@@ -1,0 +1,48 @@
+import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_v1beta1/messages/dec_coin.dart';
+import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_distribution_v1beta1/messages/delegation_delegator_reward.dart';
+import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_distribution_v1beta1/types/types.dart';
+
+import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+
+/// QueryDelegationTotalRewardsResponse is the response type for the Query/DelegationTotalRewards RPC method.
+class DistributionQueryDelegationTotalRewardsResponse extends CosmosMessage {
+  /// rewards defines all the rewards accrued by a delegator.
+  final List<DistributionDelegationDelegatorReward> rewards;
+
+  /// total defines the sum of all the rewards.
+  final List<DecCoin> total;
+  DistributionQueryDelegationTotalRewardsResponse(
+      {required List<DistributionDelegationDelegatorReward> rewards,
+      required List<DecCoin> total})
+      : rewards = rewards.mutable,
+        total = total.mutable;
+  factory DistributionQueryDelegationTotalRewardsResponse.deserialize(
+      List<int> bytes) {
+    final deocde = CosmosProtocolBuffer.decode(bytes);
+    return DistributionQueryDelegationTotalRewardsResponse(
+        rewards: deocde
+            .getFileds(1)
+            .map((e) => DistributionDelegationDelegatorReward.deserialize(e))
+            .toList(),
+        total: deocde.getFileds(2).map((e) => DecCoin.deserialize(e)).toList());
+  }
+
+  @override
+  List<int> get fieldIds => [1, 2];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      "rewards": rewards.map((e) => e.toJson()).toList(),
+      "total": total.map((e) => e.toJson()).toList()
+    };
+  }
+
+  @override
+  String get typeUrl => DistributionV1beta1Types
+      .distributionQueryDelegationTotalRewardsResponse.typeUrl;
+
+  @override
+  List get values => [rewards, total];
+}
