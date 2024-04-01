@@ -1,7 +1,8 @@
 # Dart Cosmos-sdk
 
 Experience effortless interaction with a Cosmos SDK-based network in Dart, facilitating the seamless creation, signing, and transmission of transactions. (Beta version)
-This version is in beta and requires comprehensive testing for each model implementation.
+
+*** This version is in beta and requires comprehensive testing for each model implementation. ****
 
 ## Supported Protocol Buffer packages
 
