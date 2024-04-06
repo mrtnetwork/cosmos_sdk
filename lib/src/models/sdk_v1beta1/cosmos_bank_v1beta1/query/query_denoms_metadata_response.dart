@@ -16,7 +16,7 @@ class QueryDenomsMetadataResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryDenomsMetadataResponse(
         metadatas: decode
-            .getFileds<List<int>>(1)
+            .getFields<List<int>>(1)
             .map((e) => Metadata.deserialize(e))
             .toList(),
         pagination: decode

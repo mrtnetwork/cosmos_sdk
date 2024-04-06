@@ -30,7 +30,7 @@ class Fee extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Fee(
         amount: decode
-            .getFileds<List<int>>(1)
+            .getFields<List<int>>(1)
             .map((e) => Coin.deserialize(e))
             .toList(),
         gasLimit: decode.getResult(2)?.cast<BigInt>(),

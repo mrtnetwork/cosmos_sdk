@@ -13,7 +13,7 @@ class AuthzGenesisState extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return AuthzGenesisState(
         authorization: decode
-            .getFileds(1)
+            .getFields(1)
             .map((e) => AuthzGenericAuthorization.deserialize(e))
             .toList());
   }

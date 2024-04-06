@@ -18,7 +18,7 @@ class AuthzQueryGrantsResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return AuthzQueryGrantsResponse(
         grants:
-            decode.getFileds(1).map((e) => AuthzGrant.deserialize(e)).toList(),
+            decode.getFields(1).map((e) => AuthzGrant.deserialize(e)).toList(),
         pagination: decode
             .getResult(2)
             ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));

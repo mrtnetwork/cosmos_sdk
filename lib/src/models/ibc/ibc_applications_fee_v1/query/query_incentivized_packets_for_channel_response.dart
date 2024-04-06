@@ -21,7 +21,7 @@ class QueryIncentivizedPacketsForChannelResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryIncentivizedPacketsForChannelResponse(
         incentivizedPackets: decode
-            .getFileds(1)
+            .getFields(1)
             .map((e) => IbcFeeIdentifiedPacketFees.deserialize(e))
             .toList(),
         pagination: decode

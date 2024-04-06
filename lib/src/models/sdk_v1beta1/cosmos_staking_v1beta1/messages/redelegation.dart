@@ -35,7 +35,7 @@ class Redelegation extends CosmosMessage {
         validatorSrcAddress:
             decode.getResult(2)?.to<BaseAddress, String>((e) => BaseAddress(e)),
         entries: decode
-            .getFileds<List<int>>(4)
+            .getFields<List<int>>(4)
             .map((e) => RedelegationEntry.deserialize(e))
             .toList());
   }

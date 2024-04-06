@@ -13,7 +13,7 @@ class DistributionValidatorSlashEvents extends CosmosMessage {
   factory DistributionValidatorSlashEvents.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionValidatorSlashEvents(decode
-        .getFileds(1)
+        .getFields(1)
         .map((e) => DistributionValidatorSlashEvent.deserialize(e))
         .toList());
   }

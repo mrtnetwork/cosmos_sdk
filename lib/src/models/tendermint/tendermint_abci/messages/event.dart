@@ -13,7 +13,7 @@ class Event extends CosmosMessage {
     return Event(
         type: decode.getField(1),
         attributes: decode
-            .getFileds<List<int>>(2)
+            .getFields<List<int>>(2)
             .map((e) => EventAttribute.deserialize(e))
             .toList());
   }

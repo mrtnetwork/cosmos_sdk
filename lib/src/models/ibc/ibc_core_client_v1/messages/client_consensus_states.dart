@@ -19,7 +19,7 @@ class IbcClientClientConsensusStates extends CosmosMessage {
     return IbcClientClientConsensusStates(
         clientId: decode.getField(1),
         consensusStates: decode
-            .getFileds<List<int>>(2)
+            .getFields<List<int>>(2)
             .map((e) => ConsensusStateWithHeight.deserialize(e))
             .toList());
   }

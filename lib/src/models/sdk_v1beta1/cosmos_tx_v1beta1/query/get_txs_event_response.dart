@@ -30,11 +30,11 @@ class GetTxsEventResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GetTxsEventResponse(
         txs: decode
-            .getFileds<List<int>>(1)
+            .getFields<List<int>>(1)
             .map((e) => Tx.deserialize(e))
             .toList(),
         txResponses: decode
-            .getFileds<List<int>>(2)
+            .getFields<List<int>>(2)
             .map((e) => TxResponse.deserialize(e))
             .toList(),
         pagination: decode

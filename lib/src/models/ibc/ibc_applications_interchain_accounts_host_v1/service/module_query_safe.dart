@@ -22,7 +22,7 @@ class InterchainAccountsHostModuleQuerySafe extends CosmosMessage
     return InterchainAccountsHostModuleQuerySafe(
       signer: decode.getField(1),
       requests: decode
-          .getFileds(2)
+          .getFields(2)
           .map((e) => InterchainAccountsHostQueryRequest.deserialize(bytes))
           .toList(),
     );

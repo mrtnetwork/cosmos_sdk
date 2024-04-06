@@ -15,7 +15,7 @@ class QueryValidatorsResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryValidatorsResponse(
         validators: decode
-            .getFileds<List<int>>(1)
+            .getFields<List<int>>(1)
             .map((e) => StakingValidator.deserialize(e))
             .toList(),
         pagination: decode

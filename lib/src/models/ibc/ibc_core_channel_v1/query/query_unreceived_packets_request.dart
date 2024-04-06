@@ -23,7 +23,7 @@ class QueryUnreceivedPacketsRequest extends CosmosMessage
     return QueryUnreceivedPacketsRequest(
         portId: decode.getField(1),
         channelId: decode.getField(2),
-        packetCommitmentSequences: decode.getFileds<BigInt>(3));
+        packetCommitmentSequences: decode.getFields<BigInt>(3));
   }
 
   @override

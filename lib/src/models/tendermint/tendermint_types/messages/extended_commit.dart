@@ -23,7 +23,7 @@ class ExtendedCommit extends CosmosMessage {
       round: decode.getField(2),
       blockID: BlockID.deserialize(decode.getField(3)),
       extendedSignatures: decode
-          .getFileds(4)
+          .getFields(4)
           .map((e) => ExtendedCommitSig.deserialize(e))
           .toList(),
     );

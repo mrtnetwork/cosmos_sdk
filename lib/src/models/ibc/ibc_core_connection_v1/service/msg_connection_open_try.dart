@@ -66,7 +66,7 @@ class IbcConnectionMsgConnectionOpenTry extends CosmosMessage
         counterparty: IbcConnectionCounterparty.deserialize(decode.getField(4)),
         delayPeriod: decode.getField(5),
         counterpartyVersions: decode
-            .getFileds<List<int>>(6)
+            .getFields<List<int>>(6)
             .map((e) => IbcConnectionVersion.deserialize(e))
             .toList(),
         proofHeight: IbcClientHeight.deserialize(decode.getField(7)),

@@ -19,7 +19,7 @@ class GovDepositParams extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GovDepositParams(
         minDeposit:
-            decode.getFileds(1).map((e) => Coin.deserialize(e)).toList(),
+            decode.getFields(1).map((e) => Coin.deserialize(e)).toList(),
         maxDepositPeriod: ProtobufDuration.deserialize(decode.getField(2)));
   }
 

@@ -29,7 +29,7 @@ class UnbondingDelegation extends CosmosMessage {
         validatorAddress:
             decode.getResult(1)?.to<BaseAddress, String>((e) => BaseAddress(e)),
         entries: decode
-            .getFileds<List<int>>(3)
+            .getFields<List<int>>(3)
             .map((e) => UnbondingDelegationEntry.deserialize(e))
             .toList());
   }

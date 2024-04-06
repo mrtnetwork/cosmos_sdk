@@ -1,12 +1,14 @@
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_auth_v1beta1/query/query_accounts_response.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_query_v1beta1/messages/page_request.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_auth_v1beta1/types/auth_v1beta1_types.dart';
+import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_auth_v1beta1/types/types.dart';
 
 /// QueryAccountsRequest is the request type for the Query/Accounts RPC method.
 /// Since: cosmos-sdk 0.43
 class QueryAccountsRequest extends CosmosMessage
-    with QueryMessage<QueryAccountsResponse> {
+    with
+        QueryMessage<QueryAccountsResponse>,
+        RPCMessage<QueryAccountsResponse> {
   /// pagination defines an optional pagination for the request.
   final PageRequest? pagination;
   const QueryAccountsRequest({this.pagination});
@@ -39,4 +41,14 @@ class QueryAccountsRequest extends CosmosMessage
   QueryAccountsResponse onResponse(List<int> bytes) {
     throw QueryAccountsResponse.deserialize(bytes);
   }
+
+  @override
+  QueryAccountsResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryAccountsResponse.fromRpc(json);
+  }
+
+  @override
+  String get rpcPath => AuthV1beta1Types.accounts.rpcUrl();
+  @override
+  Map<String, String> get queryParameters => {};
 }

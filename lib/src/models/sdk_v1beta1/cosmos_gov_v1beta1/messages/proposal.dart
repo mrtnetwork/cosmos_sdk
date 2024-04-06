@@ -60,7 +60,7 @@ class GovProposal extends CosmosMessage {
         submitTime: ProtobufTimestamp.deserialize(decode.getField(5)),
         depositEndTime: ProtobufTimestamp.deserialize(decode.getField(6)),
         totalDeposit:
-            decode.getFileds(7).map((e) => Coin.deserialize(e)).toList(),
+            decode.getFields(7).map((e) => Coin.deserialize(e)).toList(),
         votingEndTime: ProtobufTimestamp.deserialize(decode.getField(9)),
         votingStartTime: ProtobufTimestamp.deserialize(decode.getField(8)));
   }

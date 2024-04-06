@@ -15,7 +15,7 @@ class Ics23BatchProof extends Ics23ProofBase {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Ics23BatchProof(
         entries: decode
-            .getFileds<List<int>>(1)
+            .getFields<List<int>>(1)
             .map((e) => Ics23BatchEntry.deserialize(e))
             .toList());
   }

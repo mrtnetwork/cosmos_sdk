@@ -1,4 +1,5 @@
-import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_auth_v1beta1/types/auth_v1beta1_types.dart';
+import 'package:cosmos_sdk/src/models/core/account/account.dart';
+import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_auth_v1beta1/types/types.dart';
 
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
@@ -8,11 +9,14 @@ class QueryAccountResponse extends CosmosMessage {
   factory QueryAccountResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     final any = Any.deserialize(decode.getField(1));
-    return QueryAccountResponse(any);
+    return QueryAccountResponse(CosmosBaseAccount.fromAny(any));
+  }
+  factory QueryAccountResponse.fromRpc(Map<String, dynamic> json) {
+    return QueryAccountResponse(CosmosBaseAccount.fromRpc(json["account"]));
   }
 
   /// account defines the account of the corresponding address.
-  final Any account;
+  final CosmosBaseAccount account;
 
   @override
   List<int> get fieldIds => [1];

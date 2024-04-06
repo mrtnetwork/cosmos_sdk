@@ -46,7 +46,7 @@ class IbcChannelChannel extends CosmosMessage {
             .getResult(2)
             ?.to<IbcChannelOrder, int>((e) => IbcChannelOrder.fromValue(e)),
         counterparty: IbcChannelCounterParty.deserialize(decode.getField(3)),
-        connectionHops: decode.getFileds<String>(4),
+        connectionHops: decode.getFields<String>(4),
         version: decode.getField(5),
         upgradeSequence: decode.getField(6));
   }

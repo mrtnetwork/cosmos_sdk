@@ -12,7 +12,7 @@ class IbcClientParams extends CosmosMessage {
       : allowedClients = allowedClients?.nullOnEmpy;
   factory IbcClientParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return IbcClientParams(allowedClients: decode.getFileds<String>(1));
+    return IbcClientParams(allowedClients: decode.getFields<String>(1));
   }
 
   @override

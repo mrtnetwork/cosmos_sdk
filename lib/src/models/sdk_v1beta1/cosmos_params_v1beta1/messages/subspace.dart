@@ -11,7 +11,7 @@ class ParamsSubspace extends CosmosMessage {
   factory ParamsSubspace.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ParamsSubspace(
-        subspace: decode.getField(1), keys: decode.getFileds<String>(2));
+        subspace: decode.getField(1), keys: decode.getFields<String>(2));
   }
 
   @override

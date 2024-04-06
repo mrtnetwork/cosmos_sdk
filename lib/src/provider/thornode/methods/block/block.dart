@@ -1,0 +1,20 @@
+import 'package:cosmos_sdk/src/provider/thornode/core/core.dart';
+import 'package:cosmos_sdk/src/provider/thornode/core/thorenode.dart';
+
+/// Returns verbose details of the block.
+class ThorNodeRequestBlock
+    extends ThorNodeRequestParam<Map<String, dynamic>, Map<String, dynamic>> {
+  ThorNodeRequestBlock({this.height});
+
+  /// optional block height, defaults to current tip
+  final BigInt? height;
+
+  @override
+  String get method => ThorNodeMethods.block.url;
+
+  @override
+  List<String> get pathParameters => [];
+
+  @override
+  Map<String, String?> get parameters => {"height": height?.toString()};
+}

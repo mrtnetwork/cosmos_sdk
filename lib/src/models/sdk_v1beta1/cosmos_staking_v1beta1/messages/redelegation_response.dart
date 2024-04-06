@@ -15,7 +15,7 @@ class RedelegationResponse extends CosmosMessage {
     return RedelegationResponse(
         redelegation: Redelegation.deserialize(decode.getField(1)),
         entries: decode
-            .getFileds(2)
+            .getFields(2)
             .map((e) => RedelegationEntryResponse.deserialize(e))
             .toList());
   }

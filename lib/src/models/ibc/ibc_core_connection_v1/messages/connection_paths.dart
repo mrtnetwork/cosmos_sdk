@@ -15,7 +15,7 @@ class IbcConnectConnectionPaths extends CosmosMessage {
   factory IbcConnectConnectionPaths.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcConnectConnectionPaths(
-        clientId: decode.getField(1), paths: decode.getFileds<String>(2));
+        clientId: decode.getField(1), paths: decode.getFields<String>(2));
   }
 
   @override

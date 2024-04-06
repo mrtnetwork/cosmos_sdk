@@ -37,11 +37,11 @@ class Result extends CosmosMessage {
         data: decode.getField(1),
         log: decode.getField(2),
         events: decode
-            .getFileds<List<int>>(3)
+            .getFields<List<int>>(3)
             .map((e) => Event.deserialize(e))
             .toList(),
         msgResponses: decode
-            .getFileds<List<int>>(4)
+            .getFields<List<int>>(4)
             .map((e) => Any.deserialize(e))
             .toList());
   }

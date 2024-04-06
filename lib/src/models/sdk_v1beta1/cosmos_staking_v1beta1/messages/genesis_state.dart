@@ -58,23 +58,23 @@ class StakingGenesisState extends CosmosMessage {
         params: StakingParams.deserialize(decode.getField(1)),
         lastTotalPower: decode.getField(2),
         lastValidatorPowers: decode
-            .getFileds<List<int>>(3)
+            .getFields<List<int>>(3)
             .map((e) => LastValidatorPower.deserialize(e))
             .toList(),
         validators: decode
-            .getFileds<List<int>>(4)
+            .getFields<List<int>>(4)
             .map((e) => StakingValidator.deserialize(e))
             .toList(),
         delegations: decode
-            .getFileds<List<int>>(5)
+            .getFields<List<int>>(5)
             .map((e) => Delegation.deserialize(e))
             .toList(),
         unbondingDelegations: decode
-            .getFileds<List<int>>(6)
+            .getFields<List<int>>(6)
             .map((e) => UnbondingDelegation.deserialize(e))
             .toList(),
         redelegations: decode
-            .getFileds<List<int>>(7)
+            .getFields<List<int>>(7)
             .map((e) => Redelegation.deserialize(e))
             .toList(),
         exported: decode.getField(8));

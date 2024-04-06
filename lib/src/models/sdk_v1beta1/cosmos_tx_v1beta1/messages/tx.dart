@@ -29,7 +29,7 @@ class Tx extends CosmosMessage {
     return Tx(
         body: TXBody.deserialize(decode.getField(1)),
         authInfo: AuthInfo.deserialize(decode.getField(2)),
-        signatures: decode.getFileds<List<int>>(3));
+        signatures: decode.getFields<List<int>>(3));
   }
 
   @override

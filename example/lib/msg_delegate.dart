@@ -51,7 +51,7 @@ void main() async {
   final SignDoc signDoc = SignDoc(
       bodyBytes: txbody.toBuffer(),
       authInfoBytes: authInfo.toBuffer(),
-      chainId: latestBlock.sdkBlock!.header.chainId!,
+      chainId: latestBlock.sdkBlock!.header.chainId,
       accountNumber: accountInfo.info.accountNumber);
   final sign2 = privateKey.sign(signDoc.toBuffer());
   final txRaw = TxRaw(

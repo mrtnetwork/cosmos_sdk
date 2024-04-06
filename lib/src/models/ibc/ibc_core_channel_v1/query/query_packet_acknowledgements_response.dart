@@ -23,7 +23,7 @@ class QueryPacketAcknowledgementsResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryPacketAcknowledgementsResponse(
       acknowledgements: decode
-          .getFileds(1)
+          .getFields(1)
           .map((e) => IbcChannelPacketState.deserialize(e))
           .toList(),
       pagination: decode

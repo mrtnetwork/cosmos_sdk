@@ -17,7 +17,7 @@ class ParameterChangeProposal extends CosmosMessage {
         title: decode.getField(1),
         description: decode.getField(2),
         changes: decode
-            .getFileds(3)
+            .getFields(3)
             .map((e) => ParamChange.deserialize(e))
             .toList());
   }

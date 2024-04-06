@@ -27,7 +27,7 @@ class GovMsgSubmitProposal extends CosmosMessage
         content:
             decode.getResult(1)?.to<Any, List<int>>((e) => Any.deserialize(e)),
         initialDeposit: decode
-            .getFileds<List<int>>(2)
+            .getFields<List<int>>(2)
             .map((e) => Coin.deserialize(e))
             .toList(),
         proposer: decode

@@ -19,7 +19,7 @@ class Period extends CosmosMessage {
   factory Period.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Period(
-        amount: decode.getFileds(2).map((e) => Coin.deserialize(e)).toList(),
+        amount: decode.getFields(2).map((e) => Coin.deserialize(e)).toList(),
         length: decode.getField(1));
   }
 

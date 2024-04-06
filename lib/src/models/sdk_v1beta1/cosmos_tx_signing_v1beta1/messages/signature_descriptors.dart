@@ -14,7 +14,7 @@ class SignatureDescriptors extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return SignatureDescriptors(
         signatures: decode
-            .getFileds(1)
+            .getFields(1)
             .map((e) => SignatureDescriptor.deserialize(e))
             .toList());
   }

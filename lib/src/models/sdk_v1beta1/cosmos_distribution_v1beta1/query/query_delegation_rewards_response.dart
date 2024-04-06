@@ -14,7 +14,7 @@ class DistributionQueryDelegationRewardsResponse extends CosmosMessage {
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionQueryDelegationRewardsResponse(
-        decode.getFileds(1).map((e) => DecCoin.deserialize(e)).toList());
+        decode.getFields(1).map((e) => DecCoin.deserialize(e)).toList());
   }
 
   @override

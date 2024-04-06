@@ -30,6 +30,16 @@ class GetLatestBlockResponse extends CosmosMessage {
             ?.to<CosmosBlock, List<int>>((e) => CosmosBlock.deserialize(e)));
   }
 
+  factory GetLatestBlockResponse.fromRpc(Map<String, dynamic> json) {
+    return GetLatestBlockResponse(
+        blockID:
+            json["block_id"] == null ? null : BlockID.fromRpc(json["block_id"]),
+        sdkBlock: json["sdk_block"] == null
+            ? null
+            : CosmosBlock.fromRpc(json["sdk_block"]),
+        block: json["block"] == null ? null : Block.fromRpc(json["block"]));
+  }
+
   @override
   List<int> get fieldIds => [1, 2, 3];
 

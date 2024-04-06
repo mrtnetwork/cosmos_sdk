@@ -55,7 +55,7 @@ class IbcChannelIdentifiedChannel extends CosmosMessage {
             .getResult(3)
             ?.to<IbcChannelCounterParty, List<int>>(
                 (e) => IbcChannelCounterParty.deserialize(e)),
-        connectionHops: decode.getFileds(4),
+        connectionHops: decode.getFields(4),
         version: decode.getField(5),
         portId: decode.getField(6),
         channelId: decode.getField(7),

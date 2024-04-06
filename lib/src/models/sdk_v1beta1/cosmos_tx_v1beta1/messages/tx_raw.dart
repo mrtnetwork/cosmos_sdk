@@ -34,7 +34,7 @@ class TxRaw extends CosmosMessage {
     return TxRaw(
         bodyBytes: decode.getField(1),
         authInfoBytes: decode.getField(2),
-        signatures: decode.getFileds<List<int>>(3));
+        signatures: decode.getFields<List<int>>(3));
   }
 
   @override

@@ -3,10 +3,10 @@ import 'package:cosmos_sdk/src/protobuf/types/cosmos_enum.dart';
 
 /// BlockIdFlag indicates which BlockID the signature is for
 class BlockIDFlag implements CosmosEnum {
-  static const BlockIDFlag unknown = BlockIDFlag._(0, "unknown");
-  static const BlockIDFlag absent = BlockIDFlag._(1, "absent");
-  static const BlockIDFlag commit = BlockIDFlag._(2, "commit");
-  static const BlockIDFlag nil = BlockIDFlag._(3, "nil");
+  static const BlockIDFlag unknown = BlockIDFlag._(0, "BLOCK_ID_FLAG_UNKNOWN");
+  static const BlockIDFlag absent = BlockIDFlag._(1, "BLOCK_ID_FLAG_ABSENT");
+  static const BlockIDFlag commit = BlockIDFlag._(2, "BLOCK_ID_FLAG_COMMIT");
+  static const BlockIDFlag nil = BlockIDFlag._(3, "BLOCK_ID_FLAG_NIL");
 
   @override
   final int value;
@@ -22,6 +22,15 @@ class BlockIDFlag implements CosmosEnum {
       orElse: () => throw MessageException(
           "No BlockIDFlag element found for the given value.",
           details: {"value": value}),
+    );
+  }
+
+  static BlockIDFlag fromName(String? name) {
+    return values.firstWhere(
+      (e) => e.name == name,
+      orElse: () => throw MessageException(
+          "No BlockIDFlag element found for the given name.",
+          details: {"value": name}),
     );
   }
 }

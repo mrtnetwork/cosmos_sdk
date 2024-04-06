@@ -13,7 +13,7 @@ class DistributionQueryDelegatorValidatorsResponse extends CosmosMessage {
   factory DistributionQueryDelegatorValidatorsResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return DistributionQueryDelegatorValidatorsResponse(decode.getFileds(1));
+    return DistributionQueryDelegatorValidatorsResponse(decode.getFields(1));
   }
 
   @override

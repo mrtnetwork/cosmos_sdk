@@ -19,7 +19,7 @@ class IbcFeeIdentifiedPacketFees extends CosmosMessage {
     return IbcFeeIdentifiedPacketFees(
         packetId: IbcChannelPacketId.deserialize(decode.getField(1)),
         packetFees: decode
-            .getFileds(2)
+            .getFields(2)
             .map((e) => IbcFeePacketFee.deserialize(e))
             .toList());
   }

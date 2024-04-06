@@ -22,11 +22,11 @@ class MsgMultiSend extends CosmosMessage
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgMultiSend(
         inputs: decode
-            .getFileds<List<int>>(1)
+            .getFields<List<int>>(1)
             .map((e) => Input.deserialize(e))
             .toList(),
         outputs: decode
-            .getFileds<List<int>>(2)
+            .getFields<List<int>>(2)
             .map((e) => Output.deserialize(e))
             .toList());
   }

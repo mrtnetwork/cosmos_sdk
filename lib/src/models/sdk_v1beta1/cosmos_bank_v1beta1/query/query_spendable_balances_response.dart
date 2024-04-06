@@ -18,7 +18,7 @@ class QuerySpendableBalancesResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QuerySpendableBalancesResponse(
         balances: decode
-            .getFileds<List<int>>(1)
+            .getFields<List<int>>(1)
             .map((e) => Coin.deserialize(e))
             .toList(),
         pagination: decode

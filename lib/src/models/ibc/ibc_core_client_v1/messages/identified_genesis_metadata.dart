@@ -16,7 +16,7 @@ class IbcClientIdentifiedGenesisMetadata extends CosmosMessage {
     return IbcClientIdentifiedGenesisMetadata(
       clientId: decode.getField(1),
       clientMetadata: decode
-          .getFileds(2)
+          .getFields(2)
           .map((e) => IbcClientGenesisMetadata.deserialize(e))
           .toList(),
     );

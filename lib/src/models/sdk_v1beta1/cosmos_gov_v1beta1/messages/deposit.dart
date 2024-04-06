@@ -23,7 +23,7 @@ class GovDeposit extends CosmosMessage {
       proposalId: decode.getField(1),
       depositor:
           decode.getResult(2)?.to<BaseAddress, String>((e) => BaseAddress(e)),
-      amount: decode.getFileds(3).map((e) => Coin.deserialize(e)).toList(),
+      amount: decode.getFields(3).map((e) => Coin.deserialize(e)).toList(),
     );
   }
 

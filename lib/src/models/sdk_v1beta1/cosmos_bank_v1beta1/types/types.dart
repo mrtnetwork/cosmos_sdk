@@ -1,6 +1,11 @@
-class BankV1beta1Types {
+import 'package:cosmos_sdk/src/models/core/type_url/type_url.dart';
+
+class BankV1beta1Types extends TypeUrl {
+  @override
   final String typeUrl;
-  const BankV1beta1Types._(this.typeUrl);
+  @override
+  final String? rpc;
+  const BankV1beta1Types._(this.typeUrl, {this.rpc});
 
   /// messages
   static const BankV1beta1Types msgSend =
@@ -93,10 +98,12 @@ class BankV1beta1Types {
       BankV1beta1Types._("/cosmos.bank.v1beta1.MsgUpdateParams");
 
   /// queries
-  static const BankV1beta1Types balance =
-      BankV1beta1Types._("/cosmos.bank.v1beta1.Query/Balance");
-  static const BankV1beta1Types allBalances =
-      BankV1beta1Types._("/cosmos.bank.v1beta1.Query/AllBalances");
+  static const BankV1beta1Types balance = BankV1beta1Types._(
+      "/cosmos.bank.v1beta1.Query/Balance",
+      rpc: "/cosmos/bank/v1beta1/balances/:address/by_denom");
+  static const BankV1beta1Types allBalances = BankV1beta1Types._(
+      "/cosmos.bank.v1beta1.Query/AllBalances",
+      rpc: "/cosmos/bank/v1beta1/balances/:address");
   static const BankV1beta1Types spendableBalances =
       BankV1beta1Types._("/cosmos.bank.v1beta1.Query/SpendableBalances");
   static const BankV1beta1Types totalSupply =

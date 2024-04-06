@@ -33,7 +33,7 @@ class QueryPacketAcknowledgementsRequest extends CosmosMessage
         pagination: decode
             .getResult(3)
             ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)),
-        packetCommitmentSequences: decode.getFileds<BigInt>(4));
+        packetCommitmentSequences: decode.getFields<BigInt>(4));
   }
 
   @override

@@ -19,7 +19,7 @@ class SlashingQuerySigningInfosResponse extends CosmosMessage {
             .getResult(2)
             ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
         info: decode
-            .getFileds(1)
+            .getFields(1)
             .map((e) => SlashingValidatorSigningInfo.deserialize(e))
             .toList());
   }

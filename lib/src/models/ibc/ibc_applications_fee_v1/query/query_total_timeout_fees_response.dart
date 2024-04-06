@@ -13,7 +13,7 @@ class QueryTotalTimeoutFeesResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryTotalTimeoutFeesResponse(
         timeoutFees:
-            decode.getFileds(1).map((e) => Coin.deserialize(e)).toList());
+            decode.getFields(1).map((e) => Coin.deserialize(e)).toList());
   }
 
   @override

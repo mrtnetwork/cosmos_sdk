@@ -1,6 +1,11 @@
-class BaseTendermintV1beta1Types {
+import 'package:cosmos_sdk/src/models/core/type_url/type_url.dart';
+
+class BaseTendermintV1beta1Types extends TypeUrl {
+  @override
   final String typeUrl;
-  const BaseTendermintV1beta1Types._(this.typeUrl);
+  @override
+  final String? rpc;
+  const BaseTendermintV1beta1Types._(this.typeUrl, {this.rpc});
   static const BaseTendermintV1beta1Types getNodeInfoRequest =
       BaseTendermintV1beta1Types._(
           "/cosmos.base.tendermint.v1beta1.GetNodeInfoRequest");
@@ -62,7 +67,8 @@ class BaseTendermintV1beta1Types {
           "/cosmos.base.tendermint.v1beta1.Service/GetSyncing");
   static const BaseTendermintV1beta1Types getLatestBlock =
       BaseTendermintV1beta1Types._(
-          "/cosmos.base.tendermint.v1beta1.Service/GetLatestBlock");
+          "/cosmos.base.tendermint.v1beta1.Service/GetLatestBlock",
+          rpc: "/cosmos/base/tendermint/v1beta1/blocks/latest");
   static const BaseTendermintV1beta1Types getBlockByHeight =
       BaseTendermintV1beta1Types._(
           "/cosmos.base.tendermint.v1beta1.Service/GetBlockByHeight");

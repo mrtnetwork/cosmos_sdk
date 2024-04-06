@@ -15,12 +15,18 @@ class QueryAllBalancesResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryAllBalancesResponse(
         balances: decode
-            .getFileds<List<int>>(1)
+            .getFields<List<int>>(1)
             .map((e) => Coin.deserialize(e))
             .toList(),
         pagination: decode
             .getResult(2)
             ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
+  }
+  factory QueryAllBalancesResponse.fromRpc(Map<String, dynamic> json) {
+    return QueryAllBalancesResponse(
+        balances:
+            (json["balances"] as List).map((e) => Coin.fromRpc(e)).toList(),
+        pagination: PageResponse.fromRpc(json["pagination"]));
   }
   @override
   List<int> get fieldIds => [1, 2];

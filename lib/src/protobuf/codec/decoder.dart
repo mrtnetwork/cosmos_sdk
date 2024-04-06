@@ -125,7 +125,7 @@ extension QuickProtocolBufferResults on List<ProtocolBufferDecoderResult> {
     }
   }
 
-  List<T> getFileds<T>(int tag, {bool allowNull = true}) {
+  List<T> getFields<T>(int tag, {bool allowNull = true}) {
     final result = where((element) => element.tagNumber == tag);
     if (result.isEmpty && !allowNull) {
       throw MessageException("field id does not exist.",
@@ -163,7 +163,8 @@ extension QuickProtocolBufferResult on ProtocolBufferDecoderResult {
   T cast<T>() {
     if (value is T) return value;
     if (value is int) {
-      if (T == BigInt) {
+      print("come here $T");
+      if (BigInt.zero is T) {
         return BigInt.from(value) as T;
       } else if (T == bool) {
         if (value != 0 && value != 1) {

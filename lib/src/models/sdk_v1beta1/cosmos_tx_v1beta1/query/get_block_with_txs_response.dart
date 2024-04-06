@@ -23,7 +23,7 @@ class GetBlockWithTxsResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GetBlockWithTxsResponse(
         txs: decode
-            .getFileds<List<int>>(1)
+            .getFields<List<int>>(1)
             .map((e) => Tx.deserialize(e))
             .toList(),
         blockID: decode

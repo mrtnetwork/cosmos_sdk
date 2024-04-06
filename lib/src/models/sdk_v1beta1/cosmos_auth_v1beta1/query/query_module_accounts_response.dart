@@ -1,5 +1,5 @@
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_auth_v1beta1/types/auth_v1beta1_types.dart';
+import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_auth_v1beta1/types/types.dart';
 
 /// QueryModuleAccountsResponse is the response type for the Query/ModuleAccounts RPC method.
 /// Since: cosmos-sdk 0.46
@@ -9,7 +9,7 @@ class QueryModuleAccountsResponse extends CosmosMessage {
   factory QueryModuleAccountsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryModuleAccountsResponse(
-        decode.getFileds<List<int>>(1).map((e) => Any.deserialize(e)).toList());
+        decode.getFields<List<int>>(1).map((e) => Any.deserialize(e)).toList());
   }
 
   @override

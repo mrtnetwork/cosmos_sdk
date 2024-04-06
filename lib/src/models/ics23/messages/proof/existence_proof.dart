@@ -38,7 +38,7 @@ class Ics23ExistenceProof extends Ics23BatchEntryBase {
             .getResult(3)
             ?.to<Ics23LeafOp, List<int>>((e) => Ics23LeafOp.deserialize(e)),
         path: decode
-            .getFileds(4)
+            .getFields(4)
             .map((e) => Ics23InnerOp.deserialize(e))
             .toList());
   }

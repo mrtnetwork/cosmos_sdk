@@ -10,7 +10,7 @@ class IbcConnectionClientPaths extends CosmosMessage {
   IbcConnectionClientPaths({List<String>? paths}) : paths = paths?.mutable;
   factory IbcConnectionClientPaths.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return IbcConnectionClientPaths(paths: decode.getFileds<String>(1));
+    return IbcConnectionClientPaths(paths: decode.getFields<String>(1));
   }
 
   @override

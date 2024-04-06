@@ -28,7 +28,7 @@ class PeriodicVestingAccount extends CosmosMessage {
                 (e) => BaseVestingAccount.deserialize(e)),
         startTime: decode.getField(2),
         vestingPeriods:
-            decode.getFileds(3).map((e) => Period.deserialize(e)).toList());
+            decode.getFields(3).map((e) => Period.deserialize(e)).toList());
   }
 
   /// Converts this instance of [PeriodicVestingAccount] to a JSON object.

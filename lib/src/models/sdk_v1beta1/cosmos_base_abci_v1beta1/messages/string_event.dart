@@ -16,7 +16,7 @@ class StringEvent extends CosmosMessage {
     return StringEvent(
       type: decode.getField(1),
       attributes:
-          decode.getFileds(2).map((e) => Attribute.deserialize(e)).toList(),
+          decode.getFields(2).map((e) => Attribute.deserialize(e)).toList(),
     );
   }
 

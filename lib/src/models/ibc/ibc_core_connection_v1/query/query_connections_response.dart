@@ -18,7 +18,7 @@ class IbcCOnnectionQueryConnectionsResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcCOnnectionQueryConnectionsResponse(
       connections: decode
-          .getFileds(1)
+          .getFields(1)
           .map((e) => IbcConnectionIdentifiedConnection.deserialize(e))
           .toList(),
       pagination: decode

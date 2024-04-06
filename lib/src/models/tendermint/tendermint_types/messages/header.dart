@@ -1,4 +1,5 @@
 import 'package:blockchain_utils/binary/utils.dart';
+import 'package:blockchain_utils/string/string.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:cosmos_sdk/src/models/tendermint/types/types.dart';
 import 'package:cosmos_sdk/src/models/tendermint/tendermint_version/messages/consensus.dart';
@@ -9,7 +10,7 @@ import 'block_id.dart';
 class Header extends CosmosMessage {
   /// basic block info
   final Consensus version;
-  final String? chainId;
+  final String chainId;
   final BigInt? height;
   final ProtobufTimestamp time;
 
@@ -33,7 +34,7 @@ class Header extends CosmosMessage {
 
   Header({
     required this.version,
-    this.chainId,
+    required this.chainId,
     this.height,
     required this.time,
     required this.lastBlockId,
@@ -78,6 +79,31 @@ class Header extends CosmosMessage {
         lastResultsHash: decode.getField(12),
         evidenceHash: decode.getField(13),
         proposerAddress: decode.getField(14));
+  }
+  factory Header.fromRpc(Map<String, dynamic> json) {
+    return Header(
+      appHash: StringUtils.tryEncode(json["app_hash"], StringEncoding.base64),
+      height: BigInt.tryParse(json["height"] ?? ""),
+      version: Consensus.fromRpc(json["version"]),
+      time: ProtobufTimestamp.fromString(json["time"]),
+      lastBlockId: BlockID.fromRpc(json["last_block_id"]),
+      chainId: json["chain_id"],
+      lastCommitHash: StringUtils.tryEncode(
+          json["last_commit_hash"], StringEncoding.base64),
+      dataHash: StringUtils.tryEncode(json["data_hash"], StringEncoding.base64),
+      validatorsHash:
+          StringUtils.tryEncode(json["validators_hash"], StringEncoding.base64),
+      nextValidatorsHash: StringUtils.tryEncode(
+          json["next_validators_hash"], StringEncoding.base64),
+      consensusHash:
+          StringUtils.tryEncode(json["consensus_hash"], StringEncoding.base64),
+      lastResultsHash: StringUtils.tryEncode(
+          json["last_results_hash"], StringEncoding.base64),
+      evidenceHash:
+          StringUtils.tryEncode(json["evidence_hash"], StringEncoding.base64),
+      proposerAddress: StringUtils.tryEncode(
+          json["proposer_address"], StringEncoding.base64),
+    );
   }
 
   @override

@@ -18,7 +18,7 @@ class QueryDelegatorUnbondingDelegationsResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryDelegatorUnbondingDelegationsResponse(
         unbondingResponses: decode
-            .getFileds(1)
+            .getFields(1)
             .map((e) => UnbondingDelegation.deserialize(e))
             .toList(),
         pagination: decode

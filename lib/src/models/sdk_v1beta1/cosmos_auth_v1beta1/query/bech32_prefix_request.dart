@@ -1,6 +1,6 @@
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_auth_v1beta1/query/bech32_prefix_response.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_auth_v1beta1/types/auth_v1beta1_types.dart';
+import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_auth_v1beta1/types/types.dart';
 
 /// Bech32PrefixRequest is the request type for Bech32Prefix rpc method.
 /// Since: cosmos-sdk 0.46

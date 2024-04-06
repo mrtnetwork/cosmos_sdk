@@ -1,4 +1,5 @@
 import 'package:blockchain_utils/binary/utils.dart';
+import 'package:blockchain_utils/string/string.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:cosmos_sdk/src/models/tendermint/types/types.dart';
 import 'part_set_header.dart';
@@ -16,6 +17,11 @@ class BlockID extends CosmosMessage {
     return BlockID(
         partSetHeader: PartSetHeader.deserialize(decode.getField(2)),
         hash: decode.getField(1));
+  }
+  factory BlockID.fromRpc(Map<String, dynamic> json) {
+    return BlockID(
+        partSetHeader: PartSetHeader.fromRpc(json["part_set_header"]),
+        hash: StringUtils.encode(json["hash"], StringEncoding.base64));
   }
   @override
   Map<String, dynamic> toJson() {

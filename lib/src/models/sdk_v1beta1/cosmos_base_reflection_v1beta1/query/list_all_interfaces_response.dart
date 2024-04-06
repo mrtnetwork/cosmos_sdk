@@ -10,7 +10,7 @@ class ListAllInterfacesResponse extends CosmosMessage {
       : interfaceNames = interfaceNames.mutable;
   factory ListAllInterfacesResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return ListAllInterfacesResponse(interfaceNames: decode.getFileds(1));
+    return ListAllInterfacesResponse(interfaceNames: decode.getFields(1));
   }
 
   @override

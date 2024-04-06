@@ -26,7 +26,7 @@ class GovMsgVoteWeighted extends CosmosMessage
       voter:
           decode.getResult(2)?.to<BaseAddress, String>((e) => BaseAddress(e)),
       options: decode
-          .getFileds(3)
+          .getFields(3)
           .map((e) => GovWeightedVoteOption.deserialize(e))
           .toList(),
     );

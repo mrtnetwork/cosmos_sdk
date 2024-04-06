@@ -24,7 +24,7 @@ class IbcConnectionQueryClientConnectionsResponse extends CosmosMessage {
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcConnectionQueryClientConnectionsResponse(
-      connectionPaths: decode.getFileds<String>(1),
+      connectionPaths: decode.getFields<String>(1),
       proof: decode.getField(2),
       proofHeight: IbcClientHeight.deserialize(decode.getField(3)),
     );

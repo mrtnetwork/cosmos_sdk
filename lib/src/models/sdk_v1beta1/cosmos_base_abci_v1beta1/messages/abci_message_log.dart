@@ -20,7 +20,7 @@ class ABCIMessageLog extends CosmosMessage {
         msgIndex: decode.getField(1),
         log: decode.getField(2),
         events: decode
-            .getFileds<List<int>>(3)
+            .getFields<List<int>>(3)
             .map((e) => StringEvent.deserialize(e))
             .toList());
   }

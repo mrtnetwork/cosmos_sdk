@@ -18,7 +18,7 @@ class GovQueryVotesResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GovQueryVotesResponse(
         votes: decode
-            .getFileds<List<int>>(1)
+            .getFields<List<int>>(1)
             .map((e) => GovVote.deserialize(e))
             .toList(),
         pagination: decode

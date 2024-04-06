@@ -36,7 +36,7 @@ class MsgCreateVestingAccount extends CosmosMessage
             decode.getResult(1)?.to<BaseAddress, String>((e) => BaseAddress(e)),
         toAddress:
             decode.getResult(2)?.to<BaseAddress, String>((e) => BaseAddress(e)),
-        amount: decode.getFileds(3).map((e) => Coin.deserialize(e)).toList(),
+        amount: decode.getFields(3).map((e) => Coin.deserialize(e)).toList(),
         endTime: decode.getField(4),
         delayed: decode.getField(5),
         startTime: decode.getField(6));

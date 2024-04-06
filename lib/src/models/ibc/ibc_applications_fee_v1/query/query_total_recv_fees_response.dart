@@ -12,7 +12,7 @@ class QueryTotalRecvFeesResponse extends CosmosMessage {
   factory QueryTotalRecvFeesResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryTotalRecvFeesResponse(
-        recvFees: decode.getFileds(1).map((e) => Coin.deserialize(e)).toList());
+        recvFees: decode.getFields(1).map((e) => Coin.deserialize(e)).toList());
   }
 
   @override

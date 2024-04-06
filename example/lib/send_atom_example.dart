@@ -54,7 +54,7 @@ void main() async {
   final SignDoc signDoc = SignDoc(
       bodyBytes: txbody.toBuffer(),
       authInfoBytes: authInfo.toBuffer(),
-      chainId: latestBlock.block!.header.chainId!,
+      chainId: latestBlock.block!.header.chainId,
       accountNumber: accountInfo.info.accountNumber);
 
   /// Signing the document with the private key

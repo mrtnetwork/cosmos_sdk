@@ -1,4 +1,4 @@
-import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_auth_v1beta1/types/auth_v1beta1_types.dart';
+import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_auth_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:blockchain_utils/binary/binary.dart';
 
@@ -21,7 +21,7 @@ class ModuleCredential extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ModuleCredential(
         moduleName: decode.getField(1),
-        derivationKeys: decode.getFileds<List<int>>(2));
+        derivationKeys: decode.getFields<List<int>>(2));
   }
 
   @override

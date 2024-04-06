@@ -16,7 +16,7 @@ class UpgradeFields extends CosmosMessage {
         ordering: decode
             .getResult(1)
             ?.to<IbcChannelOrder, int>((e) => IbcChannelOrder.fromValue(e)),
-        connectionHops: decode.getFileds<String>(2),
+        connectionHops: decode.getFields<String>(2),
         version: decode.getField(3));
   }
 

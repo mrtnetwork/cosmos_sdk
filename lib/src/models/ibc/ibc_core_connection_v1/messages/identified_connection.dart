@@ -39,7 +39,7 @@ class IbcConnectionIdentifiedConnection extends CosmosMessage {
       id: decode.getField(1),
       clientId: decode.getField(2),
       versions: decode
-          .getFileds(3)
+          .getFields(3)
           .map((e) => IbcConnectionVersion.deserialize(e))
           .toList(),
       delayPeriod: decode.getField(6),

@@ -20,7 +20,7 @@ class MsgSend extends CosmosMessage
         fromAddress: BaseAddress(decode.getField(1)),
         toAddress: BaseAddress(decode.getField(2)),
         amount: decode
-            .getFileds<List<int>>(3)
+            .getFields<List<int>>(3)
             .map((e) => Coin.deserialize(e))
             .toList());
   }

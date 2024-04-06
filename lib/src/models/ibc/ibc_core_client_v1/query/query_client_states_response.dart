@@ -19,7 +19,7 @@ class QueryClientStatesResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryClientStatesResponse(
         clinetStates: decode
-            .getFileds(1)
+            .getFields(1)
             .map((e) => IbcClientIdentifiedClientState.deserialize(e))
             .toList(),
         pagination: decode

@@ -16,7 +16,7 @@ class InterchainAccountsHostParams extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return InterchainAccountsHostParams(
         hostEnabled: decode.getField(1),
-        allowMessages: decode.getFileds<String>(2));
+        allowMessages: decode.getFields<String>(2));
   }
 
   @override

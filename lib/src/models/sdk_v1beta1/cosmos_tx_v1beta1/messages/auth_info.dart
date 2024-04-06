@@ -34,7 +34,7 @@ class AuthInfo extends CosmosMessage {
 
     return AuthInfo(
         signerInfos: decode
-            .getFileds<List<int>>(1)
+            .getFields<List<int>>(1)
             .map((e) => SignerInfo.deserialize(e))
             .toList(),
         fee: Fee.deserialize(decode.getField(2)),

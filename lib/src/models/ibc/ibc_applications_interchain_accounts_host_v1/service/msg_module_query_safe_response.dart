@@ -20,7 +20,7 @@ class InterchainAccountsHostMsgModuleQuerySafeResponse extends CosmosMessage {
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return InterchainAccountsHostMsgModuleQuerySafeResponse(
-        height: decode.getField(1), responses: decode.getFileds<List<int>>(2));
+        height: decode.getField(1), responses: decode.getFields<List<int>>(2));
   }
   @override
   List<int> get fieldIds => [1, 2];

@@ -5,3 +5,5 @@ export 'ibc/ibc.dart';
 export 'ics23/ics23.dart';
 export 'sdk_v1beta1/sdk_v1beta1.dart';
 export 'tendermint/tendermint.dart';
+
+export 'networks/networks.dart';

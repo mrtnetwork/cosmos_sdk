@@ -18,7 +18,7 @@ class QueryDenomTracesResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryDenomTracesResponse(
         denomTraces:
-            decode.getFileds(1).map((e) => DenomTrace.deserialize(e)).toList(),
+            decode.getFields(1).map((e) => DenomTrace.deserialize(e)).toList(),
         pagination: decode
             .getResult(2)
             ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));

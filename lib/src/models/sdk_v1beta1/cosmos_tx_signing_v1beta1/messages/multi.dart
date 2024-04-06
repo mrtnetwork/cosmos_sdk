@@ -20,7 +20,7 @@ class SignatureDescriptorDataMulti extends BaseSignatureDescriptorData {
         bitarray: decode.getResult(1)?.to<CompactBitArray, List<int>>(
             (e) => CompactBitArray.deserialize(e)),
         signatures: decode
-            .getFileds(2)
+            .getFields(2)
             .map((e) => BaseSignatureDescriptorData.deserialize(e))
             .toList());
   }

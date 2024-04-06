@@ -24,7 +24,7 @@ class QueryChannelsResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryChannelsResponse(
       channels: decode
-          .getFileds(1)
+          .getFields(1)
           .map((e) => IbcChannelIdentifiedChannel.deserialize(e))
           .toList(),
       pagination: decode

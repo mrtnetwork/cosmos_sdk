@@ -28,7 +28,7 @@ class LightClientAttackEvidence extends BaseEvidence {
             ?.to<LightBlock, List<int>>((e) => LightBlock.deserialize(e)),
         commonHeight: decode.getField(2),
         byzantineValidators: decode
-            .getFileds<List<int>>(3)
+            .getFields<List<int>>(3)
             .map((e) => TendermintValidator.deserialize(e))
             .toList(),
         totalVotingPower: decode.getField(4),

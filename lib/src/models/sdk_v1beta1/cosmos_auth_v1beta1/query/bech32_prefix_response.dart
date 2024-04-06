@@ -1,5 +1,5 @@
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_auth_v1beta1/types/auth_v1beta1_types.dart';
+import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_auth_v1beta1/types/types.dart';
 
 /// Bech32PrefixResponse is the response type for Bech32Prefix rpc method.
 /// Since: cosmos-sdk 0.46
@@ -10,7 +10,9 @@ class Bech32PrefixResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Bech32PrefixResponse(decode.getField(1));
   }
-
+  factory Bech32PrefixResponse.fromRpc(Map<String, dynamic> json) {
+    return Bech32PrefixResponse(json["bech32_prefix"]);
+  }
   @override
   List<int> get fieldIds => [1];
 

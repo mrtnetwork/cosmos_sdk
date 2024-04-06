@@ -16,7 +16,7 @@ class ValidatorSet extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ValidatorSet(
         validators: decode
-            .getFileds<List<int>>(1)
+            .getFields<List<int>>(1)
             .map((e) => TendermintValidator.deserialize(e))
             .toList(),
         proposer: decode.getResult(2)?.to<TendermintValidator, List<int>>(

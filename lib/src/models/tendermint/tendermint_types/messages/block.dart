@@ -25,7 +25,15 @@ class Block extends CosmosMessage {
             .getResult(4)
             ?.to<Commit, List<int>>((e) => Commit.deserialize(e)));
   }
-
+  factory Block.fromRpc(Map<String, dynamic> json) {
+    return Block(
+        header: Header.fromRpc(json["header"]),
+        data: BlockData.fromRpc(json["data"]),
+        evidence: EvidenceList(evidence: []),
+        lastCommit: json["last_commit"] == null
+            ? null
+            : Commit.fromRpc(json["last_commit"]));
+  }
   @override
   List<int> get fieldIds => [1, 2, 3, 4];
 

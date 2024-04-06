@@ -12,7 +12,7 @@ class AuthzMsgExecResponse extends CosmosMessage {
             .toList());
   factory AuthzMsgExecResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return AuthzMsgExecResponse(results: decode.getFileds<List<int>>(1));
+    return AuthzMsgExecResponse(results: decode.getFields<List<int>>(1));
   }
 
   @override

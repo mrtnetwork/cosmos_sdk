@@ -1,4 +1,5 @@
 import 'package:blockchain_utils/binary/utils.dart';
+import 'package:blockchain_utils/string/string.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:cosmos_sdk/src/models/tendermint/types/types.dart';
 
@@ -10,6 +11,11 @@ class PartSetHeader extends CosmosMessage {
   factory PartSetHeader.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return PartSetHeader(total: decode.getField(1), hash: decode.getField(2));
+  }
+  factory PartSetHeader.fromRpc(Map<String, dynamic> json) {
+    return PartSetHeader(
+        total: json["total"],
+        hash: StringUtils.encode(json["hash"], StringEncoding.base64));
   }
 
   @override

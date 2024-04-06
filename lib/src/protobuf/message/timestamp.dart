@@ -24,6 +24,10 @@ class ProtobufTimestamp extends CosmosProtocolBuffer {
     return ProtobufTimestamp(
         seconds: decode.getField(1), nanos: decode.getField(2));
   }
+  factory ProtobufTimestamp.fromString(String time) {
+    final parse = DateTime.parse(time);
+    return ProtobufTimestamp.fromDateTime(parse);
+  }
   @override
   List<int> get fieldIds => [1, 2];
 

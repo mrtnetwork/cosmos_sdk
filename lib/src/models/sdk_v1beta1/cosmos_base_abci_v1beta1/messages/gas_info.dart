@@ -4,7 +4,7 @@ import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_abci_v1beta1/types
 /// GasInfo defines tx execution gas context.
 class GasInfo extends CosmosMessage {
   /// GasWanted is the maximum units of work we allow this tx to perform.
-  final BigInt gasWanted;
+  final BigInt? gasWanted;
 
   /// GasUsed is the amount of gas actually consumed.
   final BigInt gasUsed;

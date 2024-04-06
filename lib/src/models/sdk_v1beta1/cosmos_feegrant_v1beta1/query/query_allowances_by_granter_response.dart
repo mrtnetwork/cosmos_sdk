@@ -21,7 +21,7 @@ class QueryAllowancesByGranterResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryAllowancesByGranterResponse(
         allowances:
-            decode.getFileds(1).map((e) => FeeGrant.deserialize(e)).toList(),
+            decode.getFields(1).map((e) => FeeGrant.deserialize(e)).toList(),
         pagination: decode
             .getResult(2)
             ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));

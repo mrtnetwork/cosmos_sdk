@@ -5,7 +5,7 @@ import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_bank_v1beta1/types/type
 
 /// Balance queries the balance of a single coin for a single account.
 class QueryBalanceRequest extends CosmosMessage
-    with QueryMessage<QueryBalanceResponse> {
+    with QueryMessage<QueryBalanceResponse>, RPCMessage<QueryBalanceResponse> {
   /// address is the address to query balances for.
   final BaseAddress address;
 
@@ -35,4 +35,16 @@ class QueryBalanceRequest extends CosmosMessage
   QueryBalanceResponse onResponse(List<int> bytes) {
     return QueryBalanceResponse.deserialize(bytes);
   }
+
+  @override
+  QueryBalanceResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryBalanceResponse.fromRpc(json);
+  }
+
+  @override
+  Map<String, String> get queryParameters => {"denom": denom};
+
+  @override
+  String get rpcPath =>
+      BankV1beta1Types.balance.rpcUrl(pathParameters: [address.address]);
 }

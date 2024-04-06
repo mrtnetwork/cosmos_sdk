@@ -15,7 +15,7 @@ class Input extends CosmosMessage {
     return Input(
         address: BaseAddress(decode.getField(1)),
         coins: decode
-            .getFileds<List<int>>(2)
+            .getFields<List<int>>(2)
             .map((e) => Coin.deserialize(e))
             .toList());
   }

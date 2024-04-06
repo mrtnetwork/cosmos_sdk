@@ -15,7 +15,7 @@ class QueryNFTsResponse extends CosmosMessage {
   factory QueryNFTsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryNFTsResponse(
-        nfts: decode.getFileds(1).map((e) => NFT.deserialize(e)).toList(),
+        nfts: decode.getFields(1).map((e) => NFT.deserialize(e)).toList(),
         pagination: decode
             .getResult(2)
             ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));

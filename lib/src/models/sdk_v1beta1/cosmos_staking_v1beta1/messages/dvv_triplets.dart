@@ -12,7 +12,7 @@ class DVVTriplets extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DVVTriplets(
         triplets: decode
-            .getFileds<List<int>>(1)
+            .getFields<List<int>>(1)
             .map((e) => DVVTriplet.deserialize(e))
             .toList());
   }

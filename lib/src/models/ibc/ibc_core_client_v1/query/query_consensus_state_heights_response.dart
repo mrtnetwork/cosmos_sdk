@@ -19,7 +19,7 @@ class QueryConsensusStateHeightsResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryConsensusStateHeightsResponse(
         consensusStateHeights: decode
-            .getFileds(1)
+            .getFields(1)
             .map((e) => IbcClientHeight.deserialize(e))
             .toList(),
         pagination: decode

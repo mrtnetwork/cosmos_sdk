@@ -23,11 +23,11 @@ class HostGenesisState extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return HostGenesisState(
         activeChannels: decode
-            .getFileds(1)
+            .getFields(1)
             .map((e) => ActiveChannel.deserialize(e))
             .toList(),
         interchainAccounts: decode
-            .getFileds(2)
+            .getFields(2)
             .map((e) => RegisteredInterchainAccount.deserialize(e))
             .toList(),
         port: decode.getField(3),

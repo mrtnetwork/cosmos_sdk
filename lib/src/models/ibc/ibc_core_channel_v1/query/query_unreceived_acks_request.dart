@@ -23,7 +23,7 @@ class QueryUnreceivedAcksRequest extends CosmosMessage
     return QueryUnreceivedAcksRequest(
         portId: decode.getField(1),
         channelId: decode.getField(2),
-        packetAckSequences: decode.getFileds<BigInt>(3));
+        packetAckSequences: decode.getFields<BigInt>(3));
   }
 
   @override

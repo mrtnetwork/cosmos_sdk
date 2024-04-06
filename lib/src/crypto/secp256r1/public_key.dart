@@ -21,6 +21,7 @@ class CosmosSecp256R1PublicKey extends CosmosPublicKeyInfo {
     return CosmosSecp256R1PublicKey._(
         Nist256p1PublicKey.fromBytes(decode.getField(1)));
   }
+
   List<int> toBytes({bool compressed = true}) {
     if (compressed) return _publicKey.compressed;
     return _publicKey.uncompressed;

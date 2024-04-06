@@ -22,7 +22,7 @@ class GetValidatorSetByHeightResponse extends CosmosMessage {
     return GetValidatorSetByHeightResponse(
         blockHeight: decode.getField(1),
         validator: decode
-            .getFileds<List<int>>(2)
+            .getFields<List<int>>(2)
             .map((e) => CosmosTendermintValidator.deserialize(e))
             .toList(),
         pagination: decode

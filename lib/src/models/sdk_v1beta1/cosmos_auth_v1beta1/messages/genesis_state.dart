@@ -1,6 +1,6 @@
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_auth_v1beta1/messages/auth_params.dart';
 
-import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_auth_v1beta1/types/auth_v1beta1_types.dart';
+import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_auth_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
 /// GenesisState defines the auth module's genesis state.
@@ -16,7 +16,7 @@ class AuthGenesisState extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return AuthGenesisState(
         params: AuthParams.deserialize(decode.getField(1)),
-        accounts: decode.getFileds(2).map((e) => Any.deserialize(e)).toList());
+        accounts: decode.getFields(2).map((e) => Any.deserialize(e)).toList());
   }
 
   @override

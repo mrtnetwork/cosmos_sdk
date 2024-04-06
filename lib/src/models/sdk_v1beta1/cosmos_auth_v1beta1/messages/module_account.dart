@@ -1,10 +1,11 @@
+import 'package:cosmos_sdk/src/models/core/account/account.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_auth_v1beta1/messages/base_account.dart';
 
-import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_auth_v1beta1/types/auth_v1beta1_types.dart';
+import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_auth_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
 /// ModuleAccount defines an account for modules that holds coins on a pool.
-class ModuleAccount extends CosmosMessage {
+class ModuleAccount extends CosmosBaseAccount {
   final BaseAccount baseAccount;
   final String name;
   final List<String> permissions;
@@ -18,7 +19,13 @@ class ModuleAccount extends CosmosMessage {
     return ModuleAccount(
         baseAccount: BaseAccount.deserialize(decode.getField(1)),
         name: decode.getField(2),
-        permissions: decode.getFileds<String>(3));
+        permissions: decode.getFields<String>(3));
+  }
+  factory ModuleAccount.fromRpc(Map<String, dynamic> json) {
+    return ModuleAccount(
+        baseAccount: BaseAccount.fromRpc(json["base_account"]),
+        name: json["name"],
+        permissions: (json["permissions"] as List).cast());
   }
 
   @override

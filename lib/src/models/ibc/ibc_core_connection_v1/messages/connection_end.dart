@@ -37,7 +37,7 @@ class IbcConnectionConnectionEnd extends CosmosMessage {
     return IbcConnectionConnectionEnd(
         clientId: decode.getField(1),
         versions: decode
-            .getFileds(2)
+            .getFields(2)
             .map((e) => IbcConnectionVersion.deserialize(e))
             .toList(),
         state: decode.getResult(3)?.to<IbcConnectionState, int>(

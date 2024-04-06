@@ -14,7 +14,7 @@ class DistributionValidatorAccumulatedCommission extends CosmosMessage {
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionValidatorAccumulatedCommission(decode
-        .getFileds<List<int>>(1)
+        .getFields<List<int>>(1)
         .map((e) => DecCoin.deserialize(e))
         .toList());
   }

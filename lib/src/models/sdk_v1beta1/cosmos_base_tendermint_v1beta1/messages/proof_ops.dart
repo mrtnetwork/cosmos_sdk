@@ -12,7 +12,7 @@ class CosmosProofOps extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmosProofOps(
         ops: decode
-            .getFileds(1)
+            .getFields(1)
             .map((e) => CosmosProofOp.deserialize(e))
             .toList());
   }

@@ -51,7 +51,7 @@ class Metadata extends CosmosMessage {
     return Metadata(
         description: decode.getField(1),
         denomUnits: decode
-            .getFileds<List<int>>(2)
+            .getFields<List<int>>(2)
             .map((e) => DenomUnit.deserialize(e))
             .toList(),
         base: decode.getField(3),

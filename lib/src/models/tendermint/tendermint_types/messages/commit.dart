@@ -23,9 +23,18 @@ class Commit extends CosmosMessage {
         height: decode.getField(1),
         round: decode.getField(2),
         signatures: decode
-            .getFileds<List<int>>(4)
+            .getFields<List<int>>(4)
             .map((e) => CommitSig.deserialize(e))
             .toList());
+  }
+  factory Commit.fromRpc(Map<String, dynamic> json) {
+    return Commit(
+        blockID: BlockID.fromRpc(json["block_id"]),
+        signatures: (json["signatures"] as List)
+            .map((e) => CommitSig.fromRpc(e))
+            .toList(),
+        height: BigInt.tryParse(json["height"] ?? ""),
+        round: json["round"]);
   }
 
   @override

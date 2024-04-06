@@ -22,7 +22,7 @@ class DistributionValidatorOutstandingRewardsRecord extends CosmosMessage {
         validatorAddress:
             decode.getResult(1)?.to<BaseAddress, String>((e) => BaseAddress(e)),
         outstandingRewards:
-            decode.getFileds(2).map((e) => DecCoin.deserialize(e)).toList());
+            decode.getFields(2).map((e) => DecCoin.deserialize(e)).toList());
   }
   @override
   List<int> get fieldIds => [1, 2];

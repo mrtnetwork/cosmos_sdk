@@ -18,7 +18,7 @@ class DistributionValidatorCurrentRewards extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionValidatorCurrentRewards(
         rewards:
-            decode.getFileds(1).map((e) => DecCoin.deserialize(e)).toList(),
+            decode.getFields(1).map((e) => DecCoin.deserialize(e)).toList(),
         period: decode.getField(2));
   }
 

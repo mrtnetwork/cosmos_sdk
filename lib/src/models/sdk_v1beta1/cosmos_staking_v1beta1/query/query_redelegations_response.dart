@@ -15,7 +15,7 @@ class QueryRedelegationsResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryRedelegationsResponse(
         redelegationResponses: decode
-            .getFileds<List<int>>(1)
+            .getFields<List<int>>(1)
             .map((e) => RedelegationResponse.deserialize(e))
             .toList(),
         pagination: decode

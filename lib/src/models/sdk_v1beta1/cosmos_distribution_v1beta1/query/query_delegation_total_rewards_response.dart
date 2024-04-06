@@ -22,10 +22,10 @@ class DistributionQueryDelegationTotalRewardsResponse extends CosmosMessage {
     final deocde = CosmosProtocolBuffer.decode(bytes);
     return DistributionQueryDelegationTotalRewardsResponse(
         rewards: deocde
-            .getFileds(1)
+            .getFields(1)
             .map((e) => DistributionDelegationDelegatorReward.deserialize(e))
             .toList(),
-        total: deocde.getFileds(2).map((e) => DecCoin.deserialize(e)).toList());
+        total: deocde.getFields(2).map((e) => DecCoin.deserialize(e)).toList());
   }
 
   @override

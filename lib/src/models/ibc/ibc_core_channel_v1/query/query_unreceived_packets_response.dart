@@ -16,7 +16,7 @@ class QueryUnreceivedPacketsResponse extends CosmosMessage {
   factory QueryUnreceivedPacketsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryUnreceivedPacketsResponse(
-        sequences: decode.getFileds<BigInt>(1),
+        sequences: decode.getFields<BigInt>(1),
         height: IbcClientHeight.deserialize(decode.getField(2)));
   }
 

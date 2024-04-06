@@ -13,7 +13,7 @@ class DistributionValidatorOutstandingRewards extends CosmosMessage {
   factory DistributionValidatorOutstandingRewards.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionValidatorOutstandingRewards(
-        decode.getFileds(1).map((e) => DecCoin.deserialize(e)).toList());
+        decode.getFields(1).map((e) => DecCoin.deserialize(e)).toList());
   }
 
   @override

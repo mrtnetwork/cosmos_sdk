@@ -39,19 +39,19 @@ class BankGenesisState extends CosmosMessage {
     return BankGenesisState(
       params: BankParams.deserialize(decode.getField(1)),
       balances: decode
-          .getFileds<List<int>>(2)
+          .getFields<List<int>>(2)
           .map((e) => Balance.deserialize(e))
           .toList(),
       supply: decode
-          .getFileds<List<int>>(3)
+          .getFields<List<int>>(3)
           .map((e) => Coin.deserialize(e))
           .toList(),
       denomMetadata: decode
-          .getFileds<List<int>>(4)
+          .getFields<List<int>>(4)
           .map((e) => Metadata.deserialize(e))
           .toList(),
       sendEnabled: decode
-          .getFileds<List<int>>(5)
+          .getFields<List<int>>(5)
           .map((e) => SendEnabled.deserialize(e))
           .toList(),
     );

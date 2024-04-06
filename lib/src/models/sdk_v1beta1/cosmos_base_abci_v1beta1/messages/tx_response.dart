@@ -76,7 +76,7 @@ class TxResponse extends CosmosMessage {
         data: decode.getField(5),
         rawLog: decode.getField(6),
         logs: decode
-            .getFileds<List<int>>(7)
+            .getFields<List<int>>(7)
             .map((e) => ABCIMessageLog.deserialize(e))
             .toList(),
         info: decode.getField(8),
@@ -85,7 +85,7 @@ class TxResponse extends CosmosMessage {
         tx: Any.deserialize(decode.getField(11)),
         timestamp: decode.getField(12),
         events: decode
-            .getFileds<List<int>>(13)
+            .getFields<List<int>>(13)
             .map((e) => Event.deserialize(e))
             .toList());
   }

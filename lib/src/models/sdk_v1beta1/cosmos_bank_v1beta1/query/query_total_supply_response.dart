@@ -17,7 +17,7 @@ class QueryTotalSupplyResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryTotalSupplyResponse(
         supply: decode
-            .getFileds<List<int>>(1)
+            .getFields<List<int>>(1)
             .map((e) => Coin.deserialize(e))
             .toList(),
         pagination: decode

@@ -14,7 +14,7 @@ class DistributionMsgWithdrawValidatorCommissionResponse extends CosmosMessage {
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionMsgWithdrawValidatorCommissionResponse(decode
-        .getFileds<List<int>>(1)
+        .getFields<List<int>>(1)
         .map((e) => Coin.deserialize(e))
         .toList());
   }

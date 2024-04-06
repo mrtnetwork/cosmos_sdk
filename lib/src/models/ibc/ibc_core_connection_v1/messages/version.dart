@@ -14,7 +14,7 @@ class IbcConnectionVersion extends CosmosMessage {
   factory IbcConnectionVersion.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcConnectionVersion(
-        identifier: decode.getField(1), features: decode.getFileds<String>(2));
+        identifier: decode.getField(1), features: decode.getFields<String>(2));
   }
 
   @override

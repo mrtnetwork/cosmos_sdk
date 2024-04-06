@@ -40,7 +40,7 @@ class GovVote extends CosmosMessage {
             .getResult(3)
             ?.to<GovVoteOption, int>((e) => GovVoteOption.fromValue(e)),
         options: decode
-            .getFileds<List<int>>(4)
+            .getFields<List<int>>(4)
             .map((e) => GovWeightedVoteOption.deserialize(e))
             .toList());
   }

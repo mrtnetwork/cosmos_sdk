@@ -19,7 +19,7 @@ class Entry extends CosmosMessage {
     return Entry(
         owner: decode.getField(1),
         nfts: decode
-            .getFileds<List<int>>(2)
+            .getFields<List<int>>(2)
             .map((e) => NFT.deserialize(e))
             .toList());
   }

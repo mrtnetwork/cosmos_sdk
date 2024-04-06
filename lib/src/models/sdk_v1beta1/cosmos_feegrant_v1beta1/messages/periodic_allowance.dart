@@ -39,9 +39,9 @@ class PeriodicAllowance extends CosmosMessage {
         basic: BasicAllowance.deserialize(decode.getField(1)),
         period: ProtobufDuration.deserialize(decode.getField(2)),
         periodSpendLimit:
-            decode.getFileds(3).map((e) => Coin.deserialize(e)).toList(),
+            decode.getFields(3).map((e) => Coin.deserialize(e)).toList(),
         periodCanSpend:
-            decode.getFileds(4).map((e) => Coin.deserialize(e)).toList(),
+            decode.getFields(4).map((e) => Coin.deserialize(e)).toList(),
         periodReset: ProtobufTimestamp.deserialize(decode.getField(5)));
   }
 

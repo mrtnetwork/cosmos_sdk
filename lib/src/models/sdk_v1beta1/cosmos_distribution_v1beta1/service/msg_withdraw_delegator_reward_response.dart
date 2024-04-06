@@ -14,7 +14,7 @@ class DistributionMsgWithdrawDelegatorRewardResponse extends CosmosMessage {
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionMsgWithdrawDelegatorRewardResponse(decode
-        .getFileds<List<int>>(1)
+        .getFields<List<int>>(1)
         .map((e) => Coin.deserialize(e))
         .toList());
   }

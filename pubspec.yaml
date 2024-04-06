@@ -1,6 +1,6 @@
 name: cosmos_sdk
 description: Engage seamlessly with a Cosmos SDK-based network, enabling the creation, signing, and transmission of transactions. (Beta version)
-version: 0.0.1
+version: 0.0.2
 homepage: "https://github.com/mrtnetwork/cosmos_sdk"
 repository: "https://github.com/mrtnetwork/cosmos_sdk"
 Author: mrhaydari.t@gmail.com
@@ -14,11 +14,14 @@ environment:
 # Add regular dependencies here.
 dependencies:
   blockchain_utils: ^2.1.1
+  on_chain: ^3.0.1
+  bitcoin_base: ^4.2.0
     
 
 dev_dependencies:
   test: ^1.25.2
   lints: ^3.0.0
+  http: ^1.2.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

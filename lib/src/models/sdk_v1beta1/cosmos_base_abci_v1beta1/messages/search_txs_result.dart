@@ -42,7 +42,7 @@ class SearchTxsResult extends CosmosMessage {
         pageTotal: decode.getField(4),
         limit: decode.getField(5),
         txs: decode
-            .getFileds<List<int>>(6)
+            .getFields<List<int>>(6)
             .map((e) => TxResponse.deserialize(e))
             .toList());
   }

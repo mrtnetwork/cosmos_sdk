@@ -19,7 +19,7 @@ class QueryFeeEnabledChannelsResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryFeeEnabledChannelsResponse(
         feeEnabledChannels: decode
-            .getFileds(1)
+            .getFields(1)
             .map((e) => IbcFeeFeeEnabledChannel.deserialize(e))
             .toList(),
         pagination: decode

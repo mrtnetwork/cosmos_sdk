@@ -18,7 +18,7 @@ class DistributionDelegationDelegatorReward extends CosmosMessage {
         validatorddress:
             decode.getResult(1)?.to<BaseAddress, String>((e) => BaseAddress(e)),
         reward:
-            decode.getFileds(2).map((e) => DecCoin.deserialize(e)).toList());
+            decode.getFields(2).map((e) => DecCoin.deserialize(e)).toList());
   }
 
   @override

@@ -9,6 +9,9 @@ class QueryBalanceResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryBalanceResponse(Coin.deserialize(decode.getField(1)));
   }
+  factory QueryBalanceResponse.fromRpc(Map<String, dynamic> json) {
+    return QueryBalanceResponse(Coin.fromRpc(json["balance"]));
+  }
 
   @override
   List<int> get fieldIds => [1];

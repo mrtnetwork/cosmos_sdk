@@ -12,7 +12,7 @@ class ProofOps extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ProofOps(
         ops: decode
-            .getFileds(1)
+            .getFields(1)
             .map((e) => TendermintCryptoProofOp.deserialize(e))
             .toList());
   }

@@ -18,7 +18,7 @@ class BankParams extends CosmosMessage {
     return BankParams(
         defaultSendEnabled: decode.getField(2),
         sendEnabled: decode
-            .getFileds<List<int>>(1)
+            .getFields<List<int>>(1)
             .map((e) => SendEnabled.deserialize(e))
             .toList());
   }

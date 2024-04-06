@@ -13,7 +13,7 @@ class IbcLightClientsWasmGenesisState extends CosmosMessage {
   factory IbcLightClientsWasmGenesisState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcLightClientsWasmGenesisState(decode
-        .getFileds<List<int>>(1)
+        .getFields<List<int>>(1)
         .map((e) => IbcLightClientsWasmContract.deserialize(e))
         .toList());
   }

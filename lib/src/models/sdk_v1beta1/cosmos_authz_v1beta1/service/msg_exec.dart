@@ -21,7 +21,7 @@ class AuthzExec extends CosmosMessage
     return AuthzExec(
         grantee:
             decode.getResult(1)?.to<BaseAddress, String>((e) => BaseAddress(e)),
-        msgs: decode.getFileds(2).map((e) => Any.deserialize(e)).toList());
+        msgs: decode.getFields(2).map((e) => Any.deserialize(e)).toList());
   }
 
   @override

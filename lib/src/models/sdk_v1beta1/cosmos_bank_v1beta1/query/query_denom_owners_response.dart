@@ -17,7 +17,7 @@ class QueryDenomOwnersResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryDenomOwnersResponse(
         denomOwners:
-            decode.getFileds(1).map((e) => DenomOwner.deserialize(e)).toList(),
+            decode.getFields(1).map((e) => DenomOwner.deserialize(e)).toList(),
         pagination: decode
             .getResult(2)
             ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));

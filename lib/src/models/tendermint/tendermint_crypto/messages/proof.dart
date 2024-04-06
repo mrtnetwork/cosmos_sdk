@@ -21,7 +21,7 @@ class Proof extends CosmosMessage {
         total: decode.getField(1),
         index: decode.getField(2),
         leafHash: decode.getField(3),
-        aunts: decode.getFileds<List<int>>(4));
+        aunts: decode.getFields<List<int>>(4));
   }
 
   @override

@@ -31,10 +31,10 @@ class MsgSetSendEnabled extends CosmosMessage
     return MsgSetSendEnabled(
         authority: BaseAddress(decode.getField(1)),
         sendEnabled: decode
-            .getFileds<List<int>>(2)
+            .getFields<List<int>>(2)
             .map((e) => SendEnabled.deserialize(e))
             .toList(),
-        useDefaultFor: decode.getFileds<String>(3));
+        useDefaultFor: decode.getFields<String>(3));
   }
 
   @override

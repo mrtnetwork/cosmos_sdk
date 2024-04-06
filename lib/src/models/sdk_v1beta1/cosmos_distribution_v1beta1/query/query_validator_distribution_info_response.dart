@@ -28,9 +28,9 @@ class DistributionQueryValidatorDistributionInfoResponse extends CosmosMessage {
         operatorAddress:
             decode.getResult(1)?.to<BaseAddress, String>((e) => BaseAddress(e)),
         selfBondRewards:
-            decode.getFileds(2).map((e) => DecCoin.deserialize(e)).toList(),
+            decode.getFields(2).map((e) => DecCoin.deserialize(e)).toList(),
         commission:
-            decode.getFileds(3).map((e) => DecCoin.deserialize(e)).toList());
+            decode.getFields(3).map((e) => DecCoin.deserialize(e)).toList());
   }
 
   @override

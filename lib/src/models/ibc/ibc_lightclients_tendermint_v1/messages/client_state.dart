@@ -68,10 +68,10 @@ class IbcTendermintClientState extends CosmosMessage {
         frozenHeight: IbcClientHeight.deserialize(decode.getField(6)),
         latestHeight: IbcClientHeight.deserialize(decode.getField(7)),
         proofSpecs: decode
-            .getFileds(8)
+            .getFields(8)
             .map((e) => Ics23ProofSpec.deserialize(e))
             .toList(),
-        upgradePath: decode.getFileds<String>(9),
+        upgradePath: decode.getFields<String>(9),
         allowUpdateAfterExpiry: decode.getField(10),
         allowUpdateAfterMisbehaviour: decode.getField(11));
   }

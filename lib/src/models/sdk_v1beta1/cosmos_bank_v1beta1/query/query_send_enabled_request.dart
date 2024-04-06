@@ -20,7 +20,7 @@ class QuerySendEnabledRequest extends CosmosMessage
   factory QuerySendEnabledRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QuerySendEnabledRequest(
-        denoms: decode.getFileds<String>(1),
+        denoms: decode.getFields<String>(1),
         pagination: decode
             .getResult(99)
             ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)));

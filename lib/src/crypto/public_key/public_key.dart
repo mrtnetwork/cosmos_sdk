@@ -21,4 +21,20 @@ abstract class CosmosPublicKeyInfo extends CosmosMessage {
             details: {"type": any.typeUrl});
     }
   }
+  factory CosmosPublicKeyInfo.fromRpc(Map<String, dynamic> json) {
+    final pubkeyType = CryptoTypes.fromType(json["@type"]);
+    final List<int> key =
+        StringUtils.encode(json["key"], StringEncoding.base64);
+    switch (pubkeyType) {
+      case CryptoTypes.secp256R1Publickey:
+        return CosmosSecp256R1PublicKey.fromBytes(key);
+      case CryptoTypes.secp256k1Publickey:
+        return CosmosSecp256K1PublicKey.fromBytes(key);
+      case CryptoTypes.ed25519Publickey:
+        return CosmosED25519PublicKey.fromBytes(key);
+      default:
+        throw MessageException("Invalid public type.",
+            details: {"type": pubkeyType.typeUrl});
+    }
+  }
 }

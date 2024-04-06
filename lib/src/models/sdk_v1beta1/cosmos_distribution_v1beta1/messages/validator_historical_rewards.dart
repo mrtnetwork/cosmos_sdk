@@ -24,7 +24,7 @@ class DistributionValidatorHistoricalRewards extends CosmosMessage {
     return DistributionValidatorHistoricalRewards(
       referenceCount: decode.getField(2),
       cumulativeRewardRatio:
-          decode.getFileds(1).map((e) => DecCoin.deserialize(e)).toList(),
+          decode.getFields(1).map((e) => DecCoin.deserialize(e)).toList(),
     );
   }
 

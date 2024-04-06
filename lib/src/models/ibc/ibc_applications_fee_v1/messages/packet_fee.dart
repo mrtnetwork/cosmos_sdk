@@ -21,7 +21,7 @@ class IbcFeePacketFee extends CosmosMessage {
     return IbcFeePacketFee(
         fee: IbcFeeFee.deserialize(decode.getField(1)),
         refundAddress: decode.getField(2),
-        relayers: decode.getFileds<String>(3));
+        relayers: decode.getFields<String>(3));
   }
 
   @override

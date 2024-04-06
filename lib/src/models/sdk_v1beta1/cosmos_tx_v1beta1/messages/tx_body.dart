@@ -58,7 +58,7 @@ class TXBody extends CosmosMessage {
   factory TXBody.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     final anys = decode
-        .getFileds<List<int>>(1)
+        .getFields<List<int>>(1)
         .map((e) => Any.deserialize(e))
         .toList()
         .map((e) => AnyMessage(e))

@@ -15,7 +15,7 @@ class QueryModuleVersionsResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryModuleVersionsResponse(
         moduleVersions: decode
-            .getFileds(1)
+            .getFields(1)
             .map((e) => ModuleVersion.deserialize(e))
             .toList());
   }

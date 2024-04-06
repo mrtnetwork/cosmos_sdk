@@ -1,5 +1,5 @@
-import 'package:cosmos_sdk/src/provider/tendermint/utils/utils.dart';
 import 'package:blockchain_utils/exception/exception.dart';
+import 'package:cosmos_sdk/src/utils/utils.dart';
 
 /// An abstract class representing request parameters for tendermint API calls.
 abstract class TendermintRequestParams {
@@ -24,7 +24,7 @@ abstract class TendermintRequestParam<RESULT, RESPONSE>
 
   /// Converts the request parameters to [TendermintRequestDetails] with a unique identifier.
   TendermintRequestDetails toRequest(int _) {
-    final pathParams = BlockforestProviderUtils.extractParams(method);
+    final pathParams = CosmosUtils.extractParams(method);
     if (pathParams.length != pathParameters.length) {
       throw MessageException("Invalid Path Parameters.", details: {
         "pathParams": pathParameters,
@@ -35,12 +35,15 @@ abstract class TendermintRequestParam<RESULT, RESPONSE>
     for (int i = 0; i < pathParams.length; i++) {
       params = params.replaceFirst(pathParams[i], pathParameters[i]);
     }
-    params = Uri.parse(params)
-        .replace(
-            queryParameters: Map<String, String>.from(
-                parameters..removeWhere((key, value) => value == null)))
-        .normalizePath()
-        .toString();
+    final queryParameters = Map<String, String>.from(
+        parameters..removeWhere((key, value) => value == null));
+    if (queryParameters.isNotEmpty) {
+      params = Uri.parse(params)
+          .replace(queryParameters: queryParameters)
+          .normalizePath()
+          .toString();
+    }
+
     return TendermintRequestDetails(id: _, pathParams: params);
   }
 }
@@ -84,7 +87,7 @@ class TendermintRequestDetails {
     if (url.endsWith("/")) {
       url = url.substring(0, url.length - 1);
     }
-
+    print("url ${"$url$pathParams"}");
     return "$url$pathParams";
   }
 }

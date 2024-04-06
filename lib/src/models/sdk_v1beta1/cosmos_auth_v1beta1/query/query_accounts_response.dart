@@ -1,11 +1,12 @@
+import 'package:cosmos_sdk/src/models/core/account/account.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_query_v1beta1/messages/page_response.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_auth_v1beta1/types/auth_v1beta1_types.dart';
+import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_auth_v1beta1/types/types.dart';
 
 /// QueryAccountsResponse is the response type for the Query/Accounts RPC method.
 class QueryAccountsResponse extends CosmosMessage {
   /// accounts are the existing accounts.
-  final List<Any> accounts;
+  final List<CosmosBaseAccount> accounts;
 
   /// pagination defines the pagination in the response.
   final PageResponse? pagination;
@@ -14,10 +15,22 @@ class QueryAccountsResponse extends CosmosMessage {
   factory QueryAccountsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryAccountsResponse(
-      accounts: decode.getFileds(1).map((e) => Any.deserialize(e)).toList(),
+      accounts: decode
+          .getFields(1)
+          .map((e) => Any.deserialize(e))
+          .map((e) => CosmosBaseAccount.fromAny(e))
+          .toList(),
       pagination: decode
           .getResult(2)
           ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
+    );
+  }
+  factory QueryAccountsResponse.fromRpc(Map<String, dynamic> json) {
+    return QueryAccountsResponse(
+      accounts: (json["accounts"] as List)
+          .map((e) => CosmosBaseAccount.fromRpc(e))
+          .toList(),
+      pagination: PageResponse.fromRpc(json["pagination"]),
     );
   }
 

@@ -13,7 +13,7 @@ class ParamsQuerySubspacesResponse extends CosmosMessage {
   factory ParamsQuerySubspacesResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ParamsQuerySubspacesResponse(decode
-        .getFileds<List<int>>(1)
+        .getFields<List<int>>(1)
         .map((e) => ParamsSubspace.deserialize(e))
         .toList());
   }

@@ -34,3 +34,5 @@ export 'unsafe/dial_seeds.dart';
 export 'websocket/subscribe.dart';
 export 'websocket/unsubscribe.dart';
 export 'websocket/unsubscribe_all.dart';
+
+export 'rpc/rpc_request.dart';

@@ -37,7 +37,7 @@ class MsgPayPacketFee extends CosmosMessage
         sourcePortId: decode.getField(2),
         sourceChannelId: decode.getField(3),
         signer: decode.getField(4),
-        relayers: decode.getFileds<String>(5));
+        relayers: decode.getFields<String>(5));
   }
 
   @override

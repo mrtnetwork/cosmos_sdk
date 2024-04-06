@@ -7,7 +7,9 @@ import 'query_all_balances_response.dart';
 /// AllBalances queries the balance of all coins for a single account.
 /// When called from another module, this query might consume a high amount of gas if the pagination field is incorrectly set.
 class QueryAllBalancesRequest extends CosmosMessage
-    with QueryMessage<QueryAllBalancesResponse> {
+    with
+        QueryMessage<QueryAllBalancesResponse>,
+        RPCMessage<QueryAllBalancesResponse> {
   /// address is the address to query balances for.
   final BaseAddress address;
 
@@ -56,4 +58,16 @@ class QueryAllBalancesRequest extends CosmosMessage
   QueryAllBalancesResponse onResponse(List<int> bytes) {
     return QueryAllBalancesResponse.deserialize(bytes);
   }
+
+  @override
+  QueryAllBalancesResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryAllBalancesResponse.fromRpc(json);
+  }
+
+  @override
+  String get rpcPath =>
+      BankV1beta1Types.allBalances.rpcUrl(pathParameters: [address.address]);
+
+  @override
+  Map<String, String> get queryParameters => {};
 }

@@ -39,7 +39,7 @@ class MsgChannelUpgradeTry extends CosmosMessage
     return MsgChannelUpgradeTry(
         portId: decode.getField(1),
         channelId: decode.getField(2),
-        proposedUpgradeConnectionHops: decode.getFileds<String>(3),
+        proposedUpgradeConnectionHops: decode.getFields<String>(3),
         counterpartyUpgradeFields:
             UpgradeFields.deserialize(decode.getField(4)),
         counterpartyUpgradeSequence: decode.getField(5),

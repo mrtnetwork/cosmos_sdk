@@ -92,7 +92,7 @@ class StakingValidator extends CosmosMessage {
         commission: Commission.deserialize(decode.getField(10)),
         minSelfDelegation: BigintUtils.parse(decode.getField<String>(11)),
         unbondingOnHoldRefCount: decode.getField(12),
-        unbondingIds: decode.getFileds<BigInt>(13));
+        unbondingIds: decode.getFields<BigInt>(13));
   }
 
   @override

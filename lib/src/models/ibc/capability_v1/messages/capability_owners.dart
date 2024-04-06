@@ -11,7 +11,7 @@ class CapabilityOwners extends CosmosMessage {
   factory CapabilityOwners.deserialize(List<int> bytes) {
     final deocde = CosmosProtocolBuffer.decode(bytes);
     return CapabilityOwners(
-        deocde.getFileds(1).map((e) => Owner.deserialize(e)).toList());
+        deocde.getFields(1).map((e) => Owner.deserialize(e)).toList());
   }
 
   @override

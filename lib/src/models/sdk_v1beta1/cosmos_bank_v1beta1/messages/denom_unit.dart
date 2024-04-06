@@ -21,7 +21,7 @@ class DenomUnit extends CosmosMessage {
     return DenomUnit(
         denom: decode.getField(1),
         exponent: decode.getField(2),
-        aliases: decode.getFileds<String>(3));
+        aliases: decode.getFields<String>(3));
   }
 
   @override

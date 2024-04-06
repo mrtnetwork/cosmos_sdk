@@ -13,7 +13,7 @@ class PexAddrs extends P2pMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return PexAddrs(
         addrs:
-            decode.getFileds(1).map((e) => NetAddress.deserialize(e)).toList());
+            decode.getFields(1).map((e) => NetAddress.deserialize(e)).toList());
   }
   @override
   List<int> get fieldIds => [1];

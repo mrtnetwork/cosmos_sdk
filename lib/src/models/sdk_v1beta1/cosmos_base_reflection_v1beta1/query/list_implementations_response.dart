@@ -12,7 +12,7 @@ class ListImplementationsResponse extends CosmosMessage {
   factory ListImplementationsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ListImplementationsResponse(
-        implementationMessageNames: decode.getFileds<String>(1));
+        implementationMessageNames: decode.getFields<String>(1));
   }
 
   @override

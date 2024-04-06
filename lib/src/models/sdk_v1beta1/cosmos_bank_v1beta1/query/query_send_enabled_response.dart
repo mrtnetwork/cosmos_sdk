@@ -18,7 +18,7 @@ class QuerySendEnabledResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QuerySendEnabledResponse(
         sendEnabled: decode
-            .getFileds<List<int>>(1)
+            .getFields<List<int>>(1)
             .map((e) => SendEnabled.deserialize(e))
             .toList(),
         pagination: decode

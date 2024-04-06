@@ -10,7 +10,7 @@ class AuthGrantQueueItem extends CosmosMessage {
 
   factory AuthGrantQueueItem.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return AuthGrantQueueItem(decode.getFileds(1));
+    return AuthGrantQueueItem(decode.getFields(1));
   }
 
   @override

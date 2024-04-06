@@ -13,7 +13,7 @@ class PacketFees extends CosmosMessage {
   factory PacketFees.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return PacketFees(decode
-        .getFileds(1)
+        .getFields(1)
         .map((e) => IbcFeePacketFee.deserialize(e))
         .toList());
   }

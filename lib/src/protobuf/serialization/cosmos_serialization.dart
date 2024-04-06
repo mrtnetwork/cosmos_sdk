@@ -66,6 +66,11 @@ mixin QueryMessage<Response> on CosmosMessage {
   abstract final String queryPath;
   Response onResponse(List<int> bytes);
 }
+mixin RPCMessage<Response> on CosmosMessage {
+  abstract final String rpcPath;
+  Response onJsonResponse(Map<String, dynamic> json);
+  abstract final Map<String, String> queryParameters;
+}
 mixin ServiceMessage<Response> on CosmosMessage {
   abstract final String service;
   abstract final List<String?> signers;

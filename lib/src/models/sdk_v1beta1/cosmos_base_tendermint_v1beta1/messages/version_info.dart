@@ -37,7 +37,7 @@ class VersionInfo extends CosmosMessage {
         buildTags: decode.getField(5),
         goVersion: decode.getField(6),
         buildDeps:
-            decode.getFileds(7).map((e) => Module.deserialize(e)).toList(),
+            decode.getFields(7).map((e) => Module.deserialize(e)).toList(),
         cosmosSdkVersion: decode.getField(8));
   }
 

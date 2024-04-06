@@ -22,6 +22,11 @@ class PageResponse extends CosmosMessage {
         nextKey: decode.getField(1),
         total: decode.getResult(2)?.cast<BigInt>());
   }
+  factory PageResponse.fromRpc(Map<String, dynamic> json) {
+    return PageResponse(
+        nextKey: StringUtils.tryEncode(json["next_key"], StringEncoding.base64),
+        total: BigInt.tryParse(json["total"] ?? ""));
+  }
 
   @override
   List<int> get fieldIds => [1, 2];

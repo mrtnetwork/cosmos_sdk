@@ -12,6 +12,9 @@ class Coin extends CosmosMessage {
         denom: decode.getField<String>(1),
         amount: BigintUtils.parse(decode.getField<String>(2)));
   }
+  factory Coin.fromRpc(Map<String, dynamic> json) {
+    return Coin(denom: json["denom"], amount: BigInt.parse(json["amount"]));
+  }
 
   /// denomination
   final String denom;

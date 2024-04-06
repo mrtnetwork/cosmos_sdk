@@ -20,7 +20,7 @@ class DistributionQueryValidatorSlashesResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionQueryValidatorSlashesResponse(
         slashes: decode
-            .getFileds<List<int>>(1)
+            .getFields<List<int>>(1)
             .map((e) => DistributionValidatorSlashEvent.deserialize(e))
             .toList(),
         pagination: decode
