@@ -14,8 +14,7 @@ environment:
 # Add regular dependencies here.
 dependencies:
   blockchain_utils: ^2.1.1
-  on_chain: ^3.0.1
-  bitcoin_base: ^4.2.0
+
     
 
 dev_dependencies:
