@@ -12,7 +12,7 @@ class ProtobufTimestamp extends CosmosProtocolBuffer {
   /// second values with fractions must still have non-negative nanos values
   /// that count forward in time. Must be from 0 to 999,999,999
   /// inclusive.
-  final int nanos;
+  final int? nanos;
   const ProtobufTimestamp({required this.seconds, required this.nanos});
   factory ProtobufTimestamp.fromDateTime(DateTime time) {
     final BigInt seconds = BigInt.from(time.millisecondsSinceEpoch ~/ 1000);
