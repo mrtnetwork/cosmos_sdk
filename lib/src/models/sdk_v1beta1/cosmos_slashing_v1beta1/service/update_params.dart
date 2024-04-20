@@ -9,7 +9,7 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class SlashingMsgUpdateParams extends CosmosMessage
     with ServiceMessage<EmptyServiceRequestResponse> {
   /// authority is the address that controls the module (defaults to x/gov unless overwritten).
-  final BaseAddress? authority;
+  final CosmosBaseAddress? authority;
 
   /// params defines the x/slashing parameters to update.
   ///
@@ -19,8 +19,9 @@ class SlashingMsgUpdateParams extends CosmosMessage
   factory SlashingMsgUpdateParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return SlashingMsgUpdateParams(
-      authority:
-          decode.getResult(1)?.to<BaseAddress, String>((e) => BaseAddress(e)),
+      authority: decode
+          .getResult(1)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
       params: SlashingParams.deserialize(decode.getField(2)),
     );
   }

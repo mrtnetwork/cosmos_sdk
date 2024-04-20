@@ -8,7 +8,7 @@ import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
 /// ValidatorCurrentRewardsRecord is used for import / export via genesis json.
 class DistributionValidatorCurrentRewardsRecord extends CosmosMessage {
   /// validator_address is the address of the validator.
-  final BaseAddress? validatorAddress;
+  final CosmosBaseAddress? validatorAddress;
 
   /// rewards defines the current rewards of a validator.
   final List<DistributionValidatorCurrentRewards> rewards;
@@ -20,8 +20,9 @@ class DistributionValidatorCurrentRewardsRecord extends CosmosMessage {
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionValidatorCurrentRewardsRecord(
-        validatorAddress:
-            decode.getResult(1)?.to<BaseAddress, String>((e) => BaseAddress(e)),
+        validatorAddress: decode
+            .getResult(1)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
         rewards: decode
             .getFields(2)
             .map((e) => DistributionValidatorCurrentRewards.deserialize(e))

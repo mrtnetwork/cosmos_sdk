@@ -8,8 +8,8 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 /// Since: cosmos-sdk 0.46
 class MsgCancelUnbondingDelegation extends CosmosMessage
     with ServiceMessage<EmptyServiceRequestResponse> {
-  final BaseAddress? delegatorAddress;
-  final BaseAddress? validatorAddress;
+  final CosmosBaseAddress? delegatorAddress;
+  final CosmosBaseAddress? validatorAddress;
   final Coin amount;
   final BigInt? creationHeight;
 
@@ -22,10 +22,12 @@ class MsgCancelUnbondingDelegation extends CosmosMessage
   factory MsgCancelUnbondingDelegation.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgCancelUnbondingDelegation(
-        delegatorAddress:
-            decode.getResult(1)?.to<BaseAddress, String>((e) => BaseAddress(e)),
-        validatorAddress:
-            decode.getResult(2)?.to<BaseAddress, String>((e) => BaseAddress(e)),
+        delegatorAddress: decode
+            .getResult(1)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+        validatorAddress: decode
+            .getResult(2)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
         amount: Coin.deserialize(decode.getField(3)),
         creationHeight: decode.getField(4));
   }

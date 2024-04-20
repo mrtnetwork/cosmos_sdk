@@ -9,10 +9,10 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class MsgGrantAllowance extends CosmosMessage
     with ServiceMessage<EmptyServiceRequestResponse> {
   /// granter is the address of the user granting an allowance of their funds.
-  final BaseAddress? granter;
+  final CosmosBaseAddress? granter;
 
   /// grantee is the address of the user being granted an allowance of another user's funds.
-  final BaseAddress? grantee;
+  final CosmosBaseAddress? grantee;
 
   /// allowance can be any of basic, periodic, allowed fee allowance.
   final Any? allowance;
@@ -20,10 +20,12 @@ class MsgGrantAllowance extends CosmosMessage
   factory MsgGrantAllowance.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgGrantAllowance(
-        granter:
-            decode.getResult(1)?.to<BaseAddress, String>((e) => BaseAddress(e)),
-        grantee:
-            decode.getResult(2)?.to<BaseAddress, String>((e) => BaseAddress(e)),
+        granter: decode
+            .getResult(1)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+        grantee: decode
+            .getResult(2)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
         allowance:
             decode.getResult(3)?.to<Any, List<int>>((e) => Any.deserialize(e)));
   }

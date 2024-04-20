@@ -11,7 +11,7 @@ class GovQueryVoteRequest extends CosmosMessage
   final BigInt? proposalId;
 
   /// voter defines the voter address for the proposals.
-  final BaseAddress? voter;
+  final CosmosBaseAddress? voter;
 
   const GovQueryVoteRequest({this.proposalId, this.voter});
   factory GovQueryVoteRequest.deserialize(List<int> bytes) {
@@ -20,7 +20,7 @@ class GovQueryVoteRequest extends CosmosMessage
         proposalId: decode.getField(1),
         voter: decode
             .getResult(2)
-            ?.to<BaseAddress, String>((e) => BaseAddress(e)));
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)));
   }
 
   @override

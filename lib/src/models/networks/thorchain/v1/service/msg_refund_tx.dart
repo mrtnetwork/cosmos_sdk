@@ -1,19 +1,19 @@
-import 'package:blockchain_utils/binary/utils.dart';
+import 'package:cosmos_sdk/src/address/address.dart';
 import 'package:cosmos_sdk/src/models/models.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
 class ThorchainMsgRefundTx extends CosmosMessage {
   final ThorchainObservedTx tx;
   final String? inTxId;
-  final List<int>? signer;
-  ThorchainMsgRefundTx({required this.tx, this.inTxId, List<int>? signer})
-      : signer = BytesUtils.tryToBytes(signer, unmodifiable: true);
+  final CosmosBaseAddress? signer;
+  ThorchainMsgRefundTx({required this.tx, this.inTxId, this.signer});
   factory ThorchainMsgRefundTx.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainMsgRefundTx(
         tx: ThorchainObservedTx.deserialize(decode.getField(1)),
         inTxId: decode.getField(2),
-        signer: decode.getField(3));
+        signer: decode.getResult(3)?.to<CosmosBaseAddress, List<int>>(
+            (e) => CosmosBaseAddress.fromBytes(e)));
   }
 
   @override
@@ -21,16 +21,12 @@ class ThorchainMsgRefundTx extends CosmosMessage {
 
   @override
   Map<String, dynamic> toJson() {
-    return {
-      "tx": tx.toJson(),
-      "in_tx_id": inTxId,
-      "signer": BytesUtils.tryToBytes(signer)
-    };
+    return {"tx": tx.toJson(), "in_tx_id": inTxId, "signer": signer?.address};
   }
 
   @override
   String get typeUrl => ThorchainV1Types.msgRefundTx.typeUrl;
 
   @override
-  List get values => [tx, inTxId, signer];
+  List get values => [tx, inTxId, signer?.toBytes()];
 }

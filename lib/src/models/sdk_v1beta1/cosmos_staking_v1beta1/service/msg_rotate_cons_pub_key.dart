@@ -6,7 +6,7 @@ import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_staking_v1beta1/types/t
 
 class MsgRotateConsPubKey extends CosmosMessage
     with ServiceMessage<EmptyServiceRequestResponse> {
-  final BaseAddress? validatorAddress;
+  final CosmosBaseAddress? validatorAddress;
   final Any? newPubkey;
 
   const MsgRotateConsPubKey({
@@ -17,8 +17,9 @@ class MsgRotateConsPubKey extends CosmosMessage
   factory MsgRotateConsPubKey.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgRotateConsPubKey(
-        validatorAddress:
-            decode.getResult(1)?.to<BaseAddress, String>((e) => BaseAddress(e)),
+        validatorAddress: decode
+            .getResult(1)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
         newPubkey:
             decode.getResult(2)?.to<Any, List<int>>((e) => Any.deserialize(e)));
   }

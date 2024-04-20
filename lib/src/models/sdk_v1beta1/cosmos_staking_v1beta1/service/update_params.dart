@@ -9,7 +9,7 @@ import '../messages/params.dart';
 class StakingMsgUpdateParams extends CosmosMessage
     with ServiceMessage<EmptyServiceRequestResponse> {
   /// authority is the address that controls the module (defaults to x/gov unless overwritten)
-  final BaseAddress? authority;
+  final CosmosBaseAddress? authority;
 
   /// params defines the x/staking parameters to update.
   ///
@@ -24,8 +24,9 @@ class StakingMsgUpdateParams extends CosmosMessage
   factory StakingMsgUpdateParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return StakingMsgUpdateParams(
-        authority:
-            decode.getResult(1)?.to<BaseAddress, String>((e) => BaseAddress(e)),
+        authority: decode
+            .getResult(1)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
         params: StakingParams.deserialize(decode.getField(2)));
   }
 

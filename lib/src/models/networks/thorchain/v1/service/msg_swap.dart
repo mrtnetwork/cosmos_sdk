@@ -1,18 +1,20 @@
 import 'package:blockchain_utils/blockchain_utils.dart';
+import 'package:cosmos_sdk/src/address/address/address.dart';
+import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
 import 'package:cosmos_sdk/src/models/networks/thorchain/v1/common/asset.dart';
 import 'package:cosmos_sdk/src/models/networks/thorchain/v1/common/tx.dart';
 import 'package:cosmos_sdk/src/models/networks/thorchain/v1/messages/order_type.dart';
 import 'package:cosmos_sdk/src/models/networks/thorchain/v1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
-class ThorchainMsgSwap extends CosmosMessage {
+class ThorchainMsgSwap extends CosmosMessage with ServiceMessage {
   final ThorchainTx tx;
   final ThorchainAsset targetAsset;
   final String? destination;
   final BigInt tradeTarget;
   final String? affiliateAddress;
   final BigInt affiliateBasisPoints;
-  final List<int>? signer;
+  final CosmosBaseAddress? signer;
   final String? aggregator;
   final String? aggregatorTargetAddress;
   final BigInt? aggregatorTargetLimit;
@@ -26,14 +28,13 @@ class ThorchainMsgSwap extends CosmosMessage {
       required this.tradeTarget,
       this.affiliateAddress,
       required this.affiliateBasisPoints,
-      List<int>? signer,
+      this.signer,
       this.aggregator,
       this.aggregatorTargetAddress,
       this.aggregatorTargetLimit,
       this.orderType,
       this.streamQuantity,
-      this.streamInterval})
-      : signer = BytesUtils.tryToBytes(signer, unmodifiable: true);
+      this.streamInterval});
   factory ThorchainMsgSwap.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainMsgSwap(
@@ -43,7 +44,8 @@ class ThorchainMsgSwap extends CosmosMessage {
       tradeTarget: BigintUtils.parse(decode.getField<String>(4)),
       affiliateAddress: decode.getField(5),
       affiliateBasisPoints: BigintUtils.parse(decode.getField<String>(6)),
-      signer: decode.getField(7),
+      signer: decode.getResult(7)?.to<CosmosBaseAddress, List<int>>(
+          (e) => CosmosBaseAddress.fromBytes(e)),
       aggregator: decode.getField(8),
       aggregatorTargetAddress: decode.getField(9),
       aggregatorTargetLimit: BigintUtils.tryParse(decode.getField<String?>(10)),
@@ -67,7 +69,7 @@ class ThorchainMsgSwap extends CosmosMessage {
       "trade_target": tradeTarget.toString(),
       "affiliate_address": affiliateAddress,
       "affiliate_basis_points": affiliateBasisPoints.toString(),
-      "signer": BytesUtils.tryToHexString(signer),
+      "signer": signer?.address,
       "aggregator": aggregator,
       "aggregator_target_address": aggregatorTargetAddress,
       "aggregator_target_limit": aggregatorTargetLimit?.toString(),
@@ -88,7 +90,7 @@ class ThorchainMsgSwap extends CosmosMessage {
         tradeTarget.toString(),
         affiliateAddress,
         affiliateBasisPoints.toString(),
-        signer,
+        signer?.toBytes(),
         aggregator,
         aggregatorTargetAddress,
         aggregatorTargetLimit?.toString(),
@@ -96,4 +98,15 @@ class ThorchainMsgSwap extends CosmosMessage {
         streamQuantity,
         streamInterval
       ];
+
+  @override
+  EmptyServiceRequestResponse onResponse(List<int> bytes) {
+    return EmptyServiceRequestResponse(typeUrl);
+  }
+
+  @override
+  String get service => typeUrl;
+
+  @override
+  List<String?> get signers => [signer?.address];
 }

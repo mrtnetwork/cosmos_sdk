@@ -21,7 +21,7 @@ void main() async {
       TendermintRequestAbciQuery(request: const GetLatestBlockRequest()));
 
   final valAddr =
-      BaseAddress("cosmosvaloper10v6wvdenee8r9l6wlsphcgur2ltl8ztkfrvj9a");
+      CosmosBaseAddress("cosmosvaloper10v6wvdenee8r9l6wlsphcgur2ltl8ztkfrvj9a");
   final validator = MsgDelegate(
       validatorAddress: valAddr,
       delegatorAddress: pubkey.toAddresss(),

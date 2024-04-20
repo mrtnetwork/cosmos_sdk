@@ -87,7 +87,6 @@ class TendermintRequestDetails {
     if (url.endsWith("/")) {
       url = url.substring(0, url.length - 1);
     }
-    print("url ${"$url$pathParams"}");
     return "$url$pathParams";
   }
 }

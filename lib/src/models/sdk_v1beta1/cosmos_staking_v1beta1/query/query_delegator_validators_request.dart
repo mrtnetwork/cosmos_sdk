@@ -8,7 +8,7 @@ import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_staking_v1beta1/types/t
 class QueryDelegatorValidatorsRequest extends CosmosMessage
     with QueryMessage<QueryDelegatorValidatorsResponse> {
   /// delegator_addr defines the delegator address to query for.
-  final BaseAddress? delegatorAddr;
+  final CosmosBaseAddress? delegatorAddr;
 
   /// pagination defines an optional pagination for the request.
   final PageRequest? pagination;
@@ -16,8 +16,9 @@ class QueryDelegatorValidatorsRequest extends CosmosMessage
   factory QueryDelegatorValidatorsRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryDelegatorValidatorsRequest(
-        delegatorAddr:
-            decode.getResult(1)?.to<BaseAddress, String>((e) => BaseAddress(e)),
+        delegatorAddr: decode
+            .getResult(1)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
         pagination: decode
             .getResult(2)
             ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)));

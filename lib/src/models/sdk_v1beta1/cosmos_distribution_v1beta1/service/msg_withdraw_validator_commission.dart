@@ -8,7 +8,7 @@ import 'msg_withdraw_validator_commission_response.dart';
 /// MsgWithdrawValidatorCommission withdraws the full commission to the validator address.
 class DistributionMsgWithdrawValidatorCommission extends CosmosMessage
     with ServiceMessage<DistributionMsgWithdrawValidatorCommissionResponse> {
-  final BaseAddress? validatorAddress;
+  final CosmosBaseAddress? validatorAddress;
   const DistributionMsgWithdrawValidatorCommission({this.validatorAddress});
   factory DistributionMsgWithdrawValidatorCommission.deserialize(
       List<int> bytes) {
@@ -16,7 +16,7 @@ class DistributionMsgWithdrawValidatorCommission extends CosmosMessage
     return DistributionMsgWithdrawValidatorCommission(
         validatorAddress: decode
             .getResult(1)
-            ?.to<BaseAddress, String>((e) => BaseAddress(e)));
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)));
   }
 
   @override

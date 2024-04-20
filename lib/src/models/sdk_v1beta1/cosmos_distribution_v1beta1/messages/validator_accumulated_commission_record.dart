@@ -7,7 +7,7 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 /// ValidatorAccumulatedCommissionRecord is used for import / export via genesis json.
 class DistributionValidatorAccumulatedCommissionRecord extends CosmosMessage {
   /// validator_address is the address of the validator.
-  final BaseAddress? validatorAddress;
+  final CosmosBaseAddress? validatorAddress;
 
   /// accumulated is the accumulated commission of a validator.
   final DistributionValidatorAccumulatedCommission accumulated;
@@ -17,8 +17,9 @@ class DistributionValidatorAccumulatedCommissionRecord extends CosmosMessage {
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionValidatorAccumulatedCommissionRecord(
-      validatorAddress:
-          decode.getResult(1)?.to<BaseAddress, String>((e) => BaseAddress(e)),
+      validatorAddress: decode
+          .getResult(1)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
       accumulated: DistributionValidatorAccumulatedCommission.deserialize(
           decode.getField(2)),
     );

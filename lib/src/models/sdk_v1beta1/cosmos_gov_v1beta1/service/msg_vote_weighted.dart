@@ -11,7 +11,7 @@ import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
 class GovMsgVoteWeighted extends CosmosMessage
     with ServiceMessage<EmptyServiceRequestResponse> {
   final BigInt propoosalId;
-  final BaseAddress? voter;
+  final CosmosBaseAddress? voter;
   final List<GovWeightedVoteOption> options;
 
   GovMsgVoteWeighted(
@@ -23,8 +23,9 @@ class GovMsgVoteWeighted extends CosmosMessage
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GovMsgVoteWeighted(
       propoosalId: decode.getField(1),
-      voter:
-          decode.getResult(2)?.to<BaseAddress, String>((e) => BaseAddress(e)),
+      voter: decode
+          .getResult(2)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
       options: decode
           .getFields(3)
           .map((e) => GovWeightedVoteOption.deserialize(e))

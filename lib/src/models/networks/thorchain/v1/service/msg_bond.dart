@@ -1,36 +1,38 @@
-import 'package:blockchain_utils/binary/utils.dart';
+import 'package:cosmos_sdk/src/address/address/address.dart';
 import 'package:cosmos_sdk/src/models/models.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
-class ThorchainMsgBond extends CosmosMessage {
+class ThorchainMsgBond extends CosmosMessage
+    with ServiceMessage<EmptyServiceRequestResponse> {
   final ThorchainTx txIn;
-  final List<int>? nodeAddress;
+  final CosmosBaseAddress? nodeAddress;
   final String bond;
   final String? bondAddress;
-  final List<int>? signer;
-  final List<int>? bondProviderAddress;
+  final CosmosBaseAddress? signer;
+  final CosmosBaseAddress? bondProviderAddress;
   final BigInt? operatorFee;
   ThorchainMsgBond(
       {required this.txIn,
-      List<int>? nodeAddress,
       required this.bond,
       this.bondAddress,
-      List<int>? signer,
-      List<int>? bondProviderAddress,
-      this.operatorFee})
-      : nodeAddress = BytesUtils.tryToBytes(nodeAddress, unmodifiable: true),
-        signer = BytesUtils.tryToBytes(signer, unmodifiable: true),
-        bondProviderAddress =
-            BytesUtils.tryToBytes(bondProviderAddress, unmodifiable: true);
+      this.operatorFee,
+      this.signer,
+      this.bondProviderAddress,
+      this.nodeAddress});
   factory ThorchainMsgBond.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainMsgBond(
         txIn: ThorchainTx.deserialize(decode.getField(1)),
-        nodeAddress: decode.getField(2),
+        nodeAddress: decode.getResult(2)?.to<CosmosBaseAddress, List<int>>(
+            (e) => CosmosBaseAddress.fromBytes(e)),
         bond: decode.getField(3),
         bondAddress: decode.getField(4),
-        signer: decode.getField(5),
-        bondProviderAddress: decode.getField(6),
+        signer: decode.getResult(5)?.to<CosmosBaseAddress, List<int>>(
+            (e) => CosmosBaseAddress.fromBytes(e)),
+        bondProviderAddress: decode
+            .getResult(6)
+            ?.to<CosmosBaseAddress, List<int>>(
+                (e) => CosmosBaseAddress.fromBytes(e)),
         operatorFee: decode.getField(7));
   }
 
@@ -41,11 +43,11 @@ class ThorchainMsgBond extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "tx_in": txIn.toJson(),
-      "node_address": BytesUtils.tryToHexString(nodeAddress),
+      "node_address": nodeAddress?.address,
       "bond": bond,
       "bond_address": bondAddress,
-      "signer": BytesUtils.tryToHexString(signer),
-      "bond_provider_address": BytesUtils.tryToHexString(bondProviderAddress),
+      "signer": signer?.address,
+      "bond_provider_address": bondProviderAddress?.address,
       "operator_fee": operatorFee?.toString()
     };
   }
@@ -56,11 +58,22 @@ class ThorchainMsgBond extends CosmosMessage {
   @override
   List get values => [
         txIn,
-        nodeAddress,
+        nodeAddress?.toBytes(),
         bond,
         bondAddress,
-        signer,
-        bondProviderAddress,
+        signer?.toBytes(),
+        bondProviderAddress?.toBytes(),
         operatorFee
       ];
+
+  @override
+  EmptyServiceRequestResponse onResponse(List<int> bytes) {
+    return EmptyServiceRequestResponse(typeUrl);
+  }
+
+  @override
+  String get service => typeUrl;
+
+  @override
+  List<String?> get signers => [signer?.address];
 }

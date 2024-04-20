@@ -8,7 +8,7 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class MsgPruneAllowances extends CosmosMessage
     with ServiceMessage<EmptyServiceRequestResponse> {
   /// pruner is the address of the user pruning expired allowances
-  final BaseAddress? pruner;
+  final CosmosBaseAddress? pruner;
   const MsgPruneAllowances({this.pruner});
   @override
   List<int> get fieldIds => [1];

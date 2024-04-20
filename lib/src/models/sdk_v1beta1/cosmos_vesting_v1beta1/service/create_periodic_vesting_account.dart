@@ -10,8 +10,8 @@ import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
 /// Since: cosmos-sdk 0.46
 class MsgCreatePeriodicVestingAccount extends CosmosMessage
     with ServiceMessage<EmptyServiceRequestResponse> {
-  final BaseAddress? fromAddress;
-  final BaseAddress? toAddress;
+  final CosmosBaseAddress? fromAddress;
+  final CosmosBaseAddress? toAddress;
 
   /// The start time of vesting as Unix time (in seconds).
   final BigInt? startTime;

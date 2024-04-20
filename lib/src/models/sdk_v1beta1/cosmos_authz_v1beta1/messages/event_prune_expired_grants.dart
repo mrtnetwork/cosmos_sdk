@@ -8,14 +8,14 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 /// Since: x/authz 1.0.0
 class AuthzEventPruneExpiredGrants extends CosmosMessage {
   /// Address of the pruner
-  final BaseAddress? pruner;
+  final CosmosBaseAddress? pruner;
   const AuthzEventPruneExpiredGrants({this.pruner});
   factory AuthzEventPruneExpiredGrants.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return AuthzEventPruneExpiredGrants(
         pruner: decode
             .getResult(2)
-            ?.to<BaseAddress, String>((e) => BaseAddress(e)));
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)));
   }
 
   @override

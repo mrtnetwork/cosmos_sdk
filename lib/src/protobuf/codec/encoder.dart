@@ -38,7 +38,7 @@ class ProtocolBufferEncoder {
       return _encodeInt(fieldNumber, value);
     } else if (value is CosmosEnum) {
       return _encodeInt(fieldNumber, value.value);
-    } else if (value is BaseAddress) {
+    } else if (value is CosmosBaseAddress) {
       return _encodeBytes(fieldNumber, StringUtils.encode(value.address));
     } else if (value is List<int>) {
       return _encodeBytes(fieldNumber, value);

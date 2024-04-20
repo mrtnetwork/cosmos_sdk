@@ -7,7 +7,7 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 /// Balance defines an account address and balance pair used in the bank module's genesis state.
 class Balance extends CosmosMessage {
   /// address is the address of the balance holder.
-  final BaseAddress address;
+  final CosmosBaseAddress address;
 
   /// coins defines the different coins this balance holds.
   final List<Coin> coins;
@@ -16,7 +16,7 @@ class Balance extends CosmosMessage {
   factory Balance.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Balance(
-        address: BaseAddress(decode.getField(1)),
+        address: CosmosBaseAddress(decode.getField(1)),
         coins: decode
             .getFields<List<int>>(2)
             .map((e) => Coin.deserialize(e))

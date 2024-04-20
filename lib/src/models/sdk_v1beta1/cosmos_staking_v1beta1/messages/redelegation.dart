@@ -7,13 +7,13 @@ import 'redelegation_entry.dart';
 /// particular source validator to a particular destination validator.
 class Redelegation extends CosmosMessage {
   /// delegator_address is the bech32-encoded address of the delegator.
-  final BaseAddress? delegatorAddress;
+  final CosmosBaseAddress? delegatorAddress;
 
   /// validator_src_address is the validator redelegation source operator address.
-  final BaseAddress? validatorSrcAddress;
+  final CosmosBaseAddress? validatorSrcAddress;
 
   /// validator_dst_address is the validator redelegation destination operator address.
-  final BaseAddress? validatorDstAddress;
+  final CosmosBaseAddress? validatorDstAddress;
 
   /// entries are the redelegation entries.
   final List<RedelegationEntry> entries;
@@ -28,12 +28,15 @@ class Redelegation extends CosmosMessage {
   factory Redelegation.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Redelegation(
-        delegatorAddress:
-            decode.getResult(1)?.to<BaseAddress, String>((e) => BaseAddress(e)),
-        validatorDstAddress:
-            decode.getResult(3)?.to<BaseAddress, String>((e) => BaseAddress(e)),
-        validatorSrcAddress:
-            decode.getResult(2)?.to<BaseAddress, String>((e) => BaseAddress(e)),
+        delegatorAddress: decode
+            .getResult(1)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+        validatorDstAddress: decode
+            .getResult(3)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+        validatorSrcAddress: decode
+            .getResult(2)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
         entries: decode
             .getFields<List<int>>(4)
             .map((e) => RedelegationEntry.deserialize(e))

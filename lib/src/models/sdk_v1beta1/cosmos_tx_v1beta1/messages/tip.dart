@@ -11,7 +11,7 @@ class Tip extends CosmosMessage {
   final List<Coin> amount;
 
   /// tipper is the address of the account paying for the tip
-  final BaseAddress? tipper;
+  final CosmosBaseAddress? tipper;
 
   const Tip({required this.amount, required this.tipper});
   factory Tip.deserialize(List<int> bytes) {
@@ -23,7 +23,7 @@ class Tip extends CosmosMessage {
             .toList(),
         tipper: decode
             .getResult(2)
-            ?.to<BaseAddress, String>((e) => BaseAddress(e)));
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)));
   }
 
   @override

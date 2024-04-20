@@ -8,7 +8,7 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 /// QueryAllowancesRequest is the request type for the Query/Allowances RPC method.
 class QueryAllowancesRequest extends CosmosMessage
     with QueryMessage<QueryAllowancesResponse> {
-  final BaseAddress? grantee;
+  final CosmosBaseAddress? grantee;
 
   /// pagination defines an pagination for the request.
   final PageRequest? pagination;
@@ -16,8 +16,9 @@ class QueryAllowancesRequest extends CosmosMessage
   factory QueryAllowancesRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryAllowancesRequest(
-        grantee:
-            decode.getResult(1)?.to<BaseAddress, String>((e) => BaseAddress(e)),
+        grantee: decode
+            .getResult(1)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
         pagination: decode
             .getResult(2)
             ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)));

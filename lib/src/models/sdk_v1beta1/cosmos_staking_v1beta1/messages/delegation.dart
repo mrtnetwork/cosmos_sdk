@@ -6,10 +6,10 @@ import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_staking_v1beta1/types/t
 /// It is owned by one delegator, and is associated with the voting power of one validator.
 class Delegation extends CosmosMessage {
   // delegatorAddress is the bech32-encoded address of the delegator.
-  final BaseAddress delegatorAddress;
+  final CosmosBaseAddress delegatorAddress;
 
   // validatorAddress is the bech32-encoded address of the validator.
-  final BaseAddress validatorAddress;
+  final CosmosBaseAddress validatorAddress;
 
   // shares define the delegation shares received.
   final String shares;
@@ -22,8 +22,8 @@ class Delegation extends CosmosMessage {
   factory Delegation.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Delegation(
-        delegatorAddress: BaseAddress(decode.getField(1)),
-        validatorAddress: BaseAddress(decode.getField(2)),
+        delegatorAddress: CosmosBaseAddress(decode.getField(1)),
+        validatorAddress: CosmosBaseAddress(decode.getField(2)),
         shares: decode.getField(3));
   }
 

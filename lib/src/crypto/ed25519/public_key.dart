@@ -26,8 +26,8 @@ class CosmosED25519PublicKey extends CosmosPublicKeyInfo {
     return _publicKey.uncompressed;
   }
 
-  BaseAddress toAddresss({String hrp = CosmosAddrConst.validatorHRP}) {
-    return BaseAddress.fromBytes(
+  CosmosBaseAddress toAddresss({String hrp = CosmosAddrConst.validatorHRP}) {
+    return CosmosBaseAddress.fromBytes(
         CosmosAddrUtils.ed22195PubkeyToAddress(toBytes()),
         hrp: hrp);
   }

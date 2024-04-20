@@ -10,7 +10,7 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class AuthMsgUpdateParams extends CosmosMessage
     with ServiceMessage<EmptyServiceRequestResponse> {
   /// authority is the address that controls the module (defaults to x/gov unless overwritten).
-  final BaseAddress authority;
+  final CosmosBaseAddress authority;
 
   /// params defines the x/auth parameters to update.
   ///
@@ -21,7 +21,7 @@ class AuthMsgUpdateParams extends CosmosMessage
   factory AuthMsgUpdateParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return AuthMsgUpdateParams(
-        authority: BaseAddress(decode.getField(1)),
+        authority: CosmosBaseAddress(decode.getField(1)),
         params: AuthParams.deserialize(decode.getField(2)));
   }
 

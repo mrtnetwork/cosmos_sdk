@@ -7,7 +7,7 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 /// ValidatorSlashEventRecord is used for import / export via genesis json.
 class DistributionValidatorSlashEventRecord extends CosmosMessage {
   /// validator_address is the address of the validator.
-  final BaseAddress? validatorAddress;
+  final CosmosBaseAddress? validatorAddress;
 
   /// height defines the block height at which the slash event occurred.
   final BigInt? height;
@@ -25,8 +25,9 @@ class DistributionValidatorSlashEventRecord extends CosmosMessage {
   factory DistributionValidatorSlashEventRecord.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionValidatorSlashEventRecord(
-        validatorAddress:
-            decode.getResult(1)?.to<BaseAddress, String>((e) => BaseAddress(e)),
+        validatorAddress: decode
+            .getResult(1)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
         height: decode.getField(2),
         period: decode.getField(3),
         validatorSlashEvent:

@@ -8,7 +8,7 @@ import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
 /// QueryValidatorDistributionInfoResponse is the response type for the Query/ValidatorDistributionInfo RPC method.
 class DistributionQueryValidatorDistributionInfoResponse extends CosmosMessage {
   /// operator_address defines the validator operator address.
-  final BaseAddress? operatorAddress;
+  final CosmosBaseAddress? operatorAddress;
 
   /// self_bond_rewards defines the self delegations rewards
   final List<DecCoin> selfBondRewards;
@@ -25,8 +25,9 @@ class DistributionQueryValidatorDistributionInfoResponse extends CosmosMessage {
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionQueryValidatorDistributionInfoResponse(
-        operatorAddress:
-            decode.getResult(1)?.to<BaseAddress, String>((e) => BaseAddress(e)),
+        operatorAddress: decode
+            .getResult(1)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
         selfBondRewards:
             decode.getFields(2).map((e) => DecCoin.deserialize(e)).toList(),
         commission:

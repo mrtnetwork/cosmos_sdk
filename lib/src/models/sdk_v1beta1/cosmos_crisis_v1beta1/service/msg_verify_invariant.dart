@@ -8,7 +8,7 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class MsgVerifyInvariant extends CosmosMessage
     with ServiceMessage<EmptyServiceRequestResponse> {
   /// sender is the account address of private key to send coins to fee collector account.
-  final BaseAddress? sender;
+  final CosmosBaseAddress? sender;
 
   /// name of the invariant modul
   final String? invariantModuleName;
@@ -20,8 +20,9 @@ class MsgVerifyInvariant extends CosmosMessage
   factory MsgVerifyInvariant.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgVerifyInvariant(
-        sender:
-            decode.getResult(1)?.to<BaseAddress, String>((e) => BaseAddress(e)),
+        sender: decode
+            .getResult(1)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
         invariantModuleName: decode.getField(2),
         invariantRoute: decode.getField(3));
   }

@@ -5,7 +5,7 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
 /// Validator is the type for the validator-set.
 class CosmosTendermintValidator extends CosmosMessage {
-  final BaseAddress? address;
+  final CosmosBaseAddress? address;
   final Any? pubKey;
   final BigInt? votingPower;
   final BigInt? proposerPriority;
@@ -14,8 +14,9 @@ class CosmosTendermintValidator extends CosmosMessage {
   factory CosmosTendermintValidator.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmosTendermintValidator(
-        address:
-            decode.getResult(1)?.to<BaseAddress, String>((e) => BaseAddress(e)),
+        address: decode
+            .getResult(1)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
         pubKey:
             decode.getResult(2)?.to<Any, List<int>>((e) => Any.deserialize(e)),
         votingPower: decode.getField(3),

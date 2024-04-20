@@ -21,7 +21,6 @@ class ThorNodeProvider {
       [Duration? timeout]) async {
     final id = ++_id;
     final params = request.toRequest(id);
-    print("uri ${params.url("")}");
     final data = await rpc.get(params, timeout);
     _findError(data);
     return data;
@@ -39,7 +38,6 @@ class ThorNodeProvider {
   Future<T> request<T, E>(ThorNodeRequestParam<T, E> request,
       [Duration? timeout]) async {
     final data = await requestDynamic(request, timeout);
-    print("data $data");
     final Object? result;
     if (E == List<Map<String, dynamic>>) {
       result = (data as List).map((e) => Map<String, dynamic>.from(e)).toList();

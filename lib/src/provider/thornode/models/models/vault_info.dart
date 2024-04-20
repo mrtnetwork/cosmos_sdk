@@ -1,6 +1,6 @@
-import 'package:cosmos_sdk/cosmos_sdk.dart';
 import 'package:cosmos_sdk/src/provider/thornode/models/models/chain_contract.dart';
 import 'package:cosmos_sdk/src/provider/thornode/models/models/thor_coin_response.dart';
+import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
 
 class ThorVaultInfoResponse {
   final int blockHeight;

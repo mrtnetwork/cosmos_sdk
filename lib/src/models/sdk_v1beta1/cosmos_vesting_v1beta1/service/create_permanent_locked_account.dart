@@ -11,8 +11,8 @@ import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
 /// Since: cosmos-sdk 0.46
 class MsgCreatePermanentLockedAccount extends CosmosMessage
     with ServiceMessage<EmptyServiceRequestResponse> {
-  final BaseAddress? fromAddress;
-  final BaseAddress? toAddress;
+  final CosmosBaseAddress? fromAddress;
+  final CosmosBaseAddress? toAddress;
   final List<Coin> amount;
 
   /// Constructs a new instance of [MsgCreatePermanentLockedAccount].
@@ -25,10 +25,12 @@ class MsgCreatePermanentLockedAccount extends CosmosMessage
   factory MsgCreatePermanentLockedAccount.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgCreatePermanentLockedAccount(
-        fromAddress:
-            decode.getResult(1)?.to<BaseAddress, String>((e) => BaseAddress(e)),
-        toAddress:
-            decode.getResult(2)?.to<BaseAddress, String>((e) => BaseAddress(e)),
+        fromAddress: decode
+            .getResult(1)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+        toAddress: decode
+            .getResult(2)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
         amount: decode.getFields(3).map((e) => Coin.deserialize(e)).toList());
   }
 

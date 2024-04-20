@@ -27,8 +27,8 @@ class CosmosSecp256K1PublicKey extends CosmosPublicKeyInfo {
     return _publicKey.uncompressed;
   }
 
-  BaseAddress toAddresss({String hrp = CosmosAddrConst.accHRP}) {
-    return BaseAddress.fromBytes(
+  CosmosBaseAddress toAddresss({String hrp = CosmosAddrConst.accHRP}) {
+    return CosmosBaseAddress.fromBytes(
         CosmosAddrUtils.secp256k1PubKeyToAddress(toBytes()),
         hrp: hrp);
   }

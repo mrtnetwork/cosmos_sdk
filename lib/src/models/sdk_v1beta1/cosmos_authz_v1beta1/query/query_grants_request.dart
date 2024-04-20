@@ -8,8 +8,8 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 /// QueryGrantsRequest is the request type for the Query/Grants RPC method.
 class AuthzQueryGrantsRequest extends CosmosMessage
     with QueryMessage<AuthzQueryGrantsResponse> {
-  final BaseAddress? granter;
-  final BaseAddress? grantee;
+  final CosmosBaseAddress? granter;
+  final CosmosBaseAddress? grantee;
 
   /// Optional, msg_type_url, when set, will query only grants matching given msg type.
   final String? msgTypeUrl;
@@ -21,10 +21,12 @@ class AuthzQueryGrantsRequest extends CosmosMessage
   factory AuthzQueryGrantsRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return AuthzQueryGrantsRequest(
-        granter:
-            decode.getResult(1)?.to<BaseAddress, String>((e) => BaseAddress(e)),
-        grantee:
-            decode.getResult(2)?.to<BaseAddress, String>((e) => BaseAddress(e)),
+        granter: decode
+            .getResult(1)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+        grantee: decode
+            .getResult(2)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
         msgTypeUrl: decode.getField(3),
         pagination: decode
             .getResult(4)

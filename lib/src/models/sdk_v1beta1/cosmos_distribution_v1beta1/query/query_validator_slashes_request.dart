@@ -9,7 +9,7 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class DistributionQueryValidatorSlashesRequest extends CosmosMessage
     with QueryMessage<DistributionQueryValidatorSlashesResponse> {
   /// validator_address defines the validator address to query for.
-  final BaseAddress? validatorAddress;
+  final CosmosBaseAddress? validatorAddress;
 
   /// starting_height defines the optional starting height to query the slashes.
   final BigInt? startingHeight;
@@ -28,8 +28,9 @@ class DistributionQueryValidatorSlashesRequest extends CosmosMessage
       List<int> bytes) {
     final deocde = CosmosProtocolBuffer.decode(bytes);
     return DistributionQueryValidatorSlashesRequest(
-        validatorAddress:
-            deocde.getResult(1)?.to<BaseAddress, String>((e) => BaseAddress(e)),
+        validatorAddress: deocde
+            .getResult(1)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
         startingHeight: deocde.getField(2),
         endingHeight: deocde.getField(3),
         pagination: deocde

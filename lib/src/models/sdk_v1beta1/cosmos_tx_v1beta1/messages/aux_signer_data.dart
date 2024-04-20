@@ -14,7 +14,7 @@ class AuxSignerData extends CosmosMessage {
   /// address is the bech32-encoded address of the auxiliary signer. If using
   /// AuxSignerData across different chains, the bech32 prefix of the target
   /// chain (where the final transaction is broadcasted) should be used.
-  final BaseAddress? address;
+  final CosmosBaseAddress? address;
 
   /// sign_doc is the SIGN_MODE_DIRECT_AUX sign doc that the auxiliary signer
   /// signs. Note: we use the same sign doc even if we're signing with
@@ -32,8 +32,9 @@ class AuxSignerData extends CosmosMessage {
   factory AuxSignerData.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return AuxSignerData(
-      address:
-          decode.getResult(1)?.to<BaseAddress, String>((e) => BaseAddress(e)),
+      address: decode
+          .getResult(1)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
       sig: decode.getField(4),
       signDoc: decode.getResult(2)?.to<SignDocDirectAux, List<int>>(
           (e) => SignDocDirectAux.deserialize(e)),

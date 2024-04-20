@@ -6,14 +6,14 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
 /// Output models transaction outputs.
 class Output extends CosmosMessage {
-  final BaseAddress address;
+  final CosmosBaseAddress address;
   final List<Coin> coins;
 
   const Output({required this.address, required this.coins});
   factory Output.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Output(
-        address: BaseAddress(decode.getField(1)),
+        address: CosmosBaseAddress(decode.getField(1)),
         coins: decode
             .getFields<List<int>>(2)
             .map((e) => Coin.deserialize(e))

@@ -10,7 +10,7 @@ import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_bank_v1beta1/types/type
 class QuerySpendableBalancesRequest extends CosmosMessage
     with QueryMessage<QuerySpendableBalancesResponse> {
   /// address is the address to query spendable balances for.
-  final BaseAddress address;
+  final CosmosBaseAddress address;
 
   /// pagination defines an optional pagination for the request.
   final PageRequest? pagination;

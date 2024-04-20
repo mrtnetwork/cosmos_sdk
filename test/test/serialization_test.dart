@@ -63,8 +63,9 @@ void _msgSend() {
   test("msg send", () {
     final message = MsgSend(
         fromAddress:
-            BaseAddress("cosmos1htg7dmhelazdsmuwm9ngtg0tpe82006uqdw9nj"),
-        toAddress: BaseAddress("cosmos1qhslf0sx2fegltfqq0p5j6etmdznjgfnm2j6nc"),
+            CosmosBaseAddress("cosmos1htg7dmhelazdsmuwm9ngtg0tpe82006uqdw9nj"),
+        toAddress:
+            CosmosBaseAddress("cosmos1qhslf0sx2fegltfqq0p5j6etmdznjgfnm2j6nc"),
         amount: [Coin(denom: "uatom", amount: BigInt.from(1000000))]);
     expect(message.toHex,
         "0a2d636f736d6f733168746737646d68656c617a64736d75776d396e67746730747065383230303675716477396e6a122d636f736d6f73317168736c66307378326665676c746671713070356a3665746d647a6e6a67666e6d326a366e631a100a057561746f6d120731303030303030");
@@ -75,8 +76,9 @@ void _txBody() {
   test("txbody", () {
     final message = MsgSend(
         fromAddress:
-            BaseAddress("cosmos1htg7dmhelazdsmuwm9ngtg0tpe82006uqdw9nj"),
-        toAddress: BaseAddress("cosmos1qhslf0sx2fegltfqq0p5j6etmdznjgfnm2j6nc"),
+            CosmosBaseAddress("cosmos1htg7dmhelazdsmuwm9ngtg0tpe82006uqdw9nj"),
+        toAddress:
+            CosmosBaseAddress("cosmos1qhslf0sx2fegltfqq0p5j6etmdznjgfnm2j6nc"),
         amount: [Coin(denom: "uatom", amount: BigInt.from(1000000))]);
     final txbody = TXBody(messages: [message]);
     expect(txbody.toHex,
@@ -102,8 +104,9 @@ void _signDoc() {
         ], gasLimit: BigInt.from(200000)));
     final message = MsgSend(
         fromAddress:
-            BaseAddress("cosmos1htg7dmhelazdsmuwm9ngtg0tpe82006uqdw9nj"),
-        toAddress: BaseAddress("cosmos1qhslf0sx2fegltfqq0p5j6etmdznjgfnm2j6nc"),
+            CosmosBaseAddress("cosmos1htg7dmhelazdsmuwm9ngtg0tpe82006uqdw9nj"),
+        toAddress:
+            CosmosBaseAddress("cosmos1qhslf0sx2fegltfqq0p5j6etmdznjgfnm2j6nc"),
         amount: [Coin(denom: "uatom", amount: BigInt.from(1000000))]);
     final txbody = TXBody(messages: [message]);
     final SignDoc signDoc = SignDoc(
@@ -134,8 +137,9 @@ void _txRaw() {
         ], gasLimit: BigInt.from(200000)));
     final message = MsgSend(
         fromAddress:
-            BaseAddress("cosmos1htg7dmhelazdsmuwm9ngtg0tpe82006uqdw9nj"),
-        toAddress: BaseAddress("cosmos1qhslf0sx2fegltfqq0p5j6etmdznjgfnm2j6nc"),
+            CosmosBaseAddress("cosmos1htg7dmhelazdsmuwm9ngtg0tpe82006uqdw9nj"),
+        toAddress:
+            CosmosBaseAddress("cosmos1qhslf0sx2fegltfqq0p5j6etmdznjgfnm2j6nc"),
         amount: [Coin(denom: "uatom", amount: BigInt.from(1000000))]);
     final txbody = TXBody(messages: [message]);
     final txRaw = TxRaw(

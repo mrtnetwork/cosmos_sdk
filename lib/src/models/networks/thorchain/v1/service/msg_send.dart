@@ -1,24 +1,23 @@
-import 'package:blockchain_utils/binary/utils.dart';
+import 'package:cosmos_sdk/src/address/address.dart';
 import 'package:cosmos_sdk/src/models/models.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
 
-class ThorchainMsgSend extends CosmosMessage {
-  final List<int>? fromAddress;
-  final List<int>? toAddress;
+class ThorchainMsgSend extends CosmosMessage
+    with ServiceMessage<EmptyServiceRequestResponse> {
+  final CosmosBaseAddress fromAddress;
+  final CosmosBaseAddress toAddress;
   final List<Coin> amount;
   ThorchainMsgSend({
-    List<int>? fromAddress,
-    List<int>? toAddress,
+    required this.fromAddress,
+    required this.toAddress,
     required List<Coin> amount,
-  })  : amount = amount.mutable,
-        fromAddress = BytesUtils.tryToBytes(fromAddress, unmodifiable: true),
-        toAddress = BytesUtils.tryToBytes(toAddress, unmodifiable: true);
+  }) : amount = amount.mutable;
   factory ThorchainMsgSend.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainMsgSend(
-      fromAddress: decode.getField(1),
-      toAddress: decode.getField(2),
+      fromAddress: CosmosBaseAddress.fromBytes(decode.getField(1)),
+      toAddress: CosmosBaseAddress.fromBytes(decode.getField(2)),
       amount: decode.getFields(3).map((e) => Coin.deserialize(e)).toList(),
     );
   }
@@ -29,8 +28,8 @@ class ThorchainMsgSend extends CosmosMessage {
   @override
   Map<String, dynamic> toJson() {
     return {
-      "from_address": BytesUtils.tryToHexString(fromAddress),
-      "to_address": BytesUtils.tryToHexString(toAddress),
+      "from_address": fromAddress.address,
+      "to_address": toAddress.address,
       "amount": amount.map((e) => e.toJson()).toList()
     };
   }
@@ -39,5 +38,16 @@ class ThorchainMsgSend extends CosmosMessage {
   String get typeUrl => ThorchainV1Types.msgSend.typeUrl;
 
   @override
-  List get values => [fromAddress, toAddress, amount];
+  List get values => [fromAddress.toBytes(), toAddress.toBytes(), amount];
+
+  @override
+  EmptyServiceRequestResponse onResponse(List<int> bytes) {
+    return EmptyServiceRequestResponse(typeUrl);
+  }
+
+  @override
+  String get service => ThorchainV1Types.msgSend.typeUrl;
+
+  @override
+  List<String?> get signers => [fromAddress.address];
 }

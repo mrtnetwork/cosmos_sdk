@@ -7,12 +7,13 @@ import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_staking_v1beta1/types/t
 class QueryValidatorRequest extends CosmosMessage
     with QueryMessage<QueryValidatorResponse> {
   /// validator_addr defines the validator address to query for.
-  final BaseAddress? validatorAddr;
+  final CosmosBaseAddress? validatorAddr;
   const QueryValidatorRequest(this.validatorAddr);
   factory QueryValidatorRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return QueryValidatorRequest(
-        decode.getResult(1)?.to<BaseAddress, String>((e) => BaseAddress(e)));
+    return QueryValidatorRequest(decode
+        .getResult(1)
+        ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)));
   }
 
   @override

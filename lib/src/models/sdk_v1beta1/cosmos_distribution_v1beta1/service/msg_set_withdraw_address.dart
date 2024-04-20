@@ -7,18 +7,19 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 /// MsgSetWithdrawAddress sets the withdraw address for a delegator (or validator self-delegation).
 class DistributionMsgSetWithdrawAddress extends CosmosMessage
     with ServiceMessage<EmptyServiceRequestResponse> {
-  final BaseAddress? delegatorAddress;
-  final BaseAddress? withdrawAddress;
+  final CosmosBaseAddress? delegatorAddress;
+  final CosmosBaseAddress? withdrawAddress;
   const DistributionMsgSetWithdrawAddress(
       {this.delegatorAddress, this.withdrawAddress});
   factory DistributionMsgSetWithdrawAddress.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionMsgSetWithdrawAddress(
-        delegatorAddress:
-            decode.getResult(1)?.to<BaseAddress, String>((e) => BaseAddress(e)),
+        delegatorAddress: decode
+            .getResult(1)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
         withdrawAddress: decode
             .getResult(2)
-            ?.to<BaseAddress, String>((e) => BaseAddress(e)));
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)));
   }
 
   @override

@@ -6,6 +6,7 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
 /// ModuleAccount defines an account for modules that holds coins on a pool.
 class ModuleAccount extends CosmosBaseAccount {
+  @override
   final BaseAccount baseAccount;
   final String name;
   final List<String> permissions;

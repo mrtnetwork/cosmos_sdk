@@ -9,7 +9,7 @@ import 'msg_exec_response.dart';
 /// Each message should have only one signer corresponding to the granter of the authorization.
 class AuthzExec extends CosmosMessage
     with ServiceMessage<AuthzMsgExecResponse> {
-  final BaseAddress? grantee;
+  final CosmosBaseAddress? grantee;
 
   /// Execute Msg.
   /// The x/authz will try to find a grant matching (msg.signers[0], grantee, MsgTypeURL(msg))
@@ -19,8 +19,9 @@ class AuthzExec extends CosmosMessage
   factory AuthzExec.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return AuthzExec(
-        grantee:
-            decode.getResult(1)?.to<BaseAddress, String>((e) => BaseAddress(e)),
+        grantee: decode
+            .getResult(1)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
         msgs: decode.getFields(2).map((e) => Any.deserialize(e)).toList());
   }
 

@@ -11,7 +11,7 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class CrisisMsgUpdateParams extends CosmosMessage
     with ServiceMessage<EmptyServiceRequestResponse> {
   /// authority is the address that controls the module (defaults to x/gov unless overwritten).
-  final BaseAddress? authority;
+  final CosmosBaseAddress? authority;
 
   /// constant_fee defines the x/crisis parameter.
   final Coin constantFee;
@@ -19,8 +19,9 @@ class CrisisMsgUpdateParams extends CosmosMessage
   factory CrisisMsgUpdateParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CrisisMsgUpdateParams(
-      authority:
-          decode.getResult(1)?.to<BaseAddress, String>((e) => BaseAddress(e)),
+      authority: decode
+          .getResult(1)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
       constantFee: Coin.deserialize(decode.getField(2)),
     );
   }

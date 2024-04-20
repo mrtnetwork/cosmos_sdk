@@ -11,7 +11,7 @@ class GovQueryDepositRequest extends CosmosMessage
   final BigInt? proposalId;
 
   /// depositor defines the deposit addresses from the proposals.
-  final BaseAddress? depositor;
+  final CosmosBaseAddress? depositor;
   const GovQueryDepositRequest({this.proposalId, this.depositor});
   factory GovQueryDepositRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -19,7 +19,7 @@ class GovQueryDepositRequest extends CosmosMessage
         proposalId: decode.getField(1),
         depositor: decode
             .getResult(2)
-            ?.to<BaseAddress, String>((e) => BaseAddress(e)));
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)));
   }
 
   @override

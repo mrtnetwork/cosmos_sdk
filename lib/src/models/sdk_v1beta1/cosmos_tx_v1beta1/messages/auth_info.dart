@@ -42,6 +42,18 @@ class AuthInfo extends CosmosMessage {
             decode.getResult(3)?.to<Tip, List<int>>((e) => Tip.deserialize(e)));
   }
 
+  AuthInfo copyWith({
+    List<SignerInfo>? signerInfos,
+    Fee? fee,
+    Tip? tip,
+  }) {
+    return AuthInfo(
+      signerInfos: signerInfos ?? this.signerInfos,
+      fee: fee ?? this.fee,
+      tip: tip ?? this.tip,
+    );
+  }
+
   @override
   List<int> get fieldIds => [1, 2, 3];
 

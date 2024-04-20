@@ -9,17 +9,19 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 /// behalf of the granter with the provided expiration time.
 class AuthzMsgGrant extends CosmosMessage
     with ServiceMessage<EmptyServiceRequestResponse> {
-  final BaseAddress? granter;
-  final BaseAddress? grantee;
+  final CosmosBaseAddress? granter;
+  final CosmosBaseAddress? grantee;
   final AuthzGrant grant;
   const AuthzMsgGrant({this.granter, this.grantee, required this.grant});
   factory AuthzMsgGrant.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return AuthzMsgGrant(
-      granter:
-          decode.getResult(1)?.to<BaseAddress, String>((e) => BaseAddress(e)),
-      grantee:
-          decode.getResult(2)?.to<BaseAddress, String>((e) => BaseAddress(e)),
+      granter: decode
+          .getResult(1)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      grantee: decode
+          .getResult(2)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
       grant: AuthzGrant.deserialize(decode.getField(3)),
     );
   }

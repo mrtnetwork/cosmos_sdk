@@ -8,7 +8,7 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class DistributionQueryValidatorCommissionRequest extends CosmosMessage
     with QueryMessage<DistributionQueryValidatorCommissionResponse> {
   /// validator_address defines the validator address to query for.
-  final BaseAddress? validatorAddress;
+  final CosmosBaseAddress? validatorAddress;
   const DistributionQueryValidatorCommissionRequest({this.validatorAddress});
   factory DistributionQueryValidatorCommissionRequest.deserialize(
       List<int> bytes) {
@@ -16,7 +16,7 @@ class DistributionQueryValidatorCommissionRequest extends CosmosMessage
     return DistributionQueryValidatorCommissionRequest(
         validatorAddress: decode
             .getResult(1)
-            ?.to<BaseAddress, String>((e) => BaseAddress(e)));
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)));
   }
 
   @override

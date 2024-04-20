@@ -10,4 +10,12 @@ class CosmosAddrConst {
 
   // Human Readable Part (HRP) for consensus node addresses.
   static const String consensusHRP = "cosmosvalcons";
+
+  // Human Readable Part (HRP) for maya protocol account addresses.
+  static const String mayaProtocol = "maya";
+
+  // Human Readable Part (HRP) for thor account addresses.
+  static const String thor = "thor";
+
+  static const String kujira = "kujira";
 }

@@ -12,7 +12,7 @@ class GovVote extends CosmosMessage {
   final BigInt proposalId;
 
   /// voter is the voter address of the proposal.
-  final BaseAddress? voter;
+  final CosmosBaseAddress? voter;
 
   /// Deprecated: Prefer to use `options` instead. This field is set in queries
   /// if and only if `len(options) == 1` and that option has weight 1. In all
@@ -34,8 +34,9 @@ class GovVote extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GovVote(
         proposalId: decode.getField(1),
-        voter:
-            decode.getResult(2)?.to<BaseAddress, String>((e) => BaseAddress(e)),
+        voter: decode
+            .getResult(2)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
         option: decode
             .getResult(3)
             ?.to<GovVoteOption, int>((e) => GovVoteOption.fromValue(e)),

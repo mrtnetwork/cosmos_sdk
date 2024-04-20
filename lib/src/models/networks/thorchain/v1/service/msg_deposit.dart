@@ -28,7 +28,7 @@ class ThorchainMsgDeposit extends CosmosMessage {
   factory ThorchainMsgDeposit.create(
       {required List<ThorchainCoin> coins,
       required List<int> signer,
-      required BaseAddress ownerAddress,
+      required CosmosBaseAddress ownerAddress,
       required String chainName,
       required String chainAddress,
       required String chainAsset,

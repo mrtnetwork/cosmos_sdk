@@ -8,8 +8,8 @@ import 'msg_undelegate_response.dart';
 /// MsgUndelegate defines a SDK message for performing an undelegation from a delegate and a validator.
 class MsgUndelegate extends CosmosMessage
     with ServiceMessage<MsgUndelegateResponse> {
-  final BaseAddress? delegatorAddress;
-  final BaseAddress? validatorAddress;
+  final CosmosBaseAddress? delegatorAddress;
+  final CosmosBaseAddress? validatorAddress;
   final Coin amount;
 
   const MsgUndelegate({
@@ -20,10 +20,12 @@ class MsgUndelegate extends CosmosMessage
   factory MsgUndelegate.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgUndelegate(
-        delegatorAddress:
-            decode.getResult(1)?.to<BaseAddress, String>((e) => BaseAddress(e)),
-        validatorAddress:
-            decode.getResult(2)?.to<BaseAddress, String>((e) => BaseAddress(e)),
+        delegatorAddress: decode
+            .getResult(1)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+        validatorAddress: decode
+            .getResult(2)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
         amount: Coin.deserialize(decode.getField(3)));
   }
 

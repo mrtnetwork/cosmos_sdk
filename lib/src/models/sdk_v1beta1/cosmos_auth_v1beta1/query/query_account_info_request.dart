@@ -10,11 +10,11 @@ import 'query_account_info_response.dart';
 class QueryAccountInfoRequest extends CosmosMessage
     with QueryMessage<QueryAccountInfoResponse> {
   /// address is the account address.
-  final BaseAddress address;
+  final CosmosBaseAddress address;
   const QueryAccountInfoRequest(this.address);
   factory QueryAccountInfoRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return QueryAccountInfoRequest(BaseAddress(decode.getField(1)));
+    return QueryAccountInfoRequest(CosmosBaseAddress(decode.getField(1)));
   }
 
   @override

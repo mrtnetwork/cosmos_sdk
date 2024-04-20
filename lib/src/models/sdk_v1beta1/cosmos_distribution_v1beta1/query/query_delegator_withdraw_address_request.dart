@@ -8,7 +8,7 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class DistributionQueryDelegatorWithdrawAddressRequest extends CosmosMessage
     with QueryMessage<DistributionQueryDelegatorWithdrawAddressResponse> {
   /// delegator_address defines the delegator address to query for.
-  final BaseAddress? delegatorAddress;
+  final CosmosBaseAddress? delegatorAddress;
   DistributionQueryDelegatorWithdrawAddressRequest({this.delegatorAddress});
   factory DistributionQueryDelegatorWithdrawAddressRequest.deserialize(
       List<int> bytes) {
@@ -16,7 +16,7 @@ class DistributionQueryDelegatorWithdrawAddressRequest extends CosmosMessage
     return DistributionQueryDelegatorWithdrawAddressRequest(
         delegatorAddress: decode
             .getResult(1)
-            ?.to<BaseAddress, String>((e) => BaseAddress(e)));
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)));
   }
 
   @override

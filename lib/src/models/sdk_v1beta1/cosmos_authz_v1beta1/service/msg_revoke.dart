@@ -8,17 +8,19 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 /// granter's account with that has been granted to the grantee.
 class AuthzMsgRevoke extends CosmosMessage
     with ServiceMessage<EmptyServiceRequestResponse> {
-  final BaseAddress? granter;
-  final BaseAddress? grantee;
+  final CosmosBaseAddress? granter;
+  final CosmosBaseAddress? grantee;
   final String? msgTypeUrl;
   const AuthzMsgRevoke({this.granter, this.grantee, this.msgTypeUrl});
   factory AuthzMsgRevoke.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return AuthzMsgRevoke(
-        granter:
-            decode.getResult(1)?.to<BaseAddress, String>((e) => BaseAddress(e)),
-        grantee:
-            decode.getResult(2)?.to<BaseAddress, String>((e) => BaseAddress(e)),
+        granter: decode
+            .getResult(1)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+        grantee: decode
+            .getResult(2)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
         msgTypeUrl: decode.getField(3));
   }
 

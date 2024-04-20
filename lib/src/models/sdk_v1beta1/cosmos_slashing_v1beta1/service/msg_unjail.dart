@@ -6,11 +6,11 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 /// MsgUnjail defines the Msg/Unjail request type
 class SlashingMsgUnjail extends CosmosMessage
     with ServiceMessage<EmptyServiceRequestResponse> {
-  final BaseAddress validatorAddr;
+  final CosmosBaseAddress validatorAddr;
   const SlashingMsgUnjail(this.validatorAddr);
   factory SlashingMsgUnjail.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return SlashingMsgUnjail(BaseAddress(decode.getField(1)));
+    return SlashingMsgUnjail(CosmosBaseAddress(decode.getField(1)));
   }
 
   @override

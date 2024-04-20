@@ -7,7 +7,7 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class SlashingQuerySigningInfoRequest extends CosmosMessage
     with QueryMessage<SlashingQuerySigningInfoResponse> {
   /// cons_address is the address to query signing info of
-  final BaseAddress consAddress;
+  final CosmosBaseAddress consAddress;
   const SlashingQuerySigningInfoRequest(this.consAddress);
 
   @override

@@ -8,7 +8,7 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 ///  It contains the account address and account balance of the denominated token.
 class DenomOwner extends CosmosMessage {
   /// address defines the address that owns a particular denomination.
-  final BaseAddress address;
+  final CosmosBaseAddress address;
 
   /// balance is the balance of the denominated coin for an account.
   final Coin balance;
@@ -17,7 +17,7 @@ class DenomOwner extends CosmosMessage {
   factory DenomOwner.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DenomOwner(
-        address: BaseAddress(decode.getField(1)),
+        address: CosmosBaseAddress(decode.getField(1)),
         balance: Coin.deserialize(decode.getField(2)));
   }
 

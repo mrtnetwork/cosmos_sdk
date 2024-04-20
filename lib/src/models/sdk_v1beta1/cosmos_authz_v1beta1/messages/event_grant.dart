@@ -11,20 +11,21 @@ class AuthzEventGrant extends CosmosMessage {
   final String? msgTypeUrl;
 
   /// Granter account address
-  final BaseAddress? granter;
+  final CosmosBaseAddress? granter;
 
   /// Grantee account address
-  final BaseAddress? grantee;
+  final CosmosBaseAddress? grantee;
   const AuthzEventGrant({this.msgTypeUrl, this.granter, this.grantee});
   factory AuthzEventGrant.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return AuthzEventGrant(
         msgTypeUrl: decode.getField(2),
-        granter:
-            decode.getResult(3)?.to<BaseAddress, String>((e) => BaseAddress(e)),
+        granter: decode
+            .getResult(3)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
         grantee: decode
             .getResult(4)
-            ?.to<BaseAddress, String>((e) => BaseAddress(e)));
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)));
   }
 
   @override

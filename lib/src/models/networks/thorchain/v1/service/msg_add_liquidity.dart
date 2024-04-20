@@ -1,10 +1,13 @@
 import 'package:blockchain_utils/blockchain_utils.dart';
+import 'package:cosmos_sdk/src/address/address/address.dart';
+import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
 import 'package:cosmos_sdk/src/models/networks/thorchain/v1/common/asset.dart';
 import 'package:cosmos_sdk/src/models/networks/thorchain/v1/common/tx.dart';
 import 'package:cosmos_sdk/src/models/networks/thorchain/v1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
-class ThorchainMsgAddLiquidity extends CosmosMessage {
+class ThorchainMsgAddLiquidity extends CosmosMessage
+    with ServiceMessage<EmptyServiceRequestResponse> {
   final ThorchainTx tx;
   final ThorchainAsset asset;
   final BigInt assetAmount;
@@ -13,18 +16,18 @@ class ThorchainMsgAddLiquidity extends CosmosMessage {
   final String? assetAddress;
   final String? affiliateAddress;
   final String affiliateBasisPoints;
-  final List<int>? signer;
-  ThorchainMsgAddLiquidity(
-      {required this.tx,
-      required this.asset,
-      required this.assetAmount,
-      required this.runeAmount,
-      this.runeAddress,
-      this.assetAddress,
-      this.affiliateAddress,
-      required this.affiliateBasisPoints,
-      List<int>? signer})
-      : signer = BytesUtils.tryToBytes(signer);
+  final CosmosBaseAddress? signer;
+  ThorchainMsgAddLiquidity({
+    required this.tx,
+    required this.asset,
+    required this.assetAmount,
+    required this.runeAmount,
+    this.runeAddress,
+    this.assetAddress,
+    this.affiliateAddress,
+    required this.affiliateBasisPoints,
+    this.signer,
+  });
   factory ThorchainMsgAddLiquidity.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainMsgAddLiquidity(
@@ -36,7 +39,8 @@ class ThorchainMsgAddLiquidity extends CosmosMessage {
         assetAddress: decode.getField(6),
         affiliateAddress: decode.getField(7),
         affiliateBasisPoints: decode.getField(8),
-        signer: decode.getField(9));
+        signer: decode.getResult(9)?.to<CosmosBaseAddress, List<int>>(
+            (e) => CosmosBaseAddress.fromBytes(e)));
   }
 
   @override
@@ -53,7 +57,7 @@ class ThorchainMsgAddLiquidity extends CosmosMessage {
       "asset_address": assetAddress,
       "affiliate_address": affiliateAddress,
       "affiliate_basis_points": affiliateBasisPoints,
-      "signer": BytesUtils.tryToHexString(signer)
+      "signer": signer?.address
     };
   }
 
@@ -70,6 +74,17 @@ class ThorchainMsgAddLiquidity extends CosmosMessage {
         assetAddress,
         affiliateAddress,
         affiliateBasisPoints,
-        signer
+        signer?.toBytes()
       ];
+
+  @override
+  EmptyServiceRequestResponse onResponse(List<int> bytes) {
+    return EmptyServiceRequestResponse(typeUrl);
+  }
+
+  @override
+  String get service => typeUrl;
+
+  @override
+  List<String?> get signers => [signer?.address];
 }

@@ -20,3 +20,4 @@ export 'models/vault_info.dart';
 export 'models/vault_pubkey_info.dart';
 export 'models/vault_pubkeys_info.dart';
 export 'models/version.dart';
+export 'models/constant.dart';

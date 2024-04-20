@@ -3,8 +3,8 @@ import 'package:cosmos_sdk/src/models/tendermint/types/types.dart';
 
 /// EventAttribute is a single key-value pair, associated with an event.
 class EventAttribute extends CosmosMessage {
-  final String key;
-  final String value;
+  final String? key;
+  final String? value;
   final bool? index;
   const EventAttribute(
       {required this.key, required this.value, required this.index});

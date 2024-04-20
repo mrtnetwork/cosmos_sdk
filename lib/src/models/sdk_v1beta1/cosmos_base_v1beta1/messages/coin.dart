@@ -5,6 +5,11 @@ import '../types/types.dart';
 
 /// Coin defines a token with a denomination and an amount.
 class Coin extends CosmosMessage {
+  /// denomination
+  final String denom;
+
+  /// amount
+  final BigInt amount;
   const Coin({required this.denom, required this.amount});
   factory Coin.deserialize(List<int> data) {
     final decode = CosmosProtocolBuffer.decode(data);
@@ -16,11 +21,9 @@ class Coin extends CosmosMessage {
     return Coin(denom: json["denom"], amount: BigInt.parse(json["amount"]));
   }
 
-  /// denomination
-  final String denom;
-
-  /// amount
-  final BigInt amount;
+  Coin copyWith({String? denom, BigInt? amount}) {
+    return Coin(denom: denom ?? this.denom, amount: amount ?? this.amount);
+  }
 
   @override
   List<int> get fieldIds => [1, 2];

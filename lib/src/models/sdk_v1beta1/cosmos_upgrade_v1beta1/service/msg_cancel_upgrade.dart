@@ -7,7 +7,7 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class MsgCancelUpgrade extends CosmosMessage
     with ServiceMessage<EmptyServiceRequestResponse> {
   /// authority is the address that controls the module (defaults to x/gov unless overwritten).
-  final BaseAddress? authority;
+  final CosmosBaseAddress? authority;
 
   const MsgCancelUpgrade({this.authority});
   factory MsgCancelUpgrade.deserialize(List<int> bytes) {
@@ -15,7 +15,7 @@ class MsgCancelUpgrade extends CosmosMessage
     return MsgCancelUpgrade(
         authority: decode
             .getResult(1)
-            ?.to<BaseAddress, String>((e) => BaseAddress(e)));
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)));
   }
 
   /// Converts the message to a JSON-serializable map.

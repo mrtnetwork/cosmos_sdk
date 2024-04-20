@@ -10,8 +10,8 @@ import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
 /// Since: cosmos-sdk 0.50
 class DistributionMsgDepositValidatorRewardsPool extends CosmosMessage
     with ServiceMessage<EmptyServiceRequestResponse> {
-  final BaseAddress? depositor;
-  final BaseAddress? validatorAddress;
+  final CosmosBaseAddress? depositor;
+  final CosmosBaseAddress? validatorAddress;
   final List<Coin> amount;
   DistributionMsgDepositValidatorRewardsPool(
       {this.depositor, this.validatorAddress, required List<Coin> amount})

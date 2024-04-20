@@ -11,7 +11,7 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class MsgSetSendEnabled extends CosmosMessage
     with ServiceMessage<EmptyServiceRequestResponse> {
   /// authority is the address that controls the module.
-  final BaseAddress authority;
+  final CosmosBaseAddress authority;
 
   /// send_enabled is the list of entries to add or update.
   final List<SendEnabled> sendEnabled;
@@ -29,7 +29,7 @@ class MsgSetSendEnabled extends CosmosMessage
   factory MsgSetSendEnabled.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgSetSendEnabled(
-        authority: BaseAddress(decode.getField(1)),
+        authority: CosmosBaseAddress(decode.getField(1)),
         sendEnabled: decode
             .getFields<List<int>>(2)
             .map((e) => SendEnabled.deserialize(e))

@@ -4,7 +4,7 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
 /// ValidatorSigningInfo defines a validator's signing info for monitoring their liveness activity.
 class SlashingValidatorSigningInfo extends CosmosMessage {
-  final BaseAddress? address;
+  final CosmosBaseAddress? address;
 
   /// Height at which validator was first a candidate OR was un-jailed
   final BigInt? startHeight;
@@ -36,8 +36,9 @@ class SlashingValidatorSigningInfo extends CosmosMessage {
   factory SlashingValidatorSigningInfo.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return SlashingValidatorSigningInfo(
-        address:
-            decode.getResult(1)?.to<BaseAddress, String>((e) => BaseAddress(e)),
+        address: decode
+            .getResult(1)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
         startHeight: decode.getField(2),
         indexOffset: decode.getField(3),
         jailedUntil: ProtobufTimestamp.deserialize(decode.getField(4)),

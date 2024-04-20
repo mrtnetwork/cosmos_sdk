@@ -1,7 +1,12 @@
-## 0.0.2 
+## 0.0.3
 
-* support for thor and maya serialization.
-* support thor and maya node api provider.
+* Fix bugs.
+* Update dependencies.
+
+## 0.0.2
+
+* Support for thor and maya serialization.
+* Support thor and maya node api provider.
 
 ## 0.0.1
 

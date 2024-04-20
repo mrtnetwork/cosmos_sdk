@@ -49,6 +49,7 @@ class TendermintProvider {
     final id = ++_id;
     final params = request.toRequest(id);
     final data = await rpc.get(params, timeout);
+    print("data $data");
     return _findError(request, data);
   }
 
@@ -58,7 +59,6 @@ class TendermintProvider {
   Future<T> request<T, E>(TendermintRequestParam<T, E> request,
       [Duration? timeout]) async {
     final data = await requestDynamic(request, timeout);
-    print("data $data");
     final Object? result;
     if (E == List<Map<String, dynamic>>) {
       result = (data as List).map((e) => Map<String, dynamic>.from(e)).toList();

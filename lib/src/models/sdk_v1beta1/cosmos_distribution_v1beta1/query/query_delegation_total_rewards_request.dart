@@ -8,7 +8,7 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class DistributionQueryDelegationTotalRewardsRequest extends CosmosMessage
     with QueryMessage<DistributionQueryDelegationTotalRewardsResponse> {
   /// delegator_address defines the delegator address to query for.
-  final BaseAddress? delegatorAddress;
+  final CosmosBaseAddress? delegatorAddress;
   DistributionQueryDelegationTotalRewardsRequest({this.delegatorAddress});
   factory DistributionQueryDelegationTotalRewardsRequest.deserialize(
       List<int> bytes) {
@@ -16,7 +16,7 @@ class DistributionQueryDelegationTotalRewardsRequest extends CosmosMessage
     return DistributionQueryDelegationTotalRewardsRequest(
         delegatorAddress: decode
             .getResult(1)
-            ?.to<BaseAddress, String>((e) => BaseAddress(e)));
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)));
   }
 
   @override

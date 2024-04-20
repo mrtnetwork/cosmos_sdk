@@ -5,7 +5,7 @@ import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_staking_v1beta1/types/t
 /// LastValidatorPower required for validator set update logic.
 class LastValidatorPower extends CosmosMessage {
   /// address is the address of the validator.
-  final BaseAddress? address;
+  final CosmosBaseAddress? address;
 
   /// power defines the power of the validator.
   final int? power;
@@ -18,8 +18,9 @@ class LastValidatorPower extends CosmosMessage {
   factory LastValidatorPower.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return LastValidatorPower(
-      address:
-          decode.getResult(1)?.to<BaseAddress, String>((e) => BaseAddress(e)),
+      address: decode
+          .getResult(1)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
       power: decode.getField(2),
     );
   }

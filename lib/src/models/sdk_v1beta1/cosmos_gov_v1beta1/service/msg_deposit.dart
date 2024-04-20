@@ -12,7 +12,7 @@ class GovMsgDeposit extends CosmosMessage
   final BigInt proposalId;
 
   /// depositor defines the deposit addresses from the proposals.
-  final BaseAddress? depositor;
+  final CosmosBaseAddress? depositor;
 
   /// amount to be deposited by depositor.
   final List<Coin> amount;
@@ -22,8 +22,9 @@ class GovMsgDeposit extends CosmosMessage
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GovMsgDeposit(
         proposalId: decode.getField(1),
-        depositor:
-            decode.getResult(2)?.to<BaseAddress, String>((e) => BaseAddress(e)),
+        depositor: decode
+            .getResult(2)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
         amount: decode.getFields(3).map((e) => Coin.deserialize(e)).toList());
   }
 

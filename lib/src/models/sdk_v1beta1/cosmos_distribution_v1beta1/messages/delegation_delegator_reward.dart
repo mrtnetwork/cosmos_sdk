@@ -7,7 +7,7 @@ import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
 
 /// DelegationDelegatorReward represents the properties of a delegator's delegation reward.
 class DistributionDelegationDelegatorReward extends CosmosMessage {
-  final BaseAddress? validatorddress;
+  final CosmosBaseAddress? validatorddress;
   final List<DecCoin> reward;
   DistributionDelegationDelegatorReward(
       {this.validatorddress, required List<DecCoin> reward})
@@ -15,8 +15,9 @@ class DistributionDelegationDelegatorReward extends CosmosMessage {
   factory DistributionDelegationDelegatorReward.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionDelegationDelegatorReward(
-        validatorddress:
-            decode.getResult(1)?.to<BaseAddress, String>((e) => BaseAddress(e)),
+        validatorddress: decode
+            .getResult(1)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
         reward:
             decode.getFields(2).map((e) => DecCoin.deserialize(e)).toList());
   }

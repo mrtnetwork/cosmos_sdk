@@ -6,8 +6,8 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 /// GrantAuthorization extends a grant with both the addresses of the grantee and granter.
 /// It is used in genesis.proto and query.proto
 class AuthzGrantAuthorization extends CosmosMessage {
-  final BaseAddress? granter;
-  final BaseAddress? grantee;
+  final CosmosBaseAddress? granter;
+  final CosmosBaseAddress? grantee;
   final Any? authorization;
   final ProtobufTimestamp? expiration;
   const AuthzGrantAuthorization(
@@ -15,10 +15,12 @@ class AuthzGrantAuthorization extends CosmosMessage {
   factory AuthzGrantAuthorization.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return AuthzGrantAuthorization(
-        granter:
-            decode.getResult(1)?.to<BaseAddress, String>((e) => BaseAddress(e)),
-        grantee:
-            decode.getResult(2)?.to<BaseAddress, String>((e) => BaseAddress(e)),
+        granter: decode
+            .getResult(1)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+        grantee: decode
+            .getResult(2)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
         authorization:
             decode.getResult(3)?.to<Any, List<int>>((e) => Any.deserialize(e)),
         expiration: decode.getResult(4)?.to<ProtobufTimestamp, List<int>>(

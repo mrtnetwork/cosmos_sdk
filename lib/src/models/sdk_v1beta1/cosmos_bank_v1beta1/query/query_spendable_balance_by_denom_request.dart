@@ -9,7 +9,7 @@ import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_bank_v1beta1/types/type
 class QuerySpendableBalanceByDenomRequest extends CosmosMessage
     with QueryMessage<QuerySpendableBalanceByDenomResponse> {
   /// address is the address to query balances for.
-  final BaseAddress address;
+  final CosmosBaseAddress address;
 
   /// denom is the coin denom to query balances for.
   final String denom;
@@ -18,7 +18,8 @@ class QuerySpendableBalanceByDenomRequest extends CosmosMessage
   factory QuerySpendableBalanceByDenomRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QuerySpendableBalanceByDenomRequest(
-        address: BaseAddress(decode.getField(1)), denom: decode.getField(2));
+        address: CosmosBaseAddress(decode.getField(1)),
+        denom: decode.getField(2));
   }
 
   @override

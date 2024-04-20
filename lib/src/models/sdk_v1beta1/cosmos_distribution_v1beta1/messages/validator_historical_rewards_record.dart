@@ -7,7 +7,7 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 /// ValidatorHistoricalRewardsRecord is used for import / export via genesis json.
 class DistributionValidatorHistoricalRewardsRecord extends CosmosMessage {
   /// validator_address is the address of the validator.
-  final BaseAddress? validatorAddress;
+  final CosmosBaseAddress? validatorAddress;
 
   /// period defines the period the historical rewards apply to.
   final BigInt? period;
@@ -20,8 +20,9 @@ class DistributionValidatorHistoricalRewardsRecord extends CosmosMessage {
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionValidatorHistoricalRewardsRecord(
-        validatorAddress:
-            decode.getResult(1)?.to<BaseAddress, String>((e) => BaseAddress(e)),
+        validatorAddress: decode
+            .getResult(1)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
         period: decode.getField(2),
         rewards: DistributionValidatorHistoricalRewards.deserialize(
             decode.getField(3)));

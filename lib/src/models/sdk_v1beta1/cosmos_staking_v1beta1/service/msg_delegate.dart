@@ -7,8 +7,8 @@ import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_staking_v1beta1/types/t
 /// MsgDelegate defines a SDK message for performing a delegation of coins from a delegator to a validator.
 class MsgDelegate extends CosmosMessage
     with ServiceMessage<EmptyServiceRequestResponse> {
-  final BaseAddress? delegatorAddress;
-  final BaseAddress? validatorAddress;
+  final CosmosBaseAddress? delegatorAddress;
+  final CosmosBaseAddress? validatorAddress;
   final Coin amount;
 
   const MsgDelegate({
@@ -19,10 +19,12 @@ class MsgDelegate extends CosmosMessage
   factory MsgDelegate.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgDelegate(
-        delegatorAddress:
-            decode.getResult(1)?.to<BaseAddress, String>((e) => BaseAddress(e)),
-        validatorAddress:
-            decode.getResult(2)?.to<BaseAddress, String>((e) => BaseAddress(e)),
+        delegatorAddress: decode
+            .getResult(1)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+        validatorAddress: decode
+            .getResult(2)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
         amount: Coin.deserialize(decode.getField(3)));
   }
 

@@ -5,18 +5,6 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
 /// SignerInfo describes the public key and signing mode of a single top-level signer.
 class SignerInfo extends CosmosMessage {
-  SignerInfo(
-      {required this.publicKey,
-      required this.modeInfo,
-      required this.sequence});
-  factory SignerInfo.deserialize(List<int> bytes) {
-    final decode = CosmosProtocolBuffer.decode(bytes);
-    return SignerInfo(
-        publicKey: CosmosPublicKeyInfo.fromAnyBytes(decode.getField(1)),
-        modeInfo: ModeInfo.deserialize(decode.getField(2)),
-        sequence: decode.getField<BigInt?>(3) ?? BigInt.zero);
-  }
-
   /// public_key is the public key of the signer. It is optional for accounts
   /// that already exist in state. If unset, the verifier can use the required
   /// signer address for this position and lookup the public key.
@@ -30,6 +18,17 @@ class SignerInfo extends CosmosMessage {
   /// number of committed transactions signed by a given address. It is used to
   /// prevent replay attacks.
   final BigInt sequence;
+  SignerInfo(
+      {required this.publicKey,
+      required this.modeInfo,
+      required this.sequence});
+  factory SignerInfo.deserialize(List<int> bytes) {
+    final decode = CosmosProtocolBuffer.decode(bytes);
+    return SignerInfo(
+        publicKey: CosmosPublicKeyInfo.fromAnyBytes(decode.getField(1)),
+        modeInfo: ModeInfo.deserialize(decode.getField(2)),
+        sequence: decode.getField<BigInt?>(3) ?? BigInt.zero);
+  }
 
   @override
   List<int> get fieldIds => [1, 2, 3];
@@ -48,4 +47,16 @@ class SignerInfo extends CosmosMessage {
       [publicKey.toAny(), modeInfo, sequence == BigInt.zero ? null : sequence];
   @override
   String get typeUrl => TxV1beta1Types.signerInfo.typeUrl;
+
+  SignerInfo copyWith({
+    CosmosPublicKeyInfo? publicKey,
+    ModeInfo? modeInfo,
+    BigInt? sequence,
+  }) {
+    return SignerInfo(
+      publicKey: publicKey ?? this.publicKey,
+      modeInfo: modeInfo ?? this.modeInfo,
+      sequence: sequence ?? this.sequence,
+    );
+  }
 }

@@ -8,19 +8,20 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class QueryAllowanceRequest extends CosmosMessage
     with QueryMessage<QueryAllowanceResponse> {
   /// granter is the address of the user granting an allowance of their funds.
-  final BaseAddress? granter;
+  final CosmosBaseAddress? granter;
 
   /// grantee is the address of the user being granted an allowance of another user's funds
-  final BaseAddress? grantee;
+  final CosmosBaseAddress? grantee;
   const QueryAllowanceRequest({this.granter, this.grantee});
   factory QueryAllowanceRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryAllowanceRequest(
-        granter:
-            decode.getResult(1)?.to<BaseAddress, String>((e) => BaseAddress(e)),
+        granter: decode
+            .getResult(1)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
         grantee: decode
             .getResult(2)
-            ?.to<BaseAddress, String>((e) => BaseAddress(e)));
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)));
   }
 
   @override

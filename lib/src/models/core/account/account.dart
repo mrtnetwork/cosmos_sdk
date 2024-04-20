@@ -44,4 +44,6 @@ abstract class CosmosBaseAccount extends CosmosMessage {
     }
     return acc;
   }
+
+  abstract final BaseAccount baseAccount;
 }

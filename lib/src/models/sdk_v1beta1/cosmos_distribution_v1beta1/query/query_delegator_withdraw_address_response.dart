@@ -6,7 +6,7 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 /// QueryDelegatorWithdrawAddressResponse is the response type for the Query/DelegatorWithdrawAddress RPC method.
 class DistributionQueryDelegatorWithdrawAddressResponse extends CosmosMessage {
   /// withdraw_address defines the delegator address to query for.
-  final BaseAddress? withdrawAddress;
+  final CosmosBaseAddress? withdrawAddress;
   const DistributionQueryDelegatorWithdrawAddressResponse(
       {this.withdrawAddress});
   factory DistributionQueryDelegatorWithdrawAddressResponse.deserialize(
@@ -15,7 +15,7 @@ class DistributionQueryDelegatorWithdrawAddressResponse extends CosmosMessage {
     return DistributionQueryDelegatorWithdrawAddressResponse(
         withdrawAddress: decode
             .getResult(1)
-            ?.to<BaseAddress, String>((e) => BaseAddress(e)));
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)));
   }
 
   @override

@@ -13,10 +13,10 @@ class GovQueryProposalsRequest extends CosmosMessage
   final ProposalStatus? proposalStatus;
 
   /// voter defines the voter address for the proposals.
-  final BaseAddress? voter;
+  final CosmosBaseAddress? voter;
 
   /// depositor defines the deposit addresses from the proposals.
-  final BaseAddress? depositor;
+  final CosmosBaseAddress? depositor;
 
   /// pagination defines an optional pagination for the request.
   final PageRequest? pagination;
@@ -29,10 +29,12 @@ class GovQueryProposalsRequest extends CosmosMessage
         proposalStatus: decode
             .getResult(1)
             ?.to<ProposalStatus, int>((e) => ProposalStatus.fromValue(e)),
-        voter:
-            decode.getResult(2)?.to<BaseAddress, String>((e) => BaseAddress(e)),
-        depositor:
-            decode.getResult(3)?.to<BaseAddress, String>((e) => BaseAddress(e)),
+        voter: decode
+            .getResult(2)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+        depositor: decode
+            .getResult(3)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
         pagination: decode
             .getResult(4)
             ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)));

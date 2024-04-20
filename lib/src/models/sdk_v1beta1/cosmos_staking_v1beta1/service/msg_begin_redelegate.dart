@@ -9,9 +9,9 @@ import 'msg_begin_redelegate_response.dart';
 /// delegator and source validator to a destination validator.
 class MsgBeginRedelegate extends CosmosMessage
     with ServiceMessage<MsgBeginRedelegateResponse> {
-  final BaseAddress? delegatorAddress;
-  final BaseAddress? validatorSrcAddress;
-  final BaseAddress? validatorDstAddress;
+  final CosmosBaseAddress? delegatorAddress;
+  final CosmosBaseAddress? validatorSrcAddress;
+  final CosmosBaseAddress? validatorDstAddress;
   final Coin amount;
 
   const MsgBeginRedelegate({
@@ -23,12 +23,15 @@ class MsgBeginRedelegate extends CosmosMessage
   factory MsgBeginRedelegate.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgBeginRedelegate(
-        delegatorAddress:
-            decode.getResult(1)?.to<BaseAddress, String>((e) => BaseAddress(e)),
-        validatorSrcAddress:
-            decode.getResult(2)?.to<BaseAddress, String>((e) => BaseAddress(e)),
-        validatorDstAddress:
-            decode.getResult(3)?.to<BaseAddress, String>((e) => BaseAddress(e)),
+        delegatorAddress: decode
+            .getResult(1)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+        validatorSrcAddress: decode
+            .getResult(2)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+        validatorDstAddress: decode
+            .getResult(3)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
         amount: Coin.deserialize(decode.getField(4)));
   }
 

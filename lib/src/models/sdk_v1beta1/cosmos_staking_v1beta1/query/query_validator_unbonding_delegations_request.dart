@@ -8,7 +8,7 @@ import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_staking_v1beta1/types/t
 class QueryValidatorUnbondingDelegationsRequest extends CosmosMessage
     with QueryMessage<QueryValidatorUnbondingDelegationsResponse> {
   /// validator_addr defines the validator address to query for.
-  final BaseAddress? validatorAddr;
+  final CosmosBaseAddress? validatorAddr;
 
   /// pagination defines an optional pagination for the request.
   final PageRequest? pagination;
@@ -19,8 +19,9 @@ class QueryValidatorUnbondingDelegationsRequest extends CosmosMessage
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryValidatorUnbondingDelegationsRequest(
-        validatorAddr:
-            decode.getResult(1)?.to<BaseAddress, String>((e) => BaseAddress(e)),
+        validatorAddr: decode
+            .getResult(1)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
         pagination: decode
             .getResult(2)
             ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)));

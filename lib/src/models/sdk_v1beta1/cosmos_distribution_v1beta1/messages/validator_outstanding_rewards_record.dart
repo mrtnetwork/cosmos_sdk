@@ -8,7 +8,7 @@ import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
 ///  ValidatorOutstandingRewardsRecord is used for import/export via genesis json.
 class DistributionValidatorOutstandingRewardsRecord extends CosmosMessage {
   /// validator_address is the address of the validator.
-  final BaseAddress? validatorAddress;
+  final CosmosBaseAddress? validatorAddress;
 
   /// outstanding_rewards represents the outstanding rewards of a validator.
   final List<DecCoin> outstandingRewards;
@@ -19,8 +19,9 @@ class DistributionValidatorOutstandingRewardsRecord extends CosmosMessage {
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionValidatorOutstandingRewardsRecord(
-        validatorAddress:
-            decode.getResult(1)?.to<BaseAddress, String>((e) => BaseAddress(e)),
+        validatorAddress: decode
+            .getResult(1)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
         outstandingRewards:
             decode.getFields(2).map((e) => DecCoin.deserialize(e)).toList());
   }

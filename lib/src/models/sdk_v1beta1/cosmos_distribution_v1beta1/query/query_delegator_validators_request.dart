@@ -8,7 +8,7 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class DistributionQueryDelegatorValidatorsRequest extends CosmosMessage
     with QueryMessage<DistributionQueryDelegatorValidatorsResponse> {
   /// validators defines the validators a delegator is delegating for.
-  final BaseAddress? delegatorAddress;
+  final CosmosBaseAddress? delegatorAddress;
   const DistributionQueryDelegatorValidatorsRequest({this.delegatorAddress});
   factory DistributionQueryDelegatorValidatorsRequest.deserialize(
       List<int> bytes) {
@@ -16,7 +16,7 @@ class DistributionQueryDelegatorValidatorsRequest extends CosmosMessage
     return DistributionQueryDelegatorValidatorsRequest(
         delegatorAddress: decode
             .getResult(1)
-            ?.to<BaseAddress, String>((e) => BaseAddress(e)));
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)));
   }
 
   @override

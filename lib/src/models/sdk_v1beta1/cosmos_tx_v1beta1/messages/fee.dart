@@ -17,13 +17,13 @@ class Fee extends CosmosMessage {
   /// specified account must pay the fees. the payer must be a tx signer (and
   /// thus have signed this field in AuthInfo). setting this field does *not*
   /// change the ordering of required signers for the transaction.
-  final BaseAddress? payer;
+  final CosmosBaseAddress? payer;
 
   /// if set, the fee payer (either the first signer or the value of the payer
   /// field) requests that a fee grant be used to pay fees instead of the fee
   /// payer's own balance. If an appropriate fee grant does not exist or the
   /// chain does not support fee grants, this will fail
-  final BaseAddress? granter;
+  final CosmosBaseAddress? granter;
   const Fee({required this.amount, this.gasLimit, this.payer, this.granter});
 
   factory Fee.deserialize(List<int> bytes) {
@@ -34,11 +34,25 @@ class Fee extends CosmosMessage {
             .map((e) => Coin.deserialize(e))
             .toList(),
         gasLimit: decode.getResult(2)?.cast<BigInt>(),
-        granter:
-            decode.getResult(3)?.to<BaseAddress, String>((e) => BaseAddress(e)),
+        granter: decode
+            .getResult(3)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
         payer: decode
             .getResult(4)
-            ?.to<BaseAddress, String>((e) => BaseAddress(e)));
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)));
+  }
+  Fee copyWith({
+    List<Coin>? amount,
+    BigInt? gasLimit,
+    CosmosBaseAddress? payer,
+    CosmosBaseAddress? granter,
+  }) {
+    return Fee(
+      amount: amount ?? this.amount,
+      gasLimit: gasLimit ?? this.gasLimit,
+      payer: payer ?? this.payer,
+      granter: granter ?? this.granter,
+    );
   }
 
   @override

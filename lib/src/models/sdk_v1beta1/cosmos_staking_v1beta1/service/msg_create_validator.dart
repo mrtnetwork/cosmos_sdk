@@ -19,8 +19,8 @@ class MsgCreateValidator extends CosmosMessage
   /// Deprecated: Use of Delegator Address in MsgCreateValidator is deprecated.
   /// The validator address bytes and delegator
   /// address bytes refer to the same account while creating validator (defer only in bech32 notation).
-  final BaseAddress? delegatorAddress;
-  final BaseAddress? validatorAddress;
+  final CosmosBaseAddress? delegatorAddress;
+  final CosmosBaseAddress? validatorAddress;
   final CosmosPublicKeyInfo? pubkey;
   final Coin value;
 
@@ -39,10 +39,12 @@ class MsgCreateValidator extends CosmosMessage
         description: Description.deserialize(decode.getField(1)),
         commission: CommissionRates.deserialize(decode.getField(2)),
         minSelfDelegation: BigintUtils.parse(decode.getField<String>(3)),
-        delegatorAddress:
-            decode.getResult(4)?.to<BaseAddress, String>((e) => BaseAddress(e)),
-        validatorAddress:
-            decode.getResult(5)?.to<BaseAddress, String>((e) => BaseAddress(e)),
+        delegatorAddress: decode
+            .getResult(4)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+        validatorAddress: decode
+            .getResult(5)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
         pubkey: decode.getResult(6)?.to<CosmosPublicKeyInfo, List<int>>(
             (e) => CosmosPublicKeyInfo.fromAnyBytes(e)),
         value: Coin.deserialize(decode.getField(7)));

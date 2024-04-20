@@ -37,8 +37,10 @@ dependencies:
   cupertino_icons: ^1.0.2
   cosmos_sdk: 
     path: ../
-  blockchain_utils: ^2.1.1
+  # blockchain_utils:
+  #   path: ../../bitcoin/blockchain_utils
   http: ^1.2.0
+  blockchain_utils: ^2.1.2
 
 dev_dependencies:
   flutter_test:

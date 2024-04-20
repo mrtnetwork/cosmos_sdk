@@ -8,13 +8,13 @@ import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_staking_v1beta1/types/t
 class QueryRedelegationsRequest extends CosmosMessage
     with QueryMessage<QueryRedelegationsResponse> {
   /// delegator_addr defines the delegator address to query for.
-  final BaseAddress? delegatorAddr;
+  final CosmosBaseAddress? delegatorAddr;
 
   /// src_validator_addr defines the validator address to redelegate from.
-  final BaseAddress? srcValidatorAddr;
+  final CosmosBaseAddress? srcValidatorAddr;
 
   /// dst_validator_addr defines the validator address to redelegate to.
-  final BaseAddress? dstValidatorAddr;
+  final CosmosBaseAddress? dstValidatorAddr;
 
   /// pagination defines an optional pagination for the request.
   final PageRequest? pagination;

@@ -7,8 +7,8 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 /// MsgCreateVestingAccount defines a message that enables creating a vesting account.
 class MsgCreateVestingAccount extends CosmosMessage
     with ServiceMessage<EmptyServiceRequestResponse> {
-  final BaseAddress? fromAddress;
-  final BaseAddress? toAddress;
+  final CosmosBaseAddress? fromAddress;
+  final CosmosBaseAddress? toAddress;
   final List<Coin> amount;
 
   /// end of vesting as unix time (in seconds).
@@ -32,10 +32,12 @@ class MsgCreateVestingAccount extends CosmosMessage
   factory MsgCreateVestingAccount.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgCreateVestingAccount(
-        fromAddress:
-            decode.getResult(1)?.to<BaseAddress, String>((e) => BaseAddress(e)),
-        toAddress:
-            decode.getResult(2)?.to<BaseAddress, String>((e) => BaseAddress(e)),
+        fromAddress: decode
+            .getResult(1)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+        toAddress: decode
+            .getResult(2)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
         amount: decode.getFields(3).map((e) => Coin.deserialize(e)).toList(),
         endTime: decode.getField(4),
         delayed: decode.getField(5),

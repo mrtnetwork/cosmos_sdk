@@ -9,7 +9,7 @@ import '../messages/description.dart';
 class MsgEditValidator extends CosmosMessage
     with ServiceMessage<EmptyServiceRequestResponse> {
   final Description description;
-  final BaseAddress? validatorAddress;
+  final CosmosBaseAddress? validatorAddress;
 
   /// We pass a reference to the new commission rate and min self delegation as
   /// it's not mandatory to update. If not updated, the deserialized rate will be
@@ -27,8 +27,9 @@ class MsgEditValidator extends CosmosMessage
   factory MsgEditValidator.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgEditValidator(
-      validatorAddress:
-          decode.getResult(2)?.to<BaseAddress, String>((e) => BaseAddress(e)),
+      validatorAddress: decode
+          .getResult(2)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
       description: Description.deserialize(decode.getField(1)),
       commissionRate: decode.getField(3),
       minSelfDelegation: BigintUtils.tryParse(decode.getField<String?>(4)),

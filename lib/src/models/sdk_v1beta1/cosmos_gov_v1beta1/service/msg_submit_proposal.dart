@@ -17,7 +17,7 @@ class GovMsgSubmitProposal extends CosmosMessage
   final List<Coin> initialDeposit;
 
   /// proposer is the account address of the proposer.
-  final BaseAddress? proposer;
+  final CosmosBaseAddress? proposer;
   GovMsgSubmitProposal(
       {this.content, required List<Coin> initialDeposit, this.proposer})
       : initialDeposit = initialDeposit.mutable;
@@ -32,7 +32,7 @@ class GovMsgSubmitProposal extends CosmosMessage
             .toList(),
         proposer: decode
             .getResult(3)
-            ?.to<BaseAddress, String>((e) => BaseAddress(e)));
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)));
   }
 
   @override

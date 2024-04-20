@@ -8,7 +8,7 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class MsgSoftwareUpgrade extends CosmosMessage
     with ServiceMessage<EmptyServiceRequestResponse> {
   /// authority is the address that controls the module (defaults to x/gov unless overwritten).
-  final BaseAddress? authority;
+  final CosmosBaseAddress? authority;
 
   /// plan is the upgrade plan.
   final Plan plan;
@@ -23,7 +23,7 @@ class MsgSoftwareUpgrade extends CosmosMessage
         plan: Plan.deserialize(decode.getField(2)),
         authority: decode
             .getResult(1)
-            ?.to<BaseAddress, String>((e) => BaseAddress(e)));
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)));
   }
 
   /// Converts the message to a JSON-serializable map.

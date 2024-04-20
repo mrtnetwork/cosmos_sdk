@@ -7,7 +7,7 @@ import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_bank_v1beta1/types/type
 class QueryBalanceRequest extends CosmosMessage
     with QueryMessage<QueryBalanceResponse>, RPCMessage<QueryBalanceResponse> {
   /// address is the address to query balances for.
-  final BaseAddress address;
+  final CosmosBaseAddress address;
 
   /// denom is the coin denom to query balances for.
   final String denom;

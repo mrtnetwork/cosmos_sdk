@@ -7,13 +7,13 @@ import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_staking_v1beta1/types/t
 /// a DVVTriplet can be used to construct the key to getting a Redelegation from state.
 class DVVTriplet extends CosmosMessage {
   // delegatorAddress is the bech32-encoded address of the delegator.
-  final BaseAddress? delegatorAddress;
+  final CosmosBaseAddress? delegatorAddress;
 
   // validatorSrcAddress is the bech32-encoded source address of the validator.
-  final BaseAddress? validatorSrcAddress;
+  final CosmosBaseAddress? validatorSrcAddress;
 
   // validatorDstAddress is the bech32-encoded destination address of the validator.
-  final BaseAddress? validatorDstAddress;
+  final CosmosBaseAddress? validatorDstAddress;
 
   const DVVTriplet({
     this.delegatorAddress,
@@ -23,13 +23,15 @@ class DVVTriplet extends CosmosMessage {
   factory DVVTriplet.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DVVTriplet(
-        delegatorAddress:
-            decode.getResult(1)?.to<BaseAddress, String>((e) => BaseAddress(e)),
-        validatorDstAddress:
-            decode.getResult(3)?.to<BaseAddress, String>((e) => BaseAddress(e)),
+        delegatorAddress: decode
+            .getResult(1)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+        validatorDstAddress: decode
+            .getResult(3)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
         validatorSrcAddress: decode
             .getResult(2)
-            ?.to<BaseAddress, String>((e) => BaseAddress(e)));
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)));
   }
 
   @override

@@ -8,10 +8,10 @@ import 'unbonding_delegation_entry.dart';
 /// UnbondingDelegation stores all of a single delegator's unbonding bonds for a single validator in an time-ordered list.
 class UnbondingDelegation extends CosmosMessage {
   /// delegator_address is the encoded address of the delegator.
-  final BaseAddress? delegatorAddress;
+  final CosmosBaseAddress? delegatorAddress;
 
   /// validator_address is the encoded address of the validator.
-  final BaseAddress? validatorAddress;
+  final CosmosBaseAddress? validatorAddress;
 
   /// entries are the unbonding delegation entries.
   final List<UnbondingDelegationEntry> entries;
@@ -24,10 +24,12 @@ class UnbondingDelegation extends CosmosMessage {
   factory UnbondingDelegation.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return UnbondingDelegation(
-        delegatorAddress:
-            decode.getResult(1)?.to<BaseAddress, String>((e) => BaseAddress(e)),
-        validatorAddress:
-            decode.getResult(1)?.to<BaseAddress, String>((e) => BaseAddress(e)),
+        delegatorAddress: decode
+            .getResult(1)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+        validatorAddress: decode
+            .getResult(1)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
         entries: decode
             .getFields<List<int>>(3)
             .map((e) => UnbondingDelegationEntry.deserialize(e))

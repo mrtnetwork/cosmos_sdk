@@ -7,19 +7,20 @@ import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_staking_v1beta1/types/t
 class QueryDelegationRequest extends CosmosMessage
     with QueryMessage<QueryDelegationResponse> {
   /// delegator_addr defines the delegator address to query for.
-  final BaseAddress? delegatorAddr;
+  final CosmosBaseAddress? delegatorAddr;
 
   /// validator_addr defines the validator address to query for.
-  final BaseAddress? validatorAddr;
+  final CosmosBaseAddress? validatorAddr;
   const QueryDelegationRequest({this.delegatorAddr, this.validatorAddr});
   factory QueryDelegationRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryDelegationRequest(
-        delegatorAddr:
-            decode.getResult(1)?.to<BaseAddress, String>((e) => BaseAddress(e)),
+        delegatorAddr: decode
+            .getResult(1)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
         validatorAddr: decode
             .getResult(2)
-            ?.to<BaseAddress, String>((e) => BaseAddress(e)));
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)));
   }
 
   @override

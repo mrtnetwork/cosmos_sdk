@@ -7,10 +7,10 @@ import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_staking_v1beta1/types/t
 /// used to construct the key to getting an UnbondingDelegation from state.
 class DVPair extends CosmosMessage {
   // delegatorAddress is the bech32-encoded address of the delegator.
-  final BaseAddress? delegatorAddress;
+  final CosmosBaseAddress? delegatorAddress;
 
   // validatorAddress is the bech32-encoded address of the validator.
-  final BaseAddress? validatorAddress;
+  final CosmosBaseAddress? validatorAddress;
 
   const DVPair({
     this.delegatorAddress,
@@ -19,10 +19,12 @@ class DVPair extends CosmosMessage {
   factory DVPair.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DVPair(
-      delegatorAddress:
-          decode.getResult(1)?.to<BaseAddress, String>((e) => BaseAddress(e)),
-      validatorAddress:
-          decode.getResult(2)?.to<BaseAddress, String>((e) => BaseAddress(e)),
+      delegatorAddress: decode
+          .getResult(1)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      validatorAddress: decode
+          .getResult(2)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
     );
   }
 

@@ -6,7 +6,7 @@ import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_auth_v1beta1/types/type
 import 'package:cosmos_sdk/src/utils/utils.dart';
 
 class BaseAccount extends CosmosBaseAccount {
-  final BaseAddress address;
+  final CosmosBaseAddress address;
   final CosmosPublicKeyInfo? pubKey;
   final BigInt accountNumber;
   final BigInt sequence;
@@ -19,7 +19,7 @@ class BaseAccount extends CosmosBaseAccount {
   factory BaseAccount.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return BaseAccount(
-        address: BaseAddress(decode.getField(1)),
+        address: CosmosBaseAddress(decode.getField(1)),
         pubKey: decode.getResult(2)?.to<CosmosPublicKeyInfo, List<int>>(
             (e) => CosmosPublicKeyInfo.fromAnyBytes(e)),
         accountNumber: decode.getResult(3)?.cast<BigInt>() ?? BigInt.zero,
@@ -30,7 +30,7 @@ class BaseAccount extends CosmosBaseAccount {
         json["@type"] ?? AuthV1beta1Types.baseAccount.typeUrl);
 
     return BaseAccount(
-        address: BaseAddress(json["address"]),
+        address: CosmosBaseAddress(json["address"]),
         pubKey: json["pub_key"] == null
             ? null
             : CosmosPublicKeyInfo.fromRpc(json["pub_key"]),
@@ -61,4 +61,7 @@ class BaseAccount extends CosmosBaseAccount {
         accountNumber,
         sequence == BigInt.zero ? null : sequence
       ];
+
+  @override
+  BaseAccount get baseAccount => this;
 }

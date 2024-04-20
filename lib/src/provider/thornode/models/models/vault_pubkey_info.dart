@@ -1,5 +1,5 @@
-import 'package:cosmos_sdk/cosmos_sdk.dart';
 import 'package:cosmos_sdk/src/provider/thornode/models/models/chain_contract.dart';
+import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
 
 class VaultPubKeyInfo {
   final String pubKey;

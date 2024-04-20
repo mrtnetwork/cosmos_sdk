@@ -9,14 +9,14 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 /// Since: cosmos-sdk 0.51
 class MsgBurn extends CosmosMessage
     with ServiceMessage<EmptyServiceRequestResponse> {
-  final BaseAddress address;
+  final CosmosBaseAddress address;
   final List<Coin> amount;
 
   const MsgBurn({required this.address, required this.amount});
   factory MsgBurn.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgBurn(
-        address: BaseAddress(decode.getField(1)),
+        address: CosmosBaseAddress(decode.getField(1)),
         amount: decode
             .getFields<List<int>>(2)
             .map((e) => Coin.deserialize(e))

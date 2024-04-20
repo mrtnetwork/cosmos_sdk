@@ -13,10 +13,10 @@ class MsgNFTSend extends CosmosMessage
   final String? id;
 
   /// sender is the address of the owner of nft
-  final BaseAddress? sender;
+  final CosmosBaseAddress? sender;
 
   /// receiver is the receiver address of nft
-  final BaseAddress? receiver;
+  final CosmosBaseAddress? receiver;
 
   const MsgNFTSend({
     this.classId,

@@ -4,7 +4,7 @@ import 'denom_unit.dart';
 
 /// Metadata represents a struct that describes a basic token.
 class Metadata extends CosmosMessage {
-  final String description;
+  final String? description;
 
   /// denom_units represents the list of DenomUnit's for a given coin
   final List<DenomUnit> denomUnits;
@@ -14,18 +14,18 @@ class Metadata extends CosmosMessage {
 
   /// display indicates the suggested denom that should be
   /// displayed in clients.
-  final String display;
+  final String? display;
 
   /// name defines the name of the token (eg: Cosmos Atom)
   ///
   /// Since: cosmos-sdk 0.43
-  final String name;
+  final String? name;
 
   /// symbol is the token symbol usually shown on exchanges (eg: ATOM). This can
   /// be the same as the display.
   ///
   /// Since: cosmos-sdk 0.43
-  final String symbol;
+  final String? symbol;
 
   /// URI to a document (on or off-chain) that contains additional information. Optional.
   ///

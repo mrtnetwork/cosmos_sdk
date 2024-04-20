@@ -9,7 +9,7 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class BankMsgUpdateParams extends CosmosMessage
     with ServiceMessage<EmptyServiceRequestResponse> {
   /// authority is the address that controls the module (defaults to x/gov unless overwritten)
-  final BaseAddress authority;
+  final CosmosBaseAddress authority;
 
   /// params defines the x/bank parameters to update.
   ///
@@ -20,7 +20,7 @@ class BankMsgUpdateParams extends CosmosMessage
   factory BankMsgUpdateParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return BankMsgUpdateParams(
-      authority: BaseAddress(decode.getField(1)),
+      authority: CosmosBaseAddress(decode.getField(1)),
       params: BankParams.deserialize(decode.getField(2)),
     );
   }

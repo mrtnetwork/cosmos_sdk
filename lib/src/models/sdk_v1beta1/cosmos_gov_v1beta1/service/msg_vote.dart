@@ -12,7 +12,7 @@ class GovMsgVote extends CosmosMessage
   final BigInt? proposalId;
 
   /// voter is the voter address for the proposal.
-  final BaseAddress? voter;
+  final CosmosBaseAddress? voter;
 
   /// option defines the vote option.
   final GovVoteOption? option;
@@ -21,8 +21,9 @@ class GovMsgVote extends CosmosMessage
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GovMsgVote(
         proposalId: decode.getField(1),
-        voter:
-            decode.getResult(2)?.to<BaseAddress, String>((e) => BaseAddress(e)),
+        voter: decode
+            .getResult(2)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
         option: decode
             .getResult(3)
             ?.to<GovVoteOption, int>((e) => GovVoteOption.fromValue(e)));

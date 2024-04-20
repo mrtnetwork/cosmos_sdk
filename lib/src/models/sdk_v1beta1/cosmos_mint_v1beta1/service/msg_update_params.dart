@@ -11,7 +11,7 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class MsgUpdateMintParams extends CosmosMessage
     with ServiceMessage<EmptyServiceRequestResponse> {
   /// authority is the address that controls the module (defaults to x/gov unless overwritten).
-  final BaseAddress? authority;
+  final CosmosBaseAddress? authority;
 
   /// params defines the x/mint parameters to update.
   ///
@@ -27,7 +27,7 @@ class MsgUpdateMintParams extends CosmosMessage
     return MsgUpdateMintParams(
         authority: decode
             .getResult(1)
-            ?.to<BaseAddress?, String>((e) => BaseAddress(e)),
+            ?.to<CosmosBaseAddress?, String>((e) => CosmosBaseAddress(e)),
         params: MintParams.deserialize(decode.getField(2)));
   }
 

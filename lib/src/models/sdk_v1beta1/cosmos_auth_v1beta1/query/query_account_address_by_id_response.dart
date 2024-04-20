@@ -5,12 +5,13 @@ import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_auth_v1beta1/types/type
 /// QueryAccountAddressByIDResponse is the response type for AccountAddressByID rpc method
 /// Since: cosmos-sdk 0.46.2
 class QueryAccountAddressByIDResponse extends CosmosMessage {
-  final BaseAddress accountAddress;
+  final CosmosBaseAddress accountAddress;
 
   const QueryAccountAddressByIDResponse(this.accountAddress);
   factory QueryAccountAddressByIDResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return QueryAccountAddressByIDResponse(BaseAddress(decode.getField(1)));
+    return QueryAccountAddressByIDResponse(
+        CosmosBaseAddress(decode.getField(1)));
   }
 
   @override

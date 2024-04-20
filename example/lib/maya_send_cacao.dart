@@ -7,6 +7,7 @@ import 'package:cosmos_sdk/cosmos_sdk.dart';
 
 import 'provider.dart';
 
+///
 void main() async {
   final seedBytes = Bip39SeedGenerator(Mnemonic.fromString(
           "this dove indoor skin shed gap east welcome gift buffalo silent high"))
@@ -22,9 +23,9 @@ void main() async {
       request: QueryAccountRequest(pubkey.toAddresss(hrp: "smaya"))));
   final BaseAccount account = accountQuery.account as BaseAccount;
   final message = ThorchainMsgSend(
-      fromAddress: pubkey.toAddresss(hrp: "smaya").toBytes(),
+      fromAddress: pubkey.toAddresss(hrp: "smaya"),
       toAddress:
-          BaseAddress("smaya1wqzpmju4gl0kcajhjls6ufrqecaedxm9xlrkv4").toBytes(),
+          CosmosBaseAddress("smaya1wqzpmju4gl0kcajhjls6ufrqecaedxm9xlrkv4"),
       amount: [
         Coin(denom: "cacao", amount: BigInt.from(500000000000)),
       ]);

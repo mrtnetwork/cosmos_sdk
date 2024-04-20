@@ -44,7 +44,8 @@ void main() async {
   /// Creating a transaction message to send tokens
   final message = MsgSend(
       fromAddress: pubkey.toAddresss(),
-      toAddress: BaseAddress("cosmos1qhslf0sx2fegltfqq0p5j6etmdznjgfnm2j6nc"),
+      toAddress:
+          CosmosBaseAddress("cosmos1qhslf0sx2fegltfqq0p5j6etmdznjgfnm2j6nc"),
       amount: [Coin(denom: "uatom", amount: BigInt.from(1000000))]);
 
   /// Creating transaction body with the message

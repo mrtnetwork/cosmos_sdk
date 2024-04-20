@@ -7,8 +7,8 @@ import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_bank_v1beta1/types/type
 /// MsgSend represents a message to send coins from one account to another.
 class MsgSend extends CosmosMessage
     with ServiceMessage<EmptyServiceRequestResponse> {
-  final BaseAddress fromAddress;
-  final BaseAddress toAddress;
+  final CosmosBaseAddress fromAddress;
+  final CosmosBaseAddress toAddress;
   final List<Coin> amount;
   const MsgSend(
       {required this.fromAddress,
@@ -17,8 +17,8 @@ class MsgSend extends CosmosMessage
   factory MsgSend.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgSend(
-        fromAddress: BaseAddress(decode.getField(1)),
-        toAddress: BaseAddress(decode.getField(2)),
+        fromAddress: CosmosBaseAddress(decode.getField(1)),
+        toAddress: CosmosBaseAddress(decode.getField(2)),
         amount: decode
             .getFields<List<int>>(3)
             .map((e) => Coin.deserialize(e))

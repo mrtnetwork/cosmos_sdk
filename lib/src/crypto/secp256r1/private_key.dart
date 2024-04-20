@@ -1,9 +1,9 @@
 import 'package:blockchain_utils/blockchain_utils.dart';
+import 'package:blockchain_utils/signer/cosmos/cosmos_nist256r1_signer.dart';
 import 'package:cosmos_sdk/src/crypto/ed25519/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 import 'package:cosmos_sdk/src/protobuf/codec/decoder.dart';
 import 'public_key.dart';
-import 'secp256r1_signer.dart';
 
 class CosmosNist256p1PrivateKey extends CosmosMessage {
   final Nist256p1PrivateKey _privateKey;
@@ -24,7 +24,7 @@ class CosmosNist256p1PrivateKey extends CosmosMessage {
       CosmosSecp256R1PublicKey.deserialize(_privateKey.publicKey.compressed);
 
   List<int> sign(List<int> digest) {
-    final signer = CosmosSignerSecp.fromKeyBytes(toBytes());
+    final signer = CosmosNist256p1Signer.fromKeyBytes(toBytes());
     return signer.sign(digest);
   }
 

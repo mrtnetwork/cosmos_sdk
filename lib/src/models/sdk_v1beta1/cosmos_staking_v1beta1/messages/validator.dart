@@ -17,7 +17,7 @@ import 'bond_status.dart';
 ///  Voting power can be calculated as total bonded shares multiplied by exchange rate.
 class StakingValidator extends CosmosMessage {
   /// operator_address defines the address of the validator's operator; bech encoded in JSON.
-  final BaseAddress? operatorAddress;
+  final CosmosBaseAddress? operatorAddress;
 
   /// consensus_pubkey is the consensus public key of the validator, as a Protobuf Any.
   final Any? consensusPubkey;
@@ -76,8 +76,9 @@ class StakingValidator extends CosmosMessage {
   factory StakingValidator.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return StakingValidator(
-        operatorAddress:
-            decode.getResult(1)?.to<BaseAddress, String>((e) => BaseAddress(e)),
+        operatorAddress: decode
+            .getResult(1)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
         consensusPubkey:
             decode.getResult(2)?.to<Any, List<int>>((e) => Any.deserialize(e)),
         jailed: decode.getField(3),

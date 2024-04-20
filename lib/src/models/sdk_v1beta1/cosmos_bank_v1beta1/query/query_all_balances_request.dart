@@ -11,7 +11,7 @@ class QueryAllBalancesRequest extends CosmosMessage
         QueryMessage<QueryAllBalancesResponse>,
         RPCMessage<QueryAllBalancesResponse> {
   /// address is the address to query balances for.
-  final BaseAddress address;
+  final CosmosBaseAddress address;
 
   /// pagination defines an optional pagination for the request.
   final PageRequest? pagination;
@@ -26,7 +26,7 @@ class QueryAllBalancesRequest extends CosmosMessage
   factory QueryAllBalancesRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryAllBalancesRequest(
-        address: BaseAddress(decode.getField(1)),
+        address: CosmosBaseAddress(decode.getField(1)),
         pagination: decode
             .getResult(2)
             ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)),
