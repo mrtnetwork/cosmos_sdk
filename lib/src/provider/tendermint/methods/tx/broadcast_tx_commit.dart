@@ -24,8 +24,6 @@ class TendermintRequestBroadcastTxCommit
   @override
   BrodcastTxResponse onResonse(Map<String, dynamic> result) {
     final r = BrodcastTxResponse.fromJson(result);
-    print("tx log: ${r.checkTx.code} ${r.checkTx.log}");
-    print("tx log: ${r.deliverTx.code} ${r.deliverTx.log}");
     return r;
   }
 }

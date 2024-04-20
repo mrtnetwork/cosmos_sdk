@@ -1,3 +1,7 @@
+## 0.0.4
+
+* remove junk function
+
 ## 0.0.3
 
 * Fix bugs.

@@ -49,7 +49,6 @@ class TendermintProvider {
     final id = ++_id;
     final params = request.toRequest(id);
     final data = await rpc.get(params, timeout);
-    print("data $data");
     return _findError(request, data);
   }
 
