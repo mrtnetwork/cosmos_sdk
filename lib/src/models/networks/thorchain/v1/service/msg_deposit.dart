@@ -1,20 +1,19 @@
-import 'package:blockchain_utils/binary/utils.dart';
 import 'package:cosmos_sdk/src/address/address.dart';
+import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
 import 'package:cosmos_sdk/src/models/networks/thorchain/v1/common/coin.dart';
 import 'package:cosmos_sdk/src/models/networks/thorchain/v1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
 
-class ThorchainMsgDeposit extends CosmosMessage {
+class ThorchainMsgDeposit extends CosmosMessage with ServiceMessage {
   final List<ThorchainCoin> coins;
   final String memo;
-  final List<int> signer;
+  final CosmosBaseAddress signer;
   ThorchainMsgDeposit(
       {required List<ThorchainCoin> coins,
       required this.memo,
-      required List<int> signer})
-      : signer = BytesUtils.toBytes(signer, unmodifiable: true),
-        coins = coins.mutable;
+      required this.signer})
+      : coins = coins.mutable;
   factory ThorchainMsgDeposit.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainMsgDeposit(
@@ -23,11 +22,11 @@ class ThorchainMsgDeposit extends CosmosMessage {
             .map((e) => ThorchainCoin.deserialize(e))
             .toList(),
         memo: decode.getField(2),
-        signer: decode.getField(3));
+        signer: CosmosBaseAddress.fromBytes(decode.getField(3)));
   }
   factory ThorchainMsgDeposit.create(
       {required List<ThorchainCoin> coins,
-      required List<int> signer,
+      required CosmosBaseAddress signer,
       required CosmosBaseAddress ownerAddress,
       required String chainName,
       required String chainAddress,
@@ -46,7 +45,7 @@ class ThorchainMsgDeposit extends CosmosMessage {
     return {
       "coins": coins.map((e) => e.toJson()).toList(),
       "memo": memo,
-      "signer": BytesUtils.tryToHexString(signer)
+      "signer": signer.address
     };
   }
 
@@ -54,5 +53,16 @@ class ThorchainMsgDeposit extends CosmosMessage {
   String get typeUrl => ThorchainV1Types.msgDeposit.typeUrl;
 
   @override
-  List get values => [coins, memo, signer];
+  List get values => [coins, memo, signer.toBytes()];
+
+  @override
+  EmptyServiceRequestResponse onResponse(List<int> bytes) {
+    return EmptyServiceRequestResponse(typeUrl);
+  }
+
+  @override
+  String get service => typeUrl;
+
+  @override
+  List<String?> get signers => [signer.address];
 }

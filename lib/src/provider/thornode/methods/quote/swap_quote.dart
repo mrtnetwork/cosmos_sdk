@@ -2,8 +2,8 @@ import 'package:cosmos_sdk/src/provider/thornode/core/core.dart';
 import 'package:cosmos_sdk/src/provider/thornode/core/thorenode.dart';
 
 /// Provide a quote estimate for the provided swap.
-class ThorNodeRequestSwapQuote extends ThorNodeRequestParam<
-    List<Map<String, dynamic>>, List<Map<String, dynamic>>> {
+class ThorNodeRequestSwapQuote
+    extends ThorNodeRequestParam<Map<String, dynamic>, Map<String, dynamic>> {
   ThorNodeRequestSwapQuote(
       {this.height,
       this.fromAsset,
@@ -15,7 +15,8 @@ class ThorNodeRequestSwapQuote extends ThorNodeRequestParam<
       this.streamingQuantity,
       this.toleranceBps,
       this.affiliateBps,
-      this.affiliate});
+      this.affiliate,
+      this.fromAddress});
 
   /// optional block height, defaults to current tip
   final BigInt? height;
@@ -50,6 +51,8 @@ class ThorNodeRequestSwapQuote extends ThorNodeRequestParam<
   /// the affiliate (address or thorname)
   final String? affiliate;
 
+  final String? fromAddress;
+
   @override
   String get method => ThorNodeMethods.quoteSwap.url;
 
@@ -68,6 +71,7 @@ class ThorNodeRequestSwapQuote extends ThorNodeRequestParam<
         "streaming_quantity": streamingQuantity?.toString(),
         "tolerance_bps": toleranceBps?.toString(),
         "affiliate_bps": affiliateBps?.toString(),
-        "affiliate": affiliate
+        "affiliate": affiliate,
+        "from_address": fromAddress
       };
 }

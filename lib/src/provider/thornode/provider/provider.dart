@@ -39,6 +39,7 @@ class ThorNodeProvider {
       [Duration? timeout]) async {
     final data = await requestDynamic(request, timeout);
     final Object? result;
+    print("data $data");
     if (E == List<Map<String, dynamic>>) {
       result = (data as List).map((e) => Map<String, dynamic>.from(e)).toList();
     } else {

@@ -1,7 +1,7 @@
 import 'package:cosmos_sdk/src/provider/thornode/core/core.dart';
 import 'package:cosmos_sdk/src/provider/thornode/core/thorenode.dart';
 
-/// Returns the outbound queue including estimated RUNE values.
+///
 class ThorNodeRequestQueueOutbound extends ThorNodeRequestParam<
     List<Map<String, dynamic>>, List<Map<String, dynamic>>> {
   ThorNodeRequestQueueOutbound({this.height});

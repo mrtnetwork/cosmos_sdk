@@ -146,8 +146,7 @@ class ThorNodeMethods {
       "Returns mapping of mimir V2 IDs to name.", "/mimirV2/ids");
 
   static const ThorNodeMethods quoteSwap = ThorNodeMethods._(
-      "Provide a quote estimate for the provided swap",
-      "/mayachain/quote/swap");
+      "Provide a quote estimate for the provided swap", "/quote/swap");
   static const ThorNodeMethods saverDeposit = ThorNodeMethods._(
       "Provide a quote estimate for the provided saver deposit.",
       "/quote/saver/deposit");

@@ -23,7 +23,7 @@ class CosmosSecp256K1PrivateKey extends CosmosMessage {
         Secp256k1PrivateKeyEcdsa.fromBytes(decode.getField(1)));
   }
   CosmosSecp256K1PublicKey toPublicKey() =>
-      CosmosSecp256K1PublicKey.deserialize(_privateKey.publicKey.compressed);
+      CosmosSecp256K1PublicKey.fromBytes(_privateKey.publicKey.compressed);
 
   List<int> sign(List<int> digest) {
     final signer = CosmosSigner.fromKeyBytes(toBytes());

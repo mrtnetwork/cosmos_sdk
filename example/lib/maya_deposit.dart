@@ -40,7 +40,7 @@ void main() async {
       chainAsset: assetName,
       name: "MRTNETWORK",
       ownerAddress: owner,
-      signer: owner.toBytes());
+      signer: owner);
   final tnsRegisterFeeRune = BigInt.from(10000000000);
   final tnsFeePerBlockRune = BigInt.from(2000);
   final expireBlock = BigInt.from(432000); // avg 1 mount

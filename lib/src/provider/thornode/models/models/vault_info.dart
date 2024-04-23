@@ -55,7 +55,8 @@ class ThorVaultInfoResponse {
       chains: List<String>.from(json['chains']),
       inboundTxCount: json['inbound_tx_count'],
       outboundTxCount: json['outbound_tx_count'],
-      pendingTxBlockHeights: List<int>.from(json['pending_tx_block_heights']),
+      pendingTxBlockHeights:
+          List<int>.from(json['pending_tx_block_heights'] ?? []),
       routers: (json['routers'] as List<dynamic>)
           .map((routerJson) => ThorChainContractResponse.fromJson(routerJson))
           .toList(),
@@ -63,7 +64,7 @@ class ThorVaultInfoResponse {
           .map((addressJson) =>
               ThorVaultAddressInfoResponse.fromJson(addressJson))
           .toList(),
-      frozen: List<String>.from(json['frozen']),
+      frozen: List<String>.from(json['frozen'] ?? []),
     );
   }
 
@@ -84,6 +85,11 @@ class ThorVaultInfoResponse {
       'addresses': addresses.map((address) => address.toJson()).toList(),
       'frozen': frozen,
     };
+  }
+
+  @override
+  String toString() {
+    return "ThorVaultInfoResponse{${toJson()}}";
   }
 }
 
@@ -108,5 +114,10 @@ class ThorVaultAddressInfoResponse {
       'chain': chain,
       'address': address,
     };
+  }
+
+  @override
+  String toString() {
+    return "ThorVaultAddressInfoResponse{${toJson()}}";
   }
 }

@@ -21,7 +21,7 @@ class CosmosNist256p1PrivateKey extends CosmosMessage {
         Nist256p1PrivateKey.fromBytes(decode.getField(1)));
   }
   CosmosSecp256R1PublicKey toPublicKey() =>
-      CosmosSecp256R1PublicKey.deserialize(_privateKey.publicKey.compressed);
+      CosmosSecp256R1PublicKey.fromBytes(_privateKey.publicKey.compressed);
 
   List<int> sign(List<int> digest) {
     final signer = CosmosNist256p1Signer.fromKeyBytes(toBytes());

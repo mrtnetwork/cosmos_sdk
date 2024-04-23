@@ -1,6 +1,11 @@
+## 0.0.5
+
+* Fix bugs.
+* Add thor swap example
+
 ## 0.0.4
 
-* remove junk function
+* remove junk codes
 
 ## 0.0.3
 
