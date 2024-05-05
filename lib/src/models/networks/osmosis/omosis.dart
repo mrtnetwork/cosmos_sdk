@@ -14,4 +14,4 @@ export 'osmosis_tokenfactory_v1beta1/osmosis_tokenfactory_v1beta1.dart';
 export 'osmosis_twap_v1beta1/osmosis_twap_v1beta1.dart';
 export 'osmosis_txfees_v1beta1/osmosis_txfees_v1beta1.dart';
 export 'osmosis_validator_preference_v1beta1/osmosis_validator_preference_v1beta1.dart';
-export 'osmosisـstream_swapـv1/osmosis_stream_swap_v1.dart';
+export 'osmosis_stream_swap_v1/osmosis_stream_swap_v1.dart';

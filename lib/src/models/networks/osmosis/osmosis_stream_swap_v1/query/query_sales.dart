@@ -1,5 +1,5 @@
-import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis%D9%80stream_swap%D9%80v1/query/query_sales_response.dart';
-import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis%D9%80stream_swap%D9%80v1/types/types.dart';
+import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_stream_swap_v1/query/query_sales_response.dart';
+import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_stream_swap_v1/types/types.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_query_v1beta1/cosmos_base_query_v1beta1.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 

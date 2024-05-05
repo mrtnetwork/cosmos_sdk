@@ -1,22 +1,23 @@
-import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis%D9%80stream_swap%D9%80v1/types/types.dart';
+import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_stream_swap_v1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
-class OsmosisStreamSwapMsgSubscribe extends CosmosMessage
+class OsmosisStreamSwapMsgWithdraw extends CosmosMessage
     with ServiceMessage<ProtobufEmpty> {
-  /// sender is an account address adding a deposit
+  /// sender is an account address subscribed to the sale_id
   final String? sender;
 
-  /// ID of an existing sale.
+  /// ID of a sale.
   final BigInt? saleId;
 
-  /// number of sale.token_in staked by a user.
+  /// amount of tokens_in to withdraw. Must be at most the amount of not spent
+  /// tokens, unless set to null - then all remaining balance will be withdrawn.
   final BigInt amount;
 
-  OsmosisStreamSwapMsgSubscribe(
+  OsmosisStreamSwapMsgWithdraw(
       {this.sender, this.saleId, required this.amount});
-  factory OsmosisStreamSwapMsgSubscribe.deserialize(List<int> bytes) {
+  factory OsmosisStreamSwapMsgWithdraw.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return OsmosisStreamSwapMsgSubscribe(
+    return OsmosisStreamSwapMsgWithdraw(
         sender: decode.getField(1),
         saleId: decode.getField(2),
         amount: BigInt.parse(decode.getField(3)));
@@ -46,7 +47,7 @@ class OsmosisStreamSwapMsgSubscribe extends CosmosMessage
   }
 
   @override
-  String get service => OsmosisStreamSwapV1Types.subscribe.typeUrl;
+  String get service => OsmosisStreamSwapV1Types.withdraw.typeUrl;
 
   @override
   List<String?> get signers => [sender];
