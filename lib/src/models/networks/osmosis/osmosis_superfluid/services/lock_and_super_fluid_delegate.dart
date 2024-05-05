@@ -1,0 +1,58 @@
+import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_superfluid/types/types.dart';
+import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_v1beta1/messages/coin.dart';
+import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+
+import 'msg_lock_and_super_fluid_delegate_response.dart';
+
+/// Execute superfluid delegation for a lockup
+class OsmosisSuperfluidMsgLockAndSuperfluidDelegate extends CosmosMessage
+    with ServiceMessage<OsmosisSuperfluidMsgLockAndSuperfluidDelegateResponse> {
+  final String? sender;
+  final List<Coin> coins;
+  final String? valAddr;
+
+  OsmosisSuperfluidMsgLockAndSuperfluidDelegate(
+      {this.sender, required List<Coin> coins, this.valAddr})
+      : coins = coins.mutable;
+  factory OsmosisSuperfluidMsgLockAndSuperfluidDelegate.deserialize(
+      List<int> bytes) {
+    final decode = CosmosProtocolBuffer.decode(bytes);
+    return OsmosisSuperfluidMsgLockAndSuperfluidDelegate(
+        coins: decode.getFields(2).map((e) => Coin.deserialize(e)).toList(),
+        sender: decode.getField(1),
+        valAddr: decode.getField(3));
+  }
+
+  @override
+  List<int> get fieldIds => [1, 2, 3];
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      "sender": sender,
+      "coins": coins.map((e) => e.toJson()).toList(),
+      "val_addr": valAddr,
+    };
+  }
+
+  @override
+  String get typeUrl =>
+      OsmosisSuperfluidTypes.msgLockAndSuperfluidDelegate.typeUrl;
+
+  @override
+  List get values => [sender, coins, valAddr];
+
+  @override
+  String get service =>
+      OsmosisSuperfluidTypes.lockAndSuperfluidDelegate.typeUrl;
+
+  @override
+  List<String?> get signers => [sender];
+  @override
+  OsmosisSuperfluidMsgLockAndSuperfluidDelegateResponse onResponse(
+      List<int> bytes) {
+    return OsmosisSuperfluidMsgLockAndSuperfluidDelegateResponse.deserialize(
+        bytes);
+  }
+}

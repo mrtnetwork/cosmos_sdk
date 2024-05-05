@@ -1,3 +1,7 @@
+## 0.0.6
+
+* Support for osmosis network features.
+
 ## 0.0.5
 
 * Fix bugs.

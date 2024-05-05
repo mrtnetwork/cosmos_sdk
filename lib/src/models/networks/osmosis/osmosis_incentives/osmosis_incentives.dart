@@ -1,0 +1,22 @@
+export 'messages/gauge.dart';
+export 'services/msg_add_to_gauge.dart';
+export 'services/msg_create_gauge.dart';
+
+export 'query/active_gauges_per_denom_request.dart';
+export 'query/active_gauges_per_denom_response.dart';
+export 'query/active_gauges_request.dart';
+export 'query/active_gauges_response.dart';
+export 'query/gauge_by_id_request.dart';
+export 'query/gauge_by_id_response.dart';
+export 'query/gauges_request.dart';
+export 'query/gauges_response.dart';
+export 'query/lockable_durations.dart';
+export 'query/module_to_distribute_coins_request.dart';
+export 'query/module_to_distribute_coins_response.dart';
+export 'query/query_lockable_durations_response.dart';
+export 'query/rewards_est_request.dart';
+export 'query/rewards_est_response.dart';
+export 'query/upcoming_gauges_per_denom_request.dart';
+export 'query/upcoming_gauges_per_denom_response.dart';
+export 'query/upcoming_gauges_request.dart';
+export 'query/upcoming_gauges_response.dart';

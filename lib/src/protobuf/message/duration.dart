@@ -1,3 +1,4 @@
+import 'package:cosmos_sdk/src/constant/constant.dart';
 import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 import 'package:cosmos_sdk/src/protobuf/codec/decoder.dart';
 
@@ -14,8 +15,8 @@ class ProtobufDuration extends CosmosProtocolBuffer {
   /// of one second or more, a non-zero value for the `nanos` field must be
   /// of the same sign as the `seconds` field. Must be from -999,999,999
   /// to +999,999,999 inclusive.
-  final int nanos;
-  const ProtobufDuration({required this.seconds, required this.nanos});
+  final int? nanos;
+  const ProtobufDuration({required this.seconds, this.nanos});
   factory ProtobufDuration.fromDuration(Duration duration) {
     final BigInt seconds = BigInt.from(duration.inSeconds);
     final int nanos = duration.inMilliseconds.remainder(1000) * 1000000;
@@ -25,6 +26,17 @@ class ProtobufDuration extends CosmosProtocolBuffer {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ProtobufDuration(
         seconds: decode.getField(1), nanos: decode.getField(2));
+  }
+  factory ProtobufDuration.fromString(String duration) {
+    final match = CosmosConstants.strDurationRegExp.firstMatch(duration);
+
+    if (match != null) {
+      BigInt seconds = BigInt.parse(match.group(1)!);
+      int nanos = int.parse(match.group(2) ?? '0');
+      return ProtobufDuration(seconds: seconds, nanos: nanos);
+    } else {
+      throw FormatException('Invalid duration format');
+    }
   }
 
   @override

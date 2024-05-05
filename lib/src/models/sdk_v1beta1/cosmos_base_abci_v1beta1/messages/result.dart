@@ -12,7 +12,7 @@ class Result extends CosmosMessage {
   final List<int>? data;
 
   /// Log contains the log information from message or handler execution.
-  final String log;
+  final String? log;
 
   /// Events contains a slice of Event objects that were emitted during message
   /// or handler execution.
