@@ -1,3 +1,4 @@
+import 'package:blockchain_utils/numbers/numbers.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_client_v1/messages/height.dart';
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
@@ -15,7 +16,11 @@ class QueryUnreceivedAcksResponse extends CosmosMessage {
   factory QueryUnreceivedAcksResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryUnreceivedAcksResponse(
-        sequences: decode.getFields<BigInt>(1),
+        sequences: decode
+                .getResult<ProtocolBufferDecoderResult?>(1)
+                ?.to<List<BigInt>, List<int>>(
+                    (e) => e.map((e) => BigintUtils.parse(e)).toList()) ??
+            <BigInt>[],
         height: IbcClientHeight.deserialize(decode.getField(2)));
   }
 

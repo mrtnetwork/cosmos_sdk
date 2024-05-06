@@ -7,6 +7,10 @@ class OsmosisSuperfluidSuperfluidAssetType implements CosmosEnum {
       OsmosisSuperfluidSuperfluidAssetType._(0, "SuperfluidAssetTypeNative");
   static const OsmosisSuperfluidSuperfluidAssetType superfluidAssetTypeLPShare =
       OsmosisSuperfluidSuperfluidAssetType._(1, "SuperfluidAssetTypeLPShare");
+  static const OsmosisSuperfluidSuperfluidAssetType
+      superfluidAssetTypeConcentratedShare =
+      OsmosisSuperfluidSuperfluidAssetType._(
+          2, "SuperfluidAssetTypeConcentratedShare");
 
   @override
   final int value;
@@ -16,7 +20,8 @@ class OsmosisSuperfluidSuperfluidAssetType implements CosmosEnum {
   const OsmosisSuperfluidSuperfluidAssetType._(this.value, this.name);
   static const List<OsmosisSuperfluidSuperfluidAssetType> values = [
     superfluidAssetTypeNative,
-    superfluidAssetTypeLPShare
+    superfluidAssetTypeLPShare,
+    superfluidAssetTypeConcentratedShare
   ];
 
   static OsmosisSuperfluidSuperfluidAssetType fromValue(int? value) {

@@ -1,3 +1,4 @@
+import 'package:blockchain_utils/numbers/numbers.dart';
 import 'package:cosmos_sdk/src/models/models.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
@@ -40,7 +41,11 @@ class ThorchainStreamingSwap extends CosmosMessage {
       deposit: BigInt.parse(decode.getField(7)),
       inValue: BigInt.parse(decode.getField(8)),
       outValue: BigInt.parse(decode.getField(9)),
-      failedSwaps: decode.getField(10),
+      failedSwaps: decode
+              .getResult<ProtocolBufferDecoderResult?>(10)
+              ?.to<List<BigInt>, List<int>>(
+                  (e) => e.map((e) => BigintUtils.parse(e)).toList()) ??
+          <BigInt>[],
       failedSwapReasons: decode.getField(11),
     );
   }

@@ -8,6 +8,8 @@ class OsmosisGammV1beta1Types extends TypeUrl {
   const OsmosisGammV1beta1Types._(this.typeUrl, {this.rpc});
   static const OsmosisGammV1beta1Types poolAsset =
       OsmosisGammV1beta1Types._("/osmosis.gamm.v1beta1.PoolAsset");
+  static const OsmosisGammV1beta1Types pool =
+      OsmosisGammV1beta1Types._("/osmosis.gamm.v1beta1.Pool");
   static const OsmosisGammV1beta1Types smoothWeightChangeParams =
       OsmosisGammV1beta1Types._(
           "/osmosis.gamm.v1beta1.SmoothWeightChangeParams");
@@ -162,7 +164,7 @@ class OsmosisGammV1beta1Types extends TypeUrl {
       OsmosisGammV1beta1Types._("/osmosis.gamm.v1beta1.Query/TotalLiquidity",
           rpc: "/osmosis/gamm/v1beta1/total_liquidity");
 
-  static const OsmosisGammV1beta1Types pool = OsmosisGammV1beta1Types._(
+  static const OsmosisGammV1beta1Types queryPool = OsmosisGammV1beta1Types._(
       "/osmosis.gamm.v1beta1.Query/Pool",
       rpc: "/osmosis/gamm/v1beta1/pools/:pool");
   static const OsmosisGammV1beta1Types poolType = OsmosisGammV1beta1Types._(

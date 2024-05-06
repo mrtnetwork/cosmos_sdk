@@ -24,7 +24,7 @@ class OsmosisGammQueryPoolRequest extends CosmosMessage
   }
 
   @override
-  String get queryPath => OsmosisGammV1beta1Types.pool.typeUrl;
+  String get queryPath => OsmosisGammV1beta1Types.queryPool.typeUrl;
 
   @override
   Map<String, dynamic> toJson() {
@@ -46,6 +46,6 @@ class OsmosisGammQueryPoolRequest extends CosmosMessage
   Map<String, String> get queryParameters => {};
 
   @override
-  String get rpcPath =>
-      OsmosisGammV1beta1Types.pool.rpcUrl(pathParameters: [poolId?.toString()]);
+  String get rpcPath => OsmosisGammV1beta1Types.queryPool
+      .rpcUrl(pathParameters: [poolId?.toString()]);
 }

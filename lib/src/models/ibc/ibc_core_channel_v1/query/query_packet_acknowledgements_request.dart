@@ -1,3 +1,4 @@
+import 'package:blockchain_utils/numbers/numbers.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_query_v1beta1/messages/page_request.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_channel_v1/query/query_packet_acknowledgements_response.dart';
 
@@ -33,7 +34,11 @@ class QueryPacketAcknowledgementsRequest extends CosmosMessage
         pagination: decode
             .getResult(3)
             ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)),
-        packetCommitmentSequences: decode.getFields<BigInt>(4));
+        packetCommitmentSequences: decode
+                .getResult<ProtocolBufferDecoderResult?>(4)
+                ?.to<List<BigInt>, List<int>>(
+                    (e) => e.map((e) => BigintUtils.parse(e)).toList()) ??
+            <BigInt>[]);
   }
 
   @override

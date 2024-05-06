@@ -1,3 +1,4 @@
+import 'package:blockchain_utils/numbers/numbers.dart';
 import 'package:cosmos_sdk/src/models/models.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
@@ -54,7 +55,11 @@ class ThorchainVault extends CosmosMessage {
         chains: decode.getFields(8),
         inboundTxCount: decode.getField(9),
         outboundTxCount: decode.getField(10),
-        pendingTxBlockHeights: decode.getFields<BigInt>(11),
+        pendingTxBlockHeights: decode
+                .getResult<ProtocolBufferDecoderResult?>(11)
+                ?.to<List<BigInt>, List<int>>(
+                    (e) => e.map((e) => BigintUtils.parse(e)).toList()) ??
+            <BigInt>[],
         routers: decode
             .getFields(22)
             .map((e) => ThorchainChainContract.deserialize(e))

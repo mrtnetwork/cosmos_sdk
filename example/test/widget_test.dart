@@ -25,17 +25,18 @@
 //   final provider = TendermintProvider(
 //       TendermintHTTPProvider(url: "https://rpc.testnet.osmosis.zone/"));
 
-//   final message = MsgSend(
-//       fromAddress: publickey.toAddresss(hrp: CosmosAddrConst.osmosis),
-//       toAddress:
-//           CosmosBaseAddress("osmo1wqzpmju4gl0kcajhjls6ufrqecaedxm9udt80k"),
-//       amount: [
-//         Coin(
-//             denom: "factory/osmo1htg7dmhelazdsmuwm9ngtg0tpe82006ugka49q/MRT",
-//             amount: BigInt.from(100))
-//       ]);
+//   final message = OsmosisValidatorPreferenceMsgDelegateToValidatorSet(
+//       delegator: publickey.toAddresss(hrp: CosmosAddrConst.osmosis).address,
+//       coin: Coin(denom: "uosmo", amount: BigInt.from(10000000)));
 //   // print(
 //   //     "address ${publickey.toAddresss(hrp: CosmosAddrConst.osmosis).address}");
+
+//   final all = await provider.request(TendermintRequestAbciQuery(
+//       request: const OsmosisSuperfluidAllIntermediaryAccountsRequest()));
+
+//   /// OsmosisGammQueryPoolsRequest
+//   print("balances $all");
+//   return;
 
 //   /// Querying account info from the blockchain
 //   final accountInfo = await provider.request(TendermintRequestAbciQuery(
@@ -50,7 +51,8 @@
 //       request: QueryAllBalancesRequest(
 //           address: publickey.toAddresss(hrp: CosmosAddrConst.osmosis))));
 
-//   // print("balances $accountBalances");
+//   /// OsmosisGammQueryPoolsRequest
+//   print("balances $accountBalances");
 //   // return;
 
 //   /// Creating authentication info for transaction
@@ -85,15 +87,15 @@
 //       authInfoBytes: authInfo.toBuffer(),
 //       signatures: [sign]);
 
-//   // final txForSimulate =
-//   //     Tx(body: txbody, authInfo: authInfo, signatures: [sign]);
+//   final txForSimulate =
+//       Tx(body: txbody, authInfo: authInfo, signatures: [sign]);
 
-//   // final simulateRequest = await provider.request(TendermintRequestAbciQuery(
-//   //     request: SimulateRequest(txForSimulate.toBuffer())));
-//   // print("simulate $simulateRequest");
-//   final resp = await provider.request(TendermintRequestBroadcastTxCommit(
-//       BytesUtils.toHexString(txRaw.toBuffer(), prefix: "0x")));
-//   print("resp $resp");
+//   final simulateRequest = await provider.request(TendermintRequestAbciQuery(
+//       request: SimulateRequest(txForSimulate.toBuffer())));
+//   print("simulate $simulateRequest");
+//   // final resp = await provider.request(TendermintRequestBroadcastTxCommit(
+//   //     BytesUtils.toHexString(txRaw.toBuffer(), prefix: "0x")));
+//   // print("resp $resp");
 
 //   /// https://celatone.osmosis.zone/osmo-test-5/txs/7C66B231A02BE52E2E42127A6BAAC35C24AEC35519E3FED4545982BEE781EBA8
 // }

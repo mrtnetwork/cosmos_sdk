@@ -25,7 +25,7 @@ class OsmosisValidatorPreferenceV1beta1Types extends TypeUrl {
 
   static const OsmosisValidatorPreferenceV1beta1Types
       msgDelegateToValidatorSet = OsmosisValidatorPreferenceV1beta1Types._(
-          "/osmosis.validatorpreference.v1beta1.MsgDelegateToValidatorSet");
+          "/osmosis.validatorpreference.v1beta1.Msg.DelegateToValidatorSet");
   static const OsmosisValidatorPreferenceV1beta1Types
       msgDelegateToValidatorSetResponse =
       OsmosisValidatorPreferenceV1beta1Types._(

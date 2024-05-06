@@ -5,6 +5,7 @@ export 'messages/pool_params.dart';
 export 'messages/sawap_ammount_in_route.dart';
 export 'messages/sawap_ammount_out_route.dart';
 export 'messages/smooth_weight_change_params.dart';
+export 'messages/pool.dart';
 
 export 'query/query_num_pools_request.dart';
 export 'query/query_num_pools_response.dart';

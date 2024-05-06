@@ -14,6 +14,9 @@ class DecCoin extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DecCoin(denom: decode.getField(1), amount: decode.getField(2));
   }
+  factory DecCoin.fromRpc(Map<String, dynamic> json) {
+    return DecCoin(denom: json["denom"], amount: json["amount"]);
+  }
 
   @override
   List<int> get fieldIds => [1, 2];

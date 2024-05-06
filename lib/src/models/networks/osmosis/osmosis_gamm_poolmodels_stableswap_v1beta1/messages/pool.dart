@@ -1,4 +1,6 @@
+import 'package:blockchain_utils/exception/exceptions.dart';
 import 'package:blockchain_utils/numbers/numbers.dart';
+import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_gamm_poolmodels_stableswap_v1beta1/messages/pool_params.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_gamm_poolmodels_stableswap_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_v1beta1/cosmos_base_v1beta1.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
@@ -8,7 +10,7 @@ import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
 class OsmosisGammPoolmodelsStableSwapPool extends CosmosMessage {
   final String? address;
   final BigInt? id;
-  final OsmosisGammPoolmodelsStableSwapPool poolParams;
+  final OsmosisGammPoolmodelsStableSwapPoolParams poolParams;
 
   /// This string specifies who will govern the pool in the future.
   /// Valid forms of this are:
@@ -45,16 +47,21 @@ class OsmosisGammPoolmodelsStableSwapPool extends CosmosMessage {
         scalingFactor = scalingFactor.mutable;
   factory OsmosisGammPoolmodelsStableSwapPool.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
+    print("sevent ${decode.getFields(7)}");
     return OsmosisGammPoolmodelsStableSwapPool(
         address: decode.getField(1),
         id: decode.getField(2),
-        poolParams:
-            OsmosisGammPoolmodelsStableSwapPool.deserialize(decode.getField(3)),
+        poolParams: OsmosisGammPoolmodelsStableSwapPoolParams.deserialize(
+            decode.getField(3)),
         futurePoolGovernor: decode.getField(4),
         totalShares: Coin.deserialize(decode.getField(5)),
         poolLiquidity:
             decode.getFields(6).map((e) => Coin.deserialize(e)).toList(),
-        scalingFactor: decode.getFields<BigInt>(7),
+        scalingFactor: decode
+                .getResult<ProtocolBufferDecoderResult?>(7)
+                ?.to<List<BigInt>, List<int>>(
+                    (e) => e.map((e) => BigintUtils.parse(e)).toList()) ??
+            <BigInt>[],
         scalingFactorController: decode.getField(8));
   }
   factory OsmosisGammPoolmodelsStableSwapPool.fromRpc(
@@ -62,8 +69,8 @@ class OsmosisGammPoolmodelsStableSwapPool extends CosmosMessage {
     return OsmosisGammPoolmodelsStableSwapPool(
       address: json["address"],
       id: BigintUtils.tryParse(json["id"]),
-      poolParams:
-          OsmosisGammPoolmodelsStableSwapPool.fromRpc(json["pool_params"]),
+      poolParams: OsmosisGammPoolmodelsStableSwapPoolParams.fromRpc(
+          json["pool_params"]),
       futurePoolGovernor: json["future_pool_governor"],
       totalShares: Coin.fromRpc(json["total_shares"]),
       poolLiquidity: (json["pool_liquidity"] as List?)
@@ -76,6 +83,16 @@ class OsmosisGammPoolmodelsStableSwapPool extends CosmosMessage {
           <BigInt>[],
       scalingFactorController: json["scaling_factor_controller"],
     );
+  }
+  factory OsmosisGammPoolmodelsStableSwapPool.fromAny(Any any) {
+    if (any.typeUrl !=
+        OsmosisGammPoolmodelsStableswaPV1beta1Types.pool.typeUrl) {
+      throw MessageException("Invalid type url.", details: {
+        "excepted": OsmosisGammPoolmodelsStableswaPV1beta1Types.pool.typeUrl,
+        "type_url": any.typeUrl
+      });
+    }
+    return OsmosisGammPoolmodelsStableSwapPool.deserialize(any.value);
   }
 
   @override

@@ -1,3 +1,4 @@
+import 'package:blockchain_utils/numbers/numbers.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_channel_v1/query/query_unreceived_acks_response.dart';
 
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
@@ -23,7 +24,11 @@ class QueryUnreceivedAcksRequest extends CosmosMessage
     return QueryUnreceivedAcksRequest(
         portId: decode.getField(1),
         channelId: decode.getField(2),
-        packetAckSequences: decode.getFields<BigInt>(3));
+        packetAckSequences: decode
+                .getResult<ProtocolBufferDecoderResult?>(3)
+                ?.to<List<BigInt>, List<int>>(
+                    (e) => e.map((e) => BigintUtils.parse(e)).toList()) ??
+            <BigInt>[]);
   }
 
   @override

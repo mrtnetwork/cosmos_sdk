@@ -41,7 +41,11 @@ class ThorchainEventStreamingSwap extends CosmosMessage {
         deposit: ThorchainCoin.deserialize(decode.getField(7)),
         inCoin: ThorchainCoin.deserialize(decode.getField(8)),
         outCoin: ThorchainCoin.deserialize(decode.getField(9)),
-        failedSwaps: decode.getFields<BigInt>(10),
+        failedSwaps: decode
+                .getResult<ProtocolBufferDecoderResult?>(10)
+                ?.to<List<BigInt>, List<int>>(
+                    (e) => e.map((e) => BigintUtils.parse(e)).toList()) ??
+            <BigInt>[],
         failedSwapReasonss: decode.getFields<String>(11));
   }
 

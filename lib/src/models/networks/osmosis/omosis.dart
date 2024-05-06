@@ -1,4 +1,4 @@
-export 'omosis_epochs_v1beta1/omosis_epochs_v1beta1.dart';
+export 'osmosis_epochs_v1beta1/omosis_epochs_v1beta1.dart';
 export 'osmosis_gamm_pool_models_balancer_v1beta1/osmosis_gamm_pool_models_balancer_v1beta1.dart';
 export 'osmosis_gamm_poolmodels_stableswap_v1beta1/osmosis_gamm_poolmodels_stableswap_v1beta1.dart';
 export 'osmosis_gamm_v1beta1/osmosis_gamm_v1beta1.dart';

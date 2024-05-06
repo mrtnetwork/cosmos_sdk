@@ -1,3 +1,4 @@
+import 'package:blockchain_utils/numbers/numbers.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_superfluid/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
@@ -7,7 +8,11 @@ class OsmosisSuperfluidUnpoolWhitelistedPools extends CosmosMessage {
   factory OsmosisSuperfluidUnpoolWhitelistedPools.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidUnpoolWhitelistedPools(
-        ids: decode.getFields<BigInt>(1));
+        ids: decode
+                .getResult<ProtocolBufferDecoderResult?>(1)
+                ?.to<List<BigInt>, List<int>>(
+                    (e) => e.map((e) => BigintUtils.parse(e)).toList()) ??
+            <BigInt>[]);
   }
 
   @override

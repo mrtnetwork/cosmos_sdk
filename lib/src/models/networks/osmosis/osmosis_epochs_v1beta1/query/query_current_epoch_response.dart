@@ -1,5 +1,5 @@
 import 'package:blockchain_utils/numbers/bigint_utils.dart';
-import 'package:cosmos_sdk/src/models/networks/osmosis/omosis_epochs_v1beta1/types/types.dart';
+import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_epochs_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
 class OmosisEpochsQueryCurrentEpochResponse extends CosmosMessage {

@@ -1,5 +1,5 @@
 import 'package:blockchain_utils/numbers/numbers.dart';
-import 'package:cosmos_sdk/src/models/networks/osmosis/omosis_epochs_v1beta1/types/types.dart';
+import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_epochs_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
 /// EpochInfo is a struct that describes the data going into a timer defined by the x/epochs module.

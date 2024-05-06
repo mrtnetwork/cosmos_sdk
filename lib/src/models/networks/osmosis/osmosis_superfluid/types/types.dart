@@ -146,8 +146,92 @@ class OsmosisSuperfluidTypes extends TypeUrl {
       OsmosisSuperfluidTypes._(
           "/osmosis.superfluid.QueryTotalDelegationByDelegatorResponse");
 
+  static const OsmosisSuperfluidTypes msgSuperfluidUndelegateAndUnbondLock =
+      OsmosisSuperfluidTypes._(
+          "/osmosis.superfluid.MsgSuperfluidUndelegateAndUnbondLock");
+  static const OsmosisSuperfluidTypes
+      msgSuperfluidUndelegateAndUnbondLockResponse = OsmosisSuperfluidTypes._(
+          "/osmosis.superfluid.MsgSuperfluidUndelegateAndUnbondLockResponse");
+
+  static const OsmosisSuperfluidTypes
+      msgCreateFullRangePositionAndSuperfluidDelegate =
+      OsmosisSuperfluidTypes._(
+          "/osmosis.superfluid.MsgCreateFullRangePositionAndSuperfluidDelegate");
+  static const OsmosisSuperfluidTypes
+      msgCreateFullRangePositionAndSuperfluidDelegateResponse =
+      OsmosisSuperfluidTypes._(
+          "/osmosis.superfluid.MsgCreateFullRangePositionAndSuperfluidDelegateResponse");
+
+  static const OsmosisSuperfluidTypes
+      msgUnlockAndMigrateSharesToFullRangeConcentratedPosition =
+      OsmosisSuperfluidTypes._(
+          "/osmosis.superfluid.MsgUnlockAndMigrateSharesToFullRangeConcentratedPosition");
+  static const OsmosisSuperfluidTypes
+      msgUnlockAndMigrateSharesToFullRangeConcentratedPositionResponse =
+      OsmosisSuperfluidTypes._(
+          "/osmosis.superfluid.MsgUnlockAndMigrateSharesToFullRangeConcentratedPositionResponse");
+
+  static const OsmosisSuperfluidTypes
+      msgAddToConcentratedLiquiditySuperfluidPosition =
+      OsmosisSuperfluidTypes._(
+          "/osmosis.superfluid.MsgAddToConcentratedLiquiditySuperfluidPosition");
+  static const OsmosisSuperfluidTypes
+      msgAddToConcentratedLiquiditySuperfluidPositionResponse =
+      OsmosisSuperfluidTypes._(
+          "/osmosis.superfluid.MsgAddToConcentratedLiquiditySuperfluidPositionResponse");
+
+  static const OsmosisSuperfluidTypes msgUnbondConvertAndStake =
+      OsmosisSuperfluidTypes._("/osmosis.superfluid.MsgUnbondConvertAndStake");
+  static const OsmosisSuperfluidTypes msgUnbondConvertAndStakeResponse =
+      OsmosisSuperfluidTypes._(
+          "/osmosis.superfluid.MsgUnbondConvertAndStakeResponse");
+
+  static const OsmosisSuperfluidTypes queryUnpoolWhitelistRequest =
+      OsmosisSuperfluidTypes._(
+          "/osmosis.superfluid.QueryUnpoolWhitelistRequest");
+  static const OsmosisSuperfluidTypes queryUnpoolWhitelistResponse =
+      OsmosisSuperfluidTypes._(
+          "/osmosis.superfluid.QueryUnpoolWhitelistResponse");
+
+  static const OsmosisSuperfluidTypes concentratedPoolUserPositionRecord =
+      OsmosisSuperfluidTypes._(
+          "/osmosis.superfluid.ConcentratedPoolUserPositionRecord");
+
+  static const OsmosisSuperfluidTypes
+      userConcentratedSuperfluidPositionsDelegatedRequest =
+      OsmosisSuperfluidTypes._(
+          "/osmosis.superfluid.UserConcentratedSuperfluidPositionsDelegatedRequest");
+  static const OsmosisSuperfluidTypes
+      userConcentratedSuperfluidPositionsDelegatedResponse =
+      OsmosisSuperfluidTypes._(
+          "/osmosis.superfluid.UserConcentratedSuperfluidPositionsDelegatedResponse");
+
+  static const OsmosisSuperfluidTypes
+      userConcentratedSuperfluidPositionsUndelegatingRequest =
+      OsmosisSuperfluidTypes._(
+          "/osmosis.superfluid.UserConcentratedSuperfluidPositionsUndelegatingRequest");
+  static const OsmosisSuperfluidTypes
+      userConcentratedSuperfluidPositionsUndelegatingResponse =
+      OsmosisSuperfluidTypes._(
+          "/osmosis.superfluid.UserConcentratedSuperfluidPositionsUndelegatingResponse");
+
   /// query
 
+  static const OsmosisSuperfluidTypes
+      userConcentratedSuperfluidPositionsUndelegating =
+      OsmosisSuperfluidTypes._(
+          "/osmosis.superfluid.Query/UserConcentratedSuperfluidPositionsUndelegating",
+          rpc:
+              "/osmosis/superfluid/v1beta1/account_undelegating_cl_positions/:delegator_address");
+  static const OsmosisSuperfluidTypes
+      userConcentratedSuperfluidPositionsDelegated = OsmosisSuperfluidTypes._(
+          "/osmosis.superfluid.Query/UserConcentratedSuperfluidPositionsDelegated",
+          rpc:
+              "/osmosis/superfluid/v1beta1/account_delegated_cl_positions/:delegator_address");
+
+  static const OsmosisSuperfluidTypes unpoolWhitelist =
+      OsmosisSuperfluidTypes._("/osmosis.superfluid.Query/UnpoolWhitelist",
+          rpc: "/osmosis/superfluid/v1beta1/unpool_whitelist");
   static const OsmosisSuperfluidTypes totalDelegationByDelegator =
       OsmosisSuperfluidTypes._(
           "/osmosis.superfluid.Query/TotalDelegationByDelegator",
@@ -209,6 +293,21 @@ class OsmosisSuperfluidTypes extends TypeUrl {
       rpc: "/osmosis/superfluid/v1beta1/params");
 
   /// services
+  static const OsmosisSuperfluidTypes unbondConvertAndStake =
+      OsmosisSuperfluidTypes._("/osmosis.superfluid.Msg/UnbondConvertAndStake");
+  static const OsmosisSuperfluidTypes
+      adToConcentratedLiquiditySuperfluidPosition = OsmosisSuperfluidTypes._(
+          "/osmosis.superfluid.Msg/AddToConcentratedLiquiditySuperfluidPosition");
+  static const OsmosisSuperfluidTypes
+      unlockAndMigrateSharesToFullRangeConcentratedPosition =
+      OsmosisSuperfluidTypes._(
+          "/osmosis.superfluid.Msg/UnlockAndMigrateSharesToFullRangeConcentratedPosition");
+  static const OsmosisSuperfluidTypes
+      createFullRangePositionAndSuperfluidDelegate = OsmosisSuperfluidTypes._(
+          "/osmosis.superfluid.Msg/CreateFullRangePositionAndSuperfluidDelegate");
+  static const OsmosisSuperfluidTypes superfluidUndelegateAndUnbondLock =
+      OsmosisSuperfluidTypes._(
+          "/osmosis.superfluid.Msg/SuperfluidUndelegateAndUnbondLock");
   static const OsmosisSuperfluidTypes unPoolWhitelistedPool =
       OsmosisSuperfluidTypes._("/osmosis.superfluid.Msg/UnPoolWhitelistedPool");
   static const OsmosisSuperfluidTypes lockAndSuperfluidDelegate =

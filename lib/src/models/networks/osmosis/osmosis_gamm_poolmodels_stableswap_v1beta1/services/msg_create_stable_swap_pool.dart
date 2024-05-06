@@ -1,3 +1,4 @@
+import 'package:blockchain_utils/numbers/numbers.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_gamm_poolmodels_stableswap_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_gamm_v1beta1/messages/pool_params.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_v1beta1/messages/coin.dart';
@@ -36,7 +37,11 @@ class OsmosisGammPoolmodelsStableSwapMsgCreateStableswapPool
             (e) => OsmosisGammPoolParams.deserialize(e)),
         initialPoolLiquidity:
             decode.getFields(3).map((e) => Coin.deserialize(e)).toList(),
-        scalingFactors: decode.getFields<BigInt>(4),
+        scalingFactors: decode
+                .getResult<ProtocolBufferDecoderResult?>(4)
+                ?.to<List<BigInt>, List<int>>(
+                    (e) => e.map((e) => BigintUtils.parse(e)).toList()) ??
+            <BigInt>[],
         futurePoolGovernor: decode.getField(5),
         scalingFactorController: decode.getField(6));
   }

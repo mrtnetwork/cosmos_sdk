@@ -1,3 +1,4 @@
+import 'package:blockchain_utils/numbers/numbers.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_incentives/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
@@ -26,7 +27,11 @@ class OsmosisIncentiveRewardsEstRequest extends CosmosMessage
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisIncentiveRewardsEstRequest(
         owner: decode.getField(1),
-        lockIds: decode.getFields<BigInt>(2),
+        lockIds: decode
+                .getResult<ProtocolBufferDecoderResult?>(2)
+                ?.to<List<BigInt>, List<int>>(
+                    (e) => e.map((e) => BigintUtils.parse(e)).toList()) ??
+            <BigInt>[],
         endEpoch: decode.getField(3));
   }
 

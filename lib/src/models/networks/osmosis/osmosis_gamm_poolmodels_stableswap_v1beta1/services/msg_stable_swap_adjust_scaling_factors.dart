@@ -1,3 +1,4 @@
+import 'package:blockchain_utils/numbers/numbers.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_gamm_poolmodels_stableswap_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
@@ -19,7 +20,11 @@ class OsmosisGammPoolmodelsStableSwapMsgStableSwapAdjustScalingFactors
     return OsmosisGammPoolmodelsStableSwapMsgStableSwapAdjustScalingFactors(
       sender: decode.getField(1),
       poolId: decode.getField(2),
-      scalingFactors: decode.getFields<BigInt>(3),
+      scalingFactors: decode
+              .getResult<ProtocolBufferDecoderResult?>(3)
+              ?.to<List<BigInt>, List<int>>(
+                  (e) => e.map((e) => BigintUtils.parse(e)).toList()) ??
+          <BigInt>[],
     );
   }
 
