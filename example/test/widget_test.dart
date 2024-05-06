@@ -6,12 +6,17 @@
 // import 'package:cosmos_sdk/cosmos_sdk.dart';
 // import 'package:example/provider.dart';
 
+// ///  final privateKey2 = CosmosSecp256K1PrivateKey.fromBytes(
+// ///       Bip44.fromSeed(seedBytes, Bip44Coins.osmosis).privateKey.raw);
+// ///   final publickey2 = privateKey2.toPublicKey();
+
+// /// osmo1wqzpmju4gl0kcajhjls6ufrqecaedxm9udt80k
 // void main() async {
 //   final seedBytes = Bip39SeedGenerator(Mnemonic.fromString(
 //           "this dove indoor skin shed gap east welcome gift buffalo silent high"))
 //       .generate();
 //   final bip44 = Bip44.fromSeed(seedBytes, Bip44Coins.osmosis).deriveDefaultPath;
-//   // print("addr ${bip44.publicKey.toAddress}");
+
 //   final privateKey = CosmosSecp256K1PrivateKey.fromBytes(bip44.privateKey.raw);
 
 //   final publickey = privateKey.toPublicKey();
@@ -19,69 +24,76 @@
 
 //   final provider = TendermintProvider(
 //       TendermintHTTPProvider(url: "https://rpc.testnet.osmosis.zone/"));
-//   final b = await provider.request(TendermintRequestAbciQuery(
-//       request: OmosisEpochsQueryCurrentEpochRequest("day")));
-//   print("b $b");
-//   // print("b $b");
+
+//   final message = MsgSend(
+//       fromAddress: publickey.toAddresss(hrp: CosmosAddrConst.osmosis),
+//       toAddress:
+//           CosmosBaseAddress("osmo1wqzpmju4gl0kcajhjls6ufrqecaedxm9udt80k"),
+//       amount: [
+//         Coin(
+//             denom: "factory/osmo1htg7dmhelazdsmuwm9ngtg0tpe82006ugka49q/MRT",
+//             amount: BigInt.from(100))
+//       ]);
+//   // print(
+//   //     "address ${publickey.toAddresss(hrp: CosmosAddrConst.osmosis).address}");
+
+//   /// Querying account info from the blockchain
+//   final accountInfo = await provider.request(TendermintRequestAbciQuery(
+//       request: QueryAccountInfoRequest(
+//           publickey.toAddresss(hrp: CosmosAddrConst.osmosis))));
+
+//   /// Querying the latest block information
+//   final latestBlock = await provider.request(
+//       TendermintRequestAbciQuery(request: const GetLatestBlockRequest()));
+
+//   final accountBalances = await provider.request(TendermintRequestAbciQuery(
+//       request: QueryAllBalancesRequest(
+//           address: publickey.toAddresss(hrp: CosmosAddrConst.osmosis))));
+
+//   // print("balances $accountBalances");
 //   // return;
-//   // return;
-//   // final latestBlock = await provider.request(
-//   //     TendermintRequestAbciQuery(request: const GetLatestBlockRequest()));
-//   // final coinQuery = await provider.request(
-//   //     TendermintRequestAbciQuery(request: const QueryDenomsMetadataRequest()));
 
-//   // /// Querying account info from the blockchain
-//   // final accountInfo = await provider.request(TendermintRequestAbciQuery(
-//   //     request: QueryAccountInfoRequest(publickey.toAddresss(hrp: "osmo"))));
+//   /// Creating authentication info for transaction
+//   final authInfo = AuthInfo(
+//       signerInfos: [
+//         SignerInfo(
+//             publicKey: publickey,
+//             modeInfo: const ModeInfo(ModeInfoSignle(SignMode.signModeDirect)),
+//             sequence: accountInfo.info.sequence)
+//       ],
+//       fee: Fee(amount: [
+//         Coin(
+//           denom: "uosmo",
+//           amount: BigInt.from(100000),
+//         )
+//       ], gasLimit: BigInt.from(2000000)));
 
-//   // /// Querying the latest block information
-//   // final latestBlock = await provider.request(
-//   //     TendermintRequestAbciQuery(request: const GetLatestBlockRequest()));
+//   final txbody = TXBody(messages: [message]);
 
-//   // /// Creating authentication info for transaction
-//   // final authInfo = AuthInfo(
-//   //     signerInfos: [
-//   //       SignerInfo(
-//   //           publicKey: publickey,
-//   //           modeInfo: const ModeInfo(ModeInfoSignle(SignMode.signModeDirect)),
-//   //           sequence: accountInfo.info.sequence)
-//   //     ],
-//   //     fee: Fee(amount: [
-//   //       Coin(
-//   //         denom: "uosmo",
-//   //         amount: BigInt.from(1000),
-//   //       )
-//   //     ], gasLimit: BigInt.from(200000)));
+//   /// Creating a signable document for the transaction
+//   final SignDoc signDoc = SignDoc(
+//       bodyBytes: txbody.toBuffer(),
+//       authInfoBytes: authInfo.toBuffer(),
+//       chainId: latestBlock.block!.header.chainId,
+//       accountNumber: accountInfo.info.accountNumber);
 
-//   // /// Creating a transaction message to send tokens
-//   // final message = MsgSend(
-//   //     fromAddress: publickey.toAddresss(hrp: "osmo"),
-//   //     toAddress:
-//   //         CosmosBaseAddress("osmo1g5f2d3w3065usfc5fsflafa5jacp090u6pzyx5"),
-//   //     amount: [Coin(denom: "uosmo", amount: BigInt.from(8098000))]);
+//   /// Signing the document with the private key
+//   final sign = privateKey.sign(signDoc.toBuffer());
 
-//   // /// Creating transaction body with the message
-//   // final txbody = TXBody(messages: [message]);
+//   final txRaw = TxRaw(
+//       bodyBytes: txbody.toBuffer(),
+//       authInfoBytes: authInfo.toBuffer(),
+//       signatures: [sign]);
 
-//   // /// Creating a signable document for the transaction
-//   // final SignDoc signDoc = SignDoc(
-//   //     bodyBytes: txbody.toBuffer(),
-//   //     authInfoBytes: authInfo.toBuffer(),
-//   //     chainId: latestBlock.block!.header.chainId,
-//   //     accountNumber: accountInfo.info.accountNumber);
+//   // final txForSimulate =
+//   //     Tx(body: txbody, authInfo: authInfo, signatures: [sign]);
 
-//   // /// Signing the document with the private key
-//   // final sign = privateKey.sign(signDoc.toBuffer());
+//   // final simulateRequest = await provider.request(TendermintRequestAbciQuery(
+//   //     request: SimulateRequest(txForSimulate.toBuffer())));
+//   // print("simulate $simulateRequest");
+//   final resp = await provider.request(TendermintRequestBroadcastTxCommit(
+//       BytesUtils.toHexString(txRaw.toBuffer(), prefix: "0x")));
+//   print("resp $resp");
 
-//   // /// Creating a raw transaction with body, authentication info, and signature
-//   // final txRaw = TxRaw(
-//   //     bodyBytes: txbody.toBuffer(),
-//   //     authInfoBytes: authInfo.toBuffer(),
-//   //     signatures: [sign]);
-
-//   // /// Broadcasting the raw transaction to the network
-//   // final r = await provider.request(TendermintRequestBroadcastTxCommit(
-//   //     BytesUtils.toHexString(txRaw.toBuffer(), prefix: "0x")));
-//   // print("result $r");
+//   /// https://celatone.osmosis.zone/osmo-test-5/txs/7C66B231A02BE52E2E42127A6BAAC35C24AEC35519E3FED4545982BEE781EBA8
 // }
-void main() {}

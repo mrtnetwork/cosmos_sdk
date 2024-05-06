@@ -18,4 +18,6 @@ class CosmosAddrConst {
   static const String thor = "thor";
 
   static const String kujira = "kujira";
+
+  static const String osmosis = "osmo";
 }
