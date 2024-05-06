@@ -8,7 +8,7 @@ class QueryAnnualProvisionsRequest extends CosmosMessage
   ///  This message has no fields.
   const QueryAnnualProvisionsRequest();
   factory QueryAnnualProvisionsRequest.deserialize(List<int> bytes) {
-    return QueryAnnualProvisionsRequest();
+    return const QueryAnnualProvisionsRequest();
   }
 
   @override

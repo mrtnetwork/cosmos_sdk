@@ -16,7 +16,7 @@ class Ics23BatchEntry extends CosmosMessage {
       return Ics23BatchEntry(
           proof: Ics23NonExistenceProof.deserialize(decode.getField(1)));
     }
-    throw Ics23BatchEntry();
+    throw const Ics23BatchEntry();
   }
 
   @override

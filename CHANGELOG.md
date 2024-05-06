@@ -1,3 +1,7 @@
+## 0.0.10
+
+* Fix importing issue
+
 ## 0.0.6
 
 * Support for osmosis network features.

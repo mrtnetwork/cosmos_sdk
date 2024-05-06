@@ -6,7 +6,6 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 /// QueryDenomHashRequest is the request type for the Query/DenomHash RPC method
 class QueryDenomHashRequest extends CosmosMessage
     with QueryMessage<QueryDenomHashResponse> {
-  /// The denomination trace ([port_id]/[channel_id])+/[denom]
   final String? trace;
   const QueryDenomHashRequest({this.trace});
   factory QueryDenomHashRequest.deserialize(List<int> bytes) {

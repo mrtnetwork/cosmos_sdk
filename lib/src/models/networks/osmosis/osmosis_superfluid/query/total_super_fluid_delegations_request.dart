@@ -9,7 +9,7 @@ class OsmosisSuperfluidTotalSuperfluidDelegationsRequest extends CosmosMessage
   const OsmosisSuperfluidTotalSuperfluidDelegationsRequest();
   factory OsmosisSuperfluidTotalSuperfluidDelegationsRequest.deserialize(
       List<int> bytes) {
-    return OsmosisSuperfluidTotalSuperfluidDelegationsRequest();
+    return const OsmosisSuperfluidTotalSuperfluidDelegationsRequest();
   }
 
   @override

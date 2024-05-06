@@ -3,9 +3,9 @@ import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_poolincentives_v1
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
 
-/// For example: if the existing DistrRecords were: [(Gauge 0, 5), (Gauge 1, 6), (Gauge 2, 6)] An UpdatePoolIncentivesProposal includes
-/// [(Gauge 1, 0), (Gauge 2, 4), (Gauge 3, 10)] This would delete Gauge 1, Edit Gauge 2, and Add Gauge 3 The result DistrRecords in
-/// state would be: [(Gauge 0, 5), (Gauge 2, 4), (Gauge 3, 10)]
+/// For example: if the existing DistrRecords were: (Gauge 0, 5), (Gauge 1, 6), (Gauge 2, 6) An UpdatePoolIncentivesProposal includes
+/// (Gauge 1, 0), (Gauge 2, 4), (Gauge 3, 10) This would delete Gauge 1, Edit Gauge 2, and Add Gauge 3 The result DistrRecords in
+/// state would be: (Gauge 0, 5), (Gauge 2, 4), (Gauge 3, 10)
 class OsmosisPoolincentivesUpdatePoolIncentivesProposal extends CosmosMessage {
   final String? title;
   final String? description;

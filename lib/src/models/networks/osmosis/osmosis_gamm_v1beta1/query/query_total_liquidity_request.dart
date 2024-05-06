@@ -8,7 +8,7 @@ class OsmosisGammQueryTotalLiquidityRequest extends CosmosMessage
         RPCMessage<OsmosisGammQueryTotalLiquidityResponse> {
   const OsmosisGammQueryTotalLiquidityRequest();
   factory OsmosisGammQueryTotalLiquidityRequest.fromBytes(List<int> bytes) {
-    return OsmosisGammQueryTotalLiquidityRequest();
+    return const OsmosisGammQueryTotalLiquidityRequest();
   }
 
   @override

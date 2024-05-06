@@ -9,7 +9,7 @@ class OsmosisLockupModuleBalanceRequest extends CosmosMessage
         RPCMessage<OsmosisLockupModuleBalanceResponse> {
   const OsmosisLockupModuleBalanceRequest();
   factory OsmosisLockupModuleBalanceRequest.deserialize(List<int> bytes) {
-    return OsmosisLockupModuleBalanceRequest();
+    return const OsmosisLockupModuleBalanceRequest();
   }
   @override
   List<int> get fieldIds => [];

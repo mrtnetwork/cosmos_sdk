@@ -8,7 +8,7 @@ class QueryInflationRequest extends CosmosMessage
   ///  This message has no fields.
   const QueryInflationRequest();
   factory QueryInflationRequest.deserialize(List<int> bytes) {
-    return QueryInflationRequest();
+    return const QueryInflationRequest();
   }
 
   @override

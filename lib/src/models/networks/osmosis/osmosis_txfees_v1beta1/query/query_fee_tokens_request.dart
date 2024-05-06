@@ -9,11 +9,11 @@ class OsmosisTxfeesQueryFeeTokensRequest extends CosmosMessage
         RPCMessage<OsmosisTxfeesQueryFeeTokensResponse> {
   const OsmosisTxfeesQueryFeeTokensRequest();
   factory OsmosisTxfeesQueryFeeTokensRequest.deserialize(List<int> bytes) {
-    return OsmosisTxfeesQueryFeeTokensRequest();
+    return const OsmosisTxfeesQueryFeeTokensRequest();
   }
   factory OsmosisTxfeesQueryFeeTokensRequest.fromRpc(
       Map<String, dynamic> json) {
-    return OsmosisTxfeesQueryFeeTokensRequest();
+    return const OsmosisTxfeesQueryFeeTokensRequest();
   }
 
   @override

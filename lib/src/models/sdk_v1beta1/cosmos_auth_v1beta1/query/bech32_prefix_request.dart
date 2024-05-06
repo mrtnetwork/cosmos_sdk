@@ -9,7 +9,7 @@ class Bech32PrefixRequest extends CosmosMessage
   ///  This message has no fields.
   const Bech32PrefixRequest();
   factory Bech32PrefixRequest.deserialize(List<int> bytes) {
-    return Bech32PrefixRequest();
+    return const Bech32PrefixRequest();
   }
 
   @override

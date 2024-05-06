@@ -8,7 +8,7 @@ class OsmosisGammQueryNumPoolsRequest extends CosmosMessage
         RPCMessage<OsmosisGammQueryNumPoolsResponse> {
   const OsmosisGammQueryNumPoolsRequest();
   factory OsmosisGammQueryNumPoolsRequest.fromBytes(List<int> bytes) {
-    return OsmosisGammQueryNumPoolsRequest();
+    return const OsmosisGammQueryNumPoolsRequest();
   }
 
   @override

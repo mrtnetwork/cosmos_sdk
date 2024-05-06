@@ -8,7 +8,7 @@ class QueryParamsRequest extends CosmosMessage
     with QueryMessage<QueryParamsResponse> {
   const QueryParamsRequest();
   factory QueryParamsRequest.deserialize(List<int> bytes) {
-    return QueryParamsRequest();
+    return const QueryParamsRequest();
   }
 
   @override

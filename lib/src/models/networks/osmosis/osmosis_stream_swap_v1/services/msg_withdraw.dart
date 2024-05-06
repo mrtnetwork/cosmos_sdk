@@ -43,7 +43,7 @@ class OsmosisStreamSwapMsgWithdraw extends CosmosMessage
 
   @override
   ProtobufEmpty onResponse(List<int> bytes) {
-    return ProtobufEmpty();
+    return const ProtobufEmpty();
   }
 
   @override

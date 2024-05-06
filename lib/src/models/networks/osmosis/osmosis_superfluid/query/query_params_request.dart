@@ -10,7 +10,7 @@ class OsmosisSuperfluidQueryParamsRequest extends CosmosMessage
         RPCMessage<OsmosisSuperfluidQueryParamsResponse> {
   const OsmosisSuperfluidQueryParamsRequest();
   factory OsmosisSuperfluidQueryParamsRequest.deserialize(List<int> bytes) {
-    return OsmosisSuperfluidQueryParamsRequest();
+    return const OsmosisSuperfluidQueryParamsRequest();
   }
 
   @override

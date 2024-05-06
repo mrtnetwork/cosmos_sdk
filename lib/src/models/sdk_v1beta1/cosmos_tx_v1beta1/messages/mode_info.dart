@@ -18,7 +18,7 @@ class ModeInfo extends CosmosMessage {
     if (multiMode != null) {
       return ModeInfo.deserialize(multiMode);
     }
-    throw MessageException("Invalid mode info bytes.");
+    throw const MessageException("Invalid mode info bytes.");
   }
 
   @override

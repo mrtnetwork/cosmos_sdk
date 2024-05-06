@@ -35,7 +35,7 @@ class ProtobufDuration extends CosmosProtocolBuffer {
       int nanos = int.parse(match.group(2) ?? '0');
       return ProtobufDuration(seconds: seconds, nanos: nanos);
     } else {
-      throw FormatException('Invalid duration format');
+      throw const FormatException('Invalid duration format');
     }
   }
 

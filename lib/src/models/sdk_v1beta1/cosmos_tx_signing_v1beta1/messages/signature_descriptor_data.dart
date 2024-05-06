@@ -14,6 +14,6 @@ abstract class BaseSignatureDescriptorData extends CosmosMessage {
     } else if (decode.hasTag(2)) {
       return SignatureDescriptorDataMulti.desrialize(bytes);
     }
-    throw MessageException("Invalid SignatureDescriptorData bytes.");
+    throw const MessageException("Invalid SignatureDescriptorData bytes.");
   }
 }

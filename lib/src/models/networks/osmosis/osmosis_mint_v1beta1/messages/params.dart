@@ -1,5 +1,5 @@
 import 'package:blockchain_utils/blockchain_utils.dart';
-import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_mint_v1beta1/messages/Distribution_proportions.dart';
+import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_mint_v1beta1/messages/distribution_proportions.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_mint_v1beta1/messages/weighted_address.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_mint_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';

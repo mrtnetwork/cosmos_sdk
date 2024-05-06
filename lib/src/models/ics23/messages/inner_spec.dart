@@ -10,8 +10,8 @@ import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
 /// isLeftMost(spec: InnerSpec, op: InnerOp) isRightMost(spec: InnerSpec, op: InnerOp) isLeftNeighbor(spec: InnerSpec, left: InnerOp, right: InnerOp)
 class Ics23InnerSpec extends CosmosMessage {
   /// Child order is the ordering of the children node, must count from 0
-  /// iavl tree is [0, 1] (left then right)
-  /// merk is [0, 2, 1] (left, right, here)
+  /// iavl tree is 0, 1 (left then right)
+  /// merk is 0, 2, 1 (left, right, here)
   final List<int>? childOrder;
   final int? childSize;
   final int? minPrefixLength;

@@ -9,7 +9,7 @@ class QueryModuleAccountsRequest extends CosmosMessage
   /// This message has no fields.
   const QueryModuleAccountsRequest();
   factory QueryModuleAccountsRequest.deserialize(List<int> bytes) {
-    return QueryModuleAccountsRequest();
+    return const QueryModuleAccountsRequest();
   }
 
   @override

@@ -26,7 +26,7 @@ class Evidence extends CosmosMessage {
           lightClientAttackEvidence:
               LightClientAttackEvidence.deserialize(decode.getField(2)));
     }
-    return Evidence._(null);
+    return const Evidence._(null);
   }
 
   @override

@@ -19,7 +19,7 @@ class Ics23CompressedBatchEntry extends CosmosMessage {
           proof:
               Ics23CompressedNonExistenceProof.deserialize(decode.getField(1)));
     }
-    throw Ics23CompressedBatchEntry();
+    throw const Ics23CompressedBatchEntry();
   }
 
   @override

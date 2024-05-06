@@ -1,6 +1,6 @@
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_poolincentives_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'Query_incentivized_pools_response.dart';
+import 'query_incentivized_pools_response.dart';
 
 class OsmosisPoolincentivesQueryIncentivizedPoolsRequest extends CosmosMessage
     with

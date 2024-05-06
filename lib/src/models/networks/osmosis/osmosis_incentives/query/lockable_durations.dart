@@ -9,7 +9,7 @@ class OsmosisIncentiveQueryLockableDurationsRequest extends CosmosMessage
   const OsmosisIncentiveQueryLockableDurationsRequest();
   factory OsmosisIncentiveQueryLockableDurationsRequest.fromBytes(
       List<int> bytes) {
-    return OsmosisIncentiveQueryLockableDurationsRequest();
+    return const OsmosisIncentiveQueryLockableDurationsRequest();
   }
 
   @override

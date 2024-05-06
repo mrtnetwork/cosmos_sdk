@@ -8,7 +8,7 @@ class AuthQueryParamsRequest extends CosmosMessage
   /// This message has no fields.
   const AuthQueryParamsRequest();
   factory AuthQueryParamsRequest.deserialize(List<int> bytes) {
-    return AuthQueryParamsRequest();
+    return const AuthQueryParamsRequest();
   }
 
   @override

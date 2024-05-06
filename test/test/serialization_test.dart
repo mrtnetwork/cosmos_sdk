@@ -31,7 +31,7 @@ void _signerInfo() {
     final sigInfo = SignerInfo(
         publicKey: CosmosSecp256K1PublicKey.fromHex(
             "0312b4a708eaf861f52a8e934716d24b3ba3b13cf3acee3145aff924507a6e3f77"),
-        modeInfo: ModeInfo(ModeInfoSignle(SignMode.signModeDirect)),
+        modeInfo: const ModeInfo(ModeInfoSignle(SignMode.signModeDirect)),
         sequence: BigInt.zero);
     expect(sigInfo.toHex,
         "0a460a1f2f636f736d6f732e63727970746f2e736563703235366b312e5075624b657912230a210312b4a708eaf861f52a8e934716d24b3ba3b13cf3acee3145aff924507a6e3f7712040a020801");
@@ -45,7 +45,7 @@ void _authInfo() {
           SignerInfo(
               publicKey: CosmosSecp256K1PublicKey.fromHex(
                   "0312b4a708eaf861f52a8e934716d24b3ba3b13cf3acee3145aff924507a6e3f77"),
-              modeInfo: ModeInfo(ModeInfoSignle(SignMode.signModeDirect)),
+              modeInfo: const ModeInfo(ModeInfoSignle(SignMode.signModeDirect)),
               sequence: BigInt.zero)
         ],
         fee: Fee(amount: [
@@ -93,7 +93,7 @@ void _signDoc() {
           SignerInfo(
               publicKey: CosmosSecp256K1PublicKey.fromHex(
                   "0312b4a708eaf861f52a8e934716d24b3ba3b13cf3acee3145aff924507a6e3f77"),
-              modeInfo: ModeInfo(ModeInfoSignle(SignMode.signModeDirect)),
+              modeInfo: const ModeInfo(ModeInfoSignle(SignMode.signModeDirect)),
               sequence: BigInt.zero)
         ],
         fee: Fee(amount: [
@@ -126,7 +126,7 @@ void _txRaw() {
           SignerInfo(
               publicKey: CosmosSecp256K1PublicKey.fromHex(
                   "0312b4a708eaf861f52a8e934716d24b3ba3b13cf3acee3145aff924507a6e3f77"),
-              modeInfo: ModeInfo(ModeInfoSignle(SignMode.signModeDirect)),
+              modeInfo: const ModeInfo(ModeInfoSignle(SignMode.signModeDirect)),
               sequence: BigInt.zero)
         ],
         fee: Fee(amount: [

@@ -15,7 +15,7 @@ abstract class CosmosBaseAccount extends CosmosMessage {
         acc = ModuleAccount.deserialize(account.value);
         break;
       default:
-        throw MessageException("Unsupported account type");
+        throw const MessageException("Unsupported account type");
     }
     if (acc is! T) {
       throw MessageException("Invalid account type",

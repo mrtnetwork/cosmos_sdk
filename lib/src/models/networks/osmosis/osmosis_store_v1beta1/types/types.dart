@@ -7,9 +7,9 @@ class OsmosisStoreV1beta1Types extends TypeUrl {
   final String? rpc = null;
   const OsmosisStoreV1beta1Types._(this.typeUrl);
   static OsmosisStoreV1beta1Types child =
-      OsmosisStoreV1beta1Types._("/osmosis.store.v1beta1.Child");
+      const OsmosisStoreV1beta1Types._("/osmosis.store.v1beta1.Child");
   static OsmosisStoreV1beta1Types leaf =
-      OsmosisStoreV1beta1Types._("/osmosis.store.v1beta1.Leaf");
+      const OsmosisStoreV1beta1Types._("/osmosis.store.v1beta1.Leaf");
   static OsmosisStoreV1beta1Types node =
-      OsmosisStoreV1beta1Types._("/osmosis.store.v1beta1.Node");
+      const OsmosisStoreV1beta1Types._("/osmosis.store.v1beta1.Node");
 }

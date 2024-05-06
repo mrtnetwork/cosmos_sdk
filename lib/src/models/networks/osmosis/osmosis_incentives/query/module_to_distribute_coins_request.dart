@@ -9,7 +9,7 @@ class OsmosisIncentiveModuleToDistributeCoinsRequest extends CosmosMessage
   const OsmosisIncentiveModuleToDistributeCoinsRequest();
   factory OsmosisIncentiveModuleToDistributeCoinsRequest.fromBytes(
       List<int> bytes) {
-    return OsmosisIncentiveModuleToDistributeCoinsRequest();
+    return const OsmosisIncentiveModuleToDistributeCoinsRequest();
   }
 
   @override

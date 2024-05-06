@@ -9,7 +9,7 @@ class OsmosisSuperfluidAllAssetsRequest extends CosmosMessage
         RPCMessage<OsmosisSuperfluidAllAssetsResponse> {
   const OsmosisSuperfluidAllAssetsRequest();
   factory OsmosisSuperfluidAllAssetsRequest.deserialize(List<int> bytes) {
-    return OsmosisSuperfluidAllAssetsRequest();
+    return const OsmosisSuperfluidAllAssetsRequest();
   }
 
   @override

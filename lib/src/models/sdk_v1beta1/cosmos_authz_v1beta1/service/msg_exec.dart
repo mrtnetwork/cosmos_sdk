@@ -12,7 +12,7 @@ class AuthzExec extends CosmosMessage
   final CosmosBaseAddress? grantee;
 
   /// Execute Msg.
-  /// The x/authz will try to find a grant matching (msg.signers[0], grantee, MsgTypeURL(msg))
+  /// The x/authz will try to find a grant matching (msg.signers, grantee, MsgTypeURL(msg))
   /// triple and validate it.
   final List<Any> msgs;
   AuthzExec({this.grantee, required List<Any> msgs}) : msgs = msgs.mutable;
