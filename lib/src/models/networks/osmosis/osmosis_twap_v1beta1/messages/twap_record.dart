@@ -1,5 +1,5 @@
-import 'package:cosmos_sdk/cosmos_sdk.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_twap_v1beta1/types/types.dart';
+import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
 /// A TWAP record should be indexed in state by pool_id, (asset pair), timestamp The asset
 /// pair assets should be lexicographically sorted. Technically (pool_id, asset_0_denom,

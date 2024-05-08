@@ -1,5 +1,5 @@
-import 'package:cosmos_sdk/cosmos_sdk.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_txfees_v1beta1/type/types.dart';
+import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
 /// FeeToken is a struct that specifies a coin denom, and pool ID pair.
 /// This marks the token as eligible for use as a tx fee asset in Osmosis.

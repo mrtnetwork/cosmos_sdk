@@ -54,9 +54,7 @@ class OsmosisIncentiveActiveGaugesPerDenomRequest extends CosmosMessage
   }
 
   @override
-  Map<String, String?> get queryParameters => {
-        "denom": denom,
-      };
+  Map<String, String?> get queryParameters => {"denom": denom};
 
   @override
   String get rpcPath =>

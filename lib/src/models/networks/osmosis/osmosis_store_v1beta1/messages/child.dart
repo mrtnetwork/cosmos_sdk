@@ -1,6 +1,6 @@
 import 'package:blockchain_utils/binary/utils.dart';
-import 'package:cosmos_sdk/cosmos_sdk.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_store_v1beta1/types/types.dart';
+import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
 class OsmosisStoreChild extends CosmosMessage {
   final List<int>? index;

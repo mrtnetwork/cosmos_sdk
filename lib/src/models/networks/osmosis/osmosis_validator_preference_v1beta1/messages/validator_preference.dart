@@ -1,5 +1,5 @@
-import 'package:cosmos_sdk/cosmos_sdk.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_validator_preference_v1beta1/types/types.dart';
+import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
 /// ValidatorPreference defines the message structure for CreateValidatorSetPreference.
 /// It allows a user to set {val_addr, weight} in state. If a user does not have a validator

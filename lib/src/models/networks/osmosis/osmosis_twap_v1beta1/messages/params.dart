@@ -1,5 +1,5 @@
-import 'package:cosmos_sdk/cosmos_sdk.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_twap_v1beta1/types/types.dart';
+import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
 /// Params holds parameters for the twap module.
 class OsmosisTwapParams extends CosmosMessage {

@@ -1,3 +1,4 @@
+import 'package:blockchain_utils/bip/electrum/mnemonic_v1/wrodlist/languages.dart';
 import 'package:blockchain_utils/numbers/bigint_utils.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_lockup/messages/synthetic_lock.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_superfluid/types/types.dart';
@@ -64,6 +65,12 @@ class OsmosisSuperfluidConcentratedPoolUserPositionRecord
       OsmosisSuperfluidTypes.concentratedPoolUserPositionRecord.typeUrl;
 
   @override
-  List get values =>
-      [validatorAddress, positionId, lockId, syntheticLock, delegationAmount];
+  List get values => [
+        validatorAddress,
+        positionId,
+        lockId,
+        syntheticLock,
+        delegationAmount,
+        elctrumMnemonicWordsList
+      ];
 }

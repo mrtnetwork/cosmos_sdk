@@ -1,3 +1,7 @@
+## 0.1.0
+
+* Enhanced compatibility with the latest features of the Osmosis network..
+
 ## 0.0.10
 
 * Fix importing issue

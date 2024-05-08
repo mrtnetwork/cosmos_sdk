@@ -1,4 +1,4 @@
-import 'package:cosmos_sdk/cosmos_sdk.dart';
+import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
 
 class StreamingSwapStateResponse {
   final String txId;

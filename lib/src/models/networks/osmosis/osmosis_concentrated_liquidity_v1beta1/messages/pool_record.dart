@@ -3,30 +3,28 @@ import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_concentrated_liqu
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
 /// PoolIdToTickSpacingRecord is a struct that contains a pool id to new tick spacing pair.
-class OsmosisConcentratedLiquidityPoolIdToTickSpacingRecord
-    extends CosmosMessage {
+class OsmosisConcentratedLiquidityPoolRecord extends CosmosMessage {
   final String? denom0;
   final String? denom1;
   final BigInt? tickSpacing;
   final String spreadFactor;
-  OsmosisConcentratedLiquidityPoolIdToTickSpacingRecord({
+  OsmosisConcentratedLiquidityPoolRecord({
     this.denom0,
     this.denom1,
     this.tickSpacing,
     required this.spreadFactor,
   });
-  factory OsmosisConcentratedLiquidityPoolIdToTickSpacingRecord.deserialize(
-      List<int> bytes) {
+  factory OsmosisConcentratedLiquidityPoolRecord.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return OsmosisConcentratedLiquidityPoolIdToTickSpacingRecord(
+    return OsmosisConcentratedLiquidityPoolRecord(
         denom0: decode.getField(1),
         denom1: decode.getField(2),
         tickSpacing: decode.getField(3),
         spreadFactor: decode.getField(5));
   }
-  factory OsmosisConcentratedLiquidityPoolIdToTickSpacingRecord.fromRpc(
+  factory OsmosisConcentratedLiquidityPoolRecord.fromRpc(
       Map<String, dynamic> json) {
-    return OsmosisConcentratedLiquidityPoolIdToTickSpacingRecord(
+    return OsmosisConcentratedLiquidityPoolRecord(
         denom0: json["denom0"],
         denom1: json["denom1"],
         tickSpacing: BigintUtils.tryParse(json["tick_spacing"]),

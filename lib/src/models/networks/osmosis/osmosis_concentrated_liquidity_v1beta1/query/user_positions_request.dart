@@ -56,7 +56,7 @@ class OsmosisConcentratedLiquidityUserPositionsRequest extends CosmosMessage
       OsmosisConcentratedLiquidityV1beta1Types.userPositionsRequest.typeUrl;
 
   @override
-  List get values => [pagination];
+  List get values => [address, poolId, pagination];
 
   @override
   OsmosisConcentratedLiquidityUserPositionsResponse onJsonResponse(

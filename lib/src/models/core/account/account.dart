@@ -1,6 +1,8 @@
 import 'package:blockchain_utils/exception/exception.dart';
-import 'package:cosmos_sdk/cosmos_sdk.dart';
+import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_auth_v1beta1/messages/base_account.dart';
+import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_auth_v1beta1/messages/module_account.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_auth_v1beta1/types/types.dart';
+import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
 abstract class CosmosBaseAccount extends CosmosMessage {
   const CosmosBaseAccount();

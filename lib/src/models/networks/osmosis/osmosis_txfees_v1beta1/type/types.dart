@@ -9,6 +9,8 @@ class OsmosisTxfeesV1beta1Types extends TypeUrl {
   static const OsmosisTxfeesV1beta1Types updateFeeTokenProposal =
       OsmosisTxfeesV1beta1Types._(
           "/osmosis.txfees.v1beta1.UpdateFeeTokenProposal");
+  static const OsmosisTxfeesV1beta1Types txFeesTracker =
+      OsmosisTxfeesV1beta1Types._("/osmosis.txfees.v1beta1.TxFeesTracker");
   static const OsmosisTxfeesV1beta1Types feeToken =
       OsmosisTxfeesV1beta1Types._("/osmosis.txfees.v1beta1.FeeToken");
   static const OsmosisTxfeesV1beta1Types genesisState =

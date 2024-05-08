@@ -22,21 +22,13 @@
 //   final publickey = privateKey.toPublicKey();
 //   // print(pr.toPublicKey().toAddresss(hrp: "osmo"));
 
+//   // final provider = TendermintProvider(
+//   //     TendermintHTTPProvider(url: "https://lcd.osmotest5.osmosis.zone/"));
 //   final provider = TendermintProvider(
 //       TendermintHTTPProvider(url: "https://rpc.testnet.osmosis.zone/"));
-
-//   final message = OsmosisValidatorPreferenceMsgDelegateToValidatorSet(
+//   final message = OsmosisValSetprefMsgDelegateToValidatorSet(
 //       delegator: publickey.toAddresss(hrp: CosmosAddrConst.osmosis).address,
 //       coin: Coin(denom: "uosmo", amount: BigInt.from(10000000)));
-//   // print(
-//   //     "address ${publickey.toAddresss(hrp: CosmosAddrConst.osmosis).address}");
-
-//   final all = await provider.request(TendermintRequestAbciQuery(
-//       request: const OsmosisSuperfluidAllIntermediaryAccountsRequest()));
-
-//   /// OsmosisGammQueryPoolsRequest
-//   print("balances $all");
-//   return;
 
 //   /// Querying account info from the blockchain
 //   final accountInfo = await provider.request(TendermintRequestAbciQuery(
@@ -48,11 +40,11 @@
 //       TendermintRequestAbciQuery(request: const GetLatestBlockRequest()));
 
 //   final accountBalances = await provider.request(TendermintRequestAbciQuery(
-//       request: QueryAllBalancesRequest(
-//           address: publickey.toAddresss(hrp: CosmosAddrConst.osmosis))));
-
-//   /// OsmosisGammQueryPoolsRequest
-//   print("balances $accountBalances");
+//       request: OsmosisConcentratedLiquidityPoolsRequest()));
+//   print(accountBalances.pools?.map((e) => e.typeUrl).toList().toSet());
+//   return;
+//   // /// OsmosisGammQueryPoolsRequest
+//   // print("balances $accountBalances");
 //   // return;
 
 //   /// Creating authentication info for transaction

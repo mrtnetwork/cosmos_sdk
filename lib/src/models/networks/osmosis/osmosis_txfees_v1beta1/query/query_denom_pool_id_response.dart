@@ -1,6 +1,6 @@
 import 'package:blockchain_utils/numbers/numbers.dart';
-import 'package:cosmos_sdk/cosmos_sdk.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_txfees_v1beta1/type/types.dart';
+import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
 class OsmosisTxfeesQueryDenomPoolIdResponse extends CosmosMessage {
   final BigInt? poolID;

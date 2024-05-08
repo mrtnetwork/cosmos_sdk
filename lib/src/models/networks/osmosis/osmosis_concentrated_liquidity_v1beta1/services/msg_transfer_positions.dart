@@ -4,19 +4,19 @@ import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_concentrated_liqu
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
 
-class OsmosisConcentratedLiquidityMsgCollectSpreadRewards extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class OsmosisConcentratedLiquidityMsgTransferPositionsResponse
+    extends CosmosMessage with ServiceMessage<EmptyServiceRequestResponse> {
   final List<BigInt>? positionIds;
   final String? sender;
   final String? newOwner;
 
-  OsmosisConcentratedLiquidityMsgCollectSpreadRewards(
+  OsmosisConcentratedLiquidityMsgTransferPositionsResponse(
       {List<BigInt>? positionIds, this.sender, this.newOwner})
       : positionIds = positionIds?.nullOnEmpy;
-  factory OsmosisConcentratedLiquidityMsgCollectSpreadRewards.deserialize(
+  factory OsmosisConcentratedLiquidityMsgTransferPositionsResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return OsmosisConcentratedLiquidityMsgCollectSpreadRewards(
+    return OsmosisConcentratedLiquidityMsgTransferPositionsResponse(
         positionIds: decode
                 .getResult<ProtocolBufferDecoderResult?>(1)
                 ?.to<List<BigInt>, List<int>>(

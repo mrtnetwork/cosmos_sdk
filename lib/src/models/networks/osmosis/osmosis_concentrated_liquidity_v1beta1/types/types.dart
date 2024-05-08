@@ -18,6 +18,9 @@ class OsmosisConcentratedLiquidityV1beta1Types extends TypeUrl {
   static const OsmosisConcentratedLiquidityV1beta1Types poolRecord =
       OsmosisConcentratedLiquidityV1beta1Types._(
           "/osmosis.concentratedliquidity.v1beta1.PoolRecord");
+  static const OsmosisConcentratedLiquidityV1beta1Types pool =
+      OsmosisConcentratedLiquidityV1beta1Types._(
+          "/osmosis.concentratedliquidity.v1beta1.Pool");
 
   static const OsmosisConcentratedLiquidityV1beta1Types
       tickSpacingDecreaseProposal = OsmosisConcentratedLiquidityV1beta1Types._(
@@ -143,7 +146,157 @@ class OsmosisConcentratedLiquidityV1beta1Types extends TypeUrl {
       OsmosisConcentratedLiquidityV1beta1Types._(
           "/osmosis.concentratedliquidity.v1beta1.LiquidityPerTickRangeResponse");
 
+  static const OsmosisConcentratedLiquidityV1beta1Types
+      liquidityNetInDirectionRequest =
+      OsmosisConcentratedLiquidityV1beta1Types._(
+          "/osmosis.concentratedliquidity.v1beta1.LiquidityNetInDirectionRequest");
+  static const OsmosisConcentratedLiquidityV1beta1Types
+      liquidityNetInDirectionResponse =
+      OsmosisConcentratedLiquidityV1beta1Types._(
+          "/osmosis.concentratedliquidity.v1beta1.LiquidityPerTickRangeResponse");
+
+  static const OsmosisConcentratedLiquidityV1beta1Types
+      claimableSpreadRewardsRequest =
+      OsmosisConcentratedLiquidityV1beta1Types._(
+          "/osmosis.concentratedliquidity.v1beta1.ClaimableSpreadRewardsRequest");
+  static const OsmosisConcentratedLiquidityV1beta1Types
+      claimableSpreadRewardsResponse =
+      OsmosisConcentratedLiquidityV1beta1Types._(
+          "/osmosis.concentratedliquidity.v1beta1.ClaimableSpreadRewardsResponse");
+
+  static const OsmosisConcentratedLiquidityV1beta1Types
+      claimableIncentivesRequest = OsmosisConcentratedLiquidityV1beta1Types._(
+          "/osmosis.concentratedliquidity.v1beta1.ClaimableIncentivesRequest");
+  static const OsmosisConcentratedLiquidityV1beta1Types
+      claimableIncentivesResponse = OsmosisConcentratedLiquidityV1beta1Types._(
+          "/osmosis.concentratedliquidity.v1beta1.ClaimableIncentivesResponse");
+
+  static const OsmosisConcentratedLiquidityV1beta1Types positionByIdRequest =
+      OsmosisConcentratedLiquidityV1beta1Types._(
+          "/osmosis.concentratedliquidity.v1beta1.PositionByIdRequest");
+  static const OsmosisConcentratedLiquidityV1beta1Types positionByIdResponse =
+      OsmosisConcentratedLiquidityV1beta1Types._(
+          "/osmosis.concentratedliquidity.v1beta1.PositionByIdResponse");
+
+  static const OsmosisConcentratedLiquidityV1beta1Types
+      poolAccumulatorRewardsRequest =
+      OsmosisConcentratedLiquidityV1beta1Types._(
+          "/osmosis.concentratedliquidity.v1beta1.PoolAccumulatorRewardsRequest");
+  static const OsmosisConcentratedLiquidityV1beta1Types
+      poolAccumulatorRewardsResponse =
+      OsmosisConcentratedLiquidityV1beta1Types._(
+          "/osmosis.concentratedliquidity.v1beta1.PoolAccumulatorRewardsResponse");
+
+  static const OsmosisConcentratedLiquidityV1beta1Types
+      incentiveRecordsRequest = OsmosisConcentratedLiquidityV1beta1Types._(
+          "/osmosis.concentratedliquidity.v1beta1.IncentiveRecordsRequest");
+  static const OsmosisConcentratedLiquidityV1beta1Types
+      incentiveRecordsResponse = OsmosisConcentratedLiquidityV1beta1Types._(
+          "/osmosis.concentratedliquidity.v1beta1.IncentiveRecordsResponse");
+
+  static const OsmosisConcentratedLiquidityV1beta1Types
+      tickAccumulatorTrackersRequest =
+      OsmosisConcentratedLiquidityV1beta1Types._(
+          "/osmosis.concentratedliquidity.v1beta1.TickAccumulatorTrackersRequest");
+  static const OsmosisConcentratedLiquidityV1beta1Types
+      tickAccumulatorTrackersResponse =
+      OsmosisConcentratedLiquidityV1beta1Types._(
+          "/osmosis.concentratedliquidity.v1beta1.TickAccumulatorTrackersResponse");
+
+  static const OsmosisConcentratedLiquidityV1beta1Types
+      cFMMPoolIdLinkFromConcentratedPoolIdRequest =
+      OsmosisConcentratedLiquidityV1beta1Types._(
+          "/osmosis.concentratedliquidity.v1beta1.CFMMPoolIdLinkFromConcentratedPoolIdRequest");
+  static const OsmosisConcentratedLiquidityV1beta1Types
+      cFMMPoolIdLinkFromConcentratedPoolIdResponse =
+      OsmosisConcentratedLiquidityV1beta1Types._(
+          "/osmosis.concentratedliquidity.v1beta1.CFMMPoolIdLinkFromConcentratedPoolIdResponse");
+
+  static const OsmosisConcentratedLiquidityV1beta1Types
+      userUnbondingPositionsRequest =
+      OsmosisConcentratedLiquidityV1beta1Types._(
+          "/osmosis.concentratedliquidity.v1beta1.UserUnbondingPositionsRequest");
+  static const OsmosisConcentratedLiquidityV1beta1Types
+      userUnbondingPositionsResponse =
+      OsmosisConcentratedLiquidityV1beta1Types._(
+          "/osmosis.concentratedliquidity.v1beta1.UserUnbondingPositionsResponse");
+
+  static const OsmosisConcentratedLiquidityV1beta1Types
+      getTotalLiquidityRequest = OsmosisConcentratedLiquidityV1beta1Types._(
+          "/osmosis.concentratedliquidity.v1beta1.GetTotalLiquidityRequest");
+  static const OsmosisConcentratedLiquidityV1beta1Types
+      getTotalLiquidityResponse = OsmosisConcentratedLiquidityV1beta1Types._(
+          "/osmosis.concentratedliquidity.v1beta1.GetTotalLiquidityResponse");
+
+  static const OsmosisConcentratedLiquidityV1beta1Types
+      numNextInitializedTicksRequest =
+      OsmosisConcentratedLiquidityV1beta1Types._(
+          "/osmosis.concentratedliquidity.v1beta1.NumNextInitializedTicksRequest");
+  static const OsmosisConcentratedLiquidityV1beta1Types
+      numNextInitializedTicksResponse =
+      OsmosisConcentratedLiquidityV1beta1Types._(
+          "/osmosis.concentratedliquidity.v1beta1.NumNextInitializedTicksResponse");
+
   /// query
+  static const OsmosisConcentratedLiquidityV1beta1Types
+      numNextInitializedTicks = OsmosisConcentratedLiquidityV1beta1Types._(
+          "/osmosis.concentratedliquidity.v1beta1.Query/NumNextInitializedTicks",
+          rpc:
+              "/osmosis/concentratedliquidity/v1beta1/num_next_initialized_ticks");
+
+  static const OsmosisConcentratedLiquidityV1beta1Types getTotalLiquidity =
+      OsmosisConcentratedLiquidityV1beta1Types._(
+          "/osmosis.concentratedliquidity.v1beta1.Query/GetTotalLiquidity",
+          rpc: "/osmosis/concentratedliquidity/v1beta1/get_total_liquidity");
+
+  static const OsmosisConcentratedLiquidityV1beta1Types userUnbondingPositions =
+      OsmosisConcentratedLiquidityV1beta1Types._(
+          "/osmosis.concentratedliquidity.v1beta1.Query/UserUnbondingPositions",
+          rpc:
+              "/osmosis/concentratedliquidity/v1beta1/user_unbonding_positions/:address");
+
+  static const OsmosisConcentratedLiquidityV1beta1Types
+      cFMMPoolIdLinkFromConcentratedPoolId =
+      OsmosisConcentratedLiquidityV1beta1Types._(
+          "/osmosis.concentratedliquidity.v1beta1.Query/CFMMPoolIdLinkFromConcentratedPoolId",
+          rpc:
+              "/osmosis/concentratedliquidity/v1beta1/cfmm_pool_id_link_from_concentrated/:concentrated_pool_id");
+
+  static const OsmosisConcentratedLiquidityV1beta1Types
+      tickAccumulatorTrackers = OsmosisConcentratedLiquidityV1beta1Types._(
+          "/osmosis.concentratedliquidity.v1beta1.Query/TickAccumulatorTrackers",
+          rpc: "/osmosis/concentratedliquidity/v1beta1/tick_accum_trackers");
+
+  static const OsmosisConcentratedLiquidityV1beta1Types incentiveRecords =
+      OsmosisConcentratedLiquidityV1beta1Types._(
+          "/osmosis.concentratedliquidity.v1beta1.Query/IncentiveRecords",
+          rpc: "/osmosis/concentratedliquidity/v1beta1/incentive_records");
+
+  static const OsmosisConcentratedLiquidityV1beta1Types poolAccumulatorRewards =
+      OsmosisConcentratedLiquidityV1beta1Types._(
+          "/osmosis.concentratedliquidity.v1beta1.Query/PoolAccumulatorRewards",
+          rpc: "/osmosis/concentratedliquidity/v1beta1/pool_accum_rewards");
+
+  static const OsmosisConcentratedLiquidityV1beta1Types positionById =
+      OsmosisConcentratedLiquidityV1beta1Types._(
+          "/osmosis.concentratedliquidity.v1beta1.Query/PositionById",
+          rpc: "/osmosis/concentratedliquidity/v1beta1/position_by_id");
+
+  static const OsmosisConcentratedLiquidityV1beta1Types claimableIncentives =
+      OsmosisConcentratedLiquidityV1beta1Types._(
+          "/osmosis.concentratedliquidity.v1beta1.Query/ClaimableIncentives",
+          rpc: "/osmosis/concentratedliquidity/v1beta1/claimable_incentives");
+  static const OsmosisConcentratedLiquidityV1beta1Types claimableSpreadRewards =
+      OsmosisConcentratedLiquidityV1beta1Types._(
+          "/osmosis.concentratedliquidity.v1beta1.Query/ClaimableSpreadRewards",
+          rpc:
+              "/osmosis/concentratedliquidity/v1beta1/claimable_spread_rewards");
+
+  static const OsmosisConcentratedLiquidityV1beta1Types
+      liquidityNetInDirection = OsmosisConcentratedLiquidityV1beta1Types._(
+          "/osmosis.concentratedliquidity.v1beta1.Query/LiquidityNetInDirection",
+          rpc:
+              "/osmosis/concentratedliquidity/v1beta1/liquidity_net_in_direction");
   static const OsmosisConcentratedLiquidityV1beta1Types
       liquidityDepthWithRangeQuery = OsmosisConcentratedLiquidityV1beta1Types._(
           "/osmosis.concentratedliquidity.v1beta1.Query/LiquidityDepthWithRange",

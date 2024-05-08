@@ -47,7 +47,6 @@ class OsmosisGammPoolmodelsStableSwapPool extends CosmosMessage {
         scalingFactor = scalingFactor.mutable;
   factory OsmosisGammPoolmodelsStableSwapPool.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    print("sevent ${decode.getFields(7)}");
     return OsmosisGammPoolmodelsStableSwapPool(
         address: decode.getField(1),
         id: decode.getField(2),
