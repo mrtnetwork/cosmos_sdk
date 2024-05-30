@@ -10,7 +10,7 @@ class OsmosisProtorevQueryGetProtoRevBaseDenomsRequest extends CosmosMessage
   const OsmosisProtorevQueryGetProtoRevBaseDenomsRequest();
   factory OsmosisProtorevQueryGetProtoRevBaseDenomsRequest.deserialize(
       List<int> bytes) {
-    return OsmosisProtorevQueryGetProtoRevBaseDenomsRequest();
+    return const OsmosisProtorevQueryGetProtoRevBaseDenomsRequest();
   }
 
   @override

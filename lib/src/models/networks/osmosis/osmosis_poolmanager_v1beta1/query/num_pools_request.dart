@@ -8,7 +8,7 @@ class OsmosisPoolManagerNumPoolsRequest extends CosmosMessage
         RPCMessage<OsmosisPoolManagerNumPoolsResponse> {
   const OsmosisPoolManagerNumPoolsRequest();
   factory OsmosisPoolManagerNumPoolsRequest.deserialize() {
-    return OsmosisPoolManagerNumPoolsRequest();
+    return const OsmosisPoolManagerNumPoolsRequest();
   }
   @override
   List<int> get fieldIds => [];

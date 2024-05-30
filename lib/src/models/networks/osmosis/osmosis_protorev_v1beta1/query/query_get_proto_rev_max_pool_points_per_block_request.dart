@@ -13,7 +13,7 @@ class OsmosisProtorevQueryGetProtoRevMaxPoolPointsPerBlockRequest
   const OsmosisProtorevQueryGetProtoRevMaxPoolPointsPerBlockRequest();
   factory OsmosisProtorevQueryGetProtoRevMaxPoolPointsPerBlockRequest.deserialize(
       List<int> bytes) {
-    return OsmosisProtorevQueryGetProtoRevMaxPoolPointsPerBlockRequest();
+    return const OsmosisProtorevQueryGetProtoRevMaxPoolPointsPerBlockRequest();
   }
 
   @override

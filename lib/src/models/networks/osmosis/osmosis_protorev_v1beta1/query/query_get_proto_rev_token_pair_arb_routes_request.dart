@@ -11,7 +11,7 @@ class OsmosisProtorevQueryGetProtoRevTokenPairArbRoutesRequest
   const OsmosisProtorevQueryGetProtoRevTokenPairArbRoutesRequest();
   factory OsmosisProtorevQueryGetProtoRevTokenPairArbRoutesRequest.deserialize(
       List<int> bytes) {
-    return OsmosisProtorevQueryGetProtoRevTokenPairArbRoutesRequest();
+    return const OsmosisProtorevQueryGetProtoRevTokenPairArbRoutesRequest();
   }
 
   @override

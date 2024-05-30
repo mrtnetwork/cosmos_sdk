@@ -1,3 +1,7 @@
+## 0.2.0
+
+* Update dependencies
+
 ## 0.1.0
 
 * Enhanced compatibility with the latest features of the Osmosis network.

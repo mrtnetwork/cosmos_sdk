@@ -10,7 +10,7 @@ class OsmosisProtorevQueryGetProtoRevEnabledRequest extends CosmosMessage
   const OsmosisProtorevQueryGetProtoRevEnabledRequest();
   factory OsmosisProtorevQueryGetProtoRevEnabledRequest.deserialize(
       List<int> bytes) {
-    return OsmosisProtorevQueryGetProtoRevEnabledRequest();
+    return const OsmosisProtorevQueryGetProtoRevEnabledRequest();
   }
 
   @override

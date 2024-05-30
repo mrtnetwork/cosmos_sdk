@@ -11,7 +11,7 @@ class OsmosisProtorevQueryGetProtoRevDeveloperAccountRequest
   const OsmosisProtorevQueryGetProtoRevDeveloperAccountRequest();
   factory OsmosisProtorevQueryGetProtoRevDeveloperAccountRequest.deserialize(
       List<int> bytes) {
-    return OsmosisProtorevQueryGetProtoRevDeveloperAccountRequest();
+    return const OsmosisProtorevQueryGetProtoRevDeveloperAccountRequest();
   }
 
   @override

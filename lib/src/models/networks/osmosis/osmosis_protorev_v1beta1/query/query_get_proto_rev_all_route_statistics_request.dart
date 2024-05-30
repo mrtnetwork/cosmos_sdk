@@ -12,7 +12,7 @@ class OsmosisProtorevQueryGetProtoRevAllRouteStatisticsRequest
   const OsmosisProtorevQueryGetProtoRevAllRouteStatisticsRequest();
   factory OsmosisProtorevQueryGetProtoRevAllRouteStatisticsRequest.deserialize(
       List<int> bytes) {
-    return OsmosisProtorevQueryGetProtoRevAllRouteStatisticsRequest();
+    return const OsmosisProtorevQueryGetProtoRevAllRouteStatisticsRequest();
   }
 
   @override

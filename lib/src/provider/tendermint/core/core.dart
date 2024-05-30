@@ -23,7 +23,7 @@ abstract class TendermintRequestParam<RESULT, RESPONSE>
   }
 
   /// Converts the request parameters to [TendermintRequestDetails] with a unique identifier.
-  TendermintRequestDetails toRequest(int _) {
+  TendermintRequestDetails toRequest(int id) {
     final pathParams = CosmosUtils.extractParams(method);
     if (pathParams.length != pathParameters.length) {
       throw MessageException("Invalid Path Parameters.", details: {
@@ -44,7 +44,7 @@ abstract class TendermintRequestParam<RESULT, RESPONSE>
           .toString();
     }
 
-    return TendermintRequestDetails(id: _, pathParams: params);
+    return TendermintRequestDetails(id: id, pathParams: params);
   }
 }
 

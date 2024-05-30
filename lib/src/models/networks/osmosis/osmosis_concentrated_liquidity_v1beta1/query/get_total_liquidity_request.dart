@@ -9,7 +9,7 @@ class OsmosisConcentratedLiquidityGetTotalLiquidityRequest extends CosmosMessage
   const OsmosisConcentratedLiquidityGetTotalLiquidityRequest();
   factory OsmosisConcentratedLiquidityGetTotalLiquidityRequest.deserialize(
       List<int> bytes) {
-    return OsmosisConcentratedLiquidityGetTotalLiquidityRequest();
+    return const OsmosisConcentratedLiquidityGetTotalLiquidityRequest();
   }
 
   @override

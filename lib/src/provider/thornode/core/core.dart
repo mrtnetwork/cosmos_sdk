@@ -23,7 +23,7 @@ abstract class ThorNodeRequestParam<RESULT, RESPONSE>
   }
 
   /// Converts the request parameters to [ThorNodeRequestDetails] with a unique identifier.
-  ThorNodeRequestDetails toRequest(int _) {
+  ThorNodeRequestDetails toRequest(int id) {
     final pathParams = CosmosUtils.extractParams(method);
     if (pathParams.length != pathParameters.length) {
       throw MessageException("Invalid Path Parameters.", details: {
@@ -44,7 +44,7 @@ abstract class ThorNodeRequestParam<RESULT, RESPONSE>
           .toString();
     }
 
-    return ThorNodeRequestDetails(id: _, pathParams: params);
+    return ThorNodeRequestDetails(id: id, pathParams: params);
   }
 }
 

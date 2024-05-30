@@ -8,7 +8,7 @@ class OsmosisProtorevQueryParamsRequest extends CosmosMessage
         RPCMessage<OsmosisProtorevQueryParamsResponse> {
   const OsmosisProtorevQueryParamsRequest();
   factory OsmosisProtorevQueryParamsRequest.deserialize(List<int> bytes) {
-    return OsmosisProtorevQueryParamsRequest();
+    return const OsmosisProtorevQueryParamsRequest();
   }
 
   @override
