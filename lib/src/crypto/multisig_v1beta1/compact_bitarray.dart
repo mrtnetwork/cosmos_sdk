@@ -1,6 +1,6 @@
 import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 import 'package:cosmos_sdk/src/protobuf/codec/decoder.dart';
-import 'package:blockchain_utils/binary/binary.dart';
+import 'package:blockchain_utils/utils/utils.dart';
 
 /// CompactBitArray is an implementation of a space efficient bit array.
 /// This is used to ensure that the encoded data takes up a minimal amount of space after proto encoding.

@@ -1,7 +1,7 @@
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_tx_v1beta1/query/simulate_response.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_tx_v1beta1/types/types.dart';
-import 'package:blockchain_utils/binary/utils.dart';
+import 'package:blockchain_utils/utils/utils.dart';
 
 /// Simulate simulates executing a transaction for estimating gas usage.
 class SimulateRequest extends CosmosMessage

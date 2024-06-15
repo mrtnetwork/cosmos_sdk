@@ -1,4 +1,4 @@
-import 'package:blockchain_utils/binary/utils.dart';
+import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/cosmos_sdk.dart';
 import 'package:example/provider.dart';
 import 'package:example/thor_node_provider.dart';

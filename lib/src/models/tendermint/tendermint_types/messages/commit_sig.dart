@@ -30,11 +30,11 @@ class CommitSig extends CosmosMessage {
   factory CommitSig.fromRpc(Map<String, dynamic> json) {
     return CommitSig(
         blockIDFlag: BlockIDFlag.fromName(json["block_id_flag"]),
-        validatorAddress: StringUtils.tryEncode(
-            json["validator_address"], StringEncoding.base64),
+        validatorAddress: StringUtils.tryEncode(json["validator_address"],
+            type: StringEncoding.base64),
         timestamp: ProtobufTimestamp.fromString(json["timestamp"]),
-        signature:
-            StringUtils.tryEncode(json["signature"], StringEncoding.base64));
+        signature: StringUtils.tryEncode(json["signature"],
+            type: StringEncoding.base64));
   }
 
   @override

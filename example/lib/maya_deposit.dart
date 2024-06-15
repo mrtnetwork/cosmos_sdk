@@ -1,4 +1,4 @@
-import 'package:blockchain_utils/binary/utils.dart';
+import 'package:blockchain_utils/utils/utils.dart';
 import 'package:blockchain_utils/bip/bip/bip39/bip39_seed_generator.dart';
 import 'package:blockchain_utils/bip/bip/bip44/bip44_base.dart';
 import 'package:blockchain_utils/bip/bip/conf/bip44/bip44_coins.dart';

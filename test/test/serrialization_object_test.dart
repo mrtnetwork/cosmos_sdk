@@ -1,4 +1,4 @@
-import 'package:blockchain_utils/binary/binary.dart';
+import 'package:blockchain_utils/blockchain_utils.dart';
 import 'package:cosmos_sdk/cosmos_sdk.dart';
 import 'package:test/test.dart';
 

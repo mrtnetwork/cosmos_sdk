@@ -1,4 +1,4 @@
-import 'package:blockchain_utils/binary/utils.dart';
+import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/models/networks/thorchain/v1/common/coin.dart';
 import 'package:cosmos_sdk/src/models/networks/thorchain/v1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';

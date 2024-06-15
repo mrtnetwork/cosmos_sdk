@@ -48,7 +48,7 @@ class ABCIResponse {
       throw RPCError(
           errorCode: code, message: log, request: {}, data: toJson());
     }
-    return StringUtils.encode(value!, StringEncoding.base64);
+    return StringUtils.encode(value!, type: StringEncoding.base64);
   }
 
   @override

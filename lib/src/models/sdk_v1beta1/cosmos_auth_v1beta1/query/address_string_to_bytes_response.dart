@@ -1,6 +1,6 @@
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_auth_v1beta1/types/types.dart';
-import 'package:blockchain_utils/binary/utils.dart';
+import 'package:blockchain_utils/utils/utils.dart';
 
 /// AddressStringToBytesResponse is the response type for AddressBytes rpc method.
 /// Since: cosmos-sdk 0.46

@@ -12,7 +12,7 @@ class Any extends CosmosProtocolBuffer {
   }
   factory Any.fromRpc(Map<String, dynamic> json) {
     return Any(
-        value: StringUtils.encode(json["value"], StringEncoding.base64),
+        value: StringUtils.encode(json["value"], type: StringEncoding.base64),
         typeUrl: json["type_url"]);
   }
   final List<int> value;

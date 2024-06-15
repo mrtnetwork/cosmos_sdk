@@ -25,7 +25,7 @@ class DeliverTxResponse {
   factory DeliverTxResponse.fromJson(Map<String, dynamic> json) {
     return DeliverTxResponse(
         code: json["code"],
-        data: StringUtils.tryEncode(json["data"], StringEncoding.base64),
+        data: StringUtils.tryEncode(json["data"], type: StringEncoding.base64),
         log: json["log"],
         info: json["info"],
         gasWanted: BigintUtils.tryParse(json["gas_wanted"]),

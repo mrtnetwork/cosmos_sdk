@@ -1,4 +1,4 @@
-import 'package:blockchain_utils/binary/utils.dart';
+import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/models/ics23/messages/proof/batch_entry_base.dart';
 import 'package:cosmos_sdk/src/models/ics23/messages/inner_op.dart';
 import 'package:cosmos_sdk/src/models/ics23/messages/leaf_op.dart';

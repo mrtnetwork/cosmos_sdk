@@ -24,7 +24,7 @@ abstract class CosmosPublicKeyInfo extends CosmosMessage {
   factory CosmosPublicKeyInfo.fromRpc(Map<String, dynamic> json) {
     final pubkeyType = CryptoTypes.fromType(json["@type"]);
     final List<int> key =
-        StringUtils.encode(json["key"], StringEncoding.base64);
+        StringUtils.encode(json["key"], type: StringEncoding.base64);
     switch (pubkeyType) {
       case CryptoTypes.secp256R1Publickey:
         return CosmosSecp256R1PublicKey.fromBytes(key);

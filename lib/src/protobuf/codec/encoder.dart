@@ -1,8 +1,8 @@
+import 'package:blockchain_utils/utils/string/string.dart';
 import 'package:cosmos_sdk/src/address/address/address.dart';
 import 'package:cosmos_sdk/src/protobuf/types/cosmos_enum.dart';
 import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 import 'package:blockchain_utils/exception/exceptions.dart';
-import 'package:blockchain_utils/string/string.dart';
 
 /// Class for encoding cosmos messages using minimal protobuf encoding.
 class ProtocolBufferEncoder {

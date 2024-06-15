@@ -24,7 +24,8 @@ class PageResponse extends CosmosMessage {
   }
   factory PageResponse.fromRpc(Map<String, dynamic> json) {
     return PageResponse(
-        nextKey: StringUtils.tryEncode(json["next_key"], StringEncoding.base64),
+        nextKey: StringUtils.tryEncode(json["next_key"],
+            type: StringEncoding.base64),
         total: BigInt.tryParse(json["total"] ?? "0"));
   }
 

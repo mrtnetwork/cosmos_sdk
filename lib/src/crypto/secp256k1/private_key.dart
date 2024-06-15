@@ -1,6 +1,6 @@
 import 'package:blockchain_utils/signer/cosmos/cosmos_signer.dart';
 import 'package:cosmos_sdk/src/crypto/secp256k1/public_key.dart';
-import 'package:blockchain_utils/binary/binary.dart';
+import 'package:blockchain_utils/utils/utils.dart';
 import 'package:blockchain_utils/bip/ecc/keys/secp256k1_keys_ecdsa.dart';
 import 'package:cosmos_sdk/src/crypto/ed25519/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';

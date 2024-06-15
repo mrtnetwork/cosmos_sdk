@@ -1,4 +1,4 @@
-import 'package:blockchain_utils/binary/utils.dart';
+import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_client_v1/messages/height.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_client_v1/query/query_verify_membership_response.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_commitment_v1/messages/merkle_path.dart';

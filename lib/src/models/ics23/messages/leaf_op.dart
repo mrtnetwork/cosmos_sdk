@@ -1,4 +1,4 @@
-import 'package:blockchain_utils/binary/utils.dart';
+import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/models/ics23/messages/hash_op.dart';
 import 'package:cosmos_sdk/src/models/ics23/messages/length_op.dart';
 import 'package:cosmos_sdk/src/models/ics23/types/types.dart';

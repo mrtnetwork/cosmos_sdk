@@ -1,7 +1,7 @@
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_abci_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/models/tendermint/tendermint_abci/messages/event.dart';
-import 'package:blockchain_utils/binary/utils.dart';
+import 'package:blockchain_utils/utils/utils.dart';
 
 /// Result is the union of ResponseFormat and ResponseCheckTx.
 class Result extends CosmosMessage {

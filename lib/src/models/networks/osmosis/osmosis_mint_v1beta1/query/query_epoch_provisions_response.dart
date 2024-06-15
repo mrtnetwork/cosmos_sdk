@@ -1,5 +1,4 @@
-import 'package:blockchain_utils/binary/utils.dart';
-import 'package:blockchain_utils/string/string.dart';
+import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_mint_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
@@ -16,8 +15,9 @@ class OsmosisMintQueryEpochProvisionsResponse extends CosmosMessage {
   }
   factory OsmosisMintQueryEpochProvisionsResponse.fromRpc(
       Map<String, dynamic> json) {
-    return OsmosisMintQueryEpochProvisionsResponse(
-        StringUtils.encode(json["epoch_provisions"], StringEncoding.base64));
+    return OsmosisMintQueryEpochProvisionsResponse(StringUtils.encode(
+        json["epoch_provisions"],
+        type: StringEncoding.base64));
   }
   @override
   List<int> get fieldIds => [1];

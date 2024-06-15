@@ -1,5 +1,5 @@
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:blockchain_utils/numbers/numbers.dart';
+import 'package:blockchain_utils/utils/utils.dart';
 
 import '../types/types.dart';
 

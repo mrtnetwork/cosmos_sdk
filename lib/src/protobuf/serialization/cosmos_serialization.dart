@@ -1,7 +1,7 @@
 import 'package:cosmos_sdk/src/protobuf/message/any.dart';
 import 'package:cosmos_sdk/src/protobuf/codec/decoder.dart';
 import 'package:cosmos_sdk/src/protobuf/codec/encoder.dart';
-import 'package:blockchain_utils/binary/binary.dart';
+import 'package:blockchain_utils/utils/utils.dart';
 import 'package:blockchain_utils/exception/exception.dart';
 
 /// Abstract class providing a common implementation for encoding cosmos messages using minimal protobuf encoding.

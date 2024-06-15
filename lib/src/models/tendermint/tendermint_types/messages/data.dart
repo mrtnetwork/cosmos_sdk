@@ -1,5 +1,4 @@
-import 'package:blockchain_utils/binary/utils.dart';
-import 'package:blockchain_utils/string/string.dart';
+import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/models/tendermint/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
@@ -19,7 +18,7 @@ class BlockData extends CosmosMessage {
   factory BlockData.fromRpc(Map<String, dynamic> json) {
     return BlockData(
         txs: (json["txs"] as List)
-            .map((e) => StringUtils.encode(e, StringEncoding.base64))
+            .map((e) => StringUtils.encode(e, type: StringEncoding.base64))
             .toList());
   }
 

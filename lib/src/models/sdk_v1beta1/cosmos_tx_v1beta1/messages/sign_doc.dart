@@ -1,6 +1,6 @@
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_tx_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:blockchain_utils/binary/binary.dart';
+import 'package:blockchain_utils/utils/utils.dart';
 
 /// SignDoc is the type used for generating sign bytes for SIGN_MODE_DIRECT.
 class SignDoc extends CosmosMessage {

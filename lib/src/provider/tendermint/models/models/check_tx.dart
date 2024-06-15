@@ -1,7 +1,4 @@
-import 'package:blockchain_utils/binary/utils.dart';
-import 'package:blockchain_utils/numbers/bigint_utils.dart';
-import 'package:blockchain_utils/numbers/int_utils.dart';
-import 'package:blockchain_utils/string/string.dart';
+import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
 import 'event_response.dart';
 
@@ -42,7 +39,7 @@ class CheckTxResponse {
         gasWanted: BigintUtils.parse(json["gas_wanted"]),
         gasUsed: BigintUtils.parse(json["gas_used"]),
         code: IntUtils.tryParse(json["code"]),
-        data: StringUtils.tryEncode(json["data"], StringEncoding.base64),
+        data: StringUtils.tryEncode(json["data"], type: StringEncoding.base64),
         log: json["log"],
         info: json["info"],
         codespace: json["codespace"],
@@ -53,7 +50,7 @@ class CheckTxResponse {
   Map<String, dynamic> toJson() {
     return {
       'code': code,
-      'data': StringUtils.tryDecode(data, StringEncoding.base64),
+      'data': StringUtils.tryDecode(data, type: StringEncoding.base64),
       'log': log,
       'info': info,
       'gas_wanted': gasWanted.toString(),

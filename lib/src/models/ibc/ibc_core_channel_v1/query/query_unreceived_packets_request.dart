@@ -1,4 +1,4 @@
-import 'package:blockchain_utils/numbers/numbers.dart';
+import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_channel_v1/query/query_unreceived_packets_response.dart';
 
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
