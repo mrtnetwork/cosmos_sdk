@@ -11,7 +11,7 @@ class OsmosisSuperfluidAllIntermediaryAccountsResponse extends CosmosMessage {
       {required List<OsmosisSuperfluidUnpoolSuperfluidIntermediaryAccountInfo>
           accounts,
       this.pagination})
-      : accounts = accounts.mutable;
+      : accounts = accounts.immutable;
   factory OsmosisSuperfluidAllIntermediaryAccountsResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

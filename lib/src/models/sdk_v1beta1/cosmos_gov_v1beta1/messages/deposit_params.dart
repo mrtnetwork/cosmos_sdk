@@ -14,7 +14,7 @@ class GovDepositParams extends CosmosMessage {
   final ProtobufDuration maxDepositPeriod;
   GovDepositParams(
       {required List<Coin> minDeposit, required this.maxDepositPeriod})
-      : minDeposit = minDeposit.mutable;
+      : minDeposit = minDeposit.immutable;
   factory GovDepositParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GovDepositParams(

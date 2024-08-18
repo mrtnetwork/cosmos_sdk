@@ -50,7 +50,7 @@ class OsmosisMintParams extends CosmosMessage {
           weightedDeveloperRewardsReceivers,
       this.mintingRewardsDistributionStartEpoch})
       : weightedDeveloperRewardsReceivers =
-            weightedDeveloperRewardsReceivers.mutable;
+            weightedDeveloperRewardsReceivers.immutable;
   factory OsmosisMintParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisMintParams(

@@ -9,7 +9,7 @@ class OsmosisProtorevQueryGetProtoRevBaseDenomsResponse extends CosmosMessage {
   final List<OsmosisProtorevBaseDenom> baseDenoms;
   OsmosisProtorevQueryGetProtoRevBaseDenomsResponse(
       List<OsmosisProtorevBaseDenom> baseDenoms)
-      : baseDenoms = baseDenoms.mutable;
+      : baseDenoms = baseDenoms.immutable;
   factory OsmosisProtorevQueryGetProtoRevBaseDenomsResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

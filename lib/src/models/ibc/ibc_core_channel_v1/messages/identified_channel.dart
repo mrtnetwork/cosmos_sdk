@@ -41,7 +41,7 @@ class IbcChannelIdentifiedChannel extends CosmosMessage {
       this.portId,
       this.channelId,
       this.upgradeSequence})
-      : connectionHops = connectionHops?.mutable;
+      : connectionHops = connectionHops?.immutable;
   factory IbcChannelIdentifiedChannel.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcChannelIdentifiedChannel(

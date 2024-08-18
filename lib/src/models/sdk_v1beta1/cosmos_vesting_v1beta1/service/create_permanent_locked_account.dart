@@ -20,7 +20,7 @@ class MsgCreatePermanentLockedAccount extends CosmosMessage
     this.fromAddress,
     this.toAddress,
     required List<Coin> amount,
-  }) : amount = amount.mutable;
+  }) : amount = amount.immutable;
 
   factory MsgCreatePermanentLockedAccount.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

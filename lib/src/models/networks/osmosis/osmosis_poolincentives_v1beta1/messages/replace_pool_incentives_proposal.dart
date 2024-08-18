@@ -17,7 +17,7 @@ class OsmosisPoolincentivesReplacePoolIncentivesProposal extends CosmosMessage {
       {this.title,
       required this.description,
       required List<OsmosisPoolincentivesDistrRecord> records})
-      : records = records.mutable;
+      : records = records.immutable;
   factory OsmosisPoolincentivesReplacePoolIncentivesProposal.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

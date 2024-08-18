@@ -30,9 +30,9 @@ class OsmosisPoolGenesisState extends CosmosMessage {
       required List<OsmosisPoolManagerPoolVolume> poolVolumes,
       required List<OsmosisPoolManagerDenomPairTakerFee>
           denomPairTakerFeeStore})
-      : poolRoutes = poolRoutes.mutable,
-        poolVolumes = poolVolumes.mutable,
-        denomPairTakerFeeStore = denomPairTakerFeeStore.mutable;
+      : poolRoutes = poolRoutes.immutable,
+        poolVolumes = poolVolumes.immutable,
+        denomPairTakerFeeStore = denomPairTakerFeeStore.immutable;
   factory OsmosisPoolGenesisState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolGenesisState(

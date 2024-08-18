@@ -16,7 +16,7 @@ class OsmosisGammMsgJoinPool extends CosmosMessage
       this.poolId,
       required this.shareOutAmount,
       required List<Coin> tokenInMaxs})
-      : tokenInMaxs = tokenInMaxs.mutable;
+      : tokenInMaxs = tokenInMaxs.immutable;
   factory OsmosisGammMsgJoinPool.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisGammMsgJoinPool(

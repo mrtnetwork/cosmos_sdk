@@ -12,7 +12,7 @@ class ThorchainBlame extends CosmosMessage {
       this.isUnicast,
       required List<ThorchainNode> blameNodes,
       this.round})
-      : blameNodes = blameNodes.mutable;
+      : blameNodes = blameNodes.immutable;
   factory ThorchainBlame.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainBlame(

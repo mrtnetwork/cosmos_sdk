@@ -18,7 +18,7 @@ class OsmosisIncentiveMsgAddToGauge extends CosmosMessage
 
   OsmosisIncentiveMsgAddToGauge(
       {this.gaugeId, this.owner, required List<Coin> rewards})
-      : rewards = rewards.mutable;
+      : rewards = rewards.immutable;
   factory OsmosisIncentiveMsgAddToGauge.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisIncentiveMsgAddToGauge(

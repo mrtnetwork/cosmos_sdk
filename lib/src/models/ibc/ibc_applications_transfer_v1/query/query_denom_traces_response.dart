@@ -13,7 +13,7 @@ class QueryDenomTracesResponse extends CosmosMessage {
   final PageResponse? pagination;
   QueryDenomTracesResponse(
       {required List<DenomTrace> denomTraces, this.pagination})
-      : denomTraces = denomTraces.mutable;
+      : denomTraces = denomTraces.immutable;
   factory QueryDenomTracesResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryDenomTracesResponse(

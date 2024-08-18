@@ -33,13 +33,13 @@ class ThorVaultInfoResponse {
     required List<ThorChainContractResponse> routers,
     required List<ThorVaultAddressInfoResponse> addresses,
     required List<String> frozen,
-  })  : coins = coins.mutable,
-        membership = membership.mutable,
-        chains = chains.mutable,
-        routers = routers.mutable,
-        addresses = addresses.mutable,
-        frozen = frozen.mutable,
-        pendingTxBlockHeights = pendingTxBlockHeights.mutable;
+  })  : coins = coins.immutable,
+        membership = membership.immutable,
+        chains = chains.immutable,
+        routers = routers.immutable,
+        addresses = addresses.immutable,
+        frozen = frozen.immutable,
+        pendingTxBlockHeights = pendingTxBlockHeights.immutable;
 
   factory ThorVaultInfoResponse.fromJson(Map<String, dynamic> json) {
     return ThorVaultInfoResponse(

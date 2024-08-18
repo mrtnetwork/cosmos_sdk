@@ -14,7 +14,7 @@ class QueryIncentivizedPacketsForChannelResponse extends CosmosMessage {
   QueryIncentivizedPacketsForChannelResponse(
       {required List<IbcFeeIdentifiedPacketFees> incentivizedPackets,
       this.pagination})
-      : incentivizedPackets = incentivizedPackets.mutable;
+      : incentivizedPackets = incentivizedPackets.immutable;
 
   factory QueryIncentivizedPacketsForChannelResponse.deserialize(
       List<int> bytes) {

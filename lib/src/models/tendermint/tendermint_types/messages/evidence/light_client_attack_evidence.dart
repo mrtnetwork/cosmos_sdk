@@ -19,7 +19,7 @@ class LightClientAttackEvidence extends BaseEvidence {
       required List<TendermintValidator> byzantineValidators,
       this.totalVotingPower,
       required this.timestamp})
-      : byzantineValidators = byzantineValidators.mutable;
+      : byzantineValidators = byzantineValidators.immutable;
   factory LightClientAttackEvidence.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return LightClientAttackEvidence(

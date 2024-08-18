@@ -16,8 +16,8 @@ class ControllerGenesisState extends CosmosMessage {
       required List<RegisteredInterchainAccount> interchainAccounts,
       List<String>? ports,
       required this.params})
-      : activeChannels = activeChannels.mutable,
-        interchainAccounts = interchainAccounts.mutable,
+      : activeChannels = activeChannels.immutable,
+        interchainAccounts = interchainAccounts.immutable,
         ports = ports?.nullOnEmpy;
   factory ControllerGenesisState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

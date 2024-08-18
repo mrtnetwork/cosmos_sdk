@@ -27,7 +27,7 @@ class OsmosisConcentratedLiquidityMsgCreatePosition extends CosmosMessage
       required List<Coin> tokensProvided,
       required this.tokenMinAmount0,
       required this.tokenMinAmount1})
-      : tokensProvided = tokensProvided.mutable;
+      : tokensProvided = tokensProvided.immutable;
   factory OsmosisConcentratedLiquidityMsgCreatePosition.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

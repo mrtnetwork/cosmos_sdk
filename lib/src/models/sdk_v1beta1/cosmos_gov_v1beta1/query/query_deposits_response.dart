@@ -14,7 +14,7 @@ class GovQueryDepositsResponse extends CosmosMessage {
   final PageResponse? pagination;
   GovQueryDepositsResponse(
       {required List<GovDeposit> deposits, this.pagination})
-      : deposits = deposits.mutable;
+      : deposits = deposits.immutable;
   factory GovQueryDepositsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GovQueryDepositsResponse(

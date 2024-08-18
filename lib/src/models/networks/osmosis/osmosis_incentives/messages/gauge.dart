@@ -48,8 +48,8 @@ class OsmosisIncentivesGauge extends CosmosMessage {
       this.numEpochsPaidOver,
       this.filledEpochs,
       required List<Coin> distributedCoins})
-      : coins = coins.mutable,
-        distributedCoins = distributedCoins.mutable;
+      : coins = coins.immutable,
+        distributedCoins = distributedCoins.immutable;
   factory OsmosisIncentivesGauge.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisIncentivesGauge(

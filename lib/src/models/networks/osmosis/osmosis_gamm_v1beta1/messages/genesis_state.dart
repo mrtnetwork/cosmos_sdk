@@ -16,7 +16,7 @@ class OsmosisGammGenesisState extends CosmosMessage {
       {required List<Any> pools,
       required this.nextPoolNumber,
       required this.params})
-      : pools = pools.mutable;
+      : pools = pools.immutable;
   factory OsmosisGammGenesisState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisGammGenesisState(

@@ -8,7 +8,7 @@ class OsmosisLockupAccountLockedLongerDurationDenomResponse
   final List<OsmosisLockupPeriodLock> locks;
   OsmosisLockupAccountLockedLongerDurationDenomResponse(
       List<OsmosisLockupPeriodLock> locks)
-      : locks = locks.mutable;
+      : locks = locks.immutable;
   factory OsmosisLockupAccountLockedLongerDurationDenomResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

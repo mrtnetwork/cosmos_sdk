@@ -7,7 +7,7 @@ import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
 class OsmosisTokenFactoryParams extends CosmosMessage {
   final List<Coin> denomCreationFee;
   OsmosisTokenFactoryParams(List<Coin> denomCreationFee)
-      : denomCreationFee = denomCreationFee.mutable;
+      : denomCreationFee = denomCreationFee.immutable;
   factory OsmosisTokenFactoryParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisTokenFactoryParams(

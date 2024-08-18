@@ -16,7 +16,7 @@ class OsmosisConcentratedLiquidityLiquidityNetInDirectionResponse
       this.currentTick,
       required this.currentLiquidity,
       required this.currentSqrtPrice})
-      : liquidityDepths = liquidityDepths.mutable;
+      : liquidityDepths = liquidityDepths.immutable;
   factory OsmosisConcentratedLiquidityLiquidityNetInDirectionResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

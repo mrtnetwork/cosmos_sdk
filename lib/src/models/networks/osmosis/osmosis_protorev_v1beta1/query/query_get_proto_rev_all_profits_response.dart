@@ -7,7 +7,7 @@ class OsmosisProtorevQueryGetProtoRevAllProfitsResponse extends CosmosMessage {
   /// pprofits is a list of all of the profits from the module
   final List<Coin> profits;
   OsmosisProtorevQueryGetProtoRevAllProfitsResponse(List<Coin> profits)
-      : profits = profits.mutable;
+      : profits = profits.immutable;
   factory OsmosisProtorevQueryGetProtoRevAllProfitsResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

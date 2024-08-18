@@ -15,7 +15,7 @@ class DistributionMsgDepositValidatorRewardsPool extends CosmosMessage
   final List<Coin> amount;
   DistributionMsgDepositValidatorRewardsPool(
       {this.depositor, this.validatorAddress, required List<Coin> amount})
-      : amount = amount.mutable;
+      : amount = amount.immutable;
 
   @override
   List<int> get fieldIds => [1, 2, 3];

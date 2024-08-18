@@ -7,7 +7,7 @@ class OsmosisGammQueryTotalPoolLiquidityResponse extends CosmosMessage {
   final List<Coin> liquidity;
 
   OsmosisGammQueryTotalPoolLiquidityResponse({required List<Coin> liquidity})
-      : liquidity = liquidity.mutable;
+      : liquidity = liquidity.immutable;
   factory OsmosisGammQueryTotalPoolLiquidityResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

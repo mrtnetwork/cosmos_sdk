@@ -13,8 +13,8 @@ class OsmosisConcentratedLiquidityPoolAccumulatorRewardsResponse
       {required List<DecCoin> spreadRewardGrowthGlobal,
       required List<OsmosisConcentratedLiquidityUptimeTracker>
           uptimeGrowthGlobal})
-      : spreadRewardGrowthGlobal = spreadRewardGrowthGlobal.mutable,
-        uptimeGrowthGlobal = uptimeGrowthGlobal.mutable;
+      : spreadRewardGrowthGlobal = spreadRewardGrowthGlobal.immutable,
+        uptimeGrowthGlobal = uptimeGrowthGlobal.immutable;
   factory OsmosisConcentratedLiquidityPoolAccumulatorRewardsResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

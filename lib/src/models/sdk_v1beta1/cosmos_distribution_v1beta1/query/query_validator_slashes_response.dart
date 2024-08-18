@@ -14,7 +14,7 @@ class DistributionQueryValidatorSlashesResponse extends CosmosMessage {
   final PageResponse? pagination;
   DistributionQueryValidatorSlashesResponse(
       {required List<DistributionValidatorSlashEvent> slashes, this.pagination})
-      : slashes = slashes.mutable;
+      : slashes = slashes.immutable;
   factory DistributionQueryValidatorSlashesResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

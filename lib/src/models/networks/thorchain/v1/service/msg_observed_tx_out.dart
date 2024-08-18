@@ -8,7 +8,7 @@ class ThorchainMsgObservedTxOut extends CosmosMessage {
   final List<int>? signer;
   ThorchainMsgObservedTxOut(
       {required List<ThorchainObservedTx> txs, List<int>? signer})
-      : txs = txs.mutable,
+      : txs = txs.immutable,
         signer = BytesUtils.tryToBytes(signer, unmodifiable: true);
   factory ThorchainMsgObservedTxOut.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

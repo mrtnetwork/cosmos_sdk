@@ -31,8 +31,8 @@ class PeriodicAllowance extends CosmosMessage {
       required List<Coin> periodSpendLimit,
       required List<Coin> periodCanSpend,
       required this.periodReset})
-      : periodSpendLimit = periodSpendLimit.mutable,
-        periodCanSpend = periodCanSpend.mutable;
+      : periodSpendLimit = periodSpendLimit.immutable,
+        periodCanSpend = periodCanSpend.immutable;
   factory PeriodicAllowance.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return PeriodicAllowance(

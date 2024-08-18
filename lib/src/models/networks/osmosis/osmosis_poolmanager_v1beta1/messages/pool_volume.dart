@@ -13,7 +13,7 @@ class OsmosisPoolManagerPoolVolume extends CosmosMessage {
 
   OsmosisPoolManagerPoolVolume(
       {required this.poolId, required List<Coin> poolVolume})
-      : poolVolume = poolVolume.mutable;
+      : poolVolume = poolVolume.immutable;
   factory OsmosisPoolManagerPoolVolume.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolManagerPoolVolume(

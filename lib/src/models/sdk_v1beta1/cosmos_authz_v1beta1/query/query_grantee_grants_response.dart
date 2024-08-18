@@ -14,7 +14,7 @@ class AuthzQueryGranteeGrantsResponse extends CosmosMessage {
   final PageResponse? pagination;
   AuthzQueryGranteeGrantsResponse(
       {required List<AuthzGrantAuthorization> grants, this.pagination})
-      : grants = grants.mutable;
+      : grants = grants.immutable;
   factory AuthzQueryGranteeGrantsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return AuthzQueryGranteeGrantsResponse(

@@ -9,7 +9,7 @@ class DistributionMsgWithdrawValidatorCommissionResponse extends CosmosMessage {
   /// Since: cosmos-sdk 0.46
   final List<Coin> amount;
   DistributionMsgWithdrawValidatorCommissionResponse(List<Coin> amount)
-      : amount = amount.mutable;
+      : amount = amount.immutable;
   factory DistributionMsgWithdrawValidatorCommissionResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

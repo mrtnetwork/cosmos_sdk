@@ -18,7 +18,7 @@ class OsmosisSuperfluidMsgCreateFullRangePositionAndSuperfluidDelegate
 
   OsmosisSuperfluidMsgCreateFullRangePositionAndSuperfluidDelegate(
       {this.sender, required List<Coin> coins, this.valAddr, this.poolId})
-      : coins = coins.mutable;
+      : coins = coins.immutable;
   factory OsmosisSuperfluidMsgCreateFullRangePositionAndSuperfluidDelegate.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

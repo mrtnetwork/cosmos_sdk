@@ -17,7 +17,7 @@ class PeriodicVestingAccount extends CosmosMessage {
     this.baseVestingAccount,
     this.startTime,
     required List<Period> vestingPeriods,
-  }) : vestingPeriods = vestingPeriods.mutable;
+  }) : vestingPeriods = vestingPeriods.immutable;
 
   factory PeriodicVestingAccount.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

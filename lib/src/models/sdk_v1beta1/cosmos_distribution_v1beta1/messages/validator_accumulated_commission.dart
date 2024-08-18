@@ -9,7 +9,7 @@ import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
 class DistributionValidatorAccumulatedCommission extends CosmosMessage {
   final List<DecCoin> commission;
   DistributionValidatorAccumulatedCommission(List<DecCoin> commission)
-      : commission = commission.mutable;
+      : commission = commission.immutable;
   factory DistributionValidatorAccumulatedCommission.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

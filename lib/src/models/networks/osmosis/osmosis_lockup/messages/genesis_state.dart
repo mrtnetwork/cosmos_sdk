@@ -13,8 +13,8 @@ class OsmosisLockupGenesisState extends CosmosMessage {
     this.lastLockId,
     required List<OsmosisLockupPeriodLock> locks,
     required List<OsmosisLockupSyntheticLock> syntheticLocks,
-  })  : locks = locks.mutable,
-        syntheticLocks = syntheticLocks.mutable;
+  })  : locks = locks.immutable,
+        syntheticLocks = syntheticLocks.immutable;
 
   factory OsmosisLockupGenesisState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

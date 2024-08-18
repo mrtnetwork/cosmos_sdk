@@ -7,7 +7,7 @@ import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
 /// Note: This type is a duplicate of the ProofOps proto type defined in Tendermint.
 class CosmosProofOps extends CosmosMessage {
   final List<CosmosProofOp> ops;
-  CosmosProofOps({required List<CosmosProofOp> ops}) : ops = ops.mutable;
+  CosmosProofOps({required List<CosmosProofOp> ops}) : ops = ops.immutable;
   factory CosmosProofOps.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmosProofOps(

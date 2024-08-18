@@ -9,7 +9,7 @@ class OsmosisConcentratedLiquidityClaimableSpreadRewardsResponse
 
   OsmosisConcentratedLiquidityClaimableSpreadRewardsResponse(
       List<Coin> claimableSpreadRewards)
-      : claimableSpreadRewards = claimableSpreadRewards.mutable;
+      : claimableSpreadRewards = claimableSpreadRewards.immutable;
   factory OsmosisConcentratedLiquidityClaimableSpreadRewardsResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

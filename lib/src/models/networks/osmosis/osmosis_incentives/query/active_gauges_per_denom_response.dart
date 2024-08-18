@@ -13,7 +13,7 @@ class OsmosisIncentiveActiveGaugesPerDenomResponse extends CosmosMessage {
   OsmosisIncentiveActiveGaugesPerDenomResponse({
     required List<OsmosisIncentivesGauge> data,
     this.pagination,
-  }) : data = data.mutable;
+  }) : data = data.immutable;
   factory OsmosisIncentiveActiveGaugesPerDenomResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

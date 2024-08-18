@@ -52,9 +52,9 @@ class OsmosisConcentratedLiquidityParams extends CosmosMessage {
       List<String>? unrestrictedPoolCreatorWhitelist,
       this.hookGasLimit})
       : authorizedTickSpacing = authorizedTickSpacing?.nullOnEmpy,
-        authorizedSpreadFactors = authorizedSpreadFactors.mutable,
+        authorizedSpreadFactors = authorizedSpreadFactors.immutable,
         authorizedQuoteDenoms = authorizedQuoteDenoms?.nullOnEmpy,
-        authorizedUptimes = authorizedUptimes.mutable,
+        authorizedUptimes = authorizedUptimes.immutable,
         unrestrictedPoolCreatorWhitelist =
             unrestrictedPoolCreatorWhitelist?.nullOnEmpy;
   factory OsmosisConcentratedLiquidityParams.deserialize(List<int> bytes) {

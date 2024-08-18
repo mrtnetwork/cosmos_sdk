@@ -9,7 +9,7 @@ class PacketFees extends CosmosMessage {
   /// list of packet fees
   final List<IbcFeePacketFee> packetFees;
   PacketFees(List<IbcFeePacketFee> packetFees)
-      : packetFees = packetFees.mutable;
+      : packetFees = packetFees.immutable;
   factory PacketFees.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return PacketFees(decode

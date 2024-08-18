@@ -12,7 +12,7 @@ class OsmosisProtorevQueryGetProtoRevAllRouteStatisticsResponse
   final List<OsmosisProtorevRouteStatistics> statistics;
   OsmosisProtorevQueryGetProtoRevAllRouteStatisticsResponse(
       List<OsmosisProtorevRouteStatistics> statistics)
-      : statistics = statistics.mutable;
+      : statistics = statistics.immutable;
   factory OsmosisProtorevQueryGetProtoRevAllRouteStatisticsResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

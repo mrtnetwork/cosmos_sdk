@@ -20,7 +20,7 @@ class ThorchainMsgTssKeysignFail extends CosmosMessage {
       this.pubKey,
       List<int>? signer})
       : signer = BytesUtils.tryToBytes(signer, unmodifiable: true),
-        coins = coins.mutable;
+        coins = coins.immutable;
   factory ThorchainMsgTssKeysignFail.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainMsgTssKeysignFail(

@@ -22,7 +22,7 @@ class OsmosisProtorevRouteStatistics extends CosmosMessage {
       required this.numberOfTrades,
       List<BigInt>? route})
       : route = route?.nullOnEmpy,
-        profits = profits.mutable;
+        profits = profits.immutable;
 
   factory OsmosisProtorevRouteStatistics.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

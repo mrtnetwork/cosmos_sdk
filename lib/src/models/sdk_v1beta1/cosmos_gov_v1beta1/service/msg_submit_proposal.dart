@@ -20,7 +20,7 @@ class GovMsgSubmitProposal extends CosmosMessage
   final CosmosBaseAddress? proposer;
   GovMsgSubmitProposal(
       {this.content, required List<Coin> initialDeposit, this.proposer})
-      : initialDeposit = initialDeposit.mutable;
+      : initialDeposit = initialDeposit.immutable;
   factory GovMsgSubmitProposal.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GovMsgSubmitProposal(

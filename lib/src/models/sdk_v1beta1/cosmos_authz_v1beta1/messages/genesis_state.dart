@@ -8,7 +8,7 @@ import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
 class AuthzGenesisState extends CosmosMessage {
   final List<AuthzGenericAuthorization> authorization;
   AuthzGenesisState({required List<AuthzGenericAuthorization> authorization})
-      : authorization = authorization.mutable;
+      : authorization = authorization.immutable;
   factory AuthzGenesisState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return AuthzGenesisState(

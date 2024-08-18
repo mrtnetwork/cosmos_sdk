@@ -18,8 +18,8 @@ class ThorchainTx extends CosmosMessage {
       required List<ThorchainCoin> coins,
       required List<ThorchainCoin> gas,
       this.memo})
-      : coins = coins.mutable,
-        gas = gas.mutable;
+      : coins = coins.immutable,
+        gas = gas.immutable;
   factory ThorchainTx.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainTx(

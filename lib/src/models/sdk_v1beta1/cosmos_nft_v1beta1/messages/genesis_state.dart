@@ -14,8 +14,8 @@ class NFTGenesisState extends CosmosMessage {
 
   NFTGenesisState(
       {required List<NFTClass> classes, required List<Entry> entries})
-      : classes = classes.mutable,
-        entries = entries.mutable;
+      : classes = classes.immutable,
+        entries = entries.immutable;
   factory NFTGenesisState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return NFTGenesisState(

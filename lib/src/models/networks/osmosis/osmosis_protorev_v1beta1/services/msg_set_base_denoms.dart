@@ -16,7 +16,7 @@ class OsmosisProtorevMsgSetBaseDenoms extends CosmosMessage
 
   OsmosisProtorevMsgSetBaseDenoms(
       {this.admin, required List<OsmosisProtorevBaseDenom> baseDenoms})
-      : baseDenoms = baseDenoms.mutable;
+      : baseDenoms = baseDenoms.immutable;
 
   factory OsmosisProtorevMsgSetBaseDenoms.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

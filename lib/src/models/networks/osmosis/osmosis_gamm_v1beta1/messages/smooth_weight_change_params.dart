@@ -37,8 +37,8 @@ class OsmosisGammSmoothWeightChangeParams extends CosmosMessage {
       required this.duration,
       required List<OsmosisGammPoolAsset> initialPoolWeights,
       required List<OsmosisGammPoolAsset> targetPoolWeights})
-      : initialPoolWeights = initialPoolWeights.mutable,
-        targetPoolWeights = targetPoolWeights.mutable;
+      : initialPoolWeights = initialPoolWeights.immutable,
+        targetPoolWeights = targetPoolWeights.immutable;
   factory OsmosisGammSmoothWeightChangeParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisGammSmoothWeightChangeParams(

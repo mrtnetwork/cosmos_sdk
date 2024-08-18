@@ -15,7 +15,7 @@ class QueryAllowancesByGranterResponse extends CosmosMessage {
   final PageResponse? pagination;
   QueryAllowancesByGranterResponse(
       {required List<FeeGrant> allowances, this.pagination})
-      : allowances = allowances.mutable;
+      : allowances = allowances.immutable;
 
   factory QueryAllowancesByGranterResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

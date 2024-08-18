@@ -15,8 +15,8 @@ class DistributionQueryDelegationTotalRewardsResponse extends CosmosMessage {
   DistributionQueryDelegationTotalRewardsResponse(
       {required List<DistributionDelegationDelegatorReward> rewards,
       required List<DecCoin> total})
-      : rewards = rewards.mutable,
-        total = total.mutable;
+      : rewards = rewards.immutable,
+        total = total.immutable;
   factory DistributionQueryDelegationTotalRewardsResponse.deserialize(
       List<int> bytes) {
     final deocde = CosmosProtocolBuffer.decode(bytes);

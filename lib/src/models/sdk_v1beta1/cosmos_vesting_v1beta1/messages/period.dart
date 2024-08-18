@@ -14,7 +14,7 @@ class Period extends CosmosMessage {
   Period({
     this.length,
     required List<Coin> amount,
-  }) : amount = amount.mutable;
+  }) : amount = amount.immutable;
 
   factory Period.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

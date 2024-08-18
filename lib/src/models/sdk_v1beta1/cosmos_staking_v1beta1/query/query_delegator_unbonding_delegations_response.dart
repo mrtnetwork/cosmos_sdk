@@ -12,7 +12,7 @@ class QueryDelegatorUnbondingDelegationsResponse extends CosmosMessage {
   final PageResponse? pagination;
   QueryDelegatorUnbondingDelegationsResponse(
       {required List<UnbondingDelegation> unbondingResponses, this.pagination})
-      : unbondingResponses = unbondingResponses.mutable;
+      : unbondingResponses = unbondingResponses.immutable;
   factory QueryDelegatorUnbondingDelegationsResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

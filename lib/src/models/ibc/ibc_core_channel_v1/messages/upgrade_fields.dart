@@ -9,7 +9,7 @@ class UpgradeFields extends CosmosMessage {
   final List<String>? connectionHops;
   final String? version;
   UpgradeFields({this.ordering, List<String>? connectionHops, this.version})
-      : connectionHops = connectionHops?.mutable;
+      : connectionHops = connectionHops?.immutable;
   factory UpgradeFields.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return UpgradeFields(

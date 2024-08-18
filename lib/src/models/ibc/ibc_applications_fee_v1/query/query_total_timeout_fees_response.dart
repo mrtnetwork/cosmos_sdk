@@ -8,7 +8,7 @@ class QueryTotalTimeoutFeesResponse extends CosmosMessage {
   /// the total packet receive fees
   final List<Coin> timeoutFees;
   QueryTotalTimeoutFeesResponse({required List<Coin> timeoutFees})
-      : timeoutFees = timeoutFees.mutable;
+      : timeoutFees = timeoutFees.immutable;
   factory QueryTotalTimeoutFeesResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryTotalTimeoutFeesResponse(

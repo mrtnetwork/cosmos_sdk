@@ -36,10 +36,10 @@ class OsmosisSuperfluidGenesisState extends CosmosMessage {
         intermediaryAccounts,
     required List<OsmosisSuperfluidLockIdIntermediaryAccountConnection>
         intemediaryAccountConnections,
-  })  : superfluidAssets = superfluidAssets.mutable,
-        osmoEquivalentMultipliers = osmoEquivalentMultipliers.mutable,
-        intermediaryAccounts = intermediaryAccounts.mutable,
-        intemediaryAccountConnections = intemediaryAccountConnections.mutable;
+  })  : superfluidAssets = superfluidAssets.immutable,
+        osmoEquivalentMultipliers = osmoEquivalentMultipliers.immutable,
+        intermediaryAccounts = intermediaryAccounts.immutable,
+        intemediaryAccountConnections = intemediaryAccountConnections.immutable;
   factory OsmosisSuperfluidGenesisState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidGenesisState(

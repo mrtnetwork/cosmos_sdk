@@ -36,7 +36,7 @@ class OsmosisLockupPeriodLock extends CosmosMessage {
       required this.duration,
       required this.endTime,
       required List<Coin> coins})
-      : coins = coins.mutable;
+      : coins = coins.immutable;
 
   factory OsmosisLockupPeriodLock.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

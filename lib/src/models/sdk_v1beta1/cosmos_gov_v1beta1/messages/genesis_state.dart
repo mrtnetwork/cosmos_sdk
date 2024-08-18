@@ -39,12 +39,12 @@ class GovGenesisState extends CosmosMessage {
       required List<GovDepositParams> depositParams,
       required List<GovVotingParams> votingParams,
       required List<GovTallyParams> tallyParams})
-      : deposits = deposits.mutable,
-        votes = votes.mutable,
-        proposals = proposals.mutable,
-        depositParams = depositParams.mutable,
-        votingParams = votingParams.mutable,
-        tallyParams = tallyParams.mutable;
+      : deposits = deposits.immutable,
+        votes = votes.immutable,
+        proposals = proposals.immutable,
+        depositParams = depositParams.immutable,
+        votingParams = votingParams.immutable,
+        tallyParams = tallyParams.immutable;
   factory GovGenesisState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GovGenesisState(

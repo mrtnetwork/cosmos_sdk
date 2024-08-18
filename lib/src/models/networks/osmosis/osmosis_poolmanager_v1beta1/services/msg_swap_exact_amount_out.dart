@@ -17,7 +17,7 @@ class OsmosisPoolManagerMsgSwapExactAmountOut extends CosmosMessage
     required List<OsmosisPoolManagerSwapAmountOutRoute> routes,
     required this.tokenInMaxAmount,
     required this.tokenOut,
-  }) : routes = routes.mutable;
+  }) : routes = routes.immutable;
   factory OsmosisPoolManagerMsgSwapExactAmountOut.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolManagerMsgSwapExactAmountOut(

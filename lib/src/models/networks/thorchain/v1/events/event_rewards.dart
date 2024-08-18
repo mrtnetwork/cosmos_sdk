@@ -7,7 +7,7 @@ class ThorchainEventRewards extends CosmosMessage {
   final List<ThorchainPoolAmt> poolRewards;
   ThorchainEventRewards(
       {required this.bondReward, required List<ThorchainPoolAmt> poolRewards})
-      : poolRewards = poolRewards.mutable;
+      : poolRewards = poolRewards.immutable;
   factory ThorchainEventRewards.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainEventRewards(

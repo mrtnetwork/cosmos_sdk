@@ -23,7 +23,6 @@ class TendermintRequestBroadcastTxCommit
 
   @override
   BrodcastTxResponse onResonse(Map<String, dynamic> result) {
-    final r = BrodcastTxResponse.fromJson(result);
-    return r;
+    return BrodcastTxResponse.fromJson(result);
   }
 }

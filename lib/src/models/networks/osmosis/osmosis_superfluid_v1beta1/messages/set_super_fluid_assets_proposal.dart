@@ -12,7 +12,7 @@ class OsmosisSuperfluidSetSuperfluidAssetsProposal extends CosmosMessage {
       {this.title,
       this.description,
       required List<OsmosisSuperfluidSuperfluidAsset> assets})
-      : assets = assets.mutable;
+      : assets = assets.immutable;
   factory OsmosisSuperfluidSetSuperfluidAssetsProposal.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

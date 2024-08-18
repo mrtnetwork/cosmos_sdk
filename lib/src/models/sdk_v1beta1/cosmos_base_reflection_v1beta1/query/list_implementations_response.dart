@@ -8,7 +8,7 @@ class ListImplementationsResponse extends CosmosMessage {
   final List<String> implementationMessageNames;
   ListImplementationsResponse(
       {required List<String> implementationMessageNames})
-      : implementationMessageNames = implementationMessageNames.mutable;
+      : implementationMessageNames = implementationMessageNames.immutable;
   factory ListImplementationsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ListImplementationsResponse(

@@ -31,8 +31,8 @@ class StreamingSwapStateResponse {
     required this.outAmount,
     required List<int> failedSwaps,
     required List<String> failedSwapReasons,
-  })  : failedSwaps = failedSwaps.mutable,
-        failedSwapReasons = failedSwapReasons.mutable;
+  })  : failedSwaps = failedSwaps.immutable,
+        failedSwapReasons = failedSwapReasons.immutable;
 
   factory StreamingSwapStateResponse.fromJson(Map<String, dynamic> json) {
     return StreamingSwapStateResponse(

@@ -25,8 +25,8 @@ class ThorchainMsgTssPool extends CosmosMessage {
       List<int>? signer,
       this.keygenTime,
       List<int>? keysharesBackup})
-      : pubKeys = pubKeys?.mutable,
-        chains = chains?.mutable,
+      : pubKeys = pubKeys?.immutable,
+        chains = chains?.immutable,
         signer = BytesUtils.tryToBytes(signer, unmodifiable: true),
         keysharesBackup =
             BytesUtils.tryToBytes(keysharesBackup, unmodifiable: true);

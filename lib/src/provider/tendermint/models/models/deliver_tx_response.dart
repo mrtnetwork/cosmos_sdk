@@ -18,10 +18,10 @@ class DeliverTxResponse {
       this.info,
       this.gasWanted,
       this.gasUsed,
-      List<EventResponse> events = const [],
+      List<EventResponse>? events,
       this.codespace})
       : data = BytesUtils.tryToBytes(data, unmodifiable: true),
-        events = events.mutable;
+        events = events?.immutable;
   factory DeliverTxResponse.fromJson(Map<String, dynamic> json) {
     return DeliverTxResponse(
         code: json["code"],
@@ -30,8 +30,8 @@ class DeliverTxResponse {
         info: json["info"],
         gasWanted: BigintUtils.tryParse(json["gas_wanted"]),
         gasUsed: BigintUtils.tryParse(json["gas_used"]),
-        events: (json["events"] as List)
-            .map((e) => EventResponse.fromJson(e))
+        events: (json["events"] as List?)
+            ?.map((e) => EventResponse.fromJson(e))
             .toList(),
         codespace: json["codespace"]);
   }

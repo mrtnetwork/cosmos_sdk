@@ -26,7 +26,7 @@ class OsmosisGammPoolmodelsStableSwapMsgCreateStableswapPool
     List<BigInt>? scalingFactors,
     this.futurePoolGovernor,
     this.scalingFactorController,
-  })  : initialPoolLiquidity = initialPoolLiquidity.mutable,
+  })  : initialPoolLiquidity = initialPoolLiquidity.immutable,
         scalingFactors = scalingFactors?.nullOnEmpy;
   factory OsmosisGammPoolmodelsStableSwapMsgCreateStableswapPool.deserialize(
       List<int> bytes) {

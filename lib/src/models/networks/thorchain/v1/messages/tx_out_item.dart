@@ -32,7 +32,7 @@ class ThorchainTxOutItem extends CosmosMessage {
       this.aggregatorTargetAsset,
       required this.aggregatorTargetLimit,
       required this.cloutSpent})
-      : maxGas = maxGas.mutable;
+      : maxGas = maxGas.immutable;
   factory ThorchainTxOutItem.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainTxOutItem(

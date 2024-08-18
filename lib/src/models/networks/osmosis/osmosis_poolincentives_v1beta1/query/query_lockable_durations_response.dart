@@ -8,7 +8,7 @@ class OsmosisPoolincentivesQueryLockableDurationsResponse
 
   OsmosisPoolincentivesQueryLockableDurationsResponse(
       List<ProtobufDuration> lockableDurations)
-      : lockableDurations = lockableDurations.mutable;
+      : lockableDurations = lockableDurations.immutable;
   factory OsmosisPoolincentivesQueryLockableDurationsResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

@@ -7,7 +7,8 @@ class OsmosisIncentiveRewardsEstResponse extends CosmosMessage {
   /// Estimated coin rewards that will be recieved at provided address
   /// from specified locks between current time and end epoch
   final List<Coin> coins;
-  OsmosisIncentiveRewardsEstResponse(List<Coin> coins) : coins = coins.mutable;
+  OsmosisIncentiveRewardsEstResponse(List<Coin> coins)
+      : coins = coins.immutable;
   factory OsmosisIncentiveRewardsEstResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisIncentiveRewardsEstResponse(

@@ -13,7 +13,7 @@ class QueryDelegatorValidatorsResponse extends CosmosMessage {
   final PageResponse? pagination;
   QueryDelegatorValidatorsResponse(
       {required List<StakingValidator> validators, this.pagination})
-      : validators = validators.mutable;
+      : validators = validators.immutable;
   factory QueryDelegatorValidatorsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryDelegatorValidatorsResponse(

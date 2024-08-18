@@ -13,7 +13,7 @@ class ThorchainMsgDeposit extends CosmosMessage with ServiceMessage {
       {required List<ThorchainCoin> coins,
       required this.memo,
       required this.signer})
-      : coins = coins.mutable;
+      : coins = coins.immutable;
   factory ThorchainMsgDeposit.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainMsgDeposit(

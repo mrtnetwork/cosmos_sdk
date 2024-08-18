@@ -15,7 +15,7 @@ class OsmosisValSetprefMsgRedelegateValidatorSet extends CosmosMessage
   OsmosisValSetprefMsgRedelegateValidatorSet(
       {this.delegator,
       required List<OsmosisValSetprefValidatorPreference> preferences})
-      : preferences = preferences.mutable;
+      : preferences = preferences.immutable;
   factory OsmosisValSetprefMsgRedelegateValidatorSet.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

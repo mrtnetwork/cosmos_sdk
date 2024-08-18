@@ -6,7 +6,7 @@ class ThorchainKeygenBlock extends CosmosMessage {
   final BigInt? height;
   final List<ThorchainKeygen> keygens;
   ThorchainKeygenBlock({this.height, required List<ThorchainKeygen> keygens})
-      : keygens = keygens.mutable;
+      : keygens = keygens.immutable;
   factory ThorchainKeygenBlock.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainKeygenBlock(

@@ -46,11 +46,11 @@ class StakingGenesisState extends CosmosMessage {
     required List<UnbondingDelegation> unbondingDelegations,
     required List<Redelegation> redelegations,
     required this.exported,
-  })  : lastValidatorPowers = lastValidatorPowers.mutable,
-        validators = validators.mutable,
-        delegations = delegations.mutable,
-        unbondingDelegations = unbondingDelegations.mutable,
-        redelegations = redelegations.mutable,
+  })  : lastValidatorPowers = lastValidatorPowers.immutable,
+        validators = validators.immutable,
+        delegations = delegations.immutable,
+        unbondingDelegations = unbondingDelegations.immutable,
+        redelegations = redelegations.immutable,
         lastTotalPower = BytesUtils.toBytes(lastTotalPower, unmodifiable: true);
   factory StakingGenesisState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

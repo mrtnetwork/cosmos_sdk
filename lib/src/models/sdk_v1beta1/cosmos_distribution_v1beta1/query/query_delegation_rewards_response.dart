@@ -9,7 +9,7 @@ class DistributionQueryDelegationRewardsResponse extends CosmosMessage {
   /// rewards defines the rewards accrued by a delegation.
   final List<DecCoin> rewards;
   DistributionQueryDelegationRewardsResponse(List<DecCoin> rewards)
-      : rewards = rewards.mutable;
+      : rewards = rewards.immutable;
   factory DistributionQueryDelegationRewardsResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

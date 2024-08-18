@@ -25,7 +25,7 @@ class VersionInfo extends CosmosMessage {
       this.goVersion,
       List<Module>? buildDeps,
       this.cosmosSdkVersion})
-      : buildDeps = buildDeps?.mutable;
+      : buildDeps = buildDeps?.immutable;
 
   factory VersionInfo.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

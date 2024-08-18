@@ -7,7 +7,7 @@ class ThorchainTssKeysignMetric extends CosmosMessage {
   final List<ThorchainNodeTssTime> nodeTssTimes;
   ThorchainTssKeysignMetric(
       {this.txId, required List<ThorchainNodeTssTime> nodeTssTimes})
-      : nodeTssTimes = nodeTssTimes.mutable;
+      : nodeTssTimes = nodeTssTimes.immutable;
   factory ThorchainTssKeysignMetric.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainTssKeysignMetric(

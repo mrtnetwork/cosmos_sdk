@@ -12,7 +12,7 @@ class Entry extends CosmosMessage {
   final List<NFT> nfts;
 
   /// Constructs a new instance of [Entry].
-  Entry({this.owner, required List<NFT> nfts}) : nfts = nfts.mutable;
+  Entry({this.owner, required List<NFT> nfts}) : nfts = nfts.immutable;
 
   factory Entry.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

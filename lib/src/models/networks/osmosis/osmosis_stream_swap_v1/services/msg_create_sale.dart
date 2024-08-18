@@ -55,7 +55,7 @@ class OsmosisStreamSwapMsgCreateSale extends CosmosMessage
       this.recipient,
       this.name,
       this.url})
-      : maxFee = maxFee.mutable;
+      : maxFee = maxFee.immutable;
   factory OsmosisStreamSwapMsgCreateSale.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisStreamSwapMsgCreateSale(

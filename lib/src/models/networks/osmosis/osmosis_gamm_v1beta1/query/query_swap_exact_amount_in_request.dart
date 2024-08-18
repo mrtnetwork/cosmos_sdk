@@ -19,7 +19,7 @@ class OsmosisGammQuerySwapExactAmountInRequest extends CosmosMessage
       this.poolId,
       this.tokenIn,
       required List<OsmosisGammSwapAmountInRoute> routes})
-      : routes = routes.mutable;
+      : routes = routes.immutable;
 
   factory OsmosisGammQuerySwapExactAmountInRequest.deserialize(
       List<int> bytes) {

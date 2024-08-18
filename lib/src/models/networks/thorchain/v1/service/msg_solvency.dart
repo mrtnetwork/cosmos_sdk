@@ -18,7 +18,7 @@ class ThorchainMsgSolvency extends CosmosMessage {
     required List<ThorchainCoin> coins,
     this.height,
     List<int>? signer,
-  })  : coins = coins.mutable,
+  })  : coins = coins.immutable,
         signer = BytesUtils.tryToBytes(signer, unmodifiable: true);
   factory ThorchainMsgSolvency.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

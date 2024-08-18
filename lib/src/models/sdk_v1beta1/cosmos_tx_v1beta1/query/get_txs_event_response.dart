@@ -24,8 +24,8 @@ class GetTxsEventResponse extends CosmosMessage {
       required List<TxResponse> txResponses,
       this.pagination,
       this.total})
-      : txs = txs.mutable,
-        txResponses = txResponses.mutable;
+      : txs = txs.immutable,
+        txResponses = txResponses.immutable;
   factory GetTxsEventResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GetTxsEventResponse(

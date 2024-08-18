@@ -18,7 +18,7 @@ class DistributionValidatorHistoricalRewards extends CosmosMessage {
   final int? referenceCount;
   DistributionValidatorHistoricalRewards(
       {required List<DecCoin> cumulativeRewardRatio, this.referenceCount})
-      : cumulativeRewardRatio = cumulativeRewardRatio.mutable;
+      : cumulativeRewardRatio = cumulativeRewardRatio.immutable;
   factory DistributionValidatorHistoricalRewards.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionValidatorHistoricalRewards(

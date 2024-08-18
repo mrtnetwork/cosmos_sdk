@@ -16,7 +16,7 @@ class OsmosisProtorevMsgSetHotRoutes extends CosmosMessage
 
   OsmosisProtorevMsgSetHotRoutes(
       {this.admin, required List<OsmosisProtorevTokenPairArbRoutes> hotRoutes})
-      : hotRoutes = hotRoutes.mutable;
+      : hotRoutes = hotRoutes.immutable;
 
   factory OsmosisProtorevMsgSetHotRoutes.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

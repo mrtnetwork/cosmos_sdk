@@ -6,7 +6,7 @@ class OsmosisPoolincentivesLockableDurationsInfo extends CosmosMessage {
   final List<ProtobufDuration> lockableDurations;
   OsmosisPoolincentivesLockableDurationsInfo(
       List<ProtobufDuration> lockableDurations)
-      : lockableDurations = lockableDurations.mutable;
+      : lockableDurations = lockableDurations.immutable;
   factory OsmosisPoolincentivesLockableDurationsInfo.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

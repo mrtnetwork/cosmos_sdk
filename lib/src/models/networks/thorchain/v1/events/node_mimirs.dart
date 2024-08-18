@@ -5,7 +5,7 @@ import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
 class ThorchainNodeMimirs extends CosmosMessage {
   final List<ThorchainNodeMimir> mimirs;
   ThorchainNodeMimirs(List<ThorchainNodeMimir> mimirs)
-      : mimirs = mimirs.mutable;
+      : mimirs = mimirs.immutable;
   factory ThorchainNodeMimirs.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainNodeMimirs(decode

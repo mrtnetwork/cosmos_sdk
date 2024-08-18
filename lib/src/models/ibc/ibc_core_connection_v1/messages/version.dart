@@ -10,7 +10,7 @@ class IbcConnectionVersion extends CosmosMessage {
   /// list of features compatible with the specified identifier
   final List<String>? features;
   IbcConnectionVersion({this.identifier, List<String>? features})
-      : features = features?.mutable;
+      : features = features?.immutable;
   factory IbcConnectionVersion.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcConnectionVersion(

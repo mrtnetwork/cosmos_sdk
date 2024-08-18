@@ -7,7 +7,7 @@ class ListAllInterfacesResponse extends CosmosMessage {
   /// interface_names is an array of all the registered interfaces.
   final List<String> interfaceNames;
   ListAllInterfacesResponse({required List<String> interfaceNames})
-      : interfaceNames = interfaceNames.mutable;
+      : interfaceNames = interfaceNames.immutable;
   factory ListAllInterfacesResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ListAllInterfacesResponse(interfaceNames: decode.getFields(1));

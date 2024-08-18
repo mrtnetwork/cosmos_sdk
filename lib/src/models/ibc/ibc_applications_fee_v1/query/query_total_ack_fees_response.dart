@@ -8,7 +8,7 @@ class QueryTotalAckFeesResponse extends CosmosMessage {
   /// the total packet acknowledgement fees
   final List<Coin> recvFees;
   QueryTotalAckFeesResponse({required List<Coin> recvFees})
-      : recvFees = recvFees.mutable;
+      : recvFees = recvFees.immutable;
   factory QueryTotalAckFeesResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryTotalAckFeesResponse(

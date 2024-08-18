@@ -9,7 +9,7 @@ class OsmosisPoolincentivesQueryExternalIncentiveGaugesResponse
 
   OsmosisPoolincentivesQueryExternalIncentiveGaugesResponse(
       List<OsmosisIncentivesGauge> data)
-      : data = data.mutable;
+      : data = data.immutable;
   factory OsmosisPoolincentivesQueryExternalIncentiveGaugesResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

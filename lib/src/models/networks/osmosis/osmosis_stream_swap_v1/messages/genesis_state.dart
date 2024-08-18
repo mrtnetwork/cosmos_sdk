@@ -16,8 +16,8 @@ class OsmosisStreamSwapGenesisState extends CosmosMessage {
       required List<OsmosisStreamSwapUserPositionKV> userPositions,
       this.nextSaleId,
       required this.params})
-      : sales = sales.mutable,
-        userPositions = userPositions.mutable;
+      : sales = sales.immutable,
+        userPositions = userPositions.immutable;
   factory OsmosisStreamSwapGenesisState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisStreamSwapGenesisState(

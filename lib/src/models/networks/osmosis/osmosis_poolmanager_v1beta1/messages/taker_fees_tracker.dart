@@ -12,8 +12,8 @@ class OsmosisPoolManagerTakerFeesTracker extends CosmosMessage {
       {required List<Coin> takerFeesToStakers,
       required List<Coin> takerFeesToCommunityPool,
       this.heightAccountingStartsFrom})
-      : takerFeesToStakers = takerFeesToStakers.mutable,
-        takerFeesToCommunityPool = takerFeesToCommunityPool.mutable;
+      : takerFeesToStakers = takerFeesToStakers.immutable,
+        takerFeesToCommunityPool = takerFeesToCommunityPool.immutable;
   factory OsmosisPoolManagerTakerFeesTracker.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolManagerTakerFeesTracker(

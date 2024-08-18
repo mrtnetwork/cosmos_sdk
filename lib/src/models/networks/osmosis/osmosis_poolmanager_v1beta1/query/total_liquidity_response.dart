@@ -6,7 +6,7 @@ import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
 class OsmosisPoolManagerTotalLiquidityResponse extends CosmosMessage {
   final List<Coin> liquidity;
   OsmosisPoolManagerTotalLiquidityResponse(List<Coin> liquidity)
-      : liquidity = liquidity.mutable;
+      : liquidity = liquidity.immutable;
   factory OsmosisPoolManagerTotalLiquidityResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

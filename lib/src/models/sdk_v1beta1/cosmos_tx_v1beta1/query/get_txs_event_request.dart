@@ -40,7 +40,7 @@ class GetTxsEventRequest extends CosmosMessage
       this.page,
       this.limit,
       this.query})
-      : events = events?.mutable;
+      : events = events?.immutable;
   factory GetTxsEventRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GetTxsEventRequest(

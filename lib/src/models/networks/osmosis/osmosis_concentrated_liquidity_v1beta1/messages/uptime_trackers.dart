@@ -6,7 +6,7 @@ import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
 class OsmosisConcentratedLiquidityUptimeTracker extends CosmosMessage {
   final List<DecCoin> uptimeGrowthOutside;
   OsmosisConcentratedLiquidityUptimeTracker(List<DecCoin> uptimeGrowthOutside)
-      : uptimeGrowthOutside = uptimeGrowthOutside.mutable;
+      : uptimeGrowthOutside = uptimeGrowthOutside.immutable;
   factory OsmosisConcentratedLiquidityUptimeTracker.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

@@ -12,7 +12,7 @@ class OsmosisPoolManagerMsgSetDenomPairTakerFee extends CosmosMessage
   OsmosisPoolManagerMsgSetDenomPairTakerFee({
     this.sender,
     required List<OsmosisPoolManagerDenomPairTakerFee> denomPairTakerFee,
-  }) : denomPairTakerFee = denomPairTakerFee.mutable;
+  }) : denomPairTakerFee = denomPairTakerFee.immutable;
   factory OsmosisPoolManagerMsgSetDenomPairTakerFee.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

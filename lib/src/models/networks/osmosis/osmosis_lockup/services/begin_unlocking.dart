@@ -11,7 +11,7 @@ class OsmosisLockupMsgBeginUnlocking extends CosmosMessage
   final List<Coin> coins;
   OsmosisLockupMsgBeginUnlocking(
       {this.owner, this.id, required List<Coin> coins})
-      : coins = coins.mutable;
+      : coins = coins.immutable;
   factory OsmosisLockupMsgBeginUnlocking.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisLockupMsgBeginUnlocking(

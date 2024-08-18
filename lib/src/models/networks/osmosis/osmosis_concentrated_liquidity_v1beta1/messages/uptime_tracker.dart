@@ -7,7 +7,7 @@ class OsmosisConcentratedLiquidityUptimeTrackers extends CosmosMessage {
   final List<OsmosisConcentratedLiquidityUptimeTracker> list;
   OsmosisConcentratedLiquidityUptimeTrackers(
       List<OsmosisConcentratedLiquidityUptimeTracker> list)
-      : list = list.mutable;
+      : list = list.immutable;
   factory OsmosisConcentratedLiquidityUptimeTrackers.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

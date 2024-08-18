@@ -6,7 +6,7 @@ import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
 class EvidenceList extends CosmosMessage {
   final List<Evidence> evidence;
   EvidenceList({required List<Evidence> evidence})
-      : evidence = evidence.mutable;
+      : evidence = evidence.immutable;
   factory EvidenceList.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvidenceList(

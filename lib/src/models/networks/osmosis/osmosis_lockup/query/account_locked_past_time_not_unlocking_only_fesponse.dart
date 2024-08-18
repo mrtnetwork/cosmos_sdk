@@ -8,7 +8,7 @@ class OsmosisLockupAccountLockedPastTimeNotUnlockingOnlyResponse
   final List<OsmosisLockupPeriodLock> locks;
   OsmosisLockupAccountLockedPastTimeNotUnlockingOnlyResponse(
       List<OsmosisLockupPeriodLock> locks)
-      : locks = locks.mutable;
+      : locks = locks.immutable;
   factory OsmosisLockupAccountLockedPastTimeNotUnlockingOnlyResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

@@ -13,7 +13,7 @@ class IbcFeeIdentifiedPacketFees extends CosmosMessage {
   final List<IbcFeePacketFee> packetFees;
   IbcFeeIdentifiedPacketFees(
       {required this.packetId, required List<IbcFeePacketFee> packetFees})
-      : packetFees = packetFees.mutable;
+      : packetFees = packetFees.immutable;
   factory IbcFeeIdentifiedPacketFees.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcFeeIdentifiedPacketFees(

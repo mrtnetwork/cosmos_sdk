@@ -17,8 +17,8 @@ class HostGenesisState extends CosmosMessage {
       required List<RegisteredInterchainAccount> interchainAccounts,
       this.port,
       required this.params})
-      : activeChannels = activeChannels.mutable,
-        interchainAccounts = interchainAccounts.mutable;
+      : activeChannels = activeChannels.immutable,
+        interchainAccounts = interchainAccounts.immutable;
   factory HostGenesisState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return HostGenesisState(

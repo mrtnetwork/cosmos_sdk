@@ -32,9 +32,9 @@ class IbcClientGenesisState extends CosmosMessage {
       required this.params,
       this.createLocalhost,
       this.nextClientSequence})
-      : clients = clients.mutable,
-        clientsConsensus = clientsConsensus.mutable,
-        clientsMetadata = clientsMetadata.mutable;
+      : clients = clients.immutable,
+        clientsConsensus = clientsConsensus.immutable,
+        clientsMetadata = clientsMetadata.immutable;
   factory IbcClientGenesisState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcClientGenesisState(

@@ -9,7 +9,7 @@ class OsmosisPoolincentivesQueryIncentivizedPoolsResponse
 
   OsmosisPoolincentivesQueryIncentivizedPoolsResponse(
       List<OsmosisPoolincentivesIncentivizedPool> incentivizedPools)
-      : incentivizedPools = incentivizedPools.mutable;
+      : incentivizedPools = incentivizedPools.immutable;
   factory OsmosisPoolincentivesQueryIncentivizedPoolsResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

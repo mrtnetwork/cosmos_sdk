@@ -7,7 +7,7 @@ import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
 class IbcConnectionClientPaths extends CosmosMessage {
   /// list of connection paths
   final List<String>? paths;
-  IbcConnectionClientPaths({List<String>? paths}) : paths = paths?.mutable;
+  IbcConnectionClientPaths({List<String>? paths}) : paths = paths?.immutable;
   factory IbcConnectionClientPaths.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcConnectionClientPaths(paths: decode.getFields<String>(1));

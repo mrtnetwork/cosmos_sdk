@@ -19,8 +19,8 @@ class DistributionQueryValidatorDistributionInfoResponse extends CosmosMessage {
       {this.operatorAddress,
       required List<DecCoin> selfBondRewards,
       required List<DecCoin> commission})
-      : selfBondRewards = selfBondRewards.mutable,
-        commission = commission.mutable;
+      : selfBondRewards = selfBondRewards.immutable,
+        commission = commission.immutable;
   factory DistributionQueryValidatorDistributionInfoResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

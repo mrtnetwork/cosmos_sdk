@@ -10,7 +10,7 @@ class OsmosisTxfeesGenesisState extends CosmosMessage {
   OsmosisTxfeesGenesisState({
     this.basedenom,
     required List<OsmosisTxfeesFeeToken> feetokens,
-  }) : feetokens = feetokens.mutable;
+  }) : feetokens = feetokens.immutable;
   factory OsmosisTxfeesGenesisState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisTxfeesGenesisState(

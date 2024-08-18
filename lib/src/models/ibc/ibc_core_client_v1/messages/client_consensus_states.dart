@@ -13,7 +13,7 @@ class IbcClientClientConsensusStates extends CosmosMessage {
   final List<ConsensusStateWithHeight> consensusStates;
   IbcClientClientConsensusStates(
       {required List<ConsensusStateWithHeight> consensusStates, this.clientId})
-      : consensusStates = consensusStates.mutable;
+      : consensusStates = consensusStates.immutable;
   factory IbcClientClientConsensusStates.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcClientClientConsensusStates(

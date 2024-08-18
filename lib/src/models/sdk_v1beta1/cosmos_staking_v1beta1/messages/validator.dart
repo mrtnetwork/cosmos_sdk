@@ -71,7 +71,7 @@ class StakingValidator extends CosmosMessage {
     required this.minSelfDelegation,
     this.unbondingOnHoldRefCount,
     List<BigInt>? unbondingIds,
-  }) : unbondingIds = unbondingIds?.mutable;
+  }) : unbondingIds = unbondingIds?.immutable;
 
   factory StakingValidator.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

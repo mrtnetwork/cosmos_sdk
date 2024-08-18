@@ -12,7 +12,7 @@ class ThorchainMsgSend extends CosmosMessage
     required this.fromAddress,
     required this.toAddress,
     required List<Coin> amount,
-  }) : amount = amount.mutable;
+  }) : amount = amount.immutable;
   factory ThorchainMsgSend.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainMsgSend(

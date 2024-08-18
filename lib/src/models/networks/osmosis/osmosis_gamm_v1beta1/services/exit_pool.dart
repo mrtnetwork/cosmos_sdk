@@ -15,7 +15,7 @@ class OsmosisGammMsgExitPool extends CosmosMessage
       this.poolId,
       required this.shareInAmount,
       required List<Coin> tokenOutMins})
-      : tokenOutMins = tokenOutMins.mutable;
+      : tokenOutMins = tokenOutMins.immutable;
   factory OsmosisGammMsgExitPool.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisGammMsgExitPool(

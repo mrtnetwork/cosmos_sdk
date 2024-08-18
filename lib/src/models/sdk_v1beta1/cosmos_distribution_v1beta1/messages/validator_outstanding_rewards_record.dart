@@ -14,7 +14,7 @@ class DistributionValidatorOutstandingRewardsRecord extends CosmosMessage {
   final List<DecCoin> outstandingRewards;
   DistributionValidatorOutstandingRewardsRecord(
       {this.validatorAddress, required List<DecCoin> outstandingRewards})
-      : outstandingRewards = outstandingRewards.mutable;
+      : outstandingRewards = outstandingRewards.immutable;
   factory DistributionValidatorOutstandingRewardsRecord.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

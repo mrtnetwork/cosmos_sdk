@@ -7,7 +7,7 @@ class OsmosisLockupAccountLockedLongerDurationResponse extends CosmosMessage {
   final List<OsmosisLockupPeriodLock> locks;
   OsmosisLockupAccountLockedLongerDurationResponse(
       List<OsmosisLockupPeriodLock> locks)
-      : locks = locks.mutable;
+      : locks = locks.immutable;
   factory OsmosisLockupAccountLockedLongerDurationResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

@@ -38,8 +38,8 @@ class OsmosisAccumRecord extends CosmosMessage {
     required this.numShares,
     required List<DecCoin> accumValuePerShare,
     required List<DecCoin> unclaimedRewardsTotal,
-  })  : accumValuePerShare = accumValuePerShare.mutable,
-        unclaimedRewardsTotal = unclaimedRewardsTotal.mutable;
+  })  : accumValuePerShare = accumValuePerShare.immutable,
+        unclaimedRewardsTotal = unclaimedRewardsTotal.immutable;
   factory OsmosisAccumRecord.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisAccumRecord(

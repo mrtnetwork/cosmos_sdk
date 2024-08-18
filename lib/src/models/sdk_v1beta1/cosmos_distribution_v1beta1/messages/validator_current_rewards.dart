@@ -12,7 +12,7 @@ class DistributionValidatorCurrentRewards extends CosmosMessage {
   final BigInt? period;
   DistributionValidatorCurrentRewards(
       {required List<DecCoin> rewards, this.period})
-      : rewards = rewards.mutable;
+      : rewards = rewards.immutable;
 
   factory DistributionValidatorCurrentRewards.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

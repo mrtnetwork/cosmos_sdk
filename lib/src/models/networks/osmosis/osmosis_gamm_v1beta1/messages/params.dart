@@ -8,7 +8,7 @@ class OsmosisGammParams extends CosmosMessage {
   final List<Coin> poolCreationFee;
 
   OsmosisGammParams(List<Coin> poolCreationFee)
-      : poolCreationFee = poolCreationFee.mutable;
+      : poolCreationFee = poolCreationFee.immutable;
   factory OsmosisGammParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisGammParams(

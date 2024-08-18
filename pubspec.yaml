@@ -1,6 +1,6 @@
 name: cosmos_sdk
 description: Engage seamlessly with a Cosmos SDK-based network (cosmos hub, osmosis, thor, kujira and etc ... ), enabling the creation, signing, and transmission of transactions. (Beta version)
-version: 1.0.0
+version: 1.1.0
 homepage: "https://github.com/mrtnetwork/cosmos_sdk"
 repository: "https://github.com/mrtnetwork/cosmos_sdk"
 Author: mrhaydari.t@gmail.com

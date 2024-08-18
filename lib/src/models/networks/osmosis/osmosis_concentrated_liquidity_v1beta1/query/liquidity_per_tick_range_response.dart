@@ -12,7 +12,7 @@ class OsmosisConcentratedLiquidityLiquidityPerTickRangeResponse
       {required List<OsmosisConcentratedLiquidityLiquidityDepthWithRange>
           liquidity,
       this.bucketIndex})
-      : liquidity = liquidity.mutable;
+      : liquidity = liquidity.immutable;
   factory OsmosisConcentratedLiquidityLiquidityPerTickRangeResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

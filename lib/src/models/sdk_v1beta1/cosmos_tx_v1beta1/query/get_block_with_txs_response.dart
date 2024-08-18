@@ -18,7 +18,7 @@ class GetBlockWithTxsResponse extends CosmosMessage {
   final PageResponse? pagination;
   GetBlockWithTxsResponse(
       {required List<Tx> txs, this.block, this.blockID, this.pagination})
-      : txs = txs.mutable;
+      : txs = txs.immutable;
   factory GetBlockWithTxsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GetBlockWithTxsResponse(

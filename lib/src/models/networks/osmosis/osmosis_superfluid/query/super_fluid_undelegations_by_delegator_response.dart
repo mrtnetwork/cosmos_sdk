@@ -16,9 +16,9 @@ class OsmosisSuperfluidSuperfluidUndelegationsByDelegatorResponse
           superfluidDelegationRecords,
       required List<Coin> totalUnDelegatedCoins,
       required List<OsmosisLockupSyntheticLock> syntheticLocks})
-      : superfluidDelegationRecords = superfluidDelegationRecords.mutable,
-        totalUnDelegatedCoins = totalUnDelegatedCoins.mutable,
-        syntheticLocks = syntheticLocks.mutable;
+      : superfluidDelegationRecords = superfluidDelegationRecords.immutable,
+        totalUnDelegatedCoins = totalUnDelegatedCoins.immutable,
+        syntheticLocks = syntheticLocks.immutable;
   factory OsmosisSuperfluidSuperfluidUndelegationsByDelegatorResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

@@ -10,9 +10,9 @@ class ThorVaultPubkeysInfoResponse {
     required List<VaultPubKeyInfo> asgard,
     required List<VaultPubKeyInfo> yggdrasil,
     required List<VaultPubKeyInfo> inactive,
-  })  : asgard = asgard.mutable,
-        yggdrasil = yggdrasil.mutable,
-        inactive = inactive.mutable;
+  })  : asgard = asgard.immutable,
+        yggdrasil = yggdrasil.immutable,
+        inactive = inactive.immutable;
 
   factory ThorVaultPubkeysInfoResponse.fromJson(Map<String, dynamic> json) {
     return ThorVaultPubkeysInfoResponse(

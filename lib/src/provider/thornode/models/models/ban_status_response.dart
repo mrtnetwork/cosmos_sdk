@@ -9,7 +9,7 @@ class ThorBanStatusResponse {
     required this.nodeAddress,
     required this.blockHeight,
     required List<String> signers,
-  }) : signers = signers.mutable;
+  }) : signers = signers.immutable;
 
   factory ThorBanStatusResponse.fromJson(Map<String, dynamic> json) {
     return ThorBanStatusResponse(

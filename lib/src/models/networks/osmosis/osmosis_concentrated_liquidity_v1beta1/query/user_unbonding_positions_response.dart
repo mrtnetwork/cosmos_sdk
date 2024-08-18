@@ -10,7 +10,7 @@ class OsmosisConcentratedLiquidityUserUnbondingPositionsResponse
   OsmosisConcentratedLiquidityUserUnbondingPositionsResponse(
       {required List<OsmosisConcentratedLiquidityPositionWithPeriodLock>
           positions})
-      : positions = positions.mutable;
+      : positions = positions.immutable;
   factory OsmosisConcentratedLiquidityUserUnbondingPositionsResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

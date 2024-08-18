@@ -9,7 +9,7 @@ class ThorchainBanVoter extends CosmosMessage {
   final List<String>? signers;
   ThorchainBanVoter(
       {List<int>? nodeAddress, this.blockHeight, List<String>? signers})
-      : signers = signers?.mutable,
+      : signers = signers?.immutable,
         nodeAddress = BytesUtils.tryToBytes(nodeAddress, unmodifiable: true);
   factory ThorchainBanVoter.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

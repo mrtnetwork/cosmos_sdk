@@ -16,7 +16,7 @@ class GetValidatorSetByHeightResponse extends CosmosMessage {
       {this.blockHeight,
       required List<CosmosTendermintValidator> validator,
       this.pagination})
-      : validator = validator.mutable;
+      : validator = validator.immutable;
   factory GetValidatorSetByHeightResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GetValidatorSetByHeightResponse(

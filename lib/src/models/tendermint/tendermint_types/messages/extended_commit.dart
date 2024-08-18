@@ -15,7 +15,7 @@ class ExtendedCommit extends CosmosMessage {
       this.round,
       required this.blockID,
       required List<ExtendedCommitSig> extendedSignatures})
-      : extendedSignatures = extendedSignatures.mutable;
+      : extendedSignatures = extendedSignatures.immutable;
   factory ExtendedCommit.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ExtendedCommit(

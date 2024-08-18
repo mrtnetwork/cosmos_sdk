@@ -10,7 +10,7 @@ class ParameterChangeProposal extends CosmosMessage {
   final List<ParamChange> changes;
   ParameterChangeProposal(
       {this.title, this.description, required List<ParamChange> changes})
-      : changes = changes.mutable;
+      : changes = changes.immutable;
   factory ParameterChangeProposal.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ParameterChangeProposal(

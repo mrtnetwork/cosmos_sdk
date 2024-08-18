@@ -15,7 +15,7 @@ class DistributionValidatorCurrentRewardsRecord extends CosmosMessage {
   DistributionValidatorCurrentRewardsRecord(
       {this.validatorAddress,
       required List<DistributionValidatorCurrentRewards> rewards})
-      : rewards = rewards.mutable;
+      : rewards = rewards.immutable;
   factory DistributionValidatorCurrentRewardsRecord.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

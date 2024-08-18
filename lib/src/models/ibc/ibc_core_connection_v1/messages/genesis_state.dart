@@ -19,8 +19,8 @@ class IbcConnectionGenesisState extends CosmosMessage {
       required List<IbcConnectConnectionPaths> clientConnectionPaths,
       this.nextConnectionSequence,
       required this.params})
-      : connections = connections.mutable,
-        clientConnectionPaths = clientConnectionPaths.mutable;
+      : connections = connections.immutable,
+        clientConnectionPaths = clientConnectionPaths.immutable;
   factory IbcConnectionGenesisState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcConnectionGenesisState(

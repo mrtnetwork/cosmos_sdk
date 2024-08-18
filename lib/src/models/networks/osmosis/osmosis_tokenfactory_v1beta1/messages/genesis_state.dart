@@ -12,7 +12,7 @@ class OsmosisTokenFactoryGenesisState extends CosmosMessage {
   OsmosisTokenFactoryGenesisState(
       {required this.params,
       required List<OsmosisTokenFactoryGenesisDenom> factoryDenoms})
-      : factoryDenoms = factoryDenoms.mutable;
+      : factoryDenoms = factoryDenoms.immutable;
   factory OsmosisTokenFactoryGenesisState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisTokenFactoryGenesisState(

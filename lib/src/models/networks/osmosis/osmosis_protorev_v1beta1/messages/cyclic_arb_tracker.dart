@@ -12,7 +12,7 @@ class OsmosisProtorevRouteCyclicArbTracker extends CosmosMessage {
 
   OsmosisProtorevRouteCyclicArbTracker(
       {required List<Coin> cyclicArb, this.heightAccountingStartsFrom})
-      : cyclicArb = cyclicArb.mutable;
+      : cyclicArb = cyclicArb.immutable;
 
   factory OsmosisProtorevRouteCyclicArbTracker.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

@@ -16,7 +16,7 @@ class GovDeposit extends CosmosMessage {
   /// amount to be deposited by depositor.
   final List<Coin> amount;
   GovDeposit({this.proposalId, this.depositor, required List<Coin> amount})
-      : amount = amount.mutable;
+      : amount = amount.immutable;
   factory GovDeposit.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GovDeposit(

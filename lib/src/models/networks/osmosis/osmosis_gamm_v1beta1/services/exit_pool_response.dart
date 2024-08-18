@@ -6,7 +6,7 @@ import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
 class OsmosisGammMsgExitPoolResponse extends CosmosMessage {
   final List<Coin> tokenOut;
   OsmosisGammMsgExitPoolResponse({required List<Coin> tokenOut})
-      : tokenOut = tokenOut.mutable;
+      : tokenOut = tokenOut.immutable;
   factory OsmosisGammMsgExitPoolResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisGammMsgExitPoolResponse(

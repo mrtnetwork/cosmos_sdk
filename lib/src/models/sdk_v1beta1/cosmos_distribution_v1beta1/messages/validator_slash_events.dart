@@ -9,7 +9,7 @@ class DistributionValidatorSlashEvents extends CosmosMessage {
   final List<DistributionValidatorSlashEvent> validatorSlashEvents;
   DistributionValidatorSlashEvents(
       List<DistributionValidatorSlashEvent> validatorSlashEvents)
-      : validatorSlashEvents = validatorSlashEvents.mutable;
+      : validatorSlashEvents = validatorSlashEvents.immutable;
   factory DistributionValidatorSlashEvents.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionValidatorSlashEvents(decode

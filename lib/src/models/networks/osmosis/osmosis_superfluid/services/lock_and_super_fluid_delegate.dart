@@ -14,7 +14,7 @@ class OsmosisSuperfluidMsgLockAndSuperfluidDelegate extends CosmosMessage
 
   OsmosisSuperfluidMsgLockAndSuperfluidDelegate(
       {this.sender, required List<Coin> coins, this.valAddr})
-      : coins = coins.mutable;
+      : coins = coins.immutable;
   factory OsmosisSuperfluidMsgLockAndSuperfluidDelegate.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

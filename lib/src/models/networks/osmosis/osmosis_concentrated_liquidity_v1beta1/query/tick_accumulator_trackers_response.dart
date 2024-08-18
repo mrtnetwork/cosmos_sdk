@@ -14,8 +14,8 @@ class OsmosisConcentratedLiquidityTickAccumulatorTrackersResponse
           spreadRewardGrowthOppositeDirectionOfLastTraversal,
       required List<OsmosisConcentratedLiquidityUptimeTracker> uptimeTrackers})
       : spreadRewardGrowthOppositeDirectionOfLastTraversal =
-            spreadRewardGrowthOppositeDirectionOfLastTraversal.mutable,
-        uptimeTrackers = uptimeTrackers.mutable;
+            spreadRewardGrowthOppositeDirectionOfLastTraversal.immutable,
+        uptimeTrackers = uptimeTrackers.immutable;
   factory OsmosisConcentratedLiquidityTickAccumulatorTrackersResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

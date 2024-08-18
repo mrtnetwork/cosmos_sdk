@@ -10,7 +10,7 @@ class IbcClientIdentifiedGenesisMetadata extends CosmosMessage {
   final List<IbcClientGenesisMetadata> clientMetadata;
   IbcClientIdentifiedGenesisMetadata(
       {this.clientId, required List<IbcClientGenesisMetadata> clientMetadata})
-      : clientMetadata = clientMetadata.mutable;
+      : clientMetadata = clientMetadata.immutable;
   factory IbcClientIdentifiedGenesisMetadata.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcClientIdentifiedGenesisMetadata(

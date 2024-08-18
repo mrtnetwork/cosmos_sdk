@@ -14,7 +14,7 @@ class GovQueryProposalsResponse extends CosmosMessage {
   final PageResponse? pagination;
   GovQueryProposalsResponse(
       {required List<GovProposal> proposals, this.pagination})
-      : proposals = proposals.mutable;
+      : proposals = proposals.immutable;
   factory GovQueryProposalsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GovQueryProposalsResponse(

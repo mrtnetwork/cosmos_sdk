@@ -38,7 +38,7 @@ class OsmosisIncentiveMsgCreateGauge extends CosmosMessage
       required List<Coin> coins,
       required this.startTime,
       this.numEpochsPaidOver})
-      : coins = coins.mutable;
+      : coins = coins.immutable;
   factory OsmosisIncentiveMsgCreateGauge.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisIncentiveMsgCreateGauge(

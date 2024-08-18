@@ -9,7 +9,7 @@ class OsmosisTxfeesTxFeesTracker extends CosmosMessage {
   final BigInt? heightAccountingStartsFrom;
   OsmosisTxfeesTxFeesTracker(
       {required List<Coin> txFees, this.heightAccountingStartsFrom})
-      : txFees = txFees.mutable;
+      : txFees = txFees.immutable;
   factory OsmosisTxfeesTxFeesTracker.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisTxfeesTxFeesTracker(

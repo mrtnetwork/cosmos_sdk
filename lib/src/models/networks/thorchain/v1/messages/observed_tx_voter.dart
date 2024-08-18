@@ -24,9 +24,9 @@ class ThorchainObservedTxVoter extends CosmosMessage {
       this.updatedVault,
       this.reverted,
       this.outboundHeight})
-      : txs = txs.mutable,
-        actions = actions.mutable,
-        outTxs = outTxs.mutable;
+      : txs = txs.immutable,
+        actions = actions.immutable,
+        outTxs = outTxs.immutable;
   factory ThorchainObservedTxVoter.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainObservedTxVoter(

@@ -23,7 +23,7 @@ class OsmosisStreamSwapParams extends CosmosMessage {
       this.saleCreationFeeRecipient,
       required this.minDurationUntilStartTime,
       required this.minSaleDuration})
-      : saleCreationFee = saleCreationFee.mutable;
+      : saleCreationFee = saleCreationFee.immutable;
   factory OsmosisStreamSwapParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisStreamSwapParams(

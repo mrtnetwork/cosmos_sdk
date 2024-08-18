@@ -11,7 +11,7 @@ class OsmosisStreamSwapQuerySalesResponse extends CosmosMessage {
 
   OsmosisStreamSwapQuerySalesResponse(
       {required List<OsmosisStreamSwapSale> sales, this.pagination})
-      : sales = sales.mutable;
+      : sales = sales.immutable;
   factory OsmosisStreamSwapQuerySalesResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisStreamSwapQuerySalesResponse(

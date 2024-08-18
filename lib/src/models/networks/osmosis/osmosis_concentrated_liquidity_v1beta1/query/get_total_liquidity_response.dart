@@ -9,7 +9,7 @@ class OsmosisConcentratedLiquidityGetTotalLiquidityResponse
 
   OsmosisConcentratedLiquidityGetTotalLiquidityResponse(
       List<Coin> totalLiquidity)
-      : totalLiquidity = totalLiquidity.mutable;
+      : totalLiquidity = totalLiquidity.immutable;
   factory OsmosisConcentratedLiquidityGetTotalLiquidityResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

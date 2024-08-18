@@ -39,7 +39,7 @@ class OsmosisConcentratedLiquidityTickInfo extends CosmosMessage {
           spreadRewardGrowthOsppositeDirectionOfLastTraversal,
       required this.uptimeTrackers})
       : spreadRewardGrowthOsppositeDirectionOfLastTraversal =
-            spreadRewardGrowthOsppositeDirectionOfLastTraversal.mutable;
+            spreadRewardGrowthOsppositeDirectionOfLastTraversal.immutable;
   factory OsmosisConcentratedLiquidityTickInfo.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityTickInfo(

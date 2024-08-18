@@ -11,7 +11,7 @@ class OsmosisProtorevQueryGetProtoRevTokenPairArbRoutesResponse
   final List<OsmosisProtorevTokenPairArbRoutes> routes;
   OsmosisProtorevQueryGetProtoRevTokenPairArbRoutesResponse(
       List<OsmosisProtorevTokenPairArbRoutes> routes)
-      : routes = routes.mutable;
+      : routes = routes.immutable;
   factory OsmosisProtorevQueryGetProtoRevTokenPairArbRoutesResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

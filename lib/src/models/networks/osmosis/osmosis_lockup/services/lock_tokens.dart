@@ -12,7 +12,7 @@ class OsmosisLockupMsgLockTokens extends CosmosMessage
   final List<Coin> coins;
   OsmosisLockupMsgLockTokens(
       {this.owner, required this.duration, required List<Coin> coins})
-      : coins = coins.mutable;
+      : coins = coins.immutable;
   factory OsmosisLockupMsgLockTokens.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisLockupMsgLockTokens(

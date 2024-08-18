@@ -30,13 +30,13 @@ class IbcChannelGenesisState extends CosmosMessage {
       required List<IbcChannelPacketSequence> ackSequences,
       this.nextChannelSequence,
       required this.params})
-      : channels = channels.mutable,
-        acknowledgements = acknowledgements.mutable,
-        commitments = commitments.mutable,
-        receipts = receipts.mutable,
-        sendSequences = sendSequences.mutable,
-        recvSequences = recvSequences.mutable,
-        ackSequences = ackSequences.mutable;
+      : channels = channels.immutable,
+        acknowledgements = acknowledgements.immutable,
+        commitments = commitments.immutable,
+        receipts = receipts.immutable,
+        sendSequences = sendSequences.immutable,
+        recvSequences = recvSequences.immutable,
+        ackSequences = ackSequences.immutable;
   factory IbcChannelGenesisState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcChannelGenesisState(

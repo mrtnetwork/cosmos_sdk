@@ -11,7 +11,7 @@ class OsmosisSuperfluidSuperfluidDelegationsByValidatorDenomResponse
   OsmosisSuperfluidSuperfluidDelegationsByValidatorDenomResponse(
       {required List<OsmosisSuperfluidSuperfluidDelegationRecord>
           superfluidDelegationRecords})
-      : superfluidDelegationRecords = superfluidDelegationRecords.mutable;
+      : superfluidDelegationRecords = superfluidDelegationRecords.immutable;
   factory OsmosisSuperfluidSuperfluidDelegationsByValidatorDenomResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

@@ -49,7 +49,7 @@ class IbcConnectionMsgConnectionOpenTry extends CosmosMessage
     required this.consensusHeight,
     this.signer,
     List<int>? hostConsensusStateProof,
-  })  : counterpartyVersions = counterpartyVersions?.mutable,
+  })  : counterpartyVersions = counterpartyVersions?.immutable,
         proofInit = BytesUtils.tryToBytes(proofInit, unmodifiable: true),
         proofClient = BytesUtils.tryToBytes(proofClient, unmodifiable: true),
         proofConsensus =

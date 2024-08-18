@@ -15,7 +15,7 @@ class Commit extends CosmosMessage {
       this.round,
       required this.blockID,
       required List<CommitSig> signatures})
-      : signatures = signatures.mutable;
+      : signatures = signatures.immutable;
   factory Commit.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Commit(

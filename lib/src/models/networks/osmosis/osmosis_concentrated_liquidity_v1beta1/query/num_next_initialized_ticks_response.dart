@@ -14,7 +14,7 @@ class OsmosisConcentratedLiquidityNumNextInitializedTicksResponse
     required List<OsmosisConcentratedLiquidityTickLiquidityNet> liquidityDepths,
     this.currentTick,
     required this.currentLiquidity,
-  }) : liquidityDepths = liquidityDepths.mutable;
+  }) : liquidityDepths = liquidityDepths.immutable;
   factory OsmosisConcentratedLiquidityNumNextInitializedTicksResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

@@ -10,7 +10,7 @@ class OsmosisSuperfluidUserConcentratedSuperfluidPositionsUndelegatingResponse
   OsmosisSuperfluidUserConcentratedSuperfluidPositionsUndelegatingResponse(
       List<OsmosisSuperfluidConcentratedPoolUserPositionRecord>
           clPoolUserPositionRecords)
-      : clPoolUserPositionRecords = clPoolUserPositionRecords.mutable;
+      : clPoolUserPositionRecords = clPoolUserPositionRecords.immutable;
   factory OsmosisSuperfluidUserConcentratedSuperfluidPositionsUndelegatingResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

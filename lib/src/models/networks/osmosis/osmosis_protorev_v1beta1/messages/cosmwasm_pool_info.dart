@@ -11,7 +11,7 @@ class OsmosisProtorevCosmwasmPoolInfo extends CosmosMessage {
 
   OsmosisProtorevCosmwasmPoolInfo(
       {required List<OsmosisProtorevWeightMap> weightMaps})
-      : weightMaps = weightMaps.mutable;
+      : weightMaps = weightMaps.immutable;
 
   factory OsmosisProtorevCosmwasmPoolInfo.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

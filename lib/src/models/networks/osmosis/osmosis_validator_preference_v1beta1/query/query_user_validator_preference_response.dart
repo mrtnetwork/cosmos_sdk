@@ -9,7 +9,7 @@ class OsmosisValidatorPreferenceQueryUserValidatorPreferenceResponse
 
   OsmosisValidatorPreferenceQueryUserValidatorPreferenceResponse(
       List<OsmosisValidatorPreferenceValidatorPreference> preferences)
-      : preferences = preferences.mutable;
+      : preferences = preferences.immutable;
   factory OsmosisValidatorPreferenceQueryUserValidatorPreferenceResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

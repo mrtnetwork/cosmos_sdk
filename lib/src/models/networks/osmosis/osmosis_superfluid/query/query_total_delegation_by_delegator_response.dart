@@ -18,9 +18,9 @@ class OsmosisSuperfluidQueryTotalDelegationByDelegatorResponse
       required List<DelegationResponse> delegationResponse,
       required List<Coin> totalDelegatedCoins,
       required this.totalEquivalentStakedAmount})
-      : superfluidDelegationRecords = superfluidDelegationRecords.mutable,
-        delegationResponse = delegationResponse.mutable,
-        totalDelegatedCoins = totalDelegatedCoins.mutable;
+      : superfluidDelegationRecords = superfluidDelegationRecords.immutable,
+        delegationResponse = delegationResponse.immutable,
+        totalDelegatedCoins = totalDelegatedCoins.immutable;
   factory OsmosisSuperfluidQueryTotalDelegationByDelegatorResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

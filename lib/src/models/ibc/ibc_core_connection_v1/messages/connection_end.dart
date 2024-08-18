@@ -31,7 +31,7 @@ class IbcConnectionConnectionEnd extends CosmosMessage {
       this.state,
       required this.counterparty,
       this.delayPeriod})
-      : versions = versions?.mutable;
+      : versions = versions?.immutable;
   factory IbcConnectionConnectionEnd.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcConnectionConnectionEnd(

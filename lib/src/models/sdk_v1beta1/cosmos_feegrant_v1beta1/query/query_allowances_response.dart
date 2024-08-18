@@ -13,7 +13,7 @@ class QueryAllowancesResponse extends CosmosMessage {
   /// pagination defines an pagination for the response.
   final PageResponse? pagination;
   QueryAllowancesResponse({required List<FeeGrant> allowances, this.pagination})
-      : allowances = allowances.mutable;
+      : allowances = allowances.immutable;
 
   factory QueryAllowancesResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

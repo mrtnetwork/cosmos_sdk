@@ -39,7 +39,7 @@ class OsmosisGammPool extends CosmosMessage {
       required this.totalShares,
       required List<OsmosisGammPoolAsset> poolAssets,
       required this.totalWeight})
-      : poolAssets = poolAssets.mutable;
+      : poolAssets = poolAssets.immutable;
   factory OsmosisGammPool.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisGammPool(

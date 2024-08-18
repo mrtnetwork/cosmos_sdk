@@ -14,7 +14,7 @@ class QueryIncentivizedPacketsResponse extends CosmosMessage {
   QueryIncentivizedPacketsResponse(
       {required List<IbcFeeIdentifiedPacketFees> incentivizedPackets,
       this.pagination})
-      : incentivizedPackets = incentivizedPackets.mutable;
+      : incentivizedPackets = incentivizedPackets.immutable;
 
   factory QueryIncentivizedPacketsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

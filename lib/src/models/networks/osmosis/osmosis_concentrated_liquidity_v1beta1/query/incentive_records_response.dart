@@ -15,7 +15,7 @@ class OsmosisConcentratedLiquidityIncentiveRecordsResponse
       {required List<OsmosisConcentratedLiquidityIncentiveRecord>
           incentiveRecords,
       this.pagination})
-      : incentiveRecords = incentiveRecords.mutable;
+      : incentiveRecords = incentiveRecords.immutable;
   factory OsmosisConcentratedLiquidityIncentiveRecordsResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

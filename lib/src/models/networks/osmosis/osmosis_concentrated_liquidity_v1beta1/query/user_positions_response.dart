@@ -12,7 +12,7 @@ class OsmosisConcentratedLiquidityUserPositionsResponse extends CosmosMessage {
 
   OsmosisConcentratedLiquidityUserPositionsResponse(
       {required List<FullPositionBreakdown> positions, this.pagination})
-      : positions = positions.mutable;
+      : positions = positions.immutable;
   factory OsmosisConcentratedLiquidityUserPositionsResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

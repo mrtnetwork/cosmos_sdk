@@ -25,7 +25,7 @@ class OsmosisPoolManagerParams extends CosmosMessage {
     required List<Coin> poolCreationFee,
     required this.takerFeeParams,
     List<String>? authorizedQuoteDenoms,
-  })  : poolCreationFee = poolCreationFee.mutable,
+  })  : poolCreationFee = poolCreationFee.immutable,
         authorizedQuoteDenoms = authorizedQuoteDenoms?.nullOnEmpy;
   factory OsmosisPoolManagerParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

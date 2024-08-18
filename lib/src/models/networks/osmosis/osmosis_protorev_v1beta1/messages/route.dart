@@ -16,7 +16,7 @@ class OsmosisProtorevRoute extends CosmosMessage {
 
   OsmosisProtorevRoute(
       {required List<OsmosisProtorevTrade> trades, this.stepSize})
-      : trades = trades.mutable;
+      : trades = trades.immutable;
 
   factory OsmosisProtorevRoute.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

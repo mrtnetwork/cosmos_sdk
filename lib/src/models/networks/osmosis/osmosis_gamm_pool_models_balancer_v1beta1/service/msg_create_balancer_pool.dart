@@ -18,7 +18,7 @@ class OsmosisGammPoolmodelsBalancerMsgCreateBalancerPool extends CosmosMessage
     this.poolParams,
     required List<OsmosisGammPoolAsset> poolAssets,
     this.futurePoolGovernor,
-  }) : poolAssets = poolAssets.mutable;
+  }) : poolAssets = poolAssets.immutable;
   factory OsmosisGammPoolmodelsBalancerMsgCreateBalancerPool.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

@@ -8,7 +8,7 @@ import 'p2p_message.dart';
 
 class PexAddrs extends P2pMessage {
   final List<NetAddress> addrs;
-  PexAddrs({required List<NetAddress> addrs}) : addrs = addrs.mutable;
+  PexAddrs({required List<NetAddress> addrs}) : addrs = addrs.immutable;
   factory PexAddrs.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return PexAddrs(

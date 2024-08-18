@@ -16,7 +16,7 @@ class OsmosisGammMsgSwapExactAmountIn extends CosmosMessage
       required List<OsmosisGammSwapAmountInRoute> routes,
       required this.tokenIn,
       required this.tokenOutMinAmount})
-      : routes = routes.mutable;
+      : routes = routes.immutable;
   factory OsmosisGammMsgSwapExactAmountIn.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisGammMsgSwapExactAmountIn(

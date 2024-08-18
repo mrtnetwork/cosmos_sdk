@@ -31,11 +31,11 @@ class ThorchainVault extends CosmosMessage {
       List<BigInt>? pendingTxBlockHeights,
       required List<ThorchainChainContract> routers,
       List<String>? frozen})
-      : coins = coins.mutable,
+      : coins = coins.immutable,
         membership = membership?.nullOnEmpy,
         chains = chains?.nullOnEmpy,
         pendingTxBlockHeights = pendingTxBlockHeights?.nullOnEmpy,
-        routers = routers.mutable,
+        routers = routers.immutable,
         frozen = frozen?.nullOnEmpy;
   factory ThorchainVault.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

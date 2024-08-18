@@ -7,7 +7,7 @@ class ThorchainEventSlash extends CosmosMessage {
   final List<ThorchainPoolAmt> slashAmount;
   ThorchainEventSlash(
       {required this.pool, required List<ThorchainPoolAmt> slashAmount})
-      : slashAmount = slashAmount.mutable;
+      : slashAmount = slashAmount.immutable;
   factory ThorchainEventSlash.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainEventSlash(

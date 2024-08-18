@@ -10,7 +10,7 @@ class OsmosisDowntimeDetectorGenesisState extends CosmosMessage {
   OsmosisDowntimeDetectorGenesisState(
       {required List<OsmosisDowntimeDetectorGenesisDowntimeEntry> downtimes,
       required this.lastBlockTime})
-      : downtimes = downtimes.mutable;
+      : downtimes = downtimes.immutable;
   factory OsmosisDowntimeDetectorGenesisState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisDowntimeDetectorGenesisState(

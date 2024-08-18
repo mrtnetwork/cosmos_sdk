@@ -9,7 +9,7 @@ class IbcLightClientsWasmGenesisState extends CosmosMessage {
   /// uploaded light client wasm contracts
   final List<IbcLightClientsWasmContract> contracts;
   IbcLightClientsWasmGenesisState(List<IbcLightClientsWasmContract> contracts)
-      : contracts = contracts.mutable;
+      : contracts = contracts.immutable;
   factory IbcLightClientsWasmGenesisState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcLightClientsWasmGenesisState(decode

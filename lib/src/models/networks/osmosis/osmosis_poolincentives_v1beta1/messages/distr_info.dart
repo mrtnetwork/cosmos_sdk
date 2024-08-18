@@ -10,7 +10,7 @@ class OsmosisPoolincentivesDistrInfo extends CosmosMessage {
   OsmosisPoolincentivesDistrInfo(
       {required this.totalWeight,
       required List<OsmosisPoolincentivesDistrRecord> records})
-      : records = records.mutable;
+      : records = records.immutable;
   factory OsmosisPoolincentivesDistrInfo.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolincentivesDistrInfo(

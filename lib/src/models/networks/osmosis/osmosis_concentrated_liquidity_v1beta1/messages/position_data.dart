@@ -17,7 +17,7 @@ class OsmosisConcentratedLiquidityPositionData extends CosmosMessage {
     this.lockId,
     required this.spreadRewardAccumRecord,
     required List<OsmosisAccumRecord> uptimeAccumRecords,
-  }) : uptimeAccumRecords = uptimeAccumRecords.mutable;
+  }) : uptimeAccumRecords = uptimeAccumRecords.immutable;
   factory OsmosisConcentratedLiquidityPositionData.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

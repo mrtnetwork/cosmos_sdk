@@ -7,7 +7,7 @@ class OsmosisLockupAccountLockedPastTimeDenomResponse extends CosmosMessage {
   final List<OsmosisLockupPeriodLock> locks;
   OsmosisLockupAccountLockedPastTimeDenomResponse(
       List<OsmosisLockupPeriodLock> locks)
-      : locks = locks.mutable;
+      : locks = locks.immutable;
   factory OsmosisLockupAccountLockedPastTimeDenomResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

@@ -18,7 +18,7 @@ class ThorchainSolvencyVoter extends CosmosMessage {
       this.height,
       this.consensusBlockHeight,
       List<String>? signers})
-      : coins = coins.mutable,
+      : coins = coins.immutable,
         signers = signers?.nullOnEmpy;
   factory ThorchainSolvencyVoter.deserialized(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

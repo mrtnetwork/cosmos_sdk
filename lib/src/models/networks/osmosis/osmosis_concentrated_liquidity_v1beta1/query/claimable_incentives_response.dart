@@ -11,8 +11,8 @@ class OsmosisConcentratedLiquidityClaimableIncentivesResponse
   OsmosisConcentratedLiquidityClaimableIncentivesResponse({
     required List<Coin> claimableIncentives,
     required List<Coin> forfeitedIncentives,
-  })  : claimableIncentives = claimableIncentives.mutable,
-        forfeitedIncentives = forfeitedIncentives.mutable;
+  })  : claimableIncentives = claimableIncentives.immutable,
+        forfeitedIncentives = forfeitedIncentives.immutable;
   factory OsmosisConcentratedLiquidityClaimableIncentivesResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

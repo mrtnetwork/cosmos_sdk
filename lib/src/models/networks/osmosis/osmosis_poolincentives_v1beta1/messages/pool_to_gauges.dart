@@ -8,7 +8,7 @@ class OsmosisPoolincentivesPoolToGauges extends CosmosMessage {
   final List<OsmosisPoolincentivesPoolToGauge> poolToGauge;
   OsmosisPoolincentivesPoolToGauges(
       List<OsmosisPoolincentivesPoolToGauge> poolToGauge)
-      : poolToGauge = poolToGauge.mutable;
+      : poolToGauge = poolToGauge.immutable;
   factory OsmosisPoolincentivesPoolToGauges.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolincentivesPoolToGauges(decode

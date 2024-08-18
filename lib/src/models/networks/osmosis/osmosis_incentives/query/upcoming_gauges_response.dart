@@ -13,7 +13,7 @@ class OsmosisIncentiveUpcomingGaugesResponse extends CosmosMessage {
   OsmosisIncentiveUpcomingGaugesResponse({
     required List<OsmosisIncentivesGauge> data,
     this.pagination,
-  }) : data = data.mutable;
+  }) : data = data.immutable;
   factory OsmosisIncentiveUpcomingGaugesResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisIncentiveUpcomingGaugesResponse(

@@ -43,8 +43,8 @@ class OsmosisGammPoolmodelsStableSwapPool extends CosmosMessage {
       required List<Coin> poolLiquidity,
       required List<BigInt> scalingFactor,
       this.scalingFactorController})
-      : poolLiquidity = poolLiquidity.mutable,
-        scalingFactor = scalingFactor.mutable;
+      : poolLiquidity = poolLiquidity.immutable,
+        scalingFactor = scalingFactor.immutable;
   factory OsmosisGammPoolmodelsStableSwapPool.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisGammPoolmodelsStableSwapPool(

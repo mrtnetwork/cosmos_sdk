@@ -13,7 +13,7 @@ class GovQueryVotesResponse extends CosmosMessage {
   /// pagination defines the pagination in the response.
   final PageResponse? pagination;
   GovQueryVotesResponse({required List<GovVote> votes, this.pagination})
-      : votes = votes.mutable;
+      : votes = votes.immutable;
   factory GovQueryVotesResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GovQueryVotesResponse(

@@ -8,7 +8,7 @@ class OsmosisSuperfluidEstimateSuperfluidDelegatedAmountByValidatorDenomResponse
   final List<Coin> totalDelegatedCoins;
   OsmosisSuperfluidEstimateSuperfluidDelegatedAmountByValidatorDenomResponse(
       List<Coin> totalDelegatedCoins)
-      : totalDelegatedCoins = totalDelegatedCoins.mutable;
+      : totalDelegatedCoins = totalDelegatedCoins.immutable;
   factory OsmosisSuperfluidEstimateSuperfluidDelegatedAmountByValidatorDenomResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

@@ -15,7 +15,7 @@ class AuthzExec extends CosmosMessage
   /// The x/authz will try to find a grant matching (msg.signers, grantee, MsgTypeURL(msg))
   /// triple and validate it.
   final List<Any> msgs;
-  AuthzExec({this.grantee, required List<Any> msgs}) : msgs = msgs.mutable;
+  AuthzExec({this.grantee, required List<Any> msgs}) : msgs = msgs.immutable;
   factory AuthzExec.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return AuthzExec(

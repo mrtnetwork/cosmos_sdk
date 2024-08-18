@@ -7,7 +7,7 @@ class OsmosisSuperfluidAllAssetsResponse extends CosmosMessage {
   final List<OsmosisSuperfluidSuperfluidAsset> assets;
   OsmosisSuperfluidAllAssetsResponse(
       {required List<OsmosisSuperfluidSuperfluidAsset> assets})
-      : assets = assets.mutable;
+      : assets = assets.immutable;
   factory OsmosisSuperfluidAllAssetsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidAllAssetsResponse(

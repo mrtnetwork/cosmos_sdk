@@ -20,7 +20,7 @@ class OsmosisSuperfluidMsgUnlockAndMigrateSharesToFullRangeConcentratedPosition
     this.lockId,
     required this.sharesToMigrate,
     required List<Coin> tokenOutMins,
-  }) : tokenOutMins = tokenOutMins.mutable;
+  }) : tokenOutMins = tokenOutMins.immutable;
   factory OsmosisSuperfluidMsgUnlockAndMigrateSharesToFullRangeConcentratedPosition.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

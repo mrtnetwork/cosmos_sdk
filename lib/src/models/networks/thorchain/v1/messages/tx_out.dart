@@ -6,7 +6,7 @@ class ThorchainTxOut extends CosmosMessage {
   final BigInt? height;
   final List<ThorchainTxOutItem> txArray;
   ThorchainTxOut({this.height, required List<ThorchainTxOutItem> txArray})
-      : txArray = txArray.mutable;
+      : txArray = txArray.immutable;
   factory ThorchainTxOut.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainTxOut(

@@ -7,7 +7,7 @@ import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
 /// CapabilityOwners defines a set of owners of a single Capability. The set of owners must be unique.
 class CapabilityOwners extends CosmosMessage {
   final List<Owner> owners;
-  CapabilityOwners(List<Owner> owners) : owners = owners.mutable;
+  CapabilityOwners(List<Owner> owners) : owners = owners.immutable;
   factory CapabilityOwners.deserialize(List<int> bytes) {
     final deocde = CosmosProtocolBuffer.decode(bytes);
     return CapabilityOwners(

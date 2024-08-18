@@ -9,7 +9,7 @@ class OsmosisValSetprefUserValidatorPreferencesResponse extends CosmosMessage {
   final List<OsmosisValSetprefValidatorPreference> preferences;
   OsmosisValSetprefUserValidatorPreferencesResponse(
       List<OsmosisValSetprefValidatorPreference> preferences)
-      : preferences = preferences.mutable;
+      : preferences = preferences.immutable;
   factory OsmosisValSetprefUserValidatorPreferencesResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

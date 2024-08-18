@@ -8,7 +8,7 @@ class OsmosisTxfeesQueryFeeTokensResponse extends CosmosMessage {
   final List<OsmosisTxfeesFeeToken> feetokens;
   OsmosisTxfeesQueryFeeTokensResponse({
     required List<OsmosisTxfeesFeeToken> feetokens,
-  }) : feetokens = feetokens.mutable;
+  }) : feetokens = feetokens.immutable;
   factory OsmosisTxfeesQueryFeeTokensResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisTxfeesQueryFeeTokensResponse(

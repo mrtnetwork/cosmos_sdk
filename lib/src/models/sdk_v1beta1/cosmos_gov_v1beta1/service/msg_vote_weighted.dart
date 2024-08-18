@@ -18,7 +18,7 @@ class GovMsgVoteWeighted extends CosmosMessage
       {required this.propoosalId,
       this.voter,
       required List<GovWeightedVoteOption> options})
-      : options = options.mutable;
+      : options = options.immutable;
   factory GovMsgVoteWeighted.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GovMsgVoteWeighted(

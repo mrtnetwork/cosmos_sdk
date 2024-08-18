@@ -26,9 +26,9 @@ class OsmosisConcentratedLiquidityPoolData extends CosmosMessage {
           incentivesAccumulators,
       required List<OsmosisConcentratedLiquidityIncentiveRecord>
           incentiveRecords})
-      : ticks = ticks.mutable,
-        incentivesAccumulators = incentivesAccumulators.mutable,
-        incentiveRecords = incentiveRecords.mutable;
+      : ticks = ticks.immutable,
+        incentivesAccumulators = incentivesAccumulators.immutable,
+        incentiveRecords = incentiveRecords.immutable;
   factory OsmosisConcentratedLiquidityPoolData.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityPoolData(

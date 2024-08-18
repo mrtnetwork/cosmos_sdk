@@ -17,7 +17,7 @@ class OsmosisConcentratedLiquidityTickSpacingDecreaseProposal
     this.description,
     required List<OsmosisConcentratedLiquidityPoolIdToTickSpacingRecord>
         poolIdToTickSpacingRecords,
-  }) : poolIdToTickSpacingRecords = poolIdToTickSpacingRecords.mutable;
+  }) : poolIdToTickSpacingRecords = poolIdToTickSpacingRecords.immutable;
   factory OsmosisConcentratedLiquidityTickSpacingDecreaseProposal.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

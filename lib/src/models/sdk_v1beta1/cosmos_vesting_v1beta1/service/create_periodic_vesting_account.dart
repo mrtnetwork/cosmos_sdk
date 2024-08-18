@@ -24,7 +24,7 @@ class MsgCreatePeriodicVestingAccount extends CosmosMessage
     this.toAddress,
     this.startTime,
     required List<Period> vestingPeriods,
-  }) : vestingPeriods = vestingPeriods.mutable;
+  }) : vestingPeriods = vestingPeriods.immutable;
 
   /// Converts this instance of [MsgCreatePeriodicVestingAccount] to a JSON object.
   @override

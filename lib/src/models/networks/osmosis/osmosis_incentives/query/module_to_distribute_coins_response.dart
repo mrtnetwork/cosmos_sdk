@@ -7,7 +7,7 @@ class OsmosisIncentiveModuleToDistributeCoinsResponse extends CosmosMessage {
   /// Coins that have yet to be distributed
   final List<Coin> coins;
   OsmosisIncentiveModuleToDistributeCoinsResponse(List<Coin> coins)
-      : coins = coins.mutable;
+      : coins = coins.immutable;
   factory OsmosisIncentiveModuleToDistributeCoinsResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

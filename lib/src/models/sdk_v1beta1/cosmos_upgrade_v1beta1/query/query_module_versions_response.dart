@@ -10,7 +10,7 @@ class QueryModuleVersionsResponse extends CosmosMessage {
   /// module_versions is a list of module names with their consensus versions.
   final List<ModuleVersion> moduleVersions;
   QueryModuleVersionsResponse({required List<ModuleVersion> moduleVersions})
-      : moduleVersions = moduleVersions.mutable;
+      : moduleVersions = moduleVersions.immutable;
   factory QueryModuleVersionsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryModuleVersionsResponse(

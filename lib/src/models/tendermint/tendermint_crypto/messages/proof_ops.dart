@@ -7,7 +7,7 @@ import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
 /// ProofOps is Merkle proof defined by the list of ProofOps
 class ProofOps extends CosmosMessage {
   final List<TendermintCryptoProofOp> ops;
-  ProofOps({required List<TendermintCryptoProofOp> ops}) : ops = ops.mutable;
+  ProofOps({required List<TendermintCryptoProofOp> ops}) : ops = ops.immutable;
   factory ProofOps.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ProofOps(

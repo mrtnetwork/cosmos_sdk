@@ -7,7 +7,7 @@ class ThorchainTssKeygenMetric extends CosmosMessage {
   final List<ThorchainNodeTssTime> nodeTssTimes;
   ThorchainTssKeygenMetric(
       {this.pubKey, required List<ThorchainNodeTssTime> nodeTssTimes})
-      : nodeTssTimes = nodeTssTimes.mutable;
+      : nodeTssTimes = nodeTssTimes.immutable;
   factory ThorchainTssKeygenMetric.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainTssKeygenMetric(

@@ -10,7 +10,7 @@ class StringEvent extends CosmosMessage {
   final String? type;
   final List<Attribute> attributes;
   StringEvent({this.type, required List<Attribute> attributes})
-      : attributes = attributes.mutable;
+      : attributes = attributes.immutable;
   factory StringEvent.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return StringEvent(

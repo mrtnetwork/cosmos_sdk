@@ -14,7 +14,7 @@ class QueryConsensusStatesResponse extends CosmosMessage {
   QueryConsensusStatesResponse(
       {required List<ConsensusStateWithHeight> consensusStates,
       this.pagination})
-      : consensusStates = consensusStates.mutable;
+      : consensusStates = consensusStates.immutable;
   factory QueryConsensusStatesResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryConsensusStatesResponse(

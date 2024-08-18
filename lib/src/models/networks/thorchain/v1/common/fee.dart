@@ -6,7 +6,7 @@ class ThorchainFee extends CosmosMessage {
   final List<ThorchainCoin> coins;
   final String poolDeduct;
   ThorchainFee({required List<ThorchainCoin> coins, required this.poolDeduct})
-      : coins = coins.mutable;
+      : coins = coins.immutable;
   factory ThorchainFee.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainFee(

@@ -11,7 +11,7 @@ class ValidatorSet extends CosmosMessage {
       {required List<TendermintValidator> validators,
       this.proposer,
       this.totalVotingPower})
-      : validators = validators.mutable;
+      : validators = validators.immutable;
   factory ValidatorSet.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ValidatorSet(

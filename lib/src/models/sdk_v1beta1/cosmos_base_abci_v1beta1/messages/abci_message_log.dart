@@ -12,7 +12,7 @@ class ABCIMessageLog extends CosmosMessage {
   // execution.
   final List<StringEvent> events;
   ABCIMessageLog({this.msgIndex, this.log, required List<StringEvent> events})
-      : events = events.mutable;
+      : events = events.immutable;
 
   factory ABCIMessageLog.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

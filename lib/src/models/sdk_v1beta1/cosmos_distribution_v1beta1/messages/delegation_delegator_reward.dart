@@ -11,7 +11,7 @@ class DistributionDelegationDelegatorReward extends CosmosMessage {
   final List<DecCoin> reward;
   DistributionDelegationDelegatorReward(
       {this.validatorddress, required List<DecCoin> reward})
-      : reward = reward.mutable;
+      : reward = reward.immutable;
   factory DistributionDelegationDelegatorReward.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionDelegationDelegatorReward(

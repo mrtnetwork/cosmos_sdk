@@ -9,7 +9,7 @@ import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
 class DistributionValidatorOutstandingRewards extends CosmosMessage {
   final List<DecCoin> rewards;
   DistributionValidatorOutstandingRewards(List<DecCoin> rewards)
-      : rewards = rewards.mutable;
+      : rewards = rewards.immutable;
   factory DistributionValidatorOutstandingRewards.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionValidatorOutstandingRewards(

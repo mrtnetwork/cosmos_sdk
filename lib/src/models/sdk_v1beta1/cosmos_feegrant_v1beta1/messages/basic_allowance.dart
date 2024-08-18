@@ -15,7 +15,7 @@ class BasicAllowance extends CosmosMessage {
   /// expiration specifies an optional time when this allowance expires
   final ProtobufTimestamp? expiration;
   BasicAllowance({required List<Coin> spendLimit, this.expiration})
-      : spendLimit = spendLimit.mutable;
+      : spendLimit = spendLimit.immutable;
   factory BasicAllowance.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return BasicAllowance(

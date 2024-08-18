@@ -6,7 +6,7 @@ import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
 class OsmosisPoolManagerTotalVolumeForPoolResponse extends CosmosMessage {
   final List<Coin> volume;
   OsmosisPoolManagerTotalVolumeForPoolResponse(List<Coin> volume)
-      : volume = volume.mutable;
+      : volume = volume.immutable;
   factory OsmosisPoolManagerTotalVolumeForPoolResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

@@ -15,7 +15,7 @@ class ThorchainTHORName extends CosmosMessage {
       List<int>? owner,
       required this.preferredAsset,
       required List<ThorchainTHORNameAlias> aliases})
-      : aliases = aliases.mutable,
+      : aliases = aliases.immutable,
         owner = BytesUtils.tryToBytes(owner, unmodifiable: true);
   factory ThorchainTHORName.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

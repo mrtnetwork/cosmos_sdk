@@ -16,7 +16,7 @@ class OsmosisPoolManagerEstimateSwapExactAmountOutRequest extends CosmosMessage
       {this.poolId,
       required List<OsmosisPoolManagerSwapAmountOutRoute> routes,
       this.tokenOut})
-      : routes = routes.mutable;
+      : routes = routes.immutable;
   factory OsmosisPoolManagerEstimateSwapExactAmountOutRequest.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

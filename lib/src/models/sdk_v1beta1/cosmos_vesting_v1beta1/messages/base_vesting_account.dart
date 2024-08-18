@@ -29,9 +29,9 @@ class BaseVestingAccount extends CosmosMessage {
     required List<Coin> delegatedFree,
     required List<Coin> delegatedVesting,
     this.endTime,
-  })  : originalVesting = originalVesting.mutable,
-        delegatedFree = delegatedFree.mutable,
-        delegatedVesting = delegatedVesting.mutable;
+  })  : originalVesting = originalVesting.immutable,
+        delegatedFree = delegatedFree.immutable,
+        delegatedVesting = delegatedVesting.immutable;
   factory BaseVestingAccount.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return BaseVestingAccount(

@@ -17,7 +17,7 @@ class ThorchainMsgYggdrasil extends CosmosMessage {
       required List<ThorchainCoin> coins,
       this.blockHeight,
       List<int>? signer})
-      : coins = coins.mutable,
+      : coins = coins.immutable,
         signer = BytesUtils.tryToBytes(signer, unmodifiable: true);
   factory ThorchainMsgYggdrasil.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

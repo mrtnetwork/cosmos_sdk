@@ -7,7 +7,7 @@ import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
 class ParamsSubspace extends CosmosMessage {
   final String? subspace;
   final List<String>? keys;
-  ParamsSubspace({this.subspace, List<String>? keys}) : keys = keys?.mutable;
+  ParamsSubspace({this.subspace, List<String>? keys}) : keys = keys?.immutable;
   factory ParamsSubspace.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ParamsSubspace(

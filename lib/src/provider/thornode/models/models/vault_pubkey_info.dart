@@ -8,7 +8,7 @@ class VaultPubKeyInfo {
   VaultPubKeyInfo({
     required this.pubKey,
     required List<ThorChainContractResponse> routers,
-  }) : routers = routers.mutable;
+  }) : routers = routers.immutable;
 
   factory VaultPubKeyInfo.fromJson(Map<String, dynamic> json) {
     return VaultPubKeyInfo(

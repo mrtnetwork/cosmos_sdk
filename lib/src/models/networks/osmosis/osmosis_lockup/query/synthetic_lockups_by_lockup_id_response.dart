@@ -8,7 +8,7 @@ class OsmosisLockupSyntheticLockupsByLockupIDResponse extends CosmosMessage {
 
   OsmosisLockupSyntheticLockupsByLockupIDResponse(
       List<OsmosisLockupSyntheticLock> syntheticLocks)
-      : syntheticLocks = syntheticLocks.mutable;
+      : syntheticLocks = syntheticLocks.immutable;
 
   factory OsmosisLockupSyntheticLockupsByLockupIDResponse.deserialize(
       List<int> bytes) {

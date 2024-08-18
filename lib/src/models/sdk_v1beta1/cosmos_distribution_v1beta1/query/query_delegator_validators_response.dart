@@ -8,7 +8,7 @@ class DistributionQueryDelegatorValidatorsResponse extends CosmosMessage {
   /// validators defines the validators a delegator is delegating for.
   final List<String> validators;
   DistributionQueryDelegatorValidatorsResponse(List<String> validators)
-      : validators = validators.mutable;
+      : validators = validators.immutable;
 
   factory DistributionQueryDelegatorValidatorsResponse.deserialize(
       List<int> bytes) {

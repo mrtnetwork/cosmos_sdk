@@ -11,7 +11,7 @@ class SlashingQuerySigningInfosResponse extends CosmosMessage {
   final PageResponse? pagination;
   SlashingQuerySigningInfosResponse(
       {required List<SlashingValidatorSigningInfo> info, this.pagination})
-      : info = info.mutable;
+      : info = info.immutable;
   factory SlashingQuerySigningInfosResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return SlashingQuerySigningInfosResponse(

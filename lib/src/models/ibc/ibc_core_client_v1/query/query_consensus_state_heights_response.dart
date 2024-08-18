@@ -13,7 +13,7 @@ class QueryConsensusStateHeightsResponse extends CosmosMessage {
   final PageResponse? pagination;
   QueryConsensusStateHeightsResponse(
       {required List<IbcClientHeight> consensusStateHeights, this.pagination})
-      : consensusStateHeights = consensusStateHeights.mutable;
+      : consensusStateHeights = consensusStateHeights.immutable;
 
   factory QueryConsensusStateHeightsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

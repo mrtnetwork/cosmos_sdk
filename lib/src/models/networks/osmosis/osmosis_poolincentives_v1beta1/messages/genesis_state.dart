@@ -18,7 +18,7 @@ class OsmosisPoolincentivesGenesisState extends CosmosMessage {
       required List<ProtobufDuration> lockableDurations,
       this.distrInfo,
       this.poolToGauges})
-      : lockableDurations = lockableDurations.mutable;
+      : lockableDurations = lockableDurations.immutable;
   factory OsmosisPoolincentivesGenesisState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolincentivesGenesisState(

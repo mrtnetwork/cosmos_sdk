@@ -63,8 +63,8 @@ class TxResponse extends CosmosMessage {
     required this.tx,
     required this.timestamp,
     required List<Event> events,
-  })  : logs = logs.mutable,
-        events = events.mutable;
+  })  : logs = logs.immutable,
+        events = events.immutable;
 
   factory TxResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

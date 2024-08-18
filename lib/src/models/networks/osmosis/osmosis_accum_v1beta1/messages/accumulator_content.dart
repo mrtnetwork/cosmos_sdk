@@ -10,7 +10,7 @@ class OsmosisAccumAccumulatorContent extends CosmosMessage {
   final String totalShares;
   OsmosisAccumAccumulatorContent(
       {required List<DecCoin> accumValue, required this.totalShares})
-      : accumValue = accumValue.mutable;
+      : accumValue = accumValue.immutable;
   factory OsmosisAccumAccumulatorContent.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisAccumAccumulatorContent(

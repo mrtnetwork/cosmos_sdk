@@ -14,7 +14,7 @@ class QueryClientStatesResponse extends CosmosMessage {
   QueryClientStatesResponse(
       {required List<IbcClientIdentifiedClientState> clinetStates,
       this.pagination})
-      : clinetStates = clinetStates.mutable;
+      : clinetStates = clinetStates.immutable;
   factory QueryClientStatesResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryClientStatesResponse(

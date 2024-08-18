@@ -4,7 +4,7 @@ import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
 
 class ThorchainEventGas extends CosmosMessage {
   final List<ThorchainGasPool> pools;
-  ThorchainEventGas(List<ThorchainGasPool> pools) : pools = pools.mutable;
+  ThorchainEventGas(List<ThorchainGasPool> pools) : pools = pools.immutable;
   factory ThorchainEventGas.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainEventGas(decode

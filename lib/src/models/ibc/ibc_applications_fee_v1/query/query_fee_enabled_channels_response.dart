@@ -14,7 +14,7 @@ class QueryFeeEnabledChannelsResponse extends CosmosMessage {
   QueryFeeEnabledChannelsResponse(
       {required List<IbcFeeFeeEnabledChannel> feeEnabledChannels,
       this.pagination})
-      : feeEnabledChannels = feeEnabledChannels.mutable;
+      : feeEnabledChannels = feeEnabledChannels.immutable;
   factory QueryFeeEnabledChannelsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryFeeEnabledChannelsResponse(

@@ -8,7 +8,7 @@ import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
 class FeeGrantGenesisState extends CosmosMessage {
   final List<FeeGrant> allowances;
   FeeGrantGenesisState(List<FeeGrant> allowances)
-      : allowances = allowances.mutable;
+      : allowances = allowances.immutable;
   factory FeeGrantGenesisState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return FeeGrantGenesisState(

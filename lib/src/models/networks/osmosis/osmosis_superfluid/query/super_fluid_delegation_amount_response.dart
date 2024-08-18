@@ -7,7 +7,7 @@ class OsmosisSuperfluidSuperfluidDelegationAmountResponse
     extends CosmosMessage {
   final List<Coin> amount;
   OsmosisSuperfluidSuperfluidDelegationAmountResponse(List<Coin> amount)
-      : amount = amount.mutable;
+      : amount = amount.immutable;
   factory OsmosisSuperfluidSuperfluidDelegationAmountResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

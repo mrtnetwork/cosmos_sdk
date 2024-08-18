@@ -27,7 +27,7 @@ class CheckTxResponse {
     this.mempoolError,
     this.priority,
     this.sender,
-  })  : events = events.mutable,
+  })  : events = events.immutable,
         data = BytesUtils.tryToBytes(data, unmodifiable: true);
 
   factory CheckTxResponse.fromJson(Map<String, dynamic> json) {

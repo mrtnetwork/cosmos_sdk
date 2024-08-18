@@ -12,7 +12,7 @@ class ThorchainBondProviders extends CosmosMessage {
     required this.nodeOperatorFee,
     required List<ThorchainBondProvider> providers,
   })  : nodeAddress = BytesUtils.tryToBytes(nodeAddress, unmodifiable: true),
-        providers = providers.mutable;
+        providers = providers.immutable;
   factory ThorchainBondProviders.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainBondProviders(

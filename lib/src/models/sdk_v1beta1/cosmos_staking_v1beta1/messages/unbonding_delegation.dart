@@ -20,7 +20,7 @@ class UnbondingDelegation extends CosmosMessage {
     required this.delegatorAddress,
     required this.validatorAddress,
     required List<UnbondingDelegationEntry> entries,
-  }) : entries = entries.mutable;
+  }) : entries = entries.immutable;
   factory UnbondingDelegation.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return UnbondingDelegation(

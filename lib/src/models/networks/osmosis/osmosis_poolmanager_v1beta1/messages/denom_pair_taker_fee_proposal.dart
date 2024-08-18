@@ -14,7 +14,7 @@ class OsmosisPoolManagerDenomPairTakerFeeProposal extends CosmosMessage {
     this.title,
     this.description,
     required List<OsmosisPoolManagerDenomPairTakerFee> denomPairTakerFee,
-  }) : denomPairTakerFee = denomPairTakerFee.mutable;
+  }) : denomPairTakerFee = denomPairTakerFee.immutable;
   factory OsmosisPoolManagerDenomPairTakerFeeProposal.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

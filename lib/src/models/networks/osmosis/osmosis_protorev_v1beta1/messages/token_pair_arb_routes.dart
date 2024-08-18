@@ -18,7 +18,7 @@ class OsmosisProtorevTokenPairArbRoutes extends CosmosMessage {
       {required List<OsmosisProtorevRoute> arbRsoutes,
       this.tokenIn,
       this.tokenOut})
-      : arbRsoutes = arbRsoutes.mutable;
+      : arbRsoutes = arbRsoutes.immutable;
 
   factory OsmosisProtorevTokenPairArbRoutes.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

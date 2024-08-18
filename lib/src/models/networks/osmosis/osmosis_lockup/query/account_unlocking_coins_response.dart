@@ -6,7 +6,7 @@ import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
 class OsmosisLockupAccountUnlockingCoinsResponse extends CosmosMessage {
   final List<Coin> coins;
   OsmosisLockupAccountUnlockingCoinsResponse(List<Coin> coins)
-      : coins = coins.mutable;
+      : coins = coins.immutable;
   factory OsmosisLockupAccountUnlockingCoinsResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

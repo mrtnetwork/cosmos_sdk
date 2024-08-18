@@ -26,9 +26,9 @@ class FullPositionBreakdown extends CosmosMessage {
       required List<Coin> claimableSpreadRewards,
       required List<Coin> claimableIncentives,
       required List<Coin> forfeitedIncentives})
-      : claimableSpreadRewards = claimableSpreadRewards.mutable,
-        claimableIncentives = claimableIncentives.mutable,
-        forfeitedIncentives = forfeitedIncentives.mutable;
+      : claimableSpreadRewards = claimableSpreadRewards.immutable,
+        claimableIncentives = claimableIncentives.immutable,
+        forfeitedIncentives = forfeitedIncentives.immutable;
   factory FullPositionBreakdown.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return FullPositionBreakdown(

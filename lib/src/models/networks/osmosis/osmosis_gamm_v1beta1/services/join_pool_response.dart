@@ -8,7 +8,7 @@ class OsmosisGammMsgJoinPoolResponse extends CosmosMessage {
   final List<Coin> tokenInMaxs;
   OsmosisGammMsgJoinPoolResponse(
       {required this.shareOutAmount, required List<Coin> tokenInMaxs})
-      : tokenInMaxs = tokenInMaxs.mutable;
+      : tokenInMaxs = tokenInMaxs.immutable;
   factory OsmosisGammMsgJoinPoolResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisGammMsgJoinPoolResponse(
