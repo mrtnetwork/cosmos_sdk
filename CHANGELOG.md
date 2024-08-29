@@ -1,6 +1,6 @@
 ## 1.2.0
 
-* Fix desrialization objects.
+* Fix deserialization objects.
 
 ## 1.1.0
 
