@@ -6,9 +6,11 @@ class ProtocolBufferDecoder {
     final List<ProtocolBufferDecoderResult> results = [];
     int index = 0;
     while (index < bytes.length) {
-      int tag = bytes[index++];
-      int fieldId = tag >> 3;
-      int wireType = tag & 0x07;
+      final decodeTag = _decodeVarint(bytes.sublist(index));
+      index += decodeTag.consumed;
+      final int tag = decodeTag.value;
+      final int fieldId = tag >> 3;
+      final int wireType = tag & 0x07;
       switch (wireType) {
         case 2:
           final decodeLength = _decodeVarint(bytes.sublist(index));
