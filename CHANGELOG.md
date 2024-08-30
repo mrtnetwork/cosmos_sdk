@@ -1,6 +1,6 @@
-## 1.2.0
+## 1.3.0
 
-* Fix deserialization objects.
+* Resolve issues with model deserialization on the web.
 
 ## 1.1.0
 

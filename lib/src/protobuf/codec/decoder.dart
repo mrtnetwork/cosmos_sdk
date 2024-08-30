@@ -56,7 +56,7 @@ class ProtocolBufferDecoder {
     int index = 0;
     while (true) {
       int byte = data[index++];
-      value |= BigInt.from((byte & 0x7F) << shift);
+      value |= BigInt.from((byte & 0x7F)) << shift;
       if ((byte & 0x80) == 0) {
         break;
       }
@@ -67,7 +67,7 @@ class ProtocolBufferDecoder {
 
   static _Result _decodeInt(List<int> data) {
     final index = data.indexWhere((element) => (element & 0x80) == 0);
-    if (index <= 4) {
+    if (index < 4) {
       return _decodeVarint(data);
     }
     return _decodeBigVarint(data);
