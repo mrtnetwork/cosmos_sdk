@@ -4,8 +4,6 @@ import 'package:cosmos_sdk/src/models/ibc/ibc_core_client_v1/messages/height.dar
 
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:blockchain_utils/helper/helper.dart';
-
 import 'msg_channel_upgrade_try_response.dart';
 
 /// MsgChannelUpgradeTry defines the request type for the ChannelUpgradeTry rpc

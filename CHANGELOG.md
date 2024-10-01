@@ -1,3 +1,7 @@
+## 1.4.1
+
+* Cleaned up imports
+
 ## 1.4.0
 
 * Update dependencies

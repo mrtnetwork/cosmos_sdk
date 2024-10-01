@@ -1,6 +1,5 @@
 import 'package:blockchain_utils/blockchain_utils.dart';
 import 'package:cosmos_sdk/src/provider/tendermint/models/models/event_response.dart';
-import 'package:blockchain_utils/helper/helper.dart';
 
 class DeliverTxResponse {
   final int? code;

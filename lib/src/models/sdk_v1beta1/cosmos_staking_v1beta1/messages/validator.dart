@@ -3,7 +3,6 @@ import 'package:cosmos_sdk/src/address/address.dart';
 
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_staking_v1beta1/types/types.dart';
-import 'package:blockchain_utils/helper/helper.dart';
 import 'description.dart';
 import 'commission.dart';
 import 'bond_status.dart';
