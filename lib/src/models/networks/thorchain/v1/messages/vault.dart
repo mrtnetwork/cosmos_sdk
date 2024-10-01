@@ -1,7 +1,7 @@
 import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/models/models.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 class ThorchainVault extends CosmosMessage {
   final BigInt? blockHeight;
@@ -32,11 +32,11 @@ class ThorchainVault extends CosmosMessage {
       required List<ThorchainChainContract> routers,
       List<String>? frozen})
       : coins = coins.immutable,
-        membership = membership?.nullOnEmpy,
-        chains = chains?.nullOnEmpy,
-        pendingTxBlockHeights = pendingTxBlockHeights?.nullOnEmpy,
+        membership = membership?.emptyAsNull?.immutable,
+        chains = chains?.emptyAsNull?.immutable,
+        pendingTxBlockHeights = pendingTxBlockHeights?.emptyAsNull?.immutable,
         routers = routers.immutable,
-        frozen = frozen?.nullOnEmpy;
+        frozen = frozen?.emptyAsNull?.immutable;
   factory ThorchainVault.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainVault(

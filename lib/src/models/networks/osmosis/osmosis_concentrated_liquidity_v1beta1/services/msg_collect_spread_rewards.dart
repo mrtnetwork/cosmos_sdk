@@ -1,7 +1,7 @@
 import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_concentrated_liquidity_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 import 'msg_collect_spread_rewards_response.dart';
 
@@ -14,7 +14,7 @@ class OsmosisConcentratedLiquidityMsgCollectSpreadRewards extends CosmosMessage
 
   OsmosisConcentratedLiquidityMsgCollectSpreadRewards(
       {List<BigInt>? positionIds, this.sender})
-      : positionIds = positionIds?.nullOnEmpy;
+      : positionIds = positionIds?.emptyAsNull?.immutable;
   factory OsmosisConcentratedLiquidityMsgCollectSpreadRewards.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

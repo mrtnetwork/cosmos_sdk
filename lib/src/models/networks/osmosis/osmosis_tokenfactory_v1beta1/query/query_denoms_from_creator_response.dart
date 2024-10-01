@@ -1,12 +1,12 @@
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_tokenfactory_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// QueryDenomsFromCreatorRequest defines the response structure for the DenomsFromCreator gRPC query.
 class OsmosisTokenFactoryQueryDenomsFromCreatorResponse extends CosmosMessage {
   final List<String>? denoms;
   OsmosisTokenFactoryQueryDenomsFromCreatorResponse({List<String>? denoms})
-      : denoms = denoms?.nullOnEmpy;
+      : denoms = denoms?.emptyAsNull?.immutable;
   factory OsmosisTokenFactoryQueryDenomsFromCreatorResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

@@ -1,11 +1,11 @@
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_poolmanager_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 class OsmosisPoolManagerAllPoolsResponse extends CosmosMessage {
   final List<Any>? pools;
   OsmosisPoolManagerAllPoolsResponse({List<Any>? pools})
-      : pools = pools?.nullOnEmpy;
+      : pools = pools?.emptyAsNull?.immutable;
   factory OsmosisPoolManagerAllPoolsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolManagerAllPoolsResponse(

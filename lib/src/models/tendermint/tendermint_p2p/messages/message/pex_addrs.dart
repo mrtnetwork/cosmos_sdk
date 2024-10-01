@@ -2,7 +2,7 @@ import 'package:cosmos_sdk/src/models/tendermint/types/types.dart';
 
 import 'package:cosmos_sdk/src/models/tendermint/tendermint_p2p/messages/net_address.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 import 'p2p_message.dart';
 

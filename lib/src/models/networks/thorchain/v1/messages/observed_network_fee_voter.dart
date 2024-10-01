@@ -1,6 +1,6 @@
 import 'package:cosmos_sdk/src/models/models.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 class ThorchainObservedNetworkFeeVoter extends CosmosMessage {
   final BigInt? blockHeight;
@@ -16,7 +16,7 @@ class ThorchainObservedNetworkFeeVoter extends CosmosMessage {
       List<String>? signers,
       this.feeRate,
       this.transactionSize})
-      : signers = signers?.nullOnEmpy;
+      : signers = signers?.emptyAsNull?.immutable;
   factory ThorchainObservedNetworkFeeVoter.deserialized(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainObservedNetworkFeeVoter(

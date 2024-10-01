@@ -1,7 +1,7 @@
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_accum_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_v1beta1/messages/dec_coin.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// Record corresponds to an individual position value belonging to the global accumulator.
 class OsmosisAccumRecord extends CosmosMessage {

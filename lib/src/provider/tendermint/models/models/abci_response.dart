@@ -46,7 +46,7 @@ class ABCIResponse {
   List<int> valueBytes() {
     if (value == null) {
       throw RPCError(
-          errorCode: code, message: log, request: {}, data: toJson());
+          errorCode: code, message: log, request: {}, details: toJson());
     }
     return StringUtils.encode(value!, type: StringEncoding.base64);
   }

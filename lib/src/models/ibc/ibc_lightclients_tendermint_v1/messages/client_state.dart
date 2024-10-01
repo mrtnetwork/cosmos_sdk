@@ -4,7 +4,7 @@ import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/models/ics23/messages/proof_spec.dart';
 
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 class IbcTendermintClientState extends CosmosMessage {
   final String? chainId;
@@ -55,8 +55,8 @@ class IbcTendermintClientState extends CosmosMessage {
       List<String>? upgradePath,
       this.allowUpdateAfterExpiry,
       this.allowUpdateAfterMisbehaviour})
-      : proofSpecs = proofSpecs?.nullOnEmpy,
-        upgradePath = upgradePath?.nullOnEmpy;
+      : proofSpecs = proofSpecs?.emptyAsNull?.immutable,
+        upgradePath = upgradePath?.emptyAsNull?.immutable;
   factory IbcTendermintClientState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcTendermintClientState(

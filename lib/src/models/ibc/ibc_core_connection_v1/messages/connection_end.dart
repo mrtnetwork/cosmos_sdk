@@ -3,7 +3,7 @@ import 'package:cosmos_sdk/src/models/ibc/ibc_core_connection_v1/messages/state.
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_connection_v1/messages/version.dart';
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// ConnectionEnd defines a stateful object on a chain connected to another separate one. NOTE:
 /// there must only be 2 defined ConnectionEnds to establish a connection between two chains.

@@ -1,6 +1,6 @@
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// Params defines the set of on-chain interchain accounts parameters.
 /// The following parameters may be used to disable the host submodule.
@@ -11,7 +11,7 @@ class InterchainAccountsHostParams extends CosmosMessage {
   /// allow_messages defines a list of sdk message typeURLs allowed to be executed on a host chain
   final List<String>? allowMessages;
   InterchainAccountsHostParams({this.hostEnabled, List<String>? allowMessages})
-      : allowMessages = allowMessages?.nullOnEmpy;
+      : allowMessages = allowMessages?.emptyAsNull?.immutable;
   factory InterchainAccountsHostParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return InterchainAccountsHostParams(

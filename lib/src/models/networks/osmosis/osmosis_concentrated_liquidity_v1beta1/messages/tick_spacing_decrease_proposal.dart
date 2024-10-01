@@ -1,6 +1,6 @@
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_concentrated_liquidity_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 import 'pool_id_to_tick_spacing_record.dart';
 
 /// TickSpacingDecreaseProposal is a gov Content type for proposing a tick spacing decrease for a pool.

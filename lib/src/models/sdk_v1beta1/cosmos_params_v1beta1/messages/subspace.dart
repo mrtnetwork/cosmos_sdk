@@ -1,6 +1,6 @@
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_params_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// Subspace defines a parameter subspace name and all the keys that exist for the subspace.
 /// Since: cosmos-sdk 0.46

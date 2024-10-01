@@ -3,7 +3,7 @@ import 'package:cosmos_sdk/src/models/ibc/ibc_core_channel_v1/messages/order.dar
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_channel_v1/messages/state.dart';
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// Channel defines pipeline for exactly-once packet delivery between specific
 /// modules on separate blockchains, which has at least one end capable of sending
@@ -35,7 +35,7 @@ class IbcChannelChannel extends CosmosMessage {
       List<String>? connectionHops,
       this.version,
       this.upgradeSequence})
-      : connectionHops = connectionHops?.nullOnEmpy;
+      : connectionHops = connectionHops?.emptyAsNull?.immutable;
   factory IbcChannelChannel.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcChannelChannel(

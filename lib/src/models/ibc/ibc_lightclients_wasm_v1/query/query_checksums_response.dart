@@ -1,7 +1,7 @@
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_query_v1beta1/messages/page_response.dart';
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// QueryChecksumsResponse is the response type for the Query/Checksums RPC method.
 class IbcLightClientsWasmQueryChecksumsResponse extends CosmosMessage {
@@ -12,7 +12,7 @@ class IbcLightClientsWasmQueryChecksumsResponse extends CosmosMessage {
   final PageResponse? pagination;
   IbcLightClientsWasmQueryChecksumsResponse(
       {List<String>? checksums, this.pagination})
-      : checksums = checksums?.nullOnEmpy;
+      : checksums = checksums?.emptyAsNull?.immutable;
   factory IbcLightClientsWasmQueryChecksumsResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

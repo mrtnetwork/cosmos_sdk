@@ -4,7 +4,7 @@ import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_tx_v1beta1/types/types.
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:cosmos_sdk/src/models/tendermint/tendermint_types/messages/block.dart';
 import 'package:cosmos_sdk/src/models/tendermint/tendermint_types/messages/block_id.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// GetBlockWithTxsResponse is the response type for the Service.GetBlockWithTxs method.
 /// Since: cosmos-sdk 0.45.2

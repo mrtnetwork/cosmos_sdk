@@ -3,7 +3,7 @@ import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_superfluid/types/
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_v1beta1/messages/coin.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_staking_v1beta1/messages/delegation_response.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 class OsmosisSuperfluidQueryTotalDelegationByDelegatorResponse
     extends CosmosMessage {

@@ -2,7 +2,7 @@ import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dar
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_protorev_v1beta1/messages/token_pair_arb_routes.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_protorev_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// SetHotRoutes sets the hot routes that will be explored when
 /// creating cyclic arbitrage routes. Can only be called by the admin account.

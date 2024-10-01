@@ -3,7 +3,7 @@ import 'package:cosmos_sdk/src/models/ics23/messages/inner_op.dart';
 import 'package:cosmos_sdk/src/models/ics23/types/types.dart';
 
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 import 'base_proof.dart';
 
@@ -13,8 +13,8 @@ class Ics23CompressedBatchProof extends Ics23ProofBase {
   Ics23CompressedBatchProof(
       {List<Ics23CompressedBatchEntry>? entries,
       List<Ics23InnerOp>? lookupInners})
-      : entries = entries?.nullOnEmpy,
-        lookupInners = lookupInners?.nullOnEmpy;
+      : entries = entries?.emptyAsNull?.immutable,
+        lookupInners = lookupInners?.emptyAsNull?.immutable;
   factory Ics23CompressedBatchProof.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Ics23CompressedBatchProof(

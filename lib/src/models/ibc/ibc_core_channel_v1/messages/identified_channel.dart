@@ -3,7 +3,7 @@ import 'package:cosmos_sdk/src/models/ibc/ibc_core_channel_v1/messages/order.dar
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_channel_v1/messages/state.dart';
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// IdentifiedChannel defines a channel with additional port and channel identifier fields.
 class IbcChannelIdentifiedChannel extends CosmosMessage {

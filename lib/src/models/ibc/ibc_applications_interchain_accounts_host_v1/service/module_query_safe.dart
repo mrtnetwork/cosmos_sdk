@@ -2,7 +2,7 @@ import 'package:cosmos_sdk/src/models/ibc/ibc_applications_interchain_accounts_h
 
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 import 'msg_module_query_safe_response.dart';
 
@@ -16,7 +16,7 @@ class InterchainAccountsHostModuleQuerySafe extends CosmosMessage
   final List<InterchainAccountsHostQueryRequest>? requests;
   InterchainAccountsHostModuleQuerySafe(
       {this.signer, List<InterchainAccountsHostQueryRequest>? requests})
-      : requests = requests?.nullOnEmpy;
+      : requests = requests?.emptyAsNull?.immutable;
   factory InterchainAccountsHostModuleQuerySafe.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return InterchainAccountsHostModuleQuerySafe(

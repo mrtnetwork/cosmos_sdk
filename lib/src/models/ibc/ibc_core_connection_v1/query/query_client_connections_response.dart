@@ -2,7 +2,7 @@ import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_client_v1/messages/height.dart';
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// QueryClientConnectionsResponse is the response type for the Query/ClientConnections RPC method
 class IbcConnectionQueryClientConnectionsResponse extends CosmosMessage {
@@ -18,7 +18,7 @@ class IbcConnectionQueryClientConnectionsResponse extends CosmosMessage {
       {List<String>? connectionPaths,
       List<int>? proof,
       required this.proofHeight})
-      : connectionPaths = connectionPaths?.nullOnEmpy,
+      : connectionPaths = connectionPaths?.emptyAsNull?.immutable,
         proof = BytesUtils.tryToBytes(proof, unmodifiable: true);
   factory IbcConnectionQueryClientConnectionsResponse.deserialize(
       List<int> bytes) {

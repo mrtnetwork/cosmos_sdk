@@ -1,14 +1,14 @@
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_poolincentives_v1beta1/messages/gauge_id_with_duration.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_poolincentives_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 class OsmosisPoolincentivesQueryGaugeIdsResponse extends CosmosMessage {
   final List<OsmosisPoolincentivesGaugeIdWithDuration>? gaugeIdsWithDuration;
 
   OsmosisPoolincentivesQueryGaugeIdsResponse(
       {List<OsmosisPoolincentivesGaugeIdWithDuration>? gaugeIdsWithDuration})
-      : gaugeIdsWithDuration = gaugeIdsWithDuration?.nullOnEmpy;
+      : gaugeIdsWithDuration = gaugeIdsWithDuration?.emptyAsNull?.immutable;
   factory OsmosisPoolincentivesQueryGaugeIdsResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

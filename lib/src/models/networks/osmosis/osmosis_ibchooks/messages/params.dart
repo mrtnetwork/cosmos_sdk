@@ -1,6 +1,6 @@
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_ibchooks/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 class OsmosisIbchooksParams extends CosmosMessage {
   final List<String> allowedSsyncAckContracts;

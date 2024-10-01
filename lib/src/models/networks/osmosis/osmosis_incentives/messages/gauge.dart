@@ -3,7 +3,7 @@ import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_incentives/types/
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_lockup/messages/query_condition.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_v1beta1/messages/coin.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// Gauge is an object that stores and distributes yields to recipients who satisfy certain conditions.
 /// Currently gauges support conditions around the duration for which a given denom is locked.

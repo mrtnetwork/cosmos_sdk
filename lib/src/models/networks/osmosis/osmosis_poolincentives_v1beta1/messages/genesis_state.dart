@@ -3,7 +3,7 @@ import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_poolincentives_v1
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_poolincentives_v1beta1/messages/pool_to_gauges.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_poolincentives_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// GenesisState defines the pool incentives module's genesis state.
 class OsmosisPoolincentivesGenesisState extends CosmosMessage {

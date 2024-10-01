@@ -2,7 +2,7 @@ import 'package:cosmos_sdk/src/models/tendermint/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:cosmos_sdk/src/models/tendermint/tendermint_types/messages/light_block.dart';
 import 'package:cosmos_sdk/src/models/tendermint/tendermint_types/messages/tendermint_validator.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 import 'evidence_base.dart';
 

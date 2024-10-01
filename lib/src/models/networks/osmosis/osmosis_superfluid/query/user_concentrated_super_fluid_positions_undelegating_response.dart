@@ -1,7 +1,7 @@
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_superfluid/messages/concentrated_pool_user_position_record.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_superfluid/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 class OsmosisSuperfluidUserConcentratedSuperfluidPositionsUndelegatingResponse
     extends CosmosMessage {

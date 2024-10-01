@@ -3,7 +3,7 @@ import 'package:cosmos_sdk/src/models/ibc/ibc_core_channel_v1/query/query_unrece
 
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// QueryUnreceivedPacketsRequest is the request type for the Query/UnreceivedPackets RPC method
 class QueryUnreceivedPacketsRequest extends CosmosMessage
@@ -18,7 +18,8 @@ class QueryUnreceivedPacketsRequest extends CosmosMessage
   final List<BigInt>? packetCommitmentSequences;
   QueryUnreceivedPacketsRequest(
       {this.portId, this.channelId, List<BigInt>? packetCommitmentSequences})
-      : packetCommitmentSequences = packetCommitmentSequences?.nullOnEmpy;
+      : packetCommitmentSequences =
+            packetCommitmentSequences?.emptyAsNull?.immutable;
   factory QueryUnreceivedPacketsRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryUnreceivedPacketsRequest(

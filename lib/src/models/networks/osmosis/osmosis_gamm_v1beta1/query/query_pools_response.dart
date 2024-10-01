@@ -1,7 +1,7 @@
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_query_v1beta1/messages/page_response.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_gamm_v1beta1/types/types.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 class OsmosisGammQueryPoolsResponse extends CosmosMessage {
   final List<Any>? pools;
@@ -9,7 +9,7 @@ class OsmosisGammQueryPoolsResponse extends CosmosMessage {
   /// pagination defines the pagination in the response.
   final PageResponse? pagination;
   OsmosisGammQueryPoolsResponse({this.pagination, List<Any>? pools})
-      : pools = pools?.nullOnEmpy;
+      : pools = pools?.emptyAsNull?.immutable;
   factory OsmosisGammQueryPoolsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisGammQueryPoolsResponse(

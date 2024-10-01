@@ -1,7 +1,7 @@
 import 'package:cosmos_sdk/src/models/tendermint/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:cosmos_sdk/src/models/tendermint/tendermint_types/messages/evidence/evidence.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 class EvidenceList extends CosmosMessage {
   final List<Evidence> evidence;

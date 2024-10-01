@@ -1,7 +1,7 @@
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_concentrated_liquidity_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_query_v1beta1/messages/page_response.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 class OsmosisConcentratedLiquidityPoolsResponse extends CosmosMessage {
   /// pagination defines an optional pagination for the request.
@@ -11,7 +11,7 @@ class OsmosisConcentratedLiquidityPoolsResponse extends CosmosMessage {
   final PageResponse? pagination;
 
   OsmosisConcentratedLiquidityPoolsResponse({List<Any>? pools, this.pagination})
-      : pools = pools?.nullOnEmpy;
+      : pools = pools?.emptyAsNull?.immutable;
   factory OsmosisConcentratedLiquidityPoolsResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

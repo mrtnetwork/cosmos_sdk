@@ -1,6 +1,6 @@
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_poolmanager_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 import 'taker_fee_distribution_percentage.dart';
 
@@ -58,8 +58,8 @@ class OsmosisPoolManagerTakerFeeParams extends CosmosMessage {
       List<String>? adminAddresses,
       this.communityPoolDenomToSwapNonWhitelistedAssetsTo,
       List<String>? reducedFeeWhitelist})
-      : adminAddresses = adminAddresses?.nullOnEmpy,
-        reducedFeeWhitelist = reducedFeeWhitelist?.nullOnEmpy;
+      : adminAddresses = adminAddresses?.emptyAsNull?.immutable,
+        reducedFeeWhitelist = reducedFeeWhitelist?.emptyAsNull?.immutable;
   factory OsmosisPoolManagerTakerFeeParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolManagerTakerFeeParams(

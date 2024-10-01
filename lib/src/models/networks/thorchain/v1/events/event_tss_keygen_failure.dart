@@ -1,6 +1,6 @@
 import 'package:cosmos_sdk/src/models/models.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 class ThorchainEventTssKeygenFailure extends CosmosMessage {
   final String? failReason;
@@ -14,7 +14,7 @@ class ThorchainEventTssKeygenFailure extends CosmosMessage {
       List<String>? blameNodes,
       this.round,
       this.height})
-      : blameNodes = blameNodes?.nullOnEmpy;
+      : blameNodes = blameNodes?.emptyAsNull?.immutable;
   factory ThorchainEventTssKeygenFailure.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainEventTssKeygenFailure(

@@ -1,7 +1,7 @@
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_txfees_v1beta1/messages/fee_token.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_txfees_v1beta1/type/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// GenesisState defines the txfees module's genesis state.
 class OsmosisTxfeesQueryFeeTokensResponse extends CosmosMessage {

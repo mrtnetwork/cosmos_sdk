@@ -5,7 +5,7 @@ import 'package:cosmos_sdk/src/models/ics23/messages/leaf_op.dart';
 import 'package:cosmos_sdk/src/models/ics23/types/types.dart';
 
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// ExistenceProof takes a key and a value and a set of steps to perform on it.
 /// The result of peforming all these steps will provide a "root hash",
@@ -26,7 +26,7 @@ class Ics23ExistenceProof extends Ics23BatchEntryBase {
   final List<Ics23InnerOp>? path;
   Ics23ExistenceProof(
       {List<int>? key, List<int>? value, this.leaf, List<Ics23InnerOp>? path})
-      : path = path?.nullOnEmpy,
+      : path = path?.emptyAsNull?.immutable,
         key = BytesUtils.tryToBytes(key, unmodifiable: true),
         value = BytesUtils.tryToBytes(value, unmodifiable: true);
   factory Ics23ExistenceProof.deserialize(List<int> bytes) {

@@ -1,7 +1,7 @@
 import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_cosmwasmpool_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// MigratePoolContractsProposal is a gov Content type for migrating given pools to the new
 /// contract code and adding to internal whitelist if needed. It has two options to perform the migration:
@@ -45,7 +45,7 @@ class OsmosisCosmWasmPoolMigratePoolContractsProposal extends CosmosMessage {
       this.newCodeId,
       List<int>? wasmByteCode,
       List<int>? migrateMsg})
-      : poolIds = poolIds?.nullOnEmpy,
+      : poolIds = poolIds?.emptyAsNull?.immutable,
         wasmByteCode = BytesUtils.tryToBytes(wasmByteCode, unmodifiable: true),
         migrateMsg = BytesUtils.tryToBytes(migrateMsg, unmodifiable: true);
   factory OsmosisCosmWasmPoolMigratePoolContractsProposal.deserialize(

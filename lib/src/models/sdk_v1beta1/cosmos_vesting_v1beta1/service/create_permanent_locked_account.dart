@@ -4,7 +4,7 @@ import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_v1beta1/messages/c
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_vesting_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// CreatePermanentLockedAccount defines a method that enables creating a permanent locked account.
 ///

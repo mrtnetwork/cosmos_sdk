@@ -1,12 +1,12 @@
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_store_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 import 'child.dart';
 
 class OsmosisStoreNode extends CosmosMessage {
   final List<OsmosisStoreChild>? children;
   OsmosisStoreNode({List<OsmosisStoreChild>? children})
-      : children = children?.nullOnEmpy;
+      : children = children?.emptyAsNull?.immutable;
   factory OsmosisStoreNode.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisStoreNode(

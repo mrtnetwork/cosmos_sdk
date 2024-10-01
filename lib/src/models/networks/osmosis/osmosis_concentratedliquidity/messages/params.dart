@@ -1,7 +1,7 @@
 import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_concentratedliquidity/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 class OsmosisConcentratedLiquidityParams extends CosmosMessage {
   /// [authorizedTickSpacing] is an array of uint64s that represents the tick
@@ -51,12 +51,12 @@ class OsmosisConcentratedLiquidityParams extends CosmosMessage {
       this.isPermissionlessPoolCreationEnabled,
       List<String>? unrestrictedPoolCreatorWhitelist,
       this.hookGasLimit})
-      : authorizedTickSpacing = authorizedTickSpacing?.nullOnEmpy,
+      : authorizedTickSpacing = authorizedTickSpacing?.emptyAsNull?.immutable,
         authorizedSpreadFactors = authorizedSpreadFactors.immutable,
-        authorizedQuoteDenoms = authorizedQuoteDenoms?.nullOnEmpy,
+        authorizedQuoteDenoms = authorizedQuoteDenoms?.emptyAsNull?.immutable,
         authorizedUptimes = authorizedUptimes.immutable,
         unrestrictedPoolCreatorWhitelist =
-            unrestrictedPoolCreatorWhitelist?.nullOnEmpy;
+            unrestrictedPoolCreatorWhitelist?.emptyAsNull?.immutable;
   factory OsmosisConcentratedLiquidityParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityParams(

@@ -2,7 +2,7 @@ import 'package:cosmos_sdk/src/models/ibc/ibc_applications_fee_v1/messages/packe
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// PacketFees contains a list of type PacketFee
 class PacketFees extends CosmosMessage {

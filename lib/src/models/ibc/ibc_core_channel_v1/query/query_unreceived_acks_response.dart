@@ -2,7 +2,7 @@ import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_client_v1/messages/height.dart';
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// QueryUnreceivedAcksResponse is the response type for the Query/UnreceivedAcks RPC method
 class QueryUnreceivedAcksResponse extends CosmosMessage {
@@ -12,7 +12,7 @@ class QueryUnreceivedAcksResponse extends CosmosMessage {
   /// query block height
   final IbcClientHeight height;
   QueryUnreceivedAcksResponse({List<BigInt>? sequences, required this.height})
-      : sequences = sequences?.nullOnEmpy;
+      : sequences = sequences?.emptyAsNull?.immutable;
   factory QueryUnreceivedAcksResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryUnreceivedAcksResponse(

@@ -3,7 +3,7 @@ import 'package:cosmos_sdk/src/models/ibc/ibc_core_channel_v1/messages/identifie
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_client_v1/messages/height.dart';
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// QueryChannelsResponse is the response type for the Query/Channels RPC method.
 class QueryChannelsResponse extends CosmosMessage {
@@ -19,7 +19,7 @@ class QueryChannelsResponse extends CosmosMessage {
       {List<IbcChannelIdentifiedChannel>? channels,
       this.pagination,
       required this.height})
-      : channels = channels?.nullOnEmpy;
+      : channels = channels?.emptyAsNull?.immutable;
   factory QueryChannelsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryChannelsResponse(

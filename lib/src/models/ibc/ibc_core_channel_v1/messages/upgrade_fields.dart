@@ -1,7 +1,7 @@
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_channel_v1/messages/order.dart';
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// UpgradeFields are the fields in a channel end which may be changed during a channel upgrade.
 class UpgradeFields extends CosmosMessage {

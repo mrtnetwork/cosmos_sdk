@@ -1,13 +1,13 @@
 import 'package:cosmos_sdk/src/models/models.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 class ThorchainKeygen extends CosmosMessage {
   final String? id;
   final ThorchainKeygenType? type;
   final List<String>? members;
   ThorchainKeygen({this.id, this.type, List<String>? members})
-      : members = members?.nullOnEmpy;
+      : members = members?.emptyAsNull?.immutable;
   factory ThorchainKeygen.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainKeygen(

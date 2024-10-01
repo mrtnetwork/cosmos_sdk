@@ -1,7 +1,7 @@
 import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_protorev_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 import 'query_get_proto_rev_statistics_by_route_response.dart';
 
 /// GetProtoRevStatisticsByRoute queries the number of arbitrages and profits that have been executed for a given route.
@@ -14,7 +14,7 @@ class OsmosisProtorevQueryGetProtoRevStatisticsByRouteRequest
   final List<BigInt>? route;
 
   OsmosisProtorevQueryGetProtoRevStatisticsByRouteRequest({List<BigInt>? route})
-      : route = route?.nullOnEmpy;
+      : route = route?.emptyAsNull?.immutable;
   factory OsmosisProtorevQueryGetProtoRevStatisticsByRouteRequest.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

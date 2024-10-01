@@ -2,7 +2,7 @@ import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_query_v1beta1/mess
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_slashing_v1beta1/messages/validator_signing_info.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_slashing_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// QuerySigningInfosResponse is the response type for the Query/SigningInfos RPC method
 class SlashingQuerySigningInfosResponse extends CosmosMessage {

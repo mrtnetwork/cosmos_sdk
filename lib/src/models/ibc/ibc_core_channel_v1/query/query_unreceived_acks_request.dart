@@ -3,7 +3,7 @@ import 'package:cosmos_sdk/src/models/ibc/ibc_core_channel_v1/query/query_unrece
 
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// QueryUnreceivedAcks is the request type for the Query/UnreceivedAcks RPC method
 class QueryUnreceivedAcksRequest extends CosmosMessage
@@ -18,7 +18,7 @@ class QueryUnreceivedAcksRequest extends CosmosMessage
   final List<BigInt>? packetAckSequences;
   QueryUnreceivedAcksRequest(
       {this.portId, this.channelId, List<BigInt>? packetAckSequences})
-      : packetAckSequences = packetAckSequences?.nullOnEmpy;
+      : packetAckSequences = packetAckSequences?.emptyAsNull?.immutable;
   factory QueryUnreceivedAcksRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryUnreceivedAcksRequest(

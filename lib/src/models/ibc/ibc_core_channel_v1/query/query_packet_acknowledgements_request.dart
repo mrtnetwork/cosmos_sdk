@@ -4,7 +4,7 @@ import 'package:cosmos_sdk/src/models/ibc/ibc_core_channel_v1/query/query_packet
 
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// QueryPacketAcknowledgementsRequest is the request type for the Query/QueryPacketCommitments RPC method
 class QueryPacketAcknowledgementsRequest extends CosmosMessage
@@ -25,7 +25,8 @@ class QueryPacketAcknowledgementsRequest extends CosmosMessage
     this.channelId,
     this.pagination,
     List<BigInt>? packetCommitmentSequences,
-  }) : packetCommitmentSequences = packetCommitmentSequences?.nullOnEmpy;
+  }) : packetCommitmentSequences =
+            packetCommitmentSequences?.emptyAsNull?.immutable;
   factory QueryPacketAcknowledgementsRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryPacketAcknowledgementsRequest(

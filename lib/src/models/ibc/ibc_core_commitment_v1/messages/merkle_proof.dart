@@ -2,7 +2,7 @@ import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/models/ics23/messages/proof/commitment_proof.dart';
 
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// MerkleProof is a wrapper type over a chain of CommitmentProofs.
 /// It demonstrates membership or non-membership for an element or
@@ -11,7 +11,7 @@ import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
 class IbcCommitmentMerkleProof extends CosmosMessage {
   final List<Ics23CommitmentProof>? proofs;
   IbcCommitmentMerkleProof({List<Ics23CommitmentProof>? proofs})
-      : proofs = proofs?.nullOnEmpy;
+      : proofs = proofs?.emptyAsNull?.immutable;
   factory IbcCommitmentMerkleProof.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcCommitmentMerkleProof(

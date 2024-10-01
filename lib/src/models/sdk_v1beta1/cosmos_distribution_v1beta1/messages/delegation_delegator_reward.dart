@@ -3,7 +3,7 @@ import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_v1beta1/messages/d
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_distribution_v1beta1/types/types.dart';
 
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// DelegationDelegatorReward represents the properties of a delegator's delegation reward.
 class DistributionDelegationDelegatorReward extends CosmosMessage {

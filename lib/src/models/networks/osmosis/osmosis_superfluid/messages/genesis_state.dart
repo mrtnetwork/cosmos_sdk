@@ -5,7 +5,7 @@ import 'osmo_equivalent_multiplier_record.dart';
 import 'params.dart';
 import 'super_fluid_asset.dart';
 import 'super_fluid_intermediary_account.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// GenesisState defines the module's genesis state.
 class OsmosisSuperfluidGenesisState extends CosmosMessage {

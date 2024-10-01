@@ -2,7 +2,7 @@ import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_concentrated_liquidity_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 class OsmosisConcentratedLiquidityMsgTransferPositionsResponse
     extends CosmosMessage with ServiceMessage<EmptyServiceRequestResponse> {
@@ -12,7 +12,7 @@ class OsmosisConcentratedLiquidityMsgTransferPositionsResponse
 
   OsmosisConcentratedLiquidityMsgTransferPositionsResponse(
       {List<BigInt>? positionIds, this.sender, this.newOwner})
-      : positionIds = positionIds?.nullOnEmpy;
+      : positionIds = positionIds?.emptyAsNull?.immutable;
   factory OsmosisConcentratedLiquidityMsgTransferPositionsResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

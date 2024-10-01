@@ -2,7 +2,7 @@ import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_v1beta1/messages/d
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_distribution_v1beta1/types/types.dart';
 
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// ValidatorHistoricalRewards represents historical rewards for a validator.
 /// Height is implicit within the store key. Cumulative reward ratio is the sum

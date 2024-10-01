@@ -1,6 +1,6 @@
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// Version defines the versioning scheme used to negotiate the IBC version in the connection handshake.
 class IbcConnectionVersion extends CosmosMessage {

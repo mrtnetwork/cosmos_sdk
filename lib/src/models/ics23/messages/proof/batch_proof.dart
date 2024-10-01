@@ -2,7 +2,7 @@ import 'package:cosmos_sdk/src/models/ics23/messages/proof/batch_entry.dart';
 import 'package:cosmos_sdk/src/models/ics23/types/types.dart';
 
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 import 'base_proof.dart';
 
@@ -10,7 +10,7 @@ import 'base_proof.dart';
 class Ics23BatchProof extends Ics23ProofBase {
   final List<Ics23BatchEntry>? entries;
   Ics23BatchProof({List<Ics23BatchEntry>? entries})
-      : entries = entries?.nullOnEmpy;
+      : entries = entries?.emptyAsNull?.immutable;
   factory Ics23BatchProof.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Ics23BatchProof(

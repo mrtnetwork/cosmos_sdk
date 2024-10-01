@@ -1,7 +1,7 @@
 import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_superfluid/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// Execute superfluid delegation for a lockup
 class OsmosisSuperfluidMsgUnPoolWhitelistedPoolResponse extends CosmosMessage {
@@ -9,7 +9,7 @@ class OsmosisSuperfluidMsgUnPoolWhitelistedPoolResponse extends CosmosMessage {
 
   OsmosisSuperfluidMsgUnPoolWhitelistedPoolResponse(
       {List<BigInt>? exitedLockIds})
-      : exitedLockIds = exitedLockIds?.nullOnEmpy;
+      : exitedLockIds = exitedLockIds?.emptyAsNull?.immutable;
   factory OsmosisSuperfluidMsgUnPoolWhitelistedPoolResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

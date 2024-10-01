@@ -1,6 +1,6 @@
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// Params defines the set of IBC light client parameters.
 class IbcClientParams extends CosmosMessage {
@@ -9,7 +9,7 @@ class IbcClientParams extends CosmosMessage {
   /// of this client will be disabled until it is added again to the list.
   final List<String>? allowedClients;
   IbcClientParams({List<String>? allowedClients})
-      : allowedClients = allowedClients?.nullOnEmpy;
+      : allowedClients = allowedClients?.emptyAsNull?.immutable;
   factory IbcClientParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcClientParams(allowedClients: decode.getFields<String>(1));

@@ -1,7 +1,7 @@
 import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/models/models.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 class ThorchainStreamingSwap extends CosmosMessage {
   final String? txId;
@@ -27,8 +27,8 @@ class ThorchainStreamingSwap extends CosmosMessage {
       required this.outValue,
       List<BigInt>? failedSwaps,
       List<String>? failedSwapReasons})
-      : failedSwaps = failedSwaps?.nullOnEmpy,
-        failedSwapReasons = failedSwapReasons?.nullOnEmpy;
+      : failedSwaps = failedSwaps?.emptyAsNull?.immutable,
+        failedSwapReasons = failedSwapReasons?.emptyAsNull?.immutable;
   factory ThorchainStreamingSwap.deserialized(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainStreamingSwap(

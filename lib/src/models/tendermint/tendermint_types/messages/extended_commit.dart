@@ -3,7 +3,7 @@ import 'package:cosmos_sdk/src/models/tendermint/types/types.dart';
 import 'package:cosmos_sdk/src/models/tendermint/tendermint_types/messages/block_id.dart';
 import 'package:cosmos_sdk/src/models/tendermint/tendermint_types/messages/extended_commit_sig.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 class ExtendedCommit extends CosmosMessage {
   final BigInt? height;

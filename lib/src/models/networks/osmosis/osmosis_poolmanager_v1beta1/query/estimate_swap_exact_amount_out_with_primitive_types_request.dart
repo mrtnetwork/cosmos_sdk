@@ -1,7 +1,7 @@
 import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_poolmanager_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 import 'estimate_swap_exact_amount_out_response.dart';
 
 class OsmosisPoolManagerEstimateSwapExactAmountOutWithPrimitiveTypesRequest
@@ -19,8 +19,8 @@ class OsmosisPoolManagerEstimateSwapExactAmountOutWithPrimitiveTypesRequest
       this.tokenOut,
       List<BigInt>? routesPoolId,
       List<String>? routesTokenInDenom})
-      : routesPoolId = routesPoolId?.nullOnEmpy,
-        routesTokenInDenom = routesTokenInDenom?.nullOnEmpy;
+      : routesPoolId = routesPoolId?.emptyAsNull?.immutable,
+        routesTokenInDenom = routesTokenInDenom?.emptyAsNull?.immutable;
   factory OsmosisPoolManagerEstimateSwapExactAmountOutWithPrimitiveTypesRequest.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

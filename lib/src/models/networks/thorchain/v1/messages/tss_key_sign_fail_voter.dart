@@ -1,6 +1,6 @@
 import 'package:cosmos_sdk/src/models/models.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 class ThorchainTssKeysignFailVoter extends CosmosMessage {
   final String? id;
@@ -12,7 +12,7 @@ class ThorchainTssKeysignFailVoter extends CosmosMessage {
     this.height,
     List<String>? signers,
     this.round7Count,
-  }) : signers = signers?.nullOnEmpy;
+  }) : signers = signers?.emptyAsNull?.immutable;
   factory ThorchainTssKeysignFailVoter.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainTssKeysignFailVoter(

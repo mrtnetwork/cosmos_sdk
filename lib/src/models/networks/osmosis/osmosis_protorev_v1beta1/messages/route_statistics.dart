@@ -2,7 +2,7 @@ import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_protorev_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_v1beta1/cosmos_base_v1beta1.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// RouteStatistics contains the number of trades the module has executed
 /// after a swap on a given route and the profits from the trades
@@ -21,7 +21,7 @@ class OsmosisProtorevRouteStatistics extends CosmosMessage {
       {required List<Coin> profits,
       required this.numberOfTrades,
       List<BigInt>? route})
-      : route = route?.nullOnEmpy,
+      : route = route?.emptyAsNull?.immutable,
         profits = profits.immutable;
 
   factory OsmosisProtorevRouteStatistics.deserialize(List<int> bytes) {

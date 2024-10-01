@@ -3,7 +3,7 @@ import 'package:cosmos_sdk/src/models/ibc/ibc_core_channel_v1/messages/packet_st
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_client_v1/messages/height.dart';
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// QueryPacketCommitmentsResponse is the request type for the Query/QueryPacketCommitments RPC method
 class QueryPacketCommitmentsResponse extends CosmosMessage {
@@ -18,7 +18,7 @@ class QueryPacketCommitmentsResponse extends CosmosMessage {
       {List<IbcChannelPacketState>? commitments,
       this.pagination,
       required this.height})
-      : commitments = commitments?.nullOnEmpy;
+      : commitments = commitments?.emptyAsNull?.immutable;
   factory QueryPacketCommitmentsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryPacketCommitmentsResponse(

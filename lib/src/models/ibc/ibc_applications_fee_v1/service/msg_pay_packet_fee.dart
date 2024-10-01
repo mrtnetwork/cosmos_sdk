@@ -3,7 +3,7 @@ import 'package:cosmos_sdk/src/models/ibc/ibc_applications_fee_v1/messages/fee.d
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// MsgPayPacketFee defines the request type for the PayPacketFee rpc This Msg can be used
 /// to pay for a packet at the next sequence send & should be combined with the Msg that will be paid for
@@ -29,7 +29,7 @@ class MsgPayPacketFee extends CosmosMessage
       this.sourceChannelId,
       this.signer,
       List<String>? relayers})
-      : relayers = relayers?.nullOnEmpy;
+      : relayers = relayers?.emptyAsNull?.immutable;
   factory MsgPayPacketFee.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgPayPacketFee(

@@ -1,6 +1,6 @@
 import 'package:cosmos_sdk/src/models/models.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 class ThorchainEventTssKeygenSuccess extends CosmosMessage {
   final String? pubKey;
@@ -8,7 +8,7 @@ class ThorchainEventTssKeygenSuccess extends CosmosMessage {
   final BigInt? height;
   ThorchainEventTssKeygenSuccess(
       {this.pubKey, List<String>? members, this.height})
-      : members = members?.nullOnEmpy;
+      : members = members?.emptyAsNull?.immutable;
   factory ThorchainEventTssKeygenSuccess.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainEventTssKeygenSuccess(

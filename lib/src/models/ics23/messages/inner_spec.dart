@@ -3,7 +3,7 @@ import 'package:cosmos_sdk/src/models/ics23/messages/hash_op.dart';
 import 'package:cosmos_sdk/src/models/ics23/types/types.dart';
 
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// InnerSpec contains all store-specific structure info to determine if two proofs from a given store are neighbors.
 /// This enables:
@@ -30,7 +30,7 @@ class Ics23InnerSpec extends CosmosMessage {
       this.maxPrefixLength,
       List<int>? emptyChild,
       this.hash})
-      : childOrder = childOrder?.nullOnEmpy,
+      : childOrder = childOrder?.emptyAsNull?.immutable,
         emptyChild = BytesUtils.tryToBytes(emptyChild, unmodifiable: true);
   factory Ics23InnerSpec.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

@@ -1,7 +1,7 @@
 import 'package:cosmos_sdk/src/models/ibc/ibc_applications_fee_v1/messages/fee.dart';
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// PacketFee contains ICS29 relayer fees, refund address and optional list of permitted relayers
 class IbcFeePacketFee extends CosmosMessage {
@@ -15,7 +15,7 @@ class IbcFeePacketFee extends CosmosMessage {
   final List<String>? relayers;
   IbcFeePacketFee(
       {required this.fee, this.refundAddress, List<String>? relayers})
-      : relayers = relayers?.nullOnEmpy;
+      : relayers = relayers?.emptyAsNull?.immutable;
   factory IbcFeePacketFee.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcFeePacketFee(

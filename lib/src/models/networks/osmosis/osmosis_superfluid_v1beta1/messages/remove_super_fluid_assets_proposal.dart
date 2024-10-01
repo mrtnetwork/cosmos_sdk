@@ -1,6 +1,6 @@
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_superfluid_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// RemoveSuperfluidAssetsProposal is a gov Content type to remove the superfluid assets by denom
 class OsmosisSuperfluidRemoveSuperfluidAssetsProposal extends CosmosMessage {
@@ -9,7 +9,7 @@ class OsmosisSuperfluidRemoveSuperfluidAssetsProposal extends CosmosMessage {
   final List<String>? superfluidAssetDenoms;
   OsmosisSuperfluidRemoveSuperfluidAssetsProposal(
       {this.title, this.description, List<String>? superfluidAssetDenoms})
-      : superfluidAssetDenoms = superfluidAssetDenoms?.nullOnEmpy;
+      : superfluidAssetDenoms = superfluidAssetDenoms?.emptyAsNull?.immutable;
   factory OsmosisSuperfluidRemoveSuperfluidAssetsProposal.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

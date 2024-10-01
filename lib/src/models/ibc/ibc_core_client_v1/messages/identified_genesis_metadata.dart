@@ -2,7 +2,7 @@ import 'package:cosmos_sdk/src/models/ibc/ibc_core_client_v1/messages/genesis_me
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// IdentifiedGenesisMetadata has the client metadata with the corresponding client id.
 class IbcClientIdentifiedGenesisMetadata extends CosmosMessage {

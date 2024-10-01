@@ -3,7 +3,7 @@ import 'package:cosmos_sdk/src/models/ics23/messages/leaf_op.dart';
 import 'package:cosmos_sdk/src/models/ics23/types/types.dart';
 
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 import 'batch_entry_base.dart';
 
@@ -18,7 +18,7 @@ class Ics23CompressedExistenceProof extends Ics23CompressedBatchEntryBase {
       {List<int>? key, List<int>? value, this.leaf, List<int>? path})
       : key = BytesUtils.tryToBytes(key, unmodifiable: true),
         value = BytesUtils.tryToBytes(value, unmodifiable: true),
-        path = path?.nullOnEmpy;
+        path = path?.emptyAsNull?.immutable;
   factory Ics23CompressedExistenceProof.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Ics23CompressedExistenceProof(

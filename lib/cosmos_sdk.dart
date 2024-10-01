@@ -7,4 +7,3 @@ export 'src/crypto/crypto.dart';
 export 'src/models/models.dart';
 export 'src/protobuf/protobuf.dart';
 export 'src/provider/provider.dart';
-export 'src/utils/quick_extensions.dart';

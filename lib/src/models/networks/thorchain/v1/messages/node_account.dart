@@ -1,7 +1,7 @@
 import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/models/models.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 class ThorchainNodeAccount extends CosmosMessage {
   final List<int>? nodeAddress;
@@ -36,7 +36,7 @@ class ThorchainNodeAccount extends CosmosMessage {
       this.version,
       this.type})
       : nodeAddress = BytesUtils.tryToBytes(nodeAddress, unmodifiable: true),
-        signerMembership = signerMembership?.nullOnEmpy;
+        signerMembership = signerMembership?.emptyAsNull?.immutable;
   factory ThorchainNodeAccount.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainNodeAccount(

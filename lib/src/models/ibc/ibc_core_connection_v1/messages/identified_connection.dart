@@ -3,7 +3,7 @@ import 'package:cosmos_sdk/src/models/ibc/ibc_core_connection_v1/messages/state.
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_connection_v1/messages/version.dart';
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// IdentifiedConnection defines a connection with additional connection identifier field.
 class IbcConnectionIdentifiedConnection extends CosmosMessage {
@@ -32,7 +32,7 @@ class IbcConnectionIdentifiedConnection extends CosmosMessage {
       this.state,
       required this.counterparty,
       this.delayPeriod})
-      : versions = versions?.nullOnEmpy;
+      : versions = versions?.emptyAsNull?.immutable;
   factory IbcConnectionIdentifiedConnection.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcConnectionIdentifiedConnection(

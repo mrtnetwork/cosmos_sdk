@@ -3,7 +3,7 @@ import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_mint_v1beta1/mess
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_mint_v1beta1/messages/weighted_address.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_mint_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// Params holds parameters for the x/mint module.
 class OsmosisMintParams extends CosmosMessage {

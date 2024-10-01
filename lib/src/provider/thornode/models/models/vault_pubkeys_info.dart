@@ -1,4 +1,4 @@
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 import 'vault_pubkey_info.dart';
 
 class ThorVaultPubkeysInfoResponse {

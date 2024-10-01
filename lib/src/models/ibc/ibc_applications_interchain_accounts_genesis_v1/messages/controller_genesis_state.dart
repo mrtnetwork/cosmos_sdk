@@ -3,7 +3,7 @@ import 'package:cosmos_sdk/src/models/ibc/ibc_applications_interchain_accounts_g
 import 'package:cosmos_sdk/src/models/ibc/ibc_applications_interchain_accounts_genesis_v1/messages/registered_interchain_account.dart';
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// ControllerGenesisState defines the interchain accounts controller genesis state
 class ControllerGenesisState extends CosmosMessage {
@@ -18,7 +18,7 @@ class ControllerGenesisState extends CosmosMessage {
       required this.params})
       : activeChannels = activeChannels.immutable,
         interchainAccounts = interchainAccounts.immutable,
-        ports = ports?.nullOnEmpy;
+        ports = ports?.emptyAsNull?.immutable;
   factory ControllerGenesisState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ControllerGenesisState(

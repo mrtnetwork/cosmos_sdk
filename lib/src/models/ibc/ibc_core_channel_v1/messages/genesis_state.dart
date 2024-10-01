@@ -5,7 +5,7 @@ import 'package:cosmos_sdk/src/models/ibc/ibc_core_channel_v1/messages/params.da
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// GenesisState defines the ibc channel submodule's genesis state.
 class IbcChannelGenesisState extends CosmosMessage {

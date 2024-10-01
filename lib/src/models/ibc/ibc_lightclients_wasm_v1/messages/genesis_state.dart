@@ -2,7 +2,7 @@ import 'package:cosmos_sdk/src/models/ibc/ibc_lightclients_wasm_v1/messages/cont
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// GenesisState defines 08-wasm's keeper genesis state
 class IbcLightClientsWasmGenesisState extends CosmosMessage {

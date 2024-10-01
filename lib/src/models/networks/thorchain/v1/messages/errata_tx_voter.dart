@@ -1,6 +1,6 @@
 import 'package:cosmos_sdk/src/models/models.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 class ThorchainErrataTxVoter extends CosmosMessage {
   final String? txId;
@@ -9,7 +9,7 @@ class ThorchainErrataTxVoter extends CosmosMessage {
   final List<String>? signers;
   ThorchainErrataTxVoter(
       {this.txId, this.chain, this.blockHeight, List<String>? signers})
-      : signers = signers?.nullOnEmpy;
+      : signers = signers?.emptyAsNull?.immutable;
   factory ThorchainErrataTxVoter.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainErrataTxVoter(

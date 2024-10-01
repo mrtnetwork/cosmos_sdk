@@ -1,7 +1,7 @@
 import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_incentives/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 import 'rewards_est_response.dart';
 
 /// RewardsEst returns an estimate of the rewards from now until a specified time in the future
@@ -22,7 +22,7 @@ class OsmosisIncentiveRewardsEstRequest extends CosmosMessage
 
   OsmosisIncentiveRewardsEstRequest(
       {this.owner, List<BigInt>? lockIds, this.endEpoch})
-      : lockIds = lockIds?.nullOnEmpy;
+      : lockIds = lockIds?.emptyAsNull?.immutable;
   factory OsmosisIncentiveRewardsEstRequest.fromBytes(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisIncentiveRewardsEstRequest(

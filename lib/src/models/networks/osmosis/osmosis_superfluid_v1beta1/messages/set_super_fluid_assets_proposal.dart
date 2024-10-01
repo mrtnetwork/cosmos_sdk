@@ -1,7 +1,7 @@
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_superfluid/messages/super_fluid_asset.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_superfluid_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// SetSuperfluidAssetsProposal is a gov Content type to update the superfluid assets
 class OsmosisSuperfluidSetSuperfluidAssetsProposal extends CosmosMessage {

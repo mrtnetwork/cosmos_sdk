@@ -3,7 +3,7 @@ import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_gamm_poolmodels_s
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_gamm_v1beta1/messages/pool_params.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_v1beta1/messages/coin.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 import 'msg_create_stable_swap_pool_response.dart';
 
@@ -27,7 +27,7 @@ class OsmosisGammPoolmodelsStableSwapMsgCreateStableswapPool
     this.futurePoolGovernor,
     this.scalingFactorController,
   })  : initialPoolLiquidity = initialPoolLiquidity.immutable,
-        scalingFactors = scalingFactors?.nullOnEmpy;
+        scalingFactors = scalingFactors?.emptyAsNull?.immutable;
   factory OsmosisGammPoolmodelsStableSwapMsgCreateStableswapPool.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

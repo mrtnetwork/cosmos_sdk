@@ -1,12 +1,12 @@
 import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_superfluid/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 class OsmosisSuperfluidQueryUnpoolWhitelistResponse extends CosmosMessage {
   final List<BigInt>? poolIds;
   OsmosisSuperfluidQueryUnpoolWhitelistResponse({List<BigInt>? poolIds})
-      : poolIds = poolIds?.nullOnEmpy;
+      : poolIds = poolIds?.emptyAsNull?.immutable;
   factory OsmosisSuperfluidQueryUnpoolWhitelistResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

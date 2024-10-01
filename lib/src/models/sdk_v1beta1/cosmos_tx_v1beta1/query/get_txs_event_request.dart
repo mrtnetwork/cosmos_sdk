@@ -3,7 +3,7 @@ import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_query_v1beta1/mess
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_tx_v1beta1/query/get_txs_event_response.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_tx_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// GetTxsEventRequest is the request type for the Service.TxsByEvents RPC method.
 class GetTxsEventRequest extends CosmosMessage

@@ -1,7 +1,7 @@
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_protorev_v1beta1/messages/base_denom.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_protorev_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// QueryGetProtoRevBaseDenomsResponse is response type for the Query/GetProtoRevBaseDenoms RPC method.
 class OsmosisProtorevQueryGetProtoRevBaseDenomsResponse extends CosmosMessage {

@@ -4,7 +4,7 @@ import 'package:cosmos_sdk/src/models/ibc/ibc_core_connection_v1/messages/params
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// GenesisState defines the ibc connection submodule's genesis state.
 class IbcConnectionGenesisState extends CosmosMessage {

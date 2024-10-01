@@ -7,7 +7,7 @@ import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
 
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// MsgConnectionOpenTry defines a msg sent by a Relayer to try to open a connection on Chain B.
 class IbcConnectionMsgConnectionOpenTry extends CosmosMessage

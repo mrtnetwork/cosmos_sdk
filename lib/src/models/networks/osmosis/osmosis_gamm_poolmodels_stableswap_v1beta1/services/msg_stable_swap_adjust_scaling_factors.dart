@@ -2,7 +2,7 @@ import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_gamm_poolmodels_stableswap_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// Sender must be the pool's scaling_factor_governor in order for the tx to succeed. Adjusts stableswap scaling factors.
 class OsmosisGammPoolmodelsStableSwapMsgStableSwapAdjustScalingFactors
@@ -13,7 +13,7 @@ class OsmosisGammPoolmodelsStableSwapMsgStableSwapAdjustScalingFactors
 
   OsmosisGammPoolmodelsStableSwapMsgStableSwapAdjustScalingFactors(
       {this.sender, this.poolId, List<BigInt>? scalingFactors})
-      : scalingFactors = scalingFactors?.nullOnEmpy;
+      : scalingFactors = scalingFactors?.emptyAsNull?.immutable;
   factory OsmosisGammPoolmodelsStableSwapMsgStableSwapAdjustScalingFactors.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

@@ -2,7 +2,7 @@ import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_query_v1beta1/mess
 import 'package:cosmos_sdk/src/models/ibc/ibc_applications_transfer_v1/messages/denom_trace.dart';
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// QueryConnectionsResponse is the response type for the Query/DenomTraces RPC method.
 class QueryDenomTracesResponse extends CosmosMessage {

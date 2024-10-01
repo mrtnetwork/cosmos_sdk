@@ -2,7 +2,7 @@ import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_client_v1/messages/height.dart';
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// QueryUnreceivedPacketsResponse is the response type for the Query/UnreceivedPacketCommitments RPC method
 class QueryUnreceivedPacketsResponse extends CosmosMessage {
@@ -13,7 +13,7 @@ class QueryUnreceivedPacketsResponse extends CosmosMessage {
   final IbcClientHeight height;
   QueryUnreceivedPacketsResponse(
       {List<BigInt>? sequences, required this.height})
-      : sequences = sequences?.nullOnEmpy;
+      : sequences = sequences?.emptyAsNull?.immutable;
   factory QueryUnreceivedPacketsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryUnreceivedPacketsResponse(

@@ -2,7 +2,7 @@ import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_gamm_pool_models_
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_gamm_v1beta1/messages/pool_asset.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_gamm_v1beta1/messages/pool_params.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 import 'msg_create_balancer_pool_response.dart';
 
 class OsmosisGammPoolmodelsBalancerMsgCreateBalancerPool extends CosmosMessage

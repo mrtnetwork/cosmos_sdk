@@ -2,7 +2,7 @@ import 'package:cosmos_sdk/src/models/ibc/capability_v1/messages/owner.dart';
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// CapabilityOwners defines a set of owners of a single Capability. The set of owners must be unique.
 class CapabilityOwners extends CosmosMessage {

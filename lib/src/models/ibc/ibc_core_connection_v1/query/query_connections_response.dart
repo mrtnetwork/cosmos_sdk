@@ -3,7 +3,7 @@ import 'package:cosmos_sdk/src/models/ibc/ibc_core_client_v1/messages/height.dar
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_connection_v1/messages/identified_connection.dart';
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 class IbcCOnnectionQueryConnectionsResponse extends CosmosMessage {
   final List<IbcConnectionIdentifiedConnection>? connections;
@@ -13,7 +13,7 @@ class IbcCOnnectionQueryConnectionsResponse extends CosmosMessage {
       {List<IbcConnectionIdentifiedConnection>? connections,
       this.pagination,
       required this.height})
-      : connections = connections?.nullOnEmpy;
+      : connections = connections?.emptyAsNull?.immutable;
   factory IbcCOnnectionQueryConnectionsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcCOnnectionQueryConnectionsResponse(

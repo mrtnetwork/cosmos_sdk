@@ -1,7 +1,7 @@
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_poolincentives_v1beta1/messages/distr_record.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_poolincentives_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// For example: if the existing DistrRecords were: (Gauge 0, 5), (Gauge 1, 6), (Gauge 2, 6) An UpdatePoolIncentivesProposal includes
 /// (Gauge 1, 0), (Gauge 2, 4), (Gauge 3, 10) This would delete Gauge 1, Edit Gauge 2, and Add Gauge 3 The result DistrRecords in

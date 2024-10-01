@@ -21,18 +21,16 @@ class TendermintProvider {
         if (val.containsKey("code") && val.containsKey("message")) {
           throw RPCError(
               message: val["message"]!.toString(),
-              errorCode: int.tryParse(val["code"]?.toString() ?? "0") ?? 0,
-              data: val,
-              request: {});
+              errorCode: int.tryParse(val["code"]?.toString() ?? ''),
+              request: Map<String, dynamic>.from(val));
         }
         return val;
       } else {
         if (val.containsKey("error")) {
           throw RPCError(
               message: val["error"]!.toString(),
-              errorCode: int.tryParse(val["code"] ?? "0") ?? 0,
-              data: val,
-              request: {});
+              errorCode: int.tryParse(val["code"]?.toString() ?? ''),
+              request: Map<String, dynamic>.from(val));
         }
         return val["result"];
       }

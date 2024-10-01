@@ -1,6 +1,6 @@
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_cosmwasmpool_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 class OsmosisCosmWasmPoolInstantiateMsg extends CosmosMessage {
   /// [poolAssetDenoms] is the list of asset denoms that are initialized
@@ -8,7 +8,7 @@ class OsmosisCosmWasmPoolInstantiateMsg extends CosmosMessage {
   final List<String>? poolAssetDenoms;
 
   OsmosisCosmWasmPoolInstantiateMsg({List<String>? poolAssetDenoms})
-      : poolAssetDenoms = poolAssetDenoms?.nullOnEmpy;
+      : poolAssetDenoms = poolAssetDenoms?.emptyAsNull?.immutable;
   factory OsmosisCosmWasmPoolInstantiateMsg.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisCosmWasmPoolInstantiateMsg(

@@ -1,7 +1,7 @@
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_poolmanager_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_v1beta1/cosmos_base_v1beta1.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 import 'taker_fee_params.dart';
 
 /// Params holds parameters for the poolmanager module.
@@ -26,7 +26,7 @@ class OsmosisPoolManagerParams extends CosmosMessage {
     required this.takerFeeParams,
     List<String>? authorizedQuoteDenoms,
   })  : poolCreationFee = poolCreationFee.immutable,
-        authorizedQuoteDenoms = authorizedQuoteDenoms?.nullOnEmpy;
+        authorizedQuoteDenoms = authorizedQuoteDenoms?.emptyAsNull?.immutable;
   factory OsmosisPoolManagerParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolManagerParams(

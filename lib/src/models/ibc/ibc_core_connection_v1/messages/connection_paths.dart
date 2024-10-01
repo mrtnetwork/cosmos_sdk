@@ -1,7 +1,7 @@
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// ConnectionPaths define all the connection paths for a given client state.
 class IbcConnectConnectionPaths extends CosmosMessage {
@@ -11,7 +11,7 @@ class IbcConnectConnectionPaths extends CosmosMessage {
   /// list of connection paths
   final List<String>? paths;
   IbcConnectConnectionPaths({this.clientId, List<String>? paths})
-      : paths = paths?.nullOnEmpy;
+      : paths = paths?.emptyAsNull?.immutable;
   factory IbcConnectConnectionPaths.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcConnectConnectionPaths(

@@ -1,6 +1,6 @@
 import 'package:cosmos_sdk/src/models/models.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 class ThorchainObservedTx extends CosmosMessage {
   final ThorchainTx tx;
@@ -26,8 +26,8 @@ class ThorchainObservedTx extends CosmosMessage {
       this.aggregator,
       this.aggregatorTarget,
       required this.aggregatorTargetLimit})
-      : outHashes = outHashes?.nullOnEmpy,
-        signers = outHashes?.nullOnEmpy;
+      : outHashes = outHashes?.emptyAsNull?.immutable,
+        signers = outHashes?.emptyAsNull?.immutable;
   factory ThorchainObservedTx.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainObservedTx(

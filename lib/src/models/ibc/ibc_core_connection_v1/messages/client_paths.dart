@@ -1,7 +1,7 @@
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 /// ClientPaths define all the connection paths for a client state.
 class IbcConnectionClientPaths extends CosmosMessage {

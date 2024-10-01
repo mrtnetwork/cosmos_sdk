@@ -4,7 +4,7 @@ import 'package:cosmos_sdk/src/models/ibc/ibc_core_client_v1/messages/height.dar
 
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/utils/quick_extensions.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 
 import 'msg_channel_upgrade_try_response.dart';
 
@@ -31,7 +31,7 @@ class MsgChannelUpgradeTry extends CosmosMessage
     required this.proofHeight,
     this.signer,
   })  : proposedUpgradeConnectionHops =
-            proposedUpgradeConnectionHops?.nullOnEmpy,
+            proposedUpgradeConnectionHops?.emptyAsNull?.immutable,
         proofChannel = BytesUtils.tryToBytes(proofChannel, unmodifiable: true),
         proofUpgrade = BytesUtils.tryToBytes(proofUpgrade, unmodifiable: true);
   factory MsgChannelUpgradeTry.deserialize(List<int> bytes) {
