@@ -38,9 +38,9 @@ dependencies:
   cosmos_sdk: 
     path: ../
   # blockchain_utils:
-  #   path: ../../bitcoin/blockchain_utils
+  #   path: ../../blockchain_utils
   http: ^1.2.0
-  blockchain_utils: ^3.4.0
+  blockchain_utils: ^3.6.0
 
 dev_dependencies:
   flutter_test:
