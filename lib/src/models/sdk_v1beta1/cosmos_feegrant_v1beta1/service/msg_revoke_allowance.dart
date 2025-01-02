@@ -29,7 +29,7 @@ class MsgRevokeAllowance extends CosmosMessage
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get service => FeegrantV1beta1Types.revokeAllowance.typeUrl;
+  TypeUrl get service => FeegrantV1beta1Types.revokeAllowance;
 
   @override
   Map<String, dynamic> toJson() {
@@ -37,7 +37,7 @@ class MsgRevokeAllowance extends CosmosMessage
   }
 
   @override
-  String get typeUrl => FeegrantV1beta1Types.msgRevokeAllowance.typeUrl;
+  TypeUrl get typeUrl => FeegrantV1beta1Types.msgRevokeAllowance;
 
   @override
   List get values => [granter, grantee];
@@ -48,6 +48,6 @@ class MsgRevokeAllowance extends CosmosMessage
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        FeegrantV1beta1Types.msgRevokeAllowanceResponse.typeUrl);
+        FeegrantV1beta1Types.msgRevokeAllowanceResponse);
   }
 }

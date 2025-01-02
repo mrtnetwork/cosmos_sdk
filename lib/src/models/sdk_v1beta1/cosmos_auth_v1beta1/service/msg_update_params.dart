@@ -40,10 +40,10 @@ class AuthMsgUpdateParams extends CosmosMessage
   List get values => [authority, params];
 
   @override
-  String get typeUrl => AuthV1beta1Types.msgUpdateAuthParams.typeUrl;
+  TypeUrl get typeUrl => AuthV1beta1Types.msgUpdateAuthParams;
 
   @override
-  String get service => AuthV1beta1Types.updateParams.typeUrl;
+  TypeUrl get service => AuthV1beta1Types.updateParams;
 
   @override
   List<String?> get signers => [authority.address];
@@ -51,6 +51,6 @@ class AuthMsgUpdateParams extends CosmosMessage
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        AuthV1beta1Types.msgUpdateParamsResponse.typeUrl);
+        AuthV1beta1Types.msgUpdateParamsResponse);
   }
 }

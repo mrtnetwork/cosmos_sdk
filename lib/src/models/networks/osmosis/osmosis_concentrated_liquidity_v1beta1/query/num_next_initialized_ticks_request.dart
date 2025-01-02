@@ -8,8 +8,6 @@ class OsmosisConcentratedLiquidityNumNextInitializedTicksRequest
     extends CosmosMessage
     with
         QueryMessage<
-            OsmosisConcentratedLiquidityNumNextInitializedTicksResponse>,
-        RPCMessage<
             OsmosisConcentratedLiquidityNumNextInitializedTicksResponse> {
   final BigInt? poolId;
   final String? tokenInDenom;
@@ -46,8 +44,8 @@ class OsmosisConcentratedLiquidityNumNextInitializedTicksRequest
   }
 
   @override
-  String get typeUrl => OsmosisConcentratedLiquidityV1beta1Types
-      .numNextInitializedTicksRequest.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisConcentratedLiquidityV1beta1Types.numNextInitializedTicksRequest;
 
   @override
   List get values => [poolId, tokenInDenom, numNextInitializedTicks];
@@ -58,14 +56,6 @@ class OsmosisConcentratedLiquidityNumNextInitializedTicksRequest
         "token_in_denom": tokenInDenom,
         "num_next_initialized_ticks": numNextInitializedTicks?.toString()
       };
-
-  @override
-  String get queryPath =>
-      OsmosisConcentratedLiquidityV1beta1Types.numNextInitializedTicks.typeUrl;
-
-  @override
-  String get rpcPath =>
-      OsmosisConcentratedLiquidityV1beta1Types.numNextInitializedTicks.rpcUrl();
 
   @override
   OsmosisConcentratedLiquidityNumNextInitializedTicksResponse onJsonResponse(

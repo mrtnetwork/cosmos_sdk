@@ -1,4 +1,4 @@
-import 'package:blockchain_utils/exception/exceptions.dart';
+import 'package:cosmos_sdk/src/exception/exception.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
 class ThorchainOrderType implements CosmosEnum {
@@ -13,7 +13,7 @@ class ThorchainOrderType implements CosmosEnum {
   static ThorchainOrderType fromValue(int? value) {
     return values.firstWhere(
       (e) => e.value == value,
-      orElse: () => throw MessageException(
+      orElse: () => throw DartCosmosSdkPluginException(
           "No ThorchainOrderType element found for the given value.",
           details: {"value": value}),
     );

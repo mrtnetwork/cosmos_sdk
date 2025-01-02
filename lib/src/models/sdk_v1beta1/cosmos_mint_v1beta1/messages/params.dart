@@ -1,4 +1,5 @@
 // Params defines the parameters for the x/mint module.
+import 'package:blockchain_utils/utils/numbers/numbers.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_mint_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
@@ -20,7 +21,15 @@ class MintParams extends CosmosMessage {
 
   /// expected blocks per year
   final BigInt? blocksPerYear;
-
+  factory MintParams.fromRpc(Map<String, dynamic> json) {
+    return MintParams(
+        inflationRateChange: json["inflation_rate_change"],
+        inflationMax: json["inflation_max"],
+        inflationMin: json["inflation_min"],
+        goalBonded: json["goal_bonded"],
+        blocksPerYear: BigintUtils.tryParse(json["blocks_per_year"]),
+        mintDenom: json["mint_denom"]);
+  }
   const MintParams({
     this.mintDenom,
     required this.inflationRateChange,
@@ -56,7 +65,7 @@ class MintParams extends CosmosMessage {
   List<int> get fieldIds => [1, 2, 3, 4, 5, 6];
 
   @override
-  String get typeUrl => MintV1beta1Types.mintParams.typeUrl;
+  TypeUrl get typeUrl => MintV1beta1Types.mintParams;
 
   @override
   List get values => [

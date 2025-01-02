@@ -27,7 +27,7 @@ class PacketFees extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.packetFees.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.packetFees;
 
   @override
   List get values => [packetFees];

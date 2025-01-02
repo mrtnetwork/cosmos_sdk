@@ -54,8 +54,7 @@ class GetLatestBlockResponse extends CosmosMessage {
 
   @override
   @override
-  String get typeUrl =>
-      BaseTendermintV1beta1Types.getLatestBlockResponse.typeUrl;
+  TypeUrl get typeUrl => BaseTendermintV1beta1Types.getLatestBlockResponse;
 
   @override
   List get values => [blockID, block, sdkBlock];

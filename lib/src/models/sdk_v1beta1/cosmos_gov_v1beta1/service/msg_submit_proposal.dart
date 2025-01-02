@@ -39,7 +39,7 @@ class GovMsgSubmitProposal extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3];
 
   @override
-  String get service => GovV1beta1types.serviceGovSubmitProposal.typeUrl;
+  TypeUrl get service => GovV1beta1types.serviceGovSubmitProposal;
 
   @override
   Map<String, dynamic> toJson() {
@@ -51,7 +51,7 @@ class GovMsgSubmitProposal extends CosmosMessage
   }
 
   @override
-  String get typeUrl => GovV1beta1types.govMsgSubmitProposal.typeUrl;
+  TypeUrl get typeUrl => GovV1beta1types.govMsgSubmitProposal;
 
   @override
   List get values => [content, initialDeposit, proposer];

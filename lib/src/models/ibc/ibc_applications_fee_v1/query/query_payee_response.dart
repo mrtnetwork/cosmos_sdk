@@ -6,6 +6,10 @@ class QueryPayeeResponse extends CosmosMessage {
   /// the payee address to which packet fees are paid out
   final String? payeeAddress;
   const QueryPayeeResponse({this.payeeAddress});
+  factory QueryPayeeResponse.fromRpc(Map<String, dynamic> json) {
+    return QueryPayeeResponse(payeeAddress: json["payee_address"]);
+  }
+
   factory QueryPayeeResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryPayeeResponse(payeeAddress: decode.getField(1));
@@ -20,7 +24,7 @@ class QueryPayeeResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.queryPayeeResponse.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryPayeeResponse;
 
   @override
   List get values => [payeeAddress];

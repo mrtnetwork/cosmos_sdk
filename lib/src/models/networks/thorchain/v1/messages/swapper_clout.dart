@@ -44,7 +44,7 @@ class ThorchainSwapperClout extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.swapperClout.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.swapperClout;
 
   @override
   List get values => [

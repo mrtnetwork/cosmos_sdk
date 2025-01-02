@@ -41,7 +41,7 @@ class OsmosisGammMsgExitPool extends CosmosMessage
   }
 
   @override
-  String get typeUrl => OsmosisGammV1beta1Types.msgExitPool.typeUrl;
+  TypeUrl get typeUrl => OsmosisGammV1beta1Types.msgExitPool;
 
   @override
   List get values => [sender, poolId, shareInAmount, tokenOutMins];
@@ -52,7 +52,7 @@ class OsmosisGammMsgExitPool extends CosmosMessage
   }
 
   @override
-  String get service => OsmosisGammV1beta1Types.exitPool.typeUrl;
+  TypeUrl get service => OsmosisGammV1beta1Types.exitPool;
 
   @override
   List<String?> get signers => [sender];

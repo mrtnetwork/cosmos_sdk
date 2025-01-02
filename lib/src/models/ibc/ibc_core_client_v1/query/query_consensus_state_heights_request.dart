@@ -8,11 +8,12 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class QueryConsensusStateHeightsRequest extends CosmosMessage
     with QueryMessage<QueryConsensusStateHeightsResponse> {
   /// client identifier
-  final String? clientId;
+  final String clientId;
 
   /// pagination request
   final PageRequest? pagination;
-  const QueryConsensusStateHeightsRequest({this.clientId, this.pagination});
+  const QueryConsensusStateHeightsRequest(
+      {required this.clientId, this.pagination});
   factory QueryConsensusStateHeightsRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryConsensusStateHeightsRequest(
@@ -26,15 +27,12 @@ class QueryConsensusStateHeightsRequest extends CosmosMessage
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get queryPath => IbcTypes.consensusStateHeights.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {"client_id": clientId, "pagination": pagination?.toJson()};
   }
 
   @override
-  String get typeUrl => IbcTypes.queryConsensusStateHeightsRequest.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryConsensusStateHeightsRequest;
 
   @override
   List get values => [clientId, pagination];
@@ -43,4 +41,12 @@ class QueryConsensusStateHeightsRequest extends CosmosMessage
   QueryConsensusStateHeightsResponse onResponse(List<int> bytes) {
     return QueryConsensusStateHeightsResponse.deserialize(bytes);
   }
+
+  @override
+  QueryConsensusStateHeightsResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryConsensusStateHeightsResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters => [clientId];
 }

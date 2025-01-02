@@ -20,8 +20,8 @@ class OsmosisGammMsgJoinSwapExternAmountInResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisGammV1beta1Types.msgJoinSwapExternAmountInResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisGammV1beta1Types.msgJoinSwapExternAmountInResponse;
 
   @override
   List get values => [shareOutAmount.toString()];

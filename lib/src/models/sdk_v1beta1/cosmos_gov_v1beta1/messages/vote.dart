@@ -1,3 +1,4 @@
+import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/address/address.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_gov_v1beta1/messages/vote_option.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_gov_v1beta1/messages/weighted_vote_option.dart';
@@ -23,6 +24,18 @@ class GovVote extends CosmosMessage {
   ///
   /// Since: cosmos-sdk 0.43
   final List<GovWeightedVoteOption> options;
+  factory GovVote.fromRpc(Map<String, dynamic> json) {
+    return GovVote(
+        options: (json["options"] as List?)
+                ?.map((e) => GovWeightedVoteOption.fromRpc(e))
+                .toList() ??
+            [],
+        proposalId: BigintUtils.parse(json["proposal_id"]),
+        option: json["option"] == null
+            ? null
+            : GovVoteOption.fromName(json["option"]),
+        voter: json["voter"] == null ? null : CosmosBaseAddress(json["voter"]));
+  }
   GovVote(
       {required this.proposalId,
       this.voter,
@@ -60,7 +73,7 @@ class GovVote extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => GovV1beta1types.govVote.typeUrl;
+  TypeUrl get typeUrl => GovV1beta1types.govVote;
 
   @override
   List get values => [proposalId, voter, option, options];

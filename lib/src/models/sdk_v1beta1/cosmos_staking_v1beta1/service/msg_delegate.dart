@@ -41,20 +41,19 @@ class MsgDelegate extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3];
 
   @override
-  String get typeUrl => StakingV1beta1Types.msgDelegate.typeUrl;
+  TypeUrl get typeUrl => StakingV1beta1Types.msgDelegate;
 
   @override
   List get values =>
       [delegatorAddress?.address, validatorAddress?.address, amount];
 
   @override
-  String get service => StakingV1beta1Types.delegate.typeUrl;
+  TypeUrl get service => StakingV1beta1Types.delegate;
   @override
   List<String?> get signers => [delegatorAddress?.address];
 
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
-    return EmptyServiceRequestResponse(
-        StakingV1beta1Types.msgDelegateResponse.typeUrl);
+    return EmptyServiceRequestResponse(StakingV1beta1Types.msgDelegateResponse);
   }
 }

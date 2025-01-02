@@ -10,8 +10,9 @@ class QueryFeeEnabledChannelsRequest extends CosmosMessage
   final PageRequest? pagination;
 
   /// block height at which to query
-  final BigInt? queryHeight;
-  const QueryFeeEnabledChannelsRequest({this.pagination, this.queryHeight});
+  final BigInt queryHeight;
+  const QueryFeeEnabledChannelsRequest(
+      {this.pagination, required this.queryHeight});
 
   factory QueryFeeEnabledChannelsRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -26,18 +27,15 @@ class QueryFeeEnabledChannelsRequest extends CosmosMessage
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get queryPath => IbcTypes.feeEnabledChannels.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {
       "pagination": pagination?.toJson(),
-      "query_height": queryHeight?.toString()
+      "query_height": queryHeight.toString()
     };
   }
 
   @override
-  String get typeUrl => IbcTypes.queryFeeEnabledChannelsRequest.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryFeeEnabledChannelsRequest;
 
   @override
   List get values => [pagination, queryHeight];
@@ -46,4 +44,17 @@ class QueryFeeEnabledChannelsRequest extends CosmosMessage
   QueryFeeEnabledChannelsResponse onResponse(List<int> bytes) {
     return QueryFeeEnabledChannelsResponse.deserialize(bytes);
   }
+
+  @override
+  QueryFeeEnabledChannelsResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryFeeEnabledChannelsResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters => [queryHeight.toString()];
+  @override
+  Map<String, String?> get queryParameters => {
+        "query_height": queryHeight.toString(),
+        ...pagination?.queryParameters ?? {}
+      };
 }

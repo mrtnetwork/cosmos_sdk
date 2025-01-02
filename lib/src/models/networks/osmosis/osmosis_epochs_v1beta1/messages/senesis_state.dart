@@ -30,5 +30,5 @@ class OmosisEpochsGenesisState extends CosmosMessage {
 
   @override
   @override
-  String get typeUrl => OsmosisEpochsV1beta1Types.genesisState.typeUrl;
+  TypeUrl get typeUrl => OsmosisEpochsV1beta1Types.genesisState;
 }

@@ -14,6 +14,15 @@ class QueryPacketAcknowledgementsResponse extends CosmosMessage {
 
   /// query block height
   final IbcClientHeight height;
+  factory QueryPacketAcknowledgementsResponse.fromRpc(
+      Map<String, dynamic> json) {
+    return QueryPacketAcknowledgementsResponse(
+      height: IbcClientHeight.fromRpc(json["height"]),
+      pagination: json["pagination"] == null
+          ? null
+          : PageResponse.fromRpc(json["pagination"]),
+    );
+  }
   QueryPacketAcknowledgementsResponse(
       {List<IbcChannelPacketState>? acknowledgements,
       this.pagination,
@@ -46,7 +55,7 @@ class QueryPacketAcknowledgementsResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.queryPacketAcknowledgementsResponse.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryPacketAcknowledgementsResponse;
 
   @override
   List get values => [acknowledgements, pagination, height];

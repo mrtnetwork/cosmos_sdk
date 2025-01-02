@@ -45,7 +45,7 @@ class EvidenceParams extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => TendermintTypes.evidenceParams.typeUrl;
+  TypeUrl get typeUrl => TendermintTypes.evidenceParams;
 
   @override
   List get values => [maxAgeNumBlocks, maxAgeDuration, maxBytes];

@@ -50,7 +50,7 @@ class ThorchainNetwork extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.network.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.network;
 
   @override
   List get values => [

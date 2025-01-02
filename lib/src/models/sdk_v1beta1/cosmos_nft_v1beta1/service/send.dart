@@ -39,10 +39,10 @@ class MsgNFTSend extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3, 4];
 
   @override
-  String get service => NFTV1beta1Types.nFTSend.typeUrl;
+  TypeUrl get service => NFTV1beta1Types.nFTSend;
 
   @override
-  String get typeUrl => NFTV1beta1Types.msgNFTSend.typeUrl;
+  TypeUrl get typeUrl => NFTV1beta1Types.msgNFTSend;
 
   @override
   List get values => [classId, id, sender?.address, receiver?.address];
@@ -51,7 +51,6 @@ class MsgNFTSend extends CosmosMessage
 
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
-    return EmptyServiceRequestResponse(
-        NFTV1beta1Types.msgNFTSendResponse.typeUrl);
+    return EmptyServiceRequestResponse(NFTV1beta1Types.msgNFTSendResponse);
   }
 }

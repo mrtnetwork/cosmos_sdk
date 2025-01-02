@@ -30,8 +30,7 @@ class OsmosisProtorevMsgSetDeveloperAccount extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      OsmosisProtorevV1beta1Types.msgSetDeveloperAccount.typeUrl;
+  TypeUrl get typeUrl => OsmosisProtorevV1beta1Types.msgSetDeveloperAccount;
 
   @override
   List get values => [admin, developerAccount];
@@ -39,11 +38,11 @@ class OsmosisProtorevMsgSetDeveloperAccount extends CosmosMessage
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        OsmosisProtorevV1beta1Types.msgSetDeveloperAccountResponse.typeUrl);
+        OsmosisProtorevV1beta1Types.msgSetDeveloperAccountResponse);
   }
 
   @override
-  String get service => OsmosisProtorevV1beta1Types.setDeveloperAccount.typeUrl;
+  TypeUrl get service => OsmosisProtorevV1beta1Types.setDeveloperAccount;
 
   @override
   List<String?> get signers => [admin];

@@ -9,6 +9,14 @@ class DistributionQueryDelegatorWithdrawAddressResponse extends CosmosMessage {
   final CosmosBaseAddress? withdrawAddress;
   const DistributionQueryDelegatorWithdrawAddressResponse(
       {this.withdrawAddress});
+
+  factory DistributionQueryDelegatorWithdrawAddressResponse.fromRpc(
+      Map<String, dynamic> json) {
+    return DistributionQueryDelegatorWithdrawAddressResponse(
+        withdrawAddress: json["withdraw_address"] == null
+            ? null
+            : CosmosBaseAddress(json["withdraw_address"]));
+  }
   factory DistributionQueryDelegatorWithdrawAddressResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -27,8 +35,8 @@ class DistributionQueryDelegatorWithdrawAddressResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => DistributionV1beta1Types
-      .distributionQueryDelegatorWithdrawAddressResponse.typeUrl;
+  TypeUrl get typeUrl => DistributionV1beta1Types
+      .distributionQueryDelegatorWithdrawAddressResponse;
 
   @override
   List get values => [withdrawAddress?.address];

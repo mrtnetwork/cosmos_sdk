@@ -1,5 +1,4 @@
 export 'core/core.dart';
-export 'core/http_types.dart';
 export 'core/tendermint.dart';
 
 export 'methods/methods.dart';

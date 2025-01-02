@@ -5,7 +5,7 @@ import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_bank_v1beta1/types/type
 
 /// Balance queries the balance of a single coin for a single account.
 class QueryBalanceRequest extends CosmosMessage
-    with QueryMessage<QueryBalanceResponse>, RPCMessage<QueryBalanceResponse> {
+    with QueryMessage<QueryBalanceResponse> {
   /// address is the address to query balances for.
   final CosmosBaseAddress address;
 
@@ -18,15 +18,12 @@ class QueryBalanceRequest extends CosmosMessage
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get queryPath => BankV1beta1Types.balance.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {"address": address.address, "denom": denom};
   }
 
   @override
-  String get typeUrl => BankV1beta1Types.balanceRequest.typeUrl;
+  TypeUrl get typeUrl => BankV1beta1Types.balanceRequest;
 
   @override
   List get values => [address.address, denom];
@@ -45,6 +42,5 @@ class QueryBalanceRequest extends CosmosMessage
   Map<String, String> get queryParameters => {"denom": denom};
 
   @override
-  String get rpcPath =>
-      BankV1beta1Types.balance.rpcUrl(pathParameters: [address.address]);
+  List<String> get pathParameters => [address.address];
 }

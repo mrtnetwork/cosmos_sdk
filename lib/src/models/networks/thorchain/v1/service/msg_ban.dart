@@ -24,7 +24,7 @@ class ThorchainMsgBan extends CosmosMessage with ServiceMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.msgBan.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.msgBan;
 
   @override
   List get values => [nodeAddress?.toBytes(), signer?.toBytes()];
@@ -34,7 +34,7 @@ class ThorchainMsgBan extends CosmosMessage with ServiceMessage {
   }
 
   @override
-  String get service => typeUrl;
+  TypeUrl get service => typeUrl;
 
   @override
   List<String?> get signers => [signer?.address];

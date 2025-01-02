@@ -25,7 +25,7 @@ class OsmosisPoolincentivesParams extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisPoolincentivesV1beta1Types.params.typeUrl;
+  TypeUrl get typeUrl => OsmosisPoolincentivesV1beta1Types.params;
   @override
   List get values => [mintedDenom];
 }

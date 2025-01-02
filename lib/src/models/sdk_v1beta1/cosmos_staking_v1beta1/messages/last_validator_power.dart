@@ -37,7 +37,7 @@ class LastValidatorPower extends CosmosMessage {
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get typeUrl => StakingV1beta1Types.lastValidatorPower.typeUrl;
+  TypeUrl get typeUrl => StakingV1beta1Types.lastValidatorPower;
 
   @override
   List get values => [address?.address, power];

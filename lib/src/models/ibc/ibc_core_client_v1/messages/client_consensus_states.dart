@@ -36,7 +36,7 @@ class IbcClientClientConsensusStates extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.ibClientClientConsensusStates.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.ibClientClientConsensusStates;
 
   @override
   List get values => [clientId, consensusStates];

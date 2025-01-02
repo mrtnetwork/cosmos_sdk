@@ -22,15 +22,12 @@ class QueryDenomsMetadataRequest extends CosmosMessage
   List<int> get fieldIds => [1];
 
   @override
-  String get queryPath => BankV1beta1Types.denomsMetadata.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {"pagination": pagination?.toJson()};
   }
 
   @override
-  String get typeUrl => BankV1beta1Types.denomsMetadataRequest.typeUrl;
+  TypeUrl get typeUrl => BankV1beta1Types.denomsMetadataRequest;
 
   @override
   List get values => [pagination];
@@ -39,4 +36,13 @@ class QueryDenomsMetadataRequest extends CosmosMessage
   QueryDenomsMetadataResponse onResponse(List<int> bytes) {
     return QueryDenomsMetadataResponse.deserialize(bytes);
   }
+
+  @override
+  QueryDenomsMetadataResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryDenomsMetadataResponse.fromRpc(json);
+  }
+
+  @override
+  Map<String, String?> get queryParameters =>
+      {...pagination?.queryParameters ?? {}};
 }

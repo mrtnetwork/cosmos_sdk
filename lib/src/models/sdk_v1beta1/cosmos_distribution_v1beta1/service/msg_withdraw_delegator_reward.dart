@@ -25,8 +25,8 @@ class DistributionMsgWithdrawDelegatorReward extends CosmosMessage
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get service =>
-      DistributionV1beta1Types.distributionWithdrawDelegatorReward.typeUrl;
+  TypeUrl get service =>
+      DistributionV1beta1Types.distributionWithdrawDelegatorReward;
 
   @override
   Map<String, dynamic> toJson() {
@@ -37,8 +37,8 @@ class DistributionMsgWithdrawDelegatorReward extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      DistributionV1beta1Types.distributionMsgWithdrawDelegatorReward.typeUrl;
+  TypeUrl get typeUrl =>
+      DistributionV1beta1Types.distributionMsgWithdrawDelegatorReward;
 
   @override
   List get values => [delegatorAddress?.address, validatorAddress?.address];

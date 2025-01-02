@@ -36,10 +36,10 @@ class MsgRotateConsPubKey extends CosmosMessage
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get service => StakingV1beta1Types.rotateConsPubKey.typeUrl;
+  TypeUrl get service => StakingV1beta1Types.rotateConsPubKey;
 
   @override
-  String get typeUrl => StakingV1beta1Types.msgRotateConsPubKey.typeUrl;
+  TypeUrl get typeUrl => StakingV1beta1Types.msgRotateConsPubKey;
 
   @override
   List get values => [validatorAddress?.address, newPubkey];
@@ -49,6 +49,6 @@ class MsgRotateConsPubKey extends CosmosMessage
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        StakingV1beta1Types.msgRotateConsPubKeyResponse.typeUrl);
+        StakingV1beta1Types.msgRotateConsPubKeyResponse);
   }
 }

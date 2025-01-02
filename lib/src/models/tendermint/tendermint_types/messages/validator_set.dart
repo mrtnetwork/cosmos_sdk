@@ -37,7 +37,7 @@ class ValidatorSet extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => TendermintTypes.tendermintValidatorSet.typeUrl;
+  TypeUrl get typeUrl => TendermintTypes.tendermintValidatorSet;
 
   @override
   List get values => [validators, proposer, totalVotingPower];

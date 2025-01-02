@@ -15,7 +15,7 @@ class Message extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => TendermintTypes.message.typeUrl;
+  TypeUrl get typeUrl => TendermintTypes.message;
 
   @override
   List get values => [message];

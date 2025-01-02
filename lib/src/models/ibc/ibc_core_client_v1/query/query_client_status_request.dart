@@ -7,8 +7,8 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class QueryClientStatusRequest extends CosmosMessage
     with QueryMessage<QueryClientStatusResponse> {
   /// client unique identifier
-  final String? clientId;
-  const QueryClientStatusRequest({this.clientId});
+  final String clientId;
+  const QueryClientStatusRequest({required this.clientId});
   factory QueryClientStatusRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryClientStatusRequest(clientId: decode.getField(1));
@@ -18,15 +18,12 @@ class QueryClientStatusRequest extends CosmosMessage
   List<int> get fieldIds => [1];
 
   @override
-  String get queryPath => IbcTypes.clientStatus.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {"client_id": clientId};
   }
 
   @override
-  String get typeUrl => IbcTypes.queryClientStatusRequest.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryClientStatusRequest;
 
   @override
   List get values => [clientId];
@@ -34,4 +31,12 @@ class QueryClientStatusRequest extends CosmosMessage
   QueryClientStatusResponse onResponse(List<int> bytes) {
     return QueryClientStatusResponse.deserialize(bytes);
   }
+
+  @override
+  QueryClientStatusResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryClientStatusResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters => [clientId];
 }

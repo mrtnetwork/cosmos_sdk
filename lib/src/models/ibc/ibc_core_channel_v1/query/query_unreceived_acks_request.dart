@@ -9,16 +9,18 @@ import 'package:blockchain_utils/helper/helper.dart';
 class QueryUnreceivedAcksRequest extends CosmosMessage
     with QueryMessage<QueryUnreceivedAcksResponse> {
   /// port unique identifier
-  final String? portId;
+  final String portId;
 
   /// channel unique identifier
-  final String? channelId;
+  final String channelId;
 
   // list of acknowledgement sequences
-  final List<BigInt>? packetAckSequences;
+  final List<BigInt> packetAckSequences;
   QueryUnreceivedAcksRequest(
-      {this.portId, this.channelId, List<BigInt>? packetAckSequences})
-      : packetAckSequences = packetAckSequences?.emptyAsNull?.immutable;
+      {required this.portId,
+      required this.channelId,
+      required List<BigInt> packetAckSequences})
+      : packetAckSequences = packetAckSequences.immutable;
   factory QueryUnreceivedAcksRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryUnreceivedAcksRequest(
@@ -35,20 +37,17 @@ class QueryUnreceivedAcksRequest extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3];
 
   @override
-  String get queryPath => IbcTypes.unreceivedAcks.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {
       "port_id": portId,
       "channel_id": channelId,
       "packet_ack_sequences":
-          packetAckSequences?.map((e) => e.toString()).toList()
+          packetAckSequences.map((e) => e.toString()).toList()
     };
   }
 
   @override
-  String get typeUrl => IbcTypes.queryUnreceivedAcksRequest.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryUnreceivedAcksRequest;
 
   @override
   List get values => [portId, channelId, packetAckSequences];
@@ -56,4 +55,13 @@ class QueryUnreceivedAcksRequest extends CosmosMessage
   QueryUnreceivedAcksResponse onResponse(List<int> bytes) {
     return QueryUnreceivedAcksResponse.deserialize(bytes);
   }
+
+  @override
+  QueryUnreceivedAcksResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryUnreceivedAcksResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters =>
+      [channelId, portId, packetAckSequences.join(",")];
 }

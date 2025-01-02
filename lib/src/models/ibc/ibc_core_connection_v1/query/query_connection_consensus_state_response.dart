@@ -1,13 +1,15 @@
 import 'package:blockchain_utils/utils/utils.dart';
+import 'package:cosmos_sdk/src/models/global_messages/unknown_message.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_client_v1/messages/height.dart';
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/utils.dart';
 
 /// QueryConnectionConsensusStateResponse is the response type for the Query/ConnectionConsensusState RPC method
 class IbcConnectionQueryConnectionConsensusStateResponse extends CosmosMessage {
   /// consensus state associated with the channel
-  final Any? consensusState;
+  final AnyMessage? consensusState;
 
   /// client ID associated with the consensus state
   final String? clientId;
@@ -17,6 +19,16 @@ class IbcConnectionQueryConnectionConsensusStateResponse extends CosmosMessage {
 
   /// height at which the proof was retrieved
   final IbcClientHeight proofHeight;
+  factory IbcConnectionQueryConnectionConsensusStateResponse.fromRpc(
+      Map<String, dynamic> json) {
+    return IbcConnectionQueryConnectionConsensusStateResponse(
+        proofHeight: IbcClientHeight.fromRpc(json["proof_height"]),
+        clientId: json["client_id"],
+        consensusState: json["consensus_state"] == null
+            ? null
+            : AnyMessage.fromRpc(json["consensus_state"]),
+        proof: CosmosUtils.tryToBytes(json["proof"]));
+  }
   IbcConnectionQueryConnectionConsensusStateResponse(
       {this.consensusState,
       this.clientId,
@@ -27,8 +39,9 @@ class IbcConnectionQueryConnectionConsensusStateResponse extends CosmosMessage {
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcConnectionQueryConnectionConsensusStateResponse(
-      consensusState:
-          decode.getResult(1)?.to<Any, List<int>>((e) => Any.deserialize(e)),
+      consensusState: decode
+          .getResult(1)
+          ?.to<AnyMessage, List<int>>((e) => AnyMessage.deserialize(e)),
       clientId: decode.getField(2),
       proof: decode.getField(3),
       proofHeight: IbcClientHeight.deserialize(decode.getField(4)),
@@ -49,8 +62,8 @@ class IbcConnectionQueryConnectionConsensusStateResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      IbcTypes.ibcConnectionQueryConnectionConsensusStateResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      IbcTypes.ibcConnectionQueryConnectionConsensusStateResponse;
 
   @override
   List get values => [consensusState, clientId, proof, proofHeight];

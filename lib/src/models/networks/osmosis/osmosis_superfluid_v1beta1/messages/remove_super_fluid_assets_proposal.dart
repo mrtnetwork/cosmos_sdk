@@ -32,8 +32,8 @@ class OsmosisSuperfluidRemoveSuperfluidAssetsProposal extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisSuperfluidV1beta1Types.removeSuperfluidAssetsProposal.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisSuperfluidV1beta1Types.removeSuperfluidAssetsProposal;
 
   @override
   List get values => [title, description, superfluidAssetDenoms];

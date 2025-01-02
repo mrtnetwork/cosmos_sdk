@@ -21,8 +21,8 @@ class OsmosisPoolManagerMsgSwapExactAmountOutResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisPoolManagerV1beta1Types.msgSwapExactAmountOutResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisPoolManagerV1beta1Types.msgSwapExactAmountOutResponse;
 
   @override
   List get values => [tokenInAmount.toString()];

@@ -32,7 +32,7 @@ class DelayedVestingAccount extends CosmosMessage {
   List<int> get fieldIds => [1];
 
   @override
-  String get typeUrl => VestingV1beta1Types.delayedVestingAccount.typeUrl;
+  TypeUrl get typeUrl => VestingV1beta1Types.delayedVestingAccount;
 
   @override
   List get values => [baseVestingAccount];

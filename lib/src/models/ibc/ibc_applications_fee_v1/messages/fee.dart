@@ -12,6 +12,12 @@ class IbcFeeFee extends CosmosMessage {
 
   /// the packet timeout fee
   final Coin timeoutFee;
+  factory IbcFeeFee.fromRpc(Map<String, dynamic> json) {
+    return IbcFeeFee(
+        ackFee: Coin.fromRpc(json["ack_fee"]),
+        recvFee: Coin.fromRpc(json["recv_fee"]),
+        timeoutFee: Coin.fromRpc(json["timeout_fee"]));
+  }
   const IbcFeeFee(
       {required this.recvFee, required this.ackFee, required this.timeoutFee});
   factory IbcFeeFee.deserialize(List<int> bytes) {
@@ -35,7 +41,7 @@ class IbcFeeFee extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.fee.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.fee;
 
   @override
   List get values => [recvFee, ackFee, timeoutFee];

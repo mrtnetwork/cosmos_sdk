@@ -27,7 +27,7 @@ class AuthzEventPruneExpiredGrants extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => AuthzV1beta1Types.authzEventPruneExpiredGrants.typeUrl;
+  TypeUrl get typeUrl => AuthzV1beta1Types.authzEventPruneExpiredGrants;
 
   @override
   List get values => [pruner];

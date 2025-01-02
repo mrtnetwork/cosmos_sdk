@@ -3,11 +3,9 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'query_denom_pool_id_response.dart';
 
 class OsmosisTxfeesQueryDenomPoolIdRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisTxfeesQueryDenomPoolIdResponse>,
-        RPCMessage<OsmosisTxfeesQueryDenomPoolIdResponse> {
-  final String? denom;
-  const OsmosisTxfeesQueryDenomPoolIdRequest({this.denom});
+    with QueryMessage<OsmosisTxfeesQueryDenomPoolIdResponse> {
+  final String denom;
+  const OsmosisTxfeesQueryDenomPoolIdRequest({required this.denom});
   factory OsmosisTxfeesQueryDenomPoolIdRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisTxfeesQueryDenomPoolIdRequest(denom: decode.getField(1));
@@ -26,8 +24,7 @@ class OsmosisTxfeesQueryDenomPoolIdRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      OsmosisTxfeesV1beta1Types.queryDenomPoolIdRequest.typeUrl;
+  TypeUrl get typeUrl => OsmosisTxfeesV1beta1Types.queryDenomPoolIdRequest;
 
   @override
   List get values => [denom];
@@ -47,9 +44,5 @@ class OsmosisTxfeesQueryDenomPoolIdRequest extends CosmosMessage
   Map<String, String?> get queryParameters => {};
 
   @override
-  String get queryPath => OsmosisTxfeesV1beta1Types.denomPoolId.typeUrl;
-
-  @override
-  String get rpcPath =>
-      OsmosisTxfeesV1beta1Types.denomPoolId.rpcUrl(pathParameters: [denom]);
+  List<String> get pathParameters => [denom];
 }

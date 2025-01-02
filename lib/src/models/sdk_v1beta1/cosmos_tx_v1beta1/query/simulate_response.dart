@@ -10,6 +10,11 @@ class SimulateResponse extends CosmosMessage {
 
   /// result is the result of the simulation.
   final Result result;
+  factory SimulateResponse.fromRpc(Map<String, dynamic> json) {
+    return SimulateResponse(
+        gasInfo: GasInfo.fromRpc(json["gas_info"]),
+        result: Result.fromRpc(json["result"]));
+  }
   const SimulateResponse({required this.gasInfo, required this.result});
 
   factory SimulateResponse.deserialize(List<int> bytes) {
@@ -28,7 +33,7 @@ class SimulateResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => TxV1beta1Types.simulateResponse.typeUrl;
+  TypeUrl get typeUrl => TxV1beta1Types.simulateResponse;
 
   @override
   List get values => [gasInfo, result];

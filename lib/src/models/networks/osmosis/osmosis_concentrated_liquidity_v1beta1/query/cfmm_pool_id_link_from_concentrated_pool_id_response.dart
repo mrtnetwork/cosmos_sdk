@@ -29,8 +29,8 @@ class OsmosisConcentratedLiquidityCFMMPoolIdLinkFromConcentratedPoolIdResponse
   }
 
   @override
-  String get typeUrl => OsmosisConcentratedLiquidityV1beta1Types
-      .cFMMPoolIdLinkFromConcentratedPoolIdResponse.typeUrl;
+  TypeUrl get typeUrl => OsmosisConcentratedLiquidityV1beta1Types
+      .cFMMPoolIdLinkFromConcentratedPoolIdResponse;
 
   @override
   List get values => [cfmmPoolId];

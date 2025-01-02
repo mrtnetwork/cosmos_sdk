@@ -48,8 +48,7 @@ class OsmosisIncentiveUpcomingGaugesPerDenomResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisIncentivesTypes.upcomingGaugesPerDenomResponse.typeUrl;
+  TypeUrl get typeUrl => OsmosisIncentivesTypes.upcomingGaugesPerDenomResponse;
 
   @override
   List get values => [upcomingGauges, pagination];

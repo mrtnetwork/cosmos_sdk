@@ -5,15 +5,13 @@ import 'package:blockchain_utils/helper/helper.dart';
 import 'estimate_swap_exact_amount_out_response.dart';
 
 class OsmosisPoolManagerEstimateSwapExactAmountOutRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisPoolManagerEstimateSwapExactAmountOutResponse>,
-        RPCMessage<OsmosisPoolManagerEstimateSwapExactAmountOutResponse> {
-  final BigInt? poolId;
+    with QueryMessage<OsmosisPoolManagerEstimateSwapExactAmountOutResponse> {
+  final BigInt poolId;
   final List<OsmosisPoolManagerSwapAmountOutRoute> routes;
   final String? tokenOut;
 
   OsmosisPoolManagerEstimateSwapExactAmountOutRequest(
-      {this.poolId,
+      {required this.poolId,
       required List<OsmosisPoolManagerSwapAmountOutRoute> routes,
       this.tokenOut})
       : routes = routes.immutable;
@@ -51,27 +49,20 @@ class OsmosisPoolManagerEstimateSwapExactAmountOutRequest extends CosmosMessage
       };
 
   @override
-  String get queryPath =>
-      OsmosisPoolManagerV1beta1Types.estimateSwapExactAmountOut.typeUrl;
-
-  @override
-  String get rpcPath =>
-      OsmosisPoolManagerV1beta1Types.estimateSwapExactAmountOut
-          .rpcUrl(pathParameters: [poolId?.toString()]);
-
-  @override
   Map<String, dynamic> toJson() {
     return {
-      "pool_id": poolId?.toString(),
+      "pool_id": poolId.toString(),
       "routes": routes.map((e) => e.toJson()).toList(),
       "token_out": tokenOut
     };
   }
 
   @override
-  String get typeUrl =>
-      OsmosisPoolManagerV1beta1Types.estimateSwapExactAmountOutRequest.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisPoolManagerV1beta1Types.estimateSwapExactAmountOutRequest;
 
   @override
   List get values => [poolId, routes, tokenOut];
+  @override
+  List<String> get pathParameters => [poolId.toString()];
 }

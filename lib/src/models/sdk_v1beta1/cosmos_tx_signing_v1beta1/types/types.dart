@@ -1,6 +1,7 @@
-class TxSigningV1beta1Types {
-  final String typeUrl;
-  const TxSigningV1beta1Types._(this.typeUrl);
+import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
+
+class TxSigningV1beta1Types extends TypeUrl {
+  const TxSigningV1beta1Types._(super.typeUrl);
 
   static const TxSigningV1beta1Types single = TxSigningV1beta1Types._(
       "/cosmos.tx.signing.v1beta1.SignatureDescriptor.Data.Single");

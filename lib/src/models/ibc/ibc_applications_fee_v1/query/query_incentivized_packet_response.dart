@@ -7,6 +7,12 @@ class QueryIncentivizedPacketResponse extends CosmosMessage {
   /// the identified fees for the incentivized packet
   final IbcFeeIdentifiedPacketFees incentivizedPacket;
   const QueryIncentivizedPacketResponse({required this.incentivizedPacket});
+
+  factory QueryIncentivizedPacketResponse.fromRpc(Map<String, dynamic> json) {
+    return QueryIncentivizedPacketResponse(
+        incentivizedPacket:
+            IbcFeeIdentifiedPacketFees.fromRpc(json["incentivized_packet"]));
+  }
   factory QueryIncentivizedPacketResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryIncentivizedPacketResponse(
@@ -23,7 +29,7 @@ class QueryIncentivizedPacketResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.queryIncentivizedPacketResponse.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryIncentivizedPacketResponse;
 
   @override
   List get values => [incentivizedPacket];

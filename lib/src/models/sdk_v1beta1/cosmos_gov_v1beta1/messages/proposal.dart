@@ -1,3 +1,5 @@
+import 'package:blockchain_utils/utils/numbers/utils/bigint_utils.dart';
+import 'package:cosmos_sdk/src/models/global_messages/unknown_message.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_v1beta1/messages/coin.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_gov_v1beta1/messages/proposal_status.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_gov_v1beta1/messages/tally_result.dart';
@@ -11,7 +13,7 @@ class GovProposal extends CosmosMessage {
   final BigInt? proposalId;
 
   /// content is the proposal's content.
-  final Any? content;
+  final AnyMessage? content;
 
   /// status defines the proposal status.
   final ProposalStatus? status;
@@ -35,7 +37,26 @@ class GovProposal extends CosmosMessage {
 
   /// voting_end_time is the end time of voting on a proposal.
   final ProtobufTimestamp votingEndTime;
-
+  factory GovProposal.fromRpc(Map<String, dynamic> json) {
+    return GovProposal(
+        depositEndTime: ProtobufTimestamp.fromString(json["deposit_end_time"]),
+        finalTallyResult: GovTallyResult.fromRpc(json["final_tally_result"]),
+        submitTime: ProtobufTimestamp.fromString(json["submit_time"]),
+        totalDeposit: (json["total_deposit"] as List?)
+                ?.map((e) => Coin.fromRpc(e))
+                .toList() ??
+            [],
+        votingEndTime: ProtobufTimestamp.fromString(json["voting_end_time"]),
+        votingStartTime:
+            ProtobufTimestamp.fromString(json["voting_start_time"]),
+        content: json["content"] == null
+            ? null
+            : AnyMessage.fromRpc(json["content"]),
+        proposalId: BigintUtils.tryParse(json["proposal_id"]),
+        status: json["status"] == null
+            ? null
+            : ProposalStatus.fromName(json["status"]));
+  }
   GovProposal(
       {this.proposalId,
       this.content,
@@ -51,8 +72,9 @@ class GovProposal extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GovProposal(
         proposalId: decode.getField(1),
-        content:
-            decode.getResult(2)?.to<Any, List<int>>((e) => Any.deserialize(e)),
+        content: decode
+            .getResult(2)
+            ?.to<AnyMessage, List<int>>((e) => AnyMessage.deserialize(e)),
         status: decode
             .getResult(3)
             ?.to<ProposalStatus, int>((e) => ProposalStatus.fromValue(e)),
@@ -84,7 +106,7 @@ class GovProposal extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => GovV1beta1types.govProposal.typeUrl;
+  TypeUrl get typeUrl => GovV1beta1types.govProposal;
 
   @override
   List get values => [

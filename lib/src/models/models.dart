@@ -7,3 +7,6 @@ export 'sdk_v1beta1/sdk_v1beta1.dart';
 export 'tendermint/tendermint.dart';
 
 export 'networks/networks.dart';
+export 'chain_registery/chain_registery.dart';
+
+export 'ethermint/ethermint.dart';

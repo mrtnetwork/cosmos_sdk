@@ -7,45 +7,40 @@ import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_staking_v1beta1/types/t
 class QueryDelegatorValidatorRequest extends CosmosMessage
     with QueryMessage<QueryDelegatorValidatorResponse> {
   /// delegator_addr defines the delegator address to query for.
-  final CosmosBaseAddress? delegatorAddr;
+  final CosmosBaseAddress delegatorAddr;
 
   /// validator_addr defines the validator address to query for.
-  final CosmosBaseAddress? validatorAddr;
+  final CosmosBaseAddress validatorAddr;
   const QueryDelegatorValidatorRequest(
-      {this.delegatorAddr, this.validatorAddr});
-  factory QueryDelegatorValidatorRequest.deserialize(List<int> bytes) {
-    final decode = CosmosProtocolBuffer.decode(bytes);
-    return QueryDelegatorValidatorRequest(
-        delegatorAddr: decode
-            .getResult(1)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        validatorAddr: decode
-            .getResult(2)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)));
-  }
+      {required this.delegatorAddr, required this.validatorAddr});
 
   @override
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get queryPath => StakingV1beta1Types.queryDelegatorValidator.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {
-      "delegator_addr": delegatorAddr?.address,
-      "validator_addr": validatorAddr?.address,
+      "delegator_addr": delegatorAddr.address,
+      "validator_addr": validatorAddr.address,
     };
   }
 
   @override
-  String get typeUrl =>
-      StakingV1beta1Types.queryDelegatorValidatorRequest.typeUrl;
+  TypeUrl get typeUrl => StakingV1beta1Types.queryDelegatorValidatorRequest;
 
   @override
-  List get values => [delegatorAddr, validatorAddr?.address];
+  List get values => [delegatorAddr, validatorAddr.address];
   @override
   QueryDelegatorValidatorResponse onResponse(List<int> bytes) {
     return QueryDelegatorValidatorResponse.deserialize(bytes);
   }
+
+  @override
+  QueryDelegatorValidatorResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryDelegatorValidatorResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters =>
+      [delegatorAddr.address, validatorAddr.address];
 }

@@ -30,7 +30,7 @@ class ThorchainEventSlash extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.eventSlash.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.eventSlash;
 
   @override
   List get values => [pool, slashAmount];

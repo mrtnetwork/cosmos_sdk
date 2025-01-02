@@ -12,13 +12,14 @@ class QueryAccountAddressByIDRequest extends CosmosMessage
   /// id is the account number of the address to be queried. This field
   /// should have been an uint64 (like all account numbers), and will be
   /// updated to uint64 in a future version of the auth query.
-  final BigInt? id;
+  final BigInt id;
 
   /// account_id is the account number of the address to be queried.
   ///
   /// Since: cosmos-sdk 0.47
   final BigInt accountId;
-  const QueryAccountAddressByIDRequest({this.id, required this.accountId});
+  const QueryAccountAddressByIDRequest(
+      {required this.id, required this.accountId});
   factory QueryAccountAddressByIDRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryAccountAddressByIDRequest(
@@ -29,9 +30,6 @@ class QueryAccountAddressByIDRequest extends CosmosMessage
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get queryPath => AuthV1beta1Types.accountAddressByID.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {"id": id, "account_id": accountId};
   }
@@ -40,10 +38,18 @@ class QueryAccountAddressByIDRequest extends CosmosMessage
   List get values => [id, accountId];
 
   @override
-  String get typeUrl => AuthV1beta1Types.accountAddressByIDRequest.typeUrl;
+  TypeUrl get typeUrl => AuthV1beta1Types.accountAddressByIDRequest;
 
   @override
   QueryAccountAddressByIDResponse onResponse(List<int> bytes) {
     return QueryAccountAddressByIDResponse.deserialize(bytes);
   }
+
+  @override
+  QueryAccountAddressByIDResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryAccountAddressByIDResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters => [id.toString()];
 }

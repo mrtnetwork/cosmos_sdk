@@ -3,16 +3,15 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'query_user_position_response.dart';
 
 class OsmosisStreamSwapQueryUserPosition extends CosmosMessage
-    with
-        QueryMessage<OsmosisStreamSwapQueryUserPositionResponse>,
-        RPCMessage<OsmosisStreamSwapQueryUserPositionResponse> {
+    with QueryMessage<OsmosisStreamSwapQueryUserPositionResponse> {
   /// ID of the Sale
-  final BigInt? saleId;
+  final BigInt saleId;
 
   /// user account address
-  final String? user;
+  final String user;
 
-  OsmosisStreamSwapQueryUserPosition({this.saleId, this.user});
+  OsmosisStreamSwapQueryUserPosition(
+      {required this.saleId, required this.user});
   factory OsmosisStreamSwapQueryUserPosition.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisStreamSwapQueryUserPosition(
@@ -24,25 +23,17 @@ class OsmosisStreamSwapQueryUserPosition extends CosmosMessage
 
   @override
   Map<String, dynamic> toJson() {
-    return {"sale_id": saleId?.toString(), "user": user};
+    return {"sale_id": saleId.toString(), "user": user};
   }
 
   @override
-  String get typeUrl =>
-      OsmosisStreamSwapV1Types.queryUserPositionRequest.typeUrl;
+  TypeUrl get typeUrl => OsmosisStreamSwapV1Types.queryUserPositionRequest;
 
   @override
   List get values => [saleId, user];
 
   @override
   Map<String, String?> get queryParameters => {};
-
-  @override
-  String get queryPath => OsmosisStreamSwapV1Types.queryUserPosition.typeUrl;
-
-  @override
-  String get rpcPath => OsmosisStreamSwapV1Types.queryUserPosition
-      .rpcUrl(pathParameters: [saleId?.toString(), user]);
 
   @override
   OsmosisStreamSwapQueryUserPositionResponse onJsonResponse(
@@ -54,4 +45,7 @@ class OsmosisStreamSwapQueryUserPosition extends CosmosMessage
   OsmosisStreamSwapQueryUserPositionResponse onResponse(List<int> bytes) {
     return OsmosisStreamSwapQueryUserPositionResponse.deserialize(bytes);
   }
+
+  @override
+  List<String> get pathParameters => [saleId.toString(), user];
 }

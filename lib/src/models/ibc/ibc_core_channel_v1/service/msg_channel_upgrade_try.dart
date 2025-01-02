@@ -66,7 +66,7 @@ class MsgChannelUpgradeTry extends CosmosMessage
   }
 
   @override
-  String get typeUrl => IbcTypes.msgChannelUpgradeTry.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.msgChannelUpgradeTry;
 
   @override
   List get values => [
@@ -82,7 +82,7 @@ class MsgChannelUpgradeTry extends CosmosMessage
       ];
 
   @override
-  String get service => IbcTypes.channelUpgradeTry.typeUrl;
+  TypeUrl get service => IbcTypes.channelUpgradeTry;
   @override
   List<String?> get signers => [signer];
 

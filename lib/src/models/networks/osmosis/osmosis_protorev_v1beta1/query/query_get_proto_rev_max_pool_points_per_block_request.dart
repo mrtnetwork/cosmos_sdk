@@ -7,8 +7,6 @@ class OsmosisProtorevQueryGetProtoRevMaxPoolPointsPerBlockRequest
     extends CosmosMessage
     with
         QueryMessage<
-            OsmosisProtorevQueryGetProtoRevMaxPoolPointsPerBlockResponse>,
-        RPCMessage<
             OsmosisProtorevQueryGetProtoRevMaxPoolPointsPerBlockResponse> {
   const OsmosisProtorevQueryGetProtoRevMaxPoolPointsPerBlockRequest();
   factory OsmosisProtorevQueryGetProtoRevMaxPoolPointsPerBlockRequest.deserialize(
@@ -42,17 +40,9 @@ class OsmosisProtorevQueryGetProtoRevMaxPoolPointsPerBlockRequest
   }
 
   @override
-  String get typeUrl => OsmosisProtorevV1beta1Types
-      .queryGetProtoRevMaxPoolPointsPerBlockRequest.typeUrl;
-
-  @override
-  String get queryPath =>
-      OsmosisProtorevV1beta1Types.getProtoRevMaxPoolPointsPerBlock.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisProtorevV1beta1Types.queryGetProtoRevMaxPoolPointsPerBlockRequest;
 
   @override
   Map<String, String?> get queryParameters => {};
-
-  @override
-  String get rpcPath =>
-      OsmosisProtorevV1beta1Types.getProtoRevMaxPoolPointsPerBlock.rpcUrl();
 }

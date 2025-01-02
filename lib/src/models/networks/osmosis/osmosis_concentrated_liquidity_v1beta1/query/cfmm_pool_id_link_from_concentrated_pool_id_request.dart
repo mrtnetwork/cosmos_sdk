@@ -6,13 +6,11 @@ class OsmosisConcentratedLiquidityCFMMPoolIdLinkFromConcentratedPoolIdRequest
     extends CosmosMessage
     with
         QueryMessage<
-            OsmosisConcentratedLiquidityCFMMPoolIdLinkFromConcentratedPoolIdResponse>,
-        RPCMessage<
             OsmosisConcentratedLiquidityCFMMPoolIdLinkFromConcentratedPoolIdResponse> {
-  final BigInt? concentratedPoolId;
+  final BigInt concentratedPoolId;
 
   const OsmosisConcentratedLiquidityCFMMPoolIdLinkFromConcentratedPoolIdRequest(
-      {this.concentratedPoolId});
+      {required this.concentratedPoolId});
   factory OsmosisConcentratedLiquidityCFMMPoolIdLinkFromConcentratedPoolIdRequest.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -27,22 +25,16 @@ class OsmosisConcentratedLiquidityCFMMPoolIdLinkFromConcentratedPoolIdRequest
   Map<String, String?> get queryParameters => {};
 
   @override
-  String get queryPath => OsmosisConcentratedLiquidityV1beta1Types
-      .cFMMPoolIdLinkFromConcentratedPoolId.typeUrl;
-
-  @override
-  String get rpcPath => OsmosisConcentratedLiquidityV1beta1Types
-      .cFMMPoolIdLinkFromConcentratedPoolId
-      .rpcUrl(pathParameters: [concentratedPoolId?.toString()]);
+  List<String> get pathParameters => [concentratedPoolId.toString()];
 
   @override
   Map<String, dynamic> toJson() {
-    return {"concentrated_pool_id": concentratedPoolId?.toString()};
+    return {"concentrated_pool_id": concentratedPoolId.toString()};
   }
 
   @override
-  String get typeUrl => OsmosisConcentratedLiquidityV1beta1Types
-      .cFMMPoolIdLinkFromConcentratedPoolIdRequest.typeUrl;
+  TypeUrl get typeUrl => OsmosisConcentratedLiquidityV1beta1Types
+      .cFMMPoolIdLinkFromConcentratedPoolIdRequest;
 
   @override
   List get values => [concentratedPoolId];

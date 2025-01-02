@@ -57,7 +57,7 @@ class IbcInterchainAccount extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.interchainAccountMetadata.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.interchainAccountMetadata;
 
   @override
   List get values => [

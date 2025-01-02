@@ -1,3 +1,5 @@
+import 'package:blockchain_utils/utils/utils.dart';
+import 'package:cosmos_sdk/src/models/global_messages/unknown_message.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_upgrade_v1beta1/types/types.dart';
 
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
@@ -28,7 +30,16 @@ class Plan extends CosmosMessage {
   /// Deprecated: UpgradedClientState field has been deprecated. IBC upgrade logic has been
   /// moved to the IBC module in the sub module 02-client.
   /// If this field is not empty, an error will be thrown.
-  final Any? upgradedClientState;
+  final AnyMessage? upgradedClientState;
+
+  factory Plan.fromRpc(Map<String, dynamic> json) {
+    return Plan(
+        time: ProtobufTimestamp.fromString(json["time"]),
+        height: BigintUtils.tryParse(json["height"]),
+        info: json["info"],
+        name: json["name"],
+        upgradedClientState: AnyMessage.fromRpc(json["upgraded_client_state"]));
+  }
 
   Plan({
     this.name,
@@ -45,8 +56,9 @@ class Plan extends CosmosMessage {
         time: ProtobufTimestamp.deserialize(decode.getField(2)),
         height: decode.getField(3),
         info: decode.getField(4),
-        upgradedClientState:
-            decode.getResult(5)?.to<Any, List<int>>((e) => Any.deserialize(e)));
+        upgradedClientState: decode
+            .getResult(5)
+            ?.to<AnyMessage, List<int>>((e) => AnyMessage.deserialize(e)));
   }
 
   /// Converts the plan to a JSON-serializable map.
@@ -65,7 +77,7 @@ class Plan extends CosmosMessage {
   List<int> get fieldIds => [1, 2, 3, 4, 5];
 
   @override
-  String get typeUrl => UpgradeV1beta1Types.plan.typeUrl;
+  TypeUrl get typeUrl => UpgradeV1beta1Types.plan;
 
   @override
   List get values => [name, time, height, info, upgradedClientState];

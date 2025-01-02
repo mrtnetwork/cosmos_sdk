@@ -30,7 +30,7 @@ class ThorchainEventTssKeygenSuccess extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.eventTssKeygenSuccess.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.eventTssKeygenSuccess;
 
   @override
   List get values => [pubKey, members, height];

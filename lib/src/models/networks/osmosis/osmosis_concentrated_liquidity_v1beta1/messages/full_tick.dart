@@ -47,6 +47,5 @@ class OsmosisConcentratedLiquidityFullTick extends CosmosMessage {
   List get values => [poolId, tickIndex, info];
 
   @override
-  String get typeUrl =>
-      OsmosisConcentratedLiquidityV1beta1Types.fullTick.typeUrl;
+  TypeUrl get typeUrl => OsmosisConcentratedLiquidityV1beta1Types.fullTick;
 }

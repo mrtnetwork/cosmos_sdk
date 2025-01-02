@@ -1,11 +1,7 @@
-import 'package:cosmos_sdk/src/models/core/type_url/type_url.dart';
+import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 
 class OsmosisIbchooksTypes extends TypeUrl {
-  @override
-  final String typeUrl;
-  @override
-  final String? rpc = null;
-  const OsmosisIbchooksTypes._(this.typeUrl);
+  const OsmosisIbchooksTypes._(super.typeUrl);
   static const OsmosisIbchooksTypes params =
       OsmosisIbchooksTypes._("/osmosis.ibchooks.Params");
   static const OsmosisIbchooksTypes genesisState =

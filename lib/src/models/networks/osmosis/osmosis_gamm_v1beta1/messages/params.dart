@@ -33,7 +33,7 @@ class OsmosisGammParams extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisGammV1beta1Types.params.typeUrl;
+  TypeUrl get typeUrl => OsmosisGammV1beta1Types.params;
 
   @override
   List get values => [poolCreationFee];

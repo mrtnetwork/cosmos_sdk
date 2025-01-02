@@ -21,7 +21,16 @@ class UnbondingDelegationEntry extends CosmosMessage {
 
   /// Strictly positive if this entry's unbonding has been stopped by external modules
   final BigInt? unbondingOnHoldRefCount;
-
+  factory UnbondingDelegationEntry.fromRpc(Map<String, dynamic> json) {
+    return UnbondingDelegationEntry(
+        balance: BigintUtils.parse(json["balance"]),
+        completionTime: ProtobufTimestamp.fromString(json["completion_time"]),
+        creationHeight: BigintUtils.tryParse(json["creation_height"]),
+        initialBalance: BigintUtils.parse(json["initial_balance"]),
+        unbondingId: BigintUtils.tryParse(json["unbonding_id"]),
+        unbondingOnHoldRefCount:
+            BigintUtils.tryParse(json["unbonding_on_hold_ref_count"]));
+  }
   const UnbondingDelegationEntry({
     required this.creationHeight,
     required this.completionTime,
@@ -57,7 +66,7 @@ class UnbondingDelegationEntry extends CosmosMessage {
   List<int> get fieldIds => [1, 2, 3, 4, 5, 6];
 
   @override
-  String get typeUrl => StakingV1beta1Types.unbondingDelegationEntry.typeUrl;
+  TypeUrl get typeUrl => StakingV1beta1Types.unbondingDelegationEntry;
 
   @override
   List get values => [

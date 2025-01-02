@@ -1,13 +1,9 @@
-import 'package:cosmos_sdk/src/models/core/type_url/type_url.dart';
+import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 
 class OsmosisConcentratedliquidityPoolmodelConcentratedV1beta1Types
     extends TypeUrl {
-  @override
-  final String typeUrl;
-  @override
-  final String? rpc = null;
   const OsmosisConcentratedliquidityPoolmodelConcentratedV1beta1Types._(
-      this.typeUrl);
+      super.typeUrl);
   static const OsmosisConcentratedliquidityPoolmodelConcentratedV1beta1Types
       msgCreateConcentratedPool =
       OsmosisConcentratedliquidityPoolmodelConcentratedV1beta1Types._(

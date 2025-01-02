@@ -35,8 +35,7 @@ class OsmosisCosmWasmPoolMsgCreateCosmWasmPool extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      OsmosisCosmWasmPoolV1beta1Types.msgCreateCosmWasmPool.typeUrl;
+  TypeUrl get typeUrl => OsmosisCosmWasmPoolV1beta1Types.msgCreateCosmWasmPool;
 
   @override
   List get values => [codeIn, instantiateMsg, sender];
@@ -47,8 +46,7 @@ class OsmosisCosmWasmPoolMsgCreateCosmWasmPool extends CosmosMessage
   }
 
   @override
-  String get service =>
-      OsmosisCosmWasmPoolV1beta1Types.createCosmWasmPool.typeUrl;
+  TypeUrl get service => OsmosisCosmWasmPoolV1beta1Types.createCosmWasmPool;
 
   @override
   List<String?> get signers => [sender];

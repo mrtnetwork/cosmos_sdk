@@ -9,7 +9,11 @@ class DistributionQueryDelegatorValidatorsResponse extends CosmosMessage {
   final List<String> validators;
   DistributionQueryDelegatorValidatorsResponse(List<String> validators)
       : validators = validators.immutable;
-
+  factory DistributionQueryDelegatorValidatorsResponse.fromRpc(
+      Map<String, dynamic> json) {
+    return DistributionQueryDelegatorValidatorsResponse(
+        (json["validators"] as List?)?.cast() ?? []);
+  }
   factory DistributionQueryDelegatorValidatorsResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -25,8 +29,8 @@ class DistributionQueryDelegatorValidatorsResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => DistributionV1beta1Types
-      .distributionQueryDelegatorValidatorsResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      DistributionV1beta1Types.distributionQueryDelegatorValidatorsResponse;
 
   @override
   List get values => [validators];

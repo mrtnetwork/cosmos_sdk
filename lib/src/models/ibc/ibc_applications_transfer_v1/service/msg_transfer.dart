@@ -61,7 +61,7 @@ class MsgTransfer extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3, 4, 5, 6, 7, 8];
 
   @override
-  String get service => IbcTypes.transfer.typeUrl;
+  TypeUrl get service => IbcTypes.transfer;
 
   @override
   Map<String, dynamic> toJson() {
@@ -78,7 +78,7 @@ class MsgTransfer extends CosmosMessage
   }
 
   @override
-  String get typeUrl => IbcTypes.msgTransfer.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.msgTransfer;
 
   @override
   List get values => [

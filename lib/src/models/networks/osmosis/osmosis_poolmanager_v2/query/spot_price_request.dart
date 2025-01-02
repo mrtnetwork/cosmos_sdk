@@ -4,15 +4,13 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
 /// SpotPriceRequest defines the gRPC request structure for a SpotPrice query.
 class OsmosisPoolManagerV2SpotPriceRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisPoolManagerV2SpotPriceResponse>,
-        RPCMessage<OsmosisPoolManagerV2SpotPriceResponse> {
-  final BigInt? poolId;
+    with QueryMessage<OsmosisPoolManagerV2SpotPriceResponse> {
+  final BigInt poolId;
   final String? baseAssetDenom;
   final String? quoteAssetDenom;
 
   const OsmosisPoolManagerV2SpotPriceRequest(
-      {this.poolId, this.baseAssetDenom, this.quoteAssetDenom});
+      {required this.poolId, this.baseAssetDenom, this.quoteAssetDenom});
   factory OsmosisPoolManagerV2SpotPriceRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolManagerV2SpotPriceRequest(
@@ -42,24 +40,20 @@ class OsmosisPoolManagerV2SpotPriceRequest extends CosmosMessage
       };
 
   @override
-  String get queryPath => OsmosisPoolManagerV2Types.spotPriceV2.typeUrl;
-
-  @override
-  String get rpcPath => OsmosisPoolManagerV2Types.spotPriceV2
-      .rpcUrl(pathParameters: [poolId?.toString()]);
-
-  @override
   Map<String, dynamic> toJson() {
     return {
-      "pool_id": poolId?.toString(),
+      "pool_id": poolId.toString(),
       "base_asset_denom": baseAssetDenom,
       "quote_asset_denom": quoteAssetDenom
     };
   }
 
   @override
-  String get typeUrl => OsmosisPoolManagerV2Types.spotPriceRequest.typeUrl;
+  TypeUrl get typeUrl => OsmosisPoolManagerV2Types.spotPriceRequest;
 
   @override
   List get values => [poolId, baseAssetDenom, quoteAssetDenom];
+
+  @override
+  List<String> get pathParameters => [poolId.toString()];
 }

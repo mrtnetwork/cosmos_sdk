@@ -1,5 +1,6 @@
 import 'package:blockchain_utils/blockchain_utils.dart';
 import 'package:cosmos_sdk/src/address/address.dart';
+import 'package:cosmos_sdk/src/models/global_messages/unknown_message.dart';
 
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_staking_v1beta1/types/types.dart';
@@ -19,7 +20,7 @@ class StakingValidator extends CosmosMessage {
   final CosmosBaseAddress? operatorAddress;
 
   /// consensus_pubkey is the consensus public key of the validator, as a Protobuf Any.
-  final Any? consensusPubkey;
+  final AnyMessage? consensusPubkey;
 
   /// jailed defined whether the validator has been jailed from bonded status or not.
   final bool? jailed;
@@ -55,6 +56,30 @@ class StakingValidator extends CosmosMessage {
 
   /// list of unbonding ids, each uniquely identifying an unbonding of this validator
   final List<BigInt>? unbondingIds;
+  factory StakingValidator.fromRpc(Map<String, dynamic> json) {
+    return StakingValidator(
+        commission: Commission.fromRpc(json["commission"]),
+        delegatorShares: json["delegator_shares"],
+        description: Description.fromRpc(json["description"]),
+        minSelfDelegation: BigintUtils.parse(json["min_self_delegation"]),
+        tokens: BigintUtils.parse(json["tokens"]),
+        unbondingTime: ProtobufTimestamp.fromString(json[""]),
+        consensusPubkey: json["consensus_pubkey"] == null
+            ? null
+            : AnyMessage.fromRpc(json["consensus_pubkey"]),
+        jailed: json["jailed"],
+        operatorAddress: json["operator_address"] == null
+            ? null
+            : CosmosBaseAddress("operator_address"),
+        status:
+            json["status"] == null ? null : BondStatus.fromName(json["status"]),
+        unbondingHeight: BigintUtils.tryParse(json["unbonding_height"]),
+        unbondingIds: (json["unbonding_ids"] as List?)
+            ?.map((e) => BigintUtils.parse(e))
+            .toList(),
+        unbondingOnHoldRefCount:
+            BigintUtils.tryParse(json["unbonding_on_hold_ref_count"]));
+  }
 
   StakingValidator({
     this.operatorAddress,
@@ -78,8 +103,9 @@ class StakingValidator extends CosmosMessage {
         operatorAddress: decode
             .getResult(1)
             ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        consensusPubkey:
-            decode.getResult(2)?.to<Any, List<int>>((e) => Any.deserialize(e)),
+        consensusPubkey: decode
+            .getResult(2)
+            ?.to<AnyMessage, List<int>>((e) => AnyMessage.deserialize(e)),
         jailed: decode.getField(3),
         status: decode
             .getResult(4)
@@ -122,7 +148,7 @@ class StakingValidator extends CosmosMessage {
   List<int> get fieldIds => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
 
   @override
-  String get typeUrl => StakingV1beta1Types.validator.typeUrl;
+  TypeUrl get typeUrl => StakingV1beta1Types.validator;
 
   @override
   List get values => [

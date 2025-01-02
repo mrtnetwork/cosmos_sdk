@@ -9,6 +9,19 @@ class NodeStatusResponse extends CosmosMessage {
   final ProtobufTimestamp? timestamp;
   final List<int>? appHash;
   final List<int>? validatorHash;
+  factory NodeStatusResponse.fromRpc(Map<String, dynamic> json) {
+    return NodeStatusResponse(
+      timestamp: json["timestamp"] == null
+          ? null
+          : ProtobufTimestamp.fromString(json["timestamp"]),
+      validatorHash: StringUtils.tryEncode(json["validator_hash"],
+          type: StringEncoding.base64),
+      appHash:
+          StringUtils.tryEncode(json["app_hash"], type: StringEncoding.base64),
+      height: BigintUtils.tryParse(json["height"]),
+      earliestStoreHeight: BigintUtils.tryParse(json["earliest_store_height"]),
+    );
+  }
   NodeStatusResponse(
       {this.earliestStoreHeight,
       this.height,
@@ -38,13 +51,14 @@ class NodeStatusResponse extends CosmosMessage {
       "earliest_store_height": earliestStoreHeight?.toString(),
       "height": height?.toString(),
       "timestamp": timestamp?.toJson(),
-      "app_hash": BytesUtils.tryToHexString(appHash),
-      "validator_hash": BytesUtils.tryToHexString(validatorHash)
+      "app_hash": StringUtils.tryDecode(appHash, type: StringEncoding.base64),
+      "validator_hash":
+          StringUtils.tryDecode(validatorHash, type: StringEncoding.base64),
     };
   }
 
   @override
-  String get typeUrl => BaseNodeV1beta1Types.nodeStatusResponse.typeUrl;
+  TypeUrl get typeUrl => BaseNodeV1beta1Types.nodeStatusResponse;
 
   @override
   List get values =>

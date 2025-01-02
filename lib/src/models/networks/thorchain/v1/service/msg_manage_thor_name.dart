@@ -53,7 +53,7 @@ class ThorchainMsgManageTHORName extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.msgManageTHORName.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.msgManageTHORName;
 
   @override
   List get values => [

@@ -20,7 +20,7 @@ class ThorchainPubKeySet extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.pubKeySet.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.pubKeySet;
 
   @override
   List get values => [secp256k1, ed25519];

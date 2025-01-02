@@ -8,6 +8,10 @@ class IbcChannelCounterParty extends CosmosMessage {
 
   /// channel end on the counterparty chain
   final String? channelId;
+  factory IbcChannelCounterParty.fromRpc(Map<String, dynamic> json) {
+    return IbcChannelCounterParty(
+        channelId: json["channel_id"], portId: json["port_id"]);
+  }
   const IbcChannelCounterParty({this.portId, this.channelId});
   factory IbcChannelCounterParty.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -24,7 +28,7 @@ class IbcChannelCounterParty extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.counterParty.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.counterParty;
 
   @override
   List get values => [portId, channelId];

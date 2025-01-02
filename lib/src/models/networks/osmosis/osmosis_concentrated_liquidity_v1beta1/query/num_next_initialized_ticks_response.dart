@@ -52,8 +52,8 @@ class OsmosisConcentratedLiquidityNumNextInitializedTicksResponse
   }
 
   @override
-  String get typeUrl => OsmosisConcentratedLiquidityV1beta1Types
-      .numNextInitializedTicksResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisConcentratedLiquidityV1beta1Types.numNextInitializedTicksResponse;
 
   @override
   List get values => [liquidityDepths, currentTick, currentLiquidity];

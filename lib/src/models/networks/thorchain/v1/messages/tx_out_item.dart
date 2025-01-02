@@ -80,7 +80,7 @@ class ThorchainTxOutItem extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.txOutItem.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.txOutItem;
 
   @override
   List get values => [

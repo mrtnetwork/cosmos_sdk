@@ -4,15 +4,10 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
 /// GetLatestBlockRequest is the request type for the Query/GetLatestBlock RPC method.
 class GetLatestBlockRequest extends CosmosMessage
-    with
-        QueryMessage<GetLatestBlockResponse>,
-        RPCMessage<GetLatestBlockResponse> {
+    with QueryMessage<GetLatestBlockResponse> {
   const GetLatestBlockRequest();
   @override
   List<int> get fieldIds => [];
-
-  @override
-  String get queryPath => BaseTendermintV1beta1Types.getLatestBlock.typeUrl;
 
   @override
   Map<String, dynamic> toJson() {
@@ -20,8 +15,7 @@ class GetLatestBlockRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      BaseTendermintV1beta1Types.getLatestBlockRequest.typeUrl;
+  TypeUrl get typeUrl => BaseTendermintV1beta1Types.getLatestBlockRequest;
 
   @override
   List get values => [];
@@ -35,9 +29,6 @@ class GetLatestBlockRequest extends CosmosMessage
   GetLatestBlockResponse onJsonResponse(Map<String, dynamic> json) {
     return GetLatestBlockResponse.fromRpc(json);
   }
-
-  @override
-  String get rpcPath => BaseTendermintV1beta1Types.getLatestBlock.rpcUrl();
 
   @override
   Map<String, String> get queryParameters => {};

@@ -12,15 +12,12 @@ class QueryAuthorityRequest extends CosmosMessage
   List<int> get fieldIds => [];
 
   @override
-  String get queryPath => UpgradeV1beta1Types.authority.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {};
   }
 
   @override
-  String get typeUrl => UpgradeV1beta1Types.queryAuthorityRequest.typeUrl;
+  TypeUrl get typeUrl => UpgradeV1beta1Types.queryAuthorityRequest;
 
   @override
   List get values => [];
@@ -28,5 +25,10 @@ class QueryAuthorityRequest extends CosmosMessage
   @override
   QueryAuthorityResponse onResponse(List<int> bytes) {
     return QueryAuthorityResponse.deserialize(bytes);
+  }
+
+  @override
+  QueryAuthorityResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryAuthorityResponse.fromRpc(json);
   }
 }

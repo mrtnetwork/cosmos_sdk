@@ -39,6 +39,6 @@ class OsmosisProtorevQueryGetProtoRevBaseDenomsResponse extends CosmosMessage {
   List get values => [baseDenoms];
 
   @override
-  String get typeUrl =>
-      OsmosisProtorevV1beta1Types.queryGetProtoRevBaseDenomsResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisProtorevV1beta1Types.queryGetProtoRevBaseDenomsResponse;
 }

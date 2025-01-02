@@ -1,4 +1,4 @@
-import 'package:blockchain_utils/exception/exceptions.dart';
+import 'package:cosmos_sdk/src/exception/exception.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
 class ThorchainNodeStatus implements CosmosEnum {
@@ -28,7 +28,7 @@ class ThorchainNodeStatus implements CosmosEnum {
   static ThorchainNodeStatus fromValue(int? value) {
     return values.firstWhere(
       (e) => e.value == value,
-      orElse: () => throw MessageException(
+      orElse: () => throw DartCosmosSdkPluginException(
           "No ThorchainNodeStatus element found for the given value.",
           details: {"value": value}),
     );

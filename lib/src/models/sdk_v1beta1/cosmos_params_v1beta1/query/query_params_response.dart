@@ -7,6 +7,10 @@ class ParamsQueryParamsResponse extends CosmosMessage {
   ///  param defines the queried parameter.
   final ParamChange param;
   const ParamsQueryParamsResponse(this.param);
+  factory ParamsQueryParamsResponse.fromRpc(Map<String, dynamic> json) {
+    return ParamsQueryParamsResponse(
+        ParamChange.fromRpc(json["param"] ?? json["params"]));
+  }
   factory ParamsQueryParamsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ParamsQueryParamsResponse(
@@ -22,7 +26,7 @@ class ParamsQueryParamsResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ParamsV1beta1.paramsQueryParamsResponse.typeUrl;
+  TypeUrl get typeUrl => ParamsV1beta1.paramsQueryParamsResponse;
 
   @override
   List get values => [param];

@@ -1,3 +1,4 @@
+import 'package:blockchain_utils/utils/numbers/utils/int_utils.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_abci_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:blockchain_utils/helper/helper.dart';
@@ -13,6 +14,16 @@ class ABCIMessageLog extends CosmosMessage {
   final List<StringEvent> events;
   ABCIMessageLog({this.msgIndex, this.log, required List<StringEvent> events})
       : events = events.immutable;
+
+  factory ABCIMessageLog.fromRpc(Map<String, dynamic> json) {
+    return ABCIMessageLog(
+        msgIndex: IntUtils.tryParse(json["msg_index"]),
+        log: json["log"],
+        events: (json["events"] as List?)
+                ?.map((e) => StringEvent.fromRpc(e))
+                .toList() ??
+            []);
+  }
 
   factory ABCIMessageLog.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -34,7 +45,7 @@ class ABCIMessageLog extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => BaseAbciV1beta1.aBCIMessageLog.typeUrl;
+  TypeUrl get typeUrl => BaseAbciV1beta1.aBCIMessageLog;
 
   @override
   List get values => [msgIndex, log, events];

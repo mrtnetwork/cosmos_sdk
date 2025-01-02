@@ -1,3 +1,4 @@
+import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/models/tendermint/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
@@ -6,6 +7,13 @@ class ProtocolVersion extends CosmosMessage {
   final BigInt? block;
   final BigInt? app;
   const ProtocolVersion({this.p2p, this.block, this.app});
+  factory ProtocolVersion.fromRpc(Map<String, dynamic> json) {
+    return ProtocolVersion(
+      app: BigintUtils.tryParse(json["app"]),
+      block: BigintUtils.tryParse(json["block"]),
+      p2p: BigintUtils.tryParse(json["p2p"]),
+    );
+  }
   factory ProtocolVersion.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ProtocolVersion(
@@ -27,7 +35,7 @@ class ProtocolVersion extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => TendermintTypes.protocolVersion.typeUrl;
+  TypeUrl get typeUrl => TendermintTypes.protocolVersion;
 
   @override
   List get values => [p2p, block, app];

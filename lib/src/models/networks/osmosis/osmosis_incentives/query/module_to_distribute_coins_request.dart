@@ -3,9 +3,7 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'module_to_distribute_coins_response.dart';
 
 class OsmosisIncentiveModuleToDistributeCoinsRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisIncentiveModuleToDistributeCoinsResponse>,
-        RPCMessage<OsmosisIncentiveModuleToDistributeCoinsResponse> {
+    with QueryMessage<OsmosisIncentiveModuleToDistributeCoinsResponse> {
   const OsmosisIncentiveModuleToDistributeCoinsRequest();
   factory OsmosisIncentiveModuleToDistributeCoinsRequest.fromBytes(
       List<int> bytes) {
@@ -21,17 +19,12 @@ class OsmosisIncentiveModuleToDistributeCoinsRequest extends CosmosMessage
   }
 
   @override
-  String get queryPath =>
-      OsmosisIncentivesTypes.moduleToDistributeCoins.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {};
   }
 
   @override
-  String get typeUrl =>
-      OsmosisIncentivesTypes.moduleToDistributeCoinsRequest.typeUrl;
+  TypeUrl get typeUrl => OsmosisIncentivesTypes.moduleToDistributeCoinsRequest;
 
   @override
   List get values => [];
@@ -44,7 +37,4 @@ class OsmosisIncentiveModuleToDistributeCoinsRequest extends CosmosMessage
 
   @override
   Map<String, String> get queryParameters => {};
-
-  @override
-  String get rpcPath => OsmosisIncentivesTypes.moduleToDistributeCoins.rpcUrl();
 }

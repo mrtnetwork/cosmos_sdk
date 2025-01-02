@@ -92,7 +92,7 @@ class OsmosisStreamSwapMsgCreateSale extends CosmosMessage
   }
 
   @override
-  String get typeUrl => OsmosisStreamSwapV1Types.msgCreateSale.typeUrl;
+  TypeUrl get typeUrl => OsmosisStreamSwapV1Types.msgCreateSale;
 
   @override
   List get values => [
@@ -113,7 +113,7 @@ class OsmosisStreamSwapMsgCreateSale extends CosmosMessage
   }
 
   @override
-  String get service => OsmosisStreamSwapV1Types.createSale.typeUrl;
+  TypeUrl get service => OsmosisStreamSwapV1Types.createSale;
 
   @override
   List<String?> get signers => [creator];

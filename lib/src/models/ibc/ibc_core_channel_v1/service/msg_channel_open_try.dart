@@ -48,7 +48,7 @@ class MsgChannelOpenTry extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3, 4, 5, 6, 7];
 
   @override
-  String get service => IbcTypes.channelOpenTry.typeUrl;
+  TypeUrl get service => IbcTypes.channelOpenTry;
 
   @override
   Map<String, dynamic> toJson() {
@@ -64,7 +64,7 @@ class MsgChannelOpenTry extends CosmosMessage
   }
 
   @override
-  String get typeUrl => IbcTypes.msgChannelOpenTry.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.msgChannelOpenTry;
 
   @override
   List get values => [

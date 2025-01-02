@@ -12,15 +12,12 @@ class QueryUpgradedConsensusStateRequest extends CosmosMessage
   List<int> get fieldIds => [];
 
   @override
-  String get queryPath => IbcTypes.upgradedConsensusState.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {};
   }
 
   @override
-  String get typeUrl => IbcTypes.queryUpgradedConsensusStateRequest.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryUpgradedConsensusStateRequest;
 
   @override
   List get values => [];
@@ -28,5 +25,11 @@ class QueryUpgradedConsensusStateRequest extends CosmosMessage
   @override
   QueryUpgradedConsensusStateResponse onResponse(List<int> bytes) {
     return QueryUpgradedConsensusStateResponse.deserialize(bytes);
+  }
+
+  @override
+  QueryUpgradedConsensusStateResponse onJsonResponse(
+      Map<String, dynamic> json) {
+    return QueryUpgradedConsensusStateResponse.fromRpc(json);
   }
 }

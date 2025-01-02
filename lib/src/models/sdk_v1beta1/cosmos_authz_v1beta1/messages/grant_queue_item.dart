@@ -22,7 +22,7 @@ class AuthGrantQueueItem extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => AuthzV1beta1Types.authzGrantQueueItem.typeUrl;
+  TypeUrl get typeUrl => AuthzV1beta1Types.authzGrantQueueItem;
 
   @override
   List get values => [msgTypeUrls];

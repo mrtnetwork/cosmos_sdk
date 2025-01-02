@@ -32,8 +32,7 @@ class DistributionMsgUpdateParams extends CosmosMessage
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get service =>
-      DistributionV1beta1Types.distributionUpdateParams.typeUrl;
+  TypeUrl get service => DistributionV1beta1Types.distributionUpdateParams;
 
   @override
   Map<String, dynamic> toJson() {
@@ -41,8 +40,7 @@ class DistributionMsgUpdateParams extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      DistributionV1beta1Types.distributionMsgUpdateParams.typeUrl;
+  TypeUrl get typeUrl => DistributionV1beta1Types.distributionMsgUpdateParams;
 
   @override
   List get values => [authority, params];
@@ -53,6 +51,6 @@ class DistributionMsgUpdateParams extends CosmosMessage
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        DistributionV1beta1Types.distributionMsgUpdateParamsResponse.typeUrl);
+        DistributionV1beta1Types.distributionMsgUpdateParamsResponse);
   }
 }

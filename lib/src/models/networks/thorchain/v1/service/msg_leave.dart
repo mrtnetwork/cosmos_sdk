@@ -31,7 +31,7 @@ class ThorchainMsgLeave extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.msgLeave.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.msgLeave;
 
   @override
   List get values => [tx, nodeAddress, signer];

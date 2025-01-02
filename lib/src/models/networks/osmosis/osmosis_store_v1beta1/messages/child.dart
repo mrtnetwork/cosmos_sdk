@@ -25,7 +25,7 @@ class OsmosisStoreChild extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisStoreV1beta1Types.child.typeUrl;
+  TypeUrl get typeUrl => OsmosisStoreV1beta1Types.child;
 
   @override
   List get values => [index, accumulation];

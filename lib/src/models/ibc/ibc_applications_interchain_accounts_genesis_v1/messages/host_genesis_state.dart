@@ -49,7 +49,7 @@ class HostGenesisState extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.hostGenesisState.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.hostGenesisState;
 
   @override
   List get values => [activeChannels, interchainAccounts, port, params];

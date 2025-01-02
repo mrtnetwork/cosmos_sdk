@@ -57,7 +57,7 @@ class Ics23ExistenceProof extends Ics23BatchEntryBase {
   }
 
   @override
-  String get typeUrl => Ics23Types.existenceProof.typeUrl;
+  TypeUrl get typeUrl => Ics23Types.existenceProof;
 
   @override
   List get values => [key, value, leaf, path];

@@ -12,6 +12,9 @@ class Module extends CosmosMessage {
   /// checksum
   final String? sum;
   const Module({this.path, this.version, this.sum});
+  factory Module.fromRpc(Map<String, dynamic> json) {
+    return Module(path: json["path"], version: json["path"]);
+  }
   factory Module.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Module(
@@ -29,7 +32,7 @@ class Module extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => BaseTendermintV1beta1Types.module.typeUrl;
+  TypeUrl get typeUrl => BaseTendermintV1beta1Types.module;
 
   @override
   List get values => [path, version, sum];

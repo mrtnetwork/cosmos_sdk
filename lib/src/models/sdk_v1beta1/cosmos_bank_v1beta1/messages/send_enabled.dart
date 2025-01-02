@@ -10,6 +10,9 @@ class SendEnabled extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return SendEnabled(denom: decode.getField(1), enabled: decode.getField(2));
   }
+  factory SendEnabled.fromRpc(Map<String, dynamic> json) {
+    return SendEnabled(denom: json["denom"], enabled: json["enabled"]);
+  }
 
   @override
   List<int> get fieldIds => [1, 2];
@@ -20,7 +23,7 @@ class SendEnabled extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => BankV1beta1Types.sendEnabled.typeUrl;
+  TypeUrl get typeUrl => BankV1beta1Types.sendEnabled;
 
   @override
   List get values => [denom, enabled];

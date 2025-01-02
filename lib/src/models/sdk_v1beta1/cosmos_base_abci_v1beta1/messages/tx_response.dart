@@ -1,3 +1,6 @@
+import 'package:blockchain_utils/utils/numbers/utils/bigint_utils.dart';
+import 'package:blockchain_utils/utils/numbers/utils/int_utils.dart';
+import 'package:cosmos_sdk/src/models/global_messages/unknown_message.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_abci_v1beta1/types/types.dart';
 
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
@@ -24,7 +27,7 @@ class TxResponse extends CosmosMessage {
   final String data;
 
   /// The output of the application's logger (raw string). May be non-deterministic.
-  final String rawLog;
+  final String? rawLog;
 
   /// The output of the application's logger (typed). May be non-deterministic.
   final List<ABCIMessageLog> logs;
@@ -39,7 +42,7 @@ class TxResponse extends CosmosMessage {
   final BigInt gasUsed;
 
   /// The request transaction bytes.
-  final Any tx;
+  final AnyMessage tx;
 
   /// Time of the previous block. For heights > 1, it's the weighted median of
   /// the timestamps of the valid votes in the block.LastCommit. For height == 1,
@@ -48,6 +51,28 @@ class TxResponse extends CosmosMessage {
 
   /// Events emitted by processing a transaction.
   final List<Event> events;
+
+  factory TxResponse.fromRpc(Map<String, dynamic> json) {
+    return TxResponse(
+        height: BigintUtils.parse(json["height"]),
+        data: json["data"],
+        gasUsed: BigintUtils.parse(json["gas_wanted"]),
+        events:
+            (json["events"] as List?)?.map((e) => Event.fromRpc(e)).toList() ??
+                [],
+        gasWanted: BigintUtils.parse(json["gas_wanted"]),
+        logs: (json["logs"] as List?)
+                ?.map((e) => ABCIMessageLog.fromRpc(e))
+                .toList() ??
+            [],
+        rawLog: json["raw_log"],
+        timestamp: json["timestamp"],
+        tx: AnyMessage.fromRpc(json["tx"]),
+        txHash: json["txhash"],
+        code: IntUtils.tryParse(json["code"]),
+        codespace: json["codespace"],
+        info: json["info"]);
+  }
 
   TxResponse({
     required this.height,
@@ -82,7 +107,7 @@ class TxResponse extends CosmosMessage {
         info: decode.getField(8),
         gasWanted: decode.getField(9),
         gasUsed: decode.getField(10),
-        tx: Any.deserialize(decode.getField(11)),
+        tx: AnyMessage.deserialize(decode.getField(11)),
         timestamp: decode.getField(12),
         events: decode
             .getFields<List<int>>(13)
@@ -95,7 +120,7 @@ class TxResponse extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       'height': height.toString(),
-      'txHash': txHash,
+      'txhash': txHash,
       'codespace': codespace,
       'code': code.toString(),
       'data': data,
@@ -114,7 +139,7 @@ class TxResponse extends CosmosMessage {
   List<int> get fieldIds => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
 
   @override
-  String get typeUrl => BaseAbciV1beta1.txResponse.typeUrl;
+  TypeUrl get typeUrl => BaseAbciV1beta1.txResponse;
 
   @override
   List get values => [

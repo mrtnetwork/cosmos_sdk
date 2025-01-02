@@ -8,20 +8,22 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class QueryAllowanceRequest extends CosmosMessage
     with QueryMessage<QueryAllowanceResponse> {
   /// granter is the address of the user granting an allowance of their funds.
-  final CosmosBaseAddress? granter;
+  final CosmosBaseAddress granter;
 
   /// grantee is the address of the user being granted an allowance of another user's funds
-  final CosmosBaseAddress? grantee;
-  const QueryAllowanceRequest({this.granter, this.grantee});
+  final CosmosBaseAddress grantee;
+  factory QueryAllowanceRequest.fromRpc(Map<String, dynamic> json) {
+    return QueryAllowanceRequest(
+      granter: CosmosBaseAddress(json["granter"]),
+      grantee: CosmosBaseAddress(json["grantee"]),
+    );
+  }
+  const QueryAllowanceRequest({required this.granter, required this.grantee});
   factory QueryAllowanceRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryAllowanceRequest(
-        granter: decode
-            .getResult(1)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        grantee: decode
-            .getResult(2)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)));
+        granter: CosmosBaseAddress(decode.getField(1)),
+        grantee: CosmosBaseAddress(decode.getField(2)));
   }
 
   @override
@@ -29,20 +31,25 @@ class QueryAllowanceRequest extends CosmosMessage
 
   @override
   Map<String, dynamic> toJson() {
-    return {"granter": granter?.address, "grantee": grantee?.address};
+    return {"granter": granter.address, "grantee": grantee.address};
   }
 
   @override
-  String get typeUrl => FeegrantV1beta1Types.queryAllowanceRequest.typeUrl;
+  TypeUrl get typeUrl => FeegrantV1beta1Types.queryAllowanceRequest;
 
   @override
-  List get values => [granter?.address, grantee?.address];
-
-  @override
-  String get queryPath => FeegrantV1beta1Types.allowance.typeUrl;
+  List get values => [granter.address, grantee.address];
 
   @override
   QueryAllowanceResponse onResponse(List<int> bytes) {
     return QueryAllowanceResponse.deserialize(bytes);
   }
+
+  @override
+  QueryAllowanceResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryAllowanceResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters => [granter.address, grantee.address];
 }

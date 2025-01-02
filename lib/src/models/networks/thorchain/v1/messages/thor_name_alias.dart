@@ -20,7 +20,7 @@ class ThorchainTHORNameAlias extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.thorchainTHORNameAlias.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.thorchainTHORNameAlias;
 
   @override
   List get values => [chain, address];

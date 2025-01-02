@@ -24,8 +24,7 @@ class OsmosisTokenFactoryMsgSetDenomMetadata extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      OsmosisTokenFactoryV1beta1Types.msgSetDenomMetadata.typeUrl;
+  TypeUrl get typeUrl => OsmosisTokenFactoryV1beta1Types.msgSetDenomMetadata;
 
   @override
   List get values => [sender, metadata];
@@ -33,12 +32,11 @@ class OsmosisTokenFactoryMsgSetDenomMetadata extends CosmosMessage
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        OsmosisTokenFactoryV1beta1Types.msgSetDenomMetadataResponse.typeUrl);
+        OsmosisTokenFactoryV1beta1Types.msgSetDenomMetadataResponse);
   }
 
   @override
-  String get service =>
-      OsmosisTokenFactoryV1beta1Types.setDenomMetadata.typeUrl;
+  TypeUrl get service => OsmosisTokenFactoryV1beta1Types.setDenomMetadata;
 
   @override
   List<String?> get signers => [sender];

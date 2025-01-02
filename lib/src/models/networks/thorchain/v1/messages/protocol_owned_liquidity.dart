@@ -26,7 +26,7 @@ class ThorchainProtocolOwnedLiquidity extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.protocolOwnedLiquidity.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.protocolOwnedLiquidity;
 
   @override
   List get values => [runeDeposited.toString(), runeWithdrawn.toString()];

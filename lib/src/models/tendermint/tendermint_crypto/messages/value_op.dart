@@ -27,7 +27,7 @@ class ValueOp extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => TendermintTypes.valueOp.typeUrl;
+  TypeUrl get typeUrl => TendermintTypes.valueOp;
 
   @override
   List get values => [key, proof];

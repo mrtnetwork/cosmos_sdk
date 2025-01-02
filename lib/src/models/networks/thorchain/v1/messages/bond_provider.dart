@@ -27,7 +27,7 @@ class ThorchainBondProvider extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.bondProvider.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.bondProvider;
 
   @override
   List get values => [bondAddress, bond.toString()];

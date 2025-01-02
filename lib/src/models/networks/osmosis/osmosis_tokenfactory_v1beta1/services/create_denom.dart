@@ -25,7 +25,7 @@ class OsmosisTokenFactoryMsgCreateDenom extends CosmosMessage
   }
 
   @override
-  String get typeUrl => OsmosisTokenFactoryV1beta1Types.msgCreateDenom.typeUrl;
+  TypeUrl get typeUrl => OsmosisTokenFactoryV1beta1Types.msgCreateDenom;
 
   @override
   List get values => [sender, subdenom];
@@ -36,7 +36,7 @@ class OsmosisTokenFactoryMsgCreateDenom extends CosmosMessage
   }
 
   @override
-  String get service => OsmosisTokenFactoryV1beta1Types.createDenom.typeUrl;
+  TypeUrl get service => OsmosisTokenFactoryV1beta1Types.createDenom;
 
   @override
   List<String?> get signers => [sender];

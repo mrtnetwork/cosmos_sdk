@@ -1,58 +1,73 @@
-import 'package:blockchain_utils/exception/exceptions.dart';
-import 'package:cosmos_sdk/src/models/core/type_url/type_url.dart';
+import 'package:cosmos_sdk/src/exception/exception.dart';
+import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 
 class AuthV1beta1Types extends TypeUrl {
-  @override
-  final String typeUrl;
-  @override
-  final String? rpc;
-  const AuthV1beta1Types._(this.typeUrl, {this.rpc});
+  const AuthV1beta1Types._(super.typeUrl, {super.query, super.rpc});
 
   /// messages
   static const AuthV1beta1Types baseAccount =
       AuthV1beta1Types._("/cosmos.auth.v1beta1.BaseAccount");
-  static const AuthV1beta1Types queryAccountRequest =
-      AuthV1beta1Types._("/cosmos.auth.v1beta1.QueryAccountRequest");
+  static const AuthV1beta1Types queryAccountRequest = AuthV1beta1Types._(
+      "/cosmos.auth.v1beta1.QueryAccountRequest",
+      query: "/cosmos.auth.v1beta1.Query/Account",
+      rpc: "/cosmos/auth/v1beta1/accounts/:address");
   static const AuthV1beta1Types queryAccountResponse =
       AuthV1beta1Types._("/cosmos.auth.v1beta1.QueryAccountResponse");
   static const AuthV1beta1Types addressBytesToStringRequest =
-      AuthV1beta1Types._("/cosmos.auth.v1beta1.AddressBytesToStringRequest");
+      AuthV1beta1Types._("/cosmos.auth.v1beta1.AddressBytesToStringRequest",
+          query: "/cosmos.auth.v1beta1.Query/AddressBytesToString",
+          rpc: "/cosmos/auth/v1beta1/bech32/:address_bytes");
   static const AuthV1beta1Types addressBytesToStringResponse =
       AuthV1beta1Types._("/cosmos.auth.v1beta1.AddressBytesToStringResponse");
   static const AuthV1beta1Types addressStringToBytesRequest =
-      AuthV1beta1Types._("/cosmos.auth.v1beta1.AddressStringToBytesRequest");
+      AuthV1beta1Types._("/cosmos.auth.v1beta1.AddressStringToBytesRequest",
+          query: "/cosmos.auth.v1beta1.Query/AddressStringToBytes",
+          rpc: "/cosmos/auth/v1beta1/bech32/:address_string");
   static const AuthV1beta1Types addressStringToBytesResponse =
       AuthV1beta1Types._("/cosmos.auth.v1beta1.AddressStringToBytesResponse");
-  static const AuthV1beta1Types accountInfoRequest =
-      AuthV1beta1Types._("/cosmos.auth.v1beta1.QueryAccountInfoRequest");
+  static const AuthV1beta1Types accountInfoRequest = AuthV1beta1Types._(
+      "/cosmos.auth.v1beta1.QueryAccountInfoRequest",
+      query: "/cosmos.auth.v1beta1.Query/AccountInfo",
+      rpc: "/cosmos/auth/v1beta1/account_info/:address");
   static const AuthV1beta1Types accountInfoResponse =
       AuthV1beta1Types._("/cosmos.auth.v1beta1.QueryAccountInfoResponse");
-  static const AuthV1beta1Types bech32PrefixRequest =
-      AuthV1beta1Types._("/cosmos.auth.v1beta1.Bech32PrefixRequest");
+  static const AuthV1beta1Types bech32PrefixRequest = AuthV1beta1Types._(
+      "/cosmos.auth.v1beta1.Bech32PrefixRequest",
+      query: "/cosmos.auth.v1beta1.Query/Bech32Prefix",
+      rpc: "/cosmos/auth/v1beta1/bech32");
   static const AuthV1beta1Types bech32PrefixResponse =
       AuthV1beta1Types._("/cosmos.auth.v1beta1.Bech32PrefixResponse");
   static const AuthV1beta1Types moduleAccountByNameResponse =
       AuthV1beta1Types._(
           "/cosmos.auth.v1beta1.QueryModuleAccountByNameResponse");
   static const AuthV1beta1Types moduleAccountByNameRequest = AuthV1beta1Types._(
-      "/cosmos.auth.v1beta1.QueryModuleAccountByNameRequest");
-  static const AuthV1beta1Types moduleAccountsRequest =
-      AuthV1beta1Types._("/cosmos.auth.v1beta1.QueryModuleAccountsRequest");
+      "/cosmos.auth.v1beta1.QueryModuleAccountByNameRequest",
+      query: "/cosmos.auth.v1beta1.Query/ModuleAccountByName",
+      rpc: "/cosmos/auth/v1beta1/module_accounts/:name");
+  static const AuthV1beta1Types moduleAccountsRequest = AuthV1beta1Types._(
+      "/cosmos.auth.v1beta1.QueryModuleAccountsRequest",
+      query: "/cosmos.auth.v1beta1.Query/ModuleAccounts",
+      rpc: "/cosmos/auth/v1beta1/module_accounts");
   static const AuthV1beta1Types moduleAccountsResponse =
       AuthV1beta1Types._("/cosmos.auth.v1beta1.QueryModuleAccountsResponse");
-  static const AuthV1beta1Types authParamsRequest =
-      AuthV1beta1Types._("/cosmos.auth.v1beta1.QueryParamsRequest");
+  static const AuthV1beta1Types authParamsRequest = AuthV1beta1Types._(
+      "/cosmos.auth.v1beta1.QueryParamsRequest",
+      query: "/cosmos.auth.v1beta1.Query/Params",
+      rpc: "/cosmos/auth/v1beta1/params");
   static const AuthV1beta1Types authParamsResponse =
       AuthV1beta1Types._("/cosmos.auth.v1beta1.QueryParamsResponse");
   static const AuthV1beta1Types authParams =
       AuthV1beta1Types._("/cosmos.auth.v1beta1.Params");
-  static const AuthV1beta1Types accountAddressByIDRequest =
-      AuthV1beta1Types._("/cosmos.auth.v1beta1.QueryAccountAddressByIDRequest");
+  static const AuthV1beta1Types accountAddressByIDRequest = AuthV1beta1Types._(
+      "/cosmos.auth.v1beta1.QueryAccountAddressByIDRequest",
+      query: "/cosmos.auth.v1beta1.Query/AccountAddressByID",
+      rpc: "/cosmos/auth/v1beta1/address_by_id/:id");
   static const AuthV1beta1Types accountAddressByIDResponse = AuthV1beta1Types._(
       "/cosmos.auth.v1beta1.QueryAccountAddressByIDResponse");
   static const AuthV1beta1Types accountsRequest = AuthV1beta1Types._(
-    "/cosmos.auth.v1beta1.QueryAccountsRequest",
-  );
+      "/cosmos.auth.v1beta1.QueryAccountsRequest",
+      query: "/cosmos.auth.v1beta1.Query/Accounts",
+      rpc: "/cosmos/auth/v1beta1/accounts");
   static const AuthV1beta1Types accountsResponse =
       AuthV1beta1Types._("/cosmos.auth.v1beta1.QueryAccountsResponse");
   static const AuthV1beta1Types moduleAccount =
@@ -65,30 +80,6 @@ class AuthV1beta1Types extends TypeUrl {
       AuthV1beta1Types._("/cosmos.auth.v1beta1.MsgUpdateParamsResponse");
   static const AuthV1beta1Types authGenesisState =
       AuthV1beta1Types._("/cosmos.auth.v1beta1.GenesisState");
-
-  /// query
-  static const AuthV1beta1Types account = AuthV1beta1Types._(
-      "/cosmos.auth.v1beta1.Query/Account",
-      rpc: "/cosmos/auth/v1beta1/accounts/:address");
-  static const AuthV1beta1Types accounts = AuthV1beta1Types._(
-      "/cosmos.auth.v1beta1.Query/Accounts",
-      rpc: "/cosmos/auth/v1beta1/accounts");
-  static const AuthV1beta1Types addressBytesToString =
-      AuthV1beta1Types._("/cosmos.auth.v1beta1.Query/AddressBytesToString");
-  static const AuthV1beta1Types addressStringToBytes =
-      AuthV1beta1Types._("/cosmos.auth.v1beta1.Query/AddressStringToBytes");
-  static const AuthV1beta1Types accountInfo =
-      AuthV1beta1Types._("/cosmos.auth.v1beta1.Query/AccountInfo");
-  static const AuthV1beta1Types bech32Prefix =
-      AuthV1beta1Types._("/cosmos.auth.v1beta1.Query/Bech32Prefix");
-  static const AuthV1beta1Types moduleAccountByName =
-      AuthV1beta1Types._("/cosmos.auth.v1beta1.Query/ModuleAccountByName");
-  static const AuthV1beta1Types moduleAccounts =
-      AuthV1beta1Types._("/cosmos.auth.v1beta1.Query/ModuleAccounts");
-  static const AuthV1beta1Types authQueryParams =
-      AuthV1beta1Types._("/cosmos.auth.v1beta1.Query/Params");
-  static const AuthV1beta1Types accountAddressByID =
-      AuthV1beta1Types._("/cosmos.auth.v1beta1.Query/AccountAddressByID");
 
   /// msg
   static const AuthV1beta1Types updateParams =
@@ -122,22 +113,12 @@ class AuthV1beta1Types extends TypeUrl {
     msgUpdateAuthParams,
     msgUpdateParamsResponse,
     authGenesisState,
-    account,
-    accounts,
-    addressBytesToString,
-    addressStringToBytes,
-    accountInfo,
-    bech32Prefix,
-    moduleAccountByName,
-    moduleAccounts,
-    authQueryParams,
-    accountAddressByID,
     updateParams,
   ];
   static AuthV1beta1Types fromValue(String? typeUrl) {
     return values.firstWhere(
       (e) => e.typeUrl == typeUrl,
-      orElse: () => throw MessageException(
+      orElse: () => throw DartCosmosSdkPluginException(
           "No AuthV1beta1Types element found for the given value.",
           details: {"@type": typeUrl}),
     );

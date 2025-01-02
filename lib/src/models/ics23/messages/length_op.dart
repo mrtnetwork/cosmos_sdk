@@ -1,4 +1,4 @@
-import 'package:blockchain_utils/exception/exception.dart';
+import 'package:cosmos_sdk/src/exception/exception.dart';
 import 'package:cosmos_sdk/src/protobuf/types/cosmos_enum.dart';
 
 class Ics23LengthOp implements CosmosEnum {
@@ -52,7 +52,7 @@ class Ics23LengthOp implements CosmosEnum {
   static Ics23LengthOp fromValue(int? value) {
     return values.firstWhere(
       (element) => element.value == value,
-      orElse: () => throw MessageException(
+      orElse: () => throw DartCosmosSdkPluginException(
           "No matching element found for the given value.",
           details: {"value": value}),
     );

@@ -1,6 +1,7 @@
-class TendermintTypes {
-  final String typeUrl;
-  const TendermintTypes._(this.typeUrl);
+import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
+
+class TendermintTypes extends TypeUrl {
+  const TendermintTypes._(super.typeUrl);
   static const TendermintTypes partSetHeader =
       TendermintTypes._("/tendermint.types.PartSetHeader");
   static const TendermintTypes blockID =

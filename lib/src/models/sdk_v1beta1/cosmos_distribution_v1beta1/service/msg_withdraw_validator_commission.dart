@@ -23,8 +23,8 @@ class DistributionMsgWithdrawValidatorCommission extends CosmosMessage
   List<int> get fieldIds => [1];
 
   @override
-  String get service =>
-      DistributionV1beta1Types.distributionWithdrawValidatorCommission.typeUrl;
+  TypeUrl get service =>
+      DistributionV1beta1Types.distributionWithdrawValidatorCommission;
 
   @override
   Map<String, dynamic> toJson() {
@@ -32,8 +32,8 @@ class DistributionMsgWithdrawValidatorCommission extends CosmosMessage
   }
 
   @override
-  String get typeUrl => DistributionV1beta1Types
-      .distributionMsgWithdrawValidatorCommission.typeUrl;
+  TypeUrl get typeUrl =>
+      DistributionV1beta1Types.distributionMsgWithdrawValidatorCommission;
 
   @override
   List get values => [validatorAddress?.address];

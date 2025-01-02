@@ -40,7 +40,7 @@ class Ics23CompressedBatchProof extends Ics23ProofBase {
   }
 
   @override
-  String get typeUrl => Ics23Types.compressedBatchProof.typeUrl;
+  TypeUrl get typeUrl => Ics23Types.compressedBatchProof;
 
   @override
   List get values => [entries, lookupInners];

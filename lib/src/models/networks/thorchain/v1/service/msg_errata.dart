@@ -29,7 +29,7 @@ class ThorchainMsgErrataTx extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.msgErrataTx.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.msgErrataTx;
 
   @override
   List get values => [txId, chain, signer];

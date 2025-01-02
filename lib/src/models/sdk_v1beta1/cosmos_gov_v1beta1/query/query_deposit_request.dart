@@ -8,42 +8,46 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class GovQueryDepositRequest extends CosmosMessage
     with QueryMessage<GovQueryDepositResponse> {
   /// proposal_id defines the unique id of the proposal.
-  final BigInt? proposalId;
+  final BigInt proposalId;
 
   /// depositor defines the deposit addresses from the proposals.
-  final CosmosBaseAddress? depositor;
-  const GovQueryDepositRequest({this.proposalId, this.depositor});
+  final CosmosBaseAddress depositor;
+  const GovQueryDepositRequest(
+      {required this.proposalId, required this.depositor});
   factory GovQueryDepositRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GovQueryDepositRequest(
         proposalId: decode.getField(1),
-        depositor: decode
-            .getResult(2)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)));
+        depositor: CosmosBaseAddress(decode.getField(2)));
   }
 
   @override
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get queryPath => GovV1beta1types.queryGovDeposit.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {
-      "proposal_id": proposalId?.toString(),
-      "depositor": depositor?.address
+      "proposal_id": proposalId.toString(),
+      "depositor": depositor.address
     };
   }
 
   @override
-  String get typeUrl => GovV1beta1types.govQueryDepositRequest.typeUrl;
+  TypeUrl get typeUrl => GovV1beta1types.govQueryDepositRequest;
 
   @override
-  List get values => [proposalId, depositor?.address];
+  List get values => [proposalId, depositor.address];
 
   @override
   GovQueryDepositResponse onResponse(List<int> bytes) {
     return GovQueryDepositResponse.deserialize(bytes);
   }
+
+  @override
+  GovQueryDepositResponse onJsonResponse(Map<String, dynamic> json) {
+    return GovQueryDepositResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters => [proposalId.toString(), depositor.address];
 }

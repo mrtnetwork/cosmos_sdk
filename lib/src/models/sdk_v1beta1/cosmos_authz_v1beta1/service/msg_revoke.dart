@@ -28,7 +28,7 @@ class AuthzMsgRevoke extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3];
 
   @override
-  String get service => AuthzV1beta1Types.authzRevoke.typeUrl;
+  TypeUrl get service => AuthzV1beta1Types.authzRevoke;
 
   @override
   Map<String, dynamic> toJson() {
@@ -40,7 +40,7 @@ class AuthzMsgRevoke extends CosmosMessage
   }
 
   @override
-  String get typeUrl => AuthzV1beta1Types.authzMsgRevoke.typeUrl;
+  TypeUrl get typeUrl => AuthzV1beta1Types.authzMsgRevoke;
 
   @override
   List get values => [granter?.address, grantee?.address, msgTypeUrl];
@@ -51,6 +51,6 @@ class AuthzMsgRevoke extends CosmosMessage
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        AuthzV1beta1Types.authzMsgRevokeResponse.typeUrl);
+        AuthzV1beta1Types.authzMsgRevokeResponse);
   }
 }

@@ -7,14 +7,15 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class QueryPacketReceiptRequest extends CosmosMessage
     with QueryMessage<QueryPacketReceiptResponse> {
   /// port unique identifier
-  final String? portId;
+  final String portId;
 
   /// channel unique identifier
-  final String? channelId;
+  final String channelId;
 
   /// packet sequence
-  final BigInt? sequence;
-  QueryPacketReceiptRequest({this.portId, this.channelId, this.sequence});
+  final BigInt sequence;
+  QueryPacketReceiptRequest(
+      {required this.portId, required this.channelId, required this.sequence});
   factory QueryPacketReceiptRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryPacketReceiptRequest(
@@ -27,19 +28,16 @@ class QueryPacketReceiptRequest extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3];
 
   @override
-  String get queryPath => IbcTypes.packetReceipt.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {
       "port_id": portId,
       "channel_id": channelId,
-      "sequence": sequence?.toString()
+      "sequence": sequence.toString()
     };
   }
 
   @override
-  String get typeUrl => IbcTypes.queryPacketReceiptRequest.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryPacketReceiptRequest;
 
   @override
   List get values => [portId, channelId, sequence];
@@ -47,4 +45,12 @@ class QueryPacketReceiptRequest extends CosmosMessage
   QueryPacketReceiptResponse onResponse(List<int> bytes) {
     return QueryPacketReceiptResponse.deserialize(bytes);
   }
+
+  @override
+  QueryPacketReceiptResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryPacketReceiptResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters => [channelId, portId, sequence.toString()];
 }

@@ -25,7 +25,7 @@ class ThorchainNodeTssTime extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.nodeTssTime.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.nodeTssTime;
 
   @override
   List get values => [address, tssTime];

@@ -84,8 +84,7 @@ class OsmosisGammSmoothWeightChangeParams extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisGammV1beta1Types.smoothWeightChangeParams.typeUrl;
+  TypeUrl get typeUrl => OsmosisGammV1beta1Types.smoothWeightChangeParams;
 
   @override
   List get values =>

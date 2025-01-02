@@ -3,11 +3,9 @@ import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_lockup/types/type
 import 'locked_response.dart';
 
 class OsmosisLockupLockedRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisLockupLockedResponse>,
-        RPCMessage<OsmosisLockupLockedResponse> {
-  final BigInt? lockId;
-  const OsmosisLockupLockedRequest({this.lockId});
+    with QueryMessage<OsmosisLockupLockedResponse> {
+  final BigInt lockId;
+  const OsmosisLockupLockedRequest({required this.lockId});
   factory OsmosisLockupLockedRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisLockupLockedRequest(lockId: decode.getField(1));
@@ -17,11 +15,11 @@ class OsmosisLockupLockedRequest extends CosmosMessage
 
   @override
   Map<String, dynamic> toJson() {
-    return {"lock_id": lockId?.toString()};
+    return {"lock_id": lockId.toString()};
   }
 
   @override
-  String get typeUrl => OsmosisLockupTypes.lockedRequest.typeUrl;
+  TypeUrl get typeUrl => OsmosisLockupTypes.lockedRequest;
 
   @override
   List get values => [lockId];
@@ -32,17 +30,12 @@ class OsmosisLockupLockedRequest extends CosmosMessage
   }
 
   @override
-  String get queryPath => OsmosisLockupTypes.lockedByID.typeUrl;
-
-  @override
   OsmosisLockupLockedResponse onJsonResponse(Map<String, dynamic> json) {
     return OsmosisLockupLockedResponse.fromRpc(json);
   }
 
   @override
   Map<String, String?> get queryParameters => {};
-
   @override
-  String get rpcPath =>
-      OsmosisLockupTypes.lockedByID.rpcUrl(pathParameters: [lockId]);
+  List<String> get pathParameters => [lockId.toString()];
 }

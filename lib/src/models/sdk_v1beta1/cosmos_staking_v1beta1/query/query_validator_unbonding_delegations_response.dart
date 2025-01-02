@@ -10,6 +10,18 @@ class QueryValidatorUnbondingDelegationsResponse extends CosmosMessage {
 
   /// pagination defines the pagination in the response.
   final PageResponse? pagination;
+  factory QueryValidatorUnbondingDelegationsResponse.fromRpc(
+      Map<String, dynamic> json) {
+    return QueryValidatorUnbondingDelegationsResponse(
+      unbondingResponses: (json["unbonding_responses"] as List?)
+              ?.map((e) => UnbondingDelegation.fromRpc(e))
+              .toList() ??
+          [],
+      pagination: json["pagination"] == null
+          ? null
+          : PageResponse.fromRpc(json["pagination"]),
+    );
+  }
   QueryValidatorUnbondingDelegationsResponse(
       {required List<UnbondingDelegation> unbondingResponses, this.pagination})
       : unbondingResponses = unbondingResponses.immutable;
@@ -38,8 +50,8 @@ class QueryValidatorUnbondingDelegationsResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      StakingV1beta1Types.queryValidatorUnbondingDelegationsResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      StakingV1beta1Types.queryValidatorUnbondingDelegationsResponse;
 
   @override
   List get values => [unbondingResponses, pagination];

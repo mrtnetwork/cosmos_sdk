@@ -78,6 +78,5 @@ class OsmosisConcentratedLiquidityGenesisState extends CosmosMessage {
       [params, poolData, positionData, nextPositionId, nextIncentiveRecordId];
 
   @override
-  String get typeUrl =>
-      OsmosisConcentratedLiquidityV1beta1Types.genesisState.typeUrl;
+  TypeUrl get typeUrl => OsmosisConcentratedLiquidityV1beta1Types.genesisState;
 }

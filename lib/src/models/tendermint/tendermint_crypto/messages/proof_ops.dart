@@ -26,7 +26,7 @@ class ProofOps extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => TendermintTypes.proofOps.typeUrl;
+  TypeUrl get typeUrl => TendermintTypes.proofOps;
 
   @override
   List get values => [ops];

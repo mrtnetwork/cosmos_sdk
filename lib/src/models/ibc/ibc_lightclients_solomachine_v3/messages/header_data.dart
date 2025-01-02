@@ -30,7 +30,7 @@ class IbcSoloMachineV3HeaderData extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.soloMachineV3HeaderData.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.soloMachineV3HeaderData;
 
   @override
   List get values => [newPublicKey, newDiversifier];

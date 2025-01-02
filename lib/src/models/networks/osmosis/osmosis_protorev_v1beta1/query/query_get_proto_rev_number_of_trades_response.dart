@@ -33,6 +33,6 @@ class OsmosisProtorevQueryGetProtoRevNumberOfTradesResponse
   List get values => [numberOfTrades.toString()];
 
   @override
-  String get typeUrl => OsmosisProtorevV1beta1Types
-      .queryGetProtoRevNumberOfTradesResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisProtorevV1beta1Types.queryGetProtoRevNumberOfTradesResponse;
 }

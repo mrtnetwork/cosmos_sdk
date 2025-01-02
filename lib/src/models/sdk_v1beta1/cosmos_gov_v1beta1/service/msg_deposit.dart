@@ -32,7 +32,7 @@ class GovMsgDeposit extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3];
 
   @override
-  String get service => GovV1beta1types.serviceGovDeposit.typeUrl;
+  TypeUrl get service => GovV1beta1types.serviceGovDeposit;
 
   @override
   Map<String, dynamic> toJson() {
@@ -44,7 +44,7 @@ class GovMsgDeposit extends CosmosMessage
   }
 
   @override
-  String get typeUrl => GovV1beta1types.govMsgDeposit.typeUrl;
+  TypeUrl get typeUrl => GovV1beta1types.govMsgDeposit;
 
   @override
   List get values => [proposalId, depositor, amount];
@@ -53,7 +53,6 @@ class GovMsgDeposit extends CosmosMessage
 
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
-    return EmptyServiceRequestResponse(
-        GovV1beta1types.govMsgDepositResponse.typeUrl);
+    return EmptyServiceRequestResponse(GovV1beta1types.govMsgDepositResponse);
   }
 }

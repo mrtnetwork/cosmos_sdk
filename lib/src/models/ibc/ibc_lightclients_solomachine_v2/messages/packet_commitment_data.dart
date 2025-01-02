@@ -27,7 +27,7 @@ class IbcSoloMachineV2PacketCommitmentData extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.soloMachineV2PacketCommitmentData.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.soloMachineV2PacketCommitmentData;
 
   @override
   List get values => [path, commitment];

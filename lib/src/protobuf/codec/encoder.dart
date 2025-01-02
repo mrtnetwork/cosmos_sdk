@@ -2,7 +2,7 @@ import 'package:blockchain_utils/utils/string/string.dart';
 import 'package:cosmos_sdk/src/address/address/address.dart';
 import 'package:cosmos_sdk/src/protobuf/types/cosmos_enum.dart';
 import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
-import 'package:blockchain_utils/exception/exceptions.dart';
+import 'package:cosmos_sdk/src/exception/exception.dart';
 
 /// Class for encoding cosmos messages using minimal protobuf encoding.
 class ProtocolBufferEncoder {
@@ -17,7 +17,8 @@ class ProtocolBufferEncoder {
     if (value.bitLength <= _int64BitLength) {
       return;
     }
-    throw MessageException("Value overflows 64-bit signed integer range",
+    throw DartCosmosSdkPluginException(
+        "Value overflows 64-bit signed integer range",
         details: {"input": value});
   }
 
@@ -26,7 +27,8 @@ class ProtocolBufferEncoder {
     if (value.bitLength <= int32BitLength) {
       return;
     }
-    throw MessageException("Value overflows 32-bit signed integer range",
+    throw DartCosmosSdkPluginException(
+        "Value overflows 32-bit signed integer range",
         details: {"input": value});
   }
 
@@ -53,7 +55,7 @@ class ProtocolBufferEncoder {
     } else if (value is Map) {
       return _encodeMap(fieldNumber, value);
     }
-    throw MessageException("unsupported type",
+    throw DartCosmosSdkPluginException("unsupported type",
         details: {"runtime": value.runtimeType, "value": value});
   }
 

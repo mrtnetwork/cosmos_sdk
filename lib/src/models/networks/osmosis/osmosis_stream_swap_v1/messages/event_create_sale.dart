@@ -36,7 +36,7 @@ class OsmosisStreamSwapEventCreateSale extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisStreamSwapV1Types.eventCreateSale.typeUrl;
+  TypeUrl get typeUrl => OsmosisStreamSwapV1Types.eventCreateSale;
 
   @override
   List get values => [id, creator, tokenIn, tokenOut];

@@ -30,7 +30,7 @@ class ThorchainMsgSetNodeKeys extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.msgSetNodeKeys.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.msgSetNodeKeys;
 
   @override
   List get values => [pubKeySetSet, validatorConsPubKey, signer];

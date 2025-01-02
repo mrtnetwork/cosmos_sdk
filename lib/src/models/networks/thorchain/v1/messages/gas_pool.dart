@@ -34,7 +34,7 @@ class ThorchainGasPool extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.gasPool.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.gasPool;
 
   @override
   List get values => [asset, runeAmt.toString(), assetAmt.toString(), count];

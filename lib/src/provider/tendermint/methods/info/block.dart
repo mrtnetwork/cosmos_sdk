@@ -4,7 +4,7 @@ import 'package:cosmos_sdk/src/provider/tendermint/core/tendermint.dart';
 /// Get Block.
 /// https://docs.tendermint.com/v0.34/rpc/#/Info/block
 class TendermintRequestBlock
-    extends TendermintRequestParam<Map<String, dynamic>, Map<String, dynamic>> {
+    extends TendermintRequest<Map<String, dynamic>, Map<String, dynamic>> {
   TendermintRequestBlock({this.height});
 
   /// height to return. If no height is provided, it will fetch the latest block.

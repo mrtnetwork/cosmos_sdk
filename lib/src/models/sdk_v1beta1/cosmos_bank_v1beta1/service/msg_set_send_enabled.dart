@@ -54,16 +54,16 @@ class MsgSetSendEnabled extends CosmosMessage
 
   @override
   @override
-  String get typeUrl => BankV1beta1Types.msgSetSendEnabled.typeUrl;
+  TypeUrl get typeUrl => BankV1beta1Types.msgSetSendEnabled;
 
   @override
-  String get service => BankV1beta1Types.setSendEnabled.typeUrl;
+  TypeUrl get service => BankV1beta1Types.setSendEnabled;
 
   @override
   List<String?> get signers => [authority.address];
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        BankV1beta1Types.msgSetSendEnabledResponse.typeUrl);
+        BankV1beta1Types.msgSetSendEnabledResponse);
   }
 }

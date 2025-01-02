@@ -29,13 +29,13 @@ class OsmosisSuperfluidMsgUnPoolWhitelistedPool extends CosmosMessage
   }
 
   @override
-  String get typeUrl => OsmosisSuperfluidTypes.msgUnPoolWhitelistedPool.typeUrl;
+  TypeUrl get typeUrl => OsmosisSuperfluidTypes.msgUnPoolWhitelistedPool;
 
   @override
   List get values => [sender, poolId];
 
   @override
-  String get service => OsmosisSuperfluidTypes.unPoolWhitelistedPool.typeUrl;
+  TypeUrl get service => OsmosisSuperfluidTypes.unPoolWhitelistedPool;
 
   @override
   List<String?> get signers => [sender];

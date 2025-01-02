@@ -114,5 +114,5 @@ class OmosisEpochsEpochInfo extends CosmosMessage {
 
   @override
   @override
-  String get typeUrl => OsmosisEpochsV1beta1Types.epochInfo.typeUrl;
+  TypeUrl get typeUrl => OsmosisEpochsV1beta1Types.epochInfo;
 }

@@ -1,4 +1,4 @@
-import 'package:blockchain_utils/exception/exceptions.dart';
+import 'package:cosmos_sdk/src/exception/exception.dart';
 import 'package:cosmos_sdk/src/protobuf/types/cosmos_enum.dart';
 
 class OsmosisPoolManagerPoolType implements CosmosEnum {
@@ -36,7 +36,7 @@ class OsmosisPoolManagerPoolType implements CosmosEnum {
   static OsmosisPoolManagerPoolType fromValue(int? value) {
     return values.firstWhere(
       (element) => element.value == value,
-      orElse: () => throw MessageException(
+      orElse: () => throw DartCosmosSdkPluginException(
           "No OsmosisPoolManagerPoolType element found for the given value.",
           details: {"value": value}),
     );
@@ -45,7 +45,7 @@ class OsmosisPoolManagerPoolType implements CosmosEnum {
   static OsmosisPoolManagerPoolType fromName(String? name) {
     return values.firstWhere(
       (element) => element.name == name,
-      orElse: () => throw MessageException(
+      orElse: () => throw DartCosmosSdkPluginException(
           "No OsmosisPoolManagerPoolType element found for the given name.",
           details: {"name": name}),
     );

@@ -3,11 +3,9 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'query_pool_params_response.dart';
 
 class OsmosisGammQueryPoolParamsRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisGammQueryPoolParamsResponse>,
-        RPCMessage<OsmosisGammQueryPoolParamsResponse> {
-  final BigInt? poolId;
-  const OsmosisGammQueryPoolParamsRequest({this.poolId});
+    with QueryMessage<OsmosisGammQueryPoolParamsResponse> {
+  final BigInt poolId;
+  const OsmosisGammQueryPoolParamsRequest({required this.poolId});
   factory OsmosisGammQueryPoolParamsRequest.fromBytes(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisGammQueryPoolParamsRequest(poolId: decode.getField(1));
@@ -22,15 +20,15 @@ class OsmosisGammQueryPoolParamsRequest extends CosmosMessage
   }
 
   @override
-  String get queryPath => OsmosisGammV1beta1Types.queryPpoolParams.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
-    return {"pool_id": poolId?.toString()};
+    return {"pool_id": poolId.toString()};
   }
 
   @override
-  String get typeUrl => OsmosisGammV1beta1Types.queryPoolParamsRequest.typeUrl;
+  List<String> get pathParameters => [poolId.toString()];
+
+  @override
+  TypeUrl get typeUrl => OsmosisGammV1beta1Types.queryPoolParamsRequest;
 
   @override
   List get values => [poolId];
@@ -42,8 +40,4 @@ class OsmosisGammQueryPoolParamsRequest extends CosmosMessage
 
   @override
   Map<String, String> get queryParameters => {};
-
-  @override
-  String get rpcPath => OsmosisGammV1beta1Types.queryPpoolParams
-      .rpcUrl(pathParameters: [poolId?.toString()]);
 }

@@ -11,6 +11,9 @@ class QueryTotalEscrowForDenomResponse extends CosmosMessage {
     return QueryTotalEscrowForDenomResponse(
         Coin.deserialize(decode.getField(1)));
   }
+  factory QueryTotalEscrowForDenomResponse.fromRpc(Map<String, dynamic> json) {
+    return QueryTotalEscrowForDenomResponse(Coin.fromRpc(json["amount"]));
+  }
 
   @override
   List<int> get fieldIds => [1];
@@ -21,7 +24,7 @@ class QueryTotalEscrowForDenomResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.queryTotalEscrowForDenomResponse.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryTotalEscrowForDenomResponse;
 
   @override
   List get values => [amount];

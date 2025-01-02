@@ -1,6 +1,7 @@
-class BaseAbciV1beta1 {
-  final String typeUrl;
-  const BaseAbciV1beta1._(this.typeUrl);
+import 'package:cosmos_sdk/cosmos_sdk.dart';
+
+class BaseAbciV1beta1 extends TypeUrl {
+  const BaseAbciV1beta1._(super.typeUrl);
   static const BaseAbciV1beta1 searchTxsResult =
       BaseAbciV1beta1._("/cosmos.base.abci.v1beta1.SearchTxsResult");
   static const BaseAbciV1beta1 txResponse =

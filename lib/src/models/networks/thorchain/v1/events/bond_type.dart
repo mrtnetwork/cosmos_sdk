@@ -1,4 +1,4 @@
-import 'package:blockchain_utils/exception/exceptions.dart';
+import 'package:cosmos_sdk/src/exception/exception.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
 class ThorchainBondType implements CosmosEnum {
@@ -23,7 +23,7 @@ class ThorchainBondType implements CosmosEnum {
   static ThorchainBondType fromValue(int? value) {
     return values.firstWhere(
       (e) => e.value == value,
-      orElse: () => throw MessageException(
+      orElse: () => throw DartCosmosSdkPluginException(
           "No ThorchainBondType element found for the given value.",
           details: {"value": value}),
     );

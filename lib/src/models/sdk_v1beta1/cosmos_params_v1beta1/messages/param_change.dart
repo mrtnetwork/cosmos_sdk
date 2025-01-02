@@ -6,6 +6,10 @@ class ParamChange extends CosmosMessage {
   final String? subspace;
   final String? key;
   final String? value;
+  factory ParamChange.fromRpc(Map<String, dynamic> json) {
+    return ParamChange(
+        key: json["key"], subspace: json["subspace"], value: json["value"]);
+  }
   const ParamChange({this.subspace, this.key, this.value});
   factory ParamChange.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -24,7 +28,7 @@ class ParamChange extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ParamsV1beta1.paramChange.typeUrl;
+  TypeUrl get typeUrl => ParamsV1beta1.paramChange;
 
   @override
   List get values => [subspace, key, value];

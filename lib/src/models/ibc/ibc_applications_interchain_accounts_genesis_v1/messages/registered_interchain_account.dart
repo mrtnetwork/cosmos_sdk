@@ -29,7 +29,7 @@ class RegisteredInterchainAccount extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.registeredInterchainAccount.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.registeredInterchainAccount;
 
   @override
   List get values => [connectionId, portId, accountAddress];

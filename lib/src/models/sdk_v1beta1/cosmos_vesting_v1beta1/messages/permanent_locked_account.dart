@@ -36,7 +36,7 @@ class PermanentLockedAccount extends CosmosMessage {
   List<int> get fieldIds => [1];
 
   @override
-  String get typeUrl => VestingV1beta1Types.permanentLockedAccount.typeUrl;
+  TypeUrl get typeUrl => VestingV1beta1Types.permanentLockedAccount;
 
   @override
   List get values => [baseVestingAccount];

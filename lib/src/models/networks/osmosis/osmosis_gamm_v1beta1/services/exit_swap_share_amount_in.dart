@@ -35,7 +35,7 @@ class OsmosisGammMsgExitSwapShareAmountIn extends CosmosMessage
   }
 
   @override
-  String get service => OsmosisGammV1beta1Types.exitSwapShareAmountIn.typeUrl;
+  TypeUrl get service => OsmosisGammV1beta1Types.exitSwapShareAmountIn;
 
   @override
   List<String?> get signers => [sender];
@@ -52,8 +52,7 @@ class OsmosisGammMsgExitSwapShareAmountIn extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      OsmosisGammV1beta1Types.msgExitSwapShareAmountIn.typeUrl;
+  TypeUrl get typeUrl => OsmosisGammV1beta1Types.msgExitSwapShareAmountIn;
 
   @override
   List get values => [

@@ -78,7 +78,7 @@ class OsmosisTwapTwapRecord extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisTwapV1beta1Types.twapRecord.typeUrl;
+  TypeUrl get typeUrl => OsmosisTwapV1beta1Types.twapRecord;
 
   @override
   List get values => [

@@ -12,6 +12,11 @@ class IbcTransaferParams extends CosmosMessage {
   /// receive_enabled enables or disables all cross-chain token transfers to this
   /// chain.
   final bool? receiveEnabled;
+  factory IbcTransaferParams.fromRpc(Map<String, dynamic> json) {
+    return IbcTransaferParams(
+        receiveEnabled: json["receive_enabled"],
+        sendEnabled: json["send_enabled"]);
+  }
   const IbcTransaferParams({this.sendEnabled, this.receiveEnabled});
   factory IbcTransaferParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -28,7 +33,7 @@ class IbcTransaferParams extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.ibcTransferParams.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.ibcTransferParams;
 
   @override
   List get values => [sendEnabled, receiveEnabled];

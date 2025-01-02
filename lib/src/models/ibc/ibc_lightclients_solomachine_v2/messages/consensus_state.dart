@@ -37,7 +37,7 @@ class IbcSoloMachineV2ConsensusState extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.soloMachineV2ConsensusState.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.soloMachineV2ConsensusState;
 
   @override
   List get values => [publicKey, diversifier, timestamp];

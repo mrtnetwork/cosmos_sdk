@@ -61,10 +61,10 @@ class MsgCreateVestingAccount extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3, 4, 5, 6];
 
   @override
-  String get service => VestingV1beta1Types.createVestingAccount.typeUrl;
+  TypeUrl get service => VestingV1beta1Types.createVestingAccount;
 
   @override
-  String get typeUrl => VestingV1beta1Types.msgCreateVestingAccount.typeUrl;
+  TypeUrl get typeUrl => VestingV1beta1Types.msgCreateVestingAccount;
 
   @override
   List get values => [
@@ -82,6 +82,6 @@ class MsgCreateVestingAccount extends CosmosMessage
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        VestingV1beta1Types.msgCreateVestingAccountResponse.typeUrl);
+        VestingV1beta1Types.msgCreateVestingAccountResponse);
   }
 }

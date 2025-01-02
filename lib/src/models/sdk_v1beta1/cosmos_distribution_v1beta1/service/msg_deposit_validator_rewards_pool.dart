@@ -21,8 +21,8 @@ class DistributionMsgDepositValidatorRewardsPool extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3];
 
   @override
-  String get service =>
-      DistributionV1beta1Types.distributionDepositValidatorRewardsPool.typeUrl;
+  TypeUrl get service =>
+      DistributionV1beta1Types.distributionDepositValidatorRewardsPool;
 
   @override
   Map<String, dynamic> toJson() {
@@ -34,8 +34,8 @@ class DistributionMsgDepositValidatorRewardsPool extends CosmosMessage
   }
 
   @override
-  String get typeUrl => DistributionV1beta1Types
-      .distributionMsgDepositValidatorRewardsPool.typeUrl;
+  TypeUrl get typeUrl =>
+      DistributionV1beta1Types.distributionMsgDepositValidatorRewardsPool;
 
   @override
   List get values => [depositor?.address, validatorAddress?.address, amount];
@@ -45,6 +45,6 @@ class DistributionMsgDepositValidatorRewardsPool extends CosmosMessage
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(DistributionV1beta1Types
-        .distributionMsgDepositValidatorRewardsPoolResponse.typeUrl);
+        .distributionMsgDepositValidatorRewardsPoolResponse);
   }
 }

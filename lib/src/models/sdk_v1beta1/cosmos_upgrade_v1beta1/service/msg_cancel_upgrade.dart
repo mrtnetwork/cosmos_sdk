@@ -28,10 +28,10 @@ class MsgCancelUpgrade extends CosmosMessage
   List<int> get fieldIds => [1];
 
   @override
-  String get service => UpgradeV1beta1Types.cancelUpgrade.typeUrl;
+  TypeUrl get service => UpgradeV1beta1Types.cancelUpgrade;
 
   @override
-  String get typeUrl => UpgradeV1beta1Types.msgCancelUpgrade.typeUrl;
+  TypeUrl get typeUrl => UpgradeV1beta1Types.msgCancelUpgrade;
 
   @override
   List get values => [authority?.address];
@@ -41,6 +41,6 @@ class MsgCancelUpgrade extends CosmosMessage
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        UpgradeV1beta1Types.msgCancelUpgradeResponse.typeUrl);
+        UpgradeV1beta1Types.msgCancelUpgradeResponse);
   }
 }

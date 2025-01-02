@@ -12,6 +12,18 @@ class GovQueryProposalsResponse extends CosmosMessage {
 
   /// pagination defines the pagination in the response.
   final PageResponse? pagination;
+
+  factory GovQueryProposalsResponse.fromRpc(Map<String, dynamic> json) {
+    return GovQueryProposalsResponse(
+      proposals: (json["proposals"] as List?)
+              ?.map((e) => GovProposal.fromRpc(e))
+              .toList() ??
+          [],
+      pagination: json["pagination"] == null
+          ? null
+          : PageResponse.fromRpc(json["pagination"]),
+    );
+  }
   GovQueryProposalsResponse(
       {required List<GovProposal> proposals, this.pagination})
       : proposals = proposals.immutable;
@@ -37,7 +49,7 @@ class GovQueryProposalsResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => GovV1beta1types.govQueryProposalsResponse.typeUrl;
+  TypeUrl get typeUrl => GovV1beta1types.govQueryProposalsResponse;
 
   @override
   List get values => [proposals, pagination];

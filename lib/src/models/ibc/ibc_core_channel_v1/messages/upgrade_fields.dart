@@ -8,6 +8,15 @@ class UpgradeFields extends CosmosMessage {
   final IbcChannelOrder? ordering;
   final List<String>? connectionHops;
   final String? version;
+  factory UpgradeFields.fromRpc(Map<String, dynamic> json) {
+    return UpgradeFields(
+      ordering: json["ordering"] == null
+          ? null
+          : IbcChannelOrder.fromValue(json["ordering"]),
+      connectionHops: (json["connection_hops"] as List?)?.cast(),
+      version: json["version"],
+    );
+  }
   UpgradeFields({this.ordering, List<String>? connectionHops, this.version})
       : connectionHops = connectionHops?.immutable;
   factory UpgradeFields.deserialize(List<int> bytes) {
@@ -33,7 +42,7 @@ class UpgradeFields extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.upgradeFields.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.upgradeFields;
 
   @override
   List get values => [ordering?.value, connectionHops, version];

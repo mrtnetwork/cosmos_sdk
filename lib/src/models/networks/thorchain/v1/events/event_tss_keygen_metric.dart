@@ -23,7 +23,7 @@ class ThorchainEventTssKeygenMetric extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.eventTssKeygenMetric.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.eventTssKeygenMetric;
 
   @override
   List get values => [pubKey, medianDurationMs];

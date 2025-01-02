@@ -43,7 +43,7 @@ class ExtendedCommit extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => TendermintTypes.extendedCommit.typeUrl;
+  TypeUrl get typeUrl => TendermintTypes.extendedCommit;
 
   @override
   List get values => [height, round, blockID, extendedSignatures];

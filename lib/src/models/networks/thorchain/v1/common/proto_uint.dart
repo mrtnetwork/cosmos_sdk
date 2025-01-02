@@ -18,7 +18,7 @@ class ThorchainProtoUint extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.protoUint.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.protoUint;
 
   @override
   List get values => [value?.toString()];

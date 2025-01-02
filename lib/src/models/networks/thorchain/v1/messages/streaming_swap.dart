@@ -71,7 +71,7 @@ class ThorchainStreamingSwap extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.streamingSwap.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.streamingSwap;
 
   @override
   List get values => [

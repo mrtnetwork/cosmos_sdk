@@ -63,6 +63,5 @@ class OsmosisConcentratedLiquidityPosition extends CosmosMessage {
       [positionId, address, poolId, lowerTick, upperTick, joinTime, liquidity];
 
   @override
-  String get typeUrl =>
-      OsmosisConcentratedLiquidityV1beta1Types.position.typeUrl;
+  TypeUrl get typeUrl => OsmosisConcentratedLiquidityV1beta1Types.position;
 }

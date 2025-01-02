@@ -64,7 +64,7 @@ class SearchTxsResult extends CosmosMessage {
   List<int> get fieldIds => [1, 2, 3, 4, 5, 6];
 
   @override
-  String get typeUrl => BaseAbciV1beta1.searchTxsResult.typeUrl;
+  TypeUrl get typeUrl => BaseAbciV1beta1.searchTxsResult;
 
   @override
   List get values => [totalCount, count, pageNumber, pageTotal, limit, txs];

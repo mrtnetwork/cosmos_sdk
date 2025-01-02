@@ -44,7 +44,7 @@ class OsmosisLockupGenesisState extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisLockupTypes.syntheticLock.typeUrl;
+  TypeUrl get typeUrl => OsmosisLockupTypes.syntheticLock;
 
   @override
   List get values => [lastLockId, locks, syntheticLocks];

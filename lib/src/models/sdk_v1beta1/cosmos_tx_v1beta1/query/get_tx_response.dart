@@ -11,6 +11,11 @@ class GetTxResponse extends CosmosMessage {
   /// tx_response is the queried TxResponses.
   final TxResponse txResponse;
   const GetTxResponse({required this.tx, required this.txResponse});
+  factory GetTxResponse.fromRpc(Map<String, dynamic> json) {
+    return GetTxResponse(
+        tx: Tx.fromRpc(json["tx"]),
+        txResponse: TxResponse.fromRpc(json["tx_response"]));
+  }
   factory GetTxResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GetTxResponse(
@@ -27,7 +32,7 @@ class GetTxResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => TxV1beta1Types.getTxResponse.typeUrl;
+  TypeUrl get typeUrl => TxV1beta1Types.getTxResponse;
 
   @override
   List get values => [tx, txResponse];

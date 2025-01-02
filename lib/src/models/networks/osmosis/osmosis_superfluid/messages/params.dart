@@ -27,7 +27,7 @@ class OsmosisSuperfluidParams extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisSuperfluidTypes.params.typeUrl;
+  TypeUrl get typeUrl => OsmosisSuperfluidTypes.params;
 
   @override
   List get values => [minimumRiskFactor];

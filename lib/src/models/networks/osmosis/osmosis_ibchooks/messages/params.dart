@@ -20,7 +20,7 @@ class OsmosisIbchooksParams extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisIbchooksTypes.params.typeUrl;
+  TypeUrl get typeUrl => OsmosisIbchooksTypes.params;
 
   @override
   List get values => [allowedSsyncAckContracts];

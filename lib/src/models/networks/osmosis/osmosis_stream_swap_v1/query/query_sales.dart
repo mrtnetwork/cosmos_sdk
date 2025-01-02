@@ -4,9 +4,7 @@ import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_query_v1beta1/cosm
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
 class OsmosisStreamSwapQuerySales extends CosmosMessage
-    with
-        QueryMessage<OsmosisStreamSwapQuerySalesResponse>,
-        RPCMessage<OsmosisStreamSwapQuerySalesResponse> {
+    with QueryMessage<OsmosisStreamSwapQuerySalesResponse> {
   /// pagination defines an pagination for the request
   final PageRequest? pagination;
 
@@ -28,19 +26,13 @@ class OsmosisStreamSwapQuerySales extends CosmosMessage
   }
 
   @override
-  String get typeUrl => OsmosisStreamSwapV1Types.querySales.typeUrl;
+  TypeUrl get typeUrl => OsmosisStreamSwapV1Types.querySales;
 
   @override
   List get values => [pagination];
 
   @override
-  Map<String, String?> get queryParameters => {};
-
-  @override
-  String get queryPath => OsmosisStreamSwapV1Types.sales.typeUrl;
-
-  @override
-  String get rpcPath => OsmosisStreamSwapV1Types.sales.rpcUrl();
+  Map<String, String?> get queryParameters => pagination?.queryParameters ?? {};
 
   @override
   OsmosisStreamSwapQuerySalesResponse onJsonResponse(

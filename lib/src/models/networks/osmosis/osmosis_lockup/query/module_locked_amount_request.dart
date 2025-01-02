@@ -3,9 +3,7 @@ import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_lockup/types/type
 import 'module_locked_amount_response.dart';
 
 class OsmosisLockupModuleLockedAmountRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisLockupModuleLockedAmountResponse>,
-        RPCMessage<OsmosisLockupModuleLockedAmountResponse> {
+    with QueryMessage<OsmosisLockupModuleLockedAmountResponse> {
   const OsmosisLockupModuleLockedAmountRequest();
   factory OsmosisLockupModuleLockedAmountRequest.deserialize(List<int> bytes) {
     return const OsmosisLockupModuleLockedAmountRequest();
@@ -19,7 +17,7 @@ class OsmosisLockupModuleLockedAmountRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl => OsmosisLockupTypes.moduleLockedAmountRequest.typeUrl;
+  TypeUrl get typeUrl => OsmosisLockupTypes.moduleLockedAmountRequest;
 
   @override
   List get values => [];
@@ -30,9 +28,6 @@ class OsmosisLockupModuleLockedAmountRequest extends CosmosMessage
   }
 
   @override
-  String get queryPath => OsmosisLockupTypes.moduleLockedAmount.typeUrl;
-
-  @override
   OsmosisLockupModuleLockedAmountResponse onJsonResponse(
       Map<String, dynamic> json) {
     return OsmosisLockupModuleLockedAmountResponse.fromRpc(json);
@@ -40,7 +35,4 @@ class OsmosisLockupModuleLockedAmountRequest extends CosmosMessage
 
   @override
   Map<String, String?> get queryParameters => {};
-
-  @override
-  String get rpcPath => OsmosisLockupTypes.moduleLockedAmount.rpcUrl();
 }

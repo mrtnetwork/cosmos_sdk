@@ -53,7 +53,7 @@ class ThorchainEventPendingLiquidity extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.eventPendingLiquidity.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.eventPendingLiquidity;
 
   @override
   List get values => [

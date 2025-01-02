@@ -32,6 +32,6 @@ class OsmosisConcentratedLiquidityTickLiquidityNet extends CosmosMessage {
   List get values => [liquidityNet, tickIndex];
 
   @override
-  String get typeUrl =>
-      OsmosisConcentratedLiquidityV1beta1Types.tickLiquidityNet.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisConcentratedLiquidityV1beta1Types.tickLiquidityNet;
 }

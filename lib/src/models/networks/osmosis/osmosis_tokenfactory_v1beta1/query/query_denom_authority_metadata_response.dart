@@ -31,8 +31,8 @@ class OsmosisTokenFactoryQueryDenomAuthorityMetadataResponse
   }
 
   @override
-  String get typeUrl => OsmosisTokenFactoryV1beta1Types
-      .queryDenomAuthorityMetadataResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisTokenFactoryV1beta1Types.queryDenomAuthorityMetadataResponse;
 
   @override
   List get values => [authorityMetadata];

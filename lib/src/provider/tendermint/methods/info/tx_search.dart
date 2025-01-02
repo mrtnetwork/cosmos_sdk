@@ -5,7 +5,7 @@ import 'package:cosmos_sdk/src/provider/tendermint/models/models/ordering.dart';
 /// Search for transactions
 /// https://docs.tendermint.com/v0.34/rpc/#/Info/tx_search
 class TendermintRequestTxSearch
-    extends TendermintRequestParam<Map<String, dynamic>, Map<String, dynamic>> {
+    extends TendermintRequest<Map<String, dynamic>, Map<String, dynamic>> {
   TendermintRequestTxSearch(
       {required this.query,
       this.prove,

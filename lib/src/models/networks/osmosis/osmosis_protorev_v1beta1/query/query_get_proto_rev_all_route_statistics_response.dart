@@ -42,6 +42,6 @@ class OsmosisProtorevQueryGetProtoRevAllRouteStatisticsResponse
   List get values => [statistics];
 
   @override
-  String get typeUrl => OsmosisProtorevV1beta1Types
-      .queryGetProtoRevAllRouteStatisticsResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisProtorevV1beta1Types.queryGetProtoRevAllRouteStatisticsResponse;
 }

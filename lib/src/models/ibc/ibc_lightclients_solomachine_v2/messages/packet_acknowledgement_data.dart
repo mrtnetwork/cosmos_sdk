@@ -31,7 +31,7 @@ class IbcSoloMachineV2PacketAcknowledgementData extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.soloMachineV2PacketAcknowledgementData.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.soloMachineV2PacketAcknowledgementData;
 
   @override
   List get values => [path, acknowledgement];

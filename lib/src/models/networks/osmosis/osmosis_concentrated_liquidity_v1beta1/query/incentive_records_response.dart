@@ -54,8 +54,8 @@ class OsmosisConcentratedLiquidityIncentiveRecordsResponse
   }
 
   @override
-  String get typeUrl =>
-      OsmosisConcentratedLiquidityV1beta1Types.incentiveRecordsResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisConcentratedLiquidityV1beta1Types.incentiveRecordsResponse;
 
   @override
   List get values => [incentiveRecords, pagination];

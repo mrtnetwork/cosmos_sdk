@@ -51,8 +51,7 @@ class OsmosisSuperfluidSuperfluidDelegationRecord extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisSuperfluidTypes.superfluidDelegationRecord.typeUrl;
+  TypeUrl get typeUrl => OsmosisSuperfluidTypes.superfluidDelegationRecord;
 
   @override
   List get values => [

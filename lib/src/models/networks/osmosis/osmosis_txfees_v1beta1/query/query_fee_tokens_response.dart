@@ -36,8 +36,7 @@ class OsmosisTxfeesQueryFeeTokensResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisTxfeesV1beta1Types.queryFeeTokensResponse.typeUrl;
+  TypeUrl get typeUrl => OsmosisTxfeesV1beta1Types.queryFeeTokensResponse;
 
   @override
   List get values => [feetokens];

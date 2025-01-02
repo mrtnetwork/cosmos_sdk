@@ -1,3 +1,4 @@
+import 'package:cosmos_sdk/src/models/global_messages/unknown_message.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_client_v1/messages/height.dart';
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 
@@ -9,14 +10,22 @@ class ConsensusStateWithHeight extends CosmosMessage {
   final IbcClientHeight height;
 
   /// consensus state
-  final Any? consensusState;
+  final AnyMessage? consensusState;
+  factory ConsensusStateWithHeight.fromRpc(Map<String, dynamic> json) {
+    return ConsensusStateWithHeight(
+        height: IbcClientHeight.fromRpc(json["height"]),
+        consensusState: json["consensus_state"] == null
+            ? null
+            : AnyMessage.fromRpc(json["consensus_state"]));
+  }
   const ConsensusStateWithHeight({required this.height, this.consensusState});
   factory ConsensusStateWithHeight.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ConsensusStateWithHeight(
         height: IbcClientHeight.deserialize(decode.getField(1)),
-        consensusState:
-            decode.getResult(2)?.to<Any, List<int>>((e) => Any.deserialize(e)));
+        consensusState: decode
+            .getResult(2)
+            ?.to<AnyMessage, List<int>>((e) => AnyMessage.deserialize(e)));
   }
 
   @override
@@ -31,7 +40,7 @@ class ConsensusStateWithHeight extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.consensusStateWithHeight.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.consensusStateWithHeight;
 
   @override
   List get values => [height, consensusState];

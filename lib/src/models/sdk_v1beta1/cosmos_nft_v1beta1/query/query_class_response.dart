@@ -14,6 +14,11 @@ class QueryNFTClassResponse extends CosmosMessage {
             .getResult(1)
             ?.to<NFTClass, List<int>>((e) => NFTClass.deserialize(e)));
   }
+  factory QueryNFTClassResponse.fromRpc(Map<String, dynamic> json) {
+    return QueryNFTClassResponse(
+        nftClass:
+            json["class"] == null ? null : NFTClass.fromRpc(json["class"]));
+  }
 
   @override
   List<int> get fieldIds => [1];
@@ -24,7 +29,7 @@ class QueryNFTClassResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => NFTV1beta1Types.queryNFTClassResponse.typeUrl;
+  TypeUrl get typeUrl => NFTV1beta1Types.queryNFTClassResponse;
 
   @override
   List get values => [nftClass];

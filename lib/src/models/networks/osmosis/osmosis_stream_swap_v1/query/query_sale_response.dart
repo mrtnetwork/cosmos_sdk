@@ -26,7 +26,7 @@ class OsmosisStreamSwapQuerySaleResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisStreamSwapV1Types.querySaleResponse.typeUrl;
+  TypeUrl get typeUrl => OsmosisStreamSwapV1Types.querySaleResponse;
 
   @override
   List get values => [sale];

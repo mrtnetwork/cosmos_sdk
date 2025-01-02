@@ -37,8 +37,8 @@ class DistributionValidatorAccumulatedCommissionRecord extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => DistributionV1beta1Types
-      .distributionValidatorAccumulatedCommissionRecord.typeUrl;
+  TypeUrl get typeUrl =>
+      DistributionV1beta1Types.distributionValidatorAccumulatedCommissionRecord;
 
   @override
   List get values => [validatorAddress, accumulated];

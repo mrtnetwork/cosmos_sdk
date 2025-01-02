@@ -29,7 +29,7 @@ class ThorchainMsgRagnarok extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.msgRagnarok.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.msgRagnarok;
 
   @override
   List get values => [tx, blockHeight, signer];

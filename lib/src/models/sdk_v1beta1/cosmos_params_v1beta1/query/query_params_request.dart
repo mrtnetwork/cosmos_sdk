@@ -6,11 +6,11 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class ParamsQueryParamsRequest extends CosmosMessage
     with QueryMessage<ParamsQueryParamsResponse> {
   /// subspace defines the module to query the parameter for.
-  final String? subspace;
+  final String subspace;
 
   /// key defines the key of the parameter in the subspace.
-  final String? key;
-  const ParamsQueryParamsRequest({this.subspace, this.key});
+  final String key;
+  const ParamsQueryParamsRequest({required this.subspace, required this.key});
   factory ParamsQueryParamsRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ParamsQueryParamsRequest(
@@ -21,15 +21,12 @@ class ParamsQueryParamsRequest extends CosmosMessage
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get queryPath => ParamsV1beta1.paramsParams.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {"subspace": subspace, "key": key};
   }
 
   @override
-  String get typeUrl => ParamsV1beta1.paramsQueryParamsRequest.typeUrl;
+  TypeUrl get typeUrl => ParamsV1beta1.paramsQueryParamsRequest;
 
   @override
   List get values => [subspace, key];
@@ -37,4 +34,12 @@ class ParamsQueryParamsRequest extends CosmosMessage
   ParamsQueryParamsResponse onResponse(List<int> bytes) {
     return ParamsQueryParamsResponse.deserialize(bytes);
   }
+
+  @override
+  ParamsQueryParamsResponse onJsonResponse(Map<String, dynamic> json) {
+    return ParamsQueryParamsResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters => [subspace, key];
 }

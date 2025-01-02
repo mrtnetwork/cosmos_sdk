@@ -41,6 +41,6 @@ class OsmosisConcentratedLiquidityMsgCollectSpreadRewardsResponse
   List get values => [collectedSpreadRewards];
 
   @override
-  String get typeUrl => OsmosisConcentratedLiquidityV1beta1Types
-      .msgCollectSpreadRewardsResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisConcentratedLiquidityV1beta1Types.msgCollectSpreadRewardsResponse;
 }

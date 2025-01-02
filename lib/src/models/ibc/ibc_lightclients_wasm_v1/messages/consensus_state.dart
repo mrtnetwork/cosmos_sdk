@@ -24,7 +24,7 @@ class IbcLightClientsWasmConsensusState extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.ibcLightClientsWasmConsensusState.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.ibcLightClientsWasmConsensusState;
 
   @override
   List get values => [data];

@@ -53,7 +53,7 @@ class OsmosisProtorevTokenPairArbRoutes extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisProtorevV1beta1Types.tokenPairArbRoutes.typeUrl;
+  TypeUrl get typeUrl => OsmosisProtorevV1beta1Types.tokenPairArbRoutes;
 
   @override
   List get values => [arbRsoutes, tokenIn, tokenOut];

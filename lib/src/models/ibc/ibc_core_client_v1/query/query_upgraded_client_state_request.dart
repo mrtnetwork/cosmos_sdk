@@ -12,15 +12,12 @@ class QueryUpgradedClientStateRequest extends CosmosMessage
   List<int> get fieldIds => [];
 
   @override
-  String get queryPath => IbcTypes.upgradedClientState.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {};
   }
 
   @override
-  String get typeUrl => IbcTypes.queryUpgradedClientStateRequest.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryUpgradedClientStateRequest;
 
   @override
   List get values => [];
@@ -28,5 +25,10 @@ class QueryUpgradedClientStateRequest extends CosmosMessage
   @override
   QueryUpgradedClientStateResponse onResponse(List<int> bytes) {
     return QueryUpgradedClientStateResponse.deserialize(bytes);
+  }
+
+  @override
+  QueryUpgradedClientStateResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryUpgradedClientStateResponse.fromRpc(json);
   }
 }

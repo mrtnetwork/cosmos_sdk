@@ -42,8 +42,8 @@ class OsmosisConcentratedLiquidityUserUnbondingPositionsResponse
   }
 
   @override
-  String get typeUrl => OsmosisConcentratedLiquidityV1beta1Types
-      .userUnbondingPositionsResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisConcentratedLiquidityV1beta1Types.userUnbondingPositionsResponse;
 
   @override
   List get values => [positions];

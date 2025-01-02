@@ -80,7 +80,7 @@ class ThorchainMsgSwap extends CosmosMessage with ServiceMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.msgSwap.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.msgSwap;
 
   @override
   List get values => [
@@ -105,7 +105,7 @@ class ThorchainMsgSwap extends CosmosMessage with ServiceMessage {
   }
 
   @override
-  String get service => typeUrl;
+  TypeUrl get service => typeUrl;
 
   @override
   List<String?> get signers => [signer?.address];

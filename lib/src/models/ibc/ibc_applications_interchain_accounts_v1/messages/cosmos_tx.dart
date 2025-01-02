@@ -18,7 +18,7 @@ class CosmosTx extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.cosmosTx.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.cosmosTx;
 
   @override
   List get values => [messages];

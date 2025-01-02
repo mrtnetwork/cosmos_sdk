@@ -15,6 +15,18 @@ class QueryAllowancesResponse extends CosmosMessage {
   QueryAllowancesResponse({required List<FeeGrant> allowances, this.pagination})
       : allowances = allowances.immutable;
 
+  factory QueryAllowancesResponse.fromRpc(Map<String, dynamic> json) {
+    return QueryAllowancesResponse(
+      allowances: (json["allowances"] as List?)
+              ?.map((e) => FeeGrant.fromRpc(e))
+              .toList() ??
+          [],
+      pagination: json["pagination"] == null
+          ? null
+          : PageResponse.fromRpc(json["pagination"]),
+    );
+  }
+
   factory QueryAllowancesResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryAllowancesResponse(
@@ -37,7 +49,7 @@ class QueryAllowancesResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => FeegrantV1beta1Types.queryAllowancesResponse.typeUrl;
+  TypeUrl get typeUrl => FeegrantV1beta1Types.queryAllowancesResponse;
 
   @override
   List get values => [allowances, pagination];

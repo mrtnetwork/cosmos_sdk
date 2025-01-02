@@ -30,7 +30,7 @@ class ThorchainKeygenBlock extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.keygenBlock.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.keygenBlock;
 
   @override
   List get values => [height, keygens];

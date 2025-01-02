@@ -20,7 +20,7 @@ class OsmosisMintMinter extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisMintV1beta1Types.minter.typeUrl;
+  TypeUrl get typeUrl => OsmosisMintV1beta1Types.minter;
 
   @override
   List get values => [epochProvisions];

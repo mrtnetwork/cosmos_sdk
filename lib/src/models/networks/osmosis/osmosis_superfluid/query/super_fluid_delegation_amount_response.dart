@@ -30,8 +30,8 @@ class OsmosisSuperfluidSuperfluidDelegationAmountResponse
   }
 
   @override
-  String get typeUrl =>
-      OsmosisSuperfluidTypes.superfluidDelegationAmountResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisSuperfluidTypes.superfluidDelegationAmountResponse;
 
   @override
   List get values => [amount];

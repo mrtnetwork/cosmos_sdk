@@ -28,8 +28,8 @@ class OsmosisSuperfluidLockIdIntermediaryAccountConnection
   }
 
   @override
-  String get typeUrl =>
-      OsmosisSuperfluidTypes.lockIdIntermediaryAccountConnection.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisSuperfluidTypes.lockIdIntermediaryAccountConnection;
 
   @override
   List get values => [lockId, intermediaryAccount];

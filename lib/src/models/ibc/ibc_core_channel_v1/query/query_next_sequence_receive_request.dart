@@ -7,11 +7,16 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class QueryNextSequenceReceiveRequest extends CosmosMessage
     with QueryMessage<QueryNextSequenceReceiveResponse> {
   /// port unique identifier
-  final String? portId;
+  final String portId;
 
   /// channel unique identifier
-  final String? channelId;
-  const QueryNextSequenceReceiveRequest({this.portId, this.channelId});
+  final String channelId;
+  factory QueryNextSequenceReceiveRequest.fromRpc(Map<String, dynamic> json) {
+    return QueryNextSequenceReceiveRequest(
+        portId: json["port_id"], channelId: json["channel_id"]);
+  }
+  const QueryNextSequenceReceiveRequest(
+      {required this.portId, required this.channelId});
   factory QueryNextSequenceReceiveRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryNextSequenceReceiveRequest(
@@ -22,15 +27,12 @@ class QueryNextSequenceReceiveRequest extends CosmosMessage
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get queryPath => IbcTypes.nextSequenceReceive.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {"port_id": portId, "channel_id": channelId};
   }
 
   @override
-  String get typeUrl => IbcTypes.queryNextSequenceReceiveRequest.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryNextSequenceReceiveRequest;
 
   @override
   List get values => [portId, channelId];
@@ -39,4 +41,12 @@ class QueryNextSequenceReceiveRequest extends CosmosMessage
   QueryNextSequenceReceiveResponse onResponse(List<int> bytes) {
     return QueryNextSequenceReceiveResponse.deserialize(bytes);
   }
+
+  @override
+  QueryNextSequenceReceiveResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryNextSequenceReceiveResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters => [channelId, portId];
 }

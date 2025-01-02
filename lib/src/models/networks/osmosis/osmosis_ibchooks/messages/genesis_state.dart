@@ -21,7 +21,7 @@ class OsmosisIbchooksGenesisState extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisIbchooksTypes.genesisState.typeUrl;
+  TypeUrl get typeUrl => OsmosisIbchooksTypes.genesisState;
 
   @override
   List get values => [params];

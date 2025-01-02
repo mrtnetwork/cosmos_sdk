@@ -27,7 +27,7 @@ class OsmosisIncentiveGaugeByIDResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisIncentivesTypes.gaugeByIDResponse.typeUrl;
+  TypeUrl get typeUrl => OsmosisIncentivesTypes.gaugeByIDResponse;
 
   @override
   List get values => [gauge];

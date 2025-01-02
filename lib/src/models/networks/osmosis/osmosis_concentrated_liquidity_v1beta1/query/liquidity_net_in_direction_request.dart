@@ -6,8 +6,6 @@ class OsmosisConcentratedLiquidityLiquidityNetInDirectionRequest
     extends CosmosMessage
     with
         QueryMessage<
-            OsmosisConcentratedLiquidityLiquidityNetInDirectionResponse>,
-        RPCMessage<
             OsmosisConcentratedLiquidityLiquidityNetInDirectionResponse> {
   final BigInt? poolId;
   final String? tokenIn;
@@ -49,15 +47,6 @@ class OsmosisConcentratedLiquidityLiquidityNetInDirectionRequest
       };
 
   @override
-  String get queryPath =>
-      OsmosisConcentratedLiquidityV1beta1Types.liquidityNetInDirection.typeUrl;
-
-  @override
-  String get rpcPath =>
-      OsmosisConcentratedLiquidityV1beta1Types.liquidityNetInDirection
-          .rpcUrl(pathParameters: []);
-
-  @override
   Map<String, dynamic> toJson() {
     return {
       "pool_id": poolId?.toString(),
@@ -70,8 +59,8 @@ class OsmosisConcentratedLiquidityLiquidityNetInDirectionRequest
   }
 
   @override
-  String get typeUrl => OsmosisConcentratedLiquidityV1beta1Types
-      .liquidityNetInDirectionRequest.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisConcentratedLiquidityV1beta1Types.liquidityNetInDirectionRequest;
 
   @override
   List get values =>

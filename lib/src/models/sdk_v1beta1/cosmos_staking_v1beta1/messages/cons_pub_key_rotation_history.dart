@@ -56,7 +56,7 @@ class ConsPubKeyRotationHistory extends CosmosMessage {
   List<int> get fieldIds => [1, 2, 3, 4, 5];
 
   @override
-  String get typeUrl => StakingV1beta1Types.consPubKeyRotationHistory.typeUrl;
+  TypeUrl get typeUrl => StakingV1beta1Types.consPubKeyRotationHistory;
 
   @override
   List get values =>

@@ -7,18 +7,21 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class QueryChannelConsensusStateRequest extends CosmosMessage
     with QueryMessage<QueryChannelConsensusStateResponse> {
   /// port unique identifier
-  final String? portId;
+  final String portId;
 
   /// channel unique identifier
-  final String? channelId;
+  final String channelId;
 
   /// revision number of the consensus state
-  final BigInt? revisionNumber;
+  final BigInt revisionNumber;
 
   /// revision height of the consensus state
-  final BigInt? revisionHeight;
+  final BigInt revisionHeight;
   const QueryChannelConsensusStateRequest(
-      {this.portId, this.channelId, this.revisionHeight, this.revisionNumber});
+      {required this.portId,
+      required this.channelId,
+      required this.revisionHeight,
+      required this.revisionNumber});
   factory QueryChannelConsensusStateRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryChannelConsensusStateRequest(
@@ -32,20 +35,17 @@ class QueryChannelConsensusStateRequest extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3, 4];
 
   @override
-  String get queryPath => IbcTypes.channelConsensusState.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {
       "port_id": portId,
       "channel_id": channelId,
-      "revision_number": revisionNumber?.toString(),
-      "revision_height": revisionHeight?.toString()
+      "revision_number": revisionNumber.toString(),
+      "revision_height": revisionHeight.toString()
     };
   }
 
   @override
-  String get typeUrl => IbcTypes.queryChannelConsensusStateRequest.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryChannelConsensusStateRequest;
 
   @override
   List get values => [portId, channelId, revisionNumber, revisionHeight];
@@ -54,4 +54,13 @@ class QueryChannelConsensusStateRequest extends CosmosMessage
   QueryChannelConsensusStateResponse onResponse(List<int> bytes) {
     return QueryChannelConsensusStateResponse.deserialize(bytes);
   }
+
+  @override
+  QueryChannelConsensusStateResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryChannelConsensusStateResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters =>
+      [channelId, portId, revisionNumber.toString(), revisionHeight.toString()];
 }

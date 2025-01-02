@@ -25,7 +25,7 @@ class OsmosisTokenFactoryMsgMint extends CosmosMessage
   }
 
   @override
-  String get typeUrl => OsmosisTokenFactoryV1beta1Types.msgMint.typeUrl;
+  TypeUrl get typeUrl => OsmosisTokenFactoryV1beta1Types.msgMint;
 
   @override
   List get values => [sender, amount];
@@ -33,11 +33,11 @@ class OsmosisTokenFactoryMsgMint extends CosmosMessage
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        OsmosisTokenFactoryV1beta1Types.msgMintResponse.typeUrl);
+        OsmosisTokenFactoryV1beta1Types.msgMintResponse);
   }
 
   @override
-  String get service => OsmosisTokenFactoryV1beta1Types.mint.typeUrl;
+  TypeUrl get service => OsmosisTokenFactoryV1beta1Types.mint;
 
   @override
   List<String?> get signers => [sender];

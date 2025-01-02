@@ -27,8 +27,7 @@ class OsmosisTokenFactoryQueryParamsResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisTokenFactoryV1beta1Types.queryParamsResponse.typeUrl;
+  TypeUrl get typeUrl => OsmosisTokenFactoryV1beta1Types.queryParamsResponse;
 
   @override
   List get values => [params];

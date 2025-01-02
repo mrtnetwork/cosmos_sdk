@@ -17,7 +17,15 @@ class GetNodeInfoResponse extends CosmosMessage {
             .getResult(2)
             ?.to<VersionInfo, List<int>>((e) => VersionInfo.deserialize(e)));
   }
-
+  factory GetNodeInfoResponse.fromRpc(Map<String, dynamic> json) {
+    return GetNodeInfoResponse(
+        defaultNodeInfo: (json["default_node_info"] == null
+            ? null
+            : DefaultNodeInfo.fromRpc(json["default_node_info"])),
+        applicationVersion: (json["application_version"] == null
+            ? null
+            : VersionInfo.fromRpc(json["application_version"])));
+  }
   @override
   List<int> get fieldIds => [1, 2];
 
@@ -30,7 +38,7 @@ class GetNodeInfoResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => BaseTendermintV1beta1Types.getNodeInfoResponse.typeUrl;
+  TypeUrl get typeUrl => BaseTendermintV1beta1Types.getNodeInfoResponse;
 
   @override
   List get values => [defaultNodeInfo, applicationVersion];

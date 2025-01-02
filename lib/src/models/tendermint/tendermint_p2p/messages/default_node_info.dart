@@ -13,6 +13,18 @@ class DefaultNodeInfo extends CosmosMessage {
   final List<int>? channels;
   final String? moniker;
   final DefaultNodeInfoOther other;
+  factory DefaultNodeInfo.fromRpc(Map<String, dynamic> json) {
+    return DefaultNodeInfo(
+        protocolVersion: ProtocolVersion.fromRpc(json["protocol_version"]),
+        channels: StringUtils.tryEncode(json["channels"],
+            type: StringEncoding.base64),
+        other: DefaultNodeInfoOther.fromRpc(json["other"]),
+        defaultNodeId: json["default_node_id"],
+        listenAddress: json["listen_addr"],
+        moniker: json["moniker"],
+        network: json["network"],
+        version: json["version"]);
+  }
   DefaultNodeInfo(
       {required this.protocolVersion,
       this.defaultNodeId,
@@ -47,14 +59,14 @@ class DefaultNodeInfo extends CosmosMessage {
       "listen_addr": listenAddress,
       "network": network,
       "version": version,
-      "channels": BytesUtils.tryToHexString(channels),
+      "channels": StringUtils.tryDecode(channels, type: StringEncoding.base64),
       "moniker": moniker,
       "other": other.toJson()
     };
   }
 
   @override
-  String get typeUrl => TendermintTypes.defaultNodeInfo.typeUrl;
+  TypeUrl get typeUrl => TendermintTypes.defaultNodeInfo;
 
   @override
   List get values => [

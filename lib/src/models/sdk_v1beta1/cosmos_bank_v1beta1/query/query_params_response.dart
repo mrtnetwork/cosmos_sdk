@@ -13,6 +13,9 @@ class QueryParamsResponse extends CosmosMessage {
     return QueryParamsResponse(
         params: BankParams.deserialize(decode.getField(1)));
   }
+  factory QueryParamsResponse.fromRpc(Map<String, dynamic> json) {
+    return QueryParamsResponse(params: BankParams.fromRpc(json["params"]));
+  }
   @override
   List<int> get fieldIds => [1];
 
@@ -22,7 +25,7 @@ class QueryParamsResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => BankV1beta1Types.paramsResponse.typeUrl;
+  TypeUrl get typeUrl => BankV1beta1Types.paramsResponse;
 
   @override
   List get values => [params];

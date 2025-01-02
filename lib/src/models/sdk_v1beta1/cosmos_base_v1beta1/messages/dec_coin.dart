@@ -29,5 +29,5 @@ class DecCoin extends CosmosMessage {
   @override
   List get values => [denom, amount];
   @override
-  String get typeUrl => BaseV1beta1Types.decCoin.typeUrl;
+  TypeUrl get typeUrl => BaseV1beta1Types.decCoin;
 }

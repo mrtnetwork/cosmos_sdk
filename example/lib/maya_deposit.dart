@@ -18,14 +18,14 @@ void main() async {
   const btcAddress = "18o6JzKApaUQ1uJXQhbTUNDsKZRT9hAJuC";
   const String chainName = "BTC";
   const String assetName = "BTC.BTC";
-  final CosmosBaseAddress owner = pubkey.toAddresss(hrp: "smaya");
+  final CosmosBaseAddress owner = pubkey.toAddress(hrp: "smaya");
 
   final provider = TendermintProvider(
       TendermintHTTPProvider(url: "http://54.243.15.123:27147/"));
   final latestBlock = await provider.request(
       TendermintRequestAbciQuery(request: const GetLatestBlockRequest()));
   final accountQuery = await provider.request(TendermintRequestAbciQuery(
-      request: QueryAccountRequest(pubkey.toAddresss(hrp: "smaya"))));
+      request: QueryAccountRequest(pubkey.toAddress(hrp: "smaya"))));
   final BaseAccount account = accountQuery.account as BaseAccount;
 
   final message = ThorchainMsgDeposit.create(

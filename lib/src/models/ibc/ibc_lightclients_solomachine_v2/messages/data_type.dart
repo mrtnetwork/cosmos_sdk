@@ -1,4 +1,4 @@
-import 'package:blockchain_utils/exception/exception.dart';
+import 'package:cosmos_sdk/src/exception/exception.dart';
 import 'package:cosmos_sdk/src/protobuf/types/cosmos_enum.dart';
 
 class IbcSoloMachineV2DataType implements CosmosEnum {
@@ -44,7 +44,7 @@ class IbcSoloMachineV2DataType implements CosmosEnum {
   static IbcSoloMachineV2DataType fromValue(int? value) {
     return values.firstWhere(
       (e) => e.value == value,
-      orElse: () => throw MessageException(
+      orElse: () => throw DartCosmosSdkPluginException(
           "No IbcSoloMachineV2DataType element found for the given value.",
           details: {"value": value}),
     );

@@ -23,7 +23,7 @@ class CanonicalPartSetHeader extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => TendermintTypes.canonicalPartSetHeader.typeUrl;
+  TypeUrl get typeUrl => TendermintTypes.canonicalPartSetHeader;
 
   @override
   List get values => [total, hash];

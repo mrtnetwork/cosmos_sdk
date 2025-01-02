@@ -13,6 +13,18 @@ class QueryDelegatorUnbondingDelegationsResponse extends CosmosMessage {
   QueryDelegatorUnbondingDelegationsResponse(
       {required List<UnbondingDelegation> unbondingResponses, this.pagination})
       : unbondingResponses = unbondingResponses.immutable;
+  factory QueryDelegatorUnbondingDelegationsResponse.fromRpc(
+      Map<String, dynamic> json) {
+    return QueryDelegatorUnbondingDelegationsResponse(
+      unbondingResponses: (json["unbonding_responses"] as List?)
+              ?.map((e) => UnbondingDelegation.fromRpc(e))
+              .toList() ??
+          [],
+      pagination: json["pagination"] == null
+          ? null
+          : PageResponse.fromRpc(json["pagination"]),
+    );
+  }
   factory QueryDelegatorUnbondingDelegationsResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -37,8 +49,8 @@ class QueryDelegatorUnbondingDelegationsResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      StakingV1beta1Types.queryDelegatorUnbondingDelegationsResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      StakingV1beta1Types.queryDelegatorUnbondingDelegationsResponse;
 
   @override
   List get values => [unbondingResponses, pagination];

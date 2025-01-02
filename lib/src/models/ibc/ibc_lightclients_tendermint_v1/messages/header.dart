@@ -59,7 +59,7 @@ class IbcTendermintHeader extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.ibcTendermintV1Header.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.ibcTendermintV1Header;
 
   @override
   List get values =>

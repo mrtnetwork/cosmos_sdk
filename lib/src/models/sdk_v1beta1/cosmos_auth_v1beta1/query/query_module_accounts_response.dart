@@ -1,15 +1,23 @@
+import 'package:cosmos_sdk/src/models/global_messages/unknown_message.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_auth_v1beta1/types/types.dart';
 
 /// QueryModuleAccountsResponse is the response type for the Query/ModuleAccounts RPC method.
 /// Since: cosmos-sdk 0.46
 class QueryModuleAccountsResponse extends CosmosMessage {
-  final List<Any> accounts;
+  final List<AnyMessage> accounts;
   const QueryModuleAccountsResponse(this.accounts);
   factory QueryModuleAccountsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
+    return QueryModuleAccountsResponse(decode
+        .getFields<List<int>>(1)
+        .map((e) => AnyMessage.deserialize(e))
+        .toList());
+  }
+
+  factory QueryModuleAccountsResponse.fromRpc(Map<String, dynamic> json) {
     return QueryModuleAccountsResponse(
-        decode.getFields<List<int>>(1).map((e) => Any.deserialize(e)).toList());
+        (json["accounts"] as List).map((e) => AnyMessage.fromRpc(e)).toList());
   }
 
   @override
@@ -24,5 +32,5 @@ class QueryModuleAccountsResponse extends CosmosMessage {
   List get values => [accounts];
 
   @override
-  String get typeUrl => AuthV1beta1Types.moduleAccountsResponse.typeUrl;
+  TypeUrl get typeUrl => AuthV1beta1Types.moduleAccountsResponse;
 }

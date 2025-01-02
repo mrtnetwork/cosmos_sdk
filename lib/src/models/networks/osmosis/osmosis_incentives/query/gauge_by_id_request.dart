@@ -3,12 +3,10 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'gauge_by_id_response.dart';
 
 class OsmosisIncentiveGaugeByIDRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisIncentiveGaugeByIDResponse>,
-        RPCMessage<OsmosisIncentiveGaugeByIDResponse> {
+    with QueryMessage<OsmosisIncentiveGaugeByIDResponse> {
   /// Gague ID being queried
-  final BigInt? id;
-  const OsmosisIncentiveGaugeByIDRequest({this.id});
+  final BigInt id;
+  const OsmosisIncentiveGaugeByIDRequest({required this.id});
   factory OsmosisIncentiveGaugeByIDRequest.fromBytes(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisIncentiveGaugeByIDRequest(id: decode.getField(1));
@@ -23,15 +21,15 @@ class OsmosisIncentiveGaugeByIDRequest extends CosmosMessage
   }
 
   @override
-  String get queryPath => OsmosisIncentivesTypes.gaugeByID.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
-    return {"id": id?.toString()};
+    return {"id": id.toString()};
   }
 
   @override
-  String get typeUrl => OsmosisIncentivesTypes.gaugeByIDRequest.typeUrl;
+  TypeUrl get typeUrl => OsmosisIncentivesTypes.gaugeByIDRequest;
+
+  @override
+  List<String> get pathParameters => [id.toString()];
 
   @override
   List get values => [id];
@@ -43,8 +41,4 @@ class OsmosisIncentiveGaugeByIDRequest extends CosmosMessage
 
   @override
   Map<String, String> get queryParameters => {};
-
-  @override
-  String get rpcPath =>
-      OsmosisIncentivesTypes.gaugeByID.rpcUrl(pathParameters: [id?.toString()]);
 }

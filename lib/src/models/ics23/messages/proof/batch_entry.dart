@@ -28,7 +28,7 @@ class Ics23BatchEntry extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => Ics23Types.batchEntry.typeUrl;
+  TypeUrl get typeUrl => Ics23Types.batchEntry;
 
   @override
   List get values => [proof];

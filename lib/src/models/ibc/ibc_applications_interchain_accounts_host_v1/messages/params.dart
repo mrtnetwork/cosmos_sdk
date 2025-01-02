@@ -12,6 +12,12 @@ class InterchainAccountsHostParams extends CosmosMessage {
   final List<String>? allowMessages;
   InterchainAccountsHostParams({this.hostEnabled, List<String>? allowMessages})
       : allowMessages = allowMessages?.emptyAsNull?.immutable;
+
+  factory InterchainAccountsHostParams.fromRpc(Map<String, dynamic> json) {
+    return InterchainAccountsHostParams(
+        allowMessages: (json["allow_messages"] as List?)?.cast(),
+        hostEnabled: json["host_enabled"]);
+  }
   factory InterchainAccountsHostParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return InterchainAccountsHostParams(
@@ -28,7 +34,7 @@ class InterchainAccountsHostParams extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.interchainAccountsHostParams.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.interchainAccountsHostParams;
 
   @override
   List get values => [hostEnabled, allowMessages];

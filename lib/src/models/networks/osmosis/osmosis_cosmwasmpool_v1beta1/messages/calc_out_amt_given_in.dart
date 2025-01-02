@@ -35,8 +35,7 @@ class OsmosisCosmWasmPoolCalcOutAmtGivenIn extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisCosmWasmPoolV1beta1Types.calcOutAmtGivenIn.typeUrl;
+  TypeUrl get typeUrl => OsmosisCosmWasmPoolV1beta1Types.calcOutAmtGivenIn;
 
   @override
   List get values => [tokenIn, tokenOutDenom, swapFee];

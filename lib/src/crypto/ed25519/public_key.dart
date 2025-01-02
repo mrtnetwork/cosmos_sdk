@@ -1,13 +1,10 @@
 import 'package:blockchain_utils/blockchain_utils.dart';
-import 'package:cosmos_sdk/src/address/address/addr_utils.dart';
-import 'package:cosmos_sdk/src/address/address/address.dart';
-import 'package:cosmos_sdk/src/address/address/address_const.dart';
-import 'package:cosmos_sdk/src/crypto/public_key/public_key.dart';
-import 'package:cosmos_sdk/src/crypto/ed25519/types/types.dart';
+import 'package:cosmos_sdk/src/crypto/keypair/public_key.dart';
+import 'package:cosmos_sdk/src/crypto/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 import 'package:cosmos_sdk/src/protobuf/codec/decoder.dart';
 
-class CosmosED25519PublicKey extends CosmosPublicKeyInfo {
+class CosmosED25519PublicKey extends CosmosPublicKey {
   final Ed25519PublicKey _publicKey;
   const CosmosED25519PublicKey._(this._publicKey);
   factory CosmosED25519PublicKey.fromBytes(List<int> keyBytes) {
@@ -22,14 +19,9 @@ class CosmosED25519PublicKey extends CosmosPublicKeyInfo {
         Ed25519PublicKey.fromBytes(decode.getField(1)));
   }
 
+  @override
   List<int> toBytes() {
     return _publicKey.uncompressed;
-  }
-
-  CosmosBaseAddress toAddresss({String hrp = CosmosAddrConst.validatorHRP}) {
-    return CosmosBaseAddress.fromBytes(
-        CosmosAddrUtils.ed22195PubkeyToAddress(toBytes()),
-        hrp: hrp);
   }
 
   @override
@@ -49,5 +41,8 @@ class CosmosED25519PublicKey extends CosmosPublicKeyInfo {
   List get values => [_publicKey.compressed.sublist(1)];
 
   @override
-  String get typeUrl => CryptoTypes.ed25519Publickey.typeUrl;
+  TypeUrl get typeUrl => CosmosCryptoKeysTypes.ed25519Publickey;
+
+  @override
+  CosmosKeysAlgs get algorithm => CosmosKeysAlgs.ed25519;
 }

@@ -30,8 +30,7 @@ class OsmosisTxfeesQueryDenomSpotPriceResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisTxfeesV1beta1Types.queryDenomSpotPriceResponse.typeUrl;
+  TypeUrl get typeUrl => OsmosisTxfeesV1beta1Types.queryDenomSpotPriceResponse;
 
   @override
   List get values => [poolID, spotPrice];

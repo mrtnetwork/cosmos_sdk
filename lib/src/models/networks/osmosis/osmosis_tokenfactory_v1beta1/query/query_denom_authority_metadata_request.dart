@@ -5,11 +5,9 @@ import 'query_denom_authority_metadata_response.dart';
 /// QueryDenomAuthorityMetadataRequest defines the request structure for the DenomAuthorityMetadata gRPC query.
 class OsmosisTokenFactoryQueryDenomAuthorityMetadataRequest
     extends CosmosMessage
-    with
-        QueryMessage<OsmosisTokenFactoryQueryDenomAuthorityMetadataResponse>,
-        RPCMessage<OsmosisTokenFactoryQueryDenomAuthorityMetadataResponse> {
-  final String? denom;
-  OsmosisTokenFactoryQueryDenomAuthorityMetadataRequest({this.denom});
+    with QueryMessage<OsmosisTokenFactoryQueryDenomAuthorityMetadataResponse> {
+  final String denom;
+  OsmosisTokenFactoryQueryDenomAuthorityMetadataRequest({required this.denom});
   factory OsmosisTokenFactoryQueryDenomAuthorityMetadataRequest.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -26,8 +24,8 @@ class OsmosisTokenFactoryQueryDenomAuthorityMetadataRequest
   }
 
   @override
-  String get typeUrl => OsmosisTokenFactoryV1beta1Types
-      .queryDenomAuthorityMetadataRequest.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisTokenFactoryV1beta1Types.queryDenomAuthorityMetadataRequest;
 
   @override
   List get values => [denom];
@@ -49,11 +47,5 @@ class OsmosisTokenFactoryQueryDenomAuthorityMetadataRequest
   Map<String, String?> get queryParameters => {};
 
   @override
-  String get queryPath =>
-      OsmosisTokenFactoryV1beta1Types.queryDenomAuthorityMetadata.typeUrl;
-
-  @override
-  String get rpcPath =>
-      OsmosisTokenFactoryV1beta1Types.queryDenomAuthorityMetadata
-          .rpcUrl(pathParameters: [denom]);
+  List<String> get pathParameters => [denom];
 }

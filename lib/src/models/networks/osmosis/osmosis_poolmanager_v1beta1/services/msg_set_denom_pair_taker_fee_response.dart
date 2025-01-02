@@ -21,8 +21,8 @@ class OsmosisPoolManagerMsgSetDenomPairTakerFeeResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisPoolManagerV1beta1Types.msgSetDenomPairTakerFeeResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisPoolManagerV1beta1Types.msgSetDenomPairTakerFeeResponse;
 
   @override
   List get values => [success];

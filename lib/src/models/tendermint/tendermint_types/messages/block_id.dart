@@ -34,7 +34,7 @@ class BlockID extends CosmosMessage {
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get typeUrl => TendermintTypes.blockID.typeUrl;
+  TypeUrl get typeUrl => TendermintTypes.blockID;
 
   @override
   List get values => [hash, partSetHeader];

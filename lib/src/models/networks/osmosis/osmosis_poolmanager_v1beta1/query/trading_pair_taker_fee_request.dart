@@ -3,9 +3,7 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'trading_pair_taker_fee_response.dart';
 
 class OsmosisPoolManagerTradingPairTakerFeeRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisPoolManagerTradingPairTakerFeeResponse>,
-        RPCMessage<OsmosisPoolManagerTradingPairTakerFeeResponse> {
+    with QueryMessage<OsmosisPoolManagerTradingPairTakerFeeResponse> {
   final String? denom0;
   final String? denom1;
   const OsmosisPoolManagerTradingPairTakerFeeRequest(
@@ -35,21 +33,13 @@ class OsmosisPoolManagerTradingPairTakerFeeRequest extends CosmosMessage
       {"denom_0": denom0, "denom_1": denom1};
 
   @override
-  String get queryPath =>
-      OsmosisPoolManagerV1beta1Types.tradingPairTakerFee.typeUrl;
-
-  @override
-  String get rpcPath =>
-      OsmosisPoolManagerV1beta1Types.tradingPairTakerFee.rpcUrl();
-
-  @override
   Map<String, dynamic> toJson() {
     return {"denom_0": denom0, "denom_1": denom1};
   }
 
   @override
-  String get typeUrl =>
-      OsmosisPoolManagerV1beta1Types.tradingPairTakerFeeRequest.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisPoolManagerV1beta1Types.tradingPairTakerFeeRequest;
 
   @override
   List get values => [denom0, denom1];

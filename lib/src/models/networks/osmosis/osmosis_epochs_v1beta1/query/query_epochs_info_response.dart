@@ -28,7 +28,7 @@ class OmosisEpochsQueryEpochsInfoResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisEpochsV1beta1Types.epochsInfoResponse.typeUrl;
+  TypeUrl get typeUrl => OsmosisEpochsV1beta1Types.epochsInfoResponse;
 
   @override
   List get values => [epochs];

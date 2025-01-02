@@ -26,15 +26,12 @@ class QuerySpendableBalanceByDenomRequest extends CosmosMessage
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get queryPath => BankV1beta1Types.spendableBalanceByDenom.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {"address": address.address, "denom": denom};
   }
 
   @override
-  String get typeUrl => BankV1beta1Types.spendableBalanceByDenomRequest.typeUrl;
+  TypeUrl get typeUrl => BankV1beta1Types.spendableBalanceByDenomRequest;
 
   @override
   List get values => [address.address, denom];
@@ -43,4 +40,16 @@ class QuerySpendableBalanceByDenomRequest extends CosmosMessage
   QuerySpendableBalanceByDenomResponse onResponse(List<int> bytes) {
     return QuerySpendableBalanceByDenomResponse.deserialize(bytes);
   }
+
+  @override
+  QuerySpendableBalanceByDenomResponse onJsonResponse(
+      Map<String, dynamic> json) {
+    return QuerySpendableBalanceByDenomResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters => [address.address];
+
+  @override
+  Map<String, String?> get queryParameters => {"denom": denom};
 }

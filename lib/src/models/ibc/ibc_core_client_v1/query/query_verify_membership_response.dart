@@ -6,6 +6,9 @@ class QueryVerifyMembershipResponse extends CosmosMessage {
   /// boolean indicating success or failure of proof verification.
   final bool? success;
   QueryVerifyMembershipResponse({this.success});
+  factory QueryVerifyMembershipResponse.fromRpc(Map<String, dynamic> json) {
+    return QueryVerifyMembershipResponse(success: json["success"]);
+  }
   factory QueryVerifyMembershipResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryVerifyMembershipResponse(success: decode.getField(1));
@@ -20,7 +23,7 @@ class QueryVerifyMembershipResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.queryVerifyMembershipResponse.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryVerifyMembershipResponse;
 
   @override
   List get values => [success];

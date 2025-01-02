@@ -4,7 +4,7 @@ import 'package:cosmos_sdk/src/provider/tendermint/core/tendermint.dart';
 /// Gets Node Health
 /// https://docs.tendermint.com/v0.34/rpc/#/Info/health
 class TendermintRequestHealth
-    extends TendermintRequestParam<bool, Map<String, dynamic>> {
+    extends TendermintRequest<bool, Map<String, dynamic>> {
   TendermintRequestHealth();
 
   /// Node heartbeat

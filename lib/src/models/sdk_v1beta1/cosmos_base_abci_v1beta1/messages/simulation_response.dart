@@ -25,7 +25,7 @@ class SimulationResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => BaseAbciV1beta1.simulationResponse.typeUrl;
+  TypeUrl get typeUrl => BaseAbciV1beta1.simulationResponse;
 
   @override
   List get values => [gasInfo, result];

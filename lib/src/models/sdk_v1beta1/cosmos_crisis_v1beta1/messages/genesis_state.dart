@@ -23,7 +23,7 @@ class CrisisGenesisState extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => CrisisV1beta1.crisisGenesisState.typeUrl;
+  TypeUrl get typeUrl => CrisisV1beta1.crisisGenesisState;
 
   @override
   List get values => [constantFee];

@@ -1,4 +1,4 @@
-import 'package:blockchain_utils/exception/exception.dart';
+import 'package:cosmos_sdk/src/exception/exception.dart';
 import 'package:cosmos_sdk/src/protobuf/types/cosmos_enum.dart';
 
 /// BlockIdFlag indicates which BlockID the signature is for
@@ -19,7 +19,7 @@ class BlockIDFlag implements CosmosEnum {
   static BlockIDFlag fromValue(int? value) {
     return values.firstWhere(
       (e) => e.value == value,
-      orElse: () => throw MessageException(
+      orElse: () => throw DartCosmosSdkPluginException(
           "No BlockIDFlag element found for the given value.",
           details: {"value": value}),
     );
@@ -28,7 +28,7 @@ class BlockIDFlag implements CosmosEnum {
   static BlockIDFlag fromName(String? name) {
     return values.firstWhere(
       (e) => e.name == name,
-      orElse: () => throw MessageException(
+      orElse: () => throw DartCosmosSdkPluginException(
           "No BlockIDFlag element found for the given name.",
           details: {"value": name}),
     );

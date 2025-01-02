@@ -35,7 +35,7 @@ class ThorchainMsgSend extends CosmosMessage
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.msgSend.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.msgSend;
 
   @override
   List get values => [fromAddress.toBytes(), toAddress.toBytes(), amount];
@@ -46,7 +46,7 @@ class ThorchainMsgSend extends CosmosMessage
   }
 
   @override
-  String get service => ThorchainV1Types.msgSend.typeUrl;
+  TypeUrl get service => ThorchainV1Types.msgSend;
 
   @override
   List<String?> get signers => [fromAddress.address];

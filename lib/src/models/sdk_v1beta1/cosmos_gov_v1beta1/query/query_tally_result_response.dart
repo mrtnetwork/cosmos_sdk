@@ -7,6 +7,9 @@ class GovQueryTallyResultResponse extends CosmosMessage {
   /// tally defines the requested tally.
   final GovTallyResult tally;
   const GovQueryTallyResultResponse(this.tally);
+  factory GovQueryTallyResultResponse.fromRpc(Map<String, dynamic> json) {
+    return GovQueryTallyResultResponse(GovTallyResult.fromRpc(json["tally"]));
+  }
   factory GovQueryTallyResultResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GovQueryTallyResultResponse(
@@ -22,7 +25,7 @@ class GovQueryTallyResultResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => GovV1beta1types.govQueryTallyResultResponse.typeUrl;
+  TypeUrl get typeUrl => GovV1beta1types.govQueryTallyResultResponse;
 
   @override
   List get values => [tally];

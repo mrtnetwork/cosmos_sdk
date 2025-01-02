@@ -29,7 +29,7 @@ class AuthzExec extends CosmosMessage
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get service => AuthzV1beta1Types.authzExec.typeUrl;
+  TypeUrl get service => AuthzV1beta1Types.authzExec;
 
   @override
   Map<String, dynamic> toJson() {
@@ -40,7 +40,7 @@ class AuthzExec extends CosmosMessage
   }
 
   @override
-  String get typeUrl => AuthzV1beta1Types.authzMsgExec.typeUrl;
+  TypeUrl get typeUrl => AuthzV1beta1Types.authzMsgExec;
 
   @override
   List get values => [grantee, msgs];

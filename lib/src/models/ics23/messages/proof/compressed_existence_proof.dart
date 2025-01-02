@@ -44,7 +44,7 @@ class Ics23CompressedExistenceProof extends Ics23CompressedBatchEntryBase {
   }
 
   @override
-  String get typeUrl => Ics23Types.compressedExistenceProof.typeUrl;
+  TypeUrl get typeUrl => Ics23Types.compressedExistenceProof;
 
   @override
   List get values => [key, value, leaf, path];

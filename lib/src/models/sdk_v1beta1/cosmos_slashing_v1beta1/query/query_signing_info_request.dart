@@ -14,16 +14,12 @@ class SlashingQuerySigningInfoRequest extends CosmosMessage
   List<int> get fieldIds => [1];
 
   @override
-  String get queryPath => SlashingV1beta1Types.slashingSigningInfo.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {"cons_address": consAddress.address};
   }
 
   @override
-  String get typeUrl =>
-      SlashingV1beta1Types.slashingQuerySigningInfoRequest.typeUrl;
+  TypeUrl get typeUrl => SlashingV1beta1Types.slashingQuerySigningInfoRequest;
 
   @override
   List get values => [consAddress.address];
@@ -31,4 +27,12 @@ class SlashingQuerySigningInfoRequest extends CosmosMessage
   SlashingQuerySigningInfoResponse onResponse(List<int> bytes) {
     return SlashingQuerySigningInfoResponse.deserialize(bytes);
   }
+
+  @override
+  SlashingQuerySigningInfoResponse onJsonResponse(Map<String, dynamic> json) {
+    return SlashingQuerySigningInfoResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters => [consAddress.address];
 }

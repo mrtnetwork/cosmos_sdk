@@ -59,8 +59,8 @@ class OsmosisConcentratedLiquidityTickAccumulatorTrackersResponse
   }
 
   @override
-  String get typeUrl => OsmosisConcentratedLiquidityV1beta1Types
-      .tickAccumulatorTrackersResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisConcentratedLiquidityV1beta1Types.tickAccumulatorTrackersResponse;
 
   @override
   List get values =>

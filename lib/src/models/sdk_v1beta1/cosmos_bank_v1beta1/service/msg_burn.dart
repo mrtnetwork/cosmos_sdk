@@ -39,16 +39,15 @@ class MsgBurn extends CosmosMessage
 
   @override
   @override
-  String get typeUrl => BankV1beta1Types.msgBurn.typeUrl;
+  TypeUrl get typeUrl => BankV1beta1Types.msgBurn;
   @override
-  String get service => BankV1beta1Types.burn.typeUrl;
+  TypeUrl get service => BankV1beta1Types.burn;
 
   @override
   List<String?> get signers => [address.address];
 
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
-    return EmptyServiceRequestResponse(
-        BankV1beta1Types.msgBurnResponse.typeUrl);
+    return EmptyServiceRequestResponse(BankV1beta1Types.msgBurnResponse);
   }
 }

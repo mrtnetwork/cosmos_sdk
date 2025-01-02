@@ -38,8 +38,8 @@ class OsmosisValidatorPreferenceQueryUserValidatorPreferenceResponse
   }
 
   @override
-  String get typeUrl => OsmosisValidatorPreferenceV1beta1Types
-      .queryUserValidatorPreferenceResponse.typeUrl;
+  TypeUrl get typeUrl => OsmosisValidatorPreferenceV1beta1Types
+      .queryUserValidatorPreferenceResponse;
 
   @override
   List get values => [preferences];

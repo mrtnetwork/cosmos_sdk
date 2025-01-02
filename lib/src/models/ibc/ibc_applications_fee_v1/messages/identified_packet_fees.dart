@@ -11,6 +11,15 @@ class IbcFeeIdentifiedPacketFees extends CosmosMessage {
 
   /// list of packet fees
   final List<IbcFeePacketFee> packetFees;
+
+  factory IbcFeeIdentifiedPacketFees.fromRpc(Map<String, dynamic> json) {
+    return IbcFeeIdentifiedPacketFees(
+        packetId: IbcChannelPacketId.fromRpc(json["packet_id"]),
+        packetFees: (json["packet_fees"] as List?)
+                ?.map((e) => IbcFeePacketFee.fromRpc(e))
+                .toList() ??
+            []);
+  }
   IbcFeeIdentifiedPacketFees(
       {required this.packetId, required List<IbcFeePacketFee> packetFees})
       : packetFees = packetFees.immutable;
@@ -36,7 +45,7 @@ class IbcFeeIdentifiedPacketFees extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.identifiedPacketFees.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.identifiedPacketFees;
 
   @override
   List get values => [packetId, packetFees];

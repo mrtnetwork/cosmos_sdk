@@ -30,15 +30,12 @@ class QuerySendEnabledRequest extends CosmosMessage
   List<int> get fieldIds => [1, 99];
 
   @override
-  String get queryPath => BankV1beta1Types.querySendEnabled.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {"denoms": denoms, "pagination": pagination?.toJson()};
   }
 
   @override
-  String get typeUrl => BankV1beta1Types.sendEnabledRequest.typeUrl;
+  TypeUrl get typeUrl => BankV1beta1Types.sendEnabledRequest;
 
   @override
   List get values => [denoms, pagination];
@@ -47,4 +44,13 @@ class QuerySendEnabledRequest extends CosmosMessage
   QuerySendEnabledResponse onResponse(List<int> bytes) {
     return QuerySendEnabledResponse.deserialize(bytes);
   }
+
+  @override
+  QuerySendEnabledResponse onJsonResponse(Map<String, dynamic> json) {
+    return QuerySendEnabledResponse.fromRpc(json);
+  }
+
+  @override
+  Map<String, String?> get queryParameters =>
+      {"denoms": denoms.join(","), ...pagination?.queryParameters ?? {}};
 }

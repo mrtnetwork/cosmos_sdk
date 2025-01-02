@@ -61,8 +61,8 @@ class OsmosisSuperfluidConcentratedPoolUserPositionRecord
   }
 
   @override
-  String get typeUrl =>
-      OsmosisSuperfluidTypes.concentratedPoolUserPositionRecord.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisSuperfluidTypes.concentratedPoolUserPositionRecord;
 
   @override
   List get values => [

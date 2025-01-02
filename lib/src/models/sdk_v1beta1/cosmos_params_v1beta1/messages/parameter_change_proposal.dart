@@ -35,7 +35,7 @@ class ParameterChangeProposal extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ParamsV1beta1.parameterChangeProposal.typeUrl;
+  TypeUrl get typeUrl => ParamsV1beta1.parameterChangeProposal;
 
   @override
   List get values => [title, description, changes];

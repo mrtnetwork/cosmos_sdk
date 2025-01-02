@@ -24,8 +24,7 @@ class OsmosisTwapArithmeticTwapToNowResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisTwapV1beta1Types.arithmeticTwapToNowResponse.typeUrl;
+  TypeUrl get typeUrl => OsmosisTwapV1beta1Types.arithmeticTwapToNowResponse;
 
   @override
   List get values => [arithmeticTwap];

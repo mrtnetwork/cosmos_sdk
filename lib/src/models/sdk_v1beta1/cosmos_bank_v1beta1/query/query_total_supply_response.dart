@@ -8,6 +8,16 @@ class QueryTotalSupplyResponse extends CosmosMessage {
   /// supply is the supply of the coins.
   final List<Coin> supply;
 
+  factory QueryTotalSupplyResponse.fromRpc(Map<String, dynamic> json) {
+    return QueryTotalSupplyResponse(
+      supply:
+          (json["supply"] as List?)?.map((e) => Coin.fromRpc(e)).toList() ?? [],
+      pagination: json["pagination"] == null
+          ? null
+          : PageResponse.fromRpc(json["pagination"]),
+    );
+  }
+
   /// pagination defines the pagination in the response.
   ///
   /// Since: cosmos-sdk 0.43
@@ -30,13 +40,13 @@ class QueryTotalSupplyResponse extends CosmosMessage {
   @override
   Map<String, dynamic> toJson() {
     return {
-      "balances": supply.map((e) => e.toJson()).toList(),
+      "supply": supply.map((e) => e.toJson()).toList(),
       "pagination": pagination?.toJson()
     };
   }
 
   @override
-  String get typeUrl => BankV1beta1Types.totalSupplyResponse.typeUrl;
+  TypeUrl get typeUrl => BankV1beta1Types.totalSupplyResponse;
 
   @override
   List get values => [supply, pagination];

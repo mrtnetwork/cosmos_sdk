@@ -37,8 +37,8 @@ class OsmosisValidatorPreferenceMsgUndelegateFromValidatorSet
   }
 
   @override
-  String get typeUrl => OsmosisValidatorPreferenceV1beta1Types
-      .msgUndelegateFromValidatorSet.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisValidatorPreferenceV1beta1Types.msgUndelegateFromValidatorSet;
 
   @override
   List get values => [delegator, coin];
@@ -46,12 +46,12 @@ class OsmosisValidatorPreferenceMsgUndelegateFromValidatorSet
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(OsmosisValidatorPreferenceV1beta1Types
-        .msgUndelegateFromValidatorSetResponse.typeUrl);
+        .msgUndelegateFromValidatorSetResponse);
   }
 
   @override
-  String get service =>
-      OsmosisValidatorPreferenceV1beta1Types.undelegateFromValidatorSet.typeUrl;
+  TypeUrl get service =>
+      OsmosisValidatorPreferenceV1beta1Types.undelegateFromValidatorSet;
 
   @override
   List<String?> get signers => [delegator];

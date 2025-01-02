@@ -46,7 +46,7 @@ class FungibleTokenPacketData extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.fungibleTokenPacketData.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.fungibleTokenPacketData;
 
   @override
   List get values => [denom, amount, sender, receiver, memo];

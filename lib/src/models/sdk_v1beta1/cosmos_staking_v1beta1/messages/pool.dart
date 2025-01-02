@@ -28,7 +28,7 @@ class Pool extends CosmosMessage {
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get typeUrl => StakingV1beta1Types.pool.typeUrl;
+  TypeUrl get typeUrl => StakingV1beta1Types.pool;
 
   @override
   List get values => [notBondedTokens.toString(), bondedTokens.toString()];

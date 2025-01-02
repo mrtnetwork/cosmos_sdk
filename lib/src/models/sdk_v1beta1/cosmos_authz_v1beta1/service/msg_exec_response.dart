@@ -24,7 +24,7 @@ class AuthzMsgExecResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => AuthzV1beta1Types.authzMsgExecResponse.typeUrl;
+  TypeUrl get typeUrl => AuthzV1beta1Types.authzMsgExecResponse;
 
   @override
   List get values => [results];

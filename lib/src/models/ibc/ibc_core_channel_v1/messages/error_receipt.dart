@@ -1,3 +1,4 @@
+import 'package:blockchain_utils/utils/numbers/utils/bigint_utils.dart';
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
@@ -10,6 +11,12 @@ class IbcChannelErrorReceipt extends CosmosMessage {
 
   /// the error message detailing the cause of failure
   final String? message;
+  factory IbcChannelErrorReceipt.fromRpc(Map<String, dynamic> json) {
+    return IbcChannelErrorReceipt(
+      sequence: BigintUtils.parse(json["sequence"]),
+      message: json["message"],
+    );
+  }
   const IbcChannelErrorReceipt({this.sequence, this.message});
   factory IbcChannelErrorReceipt.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -26,7 +33,7 @@ class IbcChannelErrorReceipt extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.errorReceipt.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.errorReceipt;
 
   @override
   List get values => [sequence, message];

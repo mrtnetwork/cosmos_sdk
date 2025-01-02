@@ -47,15 +47,15 @@ class OsmosisSuperfluidMsgUnlockAndMigrateSharesToFullRangeConcentratedPosition
   }
 
   @override
-  String get typeUrl => OsmosisSuperfluidTypes
-      .msgUnlockAndMigrateSharesToFullRangeConcentratedPosition.typeUrl;
+  TypeUrl get typeUrl => OsmosisSuperfluidTypes
+      .msgUnlockAndMigrateSharesToFullRangeConcentratedPosition;
 
   @override
   List get values => [sender, lockId, sharesToMigrate, tokenOutMins];
 
   @override
-  String get service => OsmosisSuperfluidTypes
-      .unlockAndMigrateSharesToFullRangeConcentratedPosition.typeUrl;
+  TypeUrl get service => OsmosisSuperfluidTypes
+      .unlockAndMigrateSharesToFullRangeConcentratedPosition;
 
   @override
   List<String?> get signers => [sender];

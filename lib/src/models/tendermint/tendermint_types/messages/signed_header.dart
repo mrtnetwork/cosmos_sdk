@@ -26,7 +26,7 @@ class SignedHeader extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => TendermintTypes.tendermintSignedHeader.typeUrl;
+  TypeUrl get typeUrl => TendermintTypes.tendermintSignedHeader;
 
   @override
   List get values => [header, commit];

@@ -37,7 +37,7 @@ class OsmosisMintGenesisState extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisMintV1beta1Types.genesisState.typeUrl;
+  TypeUrl get typeUrl => OsmosisMintV1beta1Types.genesisState;
 
   @override
   List get values => [minter, params, reductionStartedEpoch];

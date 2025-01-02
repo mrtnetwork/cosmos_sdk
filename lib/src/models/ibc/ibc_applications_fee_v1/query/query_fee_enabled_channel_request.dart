@@ -7,11 +7,12 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class QueryFeeEnabledChannelRequest extends CosmosMessage
     with QueryMessage<QueryFeeEnabledChannelResponse> {
   /// unique port identifier
-  final String? portId;
+  final String portId;
 
   /// unique channel identifier
-  final String? channelId;
-  const QueryFeeEnabledChannelRequest({this.portId, this.channelId});
+  final String channelId;
+  const QueryFeeEnabledChannelRequest(
+      {required this.portId, required this.channelId});
   factory QueryFeeEnabledChannelRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryFeeEnabledChannelRequest(
@@ -22,15 +23,12 @@ class QueryFeeEnabledChannelRequest extends CosmosMessage
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get queryPath => IbcTypes.queryFeeEnabledChannel.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {"port_id": portId, "channel_id": channelId};
   }
 
   @override
-  String get typeUrl => IbcTypes.queryFeeEnabledChannelRequest.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryFeeEnabledChannelRequest;
 
   @override
   List get values => [portId, channelId];
@@ -39,4 +37,12 @@ class QueryFeeEnabledChannelRequest extends CosmosMessage
   QueryFeeEnabledChannelResponse onResponse(List<int> bytes) {
     return QueryFeeEnabledChannelResponse.deserialize(bytes);
   }
+
+  @override
+  QueryFeeEnabledChannelResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryFeeEnabledChannelResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters => [portId, channelId];
 }

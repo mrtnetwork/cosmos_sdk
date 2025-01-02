@@ -4,9 +4,7 @@ import 'claimable_incentives_response.dart';
 
 class OsmosisConcentratedLiquidityClaimableIncentivesRequest
     extends CosmosMessage
-    with
-        QueryMessage<OsmosisConcentratedLiquidityClaimableIncentivesResponse>,
-        RPCMessage<OsmosisConcentratedLiquidityClaimableIncentivesResponse> {
+    with QueryMessage<OsmosisConcentratedLiquidityClaimableIncentivesResponse> {
   final BigInt? positionId;
 
   const OsmosisConcentratedLiquidityClaimableIncentivesRequest({
@@ -27,22 +25,13 @@ class OsmosisConcentratedLiquidityClaimableIncentivesRequest
       {"position_id": positionId?.toString()};
 
   @override
-  String get queryPath =>
-      OsmosisConcentratedLiquidityV1beta1Types.claimableIncentives.typeUrl;
-
-  @override
-  String get rpcPath =>
-      OsmosisConcentratedLiquidityV1beta1Types.claimableIncentives
-          .rpcUrl(pathParameters: []);
-
-  @override
   Map<String, dynamic> toJson() {
     return {"position_id": positionId?.toString()};
   }
 
   @override
-  String get typeUrl => OsmosisConcentratedLiquidityV1beta1Types
-      .claimableIncentivesRequest.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisConcentratedLiquidityV1beta1Types.claimableIncentivesRequest;
 
   @override
   List get values => [positionId];

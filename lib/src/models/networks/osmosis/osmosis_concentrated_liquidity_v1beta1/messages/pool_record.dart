@@ -48,6 +48,5 @@ class OsmosisConcentratedLiquidityPoolRecord extends CosmosMessage {
   List get values => [denom0, denom1, tickSpacing, spreadFactor];
 
   @override
-  String get typeUrl =>
-      OsmosisConcentratedLiquidityV1beta1Types.poolRecord.typeUrl;
+  TypeUrl get typeUrl => OsmosisConcentratedLiquidityV1beta1Types.poolRecord;
 }

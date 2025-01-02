@@ -10,10 +10,12 @@ class Commission extends CosmosMessage {
   /// update_time is the last time the commission rate was changed.
   final ProtobufTimestamp updateTime;
 
-  const Commission({
-    required this.commissionRates,
-    required this.updateTime,
-  });
+  factory Commission.fromRpc(Map<String, dynamic> json) {
+    return Commission(
+        commissionRates: CommissionRates.fromRpc(json["commission_rates"]),
+        updateTime: ProtobufTimestamp.fromString(json["update_time"]));
+  }
+  const Commission({required this.commissionRates, required this.updateTime});
   factory Commission.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Commission(
@@ -33,7 +35,7 @@ class Commission extends CosmosMessage {
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get typeUrl => StakingV1beta1Types.commission.typeUrl;
+  TypeUrl get typeUrl => StakingV1beta1Types.commission;
 
   @override
   List get values => [commissionRates, updateTime];

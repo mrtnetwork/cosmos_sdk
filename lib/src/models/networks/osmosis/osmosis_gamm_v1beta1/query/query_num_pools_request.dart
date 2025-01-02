@@ -3,9 +3,7 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'query_num_pools_response.dart';
 
 class OsmosisGammQueryNumPoolsRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisGammQueryNumPoolsResponse>,
-        RPCMessage<OsmosisGammQueryNumPoolsResponse> {
+    with QueryMessage<OsmosisGammQueryNumPoolsResponse> {
   const OsmosisGammQueryNumPoolsRequest();
   factory OsmosisGammQueryNumPoolsRequest.fromBytes(List<int> bytes) {
     return const OsmosisGammQueryNumPoolsRequest();
@@ -20,15 +18,12 @@ class OsmosisGammQueryNumPoolsRequest extends CosmosMessage
   }
 
   @override
-  String get queryPath => OsmosisGammV1beta1Types.numPools.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {};
   }
 
   @override
-  String get typeUrl => OsmosisGammV1beta1Types.queryNumPoolsRequest.typeUrl;
+  TypeUrl get typeUrl => OsmosisGammV1beta1Types.queryNumPoolsRequest;
 
   @override
   List get values => [];
@@ -40,7 +35,4 @@ class OsmosisGammQueryNumPoolsRequest extends CosmosMessage
 
   @override
   Map<String, String> get queryParameters => {};
-
-  @override
-  String get rpcPath => OsmosisGammV1beta1Types.numPools.rpcUrl();
 }

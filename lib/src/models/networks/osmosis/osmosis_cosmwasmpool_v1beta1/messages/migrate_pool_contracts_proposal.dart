@@ -80,8 +80,8 @@ class OsmosisCosmWasmPoolMigratePoolContractsProposal extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisCosmWasmPoolV1beta1Types.migratePoolContractsProposal.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisCosmWasmPoolV1beta1Types.migratePoolContractsProposal;
 
   @override
   List get values =>

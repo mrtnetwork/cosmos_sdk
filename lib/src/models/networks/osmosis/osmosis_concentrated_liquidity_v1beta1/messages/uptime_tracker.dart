@@ -36,6 +36,6 @@ class OsmosisConcentratedLiquidityUptimeTrackers extends CosmosMessage {
   List get values => [list];
 
   @override
-  String get typeUrl =>
-      OsmosisConcentratedLiquidityV1beta1Types.uptimeTrackers.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisConcentratedLiquidityV1beta1Types.uptimeTrackers;
 }

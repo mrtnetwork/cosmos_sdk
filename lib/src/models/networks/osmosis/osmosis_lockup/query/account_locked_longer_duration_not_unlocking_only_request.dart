@@ -6,13 +6,11 @@ class OsmosisLockupAccountLockedLongerDurationNotUnlockingOnlyRequest
     extends CosmosMessage
     with
         QueryMessage<
-            OsmosisLockupAccountLockedLongerDurationNotUnlockingOnlyResponse>,
-        RPCMessage<
             OsmosisLockupAccountLockedLongerDurationNotUnlockingOnlyResponse> {
-  final String? owner;
+  final String owner;
   final ProtobufDuration duration;
   const OsmosisLockupAccountLockedLongerDurationNotUnlockingOnlyRequest(
-      {this.owner, required this.duration});
+      {required this.owner, required this.duration});
   factory OsmosisLockupAccountLockedLongerDurationNotUnlockingOnlyRequest.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -29,8 +27,8 @@ class OsmosisLockupAccountLockedLongerDurationNotUnlockingOnlyRequest
   }
 
   @override
-  String get typeUrl => OsmosisLockupTypes
-      .accountLockedLongerDurationNotUnlockingOnlyRequest.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisLockupTypes.accountLockedLongerDurationNotUnlockingOnlyRequest;
 
   @override
   List get values => [owner, duration];
@@ -43,10 +41,6 @@ class OsmosisLockupAccountLockedLongerDurationNotUnlockingOnlyRequest
   }
 
   @override
-  String get queryPath =>
-      OsmosisLockupTypes.accountLockedLongerDurationNotUnlockingOnly.typeUrl;
-
-  @override
   OsmosisLockupAccountLockedLongerDurationNotUnlockingOnlyResponse
       onJsonResponse(Map<String, dynamic> json) {
     return OsmosisLockupAccountLockedLongerDurationNotUnlockingOnlyResponse
@@ -57,7 +51,5 @@ class OsmosisLockupAccountLockedLongerDurationNotUnlockingOnlyRequest
   Map<String, String?> get queryParameters => {};
 
   @override
-  String get rpcPath =>
-      OsmosisLockupTypes.accountLockedLongerDurationNotUnlockingOnly
-          .rpcUrl(pathParameters: [owner]);
+  List<String> get pathParameters => [owner];
 }

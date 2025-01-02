@@ -25,7 +25,7 @@ class ThorchainMsgSetIPAddress extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.msgSetIPAddress.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.msgSetIPAddress;
 
   @override
   List get values => [ipAddress, signer];

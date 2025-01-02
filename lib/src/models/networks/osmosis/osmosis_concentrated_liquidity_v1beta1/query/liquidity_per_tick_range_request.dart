@@ -5,8 +5,8 @@ import 'liquidity_per_tick_range_response.dart';
 class OsmosisConcentratedLiquidityLiquidityPerTickRangeRequest
     extends CosmosMessage
     with
-        QueryMessage<OsmosisConcentratedLiquidityLiquidityPerTickRangeResponse>,
-        RPCMessage<OsmosisConcentratedLiquidityLiquidityPerTickRangeResponse> {
+        QueryMessage<
+            OsmosisConcentratedLiquidityLiquidityPerTickRangeResponse> {
   final BigInt? poolId;
 
   OsmosisConcentratedLiquidityLiquidityPerTickRangeRequest({
@@ -26,15 +26,6 @@ class OsmosisConcentratedLiquidityLiquidityPerTickRangeRequest
   Map<String, String?> get queryParameters => {"pool_id": poolId?.toString()};
 
   @override
-  String get queryPath => OsmosisConcentratedLiquidityV1beta1Types
-      .liquidityDepthWithRangeQuery.typeUrl;
-
-  @override
-  String get rpcPath =>
-      OsmosisConcentratedLiquidityV1beta1Types.liquidityDepthWithRangeQuery
-          .rpcUrl(pathParameters: []);
-
-  @override
   Map<String, dynamic> toJson() {
     return {
       "pool_id": poolId?.toString(),
@@ -42,8 +33,8 @@ class OsmosisConcentratedLiquidityLiquidityPerTickRangeRequest
   }
 
   @override
-  String get typeUrl => OsmosisConcentratedLiquidityV1beta1Types
-      .liquidityPerTickRangeRequest.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisConcentratedLiquidityV1beta1Types.liquidityPerTickRangeRequest;
 
   @override
   List get values => [poolId];

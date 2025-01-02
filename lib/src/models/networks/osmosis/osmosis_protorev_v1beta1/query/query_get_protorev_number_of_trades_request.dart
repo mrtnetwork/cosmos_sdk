@@ -4,9 +4,7 @@ import 'query_get_proto_rev_number_of_trades_response.dart';
 
 /// QueryGetProtoRevNumberOfTradesRequest is request type for the Query/GetProtoRevNumberOfTrades RPC method.
 class OsmosisProtorevQueryGetProtoRevNumberOfTradesRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisProtorevQueryGetProtoRevNumberOfTradesResponse>,
-        RPCMessage<OsmosisProtorevQueryGetProtoRevNumberOfTradesResponse> {
+    with QueryMessage<OsmosisProtorevQueryGetProtoRevNumberOfTradesResponse> {
   const OsmosisProtorevQueryGetProtoRevNumberOfTradesRequest();
   factory OsmosisProtorevQueryGetProtoRevNumberOfTradesRequest.deserialize(
       List<int> bytes) {
@@ -38,17 +36,9 @@ class OsmosisProtorevQueryGetProtoRevNumberOfTradesRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      OsmosisProtorevV1beta1Types.queryGetProtoRevNumberOfTradesRequest.typeUrl;
-
-  @override
-  String get queryPath =>
-      OsmosisProtorevV1beta1Types.getProtoRevNumberOfTrades.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisProtorevV1beta1Types.queryGetProtoRevNumberOfTradesRequest;
 
   @override
   Map<String, String?> get queryParameters => {};
-
-  @override
-  String get rpcPath =>
-      OsmosisProtorevV1beta1Types.getProtoRevNumberOfTrades.rpcUrl();
 }

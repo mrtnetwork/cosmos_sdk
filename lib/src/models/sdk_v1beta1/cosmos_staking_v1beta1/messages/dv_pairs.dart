@@ -26,7 +26,7 @@ class DVPairs extends CosmosMessage {
   List<int> get fieldIds => [1];
 
   @override
-  String get typeUrl => StakingV1beta1Types.dVPairs.typeUrl;
+  TypeUrl get typeUrl => StakingV1beta1Types.dVPairs;
 
   @override
   List get values => [pairs];

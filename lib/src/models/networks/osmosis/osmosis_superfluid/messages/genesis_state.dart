@@ -86,7 +86,7 @@ class OsmosisSuperfluidGenesisState extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisSuperfluidTypes.genesisState.typeUrl;
+  TypeUrl get typeUrl => OsmosisSuperfluidTypes.genesisState;
 
   @override
   List get values => [

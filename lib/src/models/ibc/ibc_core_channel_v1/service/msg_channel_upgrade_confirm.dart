@@ -49,7 +49,7 @@ class MsgChannelUpgradeConfirm extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3, 4, 5, 6, 7, 8];
 
   @override
-  String get service => IbcTypes.channelUpgradeConfirm.typeUrl;
+  TypeUrl get service => IbcTypes.channelUpgradeConfirm;
 
   @override
   Map<String, dynamic> toJson() {
@@ -66,7 +66,7 @@ class MsgChannelUpgradeConfirm extends CosmosMessage
   }
 
   @override
-  String get typeUrl => IbcTypes.msgChannelUpgradeConfirm.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.msgChannelUpgradeConfirm;
 
   @override
   List get values => [

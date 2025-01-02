@@ -4,7 +4,7 @@ import 'package:cosmos_sdk/src/provider/tendermint/core/tendermint.dart';
 /// Get consensus parameters
 /// https://docs.tendermint.com/v0.34/rpc/#/Info/consensus_params
 class TendermintRequestConsensusParams
-    extends TendermintRequestParam<Map<String, dynamic>, Map<String, dynamic>> {
+    extends TendermintRequest<Map<String, dynamic>, Map<String, dynamic>> {
   TendermintRequestConsensusParams({this.height});
 
   /// height to return. If no height is provided,

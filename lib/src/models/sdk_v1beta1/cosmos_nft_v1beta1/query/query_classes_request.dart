@@ -21,15 +21,12 @@ class QueryClassesRequest extends CosmosMessage
   List<int> get fieldIds => [1];
 
   @override
-  String get queryPath => NFTV1beta1Types.nftClass.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {"pagination": pagination?.toJson()};
   }
 
   @override
-  String get typeUrl => NFTV1beta1Types.queryNFTClassesRequest.typeUrl;
+  TypeUrl get typeUrl => NFTV1beta1Types.queryNFTClassesRequest;
 
   @override
   List get values => [pagination];
@@ -37,4 +34,12 @@ class QueryClassesRequest extends CosmosMessage
   QueryClassesResponse onResponse(List<int> bytes) {
     return QueryClassesResponse.deserialize(bytes);
   }
+
+  @override
+  QueryClassesResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryClassesResponse.fromRpc(json);
+  }
+
+  @override
+  Map<String, String?> get queryParameters => pagination?.queryParameters ?? {};
 }

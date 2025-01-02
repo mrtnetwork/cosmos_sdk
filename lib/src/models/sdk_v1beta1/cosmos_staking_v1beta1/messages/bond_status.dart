@@ -1,4 +1,4 @@
-import 'package:blockchain_utils/exception/exception.dart';
+import 'package:cosmos_sdk/src/exception/exception.dart';
 import 'package:cosmos_sdk/src/protobuf/types/cosmos_enum.dart';
 
 /// BondStatus is the status of a validator.
@@ -31,9 +31,18 @@ class BondStatus implements CosmosEnum {
   static BondStatus fromValue(int? value) {
     return values.firstWhere(
       (e) => e.value == value,
-      orElse: () => throw MessageException(
+      orElse: () => throw DartCosmosSdkPluginException(
           "No BondStatus element found for the given value.",
           details: {"value": value}),
+    );
+  }
+
+  static BondStatus fromName(String? name) {
+    return values.firstWhere(
+      (e) => e.name == name,
+      orElse: () => throw DartCosmosSdkPluginException(
+          "No BondStatus element found for the given name.",
+          details: {"name": name}),
     );
   }
 }

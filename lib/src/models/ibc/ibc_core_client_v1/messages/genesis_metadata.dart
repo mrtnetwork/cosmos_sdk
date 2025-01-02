@@ -32,7 +32,7 @@ class IbcClientGenesisMetadata extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.genesisMetadata.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.genesisMetadata;
 
   @override
   List get values => [key, value];

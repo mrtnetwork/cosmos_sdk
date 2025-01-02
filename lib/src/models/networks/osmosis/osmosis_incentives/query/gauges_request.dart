@@ -4,9 +4,7 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'gauges_response.dart';
 
 class OsmosisIncentiveGaugesRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisIncentiveGaugesResponse>,
-        RPCMessage<OsmosisIncentiveGaugesResponse> {
+    with QueryMessage<OsmosisIncentiveGaugesResponse> {
   /// Pagination defines pagination for the request
   final PageRequest? pagination;
   const OsmosisIncentiveGaugesRequest({this.pagination});
@@ -27,15 +25,12 @@ class OsmosisIncentiveGaugesRequest extends CosmosMessage
   }
 
   @override
-  String get queryPath => OsmosisIncentivesTypes.gauges.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {"pagination": pagination?.toJson()};
   }
 
   @override
-  String get typeUrl => OsmosisIncentivesTypes.gaugesRequest.typeUrl;
+  TypeUrl get typeUrl => OsmosisIncentivesTypes.gaugesRequest;
 
   @override
   List get values => [pagination];
@@ -46,9 +41,5 @@ class OsmosisIncentiveGaugesRequest extends CosmosMessage
   }
 
   @override
-  Map<String, String> get queryParameters => {};
-
-  @override
-  String get rpcPath =>
-      OsmosisIncentivesTypes.gauges.rpcUrl(pathParameters: []);
+  Map<String, String?> get queryParameters => pagination?.queryParameters ?? {};
 }

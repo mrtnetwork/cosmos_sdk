@@ -29,7 +29,7 @@ class IbcSoloMachineV2ConsensusStateData extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.soloMachineV2ConsensusStateData.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.soloMachineV2ConsensusStateData;
 
   @override
   List get values => [path, consensusState];

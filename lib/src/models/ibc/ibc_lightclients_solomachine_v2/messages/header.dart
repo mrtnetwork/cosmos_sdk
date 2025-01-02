@@ -44,7 +44,7 @@ class IbcSoloMachineV2Header extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.soloMachineV2Header.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.soloMachineV2Header;
 
   @override
   List get values =>

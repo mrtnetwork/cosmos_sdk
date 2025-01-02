@@ -1,3 +1,4 @@
+import 'package:blockchain_utils/utils/numbers/utils/bigint_utils.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_abci_v1beta1/types/types.dart';
 
@@ -9,6 +10,11 @@ class GasInfo extends CosmosMessage {
   /// GasUsed is the amount of gas actually consumed.
   final BigInt gasUsed;
   const GasInfo({required this.gasUsed, required this.gasWanted});
+  factory GasInfo.fromRpc(Map<String, dynamic> json) {
+    return GasInfo(
+        gasWanted: BigintUtils.tryParse(json["gas_wanted"]),
+        gasUsed: BigintUtils.parse(json["gas_used"]));
+  }
   factory GasInfo.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GasInfo(gasUsed: decode.getField(2), gasWanted: decode.getField(1));
@@ -23,7 +29,7 @@ class GasInfo extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => BaseAbciV1beta1.gasInfo.typeUrl;
+  TypeUrl get typeUrl => BaseAbciV1beta1.gasInfo;
 
   @override
   List get values => [gasWanted, gasUsed];

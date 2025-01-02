@@ -83,8 +83,8 @@ class FullPositionBreakdown extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisConcentratedLiquidityV1beta1Types.fullPositionBreakdown.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisConcentratedLiquidityV1beta1Types.fullPositionBreakdown;
 
   @override
   List get values => [

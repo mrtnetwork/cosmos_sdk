@@ -34,7 +34,7 @@ class MsgRecvPacket extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3, 4];
 
   @override
-  String get service => IbcTypes.recvPacket.typeUrl;
+  TypeUrl get service => IbcTypes.recvPacket;
 
   @override
   Map<String, dynamic> toJson() {
@@ -47,7 +47,7 @@ class MsgRecvPacket extends CosmosMessage
   }
 
   @override
-  String get typeUrl => IbcTypes.msgRecvPacket.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.msgRecvPacket;
 
   @override
   List get values => [packet, proofCommitment, proofHeight, signer];

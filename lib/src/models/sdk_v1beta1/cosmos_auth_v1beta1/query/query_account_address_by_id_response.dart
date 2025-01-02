@@ -13,6 +13,10 @@ class QueryAccountAddressByIDResponse extends CosmosMessage {
     return QueryAccountAddressByIDResponse(
         CosmosBaseAddress(decode.getField(1)));
   }
+  factory QueryAccountAddressByIDResponse.fromRpc(Map<String, dynamic> json) {
+    return QueryAccountAddressByIDResponse(
+        CosmosBaseAddress.fromBytes(json["account_address"]));
+  }
 
   @override
   List<int> get fieldIds => [1];
@@ -26,5 +30,5 @@ class QueryAccountAddressByIDResponse extends CosmosMessage {
   List get values => [accountAddress.address];
 
   @override
-  String get typeUrl => AuthV1beta1Types.accountAddressByIDResponse.typeUrl;
+  TypeUrl get typeUrl => AuthV1beta1Types.accountAddressByIDResponse;
 }

@@ -20,7 +20,7 @@ class MsgTransferResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.msgTransferResponse.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.msgTransferResponse;
 
   @override
   List get values => [sequence];

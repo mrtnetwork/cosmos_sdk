@@ -1,6 +1,7 @@
-class Ics23Types {
-  final String typeUrl;
-  const Ics23Types._(this.typeUrl);
+import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
+
+class Ics23Types extends TypeUrl {
+  const Ics23Types._(super.typeUrl);
   static const Ics23Types hashOp = Ics23Types._("cosmos.ics23.v1.HashOp");
   static const Ics23Types innerOp = Ics23Types._("cosmos.ics23.v1.InnerOp");
   static const Ics23Types innerSpec = Ics23Types._("cosmos.ics23.v1.InnerSpec");

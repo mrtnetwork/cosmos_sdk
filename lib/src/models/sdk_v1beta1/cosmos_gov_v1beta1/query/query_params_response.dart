@@ -19,6 +19,13 @@ class GovQueryParamsResponse extends CosmosMessage {
       {required this.votingParams,
       required this.depositParams,
       required this.tallyParams});
+  factory GovQueryParamsResponse.fromRpc(Map<String, dynamic> json) {
+    return GovQueryParamsResponse(
+      votingParams: GovVotingParams.fromRpc(json["voting_params"]),
+      depositParams: GovDepositParams.fromRpc(json["deposit_params"]),
+      tallyParams: GovTallyParams.fromRpc(json["tally_params"]),
+    );
+  }
   factory GovQueryParamsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GovQueryParamsResponse(
@@ -40,7 +47,7 @@ class GovQueryParamsResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => GovV1beta1types.govQueryParamsResponse.typeUrl;
+  TypeUrl get typeUrl => GovV1beta1types.govQueryParamsResponse;
 
   @override
   List get values => [votingParams, depositParams, tallyParams];

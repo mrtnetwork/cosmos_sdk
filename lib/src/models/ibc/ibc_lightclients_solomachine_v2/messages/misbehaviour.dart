@@ -42,7 +42,7 @@ class IbcSoloMachineV2Misbehaviour extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.soloMachineV2Misbehaviour.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.soloMachineV2Misbehaviour;
 
   @override
   List get values => [clientId, sequence, signatureOne, signatureTwo];

@@ -26,7 +26,7 @@ class ThorchainEventReserve extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.eventReserve.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.eventReserve;
 
   @override
   List get values => [reserveContributor, inTx];

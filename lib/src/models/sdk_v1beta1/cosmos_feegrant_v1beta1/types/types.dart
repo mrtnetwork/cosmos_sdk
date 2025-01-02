@@ -1,6 +1,7 @@
-class FeegrantV1beta1Types {
-  final String typeUrl;
-  const FeegrantV1beta1Types._(this.typeUrl);
+import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
+
+class FeegrantV1beta1Types extends TypeUrl {
+  const FeegrantV1beta1Types._(super.typeUrl, {super.query, super.rpc});
 
   static const FeegrantV1beta1Types feeGrant =
       FeegrantV1beta1Types._("/cosmos.feegrant.v1beta1.Grant");
@@ -26,29 +27,26 @@ class FeegrantV1beta1Types {
   static const FeegrantV1beta1Types periodicAllowance =
       FeegrantV1beta1Types._("/cosmos.feegrant.v1beta1.PeriodicAllowance");
   static const FeegrantV1beta1Types queryAllowanceRequest =
-      FeegrantV1beta1Types._("/cosmos.feegrant.v1beta1.QueryAllowanceRequest");
+      FeegrantV1beta1Types._("/cosmos.feegrant.v1beta1.QueryAllowanceRequest",
+          query: "/cosmos.feegrant.v1beta1.Query/Allowance",
+          rpc: "/cosmos/feegrant/v1beta1/allowance/:granter/:grantee");
   static const FeegrantV1beta1Types queryAllowanceResponse =
       FeegrantV1beta1Types._("/cosmos.feegrant.v1beta1.QueryAllowanceResponse");
   static const FeegrantV1beta1Types queryAllowancesRequest =
-      FeegrantV1beta1Types._("/cosmos.feegrant.v1beta1.QueryAllowancesRequest");
+      FeegrantV1beta1Types._("/cosmos.feegrant.v1beta1.QueryAllowancesRequest",
+          query: "/cosmos.feegrant.v1beta1.Query/Allowances",
+          rpc: "/cosmos/feegrant/v1beta1/allowances/:grantee");
   static const FeegrantV1beta1Types queryAllowancesResponse =
       FeegrantV1beta1Types._(
           "/cosmos.feegrant.v1beta1.QueryAllowancesResponse");
   static const FeegrantV1beta1Types queryAllowancesByGranterRequest =
       FeegrantV1beta1Types._(
-          "/cosmos.feegrant.v1beta1.QueryAllowancesByGranterRequest");
+          "/cosmos.feegrant.v1beta1.QueryAllowancesByGranterRequest",
+          query: "/cosmos.feegrant.v1beta1.Query/AllowancesByGranter",
+          rpc: "/cosmos/feegrant/v1beta1/issued/:granter");
   static const FeegrantV1beta1Types queryAllowancesByGranterResponse =
       FeegrantV1beta1Types._(
           "/cosmos.feegrant.v1beta1.QueryAllowancesByGranterResponse");
-
-  /// queries
-  static const FeegrantV1beta1Types allowance =
-      FeegrantV1beta1Types._("/cosmos.feegrant.v1beta1.Query/Allowance");
-  static const FeegrantV1beta1Types allowances =
-      FeegrantV1beta1Types._("/cosmos.feegrant.v1beta1.Query/Allowances");
-  static const FeegrantV1beta1Types allowancesByGranter =
-      FeegrantV1beta1Types._(
-          "/cosmos.feegrant.v1beta1.Query/AllowancesByGranter");
 
   /// service
   static const FeegrantV1beta1Types grantAllowance =

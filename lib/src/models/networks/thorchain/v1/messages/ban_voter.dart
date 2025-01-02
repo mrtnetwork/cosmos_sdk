@@ -32,7 +32,7 @@ class ThorchainBanVoter extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.banVoter.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.banVoter;
 
   @override
   List get values => [nodeAddress, blockHeight, signers];

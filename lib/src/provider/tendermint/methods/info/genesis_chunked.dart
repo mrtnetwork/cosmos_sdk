@@ -4,7 +4,7 @@ import 'package:cosmos_sdk/src/provider/tendermint/core/tendermint.dart';
 /// Get Genesis in multiple chunks
 /// https://docs.tendermint.com/v0.34/rpc/#/Info/genesis_chunked
 class TendermintRequestGenesisChunked
-    extends TendermintRequestParam<Map<String, dynamic>, Map<String, dynamic>> {
+    extends TendermintRequest<Map<String, dynamic>, Map<String, dynamic>> {
   TendermintRequestGenesisChunked({this.chunk});
 
   /// Sequence number of the chunk to download.

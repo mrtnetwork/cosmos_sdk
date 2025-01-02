@@ -25,7 +25,7 @@ class ThorchainMsgNodePauseChain extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.msgNodePauseChain.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.msgNodePauseChain;
 
   @override
   List get values => [value, signer];

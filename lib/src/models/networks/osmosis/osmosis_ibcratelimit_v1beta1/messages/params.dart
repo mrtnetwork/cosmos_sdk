@@ -18,7 +18,7 @@ class OsmosisIbcratelimitParams extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisIbcRatelimitV1beta1Types.params.typeUrl;
+  TypeUrl get typeUrl => OsmosisIbcRatelimitV1beta1Types.params;
 
   @override
   List get values => [contractAddress];

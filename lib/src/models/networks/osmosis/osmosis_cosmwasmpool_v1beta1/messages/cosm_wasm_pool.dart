@@ -46,7 +46,7 @@ class OsmosisCosmWasmPoolCosmWasmPool extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisCosmWasmPoolV1beta1Types.cosmWasmPool.typeUrl;
+  TypeUrl get typeUrl => OsmosisCosmWasmPoolV1beta1Types.cosmWasmPool;
 
   @override
   List get values => [contractAddress, poolId, codeId, instantiateMsg];

@@ -20,8 +20,8 @@ class OsmosisCosmWasmPoolMsgCreateCosmWasmPoolResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisCosmWasmPoolV1beta1Types.msgCreateCosmWasmPoolResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisCosmWasmPoolV1beta1Types.msgCreateCosmWasmPoolResponse;
 
   @override
   List get values => [poolId?.toString()];

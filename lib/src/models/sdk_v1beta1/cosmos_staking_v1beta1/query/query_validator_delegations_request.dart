@@ -8,45 +8,42 @@ import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_staking_v1beta1/types/t
 class QueryValidatorDelegationsRequest extends CosmosMessage
     with QueryMessage<QueryValidatorDelegationsResponse> {
   /// validator_addr defines the validator address to query for.
-  final CosmosBaseAddress? validatorAddr;
+  final CosmosBaseAddress validatorAddr;
 
   /// pagination defines an optional pagination for the request.
   final PageRequest? pagination;
-  const QueryValidatorDelegationsRequest({this.validatorAddr, this.pagination});
-
-  factory QueryValidatorDelegationsRequest.deserialize(List<int> bytes) {
-    final decode = CosmosProtocolBuffer.decode(bytes);
-    return QueryValidatorDelegationsRequest(
-        validatorAddr: decode
-            .getResult(1)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)));
-  }
+  const QueryValidatorDelegationsRequest(
+      {required this.validatorAddr, this.pagination});
 
   @override
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get queryPath => StakingV1beta1Types.queryValidatorDelegations.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {
-      "validator_addr": validatorAddr?.address,
+      "validator_addr": validatorAddr.address,
       "pagination": pagination?.toJson()
     };
   }
 
   @override
-  String get typeUrl =>
-      StakingV1beta1Types.queryValidatorDelegationsRequest.typeUrl;
+  TypeUrl get typeUrl => StakingV1beta1Types.queryValidatorDelegationsRequest;
 
   @override
-  List get values => [validatorAddr?.address, pagination];
+  List get values => [validatorAddr.address, pagination];
   @override
   QueryValidatorDelegationsResponse onResponse(List<int> bytes) {
     return QueryValidatorDelegationsResponse.deserialize(bytes);
   }
+
+  @override
+  QueryValidatorDelegationsResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryValidatorDelegationsResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters => [validatorAddr.address];
+
+  @override
+  Map<String, String?> get queryParameters => pagination?.queryParameters ?? {};
 }

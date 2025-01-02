@@ -1,4 +1,4 @@
-import 'package:blockchain_utils/exception/exception.dart';
+import 'package:cosmos_sdk/src/exception/exception.dart';
 import 'package:cosmos_sdk/src/protobuf/types/cosmos_enum.dart';
 
 /// VoteOption enumerates the valid vote options for a given governance proposal.
@@ -34,9 +34,18 @@ class GovVoteOption implements CosmosEnum {
   static GovVoteOption fromValue(int? value) {
     return values.firstWhere(
       (e) => e.value == value,
-      orElse: () => throw MessageException(
+      orElse: () => throw DartCosmosSdkPluginException(
           "No GovVoteOption element found for the given value.",
           details: {"value": value}),
+    );
+  }
+
+  static GovVoteOption fromName(String? name) {
+    return values.firstWhere(
+      (e) => e.name == name,
+      orElse: () => throw DartCosmosSdkPluginException(
+          "No GovVoteOption element found for the given value.",
+          details: {"name": name}),
     );
   }
 }

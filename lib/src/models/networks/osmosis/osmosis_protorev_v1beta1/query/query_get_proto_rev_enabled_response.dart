@@ -30,6 +30,6 @@ class OsmosisProtorevQueryGetProtoRevEnabledResponse extends CosmosMessage {
   List get values => [enabled];
 
   @override
-  String get typeUrl =>
-      OsmosisProtorevV1beta1Types.queryGetProtoRevEnabledResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisProtorevV1beta1Types.queryGetProtoRevEnabledResponse;
 }

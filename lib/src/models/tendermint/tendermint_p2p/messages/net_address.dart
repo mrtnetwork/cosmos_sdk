@@ -24,7 +24,7 @@ class NetAddress extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => TendermintTypes.netAddress.typeUrl;
+  TypeUrl get typeUrl => TendermintTypes.netAddress;
 
   @override
   List get values => [id, ip, port];

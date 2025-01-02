@@ -13,6 +13,18 @@ class QueryAllowancesByGranterResponse extends CosmosMessage {
 
   /// pagination defines an pagination for the response.
   final PageResponse? pagination;
+
+  factory QueryAllowancesByGranterResponse.fromRpc(Map<String, dynamic> json) {
+    return QueryAllowancesByGranterResponse(
+      allowances: (json["allowances"] as List?)
+              ?.map((e) => FeeGrant.fromRpc(e))
+              .toList() ??
+          [],
+      pagination: json["pagination"] == null
+          ? null
+          : PageResponse.fromRpc(json["pagination"]),
+    );
+  }
   QueryAllowancesByGranterResponse(
       {required List<FeeGrant> allowances, this.pagination})
       : allowances = allowances.immutable;
@@ -39,8 +51,7 @@ class QueryAllowancesByGranterResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      FeegrantV1beta1Types.queryAllowancesByGranterResponse.typeUrl;
+  TypeUrl get typeUrl => FeegrantV1beta1Types.queryAllowancesByGranterResponse;
 
   @override
   List get values => [allowances, pagination];

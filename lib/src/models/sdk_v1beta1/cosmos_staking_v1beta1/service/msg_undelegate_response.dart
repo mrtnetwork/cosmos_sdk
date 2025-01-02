@@ -30,7 +30,7 @@ class MsgUndelegateResponse extends CosmosMessage {
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get typeUrl => StakingV1beta1Types.msgUndelegateResponse.typeUrl;
+  TypeUrl get typeUrl => StakingV1beta1Types.msgUndelegateResponse;
 
   @override
   List get values => [complationTime, amount];

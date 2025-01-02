@@ -42,14 +42,14 @@ class MsgUndelegate extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3];
 
   @override
-  String get typeUrl => StakingV1beta1Types.msgUndelegate.typeUrl;
+  TypeUrl get typeUrl => StakingV1beta1Types.msgUndelegate;
 
   @override
   List get values =>
       [delegatorAddress?.address, validatorAddress?.address, amount];
 
   @override
-  String get service => StakingV1beta1Types.undelegate.typeUrl;
+  TypeUrl get service => StakingV1beta1Types.undelegate;
   @override
   List<String?> get signers => [delegatorAddress?.address];
 

@@ -23,7 +23,7 @@ class OsmosisStreamSwapEventSubscribe extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisStreamSwapV1Types.eventSubscribe.typeUrl;
+  TypeUrl get typeUrl => OsmosisStreamSwapV1Types.eventSubscribe;
 
   @override
   List get values => [sender, saleId, amount];

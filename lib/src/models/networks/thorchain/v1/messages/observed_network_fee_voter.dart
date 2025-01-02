@@ -44,7 +44,7 @@ class ThorchainObservedNetworkFeeVoter extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.observedNetworkFeeVoter.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.observedNetworkFeeVoter;
 
   @override
   List get values => [

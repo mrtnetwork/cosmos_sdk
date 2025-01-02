@@ -16,7 +16,7 @@ class OsmosisCosmWasmPoolEmptyStruct extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisCosmWasmPoolV1beta1Types.emptyStruct.typeUrl;
+  TypeUrl get typeUrl => OsmosisCosmWasmPoolV1beta1Types.emptyStruct;
 
   @override
   List get values => [];

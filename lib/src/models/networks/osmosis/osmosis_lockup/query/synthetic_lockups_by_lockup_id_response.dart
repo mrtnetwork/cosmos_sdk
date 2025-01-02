@@ -38,8 +38,7 @@ class OsmosisLockupSyntheticLockupsByLockupIDResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisLockupTypes.syntheticLockupsByLockupIDResponse.typeUrl;
+  TypeUrl get typeUrl => OsmosisLockupTypes.syntheticLockupsByLockupIDResponse;
 
   @override
   List get values => [syntheticLocks];

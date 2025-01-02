@@ -54,7 +54,7 @@ class OsmosisPoolManagerTakerFeesTracker extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisPoolManagerV1beta1Types.takerFeesTracker.typeUrl;
+  TypeUrl get typeUrl => OsmosisPoolManagerV1beta1Types.takerFeesTracker;
 
   @override
   List get values => [

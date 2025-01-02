@@ -3,13 +3,11 @@ import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_lockup/types/type
 import 'account_unlocked_before_time_response.dart';
 
 class OsmosisLockupAccountUnlockedBeforeTimeRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisLockupAccountUnlockedBeforeTimeResponse>,
-        RPCMessage<OsmosisLockupAccountUnlockedBeforeTimeResponse> {
-  final String? owner;
+    with QueryMessage<OsmosisLockupAccountUnlockedBeforeTimeResponse> {
+  final String owner;
   final ProtobufTimestamp timestamp;
   const OsmosisLockupAccountUnlockedBeforeTimeRequest(
-      {this.owner, required this.timestamp});
+      {required this.owner, required this.timestamp});
   factory OsmosisLockupAccountUnlockedBeforeTimeRequest.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -29,8 +27,7 @@ class OsmosisLockupAccountUnlockedBeforeTimeRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      OsmosisLockupTypes.accountUnlockedBeforeTimeRequest.typeUrl;
+  TypeUrl get typeUrl => OsmosisLockupTypes.accountUnlockedBeforeTimeRequest;
 
   @override
   List get values => [owner, timestamp];
@@ -41,18 +38,14 @@ class OsmosisLockupAccountUnlockedBeforeTimeRequest extends CosmosMessage
   }
 
   @override
-  String get queryPath => OsmosisLockupTypes.accountUnlockedBeforeTime.typeUrl;
-
-  @override
   OsmosisLockupAccountUnlockedBeforeTimeResponse onJsonResponse(
       Map<String, dynamic> json) {
     return OsmosisLockupAccountUnlockedBeforeTimeResponse.fromRpc(json);
   }
 
   @override
-  Map<String, String?> get queryParameters => {};
-
+  Map<String, String?> get queryParameters =>
+      {"timestamp": timestamp.toString()};
   @override
-  String get rpcPath => OsmosisLockupTypes.accountUnlockedBeforeTime
-      .rpcUrl(pathParameters: [owner]);
+  List<String> get pathParameters => [owner];
 }

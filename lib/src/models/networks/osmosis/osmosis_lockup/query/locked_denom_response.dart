@@ -24,7 +24,7 @@ class OsmosisLockupLockedDenomResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisLockupTypes.lockedDenomResponse.typeUrl;
+  TypeUrl get typeUrl => OsmosisLockupTypes.lockedDenomResponse;
 
   @override
   List get values => [amount];

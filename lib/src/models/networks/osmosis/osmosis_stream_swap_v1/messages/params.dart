@@ -49,7 +49,7 @@ class OsmosisStreamSwapParams extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisStreamSwapV1Types.params.typeUrl;
+  TypeUrl get typeUrl => OsmosisStreamSwapV1Types.params;
 
   @override
   List get values => [

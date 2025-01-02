@@ -47,7 +47,7 @@ class OsmosisIncentiveActiveGaugesResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisIncentivesTypes.activeGaugesResponse.typeUrl;
+  TypeUrl get typeUrl => OsmosisIncentivesTypes.activeGaugesResponse;
 
   @override
   List get values => [data, pagination];

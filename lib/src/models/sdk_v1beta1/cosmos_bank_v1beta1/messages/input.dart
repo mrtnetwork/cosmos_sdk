@@ -36,5 +36,5 @@ class Input extends CosmosMessage {
 
   @override
   @override
-  String get typeUrl => BankV1beta1Types.input.typeUrl;
+  TypeUrl get typeUrl => BankV1beta1Types.input;
 }

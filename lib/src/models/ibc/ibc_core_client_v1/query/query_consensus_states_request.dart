@@ -8,11 +8,11 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class QueryConsensusStatesRequest extends CosmosMessage
     with QueryMessage<QueryConsensusStatesResponse> {
   /// client identifier
-  final String? clientId;
+  final String clientId;
 
   /// pagination request
   final PageRequest? pagination;
-  const QueryConsensusStatesRequest({this.clientId, this.pagination});
+  const QueryConsensusStatesRequest({required this.clientId, this.pagination});
   factory QueryConsensusStatesRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryConsensusStatesRequest(
@@ -31,16 +31,24 @@ class QueryConsensusStatesRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl => IbcTypes.queryConsensusStatesRequest.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryConsensusStatesRequest;
 
   @override
   List get values => [clientId, pagination];
 
   @override
-  String get queryPath => IbcTypes.consensusStates.typeUrl;
-
-  @override
   QueryConsensusStatesResponse onResponse(List<int> bytes) {
     return QueryConsensusStatesResponse.deserialize(bytes);
   }
+
+  @override
+  QueryConsensusStatesResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryConsensusStatesResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters => [clientId];
+
+  @override
+  Map<String, String?> get queryParameters => pagination?.queryParameters ?? {};
 }

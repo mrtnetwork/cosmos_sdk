@@ -29,7 +29,7 @@ class Ics23BatchProof extends Ics23ProofBase {
   }
 
   @override
-  String get typeUrl => Ics23Types.batchProof.typeUrl;
+  TypeUrl get typeUrl => Ics23Types.batchProof;
 
   @override
   List get values => [entries];

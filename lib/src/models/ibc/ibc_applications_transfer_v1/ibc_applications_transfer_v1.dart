@@ -1,12 +1,8 @@
 export 'messages/denom_trace.dart';
 export 'messages/params.dart';
-
+export 'messages/hop.dart';
 export 'query/query_denom_hash_request.dart';
 export 'query/query_denom_hash_response.dart';
-export 'query/query_denom_trace_request.dart';
-export 'query/query_denom_trace_response.dart';
-export 'query/query_denom_traces_request.dart';
-export 'query/query_denom_traces_response.dart';
 export 'query/query_escrow_address_request.dart';
 export 'query/query_escrow_address_response.dart';
 export 'query/query_params_request.dart';

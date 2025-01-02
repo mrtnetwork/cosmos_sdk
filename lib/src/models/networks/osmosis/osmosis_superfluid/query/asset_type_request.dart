@@ -4,9 +4,7 @@ import 'asset_type_response.dart';
 
 /// Params returns the total set of superfluid parameters.
 class OsmosisSuperfluidAssetTypeRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisSuperfluidAssetTypeResponse>,
-        RPCMessage<OsmosisSuperfluidAssetTypeResponse> {
+    with QueryMessage<OsmosisSuperfluidAssetTypeResponse> {
   final String? denom;
   const OsmosisSuperfluidAssetTypeRequest({this.denom});
   factory OsmosisSuperfluidAssetTypeRequest.deserialize(List<int> bytes) {
@@ -23,19 +21,13 @@ class OsmosisSuperfluidAssetTypeRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl => OsmosisSuperfluidTypes.assetTypeRequest.typeUrl;
+  TypeUrl get typeUrl => OsmosisSuperfluidTypes.assetTypeRequest;
 
   @override
   List get values => [denom];
 
   @override
   Map<String, String?> get queryParameters => {"denom": denom};
-
-  @override
-  String get queryPath => OsmosisSuperfluidTypes.assetType.typeUrl;
-
-  @override
-  String get rpcPath => OsmosisSuperfluidTypes.assetType.rpcUrl();
 
   @override
   OsmosisSuperfluidAssetTypeResponse onJsonResponse(Map<String, dynamic> json) {

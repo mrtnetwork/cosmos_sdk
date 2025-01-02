@@ -42,8 +42,7 @@ class OsmosisGammMsgJoinSwapShareAmountOut extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      OsmosisGammV1beta1Types.msgJoinSwapShareAmountOut.typeUrl;
+  TypeUrl get typeUrl => OsmosisGammV1beta1Types.msgJoinSwapShareAmountOut;
 
   @override
   List get values => [
@@ -60,7 +59,7 @@ class OsmosisGammMsgJoinSwapShareAmountOut extends CosmosMessage
   }
 
   @override
-  String get service => OsmosisGammV1beta1Types.joinSwapShareAmountOut.typeUrl;
+  TypeUrl get service => OsmosisGammV1beta1Types.joinSwapShareAmountOut;
 
   @override
   List<String?> get signers => [sender];

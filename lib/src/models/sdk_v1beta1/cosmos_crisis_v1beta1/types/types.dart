@@ -1,6 +1,7 @@
-class CrisisV1beta1 {
-  final String typeUrl;
-  const CrisisV1beta1._(this.typeUrl);
+import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
+
+class CrisisV1beta1 extends TypeUrl {
+  const CrisisV1beta1._(super.typeUrl);
   static const CrisisV1beta1 msgVerifyInvariant =
       CrisisV1beta1._("/cosmos.crisis.v1beta1.MsgVerifyInvariant");
   static const CrisisV1beta1 msgVerifyInvariantResponse =

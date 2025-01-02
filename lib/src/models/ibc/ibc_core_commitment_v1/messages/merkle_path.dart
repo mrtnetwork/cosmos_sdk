@@ -22,7 +22,7 @@ class IbcCommitmentMerklePath extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.merklePath.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.merklePath;
 
   @override
   List get values => [keyPath];

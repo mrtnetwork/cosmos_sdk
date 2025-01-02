@@ -27,7 +27,7 @@ class GenesisOwners extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.genesisOwners.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.genesisOwners;
 
   @override
   List get values => [index, indexOwners];

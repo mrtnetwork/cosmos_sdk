@@ -1,12 +1,11 @@
-import 'package:blockchain_utils/signer/cosmos/cosmos_signer.dart';
+import 'package:blockchain_utils/blockchain_utils.dart';
+import 'package:cosmos_sdk/src/crypto/keypair/private_key.dart';
 import 'package:cosmos_sdk/src/crypto/secp256k1/public_key.dart';
-import 'package:blockchain_utils/utils/utils.dart';
-import 'package:blockchain_utils/bip/ecc/keys/secp256k1_keys_ecdsa.dart';
-import 'package:cosmos_sdk/src/crypto/ed25519/types/types.dart';
+import 'package:cosmos_sdk/src/crypto/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 import 'package:cosmos_sdk/src/protobuf/codec/decoder.dart';
 
-class CosmosSecp256K1PrivateKey extends CosmosMessage {
+class CosmosSecp256K1PrivateKey extends CosmosPrivateKey {
   final Secp256k1PrivateKeyEcdsa _privateKey;
   const CosmosSecp256K1PrivateKey._(this._privateKey);
   factory CosmosSecp256K1PrivateKey.fromBytes(List<int> keyBytes) {
@@ -22,14 +21,17 @@ class CosmosSecp256K1PrivateKey extends CosmosMessage {
     return CosmosSecp256K1PrivateKey._(
         Secp256k1PrivateKeyEcdsa.fromBytes(decode.getField(1)));
   }
+  @override
   CosmosSecp256K1PublicKey toPublicKey() =>
       CosmosSecp256K1PublicKey.fromBytes(_privateKey.publicKey.compressed);
 
+  @override
   List<int> sign(List<int> digest) {
-    final signer = CosmosSigner.fromKeyBytes(toBytes());
+    final signer = CosmosSecp256k1Signer.fromKeyBytes(toBytes());
     return signer.sign(digest);
   }
 
+  @override
   List<int> toBytes() {
     return _privateKey.raw;
   }
@@ -46,5 +48,5 @@ class CosmosSecp256K1PrivateKey extends CosmosMessage {
   List get values => [toBytes()];
 
   @override
-  String get typeUrl => CryptoTypes.secp256k1Privatekey.typeUrl;
+  TypeUrl get typeUrl => CosmosCryptoKeysTypes.secp256k1Privatekey;
 }

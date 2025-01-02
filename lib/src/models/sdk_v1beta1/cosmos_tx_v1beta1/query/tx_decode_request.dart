@@ -16,20 +16,25 @@ class TxDecodeRequest extends CosmosMessage
   List<int> get fieldIds => [1];
 
   @override
-  String get queryPath => TxV1beta1Types.txDecode.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {"tx_bytes": BytesUtils.toHexString(txBytes)};
   }
 
   @override
-  String get typeUrl => TxV1beta1Types.txDecodeRequest.typeUrl;
+  TypeUrl get typeUrl => TxV1beta1Types.txDecodeRequest;
+
+  @override
+  Map<String, dynamic> get body => toJson();
 
   @override
   List get values => [txBytes];
   @override
   TxDecodeResponse onResponse(List<int> bytes) {
     return TxDecodeResponse.deserialize(bytes);
+  }
+
+  @override
+  TxDecodeResponse onJsonResponse(Map<String, dynamic> json) {
+    return TxDecodeResponse.fromRpc(json);
   }
 }

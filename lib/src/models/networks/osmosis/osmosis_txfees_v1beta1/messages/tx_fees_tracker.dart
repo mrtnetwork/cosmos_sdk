@@ -38,7 +38,7 @@ class OsmosisTxfeesTxFeesTracker extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisTxfeesV1beta1Types.txFeesTracker.typeUrl;
+  TypeUrl get typeUrl => OsmosisTxfeesV1beta1Types.txFeesTracker;
 
   @override
   List get values => [txFees, heightAccountingStartsFrom];

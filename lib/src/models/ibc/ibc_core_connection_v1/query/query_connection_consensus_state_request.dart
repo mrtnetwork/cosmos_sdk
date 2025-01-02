@@ -7,11 +7,13 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class IbcConnectionQueryConnectionConsensusStateRequest extends CosmosMessage
     with QueryMessage<IbcConnectionQueryConnectionConsensusStateResponse> {
   /// connection identifier
-  final String? connectionId;
-  final BigInt? revisionNumber;
-  final BigInt? revisionHeight;
+  final String connectionId;
+  final BigInt revisionNumber;
+  final BigInt revisionHeight;
   const IbcConnectionQueryConnectionConsensusStateRequest(
-      {this.connectionId, this.revisionNumber, this.revisionHeight});
+      {required this.connectionId,
+      required this.revisionNumber,
+      required this.revisionHeight});
   factory IbcConnectionQueryConnectionConsensusStateRequest.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -28,25 +30,32 @@ class IbcConnectionQueryConnectionConsensusStateRequest extends CosmosMessage
   Map<String, dynamic> toJson() {
     return {
       "connection_id": connectionId,
-      "revision_number": revisionNumber?.toString(),
-      "revision_height": revisionHeight?.toString()
+      "revision_number": revisionNumber.toString(),
+      "revision_height": revisionHeight.toString()
     };
   }
 
   @override
-  String get typeUrl =>
-      IbcTypes.ibcConnectionQueryConnectionConsensusStateRequest.typeUrl;
+  TypeUrl get typeUrl =>
+      IbcTypes.ibcConnectionQueryConnectionConsensusStateRequest;
 
   @override
   List get values => [connectionId, revisionNumber, revisionHeight];
 
-  @override
-  String get queryPath =>
-      IbcTypes.ibcConnectionConnectionConsensusState.typeUrl;
   @override
   IbcConnectionQueryConnectionConsensusStateResponse onResponse(
       List<int> bytes) {
     return IbcConnectionQueryConnectionConsensusStateResponse.deserialize(
         bytes);
   }
+
+  @override
+  IbcConnectionQueryConnectionConsensusStateResponse onJsonResponse(
+      Map<String, dynamic> json) {
+    return IbcConnectionQueryConnectionConsensusStateResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters =>
+      [connectionId, revisionNumber.toString(), revisionHeight.toString()];
 }

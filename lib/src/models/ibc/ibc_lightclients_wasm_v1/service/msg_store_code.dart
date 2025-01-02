@@ -25,7 +25,7 @@ class IbcLightClientsWasmMsgStoreCode extends CosmosMessage
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get service => IbcTypes.ibcLightClientsWasmStoreCode.typeUrl;
+  TypeUrl get service => IbcTypes.ibcLightClientsWasmStoreCode;
 
   @override
   Map<String, dynamic> toJson() {
@@ -36,7 +36,7 @@ class IbcLightClientsWasmMsgStoreCode extends CosmosMessage
   }
 
   @override
-  String get typeUrl => IbcTypes.ibcLightClientsWasmMsgStoreCode.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.ibcLightClientsWasmMsgStoreCode;
 
   @override
   List get values => [signer, wasmByteCode];

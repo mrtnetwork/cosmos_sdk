@@ -25,7 +25,7 @@ class ThorchainReserveContributor extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.reserveContributor.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.reserveContributor;
 
   @override
   List get values => [address, amount.toString()];

@@ -24,7 +24,7 @@ class PexAddrs extends P2pMessage {
   }
 
   @override
-  String get typeUrl => TendermintTypes.pexAddrs.typeUrl;
+  TypeUrl get typeUrl => TendermintTypes.pexAddrs;
 
   @override
   List get values => [addrs];

@@ -57,8 +57,8 @@ class OsmosisGammPoolmodelsStableSwapMsgCreateStableswapPool
   }
 
   @override
-  String get service =>
-      OsmosisGammPoolmodelsStableswaPV1beta1Types.createStableswapPool.typeUrl;
+  TypeUrl get service =>
+      OsmosisGammPoolmodelsStableswaPV1beta1Types.createStableswapPool;
 
   @override
   List<String?> get signers => [sender];
@@ -77,8 +77,8 @@ class OsmosisGammPoolmodelsStableSwapMsgCreateStableswapPool
   }
 
   @override
-  String get typeUrl => OsmosisGammPoolmodelsStableswaPV1beta1Types
-      .msgCreateStableswapPool.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisGammPoolmodelsStableswaPV1beta1Types.msgCreateStableswapPool;
 
   @override
   List get values => [

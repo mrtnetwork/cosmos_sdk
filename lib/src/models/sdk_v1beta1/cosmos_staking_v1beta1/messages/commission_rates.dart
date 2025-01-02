@@ -11,7 +11,12 @@ class CommissionRates extends CosmosMessage {
 
   // maxChangeRate defines the maximum daily increase of the validator commission, as a fraction.
   final String maxChangeRate;
-
+  factory CommissionRates.fromRpc(Map<String, dynamic> json) {
+    return CommissionRates(
+        maxChangeRate: json["max_change_rate"],
+        maxRate: json["max_rate"],
+        rate: json["rate"]);
+  }
   const CommissionRates({
     required this.rate,
     required this.maxRate,
@@ -38,7 +43,7 @@ class CommissionRates extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => StakingV1beta1Types.commissionRates.typeUrl;
+  TypeUrl get typeUrl => StakingV1beta1Types.commissionRates;
 
   @override
   List get values => [rate, maxRate, maxChangeRate];

@@ -31,7 +31,7 @@ class Ics23CompressedBatchEntry extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => Ics23Types.compressedBatchEntry.typeUrl;
+  TypeUrl get typeUrl => Ics23Types.compressedBatchEntry;
 
   @override
   List get values => [proof];

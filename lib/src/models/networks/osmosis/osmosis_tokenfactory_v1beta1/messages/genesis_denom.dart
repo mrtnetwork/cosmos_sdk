@@ -28,7 +28,7 @@ class OsmosisTokenFactoryGenesisDenom extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisTokenFactoryV1beta1Types.genesisDenom.typeUrl;
+  TypeUrl get typeUrl => OsmosisTokenFactoryV1beta1Types.genesisDenom;
 
   @override
   List get values => [denom, authorityMetadata];

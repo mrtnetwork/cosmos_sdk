@@ -18,9 +18,6 @@ class ABCIQueryRequest extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3, 4];
 
   @override
-  String get queryPath => BaseTendermintV1beta1Types.abciQuery.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {
       "data": BytesUtils.tryToHexString(data),
@@ -31,7 +28,7 @@ class ABCIQueryRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl => BaseTendermintV1beta1Types.abciQueryRequest.typeUrl;
+  TypeUrl get typeUrl => BaseTendermintV1beta1Types.abciQueryRequest;
 
   @override
   List get values => [data, path, height, prove];
@@ -39,5 +36,10 @@ class ABCIQueryRequest extends CosmosMessage
   @override
   ABCIQueryResponse onResponse(List<int> bytes) {
     return ABCIQueryResponse.deserialize(bytes);
+  }
+
+  @override
+  ABCIQueryResponse onJsonResponse(Map<String, dynamic> json) {
+    return ABCIQueryResponse.fromJson(json);
   }
 }

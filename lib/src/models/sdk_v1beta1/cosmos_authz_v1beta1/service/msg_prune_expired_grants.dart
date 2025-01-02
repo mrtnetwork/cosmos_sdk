@@ -22,7 +22,7 @@ class AuthzMsgPruneExpiredGrants extends CosmosMessage
   List<int> get fieldIds => [1];
 
   @override
-  String get service => AuthzV1beta1Types.authzPruneExpiredGrants.typeUrl;
+  TypeUrl get service => AuthzV1beta1Types.authzPruneExpiredGrants;
 
   @override
   Map<String, dynamic> toJson() {
@@ -30,7 +30,7 @@ class AuthzMsgPruneExpiredGrants extends CosmosMessage
   }
 
   @override
-  String get typeUrl => AuthzV1beta1Types.authzMsgPruneExpiredGrants.typeUrl;
+  TypeUrl get typeUrl => AuthzV1beta1Types.authzMsgPruneExpiredGrants;
 
   @override
   List get values => [pruner];
@@ -41,6 +41,6 @@ class AuthzMsgPruneExpiredGrants extends CosmosMessage
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        AuthzV1beta1Types.authzMsgPruneExpiredGrantsResponse.typeUrl);
+        AuthzV1beta1Types.authzMsgPruneExpiredGrantsResponse);
   }
 }

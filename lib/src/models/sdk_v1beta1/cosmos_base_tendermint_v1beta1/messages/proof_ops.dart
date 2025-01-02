@@ -8,6 +8,13 @@ import 'package:blockchain_utils/helper/helper.dart';
 class CosmosProofOps extends CosmosMessage {
   final List<CosmosProofOp> ops;
   CosmosProofOps({required List<CosmosProofOp> ops}) : ops = ops.immutable;
+  factory CosmosProofOps.fromRpc(Map<String, dynamic> json) {
+    return CosmosProofOps(
+        ops: (json["ops"] as List?)
+                ?.map((e) => CosmosProofOp.fromRpc(e))
+                .toList() ??
+            []);
+  }
   factory CosmosProofOps.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmosProofOps(
@@ -26,7 +33,7 @@ class CosmosProofOps extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => BaseTendermintV1beta1Types.cosmosProofOps.typeUrl;
+  TypeUrl get typeUrl => BaseTendermintV1beta1Types.cosmosProofOps;
 
   @override
   List get values => [ops];

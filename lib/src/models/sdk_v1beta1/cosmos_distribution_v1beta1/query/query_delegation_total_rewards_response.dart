@@ -17,6 +17,17 @@ class DistributionQueryDelegationTotalRewardsResponse extends CosmosMessage {
       required List<DecCoin> total})
       : rewards = rewards.immutable,
         total = total.immutable;
+  factory DistributionQueryDelegationTotalRewardsResponse.fromRpc(
+      Map<String, dynamic> json) {
+    return DistributionQueryDelegationTotalRewardsResponse(
+        rewards: (json["rewards"] as List?)
+                ?.map((e) => DistributionDelegationDelegatorReward.fromRpc(e))
+                .toList() ??
+            [],
+        total:
+            (json["total"] as List?)?.map((e) => DecCoin.fromRpc(e)).toList() ??
+                []);
+  }
   factory DistributionQueryDelegationTotalRewardsResponse.deserialize(
       List<int> bytes) {
     final deocde = CosmosProtocolBuffer.decode(bytes);
@@ -40,8 +51,8 @@ class DistributionQueryDelegationTotalRewardsResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => DistributionV1beta1Types
-      .distributionQueryDelegationTotalRewardsResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      DistributionV1beta1Types.distributionQueryDelegationTotalRewardsResponse;
 
   @override
   List get values => [rewards, total];

@@ -7,6 +7,10 @@ class QueryUnbondingDelegationResponse extends CosmosMessage {
   /// unbond defines the unbonding information of a delegation.
   final UnbondingDelegation unbond;
   const QueryUnbondingDelegationResponse(this.unbond);
+  factory QueryUnbondingDelegationResponse.fromRpc(Map<String, dynamic> json) {
+    return QueryUnbondingDelegationResponse(
+        UnbondingDelegation.fromRpc(json["unbond"]));
+  }
   factory QueryUnbondingDelegationResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryUnbondingDelegationResponse(
@@ -21,8 +25,7 @@ class QueryUnbondingDelegationResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      StakingV1beta1Types.queryUnbondingDelegationResponse.typeUrl;
+  TypeUrl get typeUrl => StakingV1beta1Types.queryUnbondingDelegationResponse;
 
   @override
   List get values => [unbond];

@@ -16,6 +16,18 @@ class QueryIncentivizedPacketsResponse extends CosmosMessage {
       this.pagination})
       : incentivizedPackets = incentivizedPackets.immutable;
 
+  factory QueryIncentivizedPacketsResponse.fromRpc(Map<String, dynamic> json) {
+    return QueryIncentivizedPacketsResponse(
+      incentivizedPackets: (json["incentivized_packets"] as List?)
+              ?.map((e) => IbcFeeIdentifiedPacketFees.fromRpc(e))
+              .toList() ??
+          [],
+      pagination: json["pagination"] == null
+          ? null
+          : PageResponse.fromRpc(json["pagination"]),
+    );
+  }
+
   factory QueryIncentivizedPacketsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryIncentivizedPacketsResponse(
@@ -41,7 +53,7 @@ class QueryIncentivizedPacketsResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.queryIncentivizedPacketsResponse.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryIncentivizedPacketsResponse;
 
   @override
   List get values => [incentivizedPackets, pagination];

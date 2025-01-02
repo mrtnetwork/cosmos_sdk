@@ -99,7 +99,7 @@ class OsmosisIncentivesGauge extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisIncentivesTypes.gauge.typeUrl;
+  TypeUrl get typeUrl => OsmosisIncentivesTypes.gauge;
 
   @override
   List get values => [

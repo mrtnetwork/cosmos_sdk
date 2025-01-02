@@ -10,6 +10,16 @@ class IbcLightClientsWasmQueryChecksumsResponse extends CosmosMessage {
 
   /// pagination defines the pagination in the response.
   final PageResponse? pagination;
+
+  factory IbcLightClientsWasmQueryChecksumsResponse.fromRpc(
+      Map<String, dynamic> json) {
+    return IbcLightClientsWasmQueryChecksumsResponse(
+      checksums: (json["checksums"] as List?)?.cast(),
+      pagination: json["pagination"] == null
+          ? null
+          : PageResponse.fromRpc(json["pagination"]),
+    );
+  }
   IbcLightClientsWasmQueryChecksumsResponse(
       {List<String>? checksums, this.pagination})
       : checksums = checksums?.emptyAsNull?.immutable;
@@ -32,8 +42,7 @@ class IbcLightClientsWasmQueryChecksumsResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      IbcTypes.ibcLightClientsWasmQueryChecksumsResponse.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.ibcLightClientsWasmQueryChecksumsResponse;
 
   @override
   List get values => [checksums, pagination];

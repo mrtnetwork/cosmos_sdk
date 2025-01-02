@@ -30,5 +30,5 @@ class OsmosisProtorevQueryParamsResponse extends CosmosMessage {
   List get values => [];
 
   @override
-  String get typeUrl => OsmosisProtorevV1beta1Types.queryParamsResponse.typeUrl;
+  TypeUrl get typeUrl => OsmosisProtorevV1beta1Types.queryParamsResponse;
 }

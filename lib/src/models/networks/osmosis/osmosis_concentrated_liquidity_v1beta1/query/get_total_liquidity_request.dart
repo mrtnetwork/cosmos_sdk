@@ -3,9 +3,7 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'get_total_liquidity_response.dart';
 
 class OsmosisConcentratedLiquidityGetTotalLiquidityRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisConcentratedLiquidityGetTotalLiquidityResponse>,
-        RPCMessage<OsmosisConcentratedLiquidityGetTotalLiquidityResponse> {
+    with QueryMessage<OsmosisConcentratedLiquidityGetTotalLiquidityResponse> {
   const OsmosisConcentratedLiquidityGetTotalLiquidityRequest();
   factory OsmosisConcentratedLiquidityGetTotalLiquidityRequest.deserialize(
       List<int> bytes) {
@@ -19,22 +17,13 @@ class OsmosisConcentratedLiquidityGetTotalLiquidityRequest extends CosmosMessage
   Map<String, String?> get queryParameters => {};
 
   @override
-  String get queryPath =>
-      OsmosisConcentratedLiquidityV1beta1Types.getTotalLiquidity.typeUrl;
-
-  @override
-  String get rpcPath =>
-      OsmosisConcentratedLiquidityV1beta1Types.getTotalLiquidity
-          .rpcUrl(pathParameters: []);
-
-  @override
   Map<String, dynamic> toJson() {
     return {};
   }
 
   @override
-  String get typeUrl =>
-      OsmosisConcentratedLiquidityV1beta1Types.getTotalLiquidityRequest.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisConcentratedLiquidityV1beta1Types.getTotalLiquidityRequest;
 
   @override
   List get values => [];

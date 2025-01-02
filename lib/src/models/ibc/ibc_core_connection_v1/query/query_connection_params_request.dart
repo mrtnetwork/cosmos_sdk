@@ -17,17 +17,19 @@ class IbcConnectionQueryConnectionParamsRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      IbcTypes.ibcConnectionQueryConnectionParamsRequest.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.ibcConnectionQueryConnectionParamsRequest;
 
   @override
   List get values => [];
 
   @override
-  String get queryPath => IbcTypes.ibcConnectionConnectionParams.typeUrl;
-
-  @override
   IbcConnectionQueryConnectionParamsResponse onResponse(List<int> bytes) {
     return IbcConnectionQueryConnectionParamsResponse.deserialize(bytes);
+  }
+
+  @override
+  IbcConnectionQueryConnectionParamsResponse onJsonResponse(
+      Map<String, dynamic> json) {
+    return IbcConnectionQueryConnectionParamsResponse.fromRpc(json);
   }
 }

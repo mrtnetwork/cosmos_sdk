@@ -20,3 +20,4 @@ export 'cosmos_tx_signing_v1beta1/cosmos_tx_signing_v1beta1.dart';
 export 'cosmos_tx_v1beta1/cosmos_tx_v1beta1.dart';
 export 'cosmos_upgrade_v1beta1/cosmos_upgrade_v1beta1.dart';
 export 'cosmos_vesting_v1beta1/cosmos_vesting_v1beta1.dart';
+export 'cosmos_base_node_v1beta1/cosmos_base_node_v1beta1.dart';

@@ -29,7 +29,7 @@ class OsmosisGammMsgJoinPoolResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisGammV1beta1Types.msgJoinPoolResponse.typeUrl;
+  TypeUrl get typeUrl => OsmosisGammV1beta1Types.msgJoinPoolResponse;
 
   @override
   List get values => [shareOutAmount, tokenInMaxs];

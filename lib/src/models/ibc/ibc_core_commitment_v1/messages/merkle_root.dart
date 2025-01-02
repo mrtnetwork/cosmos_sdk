@@ -22,7 +22,7 @@ class IbcCommitmentMerkleMerkleRoot extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.merkleRoot.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.merkleRoot;
 
   @override
   List get values => [hash];

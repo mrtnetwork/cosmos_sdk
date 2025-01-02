@@ -40,7 +40,7 @@ class OsmosisProtorevMsgSetHotRoutes extends CosmosMessage
   }
 
   @override
-  String get typeUrl => OsmosisProtorevV1beta1Types.msgSetHotRoutes.typeUrl;
+  TypeUrl get typeUrl => OsmosisProtorevV1beta1Types.msgSetHotRoutes;
 
   @override
   List get values => [admin, hotRoutes];
@@ -48,11 +48,11 @@ class OsmosisProtorevMsgSetHotRoutes extends CosmosMessage
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        OsmosisProtorevV1beta1Types.msgSetHotRoutesResponse.typeUrl);
+        OsmosisProtorevV1beta1Types.msgSetHotRoutesResponse);
   }
 
   @override
-  String get service => OsmosisProtorevV1beta1Types.setHotRoutes.typeUrl;
+  TypeUrl get service => OsmosisProtorevV1beta1Types.setHotRoutes;
 
   @override
   List<String?> get signers => [admin];

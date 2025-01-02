@@ -30,7 +30,7 @@ class MsgSendTx extends CosmosMessage with ServiceMessage<MsgSendTxResponse> {
   List<int> get fieldIds => [1, 2, 3, 4];
 
   @override
-  String get service => IbcTypes.serviceMsgSendTx.typeUrl;
+  TypeUrl get service => IbcTypes.serviceMsgSendTx;
 
   @override
   Map<String, dynamic> toJson() {
@@ -43,7 +43,7 @@ class MsgSendTx extends CosmosMessage with ServiceMessage<MsgSendTxResponse> {
   }
 
   @override
-  String get typeUrl => IbcTypes.msgSendTx.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.msgSendTx;
 
   @override
   List get values => [owner, connectionId, packetData, relativeTimeout];

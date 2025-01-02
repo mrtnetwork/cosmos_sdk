@@ -2,6 +2,7 @@ import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_tendermint_v1beta1/messages/proof_ops.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_tendermint_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/utils.dart';
 
 /// ABCIQueryResponse defines the response structure for the ABCIQuery gRPC query.
 /// Note: This type is a duplicate of the ResponseQuery proto type defined in Tendermint.
@@ -15,6 +16,21 @@ class ABCIQueryResponse extends CosmosMessage {
   final CosmosProofOps? proofOps;
   final BigInt? height;
   final String? codespace;
+  factory ABCIQueryResponse.fromJson(Map<String, dynamic> json) {
+    return ABCIQueryResponse(
+      code: json["code"],
+      log: json["log"],
+      info: json["info"],
+      index: BigintUtils.tryParse(json["index"]),
+      key: CosmosUtils.tryToBytes(json["key"]),
+      value: CosmosUtils.tryToBytes(json["value"]),
+      proofOps: json["proof_ops"] == null
+          ? null
+          : CosmosProofOps.fromRpc(json["proof_ops"]),
+      codespace: json["codespace"],
+      height: BigintUtils.tryParse(json["height"]),
+    );
+  }
   ABCIQueryResponse(
       {this.code,
       this.log,
@@ -52,8 +68,8 @@ class ABCIQueryResponse extends CosmosMessage {
       "log": log,
       "info": info,
       "index": index?.toString(),
-      "key": BytesUtils.tryToHexString(key),
-      "value": BytesUtils.tryToHexString(value),
+      "key": CosmosUtils.tryToBase64(key),
+      "value": CosmosUtils.tryToBase64(value),
       "proof_ops": proofOps?.toJson(),
       "height": height?.toString(),
       "codespace": codespace
@@ -61,7 +77,7 @@ class ABCIQueryResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => BaseTendermintV1beta1Types.abciQueryResponse.typeUrl;
+  TypeUrl get typeUrl => BaseTendermintV1beta1Types.abciQueryResponse;
 
   @override
   List get values =>

@@ -46,8 +46,8 @@ class OsmosisConcentratedLiquidityMsgCollectSpreadRewards extends CosmosMessage
       ];
 
   @override
-  String get typeUrl =>
-      OsmosisConcentratedLiquidityV1beta1Types.msgCollectSpreadRewards.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisConcentratedLiquidityV1beta1Types.msgCollectSpreadRewards;
 
   @override
   OsmosisConcentratedLiquidityMsgCollectSpreadRewardsResponse onResponse(
@@ -57,8 +57,8 @@ class OsmosisConcentratedLiquidityMsgCollectSpreadRewards extends CosmosMessage
   }
 
   @override
-  String get service =>
-      OsmosisConcentratedLiquidityV1beta1Types.collectSpreadRewards.typeUrl;
+  TypeUrl get service =>
+      OsmosisConcentratedLiquidityV1beta1Types.collectSpreadRewards;
 
   @override
   List<String?> get signers => [sender];

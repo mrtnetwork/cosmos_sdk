@@ -8,12 +8,12 @@ import 'query_owner_by_query_string_response.dart';
 class QueryOwnerByQueryStringRequest extends CosmosMessage
     with QueryMessage<QueryOwnerByQueryStringResponse> {
   /// class_id associated with the nft.
-  final String? classId;
+  final String classId;
 
   /// id is a unique identifier of the NFT.
-  final String? id;
+  final String id;
 
-  QueryOwnerByQueryStringRequest({this.classId, this.id});
+  QueryOwnerByQueryStringRequest({required this.classId, required this.id});
 
   factory QueryOwnerByQueryStringRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -33,11 +33,7 @@ class QueryOwnerByQueryStringRequest extends CosmosMessage
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get queryPath => NFTV1beta1Types.nftOwnerByQueryString.typeUrl;
-
-  @override
-  String get typeUrl =>
-      NFTV1beta1Types.queryNFTOwnerByQueryStringRequest.typeUrl;
+  TypeUrl get typeUrl => NFTV1beta1Types.queryNFTOwnerByQueryStringRequest;
 
   @override
   List get values => [classId, id];
@@ -45,4 +41,15 @@ class QueryOwnerByQueryStringRequest extends CosmosMessage
   QueryOwnerByQueryStringResponse onResponse(List<int> bytes) {
     return QueryOwnerByQueryStringResponse.deserialize(bytes);
   }
+
+  @override
+  QueryOwnerByQueryStringResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryOwnerByQueryStringResponse.fromRpc(json);
+  }
+
+  @override
+  Map<String, String?> get queryParameters => {
+        'class_id': classId,
+        'id': id,
+      };
 }

@@ -19,7 +19,7 @@ class GovMsgSubmitProposalResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => GovV1beta1types.govMsgSubmitProposalResponse.typeUrl;
+  TypeUrl get typeUrl => GovV1beta1types.govMsgSubmitProposalResponse;
 
   @override
   List get values => [proposalId];

@@ -11,6 +11,9 @@ class TxDecodeAminoResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return TxDecodeAminoResponse(decode.getField(1));
   }
+  factory TxDecodeAminoResponse.fromRpc(Map<String, dynamic> json) {
+    return TxDecodeAminoResponse(json["amino_json"]);
+  }
 
   @override
   List<int> get fieldIds => [1];
@@ -21,7 +24,7 @@ class TxDecodeAminoResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => TxV1beta1Types.txDecodeAminoResponse.typeUrl;
+  TypeUrl get typeUrl => TxV1beta1Types.txDecodeAminoResponse;
 
   @override
   List get values => [aminoJson];

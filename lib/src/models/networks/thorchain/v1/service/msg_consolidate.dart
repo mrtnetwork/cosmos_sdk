@@ -26,7 +26,7 @@ class ThorchainMsgConsolidate extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.msgConsolidate.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.msgConsolidate;
 
   @override
   List get values => [observedTx, signer];

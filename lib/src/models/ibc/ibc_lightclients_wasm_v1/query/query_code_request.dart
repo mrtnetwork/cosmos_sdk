@@ -7,8 +7,8 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class IbcLightClientsWasmQueryCodeRequest extends CosmosMessage
     with QueryMessage<IbcLightClientsWasmQueryCodeResponse> {
   /// checksum is a hex encoded string of the code stored.
-  final String? checksum;
-  const IbcLightClientsWasmQueryCodeRequest({this.checksum});
+  final String checksum;
+  const IbcLightClientsWasmQueryCodeRequest({required this.checksum});
   factory IbcLightClientsWasmQueryCodeRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcLightClientsWasmQueryCodeRequest(checksum: decode.getField(1));
@@ -23,16 +23,22 @@ class IbcLightClientsWasmQueryCodeRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl => IbcTypes.ibcLightClientsWasmQueryCodeRequest.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.ibcLightClientsWasmQueryCodeRequest;
 
   @override
   List get values => [checksum];
 
   @override
-  String get queryPath => IbcTypes.ibcLightClientsWasmCode.typeUrl;
-
-  @override
   IbcLightClientsWasmQueryCodeResponse onResponse(List<int> bytes) {
     return IbcLightClientsWasmQueryCodeResponse.deserialize(bytes);
   }
+
+  @override
+  IbcLightClientsWasmQueryCodeResponse onJsonResponse(
+      Map<String, dynamic> json) {
+    return IbcLightClientsWasmQueryCodeResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters => [checksum];
 }

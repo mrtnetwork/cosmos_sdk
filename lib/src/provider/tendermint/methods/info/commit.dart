@@ -4,7 +4,7 @@ import 'package:cosmos_sdk/src/provider/tendermint/core/tendermint.dart';
 /// Get commit results at a specified height
 /// https://docs.tendermint.com/v0.34/rpc/#/Info/commit
 class TendermintRequestCommit
-    extends TendermintRequestParam<Map<String, dynamic>, Map<String, dynamic>> {
+    extends TendermintRequest<Map<String, dynamic>, Map<String, dynamic>> {
   TendermintRequestCommit({this.height});
 
   /// height to return. If no height is provided,

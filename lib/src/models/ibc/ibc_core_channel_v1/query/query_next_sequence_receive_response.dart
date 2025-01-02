@@ -2,6 +2,7 @@ import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_client_v1/messages/height.dart';
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/utils.dart';
 
 /// QuerySequenceResponse is the response type for the Query/QueryNextSequenceReceiveResponse RPC method
 class QueryNextSequenceReceiveResponse extends CosmosMessage {
@@ -16,6 +17,14 @@ class QueryNextSequenceReceiveResponse extends CosmosMessage {
   QueryNextSequenceReceiveResponse(
       {this.nextSequenceReceive, List<int>? proof, required this.proofHeight})
       : proof = BytesUtils.tryToBytes(proof, unmodifiable: true);
+  factory QueryNextSequenceReceiveResponse.fromRpc(Map<String, dynamic> json) {
+    return QueryNextSequenceReceiveResponse(
+      nextSequenceReceive: BigintUtils.tryParse(json["next_sequence_receive"]),
+      proof: CosmosUtils.tryToBytes(json["proof"]),
+      proofHeight: IbcClientHeight.fromRpc(json["proof_height"]),
+    );
+  }
+
   factory QueryNextSequenceReceiveResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryNextSequenceReceiveResponse(
@@ -38,7 +47,7 @@ class QueryNextSequenceReceiveResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.queryNextSequenceReceiveResponse.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryNextSequenceReceiveResponse;
 
   @override
   List get values => [nextSequenceReceive, proof, proofHeight];

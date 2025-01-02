@@ -38,7 +38,7 @@ class HistoricalRecord extends CosmosMessage {
   List<int> get fieldIds => [1, 2, 3];
 
   @override
-  String get typeUrl => StakingV1beta1Types.historicalRecord.typeUrl;
+  TypeUrl get typeUrl => StakingV1beta1Types.historicalRecord;
 
   @override
   List get values => [apphash, time, validatorsHash];

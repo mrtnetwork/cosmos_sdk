@@ -23,7 +23,7 @@ class OsmosisTwapArithmeticTwapResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisTwapV1beta1Types.arithmeticTwapResponse.typeUrl;
+  TypeUrl get typeUrl => OsmosisTwapV1beta1Types.arithmeticTwapResponse;
 
   @override
   List get values => [arithmeticTwap];

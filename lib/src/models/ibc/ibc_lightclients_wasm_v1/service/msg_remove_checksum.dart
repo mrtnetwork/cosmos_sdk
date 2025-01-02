@@ -26,7 +26,7 @@ class IbcLightClientsWasmMsgRemoveChecksum extends CosmosMessage
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get service => IbcTypes.ibcLightClientsWasmRemoveChecksum.typeUrl;
+  TypeUrl get service => IbcTypes.ibcLightClientsWasmRemoveChecksum;
 
   @override
   Map<String, dynamic> toJson() {
@@ -34,7 +34,7 @@ class IbcLightClientsWasmMsgRemoveChecksum extends CosmosMessage
   }
 
   @override
-  String get typeUrl => IbcTypes.ibcLightClientsWasmMsgRemoveChecksum.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.ibcLightClientsWasmMsgRemoveChecksum;
 
   @override
   List get values => [signer, checksum];
@@ -45,6 +45,6 @@ class IbcLightClientsWasmMsgRemoveChecksum extends CosmosMessage
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        IbcTypes.ibcLightClientsWasmMsgRemoveChecksumResponse.typeUrl);
+        IbcTypes.ibcLightClientsWasmMsgRemoveChecksumResponse);
   }
 }

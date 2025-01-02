@@ -29,7 +29,7 @@ class ThorchainTradeUnit extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.tradeUnit.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.tradeUnit;
 
   @override
   List get values => [asset, units, depth];

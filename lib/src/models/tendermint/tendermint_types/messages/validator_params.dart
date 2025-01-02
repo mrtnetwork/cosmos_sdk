@@ -19,7 +19,7 @@ class ValidatorParams extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => TendermintTypes.tendermintValidatorParams.typeUrl;
+  TypeUrl get typeUrl => TendermintTypes.tendermintValidatorParams;
 
   @override
   List get values => [pubKeyTypes];

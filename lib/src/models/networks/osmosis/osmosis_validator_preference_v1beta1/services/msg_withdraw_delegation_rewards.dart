@@ -26,8 +26,8 @@ class OsmosisValidatorPreferenceMsgWithdrawDelegationRewards
   }
 
   @override
-  String get typeUrl => OsmosisValidatorPreferenceV1beta1Types
-      .msgWithdrawDelegationRewards.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisValidatorPreferenceV1beta1Types.msgWithdrawDelegationRewards;
 
   @override
   List get values => [delegator];
@@ -35,12 +35,12 @@ class OsmosisValidatorPreferenceMsgWithdrawDelegationRewards
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(OsmosisValidatorPreferenceV1beta1Types
-        .msgWithdrawDelegationRewardsResponse.typeUrl);
+        .msgWithdrawDelegationRewardsResponse);
   }
 
   @override
-  String get service =>
-      OsmosisValidatorPreferenceV1beta1Types.withdrawDelegationRewards.typeUrl;
+  TypeUrl get service =>
+      OsmosisValidatorPreferenceV1beta1Types.withdrawDelegationRewards;
 
   @override
   List<String?> get signers => [delegator];

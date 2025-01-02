@@ -45,8 +45,8 @@ class OsmosisSuperfluidUserConcentratedSuperfluidPositionsUndelegatingResponse
   }
 
   @override
-  String get typeUrl => OsmosisSuperfluidTypes
-      .userConcentratedSuperfluidPositionsUndelegatingResponse.typeUrl;
+  TypeUrl get typeUrl => OsmosisSuperfluidTypes
+      .userConcentratedSuperfluidPositionsUndelegatingResponse;
 
   @override
   List get values => [clPoolUserPositionRecords];

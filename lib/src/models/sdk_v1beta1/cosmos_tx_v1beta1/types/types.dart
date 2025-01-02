@@ -1,40 +1,74 @@
-class TxV1beta1Types {
-  final String typeUrl;
-  const TxV1beta1Types._(this.typeUrl);
-  static const TxV1beta1Types simulateRequest =
-      TxV1beta1Types._("/cosmos.tx.v1beta1.SimulateRequest");
+import 'package:blockchain_utils/service/service.dart';
+import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
+
+class TxV1beta1Types extends TypeUrl {
+  // @override
+  // final String? rpc;
+  // @override
+  // final String typeUrl;
+  const TxV1beta1Types._(super.typeUrl, {super.query, super.rpc, super.method});
+  static const TxV1beta1Types simulateRequest = TxV1beta1Types._(
+      "/cosmos.tx.v1beta1.SimulateRequest",
+      query: "/cosmos.tx.v1beta1.Service/Simulate",
+      rpc: "/cosmos/tx/v1beta1/simulate",
+      method: RequestServiceType.post);
   static const TxV1beta1Types simulateResponse =
       TxV1beta1Types._("/cosmos.tx.v1beta1.SimulateResponse");
-  static const TxV1beta1Types getTxRequest =
-      TxV1beta1Types._("/cosmos.tx.v1beta1.GetTxRequest");
+  static const TxV1beta1Types getTxRequest = TxV1beta1Types._(
+      "/cosmos.tx.v1beta1.GetTxRequest",
+      query: "/cosmos.tx.v1beta1.Service/GetTx",
+      rpc: "/cosmos/tx/v1beta1/txs/:hash");
   static const TxV1beta1Types getTxResponse =
       TxV1beta1Types._("/cosmos.tx.v1beta1.GetTxResponse");
-  static const TxV1beta1Types broadcastTxRequest =
-      TxV1beta1Types._("/cosmos.tx.v1beta1.BroadcastTxRequest");
+  static const TxV1beta1Types broadcastTxRequest = TxV1beta1Types._(
+      "/cosmos.tx.v1beta1.BroadcastTxRequest",
+      query: "/cosmos.tx.v1beta1.Service/BroadcastTx",
+      rpc: "/cosmos/tx/v1beta1/txs",
+      method: RequestServiceType.post);
   static const TxV1beta1Types broadcastTxResponse =
       TxV1beta1Types._("/cosmos.tx.v1beta1.BroadcastTxResponse");
-  static const TxV1beta1Types getTxsEventRequest =
-      TxV1beta1Types._("/cosmos.tx.v1beta1.GetTxsEventRequest");
+  static const TxV1beta1Types getTxsEventRequest = TxV1beta1Types._(
+      "/cosmos.tx.v1beta1.GetTxsEventRequest",
+      query: "/cosmos.tx.v1beta1.Service/GetTxsEvent",
+      rpc: "/cosmos/tx/v1beta1/txs");
   static const TxV1beta1Types getTxsEventResponse =
       TxV1beta1Types._("/cosmos.tx.v1beta1.GetTxsEventResponse");
-  static const TxV1beta1Types getBlockWithTxsRequest =
-      TxV1beta1Types._("/cosmos.tx.v1beta1.GetBlockWithTxsRequest");
+  static const TxV1beta1Types getBlockWithTxsRequest = TxV1beta1Types._(
+      "/cosmos.tx.v1beta1.GetBlockWithTxsRequest",
+      query: "/cosmos.tx.v1beta1.Service/GetBlockWithTxs",
+      rpc: "/cosmos/tx/v1beta1/txs/block/:height");
   static const TxV1beta1Types getBlockWithTxsResponse =
       TxV1beta1Types._("/cosmos.tx.v1beta1.GetBlockWithTxsResponse");
-  static const TxV1beta1Types txDecodeRequest =
-      TxV1beta1Types._("/cosmos.tx.v1beta1.TxDecodeRequest");
+  static const TxV1beta1Types txDecodeRequest = TxV1beta1Types._(
+    "/cosmos.tx.v1beta1.TxDecodeRequest",
+    query: "/cosmos.tx.v1beta1.Service/TxDecode",
+    rpc: "/cosmos/tx/v1beta1/decode",
+    method: RequestServiceType.post,
+  );
   static const TxV1beta1Types txDecodeResponse =
       TxV1beta1Types._("/cosmos.tx.v1beta1.TxDecodeResponse");
-  static const TxV1beta1Types txEncodeRequest =
-      TxV1beta1Types._("/cosmos.tx.v1beta1.TxEncodeRequest");
+  static const TxV1beta1Types txEncodeRequest = TxV1beta1Types._(
+    "/cosmos.tx.v1beta1.TxEncodeRequest",
+    query: "/cosmos.tx.v1beta1.Service/TxEncode",
+    rpc: "/cosmos/tx/v1beta1/encode",
+    method: RequestServiceType.post,
+  );
   static const TxV1beta1Types txEncodeResponse =
       TxV1beta1Types._("/cosmos.tx.v1beta1.TxEncodeResponse");
-  static const TxV1beta1Types txEncodeAminoRequest =
-      TxV1beta1Types._("/cosmos.tx.v1beta1.TxEncodeAminoRequest");
+  static const TxV1beta1Types txEncodeAminoRequest = TxV1beta1Types._(
+    "/cosmos.tx.v1beta1.TxEncodeAminoRequest",
+    query: "/cosmos.tx.v1beta1.Service/TxEncodeAmino",
+    rpc: "/cosmos/tx/v1beta1/encode/amino",
+    method: RequestServiceType.post,
+  );
   static const TxV1beta1Types txEncodeAminoResponse =
       TxV1beta1Types._("/cosmos.tx.v1beta1.TxEncodeAminoResponse");
-  static const TxV1beta1Types txDecodeAminoRequest =
-      TxV1beta1Types._("/cosmos.tx.v1beta1.TxDecodeAminoRequest");
+  static const TxV1beta1Types txDecodeAminoRequest = TxV1beta1Types._(
+    "/cosmos.tx.v1beta1.TxDecodeAminoRequest",
+    query: "/cosmos.tx.v1beta1.Service/TxDecodeAmino",
+    rpc: "/cosmos/tx/v1beta1/decode/amino",
+    method: RequestServiceType.post,
+  );
   static const TxV1beta1Types txDecodeAminoResponse =
       TxV1beta1Types._("/cosmos.tx.v1beta1.TxDecodeAminoResponse");
   static const TxV1beta1Types signDocDirectAux =
@@ -60,24 +94,4 @@ class TxV1beta1Types {
   static const TxV1beta1Types fee = TxV1beta1Types._("/cosmos.tx.v1beta1.Fee");
   static const TxV1beta1Types authInfo =
       TxV1beta1Types._("/cosmos.tx.v1beta1.AuthInfo");
-
-  /// queries
-  static const TxV1beta1Types simulate =
-      TxV1beta1Types._("/cosmos.tx.v1beta1.Service/Simulate");
-  static const TxV1beta1Types getTx =
-      TxV1beta1Types._("/cosmos.tx.v1beta1.Service/GetTx");
-  static const TxV1beta1Types broadcastTx =
-      TxV1beta1Types._("/cosmos.tx.v1beta1.Service/BroadcastTx");
-  static const TxV1beta1Types getTxsEvent =
-      TxV1beta1Types._("/cosmos.tx.v1beta1.Service/GetTxsEvent");
-  static const TxV1beta1Types getBlockWithTxs =
-      TxV1beta1Types._("/cosmos.tx.v1beta1.Service/GetBlockWithTxs");
-  static const TxV1beta1Types txDecode =
-      TxV1beta1Types._("/cosmos.tx.v1beta1.Service/TxDecode");
-  static const TxV1beta1Types txEncode =
-      TxV1beta1Types._("/cosmos.tx.v1beta1.Service/TxEncode");
-  static const TxV1beta1Types txEncodeAmino =
-      TxV1beta1Types._("/cosmos.tx.v1beta1.Service/TxEncodeAmino");
-  static const TxV1beta1Types txDecodeAmino =
-      TxV1beta1Types._("/cosmos.tx.v1beta1.Service/TxDecodeAmino");
 }

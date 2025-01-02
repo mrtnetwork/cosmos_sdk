@@ -30,7 +30,7 @@ class ThorchainCoin extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.coin.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.coin;
 
   @override
   List get values => [asset, amount.toString(), decimals];

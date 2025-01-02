@@ -3,11 +3,9 @@ import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_lockup/types/type
 import 'account_unlockable_coins_response.dart';
 
 class OsmosisLockupAccountUnlockableCoinsRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisLockupAccountUnlockableCoinsResponse>,
-        RPCMessage<OsmosisLockupAccountUnlockableCoinsResponse> {
-  final String? owner;
-  const OsmosisLockupAccountUnlockableCoinsRequest({this.owner});
+    with QueryMessage<OsmosisLockupAccountUnlockableCoinsResponse> {
+  final String owner;
+  const OsmosisLockupAccountUnlockableCoinsRequest({required this.owner});
   factory OsmosisLockupAccountUnlockableCoinsRequest.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -23,8 +21,7 @@ class OsmosisLockupAccountUnlockableCoinsRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      OsmosisLockupTypes.accountUnlockableCoinsRequest.typeUrl;
+  TypeUrl get typeUrl => OsmosisLockupTypes.accountUnlockableCoinsRequest;
 
   @override
   List get values => [owner];
@@ -33,9 +30,6 @@ class OsmosisLockupAccountUnlockableCoinsRequest extends CosmosMessage
   OsmosisLockupAccountUnlockableCoinsResponse onResponse(List<int> bytes) {
     return OsmosisLockupAccountUnlockableCoinsResponse.deserialize(bytes);
   }
-
-  @override
-  String get queryPath => OsmosisLockupTypes.accountUnlockableCoins.typeUrl;
 
   @override
   OsmosisLockupAccountUnlockableCoinsResponse onJsonResponse(
@@ -47,6 +41,5 @@ class OsmosisLockupAccountUnlockableCoinsRequest extends CosmosMessage
   Map<String, String?> get queryParameters => {};
 
   @override
-  String get rpcPath =>
-      OsmosisLockupTypes.accountUnlockableCoins.rpcUrl(pathParameters: [owner]);
+  List<String> get pathParameters => [owner];
 }

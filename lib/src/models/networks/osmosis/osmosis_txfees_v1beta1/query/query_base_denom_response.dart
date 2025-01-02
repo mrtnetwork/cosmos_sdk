@@ -22,8 +22,7 @@ class OsmosisTxfeesQueryBaseDenomResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisTxfeesV1beta1Types.queryBaseDenomResponse.typeUrl;
+  TypeUrl get typeUrl => OsmosisTxfeesV1beta1Types.queryBaseDenomResponse;
 
   @override
   List get values => [baseDenom];

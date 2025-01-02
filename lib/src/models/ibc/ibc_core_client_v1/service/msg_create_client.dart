@@ -30,19 +30,18 @@ class MsgCreateClient extends CosmosMessage
   }
 
   @override
-  String get typeUrl => IbcTypes.msgCreateClient.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.msgCreateClient;
 
   @override
   List get values => [clientState, consensusState, signer];
 
   @override
-  String get service => IbcTypes.createClient.typeUrl;
+  TypeUrl get service => IbcTypes.createClient;
   @override
   List<String?> get signers => [signer];
 
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
-    return EmptyServiceRequestResponse(
-        IbcTypes.msgCreateClientResponse.typeUrl);
+    return EmptyServiceRequestResponse(IbcTypes.msgCreateClientResponse);
   }
 }

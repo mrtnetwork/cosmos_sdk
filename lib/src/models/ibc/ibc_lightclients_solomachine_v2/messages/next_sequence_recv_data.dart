@@ -27,7 +27,7 @@ class IbcSoloMachineV2NextSequenceRecvData extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.soloMachineV2NextSequenceRecvData.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.soloMachineV2NextSequenceRecvData;
 
   @override
   List get values => [path, nextSeqRecv];

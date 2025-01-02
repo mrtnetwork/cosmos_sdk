@@ -32,7 +32,7 @@ class InterchainAccountsHostModuleQuerySafe extends CosmosMessage
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get service => IbcTypes.interchainAccountsHostModuleQuerySafe.typeUrl;
+  TypeUrl get service => IbcTypes.interchainAccountsHostModuleQuerySafe;
 
   @override
   Map<String, dynamic> toJson() {
@@ -43,8 +43,7 @@ class InterchainAccountsHostModuleQuerySafe extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      IbcTypes.interchainAccountsHostMsgModuleQuerySafe.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.interchainAccountsHostMsgModuleQuerySafe;
 
   @override
   List get values => [signer, requests];

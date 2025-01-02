@@ -6,7 +6,7 @@ import 'package:cosmos_sdk/src/provider/tendermint/models/models/ordering.dart';
 /// See /subscribe for the query syntax.
 /// https://docs.tendermint.com/v0.34/rpc/#/Info/block_search
 class TendermintRequestBlockSearch
-    extends TendermintRequestParam<Map<String, dynamic>, Map<String, dynamic>> {
+    extends TendermintRequest<Map<String, dynamic>, Map<String, dynamic>> {
   TendermintRequestBlockSearch(
       {this.query = "block.height > 1000 AND valset.changed > 0",
       this.page,

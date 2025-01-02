@@ -7,45 +7,40 @@ import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_staking_v1beta1/types/t
 class QueryUnbondingDelegationRequest extends CosmosMessage
     with QueryMessage<QueryUnbondingDelegationResponse> {
   /// delegator_addr defines the delegator address to query for.
-  final CosmosBaseAddress? delegatorAddr;
+  final CosmosBaseAddress delegatorAddr;
 
   /// validator_addr defines the validator address to query for.
-  final CosmosBaseAddress? validatorAddr;
+  final CosmosBaseAddress validatorAddr;
   const QueryUnbondingDelegationRequest(
-      {this.delegatorAddr, this.validatorAddr});
-  factory QueryUnbondingDelegationRequest.deserialize(List<int> bytes) {
-    final decode = CosmosProtocolBuffer.decode(bytes);
-    return QueryUnbondingDelegationRequest(
-        delegatorAddr: decode
-            .getResult(1)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        validatorAddr: decode
-            .getResult(2)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)));
-  }
+      {required this.delegatorAddr, required this.validatorAddr});
 
   @override
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get queryPath => StakingV1beta1Types.unbondingDelegation.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {
-      "delegator_addr": delegatorAddr?.address,
-      "validator_addr": validatorAddr?.address
+      "delegator_addr": delegatorAddr.address,
+      "validator_addr": validatorAddr.address
     };
   }
 
   @override
-  String get typeUrl =>
-      StakingV1beta1Types.queryUnbondingDelegationRequest.typeUrl;
+  TypeUrl get typeUrl => StakingV1beta1Types.queryUnbondingDelegationRequest;
 
   @override
-  List get values => [delegatorAddr, validatorAddr?.address];
+  List get values => [validatorAddr.address, delegatorAddr];
   @override
   QueryUnbondingDelegationResponse onResponse(List<int> bytes) {
     return QueryUnbondingDelegationResponse.deserialize(bytes);
   }
+
+  @override
+  QueryUnbondingDelegationResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryUnbondingDelegationResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters =>
+      [delegatorAddr.address, validatorAddr.address];
 }

@@ -15,13 +15,11 @@ void main() async {
   final privateKey = CosmosSecp256K1PrivateKey.fromBytes(bip44.privateKey.raw);
 
   final publickey = privateKey.toPublicKey();
-  // print(pr.toPublicKey().toAddresss(hrp: "osmo"));
-
   final provider = TendermintProvider(
       TendermintHTTPProvider(url: "https://rpc.testnet.osmosis.zone/"));
 
   final message = OsmosisTokenFactoryMsgMint(
-      sender: publickey.toAddresss(hrp: CosmosAddrConst.osmosis).address,
+      sender: publickey.toAddress(hrp: CosmosAddrConst.osmosis).address,
       amount: Coin(
           denom: "factory/osmo1htg7dmhelazdsmuwm9ngtg0tpe82006ugka49q/MRT",
           amount: BigInt.from(123123123123123)));
@@ -29,7 +27,7 @@ void main() async {
   /// Querying account info from the blockchain
   final accountInfo = await provider.request(TendermintRequestAbciQuery(
       request: QueryAccountInfoRequest(
-          publickey.toAddresss(hrp: CosmosAddrConst.osmosis))));
+          publickey.toAddress(hrp: CosmosAddrConst.osmosis))));
 
   /// Querying the latest block information
   final latestBlock = await provider.request(

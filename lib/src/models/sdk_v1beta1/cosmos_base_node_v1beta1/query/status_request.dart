@@ -16,15 +16,18 @@ class NodeStatusRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl => BaseNodeV1beta1Types.nodeStatusRequest.typeUrl;
+  TypeUrl get typeUrl => BaseNodeV1beta1Types.nodeStatusRequest;
 
   @override
   List get values => [];
 
   @override
-  String get queryPath => BaseNodeV1beta1Types.nodeStatus.typeUrl;
-  @override
   NodeStatusResponse onResponse(List<int> bytes) {
     return NodeStatusResponse.deserialize(bytes);
+  }
+
+  @override
+  NodeStatusResponse onJsonResponse(Map<String, dynamic> json) {
+    return NodeStatusResponse.fromRpc(json);
   }
 }

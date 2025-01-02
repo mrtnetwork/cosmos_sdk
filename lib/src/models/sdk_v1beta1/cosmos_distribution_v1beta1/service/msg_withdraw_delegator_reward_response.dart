@@ -27,8 +27,8 @@ class DistributionMsgWithdrawDelegatorRewardResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => DistributionV1beta1Types
-      .distributionMsgWithdrawDelegatorRewardResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      DistributionV1beta1Types.distributionMsgWithdrawDelegatorRewardResponse;
 
   @override
   List get values => [amount];

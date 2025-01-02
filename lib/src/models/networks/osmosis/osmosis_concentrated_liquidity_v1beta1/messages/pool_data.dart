@@ -1,3 +1,4 @@
+import 'package:cosmos_sdk/src/models/global_messages/unknown_message.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_concentrated_liquidity_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:blockchain_utils/helper/helper.dart';
@@ -8,7 +9,7 @@ import 'incentive_record.dart';
 /// PoolData represents a serialized pool along with its ticks for genesis state.
 class OsmosisConcentratedLiquidityPoolData extends CosmosMessage {
   /// pool struct.
-  final Any? pool;
+  final AnyMessage? pool;
 
   /// pool's ticks
   final List<OsmosisConcentratedLiquidityFullTick> ticks;
@@ -32,8 +33,9 @@ class OsmosisConcentratedLiquidityPoolData extends CosmosMessage {
   factory OsmosisConcentratedLiquidityPoolData.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityPoolData(
-        pool:
-            decode.getResult(1)?.to<Any, List<int>>((e) => Any.deserialize(e)),
+        pool: decode
+            .getResult(1)
+            ?.to<AnyMessage, List<int>>((e) => AnyMessage.deserialize(e)),
         ticks: decode
             .getFields(2)
             .map((e) => OsmosisConcentratedLiquidityFullTick.deserialize(e))
@@ -54,7 +56,7 @@ class OsmosisConcentratedLiquidityPoolData extends CosmosMessage {
   factory OsmosisConcentratedLiquidityPoolData.fromRpc(
       Map<String, dynamic> json) {
     return OsmosisConcentratedLiquidityPoolData(
-        pool: json["pool"] == null ? null : Any.fromRpc(json["pool"]),
+        pool: json["pool"] == null ? null : AnyMessage.fromRpc(json["pool"]),
         incentiveRecords: (json["incentive_records"] as List?)
                 ?.map((e) =>
                     OsmosisConcentratedLiquidityIncentiveRecord.fromRpc(e))
@@ -98,6 +100,5 @@ class OsmosisConcentratedLiquidityPoolData extends CosmosMessage {
       ];
 
   @override
-  String get typeUrl =>
-      OsmosisConcentratedLiquidityV1beta1Types.poolData.typeUrl;
+  TypeUrl get typeUrl => OsmosisConcentratedLiquidityV1beta1Types.poolData;
 }

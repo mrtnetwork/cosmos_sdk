@@ -28,7 +28,7 @@ class OsmosisMintWeightedAddress extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisMintV1beta1Types.weightedAddress.typeUrl;
+  TypeUrl get typeUrl => OsmosisMintV1beta1Types.weightedAddress;
 
   @override
   List get values => [address, weight];

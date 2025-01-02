@@ -34,7 +34,7 @@ class TendermintCryptoProofOp extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => TendermintTypes.proofOp.typeUrl;
+  TypeUrl get typeUrl => TendermintTypes.proofOp;
 
   @override
   List get values => [type, key, data];

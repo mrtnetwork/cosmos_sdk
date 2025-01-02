@@ -40,7 +40,7 @@ class QueryAllBalancesResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => BankV1beta1Types.allBalancesResponse.typeUrl;
+  TypeUrl get typeUrl => BankV1beta1Types.allBalancesResponse;
 
   @override
   List get values => [balances, pagination];

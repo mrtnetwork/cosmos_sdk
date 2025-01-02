@@ -35,8 +35,8 @@ class OsmosisGammQueryTotalPoolLiquidityResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisGammV1beta1Types.queryTotalPoolLiquidityResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisGammV1beta1Types.queryTotalPoolLiquidityResponse;
 
   @override
   List get values => [liquidity];

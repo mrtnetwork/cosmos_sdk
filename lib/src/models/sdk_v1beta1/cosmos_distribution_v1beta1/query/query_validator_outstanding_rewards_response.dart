@@ -8,6 +8,11 @@ class DistributionQueryValidatorOutstandingRewardsResponse
     extends CosmosMessage {
   final DistributionValidatorOutstandingRewards rewards;
   const DistributionQueryValidatorOutstandingRewardsResponse(this.rewards);
+  factory DistributionQueryValidatorOutstandingRewardsResponse.fromRpc(
+      Map<String, dynamic> json) {
+    return DistributionQueryValidatorOutstandingRewardsResponse(
+        DistributionValidatorOutstandingRewards.fromRpc(json["rewards"]));
+  }
   factory DistributionQueryValidatorOutstandingRewardsResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -25,8 +30,8 @@ class DistributionQueryValidatorOutstandingRewardsResponse
   }
 
   @override
-  String get typeUrl => DistributionV1beta1Types
-      .distributionQueryValidatorOutstandingRewardsResponse.typeUrl;
+  TypeUrl get typeUrl => DistributionV1beta1Types
+      .distributionQueryValidatorOutstandingRewardsResponse;
 
   @override
   List get values => [rewards];

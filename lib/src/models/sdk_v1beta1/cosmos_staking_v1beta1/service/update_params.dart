@@ -42,19 +42,19 @@ class StakingMsgUpdateParams extends CosmosMessage
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get typeUrl => StakingV1beta1Types.stakingMsgUpdateParams.typeUrl;
+  TypeUrl get typeUrl => StakingV1beta1Types.stakingMsgUpdateParams;
 
   @override
   List get values => [authority?.address, params];
 
   @override
-  String get service => StakingV1beta1Types.updateParams.typeUrl;
+  TypeUrl get service => StakingV1beta1Types.updateParams;
   @override
   List<String?> get signers => [authority?.address];
 
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        StakingV1beta1Types.stakingMsgUpdateParamsResponse.typeUrl);
+        StakingV1beta1Types.stakingMsgUpdateParamsResponse);
   }
 }

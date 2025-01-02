@@ -13,7 +13,7 @@ class OsmosisLockupMsgBeginUnlockingResponse extends CosmosMessage {
   List<int> get fieldIds => [1];
 
   @override
-  String get typeUrl => OsmosisLockupTypes.msgBeginUnlockingResponse.typeUrl;
+  TypeUrl get typeUrl => OsmosisLockupTypes.msgBeginUnlockingResponse;
 
   @override
   List get values => [success];

@@ -34,7 +34,7 @@ class OsmosisSuperfluidAllAssetsResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisSuperfluidTypes.allAssetsResponse.typeUrl;
+  TypeUrl get typeUrl => OsmosisSuperfluidTypes.allAssetsResponse;
 
   @override
   List get values => [assets];

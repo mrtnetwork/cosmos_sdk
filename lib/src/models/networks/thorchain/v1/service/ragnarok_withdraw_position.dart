@@ -22,7 +22,7 @@ class ThorchainRagnarokWithdrawPosition extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.ragnarokWithdrawPosition.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.ragnarokWithdrawPosition;
 
   @override
   List get values => [number, pool];

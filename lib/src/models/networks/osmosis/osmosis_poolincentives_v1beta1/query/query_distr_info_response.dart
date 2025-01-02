@@ -27,8 +27,8 @@ class OsmosisPoolincentivesQueryDistrInfoResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisPoolincentivesV1beta1Types.queryDistrInfoResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisPoolincentivesV1beta1Types.queryDistrInfoResponse;
 
   @override
   List get values => [distrInfo];

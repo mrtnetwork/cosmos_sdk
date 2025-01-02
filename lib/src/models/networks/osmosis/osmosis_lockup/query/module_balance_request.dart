@@ -4,9 +4,7 @@ import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_lockup/types/type
 import 'module_balance_response.dart';
 
 class OsmosisLockupModuleBalanceRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisLockupModuleBalanceResponse>,
-        RPCMessage<OsmosisLockupModuleBalanceResponse> {
+    with QueryMessage<OsmosisLockupModuleBalanceResponse> {
   const OsmosisLockupModuleBalanceRequest();
   factory OsmosisLockupModuleBalanceRequest.deserialize(List<int> bytes) {
     return const OsmosisLockupModuleBalanceRequest();
@@ -20,7 +18,7 @@ class OsmosisLockupModuleBalanceRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl => OsmosisLockupTypes.moduleBalance.typeUrl;
+  TypeUrl get typeUrl => OsmosisLockupTypes.moduleBalanceRequest;
 
   @override
   List get values => [];
@@ -31,16 +29,10 @@ class OsmosisLockupModuleBalanceRequest extends CosmosMessage
   }
 
   @override
-  String get queryPath => OsmosisLockupTypes.moduleBalance.typeUrl;
-
-  @override
   OsmosisLockupModuleBalanceResponse onJsonResponse(Map<String, dynamic> json) {
     return OsmosisLockupModuleBalanceResponse.fromRpc(json);
   }
 
   @override
   Map<String, String?> get queryParameters => {};
-
-  @override
-  String get rpcPath => OsmosisLockupTypes.moduleBalance.rpcUrl();
 }

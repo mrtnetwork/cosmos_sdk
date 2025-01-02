@@ -27,7 +27,7 @@ class OsmosisPoolincentivesDistrRecord extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisPoolincentivesV1beta1Types.distrRecord.typeUrl;
+  TypeUrl get typeUrl => OsmosisPoolincentivesV1beta1Types.distrRecord;
   @override
   List get values => [gaugeId, weight];
 }

@@ -45,5 +45,5 @@ class ModuleAccount extends CosmosBaseAccount {
   List get values => [baseAccount, name, permissions];
 
   @override
-  String get typeUrl => AuthV1beta1Types.moduleAccount.typeUrl;
+  TypeUrl get typeUrl => AuthV1beta1Types.moduleAccount;
 }

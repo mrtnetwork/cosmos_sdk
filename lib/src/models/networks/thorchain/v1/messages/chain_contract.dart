@@ -20,7 +20,7 @@ class ThorchainChainContract extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.chainContract.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.chainContract;
 
   @override
   List get values => [chain, router];

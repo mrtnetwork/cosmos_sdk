@@ -37,8 +37,8 @@ class DistributionValidatorOutstandingRewardsRecord extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => DistributionV1beta1Types
-      .distributionValidatorOutstandingRewardsRecord.typeUrl;
+  TypeUrl get typeUrl =>
+      DistributionV1beta1Types.distributionValidatorOutstandingRewardsRecord;
 
   @override
   List get values => [validatorAddress?.address, outstandingRewards];

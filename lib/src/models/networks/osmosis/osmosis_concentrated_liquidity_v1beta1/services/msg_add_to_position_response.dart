@@ -42,6 +42,6 @@ class OsmosisConcentratedLiquidityMsgAddToPositionResponse
   List get values => [positionId, amount0.toString(), amount1.toString()];
 
   @override
-  String get typeUrl =>
-      OsmosisConcentratedLiquidityV1beta1Types.msgAddToPositionResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisConcentratedLiquidityV1beta1Types.msgAddToPositionResponse;
 }

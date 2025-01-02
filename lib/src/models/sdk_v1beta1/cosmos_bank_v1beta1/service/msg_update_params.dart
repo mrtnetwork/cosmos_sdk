@@ -38,14 +38,14 @@ class BankMsgUpdateParams extends CosmosMessage
 
   @override
   @override
-  String get typeUrl => BankV1beta1Types.msgUpdateParams.typeUrl;
+  TypeUrl get typeUrl => BankV1beta1Types.msgUpdateParams;
   @override
-  String get service => BankV1beta1Types.bankUpdateParams.typeUrl;
+  TypeUrl get service => BankV1beta1Types.bankUpdateParams;
   @override
   List<String?> get signers => [authority.address];
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        BankV1beta1Types.bankMsgUpdateParamsResponse.typeUrl);
+        BankV1beta1Types.bankMsgUpdateParamsResponse);
   }
 }

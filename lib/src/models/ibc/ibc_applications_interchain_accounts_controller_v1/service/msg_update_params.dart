@@ -35,15 +35,13 @@ class InterchainAccountsControllerMsgUpdateParams extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      IbcTypes.interchainAccountsControllerMsgUpdateParams.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.interchainAccountsControllerMsgUpdateParams;
 
   @override
   List get values => [signer, params];
 
   @override
-  String get service =>
-      IbcTypes.interchainAccountsControllerUpdateParams.typeUrl;
+  TypeUrl get service => IbcTypes.interchainAccountsControllerUpdateParams;
 
   @override
   List<String?> get signers => [signer];
@@ -51,6 +49,6 @@ class InterchainAccountsControllerMsgUpdateParams extends CosmosMessage
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        IbcTypes.interchainAccountsControllerMsgUpdateParamsResponse.typeUrl);
+        IbcTypes.interchainAccountsControllerMsgUpdateParamsResponse);
   }
 }

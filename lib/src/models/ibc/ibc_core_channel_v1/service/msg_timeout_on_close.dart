@@ -43,7 +43,7 @@ class MsgTimeoutOnClose extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3, 4, 5, 6, 7];
 
   @override
-  String get service => IbcTypes.timeoutOnClose.typeUrl;
+  TypeUrl get service => IbcTypes.timeoutOnClose;
 
   @override
   Map<String, dynamic> toJson() {
@@ -59,7 +59,7 @@ class MsgTimeoutOnClose extends CosmosMessage
   }
 
   @override
-  String get typeUrl => IbcTypes.msgTimeoutOnClose.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.msgTimeoutOnClose;
 
   @override
   List get values => [

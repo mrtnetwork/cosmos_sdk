@@ -23,7 +23,7 @@ class CapabilityOwners extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.capabilityOwners.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.capabilityOwners;
 
   @override
   List get values => [owners];

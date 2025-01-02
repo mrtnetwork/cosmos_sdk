@@ -67,6 +67,5 @@ class OsmosisConcentratedLiquidityPositionData extends CosmosMessage {
       [position, lockId, spreadRewardAccumRecord, uptimeAccumRecords];
 
   @override
-  String get typeUrl =>
-      OsmosisConcentratedLiquidityV1beta1Types.positionData.typeUrl;
+  TypeUrl get typeUrl => OsmosisConcentratedLiquidityV1beta1Types.positionData;
 }

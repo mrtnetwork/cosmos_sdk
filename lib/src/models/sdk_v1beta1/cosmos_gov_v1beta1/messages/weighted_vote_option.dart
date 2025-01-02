@@ -12,6 +12,13 @@ class GovWeightedVoteOption extends CosmosMessage {
   /// weight is the vote weight associated with the vote option.
   final String weight;
   const GovWeightedVoteOption({this.option, required this.weight});
+  factory GovWeightedVoteOption.fromRpc(Map<String, dynamic> json) {
+    return GovWeightedVoteOption(
+        weight: json["weight"],
+        option: json["option"] == null
+            ? null
+            : GovVoteOption.fromName(json["option"]));
+  }
 
   factory GovWeightedVoteOption.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -32,7 +39,7 @@ class GovWeightedVoteOption extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => GovV1beta1types.goveWeightedVoteOption.typeUrl;
+  TypeUrl get typeUrl => GovV1beta1types.goveWeightedVoteOption;
 
   @override
   List get values => [option?.value, weight];

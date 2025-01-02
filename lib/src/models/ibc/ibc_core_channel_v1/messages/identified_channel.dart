@@ -1,3 +1,4 @@
+import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_channel_v1/messages/counter_party.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_channel_v1/messages/order.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_channel_v1/messages/state.dart';
@@ -32,6 +33,24 @@ class IbcChannelIdentifiedChannel extends CosmosMessage {
   /// upgrade sequence indicates the latest upgrade attempt performed by this channel
   /// the value of 0 indicates the channel has never been upgraded
   final BigInt? upgradeSequence;
+
+  factory IbcChannelIdentifiedChannel.fromRpc(Map<String, dynamic> json) {
+    return IbcChannelIdentifiedChannel(
+        channelId: json["channel_id"],
+        connectionHops: (json["connection_hops"] as List?)?.cast(),
+        counterparty: json["counterparty"] == null
+            ? null
+            : IbcChannelCounterParty.fromRpc(json["counterparty"]),
+        ordering: json["ordering"] == null
+            ? null
+            : IbcChannelOrder.fromValue(json["ordering"]),
+        portId: json["port_id"],
+        state: json["state"] == null
+            ? null
+            : IbcChannelState.fromValue(json["state"]),
+        upgradeSequence: BigintUtils.tryParse(json["upgrade_sequence"]),
+        version: json["version"]);
+  }
   IbcChannelIdentifiedChannel(
       {this.state,
       this.ordering,
@@ -80,7 +99,7 @@ class IbcChannelIdentifiedChannel extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.identifiedChannel.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.identifiedChannel;
 
   @override
   List get values => [

@@ -43,7 +43,7 @@ class MsgChannelUpgradeAck extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3, 4, 5, 6, 7];
 
   @override
-  String get service => IbcTypes.channelUpgradeAck.typeUrl;
+  TypeUrl get service => IbcTypes.channelUpgradeAck;
 
   @override
   Map<String, dynamic> toJson() {
@@ -59,7 +59,7 @@ class MsgChannelUpgradeAck extends CosmosMessage
   }
 
   @override
-  String get typeUrl => IbcTypes.msgChannelUpgradeAck.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.msgChannelUpgradeAck;
 
   @override
   List get values => [

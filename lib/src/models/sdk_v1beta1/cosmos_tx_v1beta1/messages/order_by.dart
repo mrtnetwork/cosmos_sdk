@@ -1,4 +1,4 @@
-import 'package:blockchain_utils/exception/exception.dart';
+import 'package:cosmos_sdk/src/exception/exception.dart';
 import 'package:cosmos_sdk/src/protobuf/types/cosmos_enum.dart';
 
 /// OrderBy defines the sorting order.
@@ -24,7 +24,7 @@ class OrderBy implements CosmosEnum {
   static OrderBy fromValue(int? value) {
     return values.firstWhere(
       (e) => e.value == value,
-      orElse: () => throw MessageException(
+      orElse: () => throw DartCosmosSdkPluginException(
           "No OrderBy element found for the given value.",
           details: {"value": value}),
     );

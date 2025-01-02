@@ -11,6 +11,9 @@ class QueryOwnerByQueryStringResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryOwnerByQueryStringResponse(owner: decode.getField(1));
   }
+  factory QueryOwnerByQueryStringResponse.fromRpc(Map<String, dynamic> json) {
+    return QueryOwnerByQueryStringResponse(owner: json["owner"]);
+  }
 
   @override
   List<int> get fieldIds => [1];
@@ -21,8 +24,7 @@ class QueryOwnerByQueryStringResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      NFTV1beta1Types.queryNFTOwnerByQueryStringResponse.typeUrl;
+  TypeUrl get typeUrl => NFTV1beta1Types.queryNFTOwnerByQueryStringResponse;
 
   @override
   List get values => [owner];

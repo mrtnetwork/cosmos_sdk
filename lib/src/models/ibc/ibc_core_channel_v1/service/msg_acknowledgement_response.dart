@@ -22,7 +22,7 @@ class MsgAcknowledgementResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.msgAcknowledgementResponse.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.msgAcknowledgementResponse;
 
   @override
   List get values => [1];

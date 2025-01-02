@@ -52,7 +52,7 @@ class ThorchainSolvencyVoter extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.solvencyVoter.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.solvencyVoter;
 
   @override
   List get values =>

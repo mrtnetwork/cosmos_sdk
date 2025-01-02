@@ -1,3 +1,4 @@
+import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/models/global_messages/unknown_message.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_tx_v1beta1/types/types.dart';
 
@@ -13,6 +14,8 @@ class TXBody extends CosmosMessage {
   /// is referred to as the primary signer and pays the fee for the whole
   /// transaction.
   final List<CosmosMessage> messages;
+
+  final List<Map<String, dynamic>>? messagesJson;
 
   /// memo is any arbitrary note/comment to be added to the transaction.
   /// WARNING: in clients, any publicly exposed text should not be called memo,
@@ -42,28 +45,44 @@ class TXBody extends CosmosMessage {
   /// extension_options are arbitrary options that can be added by chains
   /// when the default options are not sufficient. If any of these are present
   /// and can't be handled, the transaction will be rejected
-  final List<Any> extensionOptions;
+  final List<AnyMessage> extensionOptions;
 
   /// extension_options are arbitrary options that can be added by chains
   /// when the default options are not sufficient. If any of these are present
   /// and can't be handled, they will be ignored
-  final List<Any> nonCriticalExtensionOptions;
+  final List<AnyMessage> nonCriticalExtensionOptions;
   const TXBody(
       {required this.messages,
       this.memo,
       this.timeoutHeight,
       this.unordered,
       this.extensionOptions = const [],
-      this.nonCriticalExtensionOptions = const []});
+      this.nonCriticalExtensionOptions = const [],
+      this.messagesJson});
   factory TXBody.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     final anys = decode
         .getFields<List<int>>(1)
-        .map((e) => Any.deserialize(e))
-        .toList()
-        .map((e) => AnyMessage(e))
+        .map((e) => AnyBytesMessage.deserialize(e))
         .toList();
     return TXBody(messages: anys);
+  }
+  factory TXBody.fromRpc(Map<String, dynamic> json) {
+    return TXBody(
+        messages: [],
+        messagesJson: json["messages"],
+        extensionOptions: (json["extension_options"] as List?)
+                ?.map((e) => AnyMessage.fromRpc(e))
+                .toList() ??
+            [],
+        memo: json["memo"],
+        nonCriticalExtensionOptions:
+            (json["non_critical_extension_options"] as List?)
+                    ?.map((e) => AnyMessage.fromRpc(e))
+                    .toList() ??
+                [],
+        timeoutHeight: BigintUtils.tryParse(json["timeout_height"]),
+        unordered: json["unordered"]);
   }
 
   @override
@@ -92,5 +111,5 @@ class TXBody extends CosmosMessage {
         nonCriticalExtensionOptions
       ];
   @override
-  String get typeUrl => TxV1beta1Types.txBody.typeUrl;
+  TypeUrl get typeUrl => TxV1beta1Types.txBody;
 }

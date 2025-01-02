@@ -32,6 +32,6 @@ class OsmosisProtorevQueryGetProtoRevDeveloperAccountResponse
   List get values => [developerAccount];
 
   @override
-  String get typeUrl => OsmosisProtorevV1beta1Types
-      .queryGetProtoRevDeveloperAccountResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisProtorevV1beta1Types.queryGetProtoRevDeveloperAccountResponse;
 }

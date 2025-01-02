@@ -33,7 +33,7 @@ class ThorchainErrataTxVoter extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.errataTxVoter.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.errataTxVoter;
 
   @override
   List get values => [txId, chain, blockHeight, signers];

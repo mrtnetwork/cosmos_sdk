@@ -57,7 +57,7 @@ class OsmosisStreamSwapUserPosition extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisStreamSwapV1Types.userPosition.typeUrl;
+  TypeUrl get typeUrl => OsmosisStreamSwapV1Types.userPosition;
 
   @override
   List get values => [shares, staked, outPerShare, spent, purchased];

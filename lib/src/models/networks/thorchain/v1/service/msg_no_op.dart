@@ -29,7 +29,7 @@ class ThorchainMsgNoOp extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.msgNoOp.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.msgNoOp;
 
   @override
   List get values => [observedTx, signer, action];

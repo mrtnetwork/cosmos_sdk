@@ -18,7 +18,7 @@ class OsmosisLockupMsgLockTokensResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisLockupTypes.msgLockTokensResponse.typeUrl;
+  TypeUrl get typeUrl => OsmosisLockupTypes.msgLockTokensResponse;
 
   @override
   List get values => [id];

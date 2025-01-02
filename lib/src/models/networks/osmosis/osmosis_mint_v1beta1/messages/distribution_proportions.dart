@@ -55,7 +55,7 @@ class OsmosisMintDistributionProportions extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisMintV1beta1Types.distributionProportions.typeUrl;
+  TypeUrl get typeUrl => OsmosisMintV1beta1Types.distributionProportions;
 
   @override
   List get values => [staking, poolIncentives, developerRewards, communityPool];

@@ -52,7 +52,7 @@ class IbcSoloMachineV3SignBytes extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.soloMachineV3SignBytes.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.soloMachineV3SignBytes;
 
   @override
   List get values => [sequence, timestamp, diversifier, path, data];

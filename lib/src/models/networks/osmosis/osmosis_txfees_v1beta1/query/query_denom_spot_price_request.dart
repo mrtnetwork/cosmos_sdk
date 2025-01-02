@@ -4,9 +4,7 @@ import 'query_denom_spot_price_response.dart';
 
 /// QueryDenomSpotPriceRequest defines grpc request structure for querying spot price for the specified tx fee denom
 class OsmosisTxfeesQueryDenomSpotPriceRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisTxfeesQueryDenomSpotPriceResponse>,
-        RPCMessage<OsmosisTxfeesQueryDenomSpotPriceResponse> {
+    with QueryMessage<OsmosisTxfeesQueryDenomSpotPriceResponse> {
   final String? denom;
   const OsmosisTxfeesQueryDenomSpotPriceRequest({this.denom});
   factory OsmosisTxfeesQueryDenomSpotPriceRequest.deserialize(List<int> bytes) {
@@ -27,8 +25,7 @@ class OsmosisTxfeesQueryDenomSpotPriceRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      OsmosisTxfeesV1beta1Types.queryDenomSpotPriceRequest.typeUrl;
+  TypeUrl get typeUrl => OsmosisTxfeesV1beta1Types.queryDenomSpotPriceRequest;
 
   @override
   List get values => [denom];
@@ -46,10 +43,4 @@ class OsmosisTxfeesQueryDenomSpotPriceRequest extends CosmosMessage
 
   @override
   Map<String, String?> get queryParameters => {"denom": denom};
-
-  @override
-  String get queryPath => OsmosisTxfeesV1beta1Types.denomSpotPrice.typeUrl;
-
-  @override
-  String get rpcPath => OsmosisTxfeesV1beta1Types.denomSpotPrice.rpcUrl();
 }

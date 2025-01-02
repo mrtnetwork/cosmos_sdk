@@ -12,6 +12,17 @@ class QueryDenomsMetadataResponse extends CosmosMessage {
   /// pagination defines the pagination in the response.
   final PageResponse? pagination;
   const QueryDenomsMetadataResponse({required this.metadatas, this.pagination});
+  factory QueryDenomsMetadataResponse.fromRpc(Map<String, dynamic> json) {
+    return QueryDenomsMetadataResponse(
+        metadatas: (json["metadatas"] as List?)
+                ?.map((e) => Metadata.fromRpc(e))
+                .toList() ??
+            [],
+        pagination: json["pagination"] == null
+            ? null
+            : PageResponse.fromRpc(json["pagination"]));
+  }
+
   factory QueryDenomsMetadataResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryDenomsMetadataResponse(
@@ -36,7 +47,7 @@ class QueryDenomsMetadataResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => BankV1beta1Types.denomsMetadataResponse.typeUrl;
+  TypeUrl get typeUrl => BankV1beta1Types.denomsMetadataResponse;
 
   @override
   List get values => [metadatas, pagination];

@@ -15,6 +15,13 @@ class GovTallyResult extends CosmosMessage {
 
   /// no_with_veto is the number of no with veto votes on a proposal.
   final BigInt noWithVeto;
+  factory GovTallyResult.fromRpc(Map<String, dynamic> json) {
+    return GovTallyResult(
+        abstain: BigintUtils.parse(json["abstain"]),
+        no: BigintUtils.parse(json["no"]),
+        noWithVeto: BigintUtils.parse(json["no_with_veto"]),
+        yes: BigintUtils.parse(json["yes"]));
+  }
   const GovTallyResult(
       {required this.yes,
       required this.abstain,
@@ -43,7 +50,7 @@ class GovTallyResult extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => GovV1beta1types.govTallyResult.typeUrl;
+  TypeUrl get typeUrl => GovV1beta1types.govTallyResult;
 
   @override
   List get values => [

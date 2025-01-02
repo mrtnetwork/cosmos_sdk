@@ -52,7 +52,7 @@ class ThorchainEventWithdraw extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.eventWithdraw.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.eventWithdraw;
 
   @override
   List get values => [

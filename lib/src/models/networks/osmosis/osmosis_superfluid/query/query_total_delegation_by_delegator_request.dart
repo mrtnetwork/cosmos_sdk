@@ -5,11 +5,10 @@ import 'query_total_delegation_by_delegator_response.dart';
 class OsmosisSuperfluidQueryTotalDelegationByDelegatorRequest
     extends CosmosMessage
     with
-        QueryMessage<OsmosisSuperfluidQueryTotalDelegationByDelegatorResponse>,
-        RPCMessage<OsmosisSuperfluidQueryTotalDelegationByDelegatorResponse> {
-  final String? delegatorAddress;
+        QueryMessage<OsmosisSuperfluidQueryTotalDelegationByDelegatorResponse> {
+  final String delegatorAddress;
   const OsmosisSuperfluidQueryTotalDelegationByDelegatorRequest(
-      {this.delegatorAddress});
+      {required this.delegatorAddress});
   factory OsmosisSuperfluidQueryTotalDelegationByDelegatorRequest.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -26,22 +25,14 @@ class OsmosisSuperfluidQueryTotalDelegationByDelegatorRequest
   }
 
   @override
-  String get typeUrl =>
-      OsmosisSuperfluidTypes.queryTotalDelegationByDelegatorRequest.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisSuperfluidTypes.queryTotalDelegationByDelegatorRequest;
 
   @override
   List get values => [delegatorAddress];
 
   @override
   Map<String, String?> get queryParameters => {};
-
-  @override
-  String get queryPath =>
-      OsmosisSuperfluidTypes.totalDelegationByDelegator.typeUrl;
-
-  @override
-  String get rpcPath => OsmosisSuperfluidTypes.totalDelegationByDelegator
-      .rpcUrl(pathParameters: [delegatorAddress]);
 
   @override
   OsmosisSuperfluidQueryTotalDelegationByDelegatorResponse onJsonResponse(
@@ -56,4 +47,7 @@ class OsmosisSuperfluidQueryTotalDelegationByDelegatorRequest
     return OsmosisSuperfluidQueryTotalDelegationByDelegatorResponse.deserialize(
         bytes);
   }
+
+  @override
+  List<String> get pathParameters => [delegatorAddress];
 }

@@ -60,7 +60,7 @@ class OsmosisPoolManagerParams extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisPoolManagerV1beta1Types.params.typeUrl;
+  TypeUrl get typeUrl => OsmosisPoolManagerV1beta1Types.params;
 
   @override
   List get values => [poolCreationFee, takerFeeParams, authorizedQuoteDenoms];

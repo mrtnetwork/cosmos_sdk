@@ -22,7 +22,7 @@ class MsgTimeoutResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.msgTimeoutResponse.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.msgTimeoutResponse;
 
   @override
   List get values => [1];

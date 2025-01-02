@@ -58,7 +58,7 @@ class Ics23LeafOp extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => Ics23Types.leafOp.typeUrl;
+  TypeUrl get typeUrl => Ics23Types.leafOp;
 
   @override
   List get values => [

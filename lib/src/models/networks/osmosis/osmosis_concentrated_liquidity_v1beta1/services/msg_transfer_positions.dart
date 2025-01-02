@@ -42,18 +42,18 @@ class OsmosisConcentratedLiquidityMsgTransferPositionsResponse
   List get values => [positionIds, sender, newOwner];
 
   @override
-  String get typeUrl =>
-      OsmosisConcentratedLiquidityV1beta1Types.msgTransferPositions.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisConcentratedLiquidityV1beta1Types.msgTransferPositions;
 
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
-    return EmptyServiceRequestResponse(OsmosisConcentratedLiquidityV1beta1Types
-        .msgTransferPositionsResponse.typeUrl);
+    return EmptyServiceRequestResponse(
+        OsmosisConcentratedLiquidityV1beta1Types.msgTransferPositionsResponse);
   }
 
   @override
-  String get service =>
-      OsmosisConcentratedLiquidityV1beta1Types.transferPositions.typeUrl;
+  TypeUrl get service =>
+      OsmosisConcentratedLiquidityV1beta1Types.transferPositions;
 
   @override
   List<String?> get signers => [sender];

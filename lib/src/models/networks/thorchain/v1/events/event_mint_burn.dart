@@ -32,7 +32,7 @@ class ThorchainEventMintBurn extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.eventMintBurn.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.eventMintBurn;
 
   @override
   List get values => [supply?.value, denom, amount.toString(), reason];

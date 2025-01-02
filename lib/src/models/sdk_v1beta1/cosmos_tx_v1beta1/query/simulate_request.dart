@@ -21,15 +21,12 @@ class SimulateRequest extends CosmosMessage
   List<int> get fieldIds => [2];
 
   @override
-  String get queryPath => TxV1beta1Types.simulate.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {"tx_bytes": BytesUtils.toHexString(txBytes)};
   }
 
   @override
-  String get typeUrl => TxV1beta1Types.simulateRequest.typeUrl;
+  TypeUrl get typeUrl => TxV1beta1Types.simulateRequest;
 
   @override
   List get values => [txBytes];
@@ -37,5 +34,10 @@ class SimulateRequest extends CosmosMessage
   @override
   SimulateResponse onResponse(List<int> bytes) {
     return SimulateResponse.deserialize(bytes);
+  }
+
+  @override
+  SimulateResponse onJsonResponse(Map<String, dynamic> json) {
+    return SimulateResponse.fromRpc(json);
   }
 }

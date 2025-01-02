@@ -41,7 +41,7 @@ class OsmosisGammMsgJoinPool extends CosmosMessage
   }
 
   @override
-  String get typeUrl => OsmosisGammV1beta1Types.msgJoinPool.typeUrl;
+  TypeUrl get typeUrl => OsmosisGammV1beta1Types.msgJoinPool;
 
   @override
   List get values => [sender, poolId, shareOutAmount, tokenInMaxs];
@@ -52,7 +52,7 @@ class OsmosisGammMsgJoinPool extends CosmosMessage
   }
 
   @override
-  String get service => OsmosisGammV1beta1Types.joinPool.typeUrl;
+  TypeUrl get service => OsmosisGammV1beta1Types.joinPool;
 
   @override
   List<String?> get signers => [sender];

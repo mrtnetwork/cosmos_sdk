@@ -54,8 +54,8 @@ class OsmosisConcentratedLiquidityPoolAccumulatorRewardsResponse
   }
 
   @override
-  String get typeUrl => OsmosisConcentratedLiquidityV1beta1Types
-      .poolAccumulatorRewardsResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisConcentratedLiquidityV1beta1Types.poolAccumulatorRewardsResponse;
 
   @override
   List get values => [spreadRewardGrowthGlobal, uptimeGrowthGlobal];

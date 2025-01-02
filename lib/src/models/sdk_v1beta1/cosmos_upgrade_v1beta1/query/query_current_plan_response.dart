@@ -7,6 +7,9 @@ class QueryCurrentPlanResponse extends CosmosMessage {
   /// plan is the current upgrade plan.
   final Plan? plan;
   const QueryCurrentPlanResponse({this.plan});
+  factory QueryCurrentPlanResponse.fromRpc(Map<String, dynamic> json) {
+    return QueryCurrentPlanResponse(plan: Plan.fromRpc(json["plan"]));
+  }
   factory QueryCurrentPlanResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryCurrentPlanResponse(
@@ -24,7 +27,7 @@ class QueryCurrentPlanResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => UpgradeV1beta1Types.queryCurrentPlanResponse.typeUrl;
+  TypeUrl get typeUrl => UpgradeV1beta1Types.queryCurrentPlanResponse;
 
   @override
   List get values => [plan];

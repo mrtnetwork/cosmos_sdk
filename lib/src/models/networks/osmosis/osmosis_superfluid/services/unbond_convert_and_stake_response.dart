@@ -23,8 +23,8 @@ class OsmosisSuperfluidMsgSuperfluidUndelegateAndUnbondLockResponse
   }
 
   @override
-  String get typeUrl =>
-      OsmosisSuperfluidTypes.msgUnbondConvertAndStakeResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisSuperfluidTypes.msgUnbondConvertAndStakeResponse;
 
   @override
   List get values => [totalAmtStaked.toString()];

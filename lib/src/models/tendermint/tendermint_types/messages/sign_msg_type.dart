@@ -1,4 +1,4 @@
-import 'package:blockchain_utils/exception/exception.dart';
+import 'package:cosmos_sdk/src/exception/exception.dart';
 import 'package:cosmos_sdk/src/protobuf/types/cosmos_enum.dart';
 
 /// SignedMsgType is a type of signed message in the consensus.
@@ -30,7 +30,7 @@ class SignedMsgType implements CosmosEnum {
   static SignedMsgType fromValue(int? value) {
     return values.firstWhere(
       (e) => e.value == value,
-      orElse: () => throw MessageException(
+      orElse: () => throw DartCosmosSdkPluginException(
           "No SignedMsgType element found for the given value.",
           details: {"value": value}),
     );

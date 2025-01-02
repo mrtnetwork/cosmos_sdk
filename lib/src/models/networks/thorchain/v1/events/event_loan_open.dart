@@ -46,7 +46,7 @@ class ThorchainEventLoanOpen extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.eventLoanOpen.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.eventLoanOpen;
 
   @override
   List get values => [

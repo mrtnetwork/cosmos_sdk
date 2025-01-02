@@ -11,15 +11,12 @@ class GetSyncingRequest extends CosmosMessage
   List<int> get fieldIds => [];
 
   @override
-  String get queryPath => BaseTendermintV1beta1Types.getSyncing.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {};
   }
 
   @override
-  String get typeUrl => BaseTendermintV1beta1Types.getSyncingRequest.typeUrl;
+  TypeUrl get typeUrl => BaseTendermintV1beta1Types.getSyncingRequest;
 
   @override
   List get values => [];
@@ -27,5 +24,10 @@ class GetSyncingRequest extends CosmosMessage
   @override
   GetSyncingResponse onResponse(List<int> bytes) {
     return GetSyncingResponse.deserialize(bytes);
+  }
+
+  @override
+  GetSyncingResponse onJsonResponse(Map<String, dynamic> json) {
+    return GetSyncingResponse.fromRpc(json);
   }
 }

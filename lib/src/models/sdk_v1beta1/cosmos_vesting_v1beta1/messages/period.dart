@@ -36,7 +36,7 @@ class Period extends CosmosMessage {
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get typeUrl => VestingV1beta1Types.period.typeUrl;
+  TypeUrl get typeUrl => VestingV1beta1Types.period;
 
   @override
   List get values => [length, amount];

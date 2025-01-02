@@ -29,7 +29,7 @@ class ThorchainMsgMigrate extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.msgMigrate.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.msgMigrate;
 
   @override
   List get values => [tx, blockHeight, signer];

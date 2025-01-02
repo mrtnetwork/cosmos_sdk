@@ -29,21 +29,21 @@ class OsmosisValSetprefMsgWithdrawDelegationRewards extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      OsmosisValSetprefV1beta1Types.msgWithdrawDelegationRewards.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisValSetprefV1beta1Types.msgWithdrawDelegationRewards;
 
   @override
   List get values => [delegator];
 
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
-    return EmptyServiceRequestResponse(OsmosisValSetprefV1beta1Types
-        .msgWithdrawDelegationRewardsResponse.typeUrl);
+    return EmptyServiceRequestResponse(
+        OsmosisValSetprefV1beta1Types.msgWithdrawDelegationRewardsResponse);
   }
 
   @override
-  String get service =>
-      OsmosisValSetprefV1beta1Types.withdrawDelegationRewards.typeUrl;
+  TypeUrl get service =>
+      OsmosisValSetprefV1beta1Types.withdrawDelegationRewards;
 
   @override
   List<String?> get signers => [delegator];

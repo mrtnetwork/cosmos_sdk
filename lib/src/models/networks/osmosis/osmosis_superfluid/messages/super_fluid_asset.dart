@@ -37,7 +37,7 @@ class OsmosisSuperfluidSuperfluidAsset extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisSuperfluidTypes.superfluidAsset.typeUrl;
+  TypeUrl get typeUrl => OsmosisSuperfluidTypes.superfluidAsset;
 
   @override
   List get values => [denom, assetType?.value];

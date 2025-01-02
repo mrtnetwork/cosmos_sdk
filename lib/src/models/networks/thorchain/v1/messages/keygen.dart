@@ -26,7 +26,7 @@ class ThorchainKeygen extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.keygen.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.keygen;
 
   @override
   List get values => [id, type, members];

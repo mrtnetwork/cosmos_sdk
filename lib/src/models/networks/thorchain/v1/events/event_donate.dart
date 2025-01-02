@@ -21,7 +21,7 @@ class ThorchainEventDonate extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.eventDonate.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.eventDonate;
 
   @override
   List get values => [pool, tx];

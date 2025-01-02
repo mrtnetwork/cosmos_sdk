@@ -1,6 +1,7 @@
 import 'package:blockchain_utils/blockchain_utils.dart';
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/utils.dart';
 
 /// PacketState defines the generic type necessary to retrieve and store packet commitments,
 /// acknowledgements, and receipts. Caller is responsible for knowing the context necessary
@@ -17,6 +18,13 @@ class IbcChannelPacketState extends CosmosMessage {
 
   /// embedded data that represents packet state.
   final List<int>? data;
+  factory IbcChannelPacketState.fromRpc(Map<String, dynamic> json) {
+    return IbcChannelPacketState(
+        portId: json["port_id"],
+        data: CosmosUtils.tryToBytes(json["data"]),
+        sequence: json["sequence"],
+        channelId: json["channel_id"]);
+  }
   IbcChannelPacketState(
       {this.portId, this.channelId, this.sequence, List<int>? data})
       : data = BytesUtils.tryToBytes(data, unmodifiable: true);
@@ -43,7 +51,7 @@ class IbcChannelPacketState extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.packetState.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.packetState;
 
   @override
   List get values => [portId, channelId, sequence, data];

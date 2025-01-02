@@ -37,8 +37,7 @@ class OsmosisPoolincentivesIncentivizedPool extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisPoolincentivesV1beta1Types.incentivizedPool.typeUrl;
+  TypeUrl get typeUrl => OsmosisPoolincentivesV1beta1Types.incentivizedPool;
   @override
   List get values => [poolId, lockableDuration, gaugeId];
 }

@@ -23,7 +23,7 @@ class GenutilGenesisState extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => GenutilV1beta1Types.genutilGenesisState.typeUrl;
+  TypeUrl get typeUrl => GenutilV1beta1Types.genutilGenesisState;
 
   @override
   List get values => [genTxs];

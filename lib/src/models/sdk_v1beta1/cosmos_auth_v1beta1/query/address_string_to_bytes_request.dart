@@ -14,11 +14,12 @@ class AddressStringToBytesRequest extends CosmosMessage
     return AddressStringToBytesRequest(decode.getField(1));
   }
 
-  @override
-  List<int> get fieldIds => [1];
+  factory AddressStringToBytesRequest.fromRpc(Map<String, dynamic> json) {
+    return AddressStringToBytesRequest(json["address_string"]);
+  }
 
   @override
-  String get queryPath => AuthV1beta1Types.addressStringToBytes.typeUrl;
+  List<int> get fieldIds => [1];
 
   @override
   Map<String, dynamic> toJson() {
@@ -29,10 +30,15 @@ class AddressStringToBytesRequest extends CosmosMessage
   List get values => [addressString];
 
   @override
-  String get typeUrl => AuthV1beta1Types.addressStringToBytesRequest.typeUrl;
+  TypeUrl get typeUrl => AuthV1beta1Types.addressStringToBytesRequest;
 
   @override
   AddressStringToBytesResponse onResponse(List<int> bytes) {
     return AddressStringToBytesResponse.deserialize(bytes);
+  }
+
+  @override
+  AddressStringToBytesResponse onJsonResponse(Map<String, dynamic> json) {
+    return AddressStringToBytesResponse.fromRpc(json);
   }
 }

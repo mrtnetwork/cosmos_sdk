@@ -32,8 +32,7 @@ class OsmosisProtorevMsgSetMaxPoolPointsPerTx extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      OsmosisProtorevV1beta1Types.msgSetMaxPoolPointsPerTx.typeUrl;
+  TypeUrl get typeUrl => OsmosisProtorevV1beta1Types.msgSetMaxPoolPointsPerTx;
 
   @override
   List get values => [admin, maxPoolPointsPerTx];
@@ -41,12 +40,11 @@ class OsmosisProtorevMsgSetMaxPoolPointsPerTx extends CosmosMessage
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        OsmosisProtorevV1beta1Types.msgSetMaxPoolPointsPerTxResponse.typeUrl);
+        OsmosisProtorevV1beta1Types.msgSetMaxPoolPointsPerTxResponse);
   }
 
   @override
-  String get service =>
-      OsmosisProtorevV1beta1Types.setMaxPoolPointsPerTx.typeUrl;
+  TypeUrl get service => OsmosisProtorevV1beta1Types.setMaxPoolPointsPerTx;
 
   @override
   List<String?> get signers => [admin];

@@ -22,7 +22,7 @@ class QueryBalanceResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => BankV1beta1Types.balanceRespone.typeUrl;
+  TypeUrl get typeUrl => BankV1beta1Types.balanceRespone;
 
   @override
   List get values => [balance];

@@ -1,3 +1,4 @@
+import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_connection_v1/messages/counterparty.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_connection_v1/messages/state.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_connection_v1/messages/version.dart';
@@ -25,6 +26,19 @@ class IbcConnectionConnectionEnd extends CosmosMessage {
   /// packet-verification NOTE: delay period logic is only implemented by some
   /// clients.
   final BigInt? delayPeriod;
+  factory IbcConnectionConnectionEnd.fromRpc(Map<String, dynamic> json) {
+    return IbcConnectionConnectionEnd(
+      clientId: json["client_id"],
+      counterparty: IbcConnectionCounterparty.fromRpc(json["counterparty"]),
+      delayPeriod: BigintUtils.tryParse(json["delay_period"]),
+      state: json["state"] == null
+          ? null
+          : IbcConnectionState.fromValue(json["state"]),
+      versions: (json["versions"] as List?)
+          ?.map((e) => IbcConnectionVersion.fromRpc(e))
+          .toList(),
+    );
+  }
   IbcConnectionConnectionEnd(
       {this.clientId,
       List<IbcConnectionVersion>? versions,
@@ -61,7 +75,7 @@ class IbcConnectionConnectionEnd extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.ibcConnectionConnectionEnd.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.ibcConnectionConnectionEnd;
 
   @override
   List get values =>

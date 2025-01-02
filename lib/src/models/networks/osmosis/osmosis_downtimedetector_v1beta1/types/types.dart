@@ -1,11 +1,8 @@
-import 'package:cosmos_sdk/src/models/core/type_url/type_url.dart';
+import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 
 class OsmosisDowntimeDetectorV1beta1Types extends TypeUrl {
-  @override
-  final String typeUrl;
-  @override
-  final String? rpc;
-  const OsmosisDowntimeDetectorV1beta1Types._(this.typeUrl, {this.rpc});
+  const OsmosisDowntimeDetectorV1beta1Types._(super.typeUrl,
+      {super.query, super.rpc});
   static const OsmosisDowntimeDetectorV1beta1Types genesisDowntimeEntry =
       OsmosisDowntimeDetectorV1beta1Types._(
           "/osmosis.downtimedetector.v1beta1.GenesisDowntimeEntry");
@@ -16,16 +13,13 @@ class OsmosisDowntimeDetectorV1beta1Types extends TypeUrl {
   static const OsmosisDowntimeDetectorV1beta1Types
       recoveredSinceDowntimeOfLengthRequest =
       OsmosisDowntimeDetectorV1beta1Types._(
-          "/osmosis.downtimedetector.v1beta1.RecoveredSinceDowntimeOfLengthRequest");
+          "/osmosis.downtimedetector.v1beta1.RecoveredSinceDowntimeOfLengthRequest",
+          query:
+              "/osmosis.downtimedetector.v1beta1.Query/RecoveredSinceDowntimeOfLength",
+          rpc:
+              "/osmosis/downtime-detector/v1beta1/RecoveredSinceDowntimeOfLength");
   static const OsmosisDowntimeDetectorV1beta1Types
       recoveredSinceDowntimeOfLengthResponse =
       OsmosisDowntimeDetectorV1beta1Types._(
           "/osmosis.downtimedetector.v1beta1.RecoveredSinceDowntimeOfLengthResponse");
-
-  /// query
-  static const OsmosisDowntimeDetectorV1beta1Types
-      recoveredSinceDowntimeOfLength = OsmosisDowntimeDetectorV1beta1Types._(
-          "/osmosis.downtimedetector.v1beta1.Query/RecoveredSinceDowntimeOfLength",
-          rpc:
-              "/osmosis/downtime-detector/v1beta1/RecoveredSinceDowntimeOfLength");
 }

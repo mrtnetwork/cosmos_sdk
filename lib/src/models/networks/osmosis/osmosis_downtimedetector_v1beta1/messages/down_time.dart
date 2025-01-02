@@ -1,4 +1,4 @@
-import 'package:blockchain_utils/exception/exception.dart';
+import 'package:cosmos_sdk/src/exception/exception.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
 class OsmosisDowntimeDetectorDowntime implements CosmosEnum {
@@ -88,7 +88,7 @@ class OsmosisDowntimeDetectorDowntime implements CosmosEnum {
   static OsmosisDowntimeDetectorDowntime fromValue(int? value) {
     return values.firstWhere(
       (e) => e.value == value,
-      orElse: () => throw MessageException(
+      orElse: () => throw DartCosmosSdkPluginException(
           "No OsmosisDowntimeDetectorDowntime element found for the given value.",
           details: {"value": value}),
     );
@@ -97,7 +97,7 @@ class OsmosisDowntimeDetectorDowntime implements CosmosEnum {
   static OsmosisDowntimeDetectorDowntime fromName(String? name) {
     return values.firstWhere(
       (e) => e.name == name,
-      orElse: () => throw MessageException(
+      orElse: () => throw DartCosmosSdkPluginException(
           "No OsmosisDowntimeDetectorDowntime element found for the given name.",
           details: {"name": name}),
     );

@@ -14,6 +14,16 @@ class AuthzQueryGrantsResponse extends CosmosMessage {
   final PageResponse? pagination;
   AuthzQueryGrantsResponse({required List<AuthzGrant> grants, this.pagination})
       : grants = grants.immutable;
+  factory AuthzQueryGrantsResponse.fromRpc(Map<String, dynamic> json) {
+    return AuthzQueryGrantsResponse(
+        grants: (json["grants"] as List?)
+                ?.map((e) => AuthzGrant.fromRpc(e))
+                .toList() ??
+            [],
+        pagination: json["pagination"] == null
+            ? null
+            : PageResponse.fromRpc(json["pagination"]));
+  }
   factory AuthzQueryGrantsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return AuthzQueryGrantsResponse(
@@ -36,7 +46,7 @@ class AuthzQueryGrantsResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => AuthzV1beta1Types.authzQueryGrantsResponse.typeUrl;
+  TypeUrl get typeUrl => AuthzV1beta1Types.authzQueryGrantsResponse;
 
   @override
   List get values => [grants, pagination];

@@ -12,15 +12,12 @@ class QueryChannelParamsRequest extends CosmosMessage
   List<int> get fieldIds => [];
 
   @override
-  String get queryPath => IbcTypes.channelParams.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {};
   }
 
   @override
-  String get typeUrl => IbcTypes.queryChannelParamsRequest.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryChannelParamsRequest;
 
   @override
   List get values => [];
@@ -28,5 +25,10 @@ class QueryChannelParamsRequest extends CosmosMessage
   @override
   QueryChannelParamsResponse onResponse(List<int> bytes) {
     return QueryChannelParamsResponse.deserialize(bytes);
+  }
+
+  @override
+  QueryChannelParamsResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryChannelParamsResponse.fromRpc(json);
   }
 }

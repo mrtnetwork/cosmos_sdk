@@ -55,7 +55,7 @@ class OsmosisIncentiveMsgCreateGauge extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3, 4, 5, 6];
 
   @override
-  String get service => OsmosisIncentivesTypes.createGauge.typeUrl;
+  TypeUrl get service => OsmosisIncentivesTypes.createGauge;
 
   @override
   List<String?> get signers => [owner];
@@ -73,7 +73,7 @@ class OsmosisIncentiveMsgCreateGauge extends CosmosMessage
   }
 
   @override
-  String get typeUrl => OsmosisIncentivesTypes.msgCreateGauge.typeUrl;
+  TypeUrl get typeUrl => OsmosisIncentivesTypes.msgCreateGauge;
 
   @override
   List get values =>
@@ -82,6 +82,6 @@ class OsmosisIncentiveMsgCreateGauge extends CosmosMessage
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        OsmosisIncentivesTypes.msgCreateGaugeResponse.typeUrl);
+        OsmosisIncentivesTypes.msgCreateGaugeResponse);
   }
 }

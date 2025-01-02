@@ -13,6 +13,12 @@ class IbcFeePacketFee extends CosmosMessage {
 
   /// optional list of relayers permitted to receive fees
   final List<String>? relayers;
+  factory IbcFeePacketFee.fromRpc(Map<String, dynamic> json) {
+    return IbcFeePacketFee(
+        fee: IbcFeeFee.fromRpc(json["fee"]),
+        refundAddress: json["refund_address"],
+        relayers: (json["relayers"] as List?)?.cast());
+  }
   IbcFeePacketFee(
       {required this.fee, this.refundAddress, List<String>? relayers})
       : relayers = relayers?.emptyAsNull?.immutable;
@@ -37,7 +43,7 @@ class IbcFeePacketFee extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.packetFee.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.packetFee;
 
   @override
   List get values => [fee, refundAddress, relayers];

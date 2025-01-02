@@ -9,6 +9,19 @@ class IbcCOnnectionQueryConnectionsResponse extends CosmosMessage {
   final List<IbcConnectionIdentifiedConnection>? connections;
   final PageResponse? pagination;
   final IbcClientHeight height;
+  factory IbcCOnnectionQueryConnectionsResponse.fromRpc(
+      Map<String, dynamic> json) {
+    return IbcCOnnectionQueryConnectionsResponse(
+      connections: (json["connections"] as List?)
+              ?.map((e) => IbcConnectionIdentifiedConnection.fromRpc(e))
+              .toList() ??
+          [],
+      height: IbcClientHeight.fromRpc(json["height"]),
+      pagination: json["pagination"] == null
+          ? null
+          : PageResponse.fromRpc(json["pagination"]),
+    );
+  }
   IbcCOnnectionQueryConnectionsResponse(
       {List<IbcConnectionIdentifiedConnection>? connections,
       this.pagination,
@@ -41,7 +54,7 @@ class IbcCOnnectionQueryConnectionsResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.ibcConnectionQueryConnectionsResponse.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.ibcConnectionQueryConnectionsResponse;
 
   @override
   List get values => [connections, pagination, height];

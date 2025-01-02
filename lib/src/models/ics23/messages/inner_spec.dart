@@ -61,7 +61,7 @@ class Ics23InnerSpec extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => Ics23Types.innerSpec.typeUrl;
+  TypeUrl get typeUrl => Ics23Types.innerSpec;
 
   @override
   List get values => [

@@ -27,8 +27,7 @@ class OsmosisProtorevSetProtoRevEnabledProposal extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisProtorevV1beta1Types.setProtoRevEnabledProposal.typeUrl;
+  TypeUrl get typeUrl => OsmosisProtorevV1beta1Types.setProtoRevEnabledProposal;
 
   @override
   List get values => [title, description, enabled];

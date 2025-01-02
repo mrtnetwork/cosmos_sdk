@@ -21,15 +21,12 @@ class QuerySpendableBalancesRequest extends CosmosMessage
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get queryPath => BankV1beta1Types.spendableBalances.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {"address": address.address, "pagination": pagination?.toJson()};
   }
 
   @override
-  String get typeUrl => BankV1beta1Types.spendableBalancesRequest.typeUrl;
+  TypeUrl get typeUrl => BankV1beta1Types.spendableBalancesRequest;
 
   @override
   List get values => [address.address, pagination];
@@ -38,4 +35,16 @@ class QuerySpendableBalancesRequest extends CosmosMessage
   QuerySpendableBalancesResponse onResponse(List<int> bytes) {
     return QuerySpendableBalancesResponse.deserialize(bytes);
   }
+
+  @override
+  QuerySpendableBalancesResponse onJsonResponse(Map<String, dynamic> json) {
+    return QuerySpendableBalancesResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters => [address.address];
+
+  @override
+  Map<String, String?> get queryParameters =>
+      {...pagination?.queryParameters ?? {}};
 }

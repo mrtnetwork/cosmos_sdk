@@ -19,13 +19,13 @@ void main() async {
       TendermintHTTPProvider(url: "https://rpc.testnet.osmosis.zone/"));
 
   final message = OsmosisTokenFactoryMsgCreateDenom(
-      sender: publickey.toAddresss(hrp: CosmosAddrConst.osmosis).address,
+      sender: publickey.toAddress(hrp: CosmosAddrConst.osmosis).address,
       subdenom: "MRT");
 
   /// Querying account info from the blockchain
   final accountInfo = await provider.request(TendermintRequestAbciQuery(
       request: QueryAccountInfoRequest(
-          publickey.toAddresss(hrp: CosmosAddrConst.osmosis))));
+          publickey.toAddress(hrp: CosmosAddrConst.osmosis))));
 
   /// Querying the latest block information
   final latestBlock = await provider.request(

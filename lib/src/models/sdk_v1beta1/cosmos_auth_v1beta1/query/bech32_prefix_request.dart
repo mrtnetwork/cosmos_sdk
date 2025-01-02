@@ -16,9 +16,6 @@ class Bech32PrefixRequest extends CosmosMessage
   List<int> get fieldIds => [];
 
   @override
-  String get queryPath => AuthV1beta1Types.bech32Prefix.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {};
   }
@@ -27,10 +24,15 @@ class Bech32PrefixRequest extends CosmosMessage
   List get values => [];
 
   @override
-  String get typeUrl => AuthV1beta1Types.bech32PrefixRequest.typeUrl;
+  TypeUrl get typeUrl => AuthV1beta1Types.bech32PrefixRequest;
 
   @override
   Bech32PrefixResponse onResponse(List<int> bytes) {
     return Bech32PrefixResponse.deserialize(bytes);
+  }
+
+  @override
+  Bech32PrefixResponse onJsonResponse(Map<String, dynamic> json) {
+    return Bech32PrefixResponse.fromRpc(json);
   }
 }

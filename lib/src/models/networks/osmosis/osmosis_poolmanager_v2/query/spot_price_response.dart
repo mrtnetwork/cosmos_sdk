@@ -23,7 +23,7 @@ class OsmosisPoolManagerV2SpotPriceResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisPoolManagerV2Types.spotPriceResponse.typeUrl;
+  TypeUrl get typeUrl => OsmosisPoolManagerV2Types.spotPriceResponse;
 
   @override
   List get values => [spotPrice];

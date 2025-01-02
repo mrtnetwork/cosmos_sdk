@@ -28,8 +28,8 @@ class OsmosisPoolManagerEstimateSwapExactAmountInResponse
   }
 
   @override
-  String get typeUrl =>
-      OsmosisPoolManagerV1beta1Types.estimateSwapExactAmountInResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisPoolManagerV1beta1Types.estimateSwapExactAmountInResponse;
 
   @override
   List get values => [tokenOutAmount.toString()];

@@ -51,7 +51,7 @@ class ThorchainTssVoter extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.tssVoter.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.tssVoter;
 
   @override
   List get values => [

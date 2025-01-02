@@ -15,7 +15,7 @@ void main() async {
       url: "https://rpc.sentry-02.theta-testnet.polypore.xyz"));
 
   final accountInfo = await provider.request(TendermintRequestAbciQuery(
-      request: QueryAccountInfoRequest(pubkey.toAddresss())));
+      request: QueryAccountInfoRequest(pubkey.toAddress())));
   final latestBlock = await provider.request(
       TendermintRequestAbciQuery(request: const GetLatestBlockRequest()));
 
@@ -23,7 +23,7 @@ void main() async {
       CosmosBaseAddress("cosmosvaloper10v6wvdenee8r9l6wlsphcgur2ltl8ztkfrvj9a");
   final validator = MsgDelegate(
       validatorAddress: valAddr,
-      delegatorAddress: pubkey.toAddresss(),
+      delegatorAddress: pubkey.toAddress(),
       amount: Coin(
         denom: "uatom",
         amount: BigInt.from(100000),
@@ -37,7 +37,7 @@ void main() async {
           sequence: accountInfo.info.sequence),
     ],
     fee: Fee(
-        payer: pubkey.toAddresss(),
+        payer: pubkey.toAddress(),
         amount: [
           Coin(
             denom: "uatom",

@@ -22,7 +22,7 @@ class InterchainAccountsGenesisGenesisState extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.interchainAccountsGenesisGenesisState.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.interchainAccountsGenesisGenesisState;
 
   @override
   List get values => [controllerGenesisState, hostGenesisState];

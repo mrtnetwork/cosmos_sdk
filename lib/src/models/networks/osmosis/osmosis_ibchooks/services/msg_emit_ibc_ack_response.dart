@@ -20,7 +20,7 @@ class OsmosisIbchooksMsgEmitIBCAckResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisIbchooksTypes.msgEmitIBCAckResponse.typeUrl;
+  TypeUrl get typeUrl => OsmosisIbchooksTypes.msgEmitIBCAckResponse;
 
   @override
   List get values => [contractResult, ibcAck];

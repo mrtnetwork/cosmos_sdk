@@ -53,7 +53,7 @@ class Proposal extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => TendermintTypes.proposal.typeUrl;
+  TypeUrl get typeUrl => TendermintTypes.proposal;
 
   @override
   List get values =>

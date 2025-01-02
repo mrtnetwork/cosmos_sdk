@@ -22,7 +22,7 @@ class MsgChannelCloseInit extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3];
 
   @override
-  String get service => IbcTypes.channelCloseInit.typeUrl;
+  TypeUrl get service => IbcTypes.channelCloseInit;
 
   @override
   Map<String, dynamic> toJson() {
@@ -30,7 +30,7 @@ class MsgChannelCloseInit extends CosmosMessage
   }
 
   @override
-  String get typeUrl => IbcTypes.msgChannelCloseInit.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.msgChannelCloseInit;
 
   @override
   List get values => [portId, channelId, signer];
@@ -40,7 +40,6 @@ class MsgChannelCloseInit extends CosmosMessage
 
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
-    return EmptyServiceRequestResponse(
-        IbcTypes.msgChannelCloseInitResponse.typeUrl);
+    return EmptyServiceRequestResponse(IbcTypes.msgChannelCloseInitResponse);
   }
 }

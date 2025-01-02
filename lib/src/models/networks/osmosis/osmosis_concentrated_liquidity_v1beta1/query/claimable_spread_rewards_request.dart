@@ -7,8 +7,7 @@ class OsmosisConcentratedLiquidityClaimableSpreadRewardsRequest
     extends CosmosMessage
     with
         QueryMessage<
-            OsmosisConcentratedLiquidityClaimableSpreadRewardsResponse>,
-        RPCMessage<OsmosisConcentratedLiquidityClaimableSpreadRewardsResponse> {
+            OsmosisConcentratedLiquidityClaimableSpreadRewardsResponse> {
   final BigInt? positionId;
 
   const OsmosisConcentratedLiquidityClaimableSpreadRewardsRequest(
@@ -29,22 +28,13 @@ class OsmosisConcentratedLiquidityClaimableSpreadRewardsRequest
       };
 
   @override
-  String get queryPath =>
-      OsmosisConcentratedLiquidityV1beta1Types.claimableSpreadRewards.typeUrl;
-
-  @override
-  String get rpcPath =>
-      OsmosisConcentratedLiquidityV1beta1Types.claimableSpreadRewards
-          .rpcUrl(pathParameters: []);
-
-  @override
   Map<String, dynamic> toJson() {
     return {"position_id": positionId?.toString()};
   }
 
   @override
-  String get typeUrl => OsmosisConcentratedLiquidityV1beta1Types
-      .claimableSpreadRewardsRequest.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisConcentratedLiquidityV1beta1Types.claimableSpreadRewardsRequest;
 
   @override
   List get values => [positionId];

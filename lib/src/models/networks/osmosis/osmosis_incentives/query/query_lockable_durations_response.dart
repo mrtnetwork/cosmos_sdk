@@ -36,8 +36,7 @@ class OsmosisIncentiveQueryLockableDurationsResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisIncentivesTypes.queryLockableDurationsResponse.typeUrl;
+  TypeUrl get typeUrl => OsmosisIncentivesTypes.queryLockableDurationsResponse;
 
   @override
   List get values => [lockableDurations];

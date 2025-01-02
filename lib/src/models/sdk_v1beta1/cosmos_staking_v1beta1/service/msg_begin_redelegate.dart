@@ -49,7 +49,7 @@ class MsgBeginRedelegate extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3, 4];
 
   @override
-  String get typeUrl => StakingV1beta1Types.msgBeginRedelegate.typeUrl;
+  TypeUrl get typeUrl => StakingV1beta1Types.msgBeginRedelegate;
 
   @override
   List get values => [
@@ -60,7 +60,7 @@ class MsgBeginRedelegate extends CosmosMessage
       ];
 
   @override
-  String get service => StakingV1beta1Types.beginRedelegate.typeUrl;
+  TypeUrl get service => StakingV1beta1Types.beginRedelegate;
 
   @override
   List<String?> get signers => [delegatorAddress?.address];

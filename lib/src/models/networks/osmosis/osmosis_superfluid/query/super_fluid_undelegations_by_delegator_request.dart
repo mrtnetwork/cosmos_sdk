@@ -6,13 +6,11 @@ class OsmosisSuperfluidSuperfluidUndelegationsByDelegatorRequest
     extends CosmosMessage
     with
         QueryMessage<
-            OsmosisSuperfluidSuperfluidUndelegationsByDelegatorResponse>,
-        RPCMessage<
             OsmosisSuperfluidSuperfluidUndelegationsByDelegatorResponse> {
-  final String? delegatorAddress;
+  final String delegatorAddress;
   final String? denom;
   const OsmosisSuperfluidSuperfluidUndelegationsByDelegatorRequest(
-      {this.delegatorAddress, this.denom});
+      {required this.delegatorAddress, this.denom});
   factory OsmosisSuperfluidSuperfluidUndelegationsByDelegatorRequest.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -29,23 +27,14 @@ class OsmosisSuperfluidSuperfluidUndelegationsByDelegatorRequest
   }
 
   @override
-  String get typeUrl =>
-      OsmosisSuperfluidTypes.superfluidUndelegationsByDelegatorRequest.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisSuperfluidTypes.superfluidUndelegationsByDelegatorRequest;
 
   @override
   List get values => [delegatorAddress, denom];
 
   @override
   Map<String, String?> get queryParameters => {"denom": denom};
-
-  @override
-  String get queryPath =>
-      OsmosisSuperfluidTypes.superfluidUndelegationsByDelegator.typeUrl;
-
-  @override
-  String get rpcPath =>
-      OsmosisSuperfluidTypes.superfluidUndelegationsByDelegator
-          .rpcUrl(pathParameters: [delegatorAddress]);
 
   @override
   OsmosisSuperfluidSuperfluidUndelegationsByDelegatorResponse onJsonResponse(
@@ -60,4 +49,7 @@ class OsmosisSuperfluidSuperfluidUndelegationsByDelegatorRequest
     return OsmosisSuperfluidSuperfluidUndelegationsByDelegatorResponse
         .deserialize(bytes);
   }
+
+  @override
+  List<String> get pathParameters => [delegatorAddress];
 }

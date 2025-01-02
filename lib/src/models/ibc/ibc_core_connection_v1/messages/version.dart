@@ -9,6 +9,12 @@ class IbcConnectionVersion extends CosmosMessage {
 
   /// list of features compatible with the specified identifier
   final List<String>? features;
+  factory IbcConnectionVersion.fromRpc(Map<String, dynamic> json) {
+    return IbcConnectionVersion(
+        identifier: json["identifier"],
+        features: (json["features"] as List?)?.cast());
+  }
+
   IbcConnectionVersion({this.identifier, List<String>? features})
       : features = features?.immutable;
   factory IbcConnectionVersion.deserialize(List<int> bytes) {
@@ -29,7 +35,7 @@ class IbcConnectionVersion extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.ibcConnectionVersion.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.ibcConnectionVersion;
 
   @override
   List get values => [identifier, features];

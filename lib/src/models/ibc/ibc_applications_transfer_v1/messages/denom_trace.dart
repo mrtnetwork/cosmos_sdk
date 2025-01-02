@@ -10,6 +10,9 @@ class DenomTrace extends CosmosMessage {
   /// base denomination of the relayed fungible token.
   final String? baseDenom;
   const DenomTrace({this.path, this.baseDenom});
+  factory DenomTrace.fromRpc(Map<String, dynamic> json) {
+    return DenomTrace(baseDenom: json["base_denom"], path: json["path"]);
+  }
   factory DenomTrace.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DenomTrace(path: decode.getField(1), baseDenom: decode.getField(2));
@@ -24,7 +27,7 @@ class DenomTrace extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.denomTrace.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.denomTrace;
 
   @override
   List get values => [path, baseDenom];

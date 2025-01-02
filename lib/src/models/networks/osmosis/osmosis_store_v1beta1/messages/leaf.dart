@@ -21,7 +21,7 @@ class OsmosisStoreLeaf extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisStoreV1beta1Types.leaf.typeUrl;
+  TypeUrl get typeUrl => OsmosisStoreV1beta1Types.leaf;
 
   @override
   List get values => [leaf];

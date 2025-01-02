@@ -5,9 +5,7 @@ import 'query_get_protorev_profits_by_denom_response.dart';
 /// QueryGetProtoRevProfitsByDenomRequest is request type for the Query/GetProtoRevProfitsByDenom RPC method.
 class OsmosisProtorevOsmosisProtorevQueryQueryGetProtoRevProfitsByDenomRequest
     extends CosmosMessage
-    with
-        QueryMessage<OsmosisProtorevQueryGetProtoRevProfitsByDenomResponse>,
-        RPCMessage<OsmosisProtorevQueryGetProtoRevProfitsByDenomResponse> {
+    with QueryMessage<OsmosisProtorevQueryGetProtoRevProfitsByDenomResponse> {
   /// [denom] is the denom to query profits by
   final String? denom;
 
@@ -45,17 +43,9 @@ class OsmosisProtorevOsmosisProtorevQueryQueryGetProtoRevProfitsByDenomRequest
   }
 
   @override
-  String get typeUrl =>
-      OsmosisProtorevV1beta1Types.queryGetProtoRevProfitsByDenomRequest.typeUrl;
-
-  @override
-  String get queryPath =>
-      OsmosisProtorevV1beta1Types.getProtoRevProfitsByDenom.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisProtorevV1beta1Types.queryGetProtoRevProfitsByDenomRequest;
 
   @override
   Map<String, String?> get queryParameters => {"denom": denom};
-
-  @override
-  String get rpcPath =>
-      OsmosisProtorevV1beta1Types.getProtoRevProfitsByDenom.rpcUrl();
 }

@@ -23,9 +23,9 @@ class OsmosisConcentratedliquidityPoolmodelConcentratedMsgCreateConcentratedPool
   }
 
   @override
-  String get typeUrl =>
+  TypeUrl get typeUrl =>
       OsmosisConcentratedliquidityPoolmodelConcentratedV1beta1Types
-          .msgCreateConcentratedPoolResponse.typeUrl;
+          .msgCreateConcentratedPoolResponse;
 
   @override
   List get values => [poolId];

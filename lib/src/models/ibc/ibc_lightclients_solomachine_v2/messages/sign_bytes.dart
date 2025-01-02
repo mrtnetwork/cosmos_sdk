@@ -48,7 +48,7 @@ class IbcSoloMachineV2SignBytes extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.soloMachineV2SignBytes.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.soloMachineV2SignBytes;
 
   @override
   List get values => [sequence, timestamp, diversifier, dataType?.value, data];

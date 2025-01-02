@@ -4,7 +4,7 @@ import 'package:cosmos_sdk/src/provider/tendermint/core/tendermint.dart';
 /// Get validator set at a specified height
 /// https://docs.tendermint.com/v0.34/rpc/#/Info/validators
 class TendermintRequestValidators
-    extends TendermintRequestParam<List<Map<String, dynamic>>, List<dynamic>> {
+    extends TendermintRequest<List<Map<String, dynamic>>, List<dynamic>> {
   TendermintRequestValidators({this.height, this.page, this.perPage});
 
   /// height to return. If no height is provided,

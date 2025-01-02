@@ -39,10 +39,10 @@ class MsgSoftwareUpgrade extends CosmosMessage
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get service => UpgradeV1beta1Types.softwareUpgrade.typeUrl;
+  TypeUrl get service => UpgradeV1beta1Types.softwareUpgrade;
 
   @override
-  String get typeUrl => UpgradeV1beta1Types.msgSoftwareUpgrade.typeUrl;
+  TypeUrl get typeUrl => UpgradeV1beta1Types.msgSoftwareUpgrade;
 
   @override
   List get values => [authority?.address, plan];
@@ -52,6 +52,6 @@ class MsgSoftwareUpgrade extends CosmosMessage
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        UpgradeV1beta1Types.msgSoftwareUpgradeResponse.typeUrl);
+        UpgradeV1beta1Types.msgSoftwareUpgradeResponse);
   }
 }

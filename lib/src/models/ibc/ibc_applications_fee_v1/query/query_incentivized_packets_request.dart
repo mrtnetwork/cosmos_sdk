@@ -27,9 +27,6 @@ class QueryIncentivizedPacketsRequest extends CosmosMessage
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get queryPath => IbcTypes.incentivizedPackets.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {
       "pagination": pagination?.toJson(),
@@ -38,7 +35,7 @@ class QueryIncentivizedPacketsRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl => IbcTypes.queryIncentivizedPacketsRequest.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryIncentivizedPacketsRequest;
 
   @override
   List get values => [pagination, queryHeight];
@@ -46,4 +43,15 @@ class QueryIncentivizedPacketsRequest extends CosmosMessage
   QueryIncentivizedPacketsResponse onResponse(List<int> bytes) {
     return QueryIncentivizedPacketsResponse.deserialize(bytes);
   }
+
+  @override
+  QueryIncentivizedPacketsResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryIncentivizedPacketsResponse.fromRpc(json);
+  }
+
+  @override
+  Map<String, String?> get queryParameters => {
+        "query_height": queryHeight?.toString(),
+        ...pagination?.queryParameters ?? {}
+      };
 }

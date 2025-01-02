@@ -25,19 +25,19 @@ class OsmosisSuperfluidMsgSuperfluidUndelegate extends CosmosMessage
   }
 
   @override
-  String get typeUrl => OsmosisSuperfluidTypes.msgSuperfluidDelegate.typeUrl;
+  TypeUrl get typeUrl => OsmosisSuperfluidTypes.msgSuperfluidDelegate;
 
   @override
   List get values => [sender, lockId];
 
   @override
-  String get service => OsmosisSuperfluidTypes.msgSuperfluidUndelegate.typeUrl;
+  TypeUrl get service => OsmosisSuperfluidTypes.msgSuperfluidUndelegate;
 
   @override
   List<String?> get signers => [sender];
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        OsmosisSuperfluidTypes.msgSuperfluidUndelegateResponse.typeUrl);
+        OsmosisSuperfluidTypes.msgSuperfluidUndelegateResponse);
   }
 }

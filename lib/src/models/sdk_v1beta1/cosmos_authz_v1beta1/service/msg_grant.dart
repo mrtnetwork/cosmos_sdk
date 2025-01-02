@@ -30,7 +30,7 @@ class AuthzMsgGrant extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3];
 
   @override
-  String get service => AuthzV1beta1Types.authzQueryGrant.typeUrl;
+  TypeUrl get service => AuthzV1beta1Types.authzQueryGrant;
 
   @override
   Map<String, dynamic> toJson() {
@@ -42,7 +42,7 @@ class AuthzMsgGrant extends CosmosMessage
   }
 
   @override
-  String get typeUrl => AuthzV1beta1Types.authzMsgGrant.typeUrl;
+  TypeUrl get typeUrl => AuthzV1beta1Types.authzMsgGrant;
 
   @override
   List get values => [granter?.address, grantee?.address, grant];
@@ -52,7 +52,6 @@ class AuthzMsgGrant extends CosmosMessage
 
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
-    return EmptyServiceRequestResponse(
-        AuthzV1beta1Types.authzMsgGrantResponse.typeUrl);
+    return EmptyServiceRequestResponse(AuthzV1beta1Types.authzMsgGrantResponse);
   }
 }

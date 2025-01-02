@@ -46,7 +46,7 @@ class IbcSoloMachineV2ClientState extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.soloMachineV2ClientState.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.soloMachineV2ClientState;
 
   @override
   List get values =>

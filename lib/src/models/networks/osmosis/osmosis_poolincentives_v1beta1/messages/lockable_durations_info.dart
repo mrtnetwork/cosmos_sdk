@@ -27,8 +27,8 @@ class OsmosisPoolincentivesLockableDurationsInfo extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisPoolincentivesV1beta1Types.lockableDurationsInfo.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisPoolincentivesV1beta1Types.lockableDurationsInfo;
   @override
   List get values => [lockableDurations];
 }

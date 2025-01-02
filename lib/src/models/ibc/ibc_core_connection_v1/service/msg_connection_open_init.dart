@@ -33,7 +33,7 @@ class IbcConnectionMsgConnectionOpenInit extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3, 4, 5];
 
   @override
-  String get service => IbcTypes.ibcConnectionConnectionOpenInit.typeUrl;
+  TypeUrl get service => IbcTypes.ibcConnectionConnectionOpenInit;
 
   @override
   Map<String, dynamic> toJson() {
@@ -47,7 +47,7 @@ class IbcConnectionMsgConnectionOpenInit extends CosmosMessage
   }
 
   @override
-  String get typeUrl => IbcTypes.msgConnectionOpenInit.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.msgConnectionOpenInit;
 
   @override
   List get values => [clientId, counterparty, version, delayPeriod, signer];
@@ -56,7 +56,6 @@ class IbcConnectionMsgConnectionOpenInit extends CosmosMessage
 
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
-    return EmptyServiceRequestResponse(
-        IbcTypes.msgConnectionOpenInitResponse.typeUrl);
+    return EmptyServiceRequestResponse(IbcTypes.msgConnectionOpenInitResponse);
   }
 }

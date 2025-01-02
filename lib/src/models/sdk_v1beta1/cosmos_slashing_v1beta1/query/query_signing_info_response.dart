@@ -7,6 +7,10 @@ class SlashingQuerySigningInfoResponse extends CosmosMessage {
   /// val_signing_info is the signing info of requested val cons address
   final SlashingValidatorSigningInfo valSigningInfo;
   const SlashingQuerySigningInfoResponse(this.valSigningInfo);
+  factory SlashingQuerySigningInfoResponse.fromRpc(Map<String, dynamic> json) {
+    return SlashingQuerySigningInfoResponse(
+        SlashingValidatorSigningInfo.fromRpc(json["val_signing_info"]));
+  }
   factory SlashingQuerySigningInfoResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return SlashingQuerySigningInfoResponse(
@@ -22,8 +26,7 @@ class SlashingQuerySigningInfoResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      SlashingV1beta1Types.slashingQuerySigningInfoResponse.typeUrl;
+  TypeUrl get typeUrl => SlashingV1beta1Types.slashingQuerySigningInfoResponse;
 
   @override
   List get values => [valSigningInfo];

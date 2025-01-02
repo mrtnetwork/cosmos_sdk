@@ -47,7 +47,7 @@ class DVVTriplet extends CosmosMessage {
   List<int> get fieldIds => [1, 2, 3];
 
   @override
-  String get typeUrl => StakingV1beta1Types.dVVTriplet.typeUrl;
+  TypeUrl get typeUrl => StakingV1beta1Types.dVVTriplet;
 
   @override
   List get values => [

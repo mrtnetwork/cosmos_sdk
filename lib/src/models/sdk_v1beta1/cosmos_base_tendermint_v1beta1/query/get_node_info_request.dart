@@ -9,15 +9,12 @@ class GetNodeInfoRequest extends CosmosMessage
   List<int> get fieldIds => [];
 
   @override
-  String get queryPath => BaseTendermintV1beta1Types.getNodeInfo.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {};
   }
 
   @override
-  String get typeUrl => BaseTendermintV1beta1Types.getNodeInfoRequest.typeUrl;
+  TypeUrl get typeUrl => BaseTendermintV1beta1Types.getNodeInfoRequest;
 
   @override
   List get values => [];
@@ -25,5 +22,10 @@ class GetNodeInfoRequest extends CosmosMessage
   @override
   GetNodeInfoResponse onResponse(List<int> bytes) {
     return GetNodeInfoResponse.deserialize(bytes);
+  }
+
+  @override
+  GetNodeInfoResponse onJsonResponse(Map<String, dynamic> json) {
+    return GetNodeInfoResponse.fromRpc(json);
   }
 }

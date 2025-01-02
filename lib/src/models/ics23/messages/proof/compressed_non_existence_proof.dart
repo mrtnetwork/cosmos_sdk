@@ -36,7 +36,7 @@ class Ics23CompressedNonExistenceProof extends Ics23CompressedBatchEntryBase {
   }
 
   @override
-  String get typeUrl => Ics23Types.compressedNonExistenceProof.typeUrl;
+  TypeUrl get typeUrl => Ics23Types.compressedNonExistenceProof;
 
   @override
   List get values => [key, left, right];

@@ -3,9 +3,7 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'query_base_denom_response.dart';
 
 class OsmosisTxfeesQueryBaseDenomRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisTxfeesQueryBaseDenomResponse>,
-        RPCMessage<OsmosisTxfeesQueryBaseDenomResponse> {
+    with QueryMessage<OsmosisTxfeesQueryBaseDenomResponse> {
   const OsmosisTxfeesQueryBaseDenomRequest();
   factory OsmosisTxfeesQueryBaseDenomRequest.deserialize(List<int> bytes) {
     return const OsmosisTxfeesQueryBaseDenomRequest();
@@ -24,7 +22,7 @@ class OsmosisTxfeesQueryBaseDenomRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl => OsmosisTxfeesV1beta1Types.queryBaseDenomRequest.typeUrl;
+  TypeUrl get typeUrl => OsmosisTxfeesV1beta1Types.queryBaseDenomRequest;
 
   @override
   List get values => [];
@@ -42,10 +40,4 @@ class OsmosisTxfeesQueryBaseDenomRequest extends CosmosMessage
 
   @override
   Map<String, String?> get queryParameters => {};
-
-  @override
-  String get queryPath => OsmosisTxfeesV1beta1Types.baseDenom.typeUrl;
-
-  @override
-  String get rpcPath => OsmosisTxfeesV1beta1Types.baseDenom.rpcUrl();
 }

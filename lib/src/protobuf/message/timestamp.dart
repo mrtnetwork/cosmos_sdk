@@ -1,3 +1,4 @@
+import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 import 'package:cosmos_sdk/src/protobuf/codec/decoder.dart';
 
@@ -12,17 +13,18 @@ class ProtobufTimestamp extends CosmosProtocolBuffer {
   /// second values with fractions must still have non-negative nanos values
   /// that count forward in time. Must be from 0 to 999,999,999
   /// inclusive.
-  final int? nanos;
+  final BigInt? nanos;
   const ProtobufTimestamp({required this.seconds, required this.nanos});
   factory ProtobufTimestamp.fromDateTime(DateTime time) {
     final BigInt seconds = BigInt.from(time.millisecondsSinceEpoch ~/ 1000);
     final int nanos = (time.millisecondsSinceEpoch % 1000) * 1000000;
-    return ProtobufTimestamp(seconds: seconds, nanos: nanos);
+    return ProtobufTimestamp(seconds: seconds, nanos: BigInt.from(nanos));
   }
   factory ProtobufTimestamp.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ProtobufTimestamp(
-        seconds: decode.getField(1), nanos: decode.getField(2));
+        seconds: BigintUtils.parse(decode.getField(1)),
+        nanos: BigintUtils.tryParse(decode.getField(2)));
   }
   factory ProtobufTimestamp.fromString(String time) {
     final parse = DateTime.parse(time);
@@ -34,6 +36,16 @@ class ProtobufTimestamp extends CosmosProtocolBuffer {
   @override
   Map<String, dynamic> toJson() {
     return {"seconds": seconds, "nanos": nanos};
+  }
+
+  @override
+  String toString() {
+    if (nanos != null) {
+      return DateTime.fromMicrosecondsSinceEpoch(nanos!.toInt())
+          .toIso8601String();
+    }
+    return DateTime.fromMillisecondsSinceEpoch((seconds.toInt() * 1000))
+        .toIso8601String();
   }
 
   @override

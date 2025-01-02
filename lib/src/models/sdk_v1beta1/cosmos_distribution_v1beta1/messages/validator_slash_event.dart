@@ -1,3 +1,4 @@
+import 'package:blockchain_utils/utils/numbers/utils/bigint_utils.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_distribution_v1beta1/types/types.dart';
 
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
@@ -7,6 +8,11 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class DistributionValidatorSlashEvent extends CosmosMessage {
   final BigInt? validatorPeriod;
   final String fraction;
+  factory DistributionValidatorSlashEvent.fromRpc(Map<String, dynamic> json) {
+    return DistributionValidatorSlashEvent(
+        fraction: json["fraction"],
+        validatorPeriod: BigintUtils.tryParse(json["validator_period"]));
+  }
   const DistributionValidatorSlashEvent(
       {this.validatorPeriod, required this.fraction});
   factory DistributionValidatorSlashEvent.deserialize(List<int> bytes) {
@@ -27,8 +33,8 @@ class DistributionValidatorSlashEvent extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      DistributionV1beta1Types.distributionValidatorSlashEvent.typeUrl;
+  TypeUrl get typeUrl =>
+      DistributionV1beta1Types.distributionValidatorSlashEvent;
 
   @override
   List get values => [validatorPeriod, fraction];

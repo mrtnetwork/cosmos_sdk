@@ -27,8 +27,7 @@ class OsmosisStreamSwapQueryUserPositionResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisStreamSwapV1Types.queryUserPositionResponse.typeUrl;
+  TypeUrl get typeUrl => OsmosisStreamSwapV1Types.queryUserPositionResponse;
 
   @override
   List get values => [userPosition];

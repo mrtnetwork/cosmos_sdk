@@ -2,6 +2,7 @@ import 'package:blockchain_utils/blockchain_utils.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_client_v1/messages/height.dart';
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/utils.dart';
 
 /// QueryPacketCommitmentResponse defines the client query response for a packet which also includes
 /// a proof and the height from which the proof was retrieved
@@ -14,6 +15,13 @@ class QueryPacketCommitmentResponse extends CosmosMessage {
 
   /// height at which the proof was retrieved
   final IbcClientHeight proofHeight;
+
+  factory QueryPacketCommitmentResponse.fromRpc(Map<String, dynamic> json) {
+    return QueryPacketCommitmentResponse(
+        commitment: CosmosUtils.tryToBytes(json["commitment"]),
+        proof: CosmosUtils.tryToBytes(json["proof"]),
+        proofHeight: IbcClientHeight.fromRpc(json["proof_height"]));
+  }
   QueryPacketCommitmentResponse(
       {List<int>? commitment, List<int>? proof, required this.proofHeight})
       : commitment = BytesUtils.tryToBytes(commitment, unmodifiable: true),
@@ -41,7 +49,7 @@ class QueryPacketCommitmentResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.queryPacketCommitmentResponse.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryPacketCommitmentResponse;
 
   @override
   List get values => [commitment, proof, proofHeight];

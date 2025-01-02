@@ -5,8 +5,8 @@ import 'query_external_incentive_gauges_response.dart';
 class OsmosisPoolincentivesQueryExternalIncentiveGaugesRequest
     extends CosmosMessage
     with
-        QueryMessage<OsmosisPoolincentivesQueryExternalIncentiveGaugesResponse>,
-        RPCMessage<OsmosisPoolincentivesQueryExternalIncentiveGaugesResponse> {
+        QueryMessage<
+            OsmosisPoolincentivesQueryExternalIncentiveGaugesResponse> {
   OsmosisPoolincentivesQueryExternalIncentiveGaugesRequest();
   factory OsmosisPoolincentivesQueryExternalIncentiveGaugesRequest.deserialize(
       List<int> bytes) {
@@ -36,20 +36,11 @@ class OsmosisPoolincentivesQueryExternalIncentiveGaugesRequest
   }
 
   @override
-  String get typeUrl => OsmosisPoolincentivesV1beta1Types
-      .queryExternalIncentiveGaugesRequest.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisPoolincentivesV1beta1Types.queryExternalIncentiveGaugesRequest;
   @override
   List get values => [];
 
   @override
   Map<String, String?> get queryParameters => {};
-
-  @override
-  String get queryPath =>
-      OsmosisPoolincentivesV1beta1Types.externalIncentiveGauges.typeUrl;
-
-  @override
-  String get rpcPath =>
-      OsmosisPoolincentivesV1beta1Types.externalIncentiveGauges
-          .rpcUrl(pathParameters: []);
 }

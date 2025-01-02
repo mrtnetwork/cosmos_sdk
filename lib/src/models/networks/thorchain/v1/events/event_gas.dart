@@ -22,7 +22,7 @@ class ThorchainEventGas extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.eventGas.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.eventGas;
 
   @override
   List get values => [pools];

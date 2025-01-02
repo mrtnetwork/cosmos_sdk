@@ -29,7 +29,7 @@ class OsmosisProtorevStablePoolInfo extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisProtorevV1beta1Types.stablePoolInfo.typeUrl;
+  TypeUrl get typeUrl => OsmosisProtorevV1beta1Types.stablePoolInfo;
 
   @override
   List get values => [weight];

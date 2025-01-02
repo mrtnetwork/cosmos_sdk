@@ -6,8 +6,8 @@ import 'query_get_proto_rev_max_pool_points_per_tx_response.dart';
 class OsmosisProtorevQueryGetProtoRevMaxPoolPointsPerTxRequest
     extends CosmosMessage
     with
-        QueryMessage<OsmosisProtorevQueryGetProtoRevMaxPoolPointsPerTxResponse>,
-        RPCMessage<OsmosisProtorevQueryGetProtoRevMaxPoolPointsPerTxResponse> {
+        QueryMessage<
+            OsmosisProtorevQueryGetProtoRevMaxPoolPointsPerTxResponse> {
   const OsmosisProtorevQueryGetProtoRevMaxPoolPointsPerTxRequest();
   factory OsmosisProtorevQueryGetProtoRevMaxPoolPointsPerTxRequest.deserialize(
       List<int> bytes) {
@@ -40,17 +40,9 @@ class OsmosisProtorevQueryGetProtoRevMaxPoolPointsPerTxRequest
   }
 
   @override
-  String get typeUrl => OsmosisProtorevV1beta1Types
-      .queryGetProtoRevMaxPoolPointsPerTxRequest.typeUrl;
-
-  @override
-  String get queryPath =>
-      OsmosisProtorevV1beta1Types.getProtoRevMaxPoolPointsPerTx.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisProtorevV1beta1Types.queryGetProtoRevMaxPoolPointsPerTxRequest;
 
   @override
   Map<String, String?> get queryParameters => {};
-
-  @override
-  String get rpcPath =>
-      OsmosisProtorevV1beta1Types.getProtoRevMaxPoolPointsPerTx.rpcUrl();
 }

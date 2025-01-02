@@ -3,12 +3,10 @@ import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_poolincentives_v1
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
 class OsmosisPoolincentivesQueryGaugeIdsRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisPoolincentivesGaugeIdWithDuration>,
-        RPCMessage<OsmosisPoolincentivesGaugeIdWithDuration> {
-  final BigInt? poolId;
+    with QueryMessage<OsmosisPoolincentivesGaugeIdWithDuration> {
+  final BigInt poolId;
 
-  OsmosisPoolincentivesQueryGaugeIdsRequest({this.poolId});
+  OsmosisPoolincentivesQueryGaugeIdsRequest({required this.poolId});
   factory OsmosisPoolincentivesQueryGaugeIdsRequest.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -21,7 +19,7 @@ class OsmosisPoolincentivesQueryGaugeIdsRequest extends CosmosMessage
 
   @override
   Map<String, dynamic> toJson() {
-    return {"pool_id": poolId?.toString()};
+    return {"pool_id": poolId.toString()};
   }
 
   @override
@@ -36,8 +34,7 @@ class OsmosisPoolincentivesQueryGaugeIdsRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      OsmosisPoolincentivesV1beta1Types.queryGaugeIdsRequest.typeUrl;
+  TypeUrl get typeUrl => OsmosisPoolincentivesV1beta1Types.queryGaugeIdsRequest;
   @override
   List get values => [poolId];
 
@@ -45,9 +42,5 @@ class OsmosisPoolincentivesQueryGaugeIdsRequest extends CosmosMessage
   Map<String, String?> get queryParameters => {};
 
   @override
-  String get queryPath => OsmosisPoolincentivesV1beta1Types.gaugeIds.typeUrl;
-
-  @override
-  String get rpcPath => OsmosisPoolincentivesV1beta1Types.gaugeIds
-      .rpcUrl(pathParameters: [poolId?.toString()]);
+  List<String> get pathParameters => [poolId.toString()];
 }

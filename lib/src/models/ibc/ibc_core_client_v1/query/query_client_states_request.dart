@@ -22,15 +22,12 @@ class QueryClientStatesRequest extends CosmosMessage
   List<int> get fieldIds => [1];
 
   @override
-  String get queryPath => IbcTypes.clientStates.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {"pagination": pagination?.toJson()};
   }
 
   @override
-  String get typeUrl => IbcTypes.queryClientStatesRequest.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryClientStatesRequest;
 
   @override
   List get values => [pagination];
@@ -39,4 +36,12 @@ class QueryClientStatesRequest extends CosmosMessage
   QueryClientStatesResponse onResponse(List<int> bytes) {
     return QueryClientStatesResponse.deserialize(bytes);
   }
+
+  @override
+  QueryClientStatesResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryClientStatesResponse.fromRpc(json);
+  }
+
+  @override
+  Map<String, String?> get queryParameters => pagination?.queryParameters ?? {};
 }

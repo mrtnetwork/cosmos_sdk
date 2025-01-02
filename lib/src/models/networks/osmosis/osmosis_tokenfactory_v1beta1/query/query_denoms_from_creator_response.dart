@@ -28,8 +28,8 @@ class OsmosisTokenFactoryQueryDenomsFromCreatorResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisTokenFactoryV1beta1Types.queryDenomsFromCreatorResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisTokenFactoryV1beta1Types.queryDenomsFromCreatorResponse;
 
   @override
   List get values => [denoms];

@@ -25,7 +25,7 @@ class GovTextProposal extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => GovV1beta1types.govTextProposal.typeUrl;
+  TypeUrl get typeUrl => GovV1beta1types.govTextProposal;
 
   @override
   List get values => [title, description];

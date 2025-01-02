@@ -23,7 +23,7 @@ class IbcLightClientsClientState extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.ibcLightClientsClientState.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.ibcLightClientsClientState;
 
   @override
   List get values => [latestHeight];

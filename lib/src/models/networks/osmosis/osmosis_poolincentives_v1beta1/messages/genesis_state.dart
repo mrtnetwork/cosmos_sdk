@@ -52,7 +52,7 @@ class OsmosisPoolincentivesGenesisState extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisPoolincentivesV1beta1Types.genesisState.typeUrl;
+  TypeUrl get typeUrl => OsmosisPoolincentivesV1beta1Types.genesisState;
   @override
   List get values => [params, lockableDurations, distrInfo, poolToGauges];
 }

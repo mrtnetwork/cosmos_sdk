@@ -33,8 +33,7 @@ class OsmosisLockupAccountLockedPastTimeDenomResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisLockupTypes.accountLockedPastTimeDenomResponse.typeUrl;
+  TypeUrl get typeUrl => OsmosisLockupTypes.accountLockedPastTimeDenomResponse;
 
   @override
   List get values => [locks];

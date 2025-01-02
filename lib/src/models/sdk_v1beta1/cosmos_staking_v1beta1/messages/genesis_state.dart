@@ -103,7 +103,7 @@ class StakingGenesisState extends CosmosMessage {
   List<int> get fieldIds => [1, 2, 3, 4, 5, 6, 7, 8];
 
   @override
-  String get typeUrl => StakingV1beta1Types.stakingGenesisState.typeUrl;
+  TypeUrl get typeUrl => StakingV1beta1Types.stakingGenesisState;
 
   @override
   List get values => [

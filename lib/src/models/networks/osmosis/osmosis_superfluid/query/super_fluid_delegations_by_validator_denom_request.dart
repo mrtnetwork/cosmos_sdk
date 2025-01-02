@@ -6,8 +6,6 @@ class OsmosisSuperfluidSuperfluidDelegationsByValidatorDenomRequest
     extends CosmosMessage
     with
         QueryMessage<
-            OsmosisSuperfluidSuperfluidDelegationsByValidatorDenomResponse>,
-        RPCMessage<
             OsmosisSuperfluidSuperfluidDelegationsByValidatorDenomResponse> {
   final String? validatorAddress;
   final String? denom;
@@ -29,8 +27,8 @@ class OsmosisSuperfluidSuperfluidDelegationsByValidatorDenomRequest
   }
 
   @override
-  String get typeUrl => OsmosisSuperfluidTypes
-      .superfluidDelegationsByValidatorDenomRequest.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisSuperfluidTypes.superfluidDelegationsByValidatorDenomRequest;
 
   @override
   List get values => [validatorAddress, denom];
@@ -38,15 +36,6 @@ class OsmosisSuperfluidSuperfluidDelegationsByValidatorDenomRequest
   @override
   Map<String, String?> get queryParameters =>
       {"denom": denom, "validator_address": validatorAddress};
-
-  @override
-  String get queryPath =>
-      OsmosisSuperfluidTypes.superfluidDelegationsByValidatorDenom.typeUrl;
-
-  @override
-  String get rpcPath =>
-      OsmosisSuperfluidTypes.superfluidDelegationsByValidatorDenom
-          .rpcUrl(pathParameters: []);
 
   @override
   OsmosisSuperfluidSuperfluidDelegationsByValidatorDenomResponse onJsonResponse(

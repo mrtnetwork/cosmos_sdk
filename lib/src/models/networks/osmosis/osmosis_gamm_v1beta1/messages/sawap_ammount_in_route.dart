@@ -28,7 +28,7 @@ class OsmosisGammSwapAmountInRoute extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisGammV1beta1Types.swapAmountInRoute.typeUrl;
+  TypeUrl get typeUrl => OsmosisGammV1beta1Types.swapAmountInRoute;
 
   @override
   List get values => [poolId, tokenOutDenom];

@@ -30,7 +30,7 @@ class CrisisMsgUpdateParams extends CosmosMessage
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get service => CrisisV1beta1.crisisUpdateParams.typeUrl;
+  TypeUrl get service => CrisisV1beta1.crisisUpdateParams;
 
   @override
   Map<String, dynamic> toJson() {
@@ -41,7 +41,7 @@ class CrisisMsgUpdateParams extends CosmosMessage
   }
 
   @override
-  String get typeUrl => CrisisV1beta1.crisisMsgUpdateParams.typeUrl;
+  TypeUrl get typeUrl => CrisisV1beta1.crisisMsgUpdateParams;
 
   @override
   List get values => [authority?.address, constantFee];
@@ -50,6 +50,6 @@ class CrisisMsgUpdateParams extends CosmosMessage
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        CrisisV1beta1.crisisMsgUpdateParamsResponse.typeUrl);
+        CrisisV1beta1.crisisMsgUpdateParamsResponse);
   }
 }

@@ -26,7 +26,7 @@ class ThorchainEventErrata extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.eventErrata.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.eventErrata;
 
   @override
   List get values => [txId, pools];

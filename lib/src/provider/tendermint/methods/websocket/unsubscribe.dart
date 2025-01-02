@@ -4,7 +4,7 @@ import 'package:cosmos_sdk/src/provider/tendermint/core/tendermint.dart';
 /// Unsubscribe from event on Websocket
 /// https://docs.tendermint.com/v0.34/rpc/#/Websocket/unsubscribe
 class TendermintRequestUnSubscribe
-    extends TendermintRequestParam<Map<String, dynamic>, Map<String, dynamic>> {
+    extends TendermintRequest<Map<String, dynamic>, Map<String, dynamic>> {
   TendermintRequestUnSubscribe(this.query);
 
   /// query is a string, which has a form:

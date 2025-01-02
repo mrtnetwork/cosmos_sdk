@@ -1,3 +1,4 @@
+import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_channel_v1/messages/counter_party.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_channel_v1/messages/order.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_channel_v1/messages/state.dart';
@@ -28,6 +29,19 @@ class IbcChannelChannel extends CosmosMessage {
   /// upgrade sequence indicates the latest upgrade attempt performed by this channel
   /// the value of 0 indicates the channel has never been upgraded
   final BigInt? upgradeSequence;
+  factory IbcChannelChannel.fromRpc(Map<String, dynamic> json) {
+    return IbcChannelChannel(
+        counterparty: IbcChannelCounterParty.fromRpc(json["counterparty"]),
+        connectionHops: (json["connection_hops"] as List?)?.cast(),
+        ordering: json["ordering"] == null
+            ? null
+            : IbcChannelOrder.fromValue(json["ordering"]),
+        state: json["state"] == null
+            ? null
+            : IbcChannelState.fromValue(json["state"]),
+        upgradeSequence: BigintUtils.tryParse(json["upgrade_sequence"]),
+        version: json["version"]);
+  }
   IbcChannelChannel(
       {this.state,
       this.ordering,
@@ -67,7 +81,7 @@ class IbcChannelChannel extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.channel.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.channel;
 
   @override
   List get values => [

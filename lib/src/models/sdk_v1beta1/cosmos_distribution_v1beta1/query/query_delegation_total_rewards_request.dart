@@ -8,38 +8,48 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class DistributionQueryDelegationTotalRewardsRequest extends CosmosMessage
     with QueryMessage<DistributionQueryDelegationTotalRewardsResponse> {
   /// delegator_address defines the delegator address to query for.
-  final CosmosBaseAddress? delegatorAddress;
-  DistributionQueryDelegationTotalRewardsRequest({this.delegatorAddress});
+  final CosmosBaseAddress delegatorAddress;
+  DistributionQueryDelegationTotalRewardsRequest(
+      {required this.delegatorAddress});
+
+  factory DistributionQueryDelegationTotalRewardsRequest.fromRpc(
+      Map<String, dynamic> json) {
+    return DistributionQueryDelegationTotalRewardsRequest(
+        delegatorAddress: CosmosBaseAddress(json["delegator_address"]));
+  }
   factory DistributionQueryDelegationTotalRewardsRequest.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionQueryDelegationTotalRewardsRequest(
-        delegatorAddress: decode
-            .getResult(1)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)));
+        delegatorAddress: CosmosBaseAddress(decode.getField(1)));
   }
 
   @override
   List<int> get fieldIds => [1];
 
   @override
-  String get queryPath =>
-      DistributionV1beta1Types.distributionDelegationTotalRewards.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
-    return {"delegator_address": delegatorAddress?.address};
+    return {"delegator_address": delegatorAddress.address};
   }
 
   @override
-  String get typeUrl => DistributionV1beta1Types
-      .distributionQueryDelegationTotalRewardsRequest.typeUrl;
+  TypeUrl get typeUrl =>
+      DistributionV1beta1Types.distributionQueryDelegationTotalRewardsRequest;
 
   @override
-  List get values => [delegatorAddress?.address];
+  List get values => [delegatorAddress.address];
 
   @override
   DistributionQueryDelegationTotalRewardsResponse onResponse(List<int> bytes) {
     return DistributionQueryDelegationTotalRewardsResponse.deserialize(bytes);
   }
+
+  @override
+  DistributionQueryDelegationTotalRewardsResponse onJsonResponse(
+      Map<String, dynamic> json) {
+    return DistributionQueryDelegationTotalRewardsResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters => [delegatorAddress.address];
 }

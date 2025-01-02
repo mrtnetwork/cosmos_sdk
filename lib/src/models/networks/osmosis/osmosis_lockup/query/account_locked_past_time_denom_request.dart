@@ -3,14 +3,12 @@ import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_lockup/types/type
 import 'account_locked_past_time_denom_reesponse.dart';
 
 class OsmosisLockupAccountLockedPastTimeDenomRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisLockupAccountLockedPastTimeDenomResponse>,
-        RPCMessage<OsmosisLockupAccountLockedPastTimeDenomResponse> {
-  final String? owner;
+    with QueryMessage<OsmosisLockupAccountLockedPastTimeDenomResponse> {
+  final String owner;
   final ProtobufTimestamp timestamp;
   final String? denom;
   const OsmosisLockupAccountLockedPastTimeDenomRequest(
-      {this.owner, required this.timestamp, this.denom});
+      {required this.owner, required this.timestamp, this.denom});
   factory OsmosisLockupAccountLockedPastTimeDenomRequest.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -28,8 +26,7 @@ class OsmosisLockupAccountLockedPastTimeDenomRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      OsmosisLockupTypes.accountLockedPastTimeDenomRequest.typeUrl;
+  TypeUrl get typeUrl => OsmosisLockupTypes.accountLockedPastTimeDenomRequest;
 
   @override
   List get values => [owner, timestamp, denom];
@@ -40,18 +37,15 @@ class OsmosisLockupAccountLockedPastTimeDenomRequest extends CosmosMessage
   }
 
   @override
-  String get queryPath => OsmosisLockupTypes.accountLockedPastTimeDenom.typeUrl;
-
-  @override
   OsmosisLockupAccountLockedPastTimeDenomResponse onJsonResponse(
       Map<String, dynamic> json) {
     return OsmosisLockupAccountLockedPastTimeDenomResponse.fromRpc(json);
   }
 
   @override
-  Map<String, String?> get queryParameters => {};
+  Map<String, String?> get queryParameters =>
+      {"denom": denom, "timestamp": timestamp.toString()};
 
   @override
-  String get rpcPath => OsmosisLockupTypes.accountLockedPastTimeDenom
-      .rpcUrl(pathParameters: [owner]);
+  List<String> get pathParameters => [owner];
 }

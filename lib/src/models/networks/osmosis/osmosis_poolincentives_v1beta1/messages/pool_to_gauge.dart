@@ -28,7 +28,7 @@ class OsmosisPoolincentivesPoolToGauge extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisPoolincentivesV1beta1Types.poolToGauge.typeUrl;
+  TypeUrl get typeUrl => OsmosisPoolincentivesV1beta1Types.poolToGauge;
   @override
   List get values => [poolId, gaugeId, duration];
 }

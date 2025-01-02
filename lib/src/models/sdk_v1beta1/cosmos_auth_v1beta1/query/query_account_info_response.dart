@@ -13,6 +13,9 @@ class QueryAccountInfoResponse extends CosmosMessage {
     return QueryAccountInfoResponse(
         BaseAccount.deserialize(decode.getField(1)));
   }
+  factory QueryAccountInfoResponse.fromRpc(Map<String, dynamic> json) {
+    return QueryAccountInfoResponse(BaseAccount.fromRpc(json["info"]));
+  }
 
   @override
   List<int> get fieldIds => [1];
@@ -26,5 +29,5 @@ class QueryAccountInfoResponse extends CosmosMessage {
   List get values => [info];
 
   @override
-  String get typeUrl => AuthV1beta1Types.accountInfoResponse.typeUrl;
+  TypeUrl get typeUrl => AuthV1beta1Types.accountInfoResponse;
 }

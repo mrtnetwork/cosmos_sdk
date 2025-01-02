@@ -24,7 +24,7 @@ class App extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => TendermintTypes.app.typeUrl;
+  TypeUrl get typeUrl => TendermintTypes.app;
 
   @override
   List get values => [protocol, software];

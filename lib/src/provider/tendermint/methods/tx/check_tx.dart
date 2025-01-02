@@ -4,7 +4,7 @@ import 'package:cosmos_sdk/src/provider/tendermint/core/tendermint.dart';
 /// Checks the transaction without executing it.
 /// https://docs.tendermint.com/v0.34/rpc/#/Tx/check_tx
 class TendermintRequestBroadcastCheckTx
-    extends TendermintRequestParam<Map<String, dynamic>, Map<String, dynamic>> {
+    extends TendermintRequest<Map<String, dynamic>, Map<String, dynamic>> {
   TendermintRequestBroadcastCheckTx(this.tx);
 
   /// The transaction

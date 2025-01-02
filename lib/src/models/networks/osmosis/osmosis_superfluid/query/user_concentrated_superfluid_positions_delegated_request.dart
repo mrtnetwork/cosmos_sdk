@@ -5,12 +5,10 @@ import 'user_concentrated_super_fluid_positions_delegated_response.dart';
 class OsmosisSuperfluidTotalSuperfluidDelegationsRequest extends CosmosMessage
     with
         QueryMessage<
-            OsmosisSuperfluidUserConcentratedSuperfluidPositionsDelegatedResponse>,
-        RPCMessage<
             OsmosisSuperfluidUserConcentratedSuperfluidPositionsDelegatedResponse> {
-  final String? delegatorAddress;
+  final String delegatorAddress;
   const OsmosisSuperfluidTotalSuperfluidDelegationsRequest(
-      {this.delegatorAddress});
+      {required this.delegatorAddress});
   factory OsmosisSuperfluidTotalSuperfluidDelegationsRequest.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -23,27 +21,18 @@ class OsmosisSuperfluidTotalSuperfluidDelegationsRequest extends CosmosMessage
 
   @override
   Map<String, dynamic> toJson() {
-    return {"delegator_address": delegatorAddress?.toString()};
+    return {"delegator_address": delegatorAddress};
   }
 
   @override
-  String get typeUrl => OsmosisSuperfluidTypes
-      .userConcentratedSuperfluidPositionsDelegatedRequest.typeUrl;
+  TypeUrl get typeUrl => OsmosisSuperfluidTypes
+      .userConcentratedSuperfluidPositionsDelegatedRequest;
 
   @override
   List get values => [delegatorAddress];
 
   @override
   Map<String, String?> get queryParameters => {};
-
-  @override
-  String get queryPath => OsmosisSuperfluidTypes
-      .userConcentratedSuperfluidPositionsDelegated.typeUrl;
-
-  @override
-  String get rpcPath =>
-      OsmosisSuperfluidTypes.userConcentratedSuperfluidPositionsDelegated
-          .rpcUrl(pathParameters: [delegatorAddress]);
 
   @override
   OsmosisSuperfluidUserConcentratedSuperfluidPositionsDelegatedResponse
@@ -58,4 +47,7 @@ class OsmosisSuperfluidTotalSuperfluidDelegationsRequest extends CosmosMessage
     return OsmosisSuperfluidUserConcentratedSuperfluidPositionsDelegatedResponse
         .deserialize(bytes);
   }
+
+  @override
+  List<String> get pathParameters => [delegatorAddress];
 }

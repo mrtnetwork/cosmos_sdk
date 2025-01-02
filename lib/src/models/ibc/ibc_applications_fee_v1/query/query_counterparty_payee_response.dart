@@ -11,6 +11,10 @@ class QueryCounterpartyPayeeResponse extends CosmosMessage {
     return QueryCounterpartyPayeeResponse(
         counterpartyPayee: decode.getField(1));
   }
+  factory QueryCounterpartyPayeeResponse.fromRpc(Map<String, dynamic> json) {
+    return QueryCounterpartyPayeeResponse(
+        counterpartyPayee: json["counterparty_payee"]);
+  }
 
   @override
   List<int> get fieldIds => [1];
@@ -21,7 +25,7 @@ class QueryCounterpartyPayeeResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.queryCounterpartyPayeeResponse.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryCounterpartyPayeeResponse;
 
   @override
   List get values => [counterpartyPayee];

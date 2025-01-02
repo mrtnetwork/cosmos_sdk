@@ -34,7 +34,7 @@ class ThorchainAsset extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.asset.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.asset;
 
   @override
   List get values => [chain, symbol, ticker, synth, trade];

@@ -17,16 +17,18 @@ class SlashingQueryParamsRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl => SlashingV1beta1Types.slashingQueryParamsRequest.typeUrl;
+  TypeUrl get typeUrl => SlashingV1beta1Types.slashingQueryParamsRequest;
 
   @override
   List get values => [];
 
   @override
-  String get queryPath => SlashingV1beta1Types.querySlashingParams.typeUrl;
-
-  @override
   SlashingQueryParamsResponse onResponse(List<int> bytes) {
     return SlashingQueryParamsResponse.deserialize(bytes);
+  }
+
+  @override
+  SlashingQueryParamsResponse onJsonResponse(Map<String, dynamic> json) {
+    return SlashingQueryParamsResponse.fromRpc(json);
   }
 }

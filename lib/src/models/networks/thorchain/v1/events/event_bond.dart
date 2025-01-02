@@ -31,7 +31,7 @@ class ThorchainEventBond extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.eventBond.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.eventBond;
 
   @override
   List get values => [amount.toString(), bondType?.value, txIn];

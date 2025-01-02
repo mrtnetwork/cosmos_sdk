@@ -65,7 +65,7 @@ class SignDocDirectAux extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => TxV1beta1Types.signDocDirectAux.typeUrl;
+  TypeUrl get typeUrl => TxV1beta1Types.signDocDirectAux;
 
   @override
   List get values =>

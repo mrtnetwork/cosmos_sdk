@@ -43,7 +43,7 @@ class MsgChannelUpgradeOpen extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3, 4, 5, 6, 7];
 
   @override
-  String get service => IbcTypes.channelUpgradeOpen.typeUrl;
+  TypeUrl get service => IbcTypes.channelUpgradeOpen;
 
   @override
   Map<String, dynamic> toJson() {
@@ -59,7 +59,7 @@ class MsgChannelUpgradeOpen extends CosmosMessage
   }
 
   @override
-  String get typeUrl => IbcTypes.msgChannelUpgradeOpen.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.msgChannelUpgradeOpen;
 
   @override
   List get values => [
@@ -77,7 +77,6 @@ class MsgChannelUpgradeOpen extends CosmosMessage
 
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
-    return EmptyServiceRequestResponse(
-        IbcTypes.msgChannelUpgradeOpenResponse.typeUrl);
+    return EmptyServiceRequestResponse(IbcTypes.msgChannelUpgradeOpenResponse);
   }
 }

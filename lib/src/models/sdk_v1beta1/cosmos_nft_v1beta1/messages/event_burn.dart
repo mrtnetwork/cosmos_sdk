@@ -34,7 +34,7 @@ class EventBurn extends CosmosMessage {
   List<int> get fieldIds => [1, 2, 3];
 
   @override
-  String get typeUrl => NFTV1beta1Types.eventBurn.typeUrl;
+  TypeUrl get typeUrl => NFTV1beta1Types.eventBurn;
 
   @override
   List get values => [classId, id, owner];

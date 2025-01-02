@@ -1,6 +1,7 @@
-class VestingV1beta1Types {
-  final String typeUrl;
-  const VestingV1beta1Types._(this.typeUrl);
+import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+
+class VestingV1beta1Types extends TypeUrl {
+  const VestingV1beta1Types._(super.typeUrl);
   static const VestingV1beta1Types baseVestingAccount =
       VestingV1beta1Types._("/cosmos.vesting.v1beta1.BaseVestingAccount");
   static const VestingV1beta1Types continuousVestingAccount =

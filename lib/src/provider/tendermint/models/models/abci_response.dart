@@ -1,6 +1,7 @@
 import 'package:blockchain_utils/blockchain_utils.dart';
 
 class ABCIResponse {
+  static const int notFoundCode = 22;
   final String log;
   final String height;
   final String? proof;
@@ -42,6 +43,8 @@ class ABCIResponse {
       "code": code
     };
   }
+
+  bool get found => code != notFoundCode;
 
   List<int> valueBytes() {
     if (value == null) {

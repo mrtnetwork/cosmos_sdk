@@ -29,7 +29,7 @@ class ThorchainJail extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.jail.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.jail;
 
   @override
   List get values => [nodeAddress, releaseHeight, reason];

@@ -12,6 +12,18 @@ class DistributionQueryValidatorSlashesResponse extends CosmosMessage {
 
   /// pagination defines the pagination in the response.
   final PageResponse? pagination;
+  factory DistributionQueryValidatorSlashesResponse.fromRpc(
+      Map<String, dynamic> json) {
+    return DistributionQueryValidatorSlashesResponse(
+      slashes: (json["slashes"] as List?)
+              ?.map((e) => DistributionValidatorSlashEvent.fromRpc(e))
+              .toList() ??
+          [],
+      pagination: json["pagination"] == null
+          ? null
+          : PageResponse.fromRpc(json["pagination"]),
+    );
+  }
   DistributionQueryValidatorSlashesResponse(
       {required List<DistributionValidatorSlashEvent> slashes, this.pagination})
       : slashes = slashes.immutable;
@@ -40,8 +52,8 @@ class DistributionQueryValidatorSlashesResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => DistributionV1beta1Types
-      .distributionQueryValidatorSlashesResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      DistributionV1beta1Types.distributionQueryValidatorSlashesResponse;
 
   @override
   List get values => [slashes, pagination];

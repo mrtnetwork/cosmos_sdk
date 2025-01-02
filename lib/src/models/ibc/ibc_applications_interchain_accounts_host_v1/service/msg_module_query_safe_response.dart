@@ -34,8 +34,8 @@ class InterchainAccountsHostMsgModuleQuerySafeResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      IbcTypes.interchainAccountsHostMsgModuleQuerySafeResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      IbcTypes.interchainAccountsHostMsgModuleQuerySafeResponse;
 
   @override
   List get values => [height, responses];

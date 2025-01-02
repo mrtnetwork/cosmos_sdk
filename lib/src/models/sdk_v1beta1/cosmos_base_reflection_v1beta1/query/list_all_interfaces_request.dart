@@ -16,17 +16,18 @@ class ListAllInterfacesRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl => BaseReflectionV1beta1.listAllInterfacesRequest.typeUrl;
+  TypeUrl get typeUrl => BaseReflectionV1beta1.listAllInterfacesRequest;
 
   @override
   List get values => [];
 
   @override
-  String get queryPath =>
-      BaseReflectionV1beta1.reflectionListAllInterfaces.typeUrl;
-
-  @override
   ListAllInterfacesResponse onResponse(List<int> bytes) {
     return ListAllInterfacesResponse.deserialize(bytes);
+  }
+
+  @override
+  ListAllInterfacesResponse onJsonResponse(Map<String, dynamic> json) {
+    return ListAllInterfacesResponse.fromRpc(json);
   }
 }

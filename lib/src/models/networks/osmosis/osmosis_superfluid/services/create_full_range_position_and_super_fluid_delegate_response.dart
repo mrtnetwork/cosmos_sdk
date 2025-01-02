@@ -24,8 +24,8 @@ class OsmosisSuperfluidMsgCreateFullRangePositionAndSuperfluidDelegateResponse
   }
 
   @override
-  String get typeUrl => OsmosisSuperfluidTypes
-      .msgCreateFullRangePositionAndSuperfluidDelegateResponse.typeUrl;
+  TypeUrl get typeUrl => OsmosisSuperfluidTypes
+      .msgCreateFullRangePositionAndSuperfluidDelegateResponse;
 
   @override
   List get values => [lockId, positionId];

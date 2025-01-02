@@ -39,5 +39,5 @@ class Balance extends CosmosMessage {
 
   @override
   @override
-  String get typeUrl => BankV1beta1Types.msgSend.typeUrl;
+  TypeUrl get typeUrl => BankV1beta1Types.msgSend;
 }

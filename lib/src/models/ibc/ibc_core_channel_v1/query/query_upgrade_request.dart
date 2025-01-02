@@ -7,11 +7,11 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class QueryUpgradeRequest extends CosmosMessage
     with QueryMessage<QueryUpgradeResponse> {
   /// port unique identifier
-  final String? portId;
+  final String portId;
 
   /// channel unique identifier
-  final String? channelId;
-  const QueryUpgradeRequest({this.portId, this.channelId});
+  final String channelId;
+  const QueryUpgradeRequest({required this.portId, required this.channelId});
   factory QueryUpgradeRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryUpgradeRequest(
@@ -22,15 +22,12 @@ class QueryUpgradeRequest extends CosmosMessage
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get queryPath => IbcTypes.queryUpgrade.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {"port_id": portId, "channel_id": channelId};
   }
 
   @override
-  String get typeUrl => IbcTypes.queryUpgradeRequest.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryUpgradeRequest;
 
   @override
   List get values => [portId, channelId];
@@ -39,4 +36,12 @@ class QueryUpgradeRequest extends CosmosMessage
   QueryUpgradeResponse onResponse(List<int> bytes) {
     return QueryUpgradeResponse.deserialize(bytes);
   }
+
+  @override
+  QueryUpgradeResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryUpgradeResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters => [channelId, portId];
 }

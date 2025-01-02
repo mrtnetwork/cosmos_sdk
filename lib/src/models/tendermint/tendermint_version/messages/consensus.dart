@@ -26,7 +26,7 @@ class Consensus extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => TendermintTypes.consensus.typeUrl;
+  TypeUrl get typeUrl => TendermintTypes.consensus;
 
   @override
   List get values => [block, app];

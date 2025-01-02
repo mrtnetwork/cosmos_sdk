@@ -5,17 +5,15 @@ import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_gamm_v1beta1/type
 import 'query_swap_exact_amount_in_response.dart';
 
 class OsmosisGammQuerySwapExactAmountInRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisGammQuerySwapExactAmountInResponse>,
-        RPCMessage<OsmosisGammQuerySwapExactAmountInResponse> {
+    with QueryMessage<OsmosisGammQuerySwapExactAmountInResponse> {
   final String? sender;
-  final BigInt? poolId;
+  final BigInt poolId;
   final String? tokenIn;
   final List<OsmosisGammSwapAmountInRoute> routes;
 
   OsmosisGammQuerySwapExactAmountInRequest(
       {this.sender,
-      this.poolId,
+      required this.poolId,
       this.tokenIn,
       required List<OsmosisGammSwapAmountInRoute> routes})
       : routes = routes.immutable;
@@ -37,7 +35,7 @@ class OsmosisGammQuerySwapExactAmountInRequest extends CosmosMessage
       Map<String, dynamic> json) {
     return OsmosisGammQuerySwapExactAmountInRequest(
         sender: json["sender"],
-        poolId: BigintUtils.tryParse(json["pool_id"]),
+        poolId: BigintUtils.parse(json["pool_id"]),
         tokenIn: json["token_in"],
         routes: (json["routes"] as List?)
                 ?.map((e) => OsmosisGammSwapAmountInRoute.fromRpc(e))
@@ -52,15 +50,14 @@ class OsmosisGammQuerySwapExactAmountInRequest extends CosmosMessage
   Map<String, dynamic> toJson() {
     return {
       "sender": sender,
-      "pool_id": poolId?.toString(),
+      "pool_id": poolId.toString(),
       "token_in": tokenIn,
       "routes": routes.map((e) => e.toJson()).toList()
     };
   }
 
   @override
-  String get typeUrl =>
-      OsmosisGammV1beta1Types.querySwapExactAmountInRequest.typeUrl;
+  TypeUrl get typeUrl => OsmosisGammV1beta1Types.querySwapExactAmountInRequest;
 
   @override
   List get values => [sender, poolId, tokenIn, routes];
@@ -69,10 +66,6 @@ class OsmosisGammQuerySwapExactAmountInRequest extends CosmosMessage
   OsmosisGammQuerySwapExactAmountInResponse onResponse(List<int> bytes) {
     return OsmosisGammQuerySwapExactAmountInResponse.deserialize(bytes);
   }
-
-  @override
-  String get queryPath =>
-      OsmosisGammV1beta1Types.estimateSwapExactAmountIn.typeUrl;
 
   @override
   OsmosisGammQuerySwapExactAmountInResponse onJsonResponse(
@@ -85,6 +78,5 @@ class OsmosisGammQuerySwapExactAmountInRequest extends CosmosMessage
       {"sender": sender, "token_in": tokenIn};
 
   @override
-  String get rpcPath => OsmosisGammV1beta1Types.estimateSwapExactAmountIn
-      .rpcUrl(pathParameters: [poolId?.toString()]);
+  List<String> get pathParameters => [poolId.toString()];
 }

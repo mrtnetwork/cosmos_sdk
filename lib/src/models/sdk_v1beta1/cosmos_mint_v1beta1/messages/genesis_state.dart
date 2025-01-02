@@ -36,7 +36,7 @@ class MintGenesisState extends CosmosMessage {
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get typeUrl => MintV1beta1Types.mintGenesisState.typeUrl;
+  TypeUrl get typeUrl => MintV1beta1Types.mintGenesisState;
 
   @override
   List get values => [minter, params];

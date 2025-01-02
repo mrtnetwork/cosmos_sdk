@@ -22,7 +22,7 @@ class OsmosisGammQueryPoolTypeResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisGammV1beta1Types.queryPoolTypeResponse.typeUrl;
+  TypeUrl get typeUrl => OsmosisGammV1beta1Types.queryPoolTypeResponse;
 
   @override
   List get values => [poolType];

@@ -119,7 +119,7 @@ class OsmosisConcentratedLiquidityParams extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisConcentratedLiquidityTypes.params.typeUrl;
+  TypeUrl get typeUrl => OsmosisConcentratedLiquidityTypes.params;
 
   @override
   List get values => [

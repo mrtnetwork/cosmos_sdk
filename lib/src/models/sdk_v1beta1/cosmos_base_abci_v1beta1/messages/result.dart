@@ -1,7 +1,9 @@
+import 'package:cosmos_sdk/src/models/global_messages/unknown_message.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_abci_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/models/tendermint/tendermint_abci/messages/event.dart';
 import 'package:blockchain_utils/utils/utils.dart';
+import 'package:cosmos_sdk/src/utils/utils.dart';
 
 /// Result is the union of ResponseFormat and ResponseCheckTx.
 class Result extends CosmosMessage {
@@ -22,12 +24,24 @@ class Result extends CosmosMessage {
   ///
   /// Since: cosmos-sdk 0.46
   final List<Any> msgResponses;
-
+  factory Result.fromRpc(Map<String, dynamic> json) {
+    return Result(
+      data: CosmosUtils.toBytes(json["data"]),
+      events:
+          (json["events"] as List?)?.map((e) => Event.fromRpc(e)).toList() ??
+              [],
+      log: json["log"],
+      msgResponses: (json["msg_responses"] as List?)
+              ?.map((e) => AnyMessage.fromRpc(e))
+              .toList() ??
+          [],
+    );
+  }
   Result(
       {List<int>? data,
       required this.log,
       required List<Event> events,
-      required List<Any> msgResponses})
+      required List<AnyMessage> msgResponses})
       : data = BytesUtils.tryToBytes(data, unmodifiable: true),
         events = List<Event>.unmodifiable(events),
         msgResponses = List<Any>.unmodifiable(msgResponses);
@@ -42,7 +56,7 @@ class Result extends CosmosMessage {
             .toList(),
         msgResponses: decode
             .getFields<List<int>>(4)
-            .map((e) => Any.deserialize(e))
+            .map((e) => AnyMessage.deserialize(e))
             .toList());
   }
 
@@ -60,7 +74,7 @@ class Result extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => BaseAbciV1beta1.result.typeUrl;
+  TypeUrl get typeUrl => BaseAbciV1beta1.result;
 
   @override
   List get values => [data, log, events, msgResponses];

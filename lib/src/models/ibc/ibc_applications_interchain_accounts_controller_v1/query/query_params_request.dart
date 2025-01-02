@@ -13,17 +13,12 @@ class InterchainAccountsControllerQueryParamsRequest extends CosmosMessage
   List<int> get fieldIds => [];
 
   @override
-  String get queryPath =>
-      IbcTypes.queryInterchainAccountsControllerParams.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {};
   }
 
   @override
-  String get typeUrl =>
-      IbcTypes.interchainAccoutsControllerQueryParamsRequest.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.interchainAccoutsControllerQueryParamsRequest;
 
   @override
   List get values => [];
@@ -31,5 +26,11 @@ class InterchainAccountsControllerQueryParamsRequest extends CosmosMessage
   @override
   InterchainAccountsControllerQueryParamsResponse onResponse(List<int> bytes) {
     return InterchainAccountsControllerQueryParamsResponse.deserialize(bytes);
+  }
+
+  @override
+  InterchainAccountsControllerQueryParamsResponse onJsonResponse(
+      Map<String, dynamic> json) {
+    return InterchainAccountsControllerQueryParamsResponse.fromRpc(json);
   }
 }

@@ -7,11 +7,9 @@ import 'rewards_est_response.dart';
 /// RewardsEst returns an estimate of the rewards from now until a specified time in the future
 /// The querier either provides an address or a set of locks for which they want to find the associated rewards
 class OsmosisIncentiveRewardsEstRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisIncentiveRewardsEstResponse>,
-        RPCMessage<OsmosisIncentiveRewardsEstResponse> {
+    with QueryMessage<OsmosisIncentiveRewardsEstResponse> {
   /// Address that is being queried for future estimated rewards
-  final String? owner;
+  final String owner;
 
   /// Lock IDs included in future reward estimation
   final List<BigInt>? lockIds;
@@ -21,7 +19,7 @@ class OsmosisIncentiveRewardsEstRequest extends CosmosMessage
   final BigInt? endEpoch;
 
   OsmosisIncentiveRewardsEstRequest(
-      {this.owner, List<BigInt>? lockIds, this.endEpoch})
+      {required this.owner, List<BigInt>? lockIds, this.endEpoch})
       : lockIds = lockIds?.emptyAsNull?.immutable;
   factory OsmosisIncentiveRewardsEstRequest.fromBytes(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -44,9 +42,6 @@ class OsmosisIncentiveRewardsEstRequest extends CosmosMessage
   }
 
   @override
-  String get queryPath => OsmosisIncentivesTypes.rewardsEst.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {
       "owner": owner,
@@ -56,10 +51,13 @@ class OsmosisIncentiveRewardsEstRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl => OsmosisIncentivesTypes.rewardsEstRequest.typeUrl;
+  TypeUrl get typeUrl => OsmosisIncentivesTypes.rewardsEstRequest;
 
   @override
   List get values => [owner, lockIds, endEpoch];
+
+  @override
+  List<String> get pathParameters => [owner];
 
   @override
   OsmosisIncentiveRewardsEstResponse onJsonResponse(Map<String, dynamic> json) {
@@ -68,8 +66,4 @@ class OsmosisIncentiveRewardsEstRequest extends CosmosMessage
 
   @override
   Map<String, String> get queryParameters => {};
-
-  @override
-  String get rpcPath =>
-      OsmosisIncentivesTypes.rewardsEst.rpcUrl(pathParameters: [owner]);
 }

@@ -36,7 +36,7 @@ class MsgTimeout extends CosmosMessage with ServiceMessage<MsgTimeoutResponse> {
   List<int> get fieldIds => [1, 2, 3, 4, 5];
 
   @override
-  String get service => IbcTypes.serviceTimeout.typeUrl;
+  TypeUrl get service => IbcTypes.serviceTimeout;
 
   @override
   Map<String, dynamic> toJson() {
@@ -50,7 +50,7 @@ class MsgTimeout extends CosmosMessage with ServiceMessage<MsgTimeoutResponse> {
   }
 
   @override
-  String get typeUrl => IbcTypes.msgTimeout.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.msgTimeout;
 
   @override
   List get values =>

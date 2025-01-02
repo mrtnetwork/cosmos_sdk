@@ -1,20 +1,23 @@
+import 'package:cosmos_sdk/src/models/global_messages/unknown_message.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_gamm_v1beta1/types/types.dart';
 
 class OsmosisGammQueryPoolParamsResponse extends CosmosMessage {
-  final Any? params;
+  final AnyMessage? params;
 
   OsmosisGammQueryPoolParamsResponse({this.params});
   factory OsmosisGammQueryPoolParamsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisGammQueryPoolParamsResponse(
-        params:
-            decode.getResult(1)?.to<Any, List<int>>((e) => Any.deserialize(e)));
+        params: decode
+            .getResult(1)
+            ?.to<AnyMessage, List<int>>((e) => AnyMessage.deserialize(e)));
   }
   factory OsmosisGammQueryPoolParamsResponse.fromRpc(
       Map<String, dynamic> json) {
     return OsmosisGammQueryPoolParamsResponse(
-        params: json["params"] == null ? null : Any.fromRpc(json["params"]));
+        params:
+            json["params"] == null ? null : AnyMessage.fromRpc(json["params"]));
   }
 
   @override
@@ -26,7 +29,7 @@ class OsmosisGammQueryPoolParamsResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisGammV1beta1Types.queryPoolResponse.typeUrl;
+  TypeUrl get typeUrl => OsmosisGammV1beta1Types.queryPoolResponse;
 
   @override
   List get values => [params];

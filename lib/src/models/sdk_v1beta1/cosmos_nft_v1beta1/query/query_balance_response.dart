@@ -1,3 +1,4 @@
+import 'package:blockchain_utils/utils/numbers/utils/bigint_utils.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_nft_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
@@ -11,6 +12,11 @@ class QueryNFTBalanceResponse extends CosmosMessage {
     return QueryNFTBalanceResponse(amount: decode.getField(1));
   }
 
+  factory QueryNFTBalanceResponse.fromRpc(Map<String, dynamic> json) {
+    return QueryNFTBalanceResponse(
+        amount: BigintUtils.tryParse(json["amount"]));
+  }
+
   @override
   List<int> get fieldIds => [1];
 
@@ -20,7 +26,7 @@ class QueryNFTBalanceResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => NFTV1beta1Types.queryNFTBalanceResponse.typeUrl;
+  TypeUrl get typeUrl => NFTV1beta1Types.queryNFTBalanceResponse;
 
   @override
   List get values => [amount];

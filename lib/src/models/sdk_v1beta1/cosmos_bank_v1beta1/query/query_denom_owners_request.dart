@@ -27,15 +27,12 @@ class QueryDenomOwnersRequest extends CosmosMessage
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get queryPath => BankV1beta1Types.denomOwners.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {"denom": denom, "pagination": pagination?.toJson()};
   }
 
   @override
-  String get typeUrl => BankV1beta1Types.denomOwnersRequest.typeUrl;
+  TypeUrl get typeUrl => BankV1beta1Types.denomOwnersRequest;
 
   @override
   List get values => [denom, pagination];
@@ -44,4 +41,16 @@ class QueryDenomOwnersRequest extends CosmosMessage
   QueryDenomOwnersResponse onResponse(List<int> bytes) {
     return QueryDenomOwnersResponse.deserialize(bytes);
   }
+
+  @override
+  QueryDenomOwnersResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryDenomOwnersResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters => [denom];
+
+  @override
+  Map<String, String?> get queryParameters =>
+      {...pagination?.queryParameters ?? {}};
 }

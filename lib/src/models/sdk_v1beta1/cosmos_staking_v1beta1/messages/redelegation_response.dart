@@ -10,6 +10,16 @@ class RedelegationResponse extends CosmosMessage {
   final List<RedelegationEntryResponse> entries;
   const RedelegationResponse(
       {required this.redelegation, required this.entries});
+
+  factory RedelegationResponse.fromRpc(Map<String, dynamic> json) {
+    return RedelegationResponse(
+        redelegation: Redelegation.fromRpc(json["redelegation"]),
+        entries: (json["entries"] as List?)
+                ?.map((e) => RedelegationEntryResponse.fromRpc(e))
+                .toList() ??
+            []);
+  }
+
   factory RedelegationResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return RedelegationResponse(
@@ -32,7 +42,7 @@ class RedelegationResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => StakingV1beta1Types.redelegationResponse.typeUrl;
+  TypeUrl get typeUrl => StakingV1beta1Types.redelegationResponse;
 
   @override
   List get values => [redelegation, entries];

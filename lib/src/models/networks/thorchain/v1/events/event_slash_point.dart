@@ -30,7 +30,7 @@ class ThorchainEventSlashPoint extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.eventSlashPoint.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.eventSlashPoint;
 
   @override
   List get values => [nodeAddress, slashPoints, reason];

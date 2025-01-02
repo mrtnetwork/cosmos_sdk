@@ -1,15 +1,17 @@
+import 'package:cosmos_sdk/src/models/global_messages/unknown_message.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_poolmanager_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
 class OsmosisPoolManagerPoolResponse extends CosmosMessage {
-  final Any pool;
+  final AnyMessage pool;
   const OsmosisPoolManagerPoolResponse(this.pool);
   factory OsmosisPoolManagerPoolResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return OsmosisPoolManagerPoolResponse(Any.deserialize(decode.getField(1)));
+    return OsmosisPoolManagerPoolResponse(
+        AnyMessage.deserialize(decode.getField(1)));
   }
   factory OsmosisPoolManagerPoolResponse.fromRpc(Map<String, dynamic> json) {
-    return OsmosisPoolManagerPoolResponse(Any.fromRpc(json["pool"]));
+    return OsmosisPoolManagerPoolResponse(AnyMessage.fromRpc(json["pool"]));
   }
 
   @override
@@ -21,7 +23,7 @@ class OsmosisPoolManagerPoolResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisPoolManagerV1beta1Types.poolResponse.typeUrl;
+  TypeUrl get typeUrl => OsmosisPoolManagerV1beta1Types.poolResponse;
 
   @override
   List get values => [pool];

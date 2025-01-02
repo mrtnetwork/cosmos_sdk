@@ -29,7 +29,7 @@ class OsmosisProtorevParams extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisProtorevV1beta1Types.params.typeUrl;
+  TypeUrl get typeUrl => OsmosisProtorevV1beta1Types.params;
 
   @override
   List get values => [enabled, admin];

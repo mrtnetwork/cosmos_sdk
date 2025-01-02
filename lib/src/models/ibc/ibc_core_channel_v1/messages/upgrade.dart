@@ -1,3 +1,4 @@
+import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_channel_v1/messages/timeout.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_channel_v1/messages/upgrade_fields.dart';
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
@@ -13,6 +14,12 @@ class IbcChannelUpgrade extends CosmosMessage {
   final UpgradeFields fields;
   final IbcChannelTimeout timeout;
   final BigInt? nextSequenceSend;
+  factory IbcChannelUpgrade.fromRpc(Map<String, dynamic> json) {
+    return IbcChannelUpgrade(
+        fields: UpgradeFields.fromRpc(json["fields"]),
+        timeout: IbcChannelTimeout.fromRpc(json["timeout"]),
+        nextSequenceSend: BigintUtils.tryParse(json["next_sequence_send"]));
+  }
   const IbcChannelUpgrade(
       {required this.fields, required this.timeout, this.nextSequenceSend});
   factory IbcChannelUpgrade.deserialize(List<int> bytes) {
@@ -35,7 +42,7 @@ class IbcChannelUpgrade extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.upgrade.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.upgrade;
 
   @override
   List get values => [fields, timeout, nextSequenceSend];

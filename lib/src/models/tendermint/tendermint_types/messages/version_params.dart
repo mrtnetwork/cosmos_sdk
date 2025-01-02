@@ -20,7 +20,7 @@ class TendermintVersionParams extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => TendermintTypes.tendermintVersionParams.typeUrl;
+  TypeUrl get typeUrl => TendermintTypes.tendermintVersionParams;
 
   @override
   List get values => [app];

@@ -42,7 +42,7 @@ class OsmosisTxfeesGenesisState extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisTxfeesV1beta1Types.genesisState.typeUrl;
+  TypeUrl get typeUrl => OsmosisTxfeesV1beta1Types.genesisState;
 
   @override
   List get values => [basedenom, feetokens];

@@ -9,6 +9,9 @@ class QueryClientStatusResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryClientStatusResponse(status: decode.getField(1));
   }
+  factory QueryClientStatusResponse.fromRpc(Map<String, dynamic> json) {
+    return QueryClientStatusResponse(status: json["status"]);
+  }
 
   @override
   List<int> get fieldIds => [1];
@@ -19,7 +22,7 @@ class QueryClientStatusResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.queryClientStatusResponse.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryClientStatusResponse;
 
   @override
   List get values => [status];

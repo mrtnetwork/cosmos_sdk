@@ -4,9 +4,7 @@ import 'query_get_proto_rev_all_profits_response.dart';
 
 /// GetProtoRevAllProfits queries all of the profits from the module.
 class OsmosisProtorevQueryGetProtoRevAllProfitsRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisProtorevQueryGetProtoRevAllProfitsResponse>,
-        RPCMessage<OsmosisProtorevQueryGetProtoRevAllProfitsResponse> {
+    with QueryMessage<OsmosisProtorevQueryGetProtoRevAllProfitsResponse> {
   const OsmosisProtorevQueryGetProtoRevAllProfitsRequest();
   factory OsmosisProtorevQueryGetProtoRevAllProfitsRequest.deserialize(
       List<int> bytes) {
@@ -37,17 +35,9 @@ class OsmosisProtorevQueryGetProtoRevAllProfitsRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      OsmosisProtorevV1beta1Types.queryGetProtoRevAllProfitsRequest.typeUrl;
-
-  @override
-  String get queryPath =>
-      OsmosisProtorevV1beta1Types.getProtoRevAllProfits.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisProtorevV1beta1Types.queryGetProtoRevAllProfitsRequest;
 
   @override
   Map<String, String?> get queryParameters => {};
-
-  @override
-  String get rpcPath =>
-      OsmosisProtorevV1beta1Types.getProtoRevAllProfits.rpcUrl();
 }

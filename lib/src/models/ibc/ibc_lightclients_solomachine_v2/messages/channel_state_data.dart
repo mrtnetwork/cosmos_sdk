@@ -31,7 +31,7 @@ class IbcSoloMachineV2ChannelStateData extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.soloMachineV2ChannelStateData.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.soloMachineV2ChannelStateData;
 
   @override
   List get values => [path, channel];

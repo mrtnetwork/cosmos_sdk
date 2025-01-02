@@ -21,7 +21,7 @@ class ThorchainEventSecurity extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.eventSecurity.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.eventSecurity;
 
   @override
   List get values => [msg, tx];

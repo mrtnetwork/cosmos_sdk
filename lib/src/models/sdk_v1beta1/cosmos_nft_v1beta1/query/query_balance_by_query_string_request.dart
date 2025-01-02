@@ -8,12 +8,13 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class QueryNFTBalanceByQueryStringRequest extends CosmosMessage
     with QueryMessage<QueryNFTBalanceByQueryStringResponse> {
   /// class_id associated with the nft.
-  final String? classId;
+  final String classId;
 
   /// owner is the owner address of the nft.
-  final String? owner;
+  final String owner;
 
-  const QueryNFTBalanceByQueryStringRequest({this.classId, this.owner});
+  const QueryNFTBalanceByQueryStringRequest(
+      {required this.classId, required this.owner});
   factory QueryNFTBalanceByQueryStringRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryNFTBalanceByQueryStringRequest(
@@ -32,11 +33,7 @@ class QueryNFTBalanceByQueryStringRequest extends CosmosMessage
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get queryPath => NFTV1beta1Types.nftBalanceByQueryString.typeUrl;
-
-  @override
-  String get typeUrl =>
-      NFTV1beta1Types.queryNFTBalanceByQueryStringRequest.typeUrl;
+  TypeUrl get typeUrl => NFTV1beta1Types.queryNFTBalanceByQueryStringRequest;
 
   @override
   List get values => [classId, owner];
@@ -44,4 +41,16 @@ class QueryNFTBalanceByQueryStringRequest extends CosmosMessage
   QueryNFTBalanceByQueryStringResponse onResponse(List<int> bytes) {
     return QueryNFTBalanceByQueryStringResponse.deserialize(bytes);
   }
+
+  @override
+  QueryNFTBalanceByQueryStringResponse onJsonResponse(
+      Map<String, dynamic> json) {
+    return QueryNFTBalanceByQueryStringResponse.fromRpc(json);
+  }
+
+  @override
+  Map<String, String?> get queryParameters => {
+        'class_id': classId,
+        'owner': owner,
+      };
 }

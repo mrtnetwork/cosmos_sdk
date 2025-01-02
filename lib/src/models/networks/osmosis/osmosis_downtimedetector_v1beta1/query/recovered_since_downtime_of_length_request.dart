@@ -8,8 +8,6 @@ class OsmosisDowntimeDetectorRecoveredSinceDowntimeOfLengthRequest
     extends CosmosMessage
     with
         QueryMessage<
-            OsmosisDowntimeDetectorRecoveredSinceDowntimeOfLengthResponse>,
-        RPCMessage<
             OsmosisDowntimeDetectorRecoveredSinceDowntimeOfLengthResponse> {
   final OsmosisDowntimeDetectorDowntime? downtime;
   final ProtobufDuration recovery;
@@ -46,22 +44,13 @@ class OsmosisDowntimeDetectorRecoveredSinceDowntimeOfLengthRequest
   Map<String, String?> get queryParameters => {};
 
   @override
-  String get queryPath => OsmosisDowntimeDetectorV1beta1Types
-      .recoveredSinceDowntimeOfLength.typeUrl;
-
-  @override
-  String get rpcPath =>
-      OsmosisDowntimeDetectorV1beta1Types.recoveredSinceDowntimeOfLength
-          .rpcUrl();
-
-  @override
   Map<String, dynamic> toJson() {
     return {"downtime": downtime?.name, "recovery": recovery.toJson()};
   }
 
   @override
-  String get typeUrl => OsmosisDowntimeDetectorV1beta1Types
-      .recoveredSinceDowntimeOfLengthRequest.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisDowntimeDetectorV1beta1Types.recoveredSinceDowntimeOfLengthRequest;
 
   @override
   List get values => [downtime?.value, recovery];

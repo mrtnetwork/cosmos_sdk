@@ -41,13 +41,13 @@ class MsgRegisterCounterpartyPayee extends CosmosMessage
   }
 
   @override
-  String get typeUrl => IbcTypes.msgRegisterCounterpartyPayee.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.msgRegisterCounterpartyPayee;
 
   @override
   List get values => [portId, channelId, relayer, counterpartyPayee];
 
   @override
-  String get service => IbcTypes.registerCounterpartyPayee.typeUrl;
+  TypeUrl get service => IbcTypes.registerCounterpartyPayee;
 
   @override
   List<String?> get signers => [relayer];
@@ -55,6 +55,6 @@ class MsgRegisterCounterpartyPayee extends CosmosMessage
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        IbcTypes.msgRegisterCounterpartyPayeeResponse.typeUrl);
+        IbcTypes.msgRegisterCounterpartyPayeeResponse);
   }
 }

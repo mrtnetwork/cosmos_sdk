@@ -20,16 +20,18 @@ class QueryInflationRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl => MintV1beta1Types.queryInflationRequest.typeUrl;
+  TypeUrl get typeUrl => MintV1beta1Types.queryInflationRequest;
 
   @override
   List get values => [];
 
   @override
-  String get queryPath => MintV1beta1Types.inflation.typeUrl;
-
-  @override
   QueryInflationResponse onResponse(List<int> bytes) {
     return QueryInflationResponse.deserialize(bytes);
+  }
+
+  @override
+  QueryInflationResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryInflationResponse.fromRpc(json);
   }
 }

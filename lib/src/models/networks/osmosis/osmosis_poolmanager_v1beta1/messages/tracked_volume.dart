@@ -22,7 +22,7 @@ class OsmosisPoolManagerTrackedVolume extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisPoolManagerV1beta1Types.trackedVolume.typeUrl;
+  TypeUrl get typeUrl => OsmosisPoolManagerV1beta1Types.trackedVolume;
 
   @override
   List get values => [amount];

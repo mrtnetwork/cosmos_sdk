@@ -30,7 +30,7 @@ class IbcConnectionMsgConnectionOpenConfirm extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3, 4];
 
   @override
-  String get service => IbcTypes.ibcConnectionConnectionOpenConfirm.typeUrl;
+  TypeUrl get service => IbcTypes.ibcConnectionConnectionOpenConfirm;
 
   @override
   Map<String, dynamic> toJson() {
@@ -43,7 +43,7 @@ class IbcConnectionMsgConnectionOpenConfirm extends CosmosMessage
   }
 
   @override
-  String get typeUrl => IbcTypes.msgConnectionOpenConfirmResponse.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.msgConnectionOpenConfirmResponse;
 
   @override
   List get values => [connectionId, proofAck, proofHeight, signer];
@@ -52,6 +52,6 @@ class IbcConnectionMsgConnectionOpenConfirm extends CosmosMessage
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        IbcTypes.msgConnectionOpenConfirmResponse.typeUrl);
+        IbcTypes.msgConnectionOpenConfirmResponse);
   }
 }

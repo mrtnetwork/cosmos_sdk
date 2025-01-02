@@ -25,7 +25,7 @@ class AuthSigMessage extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => TendermintTypes.authSigMessage.typeUrl;
+  TypeUrl get typeUrl => TendermintTypes.authSigMessage;
 
   @override
   List get values => [pubKey, sig];

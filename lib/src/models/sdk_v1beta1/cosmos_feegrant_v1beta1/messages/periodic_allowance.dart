@@ -60,7 +60,7 @@ class PeriodicAllowance extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => FeegrantV1beta1Types.periodicAllowance.typeUrl;
+  TypeUrl get typeUrl => FeegrantV1beta1Types.periodicAllowance;
 
   @override
   List get values =>

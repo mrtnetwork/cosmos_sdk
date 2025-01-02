@@ -1,6 +1,7 @@
-class SlashingV1beta1Types {
-  final String typeUrl;
-  const SlashingV1beta1Types._(this.typeUrl);
+import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
+
+class SlashingV1beta1Types extends TypeUrl {
+  const SlashingV1beta1Types._(super.typeUrl, {super.query, super.rpc});
   static const SlashingV1beta1Types slashingMsgUnjail =
       SlashingV1beta1Types._("/cosmos.slashing.v1beta1.MsgUnjail");
   static const SlashingV1beta1Types slashingMsgUnjailResponse =
@@ -15,28 +16,28 @@ class SlashingV1beta1Types {
   static const SlashingV1beta1Types slashingValidatorSigningInfo =
       SlashingV1beta1Types._("/cosmos.slashing.v1beta1.ValidatorSigningInfo");
   static const SlashingV1beta1Types slashingQueryParamsRequest =
-      SlashingV1beta1Types._("/cosmos.slashing.v1beta1.QueryParamsRequest");
+      SlashingV1beta1Types._("/cosmos.slashing.v1beta1.QueryParamsRequest",
+          query: "/cosmos.slashing.v1beta1.Query/Params",
+          rpc: "/cosmos/slashing/v1beta1/params");
   static const SlashingV1beta1Types slashingQueryParamsResponse =
-      SlashingV1beta1Types._("/cosmos.slashing.v1beta1.QueryParamsResponse");
-  static const SlashingV1beta1Types slashingQuerySigningInfoRequest =
       SlashingV1beta1Types._(
-          "/cosmos.slashing.v1beta1.QuerySigningInfoRequest");
+    "/cosmos.slashing.v1beta1.QueryParamsResponse",
+  );
+  static const SlashingV1beta1Types slashingQuerySigningInfoRequest =
+      SlashingV1beta1Types._("/cosmos.slashing.v1beta1.QuerySigningInfoRequest",
+          query: "/cosmos.slashing.v1beta1.Query/SigningInfo",
+          rpc: "/cosmos/slashing/v1beta1/signing_infos/:cons_address");
   static const SlashingV1beta1Types slashingQuerySigningInfoResponse =
       SlashingV1beta1Types._(
           "/cosmos.slashing.v1beta1.QuerySigningInfoResponse");
   static const SlashingV1beta1Types slashingQuerySigningInfosRequest =
       SlashingV1beta1Types._(
-          "/cosmos.slashing.v1beta1.QuerySigningInfosRequest");
+          "/cosmos.slashing.v1beta1.QuerySigningInfosRequest",
+          query: "/cosmos.slashing.v1beta1.Query/SigningInfos",
+          rpc: "/cosmos/slashing/v1beta1/signing_infos");
   static const SlashingV1beta1Types slashingQuerySigningInfosResponse =
       SlashingV1beta1Types._(
           "/cosmos.slashing.v1beta1.QuerySigningInfosResponse");
-
-  static const SlashingV1beta1Types querySlashingParams =
-      SlashingV1beta1Types._("/cosmos.slashing.v1beta1.Query/Params");
-  static const SlashingV1beta1Types slashingSigningInfo =
-      SlashingV1beta1Types._("/cosmos.slashing.v1beta1.Query/SigningInfo");
-  static const SlashingV1beta1Types slashingSigningInfos =
-      SlashingV1beta1Types._("/cosmos.slashing.v1beta1.Query/SigningInfos");
 
   /// service
   static const SlashingV1beta1Types slashingUnjail =

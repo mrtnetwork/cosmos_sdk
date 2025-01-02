@@ -1,4 +1,5 @@
 import 'package:cosmos_sdk/src/address/address.dart';
+import 'package:cosmos_sdk/src/models/global_messages/unknown_message.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_feegrant_v1beta1/types/types.dart';
 
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
@@ -12,7 +13,18 @@ class FeeGrant extends CosmosMessage {
   final CosmosBaseAddress? grantee;
 
   /// allowance can be any of basic, periodic, allowed fee allowance.
-  final Any? allowance;
+  final AnyMessage? allowance;
+
+  factory FeeGrant.fromRpc(Map<String, dynamic> json) {
+    return FeeGrant(
+        granter:
+            json["granter"] == null ? null : CosmosBaseAddress(json["granter"]),
+        grantee:
+            json["grantee"] == null ? null : CosmosBaseAddress(json["grantee"]),
+        allowance: json["allowance"] == null
+            ? null
+            : AnyMessage.fromRpc(json["allowance"]));
+  }
   const FeeGrant({this.granter, this.grantee, this.allowance});
   factory FeeGrant.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -23,8 +35,9 @@ class FeeGrant extends CosmosMessage {
         grantee: decode
             .getResult(2)
             ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        allowance:
-            decode.getResult(3)?.to<Any, List<int>>((e) => Any.deserialize(e)));
+        allowance: decode
+            .getResult(3)
+            ?.to<AnyMessage, List<int>>((e) => AnyMessage.deserialize(e)));
   }
 
   @override
@@ -40,7 +53,7 @@ class FeeGrant extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => FeegrantV1beta1Types.feeGrant.typeUrl;
+  TypeUrl get typeUrl => FeegrantV1beta1Types.feeGrant;
 
   @override
   List get values => [granter, grantee, allowance];

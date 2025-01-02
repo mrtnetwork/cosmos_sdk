@@ -11,17 +11,13 @@ class DistributionQueryParamsRequest extends CosmosMessage
   List<int> get fieldIds => [];
 
   @override
-  String get queryPath =>
-      DistributionV1beta1Types.queryDistributionParams.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {};
   }
 
   @override
-  String get typeUrl =>
-      DistributionV1beta1Types.distributionQueryParamsRequest.typeUrl;
+  TypeUrl get typeUrl =>
+      DistributionV1beta1Types.distributionQueryParamsRequest;
 
   @override
   List get values => [];
@@ -29,5 +25,10 @@ class DistributionQueryParamsRequest extends CosmosMessage
   @override
   DistributionQueryParamsResponse onResponse(List<int> bytes) {
     return DistributionQueryParamsResponse.deserialize(bytes);
+  }
+
+  @override
+  DistributionQueryParamsResponse onJsonResponse(Map<String, dynamic> json) {
+    return DistributionQueryParamsResponse.fromRpc(json);
   }
 }

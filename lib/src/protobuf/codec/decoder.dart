@@ -1,4 +1,4 @@
-import 'package:blockchain_utils/exception/exception.dart';
+import 'package:cosmos_sdk/src/exception/exception.dart';
 import 'package:blockchain_utils/utils/utils.dart';
 
 class ProtocolBufferDecoder {
@@ -105,15 +105,26 @@ extension QuickProtocolBufferResults on List<ProtocolBufferDecoderResult> {
     }
   }
 
-  T getField<T>(int tag) {
+  T getField<T>(int tag, {bool setDefault = false}) {
     try {
       final result = firstWhere((element) => element.tagNumber == tag);
       return result.get<T>();
     } on StateError {
       if (null is T) return null as T;
-      throw MessageException("field id does not exist.",
+      if (setDefault) {
+        final defaultValue = _getDefault<T>();
+        if (defaultValue != null) return defaultValue as T;
+      }
+      throw DartCosmosSdkPluginException("field id does not exist.",
           details: {"fieldIds": map((e) => e.tagNumber).join(", "), "id": tag});
     }
+  }
+
+  T? _getDefault<T>() {
+    if (T == bool) return false as T;
+    if (T == int) return 0 as T;
+    if (T == BigInt) return BigInt.zero as T;
+    return null;
   }
 
   T getResult<T extends ProtocolBufferDecoderResult?>(int id) {
@@ -122,7 +133,7 @@ extension QuickProtocolBufferResults on List<ProtocolBufferDecoderResult> {
       return result as T;
     } on StateError {
       if (null is T) return null as T;
-      throw MessageException("field id does not exist.",
+      throw DartCosmosSdkPluginException("field id does not exist.",
           details: {"fieldIds": map((e) => e.tagNumber).join(", "), "id": id});
     }
   }
@@ -130,7 +141,7 @@ extension QuickProtocolBufferResults on List<ProtocolBufferDecoderResult> {
   List<T> getFields<T>(int tag, {bool allowNull = true}) {
     final result = where((element) => element.tagNumber == tag);
     if (result.isEmpty && !allowNull) {
-      throw MessageException("field id does not exist.",
+      throw DartCosmosSdkPluginException("field id does not exist.",
           details: {"fieldIds": map((e) => e.tagNumber).join(", "), "id": tag});
     }
     return result.map((e) => e.get<T>()).toList();
@@ -142,26 +153,42 @@ extension QuickProtocolBufferResult on ProtocolBufferDecoderResult {
     return "" is T;
   }
 
+  bool _isTypeBigInt<T>() {
+    return BigInt.zero is T;
+  }
+
+  bool _isTypeInt<T>() {
+    return 0 is T;
+  }
+
+  T _returnString<T>(String value) {
+    try {
+      if (_isTypeString<T>()) return value as T;
+      if (_isTypeBigInt<T>()) return BigintUtils.parse(value) as T;
+      if (_isTypeInt<T>()) return IntUtils.parse(value) as T;
+    } catch (_) {}
+    throw DartCosmosSdkPluginException("Invalid type.",
+        details: {"type": "$T", "Excepted": value.runtimeType.toString()});
+  }
+
   T get<T>() {
     if (value is T) return value;
-    if (value is List<int> && _isTypeString<T>()) {
-      return StringUtils.decode(value) as T;
+    if (value is List<int>) {
+      final decode = StringUtils.tryDecode(value);
+      if (decode != null) return _returnString<T>(decode);
     }
     if (value is int) {
       if (BigInt.zero is T) {
         return BigInt.from(value) as T;
       } else if (false is T) {
         if (value != 0 && value != 1) {
-          throw MessageException("Invalid boolean value.",
+          throw DartCosmosSdkPluginException("Invalid boolean value.",
               details: {"value": value});
         }
         return (value == 1 ? true : false) as T;
       }
     }
-    if(0 is T && value is BigInt) {
-      return (value as BigInt).toInt() as T;
-    }
-    throw MessageException("Invalid type.",
+    throw DartCosmosSdkPluginException("Invalid type.",
         details: {"type": "$T", "Excepted": value.runtimeType.toString()});
   }
 
@@ -172,7 +199,7 @@ extension QuickProtocolBufferResult on ProtocolBufferDecoderResult {
         return BigInt.from(value) as T;
       } else if (T == bool) {
         if (value != 0 && value != 1) {
-          throw MessageException("Invalid boolean value.",
+          throw DartCosmosSdkPluginException("Invalid boolean value.",
               details: {"value": value});
         }
         return (value == 1 ? true : false) as T;
@@ -185,7 +212,7 @@ extension QuickProtocolBufferResult on ProtocolBufferDecoderResult {
     if (value is List<int> && T == String) {
       return StringUtils.decode(value) as T;
     }
-    throw MessageException("cannot cast value.", details: {
+    throw DartCosmosSdkPluginException("cannot cast value.", details: {
       "Type": "$T",
       "Excepted": value.runtimeType.toString(),
       "value": value

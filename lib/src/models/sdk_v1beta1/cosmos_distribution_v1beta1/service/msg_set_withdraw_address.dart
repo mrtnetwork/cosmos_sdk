@@ -26,8 +26,8 @@ class DistributionMsgSetWithdrawAddress extends CosmosMessage
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get service =>
-      DistributionV1beta1Types.distributionSetWithdrawAddress.typeUrl;
+  TypeUrl get service =>
+      DistributionV1beta1Types.distributionSetWithdrawAddress;
 
   @override
   Map<String, dynamic> toJson() {
@@ -38,8 +38,8 @@ class DistributionMsgSetWithdrawAddress extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      DistributionV1beta1Types.distributionMsgSetWithdrawAddress.typeUrl;
+  TypeUrl get typeUrl =>
+      DistributionV1beta1Types.distributionMsgSetWithdrawAddress;
 
   @override
   List get values => [delegatorAddress?.address, withdrawAddress?.address];
@@ -48,7 +48,7 @@ class DistributionMsgSetWithdrawAddress extends CosmosMessage
 
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
-    return EmptyServiceRequestResponse(DistributionV1beta1Types
-        .distributionMsgSetWithdrawAddressResponse.typeUrl);
+    return EmptyServiceRequestResponse(
+        DistributionV1beta1Types.distributionMsgSetWithdrawAddressResponse);
   }
 }

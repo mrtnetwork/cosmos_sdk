@@ -59,9 +59,6 @@ class GetTxsEventRequest extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3, 4, 5, 6];
 
   @override
-  String get queryPath => TxV1beta1Types.getTxsEvent.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {
       "events": events,
@@ -74,7 +71,7 @@ class GetTxsEventRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl => TxV1beta1Types.getTxsEventRequest.typeUrl;
+  TypeUrl get typeUrl => TxV1beta1Types.getTxsEventRequest;
 
   @override
   List get values => [events, pagination, orderBy, page, limit, query];
@@ -83,4 +80,19 @@ class GetTxsEventRequest extends CosmosMessage
   GetTxsEventResponse onResponse(List<int> bytes) {
     return GetTxsEventResponse.deserialize(bytes);
   }
+
+  @override
+  GetTxsEventResponse onJsonResponse(Map<String, dynamic> json) {
+    return GetTxsEventResponse.fromRpc(json);
+  }
+
+  @override
+  Map<String, String?> get queryParameters => {
+        "events": events?.join(","),
+        "order_by": orderBy?.value.toString(),
+        "page": page?.toString(),
+        "limit": limit?.toString(),
+        "query": query,
+        ...pagination?.queryParameters ?? {}
+      };
 }

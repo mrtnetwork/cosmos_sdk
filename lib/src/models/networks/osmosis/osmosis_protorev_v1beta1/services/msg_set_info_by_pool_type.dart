@@ -32,8 +32,7 @@ class OsmosisProtorevMsgSetInfoByPoolType extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      OsmosisProtorevV1beta1Types.msgSetInfoByPoolType.typeUrl;
+  TypeUrl get typeUrl => OsmosisProtorevV1beta1Types.msgSetInfoByPoolType;
 
   @override
   List get values => [admin, infoByPoolType];
@@ -41,11 +40,11 @@ class OsmosisProtorevMsgSetInfoByPoolType extends CosmosMessage
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        OsmosisProtorevV1beta1Types.msgSetInfoByPoolTypeResponse.typeUrl);
+        OsmosisProtorevV1beta1Types.msgSetInfoByPoolTypeResponse);
   }
 
   @override
-  String get service => OsmosisProtorevV1beta1Types.setInfoByPoolType.typeUrl;
+  TypeUrl get service => OsmosisProtorevV1beta1Types.setInfoByPoolType;
 
   @override
   List<String?> get signers => [admin];

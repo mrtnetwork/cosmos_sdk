@@ -64,7 +64,7 @@ class StakingParams extends CosmosMessage {
   List<int> get fieldIds => [1, 2, 3, 4, 5, 6, 7];
 
   @override
-  String get typeUrl => StakingV1beta1Types.stakingParams.typeUrl;
+  TypeUrl get typeUrl => StakingV1beta1Types.stakingParams;
 
   @override
   List get values => [

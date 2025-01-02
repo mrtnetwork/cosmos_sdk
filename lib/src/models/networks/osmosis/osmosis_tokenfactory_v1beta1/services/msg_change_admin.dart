@@ -26,7 +26,7 @@ class OsmosisTokenFactoryMsgChangeAdmin extends CosmosMessage
   }
 
   @override
-  String get typeUrl => OsmosisTokenFactoryV1beta1Types.msgChangeAdmin.typeUrl;
+  TypeUrl get typeUrl => OsmosisTokenFactoryV1beta1Types.msgChangeAdmin;
 
   @override
   List get values => [sender, denom, newAdmin];
@@ -34,11 +34,11 @@ class OsmosisTokenFactoryMsgChangeAdmin extends CosmosMessage
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        OsmosisTokenFactoryV1beta1Types.msgChangeAdminResponse.typeUrl);
+        OsmosisTokenFactoryV1beta1Types.msgChangeAdminResponse);
   }
 
   @override
-  String get service => OsmosisTokenFactoryV1beta1Types.changeAdmin.typeUrl;
+  TypeUrl get service => OsmosisTokenFactoryV1beta1Types.changeAdmin;
 
   @override
   List<String?> get signers => [sender];

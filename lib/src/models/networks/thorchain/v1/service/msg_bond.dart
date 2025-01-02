@@ -53,7 +53,7 @@ class ThorchainMsgBond extends CosmosMessage
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.msgBond.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.msgBond;
 
   @override
   List get values => [
@@ -72,7 +72,7 @@ class ThorchainMsgBond extends CosmosMessage
   }
 
   @override
-  String get service => typeUrl;
+  TypeUrl get service => typeUrl;
 
   @override
   List<String?> get signers => [signer?.address];

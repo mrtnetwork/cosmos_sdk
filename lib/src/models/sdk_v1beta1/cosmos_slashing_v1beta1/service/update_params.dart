@@ -30,7 +30,7 @@ class SlashingMsgUpdateParams extends CosmosMessage
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get service => SlashingV1beta1Types.slashingUpdateParams.typeUrl;
+  TypeUrl get service => SlashingV1beta1Types.slashingUpdateParams;
 
   @override
   Map<String, dynamic> toJson() {
@@ -38,7 +38,7 @@ class SlashingMsgUpdateParams extends CosmosMessage
   }
 
   @override
-  String get typeUrl => SlashingV1beta1Types.slashingMsgUpdateParams.typeUrl;
+  TypeUrl get typeUrl => SlashingV1beta1Types.slashingMsgUpdateParams;
 
   @override
   List get values => [authority?.address, params];
@@ -48,6 +48,6 @@ class SlashingMsgUpdateParams extends CosmosMessage
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        SlashingV1beta1Types.slashingMsgUpdateParamsResponse.typeUrl);
+        SlashingV1beta1Types.slashingMsgUpdateParamsResponse);
   }
 }

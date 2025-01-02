@@ -34,7 +34,7 @@ class MsgGrantAllowance extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3];
 
   @override
-  String get service => FeegrantV1beta1Types.grantAllowance.typeUrl;
+  TypeUrl get service => FeegrantV1beta1Types.grantAllowance;
 
   @override
   Map<String, dynamic> toJson() {
@@ -46,7 +46,7 @@ class MsgGrantAllowance extends CosmosMessage
   }
 
   @override
-  String get typeUrl => FeegrantV1beta1Types.msgGrantAllowance.typeUrl;
+  TypeUrl get typeUrl => FeegrantV1beta1Types.msgGrantAllowance;
 
   @override
   List get values => [granter, grantee, allowance];
@@ -56,6 +56,6 @@ class MsgGrantAllowance extends CosmosMessage
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        FeegrantV1beta1Types.msgGrantAllowanceResponse.typeUrl);
+        FeegrantV1beta1Types.msgGrantAllowanceResponse);
   }
 }

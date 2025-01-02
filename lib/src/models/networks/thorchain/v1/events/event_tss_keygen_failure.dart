@@ -40,7 +40,7 @@ class ThorchainEventTssKeygenFailure extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.eventTssKeygenFailure.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.eventTssKeygenFailure;
 
   @override
   List get values => [failReason, isUnicast, blameNodes, round, height];

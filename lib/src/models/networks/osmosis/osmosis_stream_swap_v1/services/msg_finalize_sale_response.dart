@@ -22,8 +22,7 @@ class OsmosisStreamSwapMsgFinalizeSaleResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisStreamSwapV1Types.msgFinalizeSaleResponse.typeUrl;
+  TypeUrl get typeUrl => OsmosisStreamSwapV1Types.msgFinalizeSaleResponse;
 
   @override
   List get values => [income];

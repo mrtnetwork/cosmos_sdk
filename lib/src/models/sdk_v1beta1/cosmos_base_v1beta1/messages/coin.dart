@@ -40,5 +40,9 @@ class Coin extends CosmosMessage {
   List get values => [denom, amount.toString()];
 
   @override
-  String get typeUrl => BaseV1beta1Types.coin.typeUrl;
+  TypeUrl get typeUrl => BaseV1beta1Types.coin;
+
+  Map<String, String> toQueryParam(String tag) {
+    return {"$tag.denom": denom, "$tag.amount": amount.toString()};
+  }
 }

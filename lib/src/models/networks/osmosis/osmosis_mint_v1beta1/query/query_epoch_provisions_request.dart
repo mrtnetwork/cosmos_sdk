@@ -4,9 +4,7 @@ import 'query_epoch_provisions_response.dart';
 
 /// QueryEpochProvisionsRequest is the request type for the Query/EpochProvisions RPC method.
 class OsmosisMintQueryEpochProvisionsRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisMintQueryEpochProvisionsResponse>,
-        RPCMessage<OsmosisMintQueryEpochProvisionsResponse> {
+    with QueryMessage<OsmosisMintQueryEpochProvisionsResponse> {
   const OsmosisMintQueryEpochProvisionsRequest();
 
   @override
@@ -18,8 +16,7 @@ class OsmosisMintQueryEpochProvisionsRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      OsmosisMintV1beta1Types.queryEpochProvisionsRequest.typeUrl;
+  TypeUrl get typeUrl => OsmosisMintV1beta1Types.queryEpochProvisionsRequest;
 
   @override
   List get values => [];
@@ -37,10 +34,4 @@ class OsmosisMintQueryEpochProvisionsRequest extends CosmosMessage
 
   @override
   Map<String, String?> get queryParameters => {};
-
-  @override
-  String get queryPath => OsmosisMintV1beta1Types.epochProvisions.typeUrl;
-
-  @override
-  String get rpcPath => OsmosisMintV1beta1Types.epochProvisions.rpcUrl();
 }

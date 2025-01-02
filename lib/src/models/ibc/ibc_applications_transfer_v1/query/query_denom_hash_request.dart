@@ -6,8 +6,8 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 /// QueryDenomHashRequest is the request type for the Query/DenomHash RPC method
 class QueryDenomHashRequest extends CosmosMessage
     with QueryMessage<QueryDenomHashResponse> {
-  final String? trace;
-  const QueryDenomHashRequest({this.trace});
+  final String trace;
+  const QueryDenomHashRequest({required this.trace});
   factory QueryDenomHashRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryDenomHashRequest(trace: decode.getField(1));
@@ -17,15 +17,12 @@ class QueryDenomHashRequest extends CosmosMessage
   List<int> get fieldIds => [1];
 
   @override
-  String get queryPath => IbcTypes.denomHash.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {"trace": trace};
   }
 
   @override
-  String get typeUrl => IbcTypes.queryDenomHashRequest.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryDenomHashRequest;
 
   @override
   List get values => [trace];
@@ -34,4 +31,12 @@ class QueryDenomHashRequest extends CosmosMessage
   QueryDenomHashResponse onResponse(List<int> bytes) {
     return QueryDenomHashResponse.deserialize(bytes);
   }
+
+  @override
+  QueryDenomHashResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryDenomHashResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters => [trace];
 }

@@ -57,14 +57,14 @@ class OsmosisSuperfluidMsgUnbondConvertAndStake extends CosmosMessage
   }
 
   @override
-  String get typeUrl => OsmosisSuperfluidTypes.msgUnbondConvertAndStake.typeUrl;
+  TypeUrl get typeUrl => OsmosisSuperfluidTypes.msgUnbondConvertAndStake;
 
   @override
   List get values =>
       [lockId, sender, valAddr, minAmtToStake.toString(), sharesToConvert];
 
   @override
-  String get service => OsmosisSuperfluidTypes.unbondConvertAndStake.typeUrl;
+  TypeUrl get service => OsmosisSuperfluidTypes.unbondConvertAndStake;
 
   @override
   List<String?> get signers => [sender];

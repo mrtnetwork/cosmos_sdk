@@ -1,11 +1,7 @@
-import 'package:cosmos_sdk/src/models/core/type_url/type_url.dart';
+import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 
 class OsmosisGammV1beta1Types extends TypeUrl {
-  @override
-  final String typeUrl;
-  @override
-  final String? rpc;
-  const OsmosisGammV1beta1Types._(this.typeUrl, {this.rpc});
+  const OsmosisGammV1beta1Types._(super.typeUrl, {super.query, super.rpc});
   static const OsmosisGammV1beta1Types poolAsset =
       OsmosisGammV1beta1Types._("/osmosis.gamm.v1beta1.PoolAsset");
   static const OsmosisGammV1beta1Types pool =
@@ -74,109 +70,88 @@ class OsmosisGammV1beta1Types extends TypeUrl {
           "/osmosis.gamm.v1beta1.MsgExitSwapShareAmountInResponse");
 
   static const OsmosisGammV1beta1Types queryPoolsRequest =
-      OsmosisGammV1beta1Types._("/osmosis.gamm.v1beta1.QueryPoolsRequest");
+      OsmosisGammV1beta1Types._("/osmosis.gamm.v1beta1.QueryPoolsRequest",
+          query: "/osmosis.gamm.v1beta1.Query/Pools",
+          rpc: "/osmosis/gamm/v1beta1/pools");
   static const OsmosisGammV1beta1Types queryPoolsResponse =
       OsmosisGammV1beta1Types._("/osmosis.gamm.v1beta1.QueryPoolsResponse");
 
   static const OsmosisGammV1beta1Types queryNumPoolsRequest =
-      OsmosisGammV1beta1Types._("/osmosis.gamm.v1beta1.QueryNumPoolsRequest");
+      OsmosisGammV1beta1Types._("/osmosis.gamm.v1beta1.QueryNumPoolsRequest",
+          query: "/osmosis.gamm.v1beta1.Query/Pools",
+          rpc: "/osmosis/gamm/v1beta1/NumPools");
   static const OsmosisGammV1beta1Types queryNumPoolsResponse =
       OsmosisGammV1beta1Types._("/osmosis.gamm.v1beta1.QueryNumPoolsResponse");
   static const OsmosisGammV1beta1Types queryTotalLiquidityRequest =
       OsmosisGammV1beta1Types._(
-          "/osmosis.gamm.v1beta1.QueryTotalLiquidityRequest");
+          "/osmosis.gamm.v1beta1.QueryTotalLiquidityRequest",
+          query: "/osmosis.gamm.v1beta1.Query/TotalLiquidity",
+          rpc: "/osmosis/gamm/v1beta1/total_liquidity");
   static const OsmosisGammV1beta1Types queryTotalLiquidityResponse =
       OsmosisGammV1beta1Types._(
           "/osmosis.gamm.v1beta1.QueryTotalLiquidityResponse");
 
   static const OsmosisGammV1beta1Types queryPoolRequest =
-      OsmosisGammV1beta1Types._("/osmosis.gamm.v1beta1.QueryPoolRequest");
+      OsmosisGammV1beta1Types._("/osmosis.gamm.v1beta1.QueryPoolRequest",
+          query: "/osmosis.gamm.v1beta1.Query/Pool",
+          rpc: "/osmosis/gamm/v1beta1/pools/:pool");
   static const OsmosisGammV1beta1Types queryPoolResponse =
       OsmosisGammV1beta1Types._("/osmosis.gamm.v1beta1.QueryPoolResponse");
   static const OsmosisGammV1beta1Types queryPoolTypeRequest =
-      OsmosisGammV1beta1Types._("/osmosis.gamm.v1beta1.QueryPoolTypeRequest");
+      OsmosisGammV1beta1Types._("/osmosis.gamm.v1beta1.QueryPoolTypeRequest",
+          query: "/osmosis.gamm.v1beta1.Query/PoolType",
+          rpc: "/osmosis/gamm/v1beta1/pool_type/:pool");
   static const OsmosisGammV1beta1Types queryPoolTypeResponse =
       OsmosisGammV1beta1Types._("/osmosis.gamm.v1beta1.QueryPoolTypeResponse");
 
   static const OsmosisGammV1beta1Types queryPoolParamsRequest =
-      OsmosisGammV1beta1Types._("/osmosis.gamm.v1beta1.QueryPoolParamsRequest");
+      OsmosisGammV1beta1Types._("/osmosis.gamm.v1beta1.QueryPoolParamsRequest",
+          query: "/osmosis.gamm.v1beta1.Query/PoolParams",
+          rpc: "/osmosis/gamm/v1beta1/pools/:pool/params");
   static const OsmosisGammV1beta1Types queryPoolParamsResponse =
       OsmosisGammV1beta1Types._(
           "/osmosis.gamm.v1beta1.QueryPoolParamsResponse");
 
   static const OsmosisGammV1beta1Types queryTotalPoolLiquidityRequest =
       OsmosisGammV1beta1Types._(
-          "/osmosis.gamm.v1beta1.QueryTotalPoolLiquidityRequest");
+          "/osmosis.gamm.v1beta1.QueryTotalPoolLiquidityRequest",
+          query: "/osmosis.gamm.v1beta1.Query/TotalPoolLiquidity",
+          rpc: "/osmosis/gamm/v1beta1/pools/:pool_id/total_pool_liquidity");
   static const OsmosisGammV1beta1Types queryTotalPoolLiquidityResponse =
       OsmosisGammV1beta1Types._(
           "/osmosis.gamm.v1beta1.QueryTotalPoolLiquidityResponse");
 
   static const OsmosisGammV1beta1Types queryTotalSharesRequest =
-      OsmosisGammV1beta1Types._(
-          "/osmosis.gamm.v1beta1.QueryTotalSharesRequest");
+      OsmosisGammV1beta1Types._("/osmosis.gamm.v1beta1.QueryTotalSharesRequest",
+          query: "/osmosis.gamm.v1beta1.Query/TotalShares",
+          rpc: "/osmosis/gamm/v1beta1/pools/:pool_id/total_shares");
   static const OsmosisGammV1beta1Types queryTotalSharesResponse =
       OsmosisGammV1beta1Types._(
           "/osmosis.gamm.v1beta1.QueryTotalSharesResponse");
 
   static const OsmosisGammV1beta1Types querySpotPriceRequest =
-      OsmosisGammV1beta1Types._("/osmosis.gamm.v1beta1.QuerySpotPriceRequest");
+      OsmosisGammV1beta1Types._("/osmosis.gamm.v1beta1.QuerySpotPriceRequest",
+          query: "/osmosis.gamm.v1beta1.Query/SpotPrice",
+          rpc: "/osmosis/gamm/v1beta1/pools/:pool_id/prices");
   static const OsmosisGammV1beta1Types querySpotPriceResponse =
       OsmosisGammV1beta1Types._("/osmosis.gamm.v1beta1.querySpotPriceResponse");
 
   static const OsmosisGammV1beta1Types querySwapExactAmountInRequest =
       OsmosisGammV1beta1Types._(
-          "/osmosis.gamm.v1beta1.QuerySwapExactAmountInRequest");
+          "/osmosis.gamm.v1beta1.QuerySwapExactAmountInRequest",
+          query: "/osmosis.gamm.v1beta1.Query/EstimateSwapExactAmountIn",
+          rpc: "/osmosis/gamm/v1beta1/:pool_id/estimate/swap_exact_amount_in");
   static const OsmosisGammV1beta1Types querySwapExactAmountInResponse =
       OsmosisGammV1beta1Types._(
           "/osmosis.gamm.v1beta1.QuerySwapExactAmountInResponse");
   static const OsmosisGammV1beta1Types querySwapExactAmountOutRequest =
       OsmosisGammV1beta1Types._(
-          "/osmosis.gamm.v1beta1.QuerySwapExactAmountOutRequest");
+          "/osmosis.gamm.v1beta1.QuerySwapExactAmountOutRequest",
+          query: "/osmosis.gamm.v1beta1.Query/EstimateSwapExactAmountOut",
+          rpc: "/osmosis/gamm/v1beta1/:pool_id/estimate/swap_exact_amount_out");
   static const OsmosisGammV1beta1Types querySwapExactAmountOutResponse =
       OsmosisGammV1beta1Types._(
           "/osmosis.gamm.v1beta1.QuerySwapExactAmountOutResponse");
-
-  /// query
-  static const OsmosisGammV1beta1Types estimateSwapExactAmountOut =
-      OsmosisGammV1beta1Types._(
-          "/osmosis.gamm.v1beta1.Query/EstimateSwapExactAmountOut",
-          rpc: "/osmosis/gamm/v1beta1/:pool_id/estimate/swap_exact_amount_out");
-  static const OsmosisGammV1beta1Types estimateSwapExactAmountIn =
-      OsmosisGammV1beta1Types._(
-          "/osmosis.gamm.v1beta1.Query/EstimateSwapExactAmountIn",
-          rpc: "/osmosis/gamm/v1beta1/:pool_id/estimate/swap_exact_amount_in");
-  static const OsmosisGammV1beta1Types spotPrice = OsmosisGammV1beta1Types._(
-      "/osmosis.gamm.v1beta1.Query/SpotPrice",
-      rpc: "/osmosis/gamm/v1beta1/pools/:pool_id/prices");
-
-  static const OsmosisGammV1beta1Types totalShares = OsmosisGammV1beta1Types._(
-      "/osmosis.gamm.v1beta1.Query/TotalShares",
-      rpc: "/osmosis/gamm/v1beta1/pools/:pool_id/total_shares");
-
-  static const OsmosisGammV1beta1Types pools = OsmosisGammV1beta1Types._(
-      "/osmosis.gamm.v1beta1.Query/Pools",
-      rpc: "/osmosis/gamm/v1beta1/pools");
-  static const OsmosisGammV1beta1Types numPools = OsmosisGammV1beta1Types._(
-      "/osmosis.gamm.v1beta1.Query/Pools",
-      rpc: "/osmosis/gamm/v1beta1/NumPools");
-
-  static const OsmosisGammV1beta1Types totalLiquidity =
-      OsmosisGammV1beta1Types._("/osmosis.gamm.v1beta1.Query/TotalLiquidity",
-          rpc: "/osmosis/gamm/v1beta1/total_liquidity");
-
-  static const OsmosisGammV1beta1Types queryPool = OsmosisGammV1beta1Types._(
-      "/osmosis.gamm.v1beta1.Query/Pool",
-      rpc: "/osmosis/gamm/v1beta1/pools/:pool");
-  static const OsmosisGammV1beta1Types poolType = OsmosisGammV1beta1Types._(
-      "/osmosis.gamm.v1beta1.Query/PoolType",
-      rpc: "/osmosis/gamm/v1beta1/pool_type/:pool");
-  static const OsmosisGammV1beta1Types queryPpoolParams =
-      OsmosisGammV1beta1Types._("/osmosis.gamm.v1beta1.Query/PoolParams",
-          rpc: "/osmosis/gamm/v1beta1/pools/:pool/params");
-  static const OsmosisGammV1beta1Types totalPoolLiquidity =
-      OsmosisGammV1beta1Types._(
-          "/osmosis.gamm.v1beta1.Query/TotalPoolLiquidity",
-          rpc: "/osmosis/gamm/v1beta1/pools/:pool_id/total_pool_liquidity");
 
   /// services
   static const OsmosisGammV1beta1Types joinPool =

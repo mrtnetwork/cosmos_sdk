@@ -6,12 +6,10 @@ class OsmosisSuperfluidUserConcentratedSuperfluidPositionsUndelegatingRequest
     extends CosmosMessage
     with
         QueryMessage<
-            OsmosisSuperfluidUserConcentratedSuperfluidPositionsUndelegatingResponse>,
-        RPCMessage<
             OsmosisSuperfluidUserConcentratedSuperfluidPositionsUndelegatingResponse> {
-  final String? delegatorAddress;
+  final String delegatorAddress;
   const OsmosisSuperfluidUserConcentratedSuperfluidPositionsUndelegatingRequest(
-      {this.delegatorAddress});
+      {required this.delegatorAddress});
   factory OsmosisSuperfluidUserConcentratedSuperfluidPositionsUndelegatingRequest.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -24,27 +22,18 @@ class OsmosisSuperfluidUserConcentratedSuperfluidPositionsUndelegatingRequest
 
   @override
   Map<String, dynamic> toJson() {
-    return {"delegator_address": delegatorAddress?.toString()};
+    return {"delegator_address": delegatorAddress};
   }
 
   @override
-  String get typeUrl => OsmosisSuperfluidTypes
-      .userConcentratedSuperfluidPositionsUndelegatingRequest.typeUrl;
+  TypeUrl get typeUrl => OsmosisSuperfluidTypes
+      .userConcentratedSuperfluidPositionsUndelegatingRequest;
 
   @override
   List get values => [delegatorAddress];
 
   @override
   Map<String, String?> get queryParameters => {};
-
-  @override
-  String get queryPath => OsmosisSuperfluidTypes
-      .userConcentratedSuperfluidPositionsUndelegating.typeUrl;
-
-  @override
-  String get rpcPath =>
-      OsmosisSuperfluidTypes.userConcentratedSuperfluidPositionsUndelegating
-          .rpcUrl(pathParameters: [delegatorAddress]);
 
   @override
   OsmosisSuperfluidUserConcentratedSuperfluidPositionsUndelegatingResponse
@@ -59,4 +48,7 @@ class OsmosisSuperfluidUserConcentratedSuperfluidPositionsUndelegatingRequest
     return OsmosisSuperfluidUserConcentratedSuperfluidPositionsUndelegatingResponse
         .deserialize(bytes);
   }
+
+  @override
+  List<String> get pathParameters => [delegatorAddress];
 }

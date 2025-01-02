@@ -10,6 +10,9 @@ class QueryEscrowAddressResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryEscrowAddressResponse(escrowAddress: decode.getField(1));
   }
+  factory QueryEscrowAddressResponse.fromRpc(Map<String, dynamic> json) {
+    return QueryEscrowAddressResponse(escrowAddress: json["escrow_address"]);
+  }
 
   @override
   List<int> get fieldIds => [1];
@@ -20,7 +23,7 @@ class QueryEscrowAddressResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.queryEscrowAddressResponse.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryEscrowAddressResponse;
 
   @override
   List get values => [escrowAddress];

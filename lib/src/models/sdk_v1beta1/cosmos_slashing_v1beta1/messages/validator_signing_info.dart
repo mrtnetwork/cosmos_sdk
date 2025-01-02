@@ -1,3 +1,4 @@
+import 'package:blockchain_utils/utils/numbers/utils/bigint_utils.dart';
 import 'package:cosmos_sdk/src/address/address/address.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_slashing_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
@@ -25,6 +26,18 @@ class SlashingValidatorSigningInfo extends CosmosMessage {
   /// A counter of missed (unsigned) blocks. It is used to avoid unnecessary
   /// reads in the missed block bitmap.
   final BigInt? missedBlocksCounter;
+
+  factory SlashingValidatorSigningInfo.fromRpc(Map<String, dynamic> json) {
+    return SlashingValidatorSigningInfo(
+        jailedUntil: ProtobufTimestamp.fromString(json["jailed_until"]),
+        address:
+            json["address"] == null ? null : CosmosBaseAddress(json["address"]),
+        indexOffset: BigintUtils.tryParse(json["index_offset"]),
+        missedBlocksCounter:
+            BigintUtils.tryParse(json["missed_blocks_counter"]),
+        startHeight: BigintUtils.tryParse(json["start_height"]),
+        tombstoned: json["tombstoned"]);
+  }
   const SlashingValidatorSigningInfo(
       {this.address,
       this.startHeight,
@@ -62,8 +75,7 @@ class SlashingValidatorSigningInfo extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      SlashingV1beta1Types.slashingValidatorSigningInfo.typeUrl;
+  TypeUrl get typeUrl => SlashingV1beta1Types.slashingValidatorSigningInfo;
 
   @override
   List get values => [

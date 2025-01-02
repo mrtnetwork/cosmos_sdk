@@ -12,20 +12,22 @@ class IbcTransferQueryParamsRequest extends CosmosMessage
   List<int> get fieldIds => [];
 
   @override
-  String get queryPath => IbcTypes.queryIbcTransferParams.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {};
   }
 
   @override
-  String get typeUrl => IbcTypes.queryParamsRequest.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryParamsRequest;
 
   @override
   List get values => [];
   @override
   IbcTransferQueryParamsResponse onResponse(List<int> bytes) {
     return IbcTransferQueryParamsResponse.deserialize(bytes);
+  }
+
+  @override
+  IbcTransferQueryParamsResponse onJsonResponse(Map<String, dynamic> json) {
+    return IbcTransferQueryParamsResponse.fromRpc(json);
   }
 }

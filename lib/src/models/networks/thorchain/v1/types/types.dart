@@ -1,6 +1,7 @@
-class ThorchainV1Types {
-  final String typeUrl;
-  const ThorchainV1Types._(this.typeUrl);
+import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
+
+class ThorchainV1Types extends TypeUrl {
+  const ThorchainV1Types._(super.typeUrl);
   static const ThorchainV1Types asset = ThorchainV1Types._("/common.Asset");
   static const ThorchainV1Types coin = ThorchainV1Types._("/common.Coin");
   static const ThorchainV1Types pubKeySet =

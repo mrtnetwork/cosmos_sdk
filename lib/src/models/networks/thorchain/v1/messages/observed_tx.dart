@@ -68,7 +68,7 @@ class ThorchainObservedTx extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.observedTx.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.observedTx;
 
   @override
   List get values => [

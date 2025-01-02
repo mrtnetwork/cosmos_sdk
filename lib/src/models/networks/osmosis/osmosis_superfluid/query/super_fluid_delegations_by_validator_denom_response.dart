@@ -45,8 +45,8 @@ class OsmosisSuperfluidSuperfluidDelegationsByValidatorDenomResponse
   }
 
   @override
-  String get typeUrl => OsmosisSuperfluidTypes
-      .superfluidDelegationsByValidatorDenomResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisSuperfluidTypes.superfluidDelegationsByValidatorDenomResponse;
 
   @override
   List get values => [superfluidDelegationRecords];

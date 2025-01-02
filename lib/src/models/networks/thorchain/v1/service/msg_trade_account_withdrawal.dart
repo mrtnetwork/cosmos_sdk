@@ -40,7 +40,7 @@ class ThorchainMsgTradeAccountWithdrawal extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.msgTradeAccountWithdrawal.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.msgTradeAccountWithdrawal;
   @override
   List get values => [tx, asset, amount.toString(), assetAddress, signer];
 }

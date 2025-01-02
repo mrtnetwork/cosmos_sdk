@@ -12,6 +12,14 @@ class Tip extends CosmosMessage {
 
   /// tipper is the address of the account paying for the tip
   final CosmosBaseAddress? tipper;
+  factory Tip.fromRpc(Map<String, dynamic> json) {
+    return Tip(
+        amount:
+            (json["amount"] as List?)?.map((e) => Coin.fromRpc(e)).toList() ??
+                [],
+        tipper:
+            json["tipper"] == null ? null : CosmosBaseAddress(json["tipper"]));
+  }
 
   const Tip({required this.amount, required this.tipper});
   factory Tip.deserialize(List<int> bytes) {
@@ -40,5 +48,5 @@ class Tip extends CosmosMessage {
   @override
   List get values => [amount, tipper?.address];
   @override
-  String get typeUrl => TxV1beta1Types.tip.typeUrl;
+  TypeUrl get typeUrl => TxV1beta1Types.tip;
 }

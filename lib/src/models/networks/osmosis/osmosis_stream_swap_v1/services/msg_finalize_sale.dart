@@ -26,7 +26,7 @@ class OsmosisStreamSwapMsgFinalizeSale extends CosmosMessage
   }
 
   @override
-  String get typeUrl => OsmosisStreamSwapV1Types.msgFinalizeSale.typeUrl;
+  TypeUrl get typeUrl => OsmosisStreamSwapV1Types.msgFinalizeSale;
 
   @override
   List get values => [sender, saleId];
@@ -37,7 +37,7 @@ class OsmosisStreamSwapMsgFinalizeSale extends CosmosMessage
   }
 
   @override
-  String get service => OsmosisStreamSwapV1Types.finalizeSale.typeUrl;
+  TypeUrl get service => OsmosisStreamSwapV1Types.finalizeSale;
 
   @override
   List<String?> get signers => [sender];

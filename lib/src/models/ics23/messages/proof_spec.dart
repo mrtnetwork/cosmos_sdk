@@ -45,7 +45,7 @@ class Ics23ProofSpec extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => Ics23Types.proofSpec.typeUrl;
+  TypeUrl get typeUrl => Ics23Types.proofSpec;
 
   @override
   List get values => [leafSpec, innerSpec, maxDepth, minDepth];

@@ -4,9 +4,7 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'incentive_records_response.dart';
 
 class OsmosisConcentratedLiquidityIncentiveRecordsRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisConcentratedLiquidityIncentiveRecordsResponse>,
-        RPCMessage<OsmosisConcentratedLiquidityIncentiveRecordsResponse> {
+    with QueryMessage<OsmosisConcentratedLiquidityIncentiveRecordsResponse> {
   final BigInt? poolId;
   final PageRequest? pagination;
 
@@ -29,22 +27,13 @@ class OsmosisConcentratedLiquidityIncentiveRecordsRequest extends CosmosMessage
   Map<String, String?> get queryParameters => {"pool_id": poolId?.toString()};
 
   @override
-  String get queryPath =>
-      OsmosisConcentratedLiquidityV1beta1Types.incentiveRecords.typeUrl;
-
-  @override
-  String get rpcPath =>
-      OsmosisConcentratedLiquidityV1beta1Types.incentiveRecords
-          .rpcUrl(pathParameters: []);
-
-  @override
   Map<String, dynamic> toJson() {
     return {"pool_id": poolId?.toString(), "pagination": pagination?.toJson()};
   }
 
   @override
-  String get typeUrl =>
-      OsmosisConcentratedLiquidityV1beta1Types.incentiveRecordsRequest.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisConcentratedLiquidityV1beta1Types.incentiveRecordsRequest;
 
   @override
   List get values => [poolId, pagination];

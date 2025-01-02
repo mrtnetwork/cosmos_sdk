@@ -51,7 +51,7 @@ class CommitSig extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => TendermintTypes.commitSig.typeUrl;
+  TypeUrl get typeUrl => TendermintTypes.commitSig;
 
   @override
   List get values => [blockIDFlag, validatorAddress, timestamp, signature];

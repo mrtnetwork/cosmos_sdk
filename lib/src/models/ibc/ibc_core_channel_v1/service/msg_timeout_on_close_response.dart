@@ -22,7 +22,7 @@ class MsgTimeoutOnCloseResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.msgTimeoutOnCloseResponse.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.msgTimeoutOnCloseResponse;
 
   @override
   List get values => [result?.value];

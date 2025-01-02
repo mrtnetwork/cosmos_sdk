@@ -33,7 +33,7 @@ class Minter extends CosmosMessage {
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get typeUrl => MintV1beta1Types.minter.typeUrl;
+  TypeUrl get typeUrl => MintV1beta1Types.minter;
 
   @override
   List get values => [inflation, annualProvisions];

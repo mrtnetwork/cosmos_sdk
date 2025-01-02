@@ -38,8 +38,8 @@ class OsmosisSuperfluidSetSuperfluidAssetsProposal extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisSuperfluidV1beta1Types.setSuperfluidAssetsProposal.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisSuperfluidV1beta1Types.setSuperfluidAssetsProposal;
 
   @override
   List get values => [title, description, assets];

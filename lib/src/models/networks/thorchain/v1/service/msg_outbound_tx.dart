@@ -29,7 +29,7 @@ class ThorchainMsgOutboundTx extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.msgOutboundTx.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.msgOutboundTx;
 
   @override
   List get values => [tx, inTxId, signer];

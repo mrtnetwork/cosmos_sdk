@@ -21,7 +21,7 @@ class MsgRegisterInterchainAccountResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.msgRegisterInterchainAccountResponse.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.msgRegisterInterchainAccountResponse;
 
   @override
   List get values => [channelId, portId];

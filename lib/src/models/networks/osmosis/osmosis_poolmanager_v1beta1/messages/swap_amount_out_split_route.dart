@@ -32,8 +32,7 @@ class OsmosisPoolManagerSwapAmountOutSplitRoute extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisPoolManagerV1beta1Types.swapAmountOutSplitRoute.typeUrl;
+  TypeUrl get typeUrl => OsmosisPoolManagerV1beta1Types.swapAmountOutSplitRoute;
 
   @override
   List get values => [pools, tokenOutAmount];

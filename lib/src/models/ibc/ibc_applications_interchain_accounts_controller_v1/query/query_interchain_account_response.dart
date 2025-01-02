@@ -9,6 +9,9 @@ class QueryInterchainAccountResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryInterchainAccountResponse(address: decode.getField(1));
   }
+  factory QueryInterchainAccountResponse.fromRpc(Map<String, dynamic> json) {
+    return QueryInterchainAccountResponse(address: json["address"]);
+  }
 
   @override
   List<int> get fieldIds => [1];
@@ -19,7 +22,7 @@ class QueryInterchainAccountResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.queryInterchainAccountResponse.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryInterchainAccountResponse;
 
   @override
   List get values => [address];

@@ -66,7 +66,7 @@ class ThorchainMsgTssPool extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.msgTssPool.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.msgTssPool;
 
   @override
   List get values => [

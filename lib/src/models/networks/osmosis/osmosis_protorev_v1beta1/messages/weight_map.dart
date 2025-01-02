@@ -33,7 +33,7 @@ class OsmosisProtorevWeightMap extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisProtorevV1beta1Types.weightMap.typeUrl;
+  TypeUrl get typeUrl => OsmosisProtorevV1beta1Types.weightMap;
 
   @override
   List get values => [weight, contractAddress];

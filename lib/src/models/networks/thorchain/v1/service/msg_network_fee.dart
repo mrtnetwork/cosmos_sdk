@@ -40,7 +40,7 @@ class ThorchainMsgNetworkFee extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.msgNetworkFee.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.msgNetworkFee;
 
   @override
   List get values =>

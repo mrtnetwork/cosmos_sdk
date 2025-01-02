@@ -41,6 +41,15 @@ class PageRequest extends CosmosMessage {
         reverse: decode.getResult(5)?.cast<bool>());
   }
 
+  factory PageRequest.fromRpc(Map<String, dynamic> json) {
+    return PageRequest(
+        key: BytesUtils.tryFromHexString(json["key"]),
+        offset: BigintUtils.tryParse(json["offset"]),
+        limit: BigintUtils.tryParse(json["limit"]),
+        countTotal: json["count_total"],
+        reverse: json["reverse"]);
+  }
+
   @override
   List<int> get fieldIds => [1, 2, 3, 4, 5];
 
@@ -55,8 +64,15 @@ class PageRequest extends CosmosMessage {
     };
   }
 
+  Map<String, String?> get queryParameters => {
+        "pagination.key": BytesUtils.tryToHexString(key),
+        "pagination.offset": offset?.toString(),
+        "pagination.limit": limit?.toString(),
+        "pagination.count_total": countTotal?.toString(),
+        "pagination.reverse": reverse?.toString()
+      };
   @override
-  String get typeUrl => BaseQueryV1beta1Types.pageRequest.typeUrl;
+  TypeUrl get typeUrl => BaseQueryV1beta1Types.pageRequest;
 
   @override
   List get values => [key, offset, limit, countTotal, reverse];

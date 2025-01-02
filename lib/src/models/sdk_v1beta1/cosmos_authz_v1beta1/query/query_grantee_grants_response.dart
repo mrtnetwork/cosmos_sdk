@@ -26,6 +26,17 @@ class AuthzQueryGranteeGrantsResponse extends CosmosMessage {
             .getResult(2)
             ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
   }
+  factory AuthzQueryGranteeGrantsResponse.fromRPC(Map<String, dynamic> json) {
+    return AuthzQueryGranteeGrantsResponse(
+      grants: (json["grants"] as List?)
+              ?.map((e) => AuthzGrantAuthorization.fromRpc(e))
+              .toList() ??
+          [],
+      pagination: json["pagination"] == null
+          ? null
+          : PageResponse.fromRpc(json["pagination"]),
+    );
+  }
 
   @override
   List<int> get fieldIds => [1, 2];
@@ -39,8 +50,7 @@ class AuthzQueryGranteeGrantsResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      AuthzV1beta1Types.authzQueryGranteeGrantsResponse.typeUrl;
+  TypeUrl get typeUrl => AuthzV1beta1Types.authzQueryGranteeGrantsResponse;
 
   @override
   List get values => [grants, pagination];

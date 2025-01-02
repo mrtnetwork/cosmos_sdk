@@ -64,6 +64,6 @@ class OsmosisConcentratedLiquidityIncentiveRecord extends CosmosMessage {
   List get values => [incentiveId, poolId, incentiveRecordBody, minUptime];
 
   @override
-  String get typeUrl =>
-      OsmosisConcentratedLiquidityV1beta1Types.incentiveRecord.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisConcentratedLiquidityV1beta1Types.incentiveRecord;
 }

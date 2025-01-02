@@ -1,5 +1,5 @@
 import 'package:cosmos_sdk/src/protobuf/types/cosmos_enum.dart';
-import 'package:blockchain_utils/exception/exception.dart';
+import 'package:cosmos_sdk/src/exception/exception.dart';
 
 /// SignMode represents a signing mode with its own security guarantees.
 
@@ -71,9 +71,18 @@ class SignMode implements CosmosEnum {
   static SignMode fromValue(int? value) {
     return values.firstWhere(
       (element) => element.value == value,
-      orElse: () => throw MessageException(
+      orElse: () => throw DartCosmosSdkPluginException(
           "No matching element found for the given value.",
           details: {"value": value}),
+    );
+  }
+
+  static SignMode fromName(String? name) {
+    return values.firstWhere(
+      (element) => element.name == name,
+      orElse: () => throw DartCosmosSdkPluginException(
+          "No matching element found for the given value.",
+          details: {"name": name}),
     );
   }
 }

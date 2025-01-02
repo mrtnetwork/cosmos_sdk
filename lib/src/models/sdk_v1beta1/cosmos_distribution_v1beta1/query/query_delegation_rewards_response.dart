@@ -16,6 +16,12 @@ class DistributionQueryDelegationRewardsResponse extends CosmosMessage {
     return DistributionQueryDelegationRewardsResponse(
         decode.getFields(1).map((e) => DecCoin.deserialize(e)).toList());
   }
+  factory DistributionQueryDelegationRewardsResponse.fromRpc(
+      Map<String, dynamic> json) {
+    return DistributionQueryDelegationRewardsResponse(
+        (json["rewards"] as List?)?.map((e) => DecCoin.fromRpc(e)).toList() ??
+            []);
+  }
 
   @override
   List<int> get fieldIds => [1];
@@ -26,8 +32,8 @@ class DistributionQueryDelegationRewardsResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => DistributionV1beta1Types
-      .distributionQueryDelegationRewardsResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      DistributionV1beta1Types.distributionQueryDelegationRewardsResponse;
 
   @override
   List get values => [rewards];

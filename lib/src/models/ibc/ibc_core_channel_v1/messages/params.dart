@@ -6,6 +6,9 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class IbcChannelParams extends CosmosMessage {
   /// the relative timeout after which channel upgrades will time out.
   final IbcChannelTimeout upgradeTimeout;
+  factory IbcChannelParams.fromRpc(Map<String, dynamic> json) {
+    return IbcChannelParams(IbcChannelTimeout.fromRpc(json["upgrade_timeout"]));
+  }
   const IbcChannelParams(this.upgradeTimeout);
   factory IbcChannelParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -21,7 +24,7 @@ class IbcChannelParams extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.ibcChannelParams.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.ibcChannelParams;
 
   @override
   List get values => [upgradeTimeout];

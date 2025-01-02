@@ -23,7 +23,7 @@ class DominoOp extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => TendermintTypes.dominoOp.typeUrl;
+  TypeUrl get typeUrl => TendermintTypes.dominoOp;
 
   @override
   List get values => [key, input, output];

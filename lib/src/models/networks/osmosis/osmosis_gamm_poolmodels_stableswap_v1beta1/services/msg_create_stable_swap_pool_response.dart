@@ -23,8 +23,8 @@ class OsmosisGammPoolmodelsStableSwapMsgCreateStableswapPoolResponse
   }
 
   @override
-  String get typeUrl => OsmosisGammPoolmodelsStableswaPV1beta1Types
-      .msgCreateStableswapPoolResponse.typeUrl;
+  TypeUrl get typeUrl => OsmosisGammPoolmodelsStableswaPV1beta1Types
+      .msgCreateStableswapPoolResponse;
 
   @override
   List get values => [poolId];

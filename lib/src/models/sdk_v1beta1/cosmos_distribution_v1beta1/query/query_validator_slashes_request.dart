@@ -9,7 +9,7 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class DistributionQueryValidatorSlashesRequest extends CosmosMessage
     with QueryMessage<DistributionQueryValidatorSlashesResponse> {
   /// validator_address defines the validator address to query for.
-  final CosmosBaseAddress? validatorAddress;
+  final CosmosBaseAddress validatorAddress;
 
   /// starting_height defines the optional starting height to query the slashes.
   final BigInt? startingHeight;
@@ -20,7 +20,7 @@ class DistributionQueryValidatorSlashesRequest extends CosmosMessage
   /// pagination defines an optional pagination for the request.
   final PageRequest? pagination;
   const DistributionQueryValidatorSlashesRequest(
-      {this.validatorAddress,
+      {required this.validatorAddress,
       this.startingHeight,
       this.endingHeight,
       this.pagination});
@@ -28,9 +28,7 @@ class DistributionQueryValidatorSlashesRequest extends CosmosMessage
       List<int> bytes) {
     final deocde = CosmosProtocolBuffer.decode(bytes);
     return DistributionQueryValidatorSlashesRequest(
-        validatorAddress: deocde
-            .getResult(1)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+        validatorAddress: CosmosBaseAddress(deocde.getField(1)),
         startingHeight: deocde.getField(2),
         endingHeight: deocde.getField(3),
         pagination: deocde
@@ -42,13 +40,9 @@ class DistributionQueryValidatorSlashesRequest extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3, 4];
 
   @override
-  String get queryPath =>
-      DistributionV1beta1Types.distributionValidatorSlashes.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {
-      "validator_address": validatorAddress?.address,
+      "validator_address": validatorAddress.address,
       "starting_height": startingHeight?.toString(),
       "ending_height": endingHeight?.toString(),
       "pagination": pagination?.toJson()
@@ -56,15 +50,31 @@ class DistributionQueryValidatorSlashesRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      DistributionV1beta1Types.distributionQueryValidatorSlashesRequest.typeUrl;
+  Map<String, String?> get queryParameters => {
+        "starting_height": startingHeight?.toString(),
+        "ending_height": endingHeight?.toString(),
+        ...pagination?.queryParameters ?? {}
+      };
+
+  @override
+  TypeUrl get typeUrl =>
+      DistributionV1beta1Types.distributionQueryValidatorSlashesRequest;
 
   @override
   List get values =>
-      [validatorAddress?.address, startingHeight, endingHeight, pagination];
+      [validatorAddress.address, startingHeight, endingHeight, pagination];
 
   @override
   DistributionQueryValidatorSlashesResponse onResponse(List<int> bytes) {
     return DistributionQueryValidatorSlashesResponse.deserialize(bytes);
   }
+
+  @override
+  DistributionQueryValidatorSlashesResponse onJsonResponse(
+      Map<String, dynamic> json) {
+    return DistributionQueryValidatorSlashesResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters => [validatorAddress.address];
 }

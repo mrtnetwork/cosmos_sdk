@@ -3,6 +3,7 @@ import 'package:cosmos_sdk/src/models/ibc/ibc_core_client_v1/messages/height.dar
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_connection_v1/messages/connection_end.dart';
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/utils.dart';
 
 /// QueryConnectionResponse is the response type for the Query/Connection RPC method. Besides the connection end,
 /// it includes a proof and the height from which the proof was retrieved.
@@ -15,6 +16,17 @@ class IbcConnectionQueryConnectionResponse extends CosmosMessage {
 
   /// height at which the proof was retrieved
   final IbcClientHeight proofHeight;
+
+  factory IbcConnectionQueryConnectionResponse.fromRpc(
+      Map<String, dynamic> json) {
+    return IbcConnectionQueryConnectionResponse(
+        proofHeight: IbcClientHeight.fromRpc(json["proof_height"]),
+        connection: json["connection"] == null
+            ? null
+            : IbcConnectionConnectionEnd.fromRpc(json["connection"]),
+        proof: CosmosUtils.tryToBytes(json["proof"]));
+  }
+
   IbcConnectionQueryConnectionResponse(
       {this.connection, List<int>? proof, required this.proofHeight})
       : proof = BytesUtils.tryToBytes(proof);
@@ -43,7 +55,7 @@ class IbcConnectionQueryConnectionResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.ibcConnectionQueryConnectionResponse.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.ibcConnectionQueryConnectionResponse;
 
   @override
   List get values => [connection, proof, proofHeight];

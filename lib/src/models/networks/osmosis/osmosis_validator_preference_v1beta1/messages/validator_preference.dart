@@ -35,8 +35,8 @@ class OsmosisValidatorPreferenceValidatorPreference extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisValidatorPreferenceV1beta1Types.validatorPreference.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisValidatorPreferenceV1beta1Types.validatorPreference;
 
   @override
   List get values => [valOperAddress, weight];

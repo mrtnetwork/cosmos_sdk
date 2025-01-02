@@ -48,7 +48,7 @@ class OsmosisProtorevRoute extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisProtorevV1beta1Types.route.typeUrl;
+  TypeUrl get typeUrl => OsmosisProtorevV1beta1Types.route;
 
   @override
   List get values => [trades, stepSize];

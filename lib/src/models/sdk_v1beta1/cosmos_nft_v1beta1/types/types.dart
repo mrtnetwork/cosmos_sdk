@@ -1,6 +1,7 @@
-class NFTV1beta1Types {
-  final String typeUrl;
-  const NFTV1beta1Types._(this.typeUrl);
+import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
+
+class NFTV1beta1Types extends TypeUrl {
+  const NFTV1beta1Types._(super.typeUrl, {super.query, super.rpc});
   static const NFTV1beta1Types msgNFTSend =
       NFTV1beta1Types._("/cosmos.nft.v1beta1.MsgSend");
   static const NFTV1beta1Types msgNFTSendResponse =
@@ -19,79 +20,80 @@ class NFTV1beta1Types {
       NFTV1beta1Types._("/cosmos.nft.v1beta1.EventSend");
   static const NFTV1beta1Types nFTGenesisState =
       NFTV1beta1Types._("/cosmos.nft.v1beta1.GenesisState");
-  static const NFTV1beta1Types queryNFTBalanceRequest =
-      NFTV1beta1Types._("/cosmos.nft.v1beta1.QueryBalanceRequest");
+  static const NFTV1beta1Types queryNFTBalanceRequest = NFTV1beta1Types._(
+      "/cosmos.nft.v1beta1.QueryBalanceRequest",
+      query: "/cosmos.nft.v1beta1.Query/Balance",
+      rpc: "/cosmos/nft/v1beta1/balance/:owner/:class_id");
   static const NFTV1beta1Types queryNFTBalanceResponse =
       NFTV1beta1Types._("/cosmos.nft.v1beta1.QueryBalanceResponse");
   static const NFTV1beta1Types queryNFTBalanceByQueryStringRequest =
-      NFTV1beta1Types._("/cosmos.nft.v1beta1.QueryBalanceByQueryStringRequest");
+      NFTV1beta1Types._("/cosmos.nft.v1beta1.QueryBalanceByQueryStringRequest",
+          query: "/cosmos.nft.v1beta1.Query/BalanceByQueryString",
+          rpc: "/cosmos/nft/v1beta1/balance");
   static const NFTV1beta1Types queryNFTBalanceByQueryStringResponse =
       NFTV1beta1Types._(
           "/cosmos.nft.v1beta1.QueryBalanceByQueryStringResponse");
-  static const NFTV1beta1Types queryNFTOwnerRequest =
-      NFTV1beta1Types._("/cosmos.nft.v1beta1.QueryOwnerRequest");
+  static const NFTV1beta1Types queryNFTOwnerRequest = NFTV1beta1Types._(
+      "/cosmos.nft.v1beta1.QueryOwnerRequest",
+      query: "/cosmos.nft.v1beta1.Query/Owner",
+      rpc: "/cosmos/nft/v1beta1/owner/:class_id/:id");
   static const NFTV1beta1Types queryNFTOwnerResponse =
       NFTV1beta1Types._("/cosmos.nft.v1beta1.QueryOwnerResponse");
   static const NFTV1beta1Types queryNFTOwnerByQueryStringRequest =
-      NFTV1beta1Types._("/cosmos.nft.v1beta1.QueryOwnerByQueryStringRequest");
+      NFTV1beta1Types._("/cosmos.nft.v1beta1.QueryOwnerByQueryStringRequest",
+          query: "/cosmos.nft.v1beta1.Query/OwnerByQueryString",
+          rpc: "/cosmos/nft/v1beta1/owner");
   static const NFTV1beta1Types queryNFTOwnerByQueryStringResponse =
       NFTV1beta1Types._("/cosmos.nft.v1beta1.QueryOwnerByQueryStringResponse");
-  static const NFTV1beta1Types queryNFTSupplyRequest =
-      NFTV1beta1Types._("/cosmos.nft.v1beta1.QuerySupplyRequest");
+  static const NFTV1beta1Types queryNFTSupplyRequest = NFTV1beta1Types._(
+      "/cosmos.nft.v1beta1.QuerySupplyRequest",
+      query: "/cosmos.nft.v1beta1.Query/Supply",
+      rpc: "/cosmos/nft/v1beta1/supply/:class_id");
   static const NFTV1beta1Types queryNFTSupplyResponse =
       NFTV1beta1Types._("/cosmos.nft.v1beta1.QuerySupplyResponse");
   static const NFTV1beta1Types queryNFTSupplyByQueryStringRequest =
-      NFTV1beta1Types._("/cosmos.nft.v1beta1.QuerySupplyByQueryStringRequest");
+      NFTV1beta1Types._("/cosmos.nft.v1beta1.QuerySupplyByQueryStringRequest",
+          query: "/cosmos.nft.v1beta1.Query/SupplyByQueryString",
+          rpc: "/cosmos/nft/v1beta1/supply");
   static const NFTV1beta1Types queryNFTSupplyByQueryStringResponse =
       NFTV1beta1Types._("/cosmos.nft.v1beta1.QuerySupplyByQueryStringResponse");
-  static const NFTV1beta1Types queryNFTsRequest =
-      NFTV1beta1Types._("/cosmos.nft.v1beta1.QueryNFTsRequest");
+  static const NFTV1beta1Types queryNFTsRequest = NFTV1beta1Types._(
+      "/cosmos.nft.v1beta1.QueryNFTsRequest",
+      query: "/cosmos.nft.v1beta1.Query/NFTs",
+      rpc: "/cosmos/nft/v1beta1/nfts");
   static const NFTV1beta1Types queryNFTsResponse =
       NFTV1beta1Types._("/cosmos.nft.v1beta1.QueryNFTsResponse");
-  static const NFTV1beta1Types queryNFTRequest =
-      NFTV1beta1Types._("/cosmos.nft.v1beta1.QueryNFTRequest");
+  static const NFTV1beta1Types queryNFTRequest = NFTV1beta1Types._(
+      "/cosmos.nft.v1beta1.QueryNFTRequest",
+      query: "/cosmos.nft.v1beta1.Query/NFT",
+      rpc: "/cosmos/nft/v1beta1/nfts/:class_id/:id");
   static const NFTV1beta1Types queryNFTResponse =
       NFTV1beta1Types._("/cosmos.nft.v1beta1.QueryNFTResponse");
-  static const NFTV1beta1Types queryNFTByQueryStringRequest =
-      NFTV1beta1Types._("/cosmos.nft.v1beta1.QueryNFTByQueryStringRequest");
+  static const NFTV1beta1Types queryNFTByQueryStringRequest = NFTV1beta1Types._(
+      "/cosmos.nft.v1beta1.QueryNFTByQueryStringRequest",
+      query: "/cosmos.nft.v1beta1.Query/NFTByQueryString",
+      rpc: "/cosmos/nft/v1beta1/nft");
   static const NFTV1beta1Types queryNFTByQueryStringResponse =
       NFTV1beta1Types._("/cosmos.nft.v1beta1.QueryNFTByQueryStringResponse");
-  static const NFTV1beta1Types queryNFTClassRequest =
-      NFTV1beta1Types._("/cosmos.nft.v1beta1.QueryClassRequest");
+  static const NFTV1beta1Types queryNFTClassRequest = NFTV1beta1Types._(
+      "/cosmos.nft.v1beta1.QueryClassRequest",
+      query: "/cosmos.nft.v1beta1.Query/Class",
+      rpc: "/cosmos/nft/v1beta1/classes/:class_id");
   static const NFTV1beta1Types queryNFTClassResponse =
       NFTV1beta1Types._("/cosmos.nft.v1beta1.QueryClassResponse");
   static const NFTV1beta1Types queryNFTClassByQueryStringRequest =
-      NFTV1beta1Types._("/cosmos.nft.v1beta1.QueryClassByQueryStringRequest");
+      NFTV1beta1Types._("/cosmos.nft.v1beta1.QueryClassByQueryStringRequest",
+          query: "/cosmos.nft.v1beta1.Query/ClassByQueryString",
+          rpc: "/cosmos/nft/v1beta1/class");
   static const NFTV1beta1Types queryNFTClassByQueryStringResponse =
       NFTV1beta1Types._("/cosmos.nft.v1beta1.QueryClassByQueryStringResponse");
-  static const NFTV1beta1Types queryNFTClassesRequest =
-      NFTV1beta1Types._("/cosmos.nft.v1beta1.QueryClassesRequest");
+  static const NFTV1beta1Types queryNFTClassesRequest = NFTV1beta1Types._(
+      "/cosmos.nft.v1beta1.QueryClassesRequest",
+      rpc: "/cosmos/nft/v1beta1/classes",
+      query: "/cosmos.nft.v1beta1.Query/Classes");
   static const NFTV1beta1Types queryNFTClassesResponse =
       NFTV1beta1Types._("/cosmos.nft.v1beta1.QueryClassesResponse");
 
-  /// queries
-  static const NFTV1beta1Types nftBalance =
-      NFTV1beta1Types._("/cosmos.nft.v1beta1.Query/Balance");
-  static const NFTV1beta1Types nftBalanceByQueryString =
-      NFTV1beta1Types._("/cosmos.nft.v1beta1.Query/BalanceByQueryString");
-  static const NFTV1beta1Types nftOwner =
-      NFTV1beta1Types._("/cosmos.nft.v1beta1.Query/Owner");
-  static const NFTV1beta1Types nftOwnerByQueryString =
-      NFTV1beta1Types._("/cosmos.nft.v1beta1.Query/OwnerByQueryString");
-  static const NFTV1beta1Types nftSupply =
-      NFTV1beta1Types._("/cosmos.nft.v1beta1.Query/Supply");
-  static const NFTV1beta1Types nftSupplyByQueryString =
-      NFTV1beta1Types._("/cosmos.nft.v1beta1.Query/SupplyByQueryString");
-  static const NFTV1beta1Types nfts =
-      NFTV1beta1Types._("/cosmos.nft.v1beta1.Query/NFTs");
-  static const NFTV1beta1Types nft =
-      NFTV1beta1Types._("/cosmos.nft.v1beta1.Query/NFT");
-  static const NFTV1beta1Types nftByQueryString =
-      NFTV1beta1Types._("/cosmos.nft.v1beta1.Query/NFTByQueryString");
-  static const NFTV1beta1Types nftClass =
-      NFTV1beta1Types._("/cosmos.nft.v1beta1.Query/Class");
-  static const NFTV1beta1Types nftClassByQueryString =
-      NFTV1beta1Types._("/cosmos.nft.v1beta1.Query/ClassByQueryString");
   static const NFTV1beta1Types nftClasses =
       NFTV1beta1Types._("/cosmos.nft.v1beta1.Query/Classes");
 

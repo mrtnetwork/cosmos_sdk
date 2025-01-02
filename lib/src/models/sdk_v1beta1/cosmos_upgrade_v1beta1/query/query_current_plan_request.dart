@@ -11,15 +11,12 @@ class QueryCurrentPlanRequest extends CosmosMessage
   List<int> get fieldIds => [];
 
   @override
-  String get queryPath => UpgradeV1beta1Types.currentPlan.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {};
   }
 
   @override
-  String get typeUrl => UpgradeV1beta1Types.queryCurrentPlanRequest.typeUrl;
+  TypeUrl get typeUrl => UpgradeV1beta1Types.queryCurrentPlanRequest;
 
   @override
   List get values => [];
@@ -27,5 +24,10 @@ class QueryCurrentPlanRequest extends CosmosMessage
   @override
   QueryCurrentPlanResponse onResponse(List<int> bytes) {
     return QueryCurrentPlanResponse.deserialize(bytes);
+  }
+
+  @override
+  QueryCurrentPlanResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryCurrentPlanResponse.fromRpc(json);
   }
 }

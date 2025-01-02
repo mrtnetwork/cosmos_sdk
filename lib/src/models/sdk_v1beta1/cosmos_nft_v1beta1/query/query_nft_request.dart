@@ -6,13 +6,13 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class QueryNFTRequest extends CosmosMessage
     with QueryMessage<QueryNFTResponse> {
   /// class_id associated with the NFT.
-  final String? classId;
+  final String classId;
 
   /// id is a unique identifier of the NFT.
-  final String? id;
+  final String id;
 
   /// Constructs a new instance of [QueryNFTRequest].
-  const QueryNFTRequest({this.classId, this.id});
+  const QueryNFTRequest({required this.classId, required this.id});
   factory QueryNFTRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryNFTRequest(classId: decode.getField(1), id: decode.getField(2));
@@ -30,10 +30,7 @@ class QueryNFTRequest extends CosmosMessage
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get queryPath => NFTV1beta1Types.nft.typeUrl;
-
-  @override
-  String get typeUrl => NFTV1beta1Types.queryNFTRequest.typeUrl;
+  TypeUrl get typeUrl => NFTV1beta1Types.queryNFTRequest;
 
   @override
   List get values => [classId, id];
@@ -42,4 +39,12 @@ class QueryNFTRequest extends CosmosMessage
   QueryNFTResponse onResponse(List<int> bytes) {
     return QueryNFTResponse.deserialize(bytes);
   }
+
+  @override
+  QueryNFTResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryNFTResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters => [classId, id];
 }

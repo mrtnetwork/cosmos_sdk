@@ -37,7 +37,7 @@ class SignatureDescriptorDataSingle extends BaseSignatureDescriptorData {
   }
 
   @override
-  String get typeUrl => TxSigningV1beta1Types.single.typeUrl;
+  TypeUrl get typeUrl => TxSigningV1beta1Types.single;
 
   @override
   List get values => [mode?.value, signature];

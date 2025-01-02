@@ -30,8 +30,8 @@ class OsmosisPoolManagerTakerFeeDistributionPercentage extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisPoolManagerV1beta1Types.takerFeeDistributionPercentage.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisPoolManagerV1beta1Types.takerFeeDistributionPercentage;
 
   @override
   List get values => [stakingRewards, communityPool];

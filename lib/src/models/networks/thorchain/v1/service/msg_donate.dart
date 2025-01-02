@@ -42,7 +42,7 @@ class ThorchainMsgDonate extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.msgDonate.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.msgDonate;
 
   @override
   List get values =>

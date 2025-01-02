@@ -37,6 +37,6 @@ class OsmosisConcentratedLiquidityPoolIdToTickSpacingRecord
   List get values => [poolId, newTickspacing];
 
   @override
-  String get typeUrl => OsmosisConcentratedLiquidityV1beta1Types
-      .poolIdToTickSpacingRecord.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisConcentratedLiquidityV1beta1Types.poolIdToTickSpacingRecord;
 }

@@ -34,7 +34,7 @@ class ThorchainMsgWithdrawLiquidity extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.mxgWithdrawLiquidity.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.mxgWithdrawLiquidity;
 
   @override
   List get values => [

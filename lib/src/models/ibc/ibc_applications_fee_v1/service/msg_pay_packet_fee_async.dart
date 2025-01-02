@@ -27,7 +27,7 @@ class MsgPayPacketFeeAsync extends CosmosMessage
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get service => IbcTypes.payPacketFeeAsync.typeUrl;
+  TypeUrl get service => IbcTypes.payPacketFeeAsync;
 
   @override
   Map<String, dynamic> toJson() {
@@ -35,7 +35,7 @@ class MsgPayPacketFeeAsync extends CosmosMessage
   }
 
   @override
-  String get typeUrl => IbcTypes.msgPayPacketFeeAsync.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.msgPayPacketFeeAsync;
 
   @override
   List get values => [packetId, packetFee];
@@ -44,7 +44,6 @@ class MsgPayPacketFeeAsync extends CosmosMessage
 
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
-    return EmptyServiceRequestResponse(
-        IbcTypes.msgPayPacketFeeAsyncResponse.typeUrl);
+    return EmptyServiceRequestResponse(IbcTypes.msgPayPacketFeeAsyncResponse);
   }
 }

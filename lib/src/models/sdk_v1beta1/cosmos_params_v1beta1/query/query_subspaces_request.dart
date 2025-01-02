@@ -18,16 +18,18 @@ class ParamsQuerySubspacesRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl => ParamsV1beta1.paramsQuerySubspacesRequest.typeUrl;
+  TypeUrl get typeUrl => ParamsV1beta1.paramsQuerySubspacesRequest;
 
   @override
   List get values => [];
 
   @override
-  String get queryPath => ParamsV1beta1.paramsSubspaces.typeUrl;
-
-  @override
   ParamsQuerySubspacesResponse onResponse(List<int> bytes) {
     return ParamsQuerySubspacesResponse.deserialize(bytes);
+  }
+
+  @override
+  ParamsQuerySubspacesResponse onJsonResponse(Map<String, dynamic> json) {
+    return ParamsQuerySubspacesResponse.fromRpc(json);
   }
 }

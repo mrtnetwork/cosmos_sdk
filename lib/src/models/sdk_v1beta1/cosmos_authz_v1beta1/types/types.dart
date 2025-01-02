@@ -1,6 +1,7 @@
-class AuthzV1beta1Types {
-  final String typeUrl;
-  const AuthzV1beta1Types._(this.typeUrl);
+import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
+
+class AuthzV1beta1Types extends TypeUrl {
+  const AuthzV1beta1Types._(super.typeUrl, {super.query, super.rpc});
 
   /// messages
   static const AuthzV1beta1Types authzGrant =
@@ -26,16 +27,22 @@ class AuthzV1beta1Types {
   static const AuthzV1beta1Types authzMsgPruneExpiredGrantsResponse =
       AuthzV1beta1Types._(
           "/cosmos.authz.v1beta1.MsgPruneExpiredGrantsResponse");
-  static const AuthzV1beta1Types authzQueryGrantsRequest =
-      AuthzV1beta1Types._("/cosmos.authz.v1beta1.QueryGrantsRequest");
+  static const AuthzV1beta1Types authzQueryGrantsRequest = AuthzV1beta1Types._(
+      "/cosmos.authz.v1beta1.QueryGrantsRequest",
+      query: "/cosmos.authz.v1beta1.Query/Grants",
+      rpc: "/cosmos/authz/v1beta1/grants");
   static const AuthzV1beta1Types authzQueryGrantsResponse =
       AuthzV1beta1Types._("/cosmos.authz.v1beta1.QueryGrantsResponse");
   static const AuthzV1beta1Types authzQueryGranterGrantsRequest =
-      AuthzV1beta1Types._("/cosmos.authz.v1beta1.QueryGranterGrantsRequest");
+      AuthzV1beta1Types._("/cosmos.authz.v1beta1.QueryGranterGrantsRequest",
+          query: "/cosmos.authz.v1beta1.Query/GranterGrants",
+          rpc: "/cosmos/authz/v1beta1/grants/granter/:granter");
   static const AuthzV1beta1Types authzQueryGranterGrantsResponse =
       AuthzV1beta1Types._("/cosmos.authz.v1beta1.QueryGranterGrantsResponse");
   static const AuthzV1beta1Types authzQueryGranteeGrantsRequest =
-      AuthzV1beta1Types._("/cosmos.authz.v1beta1.QueryGranteeGrantsRequest");
+      AuthzV1beta1Types._("/cosmos.authz.v1beta1.QueryGranteeGrantsRequest",
+          query: "/cosmos.authz.v1beta1.Query/GranteeGrants",
+          rpc: "/cosmos/authz/v1beta1/grants/grantee/:grantee");
   static const AuthzV1beta1Types authzQueryGranteeGrantsResponse =
       AuthzV1beta1Types._("/cosmos.authz.v1beta1.QueryGranteeGrantsResponse");
   static const AuthzV1beta1Types authzGenericAuthorization =
@@ -48,14 +55,6 @@ class AuthzV1beta1Types {
       AuthzV1beta1Types._("/cosmos.authz.v1beta1.EventGrant");
   static const AuthzV1beta1Types authzEventPruneExpiredGrants =
       AuthzV1beta1Types._("/cosmos.authz.v1beta1.EventPruneExpiredGrants");
-
-  /// queries
-  static const AuthzV1beta1Types authzGrants =
-      AuthzV1beta1Types._("/cosmos.authz.v1beta1.Query/Grants");
-  static const AuthzV1beta1Types authzGranterGrants =
-      AuthzV1beta1Types._("/cosmos.authz.v1beta1.Query/GranterGrants");
-  static const AuthzV1beta1Types authzGranteeGrants =
-      AuthzV1beta1Types._("/cosmos.authz.v1beta1.Query/GranteeGrants");
 
   /// service
   static const AuthzV1beta1Types authzQueryGrant =

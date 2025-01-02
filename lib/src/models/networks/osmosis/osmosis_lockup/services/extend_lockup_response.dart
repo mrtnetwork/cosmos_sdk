@@ -13,7 +13,7 @@ class OsmosisLockupMsgExtendLockupResponse extends CosmosMessage {
   List<int> get fieldIds => [1];
 
   @override
-  String get typeUrl => OsmosisLockupTypes.msgExtendLockupResponse.typeUrl;
+  TypeUrl get typeUrl => OsmosisLockupTypes.msgExtendLockupResponse;
 
   @override
   List get values => [success];

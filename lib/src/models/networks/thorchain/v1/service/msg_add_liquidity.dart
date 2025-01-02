@@ -62,7 +62,7 @@ class ThorchainMsgAddLiquidity extends CosmosMessage
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.msgAddLiquidity.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.msgAddLiquidity;
 
   @override
   List get values => [
@@ -83,7 +83,7 @@ class ThorchainMsgAddLiquidity extends CosmosMessage
   }
 
   @override
-  String get service => typeUrl;
+  TypeUrl get service => typeUrl;
 
   @override
   List<String?> get signers => [signer?.address];

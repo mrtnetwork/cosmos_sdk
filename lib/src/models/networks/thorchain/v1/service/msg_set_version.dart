@@ -22,7 +22,7 @@ class ThorchainMsgSetVersion extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.msgSetVersion.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.msgSetVersion;
 
   @override
   List get values => [version, signer];

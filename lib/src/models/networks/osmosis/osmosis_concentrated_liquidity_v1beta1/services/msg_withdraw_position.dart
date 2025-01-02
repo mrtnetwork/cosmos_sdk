@@ -37,8 +37,8 @@ class OsmosisConcentratedLiquidityMsgWithdrawPosition extends CosmosMessage
   List get values => [positionId, sender, liquidityAmount];
 
   @override
-  String get typeUrl =>
-      OsmosisConcentratedLiquidityV1beta1Types.msgWithdrawPosition.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisConcentratedLiquidityV1beta1Types.msgWithdrawPosition;
 
   @override
   OsmosisConcentratedLiquidityMsgWithdrawPositionResponse onResponse(
@@ -48,8 +48,8 @@ class OsmosisConcentratedLiquidityMsgWithdrawPosition extends CosmosMessage
   }
 
   @override
-  String get service =>
-      OsmosisConcentratedLiquidityV1beta1Types.withdrawPosition.typeUrl;
+  TypeUrl get service =>
+      OsmosisConcentratedLiquidityV1beta1Types.withdrawPosition;
 
   @override
   List<String?> get signers => [sender];

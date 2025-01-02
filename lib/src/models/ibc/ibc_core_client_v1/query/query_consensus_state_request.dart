@@ -8,21 +8,21 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class IbcClientQueryConsensusStateRequest extends CosmosMessage
     with QueryMessage<IbcClientQueryConsensusStateResponse> {
   /// client identifier
-  final String? clientId;
+  final String clientId;
 
   /// consensus state revision number
-  final BigInt? revisionNumber;
+  final BigInt revisionNumber;
 
   /// consensus state revision height
-  final BigInt? revisionHeight;
+  final BigInt revisionHeight;
 
   /// latest_height overrides the height field and queries the latest stored
   /// ConsensusState
   final bool? latestHeight;
   const IbcClientQueryConsensusStateRequest(
-      {this.clientId,
-      this.revisionHeight,
-      this.revisionNumber,
+      {required this.clientId,
+      required this.revisionHeight,
+      required this.revisionNumber,
       this.latestHeight});
   factory IbcClientQueryConsensusStateRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -37,20 +37,17 @@ class IbcClientQueryConsensusStateRequest extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3, 4];
 
   @override
-  String get queryPath => IbcTypes.consensusState.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {
       "client_id": clientId,
-      "revision_number": revisionNumber?.toString(),
-      "revision_height": revisionHeight?.toString(),
+      "revision_number": revisionNumber.toString(),
+      "revision_height": revisionHeight.toString(),
       "latest_height": latestHeight
     };
   }
 
   @override
-  String get typeUrl => IbcTypes.queryConsensusStateRequest.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryConsensusStateRequest;
 
   @override
   List get values => [clientId, revisionNumber, revisionHeight, latestHeight];
@@ -59,4 +56,18 @@ class IbcClientQueryConsensusStateRequest extends CosmosMessage
   IbcClientQueryConsensusStateResponse onResponse(List<int> bytes) {
     return IbcClientQueryConsensusStateResponse.deserialize(bytes);
   }
+
+  @override
+  IbcClientQueryConsensusStateResponse onJsonResponse(
+      Map<String, dynamic> json) {
+    return IbcClientQueryConsensusStateResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters =>
+      [clientId, revisionNumber.toString(), revisionHeight.toString()];
+
+  @override
+  Map<String, String?> get queryParameters =>
+      {"latest_height": latestHeight?.toString()};
 }

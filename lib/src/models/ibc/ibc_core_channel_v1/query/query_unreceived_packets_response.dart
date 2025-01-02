@@ -11,6 +11,14 @@ class QueryUnreceivedPacketsResponse extends CosmosMessage {
 
   /// query block height
   final IbcClientHeight height;
+  factory QueryUnreceivedPacketsResponse.fromRpc(Map<String, dynamic> json) {
+    return QueryUnreceivedPacketsResponse(
+      sequences: (json["sequences"] as List?)
+          ?.map((e) => BigintUtils.parse(e))
+          .toList(),
+      height: IbcClientHeight.fromRpc(json["height"]),
+    );
+  }
   QueryUnreceivedPacketsResponse(
       {List<BigInt>? sequences, required this.height})
       : sequences = sequences?.emptyAsNull?.immutable;
@@ -37,7 +45,7 @@ class QueryUnreceivedPacketsResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.queryUnreceivedPacketsResponse.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryUnreceivedPacketsResponse;
 
   @override
   List get values => [sequences, height];

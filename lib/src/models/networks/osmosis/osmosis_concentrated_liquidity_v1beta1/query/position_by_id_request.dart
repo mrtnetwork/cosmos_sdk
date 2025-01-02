@@ -3,9 +3,7 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'position_by_id_response.dart';
 
 class OsmosisConcentratedLiquidityPositionByIdRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisConcentratedLiquidityPositionByIdResponse>,
-        RPCMessage<OsmosisConcentratedLiquidityPositionByIdResponse> {
+    with QueryMessage<OsmosisConcentratedLiquidityPositionByIdResponse> {
   final BigInt? positionId;
   OsmosisConcentratedLiquidityPositionByIdRequest({this.positionId});
   factory OsmosisConcentratedLiquidityPositionByIdRequest.deserialize(
@@ -19,15 +17,8 @@ class OsmosisConcentratedLiquidityPositionByIdRequest extends CosmosMessage
   List<int> get fieldIds => [1];
 
   @override
-  Map<String, String?> get queryParameters => {};
-
-  @override
-  String get queryPath =>
-      OsmosisConcentratedLiquidityV1beta1Types.positionById.typeUrl;
-
-  @override
-  String get rpcPath =>
-      OsmosisConcentratedLiquidityV1beta1Types.positionById.rpcUrl();
+  Map<String, String?> get queryParameters =>
+      {"position_id": positionId?.toString()};
 
   @override
   Map<String, dynamic> toJson() {
@@ -35,8 +26,8 @@ class OsmosisConcentratedLiquidityPositionByIdRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      OsmosisConcentratedLiquidityV1beta1Types.positionByIdRequest.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisConcentratedLiquidityV1beta1Types.positionByIdRequest;
 
   @override
   List get values => [positionId];

@@ -39,7 +39,7 @@ class Ics23InnerOp extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => Ics23Types.innerOp.typeUrl;
+  TypeUrl get typeUrl => Ics23Types.innerOp;
 
   @override
   List get values => [hash?.value, prefix, suffix];

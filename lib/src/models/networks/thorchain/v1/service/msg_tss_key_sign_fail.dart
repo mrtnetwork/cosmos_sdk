@@ -53,7 +53,7 @@ class ThorchainMsgTssKeysignFail extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.msgTssKeysignFail.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.msgTssKeysignFail;
 
   @override
   List get values => [id, height, blame, memo, coins, pubKey, signer];

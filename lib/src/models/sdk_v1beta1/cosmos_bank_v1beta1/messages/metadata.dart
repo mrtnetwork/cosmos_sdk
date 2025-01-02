@@ -65,6 +65,20 @@ class Metadata extends CosmosMessage {
   @override
   List<int> get fieldIds => [1, 2, 3, 4, 5, 6, 7, 8];
 
+  factory Metadata.fromRpc(Map<String, dynamic> json) {
+    return Metadata(
+        description: json["description"],
+        denomUnits: (json["denom_units"] as List)
+            .map((e) => DenomUnit.fromRpc(e))
+            .toList(),
+        base: json["base"],
+        display: json["display"],
+        name: json["name"],
+        symbol: json["symbol"],
+        uri: json["uri"],
+        uriHash: json["uri_hash"]);
+  }
+
   @override
   Map<String, dynamic> toJson() {
     return {
@@ -80,7 +94,7 @@ class Metadata extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => BankV1beta1Types.metadata.typeUrl;
+  TypeUrl get typeUrl => BankV1beta1Types.metadata;
 
   @override
   List get values =>

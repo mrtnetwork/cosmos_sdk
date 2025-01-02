@@ -35,7 +35,7 @@ class IbcTypeGenesisState extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.ibcTypeGenesisState.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.ibcTypeGenesisState;
 
   @override
   List get values => [clientGenesis, connectionGenesis, channelGenesis];

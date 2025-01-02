@@ -4,9 +4,7 @@ import 'query_get_all_protocol_revenue_response.dart';
 
 /// GetAllProtocolRevenue queries all of the protocol revenue that has been accumulated by any module.
 class OsmosisProtorevQueryGetAllProtocolRevenueRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisProtorevQueryGetAllProtocolRevenueResponse>,
-        RPCMessage<OsmosisProtorevQueryGetAllProtocolRevenueResponse> {
+    with QueryMessage<OsmosisProtorevQueryGetAllProtocolRevenueResponse> {
   const OsmosisProtorevQueryGetAllProtocolRevenueRequest();
   factory OsmosisProtorevQueryGetAllProtocolRevenueRequest.deserialize(
       List<int> bytes) {
@@ -37,17 +35,9 @@ class OsmosisProtorevQueryGetAllProtocolRevenueRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      OsmosisProtorevV1beta1Types.queryGetAllProtocolRevenueRequest.typeUrl;
-
-  @override
-  String get queryPath =>
-      OsmosisProtorevV1beta1Types.getAllProtocolRevenue.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisProtorevV1beta1Types.queryGetAllProtocolRevenueRequest;
 
   @override
   Map<String, String?> get queryParameters => {};
-
-  @override
-  String get rpcPath =>
-      OsmosisProtorevV1beta1Types.getAllProtocolRevenue.rpcUrl();
 }

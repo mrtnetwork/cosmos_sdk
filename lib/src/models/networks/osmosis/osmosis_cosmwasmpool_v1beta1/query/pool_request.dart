@@ -4,9 +4,7 @@ import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_query_v1beta1/cosm
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
 class OsmosisCosmWasmPoolPoolsRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisCosmWasmPoolPoolsResponse>,
-        RPCMessage<OsmosisCosmWasmPoolPoolsResponse> {
+    with QueryMessage<OsmosisCosmWasmPoolPoolsResponse> {
   /// pagination defines an optional pagination for the request
   final PageRequest? pagination;
 
@@ -28,7 +26,7 @@ class OsmosisCosmWasmPoolPoolsRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl => OsmosisCosmWasmPoolV1beta1Types.poolsRequest.typeUrl;
+  TypeUrl get typeUrl => OsmosisCosmWasmPoolV1beta1Types.poolsRequest;
 
   @override
   List get values => [pagination];
@@ -44,10 +42,5 @@ class OsmosisCosmWasmPoolPoolsRequest extends CosmosMessage
   }
 
   @override
-  Map<String, String?> get queryParameters => {};
-  @override
-  String get queryPath => OsmosisCosmWasmPoolV1beta1Types.pools.typeUrl;
-
-  @override
-  String get rpcPath => OsmosisCosmWasmPoolV1beta1Types.pools.rpcUrl();
+  Map<String, String?> get queryParameters => pagination?.queryParameters ?? {};
 }

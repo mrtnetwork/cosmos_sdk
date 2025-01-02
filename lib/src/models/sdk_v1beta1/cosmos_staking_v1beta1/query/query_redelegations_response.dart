@@ -11,6 +11,18 @@ class QueryRedelegationsResponse extends CosmosMessage {
   final PageResponse? pagination;
   const QueryRedelegationsResponse(
       {required this.redelegationResponses, this.pagination});
+
+  factory QueryRedelegationsResponse.fromRpc(Map<String, dynamic> json) {
+    return QueryRedelegationsResponse(
+      redelegationResponses: (json["redelegation_responses"] as List?)
+              ?.map((e) => RedelegationResponse.fromRpc(e))
+              .toList() ??
+          [],
+      pagination: json["pagination"] == null
+          ? null
+          : PageResponse.fromRpc(json["pagination"]),
+    );
+  }
   factory QueryRedelegationsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryRedelegationsResponse(
@@ -36,7 +48,7 @@ class QueryRedelegationsResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => StakingV1beta1Types.queryRedelegationsResponse.typeUrl;
+  TypeUrl get typeUrl => StakingV1beta1Types.queryRedelegationsResponse;
 
   @override
   List get values => [redelegationResponses, pagination];

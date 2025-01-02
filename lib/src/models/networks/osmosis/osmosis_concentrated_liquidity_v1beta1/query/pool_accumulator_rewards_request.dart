@@ -6,8 +6,7 @@ class OsmosisConcentratedLiquidityPoolAccumulatorRewardsRequest
     extends CosmosMessage
     with
         QueryMessage<
-            OsmosisConcentratedLiquidityPoolAccumulatorRewardsResponse>,
-        RPCMessage<OsmosisConcentratedLiquidityPoolAccumulatorRewardsResponse> {
+            OsmosisConcentratedLiquidityPoolAccumulatorRewardsResponse> {
   final BigInt? poolId;
   OsmosisConcentratedLiquidityPoolAccumulatorRewardsRequest({this.poolId});
   factory OsmosisConcentratedLiquidityPoolAccumulatorRewardsRequest.deserialize(
@@ -24,21 +23,13 @@ class OsmosisConcentratedLiquidityPoolAccumulatorRewardsRequest
   Map<String, String?> get queryParameters => {"pool_id": poolId?.toString()};
 
   @override
-  String get queryPath =>
-      OsmosisConcentratedLiquidityV1beta1Types.poolAccumulatorRewards.typeUrl;
-
-  @override
-  String get rpcPath =>
-      OsmosisConcentratedLiquidityV1beta1Types.poolAccumulatorRewards.rpcUrl();
-
-  @override
   Map<String, dynamic> toJson() {
     return {"pool_id": poolId?.toString()};
   }
 
   @override
-  String get typeUrl => OsmosisConcentratedLiquidityV1beta1Types
-      .poolAccumulatorRewardsRequest.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisConcentratedLiquidityV1beta1Types.poolAccumulatorRewardsRequest;
 
   @override
   List get values => [poolId];

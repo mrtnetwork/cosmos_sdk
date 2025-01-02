@@ -42,8 +42,8 @@ class OsmosisSuperfluidUnpoolSuperfluidIntermediaryAccountInfo
   }
 
   @override
-  String get typeUrl =>
-      OsmosisSuperfluidTypes.superfluidIntermediaryAccountInfo.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisSuperfluidTypes.superfluidIntermediaryAccountInfo;
 
   @override
   List get values => [denom, valAddr, gaugeId, address];

@@ -34,7 +34,7 @@ class IbcChannelPacketSequence extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.packetSequence.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.packetSequence;
 
   @override
   List get values => [portId, channelId, sequence];

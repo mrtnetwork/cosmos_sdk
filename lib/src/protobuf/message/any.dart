@@ -10,11 +10,12 @@ class Any extends CosmosProtocolBuffer {
         value: decde.getField<List<int>?>(2) ?? <int>[],
         typeUrl: decde.getField(1));
   }
-  factory Any.fromRpc(Map<String, dynamic> json) {
-    return Any(
-        value: StringUtils.encode(json["value"], type: StringEncoding.base64),
-        typeUrl: json["type_url"]);
-  }
+  // factory Any.fromRpc(Map<String, dynamic> json) {
+  //   return Any(
+  //       value: StringUtils.encode(json["value"] ?? json["key"],
+  //           type: StringEncoding.base64),
+  //       typeUrl: json["type_url"]);
+  // }
   final List<int> value;
   final String typeUrl;
 

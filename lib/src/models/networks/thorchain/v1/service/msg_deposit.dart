@@ -50,7 +50,7 @@ class ThorchainMsgDeposit extends CosmosMessage with ServiceMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.msgDeposit.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.msgDeposit;
 
   @override
   List get values => [coins, memo, signer.toBytes()];
@@ -61,7 +61,7 @@ class ThorchainMsgDeposit extends CosmosMessage with ServiceMessage {
   }
 
   @override
-  String get service => typeUrl;
+  TypeUrl get service => typeUrl;
 
   @override
   List<String?> get signers => [signer.address];

@@ -25,7 +25,7 @@ class ThorchainMsgRefundTx extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.msgRefundTx.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.msgRefundTx;
 
   @override
   List get values => [tx, inTxId, signer?.toBytes()];

@@ -40,7 +40,7 @@ class OsmosisProtorevMsgSetBaseDenoms extends CosmosMessage
   }
 
   @override
-  String get typeUrl => OsmosisProtorevV1beta1Types.msgSetBaseDenoms.typeUrl;
+  TypeUrl get typeUrl => OsmosisProtorevV1beta1Types.msgSetBaseDenoms;
 
   @override
   List get values => [admin, baseDenoms];
@@ -48,11 +48,11 @@ class OsmosisProtorevMsgSetBaseDenoms extends CosmosMessage
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        OsmosisProtorevV1beta1Types.msgSetBaseDenomsResponse.typeUrl);
+        OsmosisProtorevV1beta1Types.msgSetBaseDenomsResponse);
   }
 
   @override
-  String get service => OsmosisProtorevV1beta1Types.setBaseDenoms.typeUrl;
+  TypeUrl get service => OsmosisProtorevV1beta1Types.setBaseDenoms;
 
   @override
   List<String?> get signers => [admin];

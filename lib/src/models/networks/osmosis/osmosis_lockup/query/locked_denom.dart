@@ -3,9 +3,7 @@ import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_lockup/types/type
 import 'locked_denom_response.dart';
 
 class OsmosisLockupLockedDenomRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisLockupLockedDenomResponse>,
-        RPCMessage<OsmosisLockupLockedDenomResponse> {
+    with QueryMessage<OsmosisLockupLockedDenomResponse> {
   final String? denom;
   final ProtobufDuration duration;
   const OsmosisLockupLockedDenomRequest({this.denom, required this.duration});
@@ -24,7 +22,7 @@ class OsmosisLockupLockedDenomRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl => OsmosisLockupTypes.lockedDenomRequest.typeUrl;
+  TypeUrl get typeUrl => OsmosisLockupTypes.lockedDenomRequest;
 
   @override
   List get values => [denom, duration];
@@ -35,16 +33,10 @@ class OsmosisLockupLockedDenomRequest extends CosmosMessage
   }
 
   @override
-  String get queryPath => OsmosisLockupTypes.lockedDenom.typeUrl;
-
-  @override
   OsmosisLockupLockedDenomResponse onJsonResponse(Map<String, dynamic> json) {
     return OsmosisLockupLockedDenomResponse.fromRpc(json);
   }
 
   @override
-  Map<String, String?> get queryParameters => {};
-
-  @override
-  String get rpcPath => OsmosisLockupTypes.lockedDenom.rpcUrl();
+  Map<String, String?> get queryParameters => {"denom": denom};
 }

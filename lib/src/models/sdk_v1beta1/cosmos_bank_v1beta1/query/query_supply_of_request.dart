@@ -17,15 +17,12 @@ class QuerySupplyOfRequest extends CosmosMessage
   List<int> get fieldIds => [1];
 
   @override
-  String get queryPath => BankV1beta1Types.supplyOf.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {"denom": denom};
   }
 
   @override
-  String get typeUrl => BankV1beta1Types.supplyOfResponse.typeUrl;
+  TypeUrl get typeUrl => BankV1beta1Types.supplyOfResponse;
 
   @override
   List get values => [denom];
@@ -34,4 +31,12 @@ class QuerySupplyOfRequest extends CosmosMessage
   QuerySupplyOfResponse onResponse(List<int> bytes) {
     return QuerySupplyOfResponse.deserialize(bytes);
   }
+
+  @override
+  QuerySupplyOfResponse onJsonResponse(Map<String, dynamic> json) {
+    return QuerySupplyOfResponse.fromRpc(json);
+  }
+
+  @override
+  Map<String, String?> get queryParameters => {"denom": denom};
 }

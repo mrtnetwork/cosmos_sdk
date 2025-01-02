@@ -7,11 +7,11 @@ import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_staking_v1beta1/types/t
 class QueryValidatorsRequest extends CosmosMessage
     with QueryMessage<QueryValidatorsResponse> {
   /// status enables to query for validators matching a given status.
-  final String? status;
+  final String status;
 
   /// pagination defines an optional pagination for the request.
   final PageRequest? pagination;
-  const QueryValidatorsRequest({this.status, this.pagination});
+  const QueryValidatorsRequest({required this.status, this.pagination});
 
   factory QueryValidatorsRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -31,15 +31,22 @@ class QueryValidatorsRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl => StakingV1beta1Types.queryValidatorsRequest.typeUrl;
+  TypeUrl get typeUrl => StakingV1beta1Types.queryValidatorsRequest;
 
   @override
   List get values => [status, pagination];
 
   @override
-  String get queryPath => StakingV1beta1Types.queryValidators.typeUrl;
-  @override
   QueryValidatorsResponse onResponse(List<int> bytes) {
     return QueryValidatorsResponse.deserialize(bytes);
   }
+
+  @override
+  QueryValidatorsResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryValidatorsResponse.fromRpc(json);
+  }
+
+  @override
+  Map<String, String?> get queryParameters =>
+      {...pagination?.queryParameters ?? {}, "status": status};
 }

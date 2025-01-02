@@ -33,7 +33,7 @@ class OsmosisProtorevBaseDenom extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisProtorevV1beta1Types.baseDenom.typeUrl;
+  TypeUrl get typeUrl => OsmosisProtorevV1beta1Types.baseDenom;
 
   @override
   List get values => [denom, stepSize];

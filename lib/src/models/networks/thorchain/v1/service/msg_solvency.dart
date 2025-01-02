@@ -50,7 +50,7 @@ class ThorchainMsgSolvency extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.msgSolvency.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.msgSolvency;
 
   @override
   List get values => [id, chain, pubKey, coins, height, signer];

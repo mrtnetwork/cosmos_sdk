@@ -8,33 +8,27 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class DistributionQueryValidatorOutstandingRewardsRequest extends CosmosMessage
     with QueryMessage<DistributionQueryValidatorOutstandingRewardsResponse> {
   /// validator_address defines the validator address to query for.
-  final CosmosBaseAddress? validatorAddress;
+  final CosmosBaseAddress validatorAddress;
   const DistributionQueryValidatorOutstandingRewardsRequest(
-      {this.validatorAddress});
+      {required this.validatorAddress});
   factory DistributionQueryValidatorOutstandingRewardsRequest.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionQueryValidatorOutstandingRewardsRequest(
-        validatorAddress: decode
-            .getResult(1)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)));
+        validatorAddress: CosmosBaseAddress(decode.getField(1)));
   }
 
   @override
   List<int> get fieldIds => [1];
 
   @override
-  String get queryPath => DistributionV1beta1Types
-      .queryDistributionValidatorOutstandingRewards.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
-    return {"validator_address": validatorAddress?.address};
+    return {"validator_address": validatorAddress.address};
   }
 
   @override
-  String get typeUrl => DistributionV1beta1Types
-      .distributionQueryValidatorOutstandingRewardsRequest.typeUrl;
+  TypeUrl get typeUrl => DistributionV1beta1Types
+      .distributionQueryValidatorOutstandingRewardsRequest;
 
   @override
   List get values => [validatorAddress];
@@ -45,4 +39,13 @@ class DistributionQueryValidatorOutstandingRewardsRequest extends CosmosMessage
     return DistributionQueryValidatorOutstandingRewardsResponse.deserialize(
         bytes);
   }
+
+  @override
+  DistributionQueryValidatorOutstandingRewardsResponse onJsonResponse(
+      Map<String, dynamic> json) {
+    return DistributionQueryValidatorOutstandingRewardsResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters => [validatorAddress.address];
 }

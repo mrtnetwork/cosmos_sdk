@@ -13,7 +13,7 @@ class EmptyServiceRequestResponse extends CosmosMessage {
   }
 
   @override
-  final String typeUrl;
+  final TypeUrl typeUrl;
 
   @override
   List get values => [];

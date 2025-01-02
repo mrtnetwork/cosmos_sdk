@@ -7,8 +7,8 @@ import 'get_block_by_height_response.dart';
 /// GetBlockByHeightRequest is the request type for the Query/GetBlockByHeight RPC method.
 class GetBlockByHeightRequest extends CosmosMessage
     with QueryMessage<GetBlockByHeightResponse> {
-  final BigInt? height;
-  const GetBlockByHeightRequest({this.height});
+  final String height;
+  const GetBlockByHeightRequest({required this.height});
   factory GetBlockByHeightRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GetBlockByHeightRequest(height: decode.getField(1));
@@ -18,16 +18,12 @@ class GetBlockByHeightRequest extends CosmosMessage
   List<int> get fieldIds => [1];
 
   @override
-  String get queryPath => BaseTendermintV1beta1Types.getBlockByHeight.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
-    return {"height": height?.toString()};
+    return {"height": height};
   }
 
   @override
-  String get typeUrl =>
-      BaseTendermintV1beta1Types.getBlockByHeightRequest.typeUrl;
+  TypeUrl get typeUrl => BaseTendermintV1beta1Types.getBlockByHeightRequest;
 
   @override
   List get values => [height];
@@ -36,4 +32,12 @@ class GetBlockByHeightRequest extends CosmosMessage
   GetBlockByHeightResponse onResponse(List<int> bytes) {
     return GetBlockByHeightResponse.deserialize(bytes);
   }
+
+  @override
+  GetBlockByHeightResponse onJsonResponse(Map<String, dynamic> json) {
+    return GetBlockByHeightResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters => [height];
 }

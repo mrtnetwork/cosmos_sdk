@@ -11,6 +11,17 @@ class QueryConsensusStatesResponse extends CosmosMessage {
 
   /// pagination response
   final PageResponse? pagination;
+  factory QueryConsensusStatesResponse.fromRpc(Map<String, dynamic> json) {
+    return QueryConsensusStatesResponse(
+      consensusStates: (json[""] as List?)
+              ?.map((e) => ConsensusStateWithHeight.fromRpc(e))
+              .toList() ??
+          [],
+      pagination: json["pagination"] == null
+          ? null
+          : PageResponse.fromRpc(json["pagination"]),
+    );
+  }
   QueryConsensusStatesResponse(
       {required List<ConsensusStateWithHeight> consensusStates,
       this.pagination})
@@ -39,7 +50,7 @@ class QueryConsensusStatesResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.queryConsensusStatesResponse.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryConsensusStatesResponse;
 
   @override
   List get values => [consensusStates, pagination];

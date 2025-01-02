@@ -14,6 +14,17 @@ class QueryPacketCommitmentsResponse extends CosmosMessage {
 
   /// query block height
   final IbcClientHeight height;
+  factory QueryPacketCommitmentsResponse.fromRpc(Map<String, dynamic> json) {
+    return QueryPacketCommitmentsResponse(
+      commitments: (json["commitments"] as List?)
+          ?.map((e) => IbcChannelPacketState.fromRpc(e))
+          .toList(),
+      height: IbcClientHeight.fromRpc(json["height"]),
+      pagination: json["pagination"] == null
+          ? null
+          : PageResponse.fromRpc(json["pagination"]),
+    );
+  }
   QueryPacketCommitmentsResponse(
       {List<IbcChannelPacketState>? commitments,
       this.pagination,
@@ -46,7 +57,7 @@ class QueryPacketCommitmentsResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.queryPacketCommitmentsResponse.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryPacketCommitmentsResponse;
 
   @override
   List get values => [commitments, pagination, height];

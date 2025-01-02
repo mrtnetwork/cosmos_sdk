@@ -27,7 +27,7 @@ class OsmosisTwapParamsResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisTwapV1beta1Types.params.typeUrl;
+  TypeUrl get typeUrl => OsmosisTwapV1beta1Types.params;
 
   @override
   List get values => [params];

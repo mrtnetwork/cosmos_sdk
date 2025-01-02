@@ -23,7 +23,7 @@ class ThorchainMinJoinLast extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.minJoinLast.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.minJoinLast;
 
   @override
   List get values => [lastChangedHeight, version];

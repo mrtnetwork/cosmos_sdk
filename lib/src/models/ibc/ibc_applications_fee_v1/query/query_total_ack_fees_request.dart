@@ -20,15 +20,12 @@ class QueryTotalAckFeesRequest extends CosmosMessage
   List<int> get fieldIds => [1];
 
   @override
-  String get queryPath => IbcTypes.totalAckFees.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {"packet_id": packetId.toJson()};
   }
 
   @override
-  String get typeUrl => IbcTypes.queryTotalAckFeesRequest.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryTotalAckFeesRequest;
 
   @override
   List get values => [packetId];
@@ -37,4 +34,13 @@ class QueryTotalAckFeesRequest extends CosmosMessage
   QueryTotalAckFeesResponse onResponse(List<int> bytes) {
     return QueryTotalAckFeesResponse.deserialize(bytes);
   }
+
+  @override
+  QueryTotalAckFeesResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryTotalAckFeesResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters =>
+      [packetId.channelId, packetId.portId, packetId.sequence.toString()];
 }

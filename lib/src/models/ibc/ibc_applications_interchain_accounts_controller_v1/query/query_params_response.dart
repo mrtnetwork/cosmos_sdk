@@ -9,6 +9,11 @@ class InterchainAccountsControllerQueryParamsResponse extends CosmosMessage {
 
   /// This message has no fields.
   const InterchainAccountsControllerQueryParamsResponse({this.params});
+  factory InterchainAccountsControllerQueryParamsResponse.fromRpc(
+      Map<String, dynamic> json) {
+    return InterchainAccountsControllerQueryParamsResponse(
+        params: InterchainAccountsControllerParams.fromRpc(json["params"]));
+  }
   factory InterchainAccountsControllerQueryParamsResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -28,8 +33,8 @@ class InterchainAccountsControllerQueryParamsResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      IbcTypes.interchainAccoutsControllerQueryParamsResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      IbcTypes.interchainAccoutsControllerQueryParamsResponse;
 
   @override
   List get values => [params];

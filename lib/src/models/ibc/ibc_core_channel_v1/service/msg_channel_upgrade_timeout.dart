@@ -38,7 +38,7 @@ class MsgChannelUpgradeTimeout extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3, 4, 5, 6];
 
   @override
-  String get service => IbcTypes.channelUpgradeTimeout.typeUrl;
+  TypeUrl get service => IbcTypes.channelUpgradeTimeout;
 
   @override
   Map<String, dynamic> toJson() {
@@ -53,7 +53,7 @@ class MsgChannelUpgradeTimeout extends CosmosMessage
   }
 
   @override
-  String get typeUrl => IbcTypes.msgChannelUpgradeTimeout.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.msgChannelUpgradeTimeout;
 
   @override
   List get values => [
@@ -71,6 +71,6 @@ class MsgChannelUpgradeTimeout extends CosmosMessage
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        IbcTypes.msgChannelUpgradeTimeoutResponse.typeUrl);
+        IbcTypes.msgChannelUpgradeTimeoutResponse);
   }
 }

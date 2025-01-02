@@ -37,15 +37,13 @@ class OsmosisSuperfluidMsgLockAndSuperfluidDelegate extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      OsmosisSuperfluidTypes.msgLockAndSuperfluidDelegate.typeUrl;
+  TypeUrl get typeUrl => OsmosisSuperfluidTypes.msgLockAndSuperfluidDelegate;
 
   @override
   List get values => [sender, coins, valAddr];
 
   @override
-  String get service =>
-      OsmosisSuperfluidTypes.lockAndSuperfluidDelegate.typeUrl;
+  TypeUrl get service => OsmosisSuperfluidTypes.lockAndSuperfluidDelegate;
 
   @override
   List<String?> get signers => [sender];

@@ -1,3 +1,4 @@
+import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
@@ -13,6 +14,12 @@ class IbcClientHeight extends CosmosMessage {
 
   /// the height within the given revision
   final BigInt? revisionHeight;
+
+  factory IbcClientHeight.fromRpc(Map<String, dynamic> json) {
+    return IbcClientHeight(
+        revisionHeight: BigintUtils.tryParse(json["revision_height"]),
+        revisionNumber: BigintUtils.tryParse(json["revision_number"]));
+  }
   const IbcClientHeight({this.revisionHeight, this.revisionNumber});
   factory IbcClientHeight.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -34,7 +41,7 @@ class IbcClientHeight extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.height.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.height;
 
   @override
   List get values => [revisionNumber, revisionHeight];

@@ -14,6 +14,12 @@ class IbcConnectionCounterparty extends CosmosMessage {
 
   /// commitment merkle prefix of the counterparty chain.
   final IbcCommitmentMerklePrefix prefix;
+  factory IbcConnectionCounterparty.fromRpc(Map<String, dynamic> json) {
+    return IbcConnectionCounterparty(
+        clientId: json["client_id"],
+        connectionId: json["connection_id"],
+        prefix: IbcCommitmentMerklePrefix.fromRpc(json["prefix"]));
+  }
   const IbcConnectionCounterparty(
       {this.clientId, this.connectionId, required this.prefix});
   factory IbcConnectionCounterparty.deserialize(List<int> bytes) {
@@ -38,7 +44,7 @@ class IbcConnectionCounterparty extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.ibcConnectionCounterparty.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.ibcConnectionCounterparty;
 
   @override
   List get values => [clientId, connectionId, prefix];

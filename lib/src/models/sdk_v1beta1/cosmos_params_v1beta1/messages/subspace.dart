@@ -7,6 +7,10 @@ import 'package:blockchain_utils/helper/helper.dart';
 class ParamsSubspace extends CosmosMessage {
   final String? subspace;
   final List<String>? keys;
+  factory ParamsSubspace.fromRpc(Map<String, dynamic> json) {
+    return ParamsSubspace(
+        keys: (json["keys"] as List?)?.cast(), subspace: json["subspace"]);
+  }
   ParamsSubspace({this.subspace, List<String>? keys}) : keys = keys?.immutable;
   factory ParamsSubspace.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -23,7 +27,7 @@ class ParamsSubspace extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ParamsV1beta1.paramsSubspace.typeUrl;
+  TypeUrl get typeUrl => ParamsV1beta1.paramsSubspace;
 
   @override
   List get values => [subspace, keys];

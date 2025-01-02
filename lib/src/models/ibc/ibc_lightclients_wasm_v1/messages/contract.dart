@@ -24,7 +24,7 @@ class IbcLightClientsWasmContract extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.ibcLightClientsWasmContract.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.ibcLightClientsWasmContract;
 
   @override
   List get values => [codeBytes];

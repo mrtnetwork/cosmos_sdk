@@ -10,6 +10,9 @@ class QueryDenomMetadataResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryDenomMetadataResponse(Metadata.deserialize(decode.getField(1)));
   }
+  factory QueryDenomMetadataResponse.fromRpc(Map<String, dynamic> json) {
+    return QueryDenomMetadataResponse(Metadata.fromRpc(json["metadata"]));
+  }
 
   @override
   List<int> get fieldIds => [1];
@@ -20,7 +23,7 @@ class QueryDenomMetadataResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => BankV1beta1Types.denomMetadataResponse.typeUrl;
+  TypeUrl get typeUrl => BankV1beta1Types.denomMetadataResponse;
 
   @override
   List get values => [metadata];

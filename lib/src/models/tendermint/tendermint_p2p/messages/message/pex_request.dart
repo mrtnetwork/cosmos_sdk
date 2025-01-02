@@ -1,4 +1,5 @@
 import 'package:cosmos_sdk/src/models/tendermint/types/types.dart';
+import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 import 'p2p_message.dart';
 
 class PexRequest extends P2pMessage {
@@ -13,7 +14,7 @@ class PexRequest extends P2pMessage {
   }
 
   @override
-  String get typeUrl => TendermintTypes.pexRequest.typeUrl;
+  TypeUrl get typeUrl => TendermintTypes.pexRequest;
 
   @override
   List get values => [];

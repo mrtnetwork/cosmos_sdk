@@ -25,5 +25,5 @@ class Bech32PrefixResponse extends CosmosMessage {
   List get values => [bech32Prefix];
 
   @override
-  String get typeUrl => AuthV1beta1Types.bech32PrefixResponse.typeUrl;
+  TypeUrl get typeUrl => AuthV1beta1Types.bech32PrefixResponse;
 }

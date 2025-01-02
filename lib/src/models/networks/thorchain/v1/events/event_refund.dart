@@ -32,7 +32,7 @@ class ThorchainEventRefund extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.eventRefund.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.eventRefund;
 
   @override
   List get values => [code, reason, inTx, fee];

@@ -10,6 +10,13 @@ class ParamsQuerySubspacesResponse extends CosmosMessage {
   final List<ParamsSubspace> subspaces;
   ParamsQuerySubspacesResponse(List<ParamsSubspace> subspaces)
       : subspaces = subspaces.immutable;
+
+  factory ParamsQuerySubspacesResponse.fromRpc(Map<String, dynamic> json) {
+    return ParamsQuerySubspacesResponse((json["subspaces"] as List?)
+            ?.map((e) => ParamsSubspace.fromRpc(e))
+            .toList() ??
+        []);
+  }
   factory ParamsQuerySubspacesResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ParamsQuerySubspacesResponse(decode
@@ -27,7 +34,7 @@ class ParamsQuerySubspacesResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ParamsV1beta1.paramsQuerySubspacesResponse.typeUrl;
+  TypeUrl get typeUrl => ParamsV1beta1.paramsQuerySubspacesResponse;
 
   @override
   List get values => [subspaces];

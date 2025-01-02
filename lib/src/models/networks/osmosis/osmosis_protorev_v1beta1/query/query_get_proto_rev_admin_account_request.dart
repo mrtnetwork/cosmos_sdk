@@ -4,9 +4,7 @@ import 'query_get_proto_rev_admin_account_response.dart';
 
 /// QueryGetProtoRevAdminAccountResponse is response type for the Query/GetProtoRevAdminAccount RPC method.
 class OsmosisProtorevQueryGetProtoRevAdminAccountRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisProtorevQueryGetProtoRevAdminAccountResponse>,
-        RPCMessage<OsmosisProtorevQueryGetProtoRevAdminAccountResponse> {
+    with QueryMessage<OsmosisProtorevQueryGetProtoRevAdminAccountResponse> {
   const OsmosisProtorevQueryGetProtoRevAdminAccountRequest();
   factory OsmosisProtorevQueryGetProtoRevAdminAccountRequest.deserialize(
       List<int> bytes) {
@@ -38,17 +36,9 @@ class OsmosisProtorevQueryGetProtoRevAdminAccountRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      OsmosisProtorevV1beta1Types.queryGetProtoRevAdminAccountRequest.typeUrl;
-
-  @override
-  String get queryPath =>
-      OsmosisProtorevV1beta1Types.getProtoRevAdminAccount.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisProtorevV1beta1Types.queryGetProtoRevAdminAccountRequest;
 
   @override
   Map<String, String?> get queryParameters => {};
-
-  @override
-  String get rpcPath =>
-      OsmosisProtorevV1beta1Types.getProtoRevAdminAccount.rpcUrl();
 }

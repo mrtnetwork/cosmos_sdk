@@ -26,7 +26,7 @@ class IbcFeeMetadata extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.metadata.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.metadata;
 
   @override
   List get values => [feeVersion, appVersion];

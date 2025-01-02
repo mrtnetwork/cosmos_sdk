@@ -30,7 +30,7 @@ class ABCIParams extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => TendermintTypes.abciParams.typeUrl;
+  TypeUrl get typeUrl => TendermintTypes.abciParams;
 
   @override
   List get values => [voteExtensionsEnableHeight];

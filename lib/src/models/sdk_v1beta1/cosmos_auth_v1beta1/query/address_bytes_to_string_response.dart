@@ -11,6 +11,10 @@ class AddressBytesToStringResponse extends CosmosMessage {
     return AddressBytesToStringResponse(decode.getField(1));
   }
 
+  factory AddressBytesToStringResponse.fromRpc(Map<String, dynamic> json) {
+    return AddressBytesToStringResponse(json["address_string"]);
+  }
+
   @override
   List<int> get fieldIds => [1];
 
@@ -23,5 +27,5 @@ class AddressBytesToStringResponse extends CosmosMessage {
   List get values => [addressString];
 
   @override
-  String get typeUrl => AuthV1beta1Types.addressBytesToStringResponse.typeUrl;
+  TypeUrl get typeUrl => AuthV1beta1Types.addressBytesToStringResponse;
 }

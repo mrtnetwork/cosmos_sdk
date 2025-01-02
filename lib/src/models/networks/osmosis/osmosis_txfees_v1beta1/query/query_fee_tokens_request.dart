@@ -4,9 +4,7 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'query_fee_tokens_response.dart';
 
 class OsmosisTxfeesQueryFeeTokensRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisTxfeesQueryFeeTokensResponse>,
-        RPCMessage<OsmosisTxfeesQueryFeeTokensResponse> {
+    with QueryMessage<OsmosisTxfeesQueryFeeTokensResponse> {
   const OsmosisTxfeesQueryFeeTokensRequest();
   factory OsmosisTxfeesQueryFeeTokensRequest.deserialize(List<int> bytes) {
     return const OsmosisTxfeesQueryFeeTokensRequest();
@@ -25,7 +23,7 @@ class OsmosisTxfeesQueryFeeTokensRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl => OsmosisTxfeesV1beta1Types.queryFeeTokensRequest.typeUrl;
+  TypeUrl get typeUrl => OsmosisTxfeesV1beta1Types.queryFeeTokensRequest;
 
   @override
   List get values => [];
@@ -43,10 +41,4 @@ class OsmosisTxfeesQueryFeeTokensRequest extends CosmosMessage
 
   @override
   Map<String, String?> get queryParameters => {};
-
-  @override
-  String get queryPath => OsmosisTxfeesV1beta1Types.feeTokens.typeUrl;
-
-  @override
-  String get rpcPath => OsmosisTxfeesV1beta1Types.feeTokens.rpcUrl();
 }

@@ -12,6 +12,17 @@ class GovQueryDepositsResponse extends CosmosMessage {
 
   /// pagination defines the pagination in the response.
   final PageResponse? pagination;
+  factory GovQueryDepositsResponse.fromRpc(Map<String, dynamic> json) {
+    return GovQueryDepositsResponse(
+      deposits: (json["deposits"] as List?)
+              ?.map((e) => GovDeposit.fromRpc(e))
+              .toList() ??
+          [],
+      pagination: json["pagination"] == null
+          ? null
+          : PageResponse.fromRpc(json["pagination"]),
+    );
+  }
   GovQueryDepositsResponse(
       {required List<GovDeposit> deposits, this.pagination})
       : deposits = deposits.immutable;
@@ -37,7 +48,7 @@ class GovQueryDepositsResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => GovV1beta1types.govQueryDepositsResponse.typeUrl;
+  TypeUrl get typeUrl => GovV1beta1types.govQueryDepositsResponse;
 
   @override
   List get values => [deposits, pagination];

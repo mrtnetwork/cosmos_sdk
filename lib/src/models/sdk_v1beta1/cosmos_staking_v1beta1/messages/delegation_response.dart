@@ -37,7 +37,7 @@ class DelegationResponse extends CosmosMessage {
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get typeUrl => StakingV1beta1Types.delegationResponse.typeUrl;
+  TypeUrl get typeUrl => StakingV1beta1Types.delegationResponse;
 
   @override
   List get values => [delegation, balance];

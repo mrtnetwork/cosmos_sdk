@@ -1,3 +1,4 @@
+import 'package:blockchain_utils/utils/numbers/utils/bigint_utils.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_node_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
@@ -12,6 +13,15 @@ class NodeConfigResponse extends CosmosMessage {
       this.pruningKeepRecent,
       this.pruningInterval,
       this.haltHeight});
+  factory NodeConfigResponse.fromRpc(Map<String, dynamic> json) {
+    return NodeConfigResponse(
+      minimumGasPrice: json["minimum_gas_price"],
+      pruningKeepRecent: json["pruning_keep_recent"],
+      pruningInterval: json["pruning_interval"],
+      haltHeight: BigintUtils.tryParse(json["halt_height"]),
+    );
+  }
+
   factory NodeConfigResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return NodeConfigResponse(
@@ -35,7 +45,7 @@ class NodeConfigResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => BaseNodeV1beta1Types.nodeConfigResponse.typeUrl;
+  TypeUrl get typeUrl => BaseNodeV1beta1Types.nodeConfigResponse;
 
   @override
   List get values =>

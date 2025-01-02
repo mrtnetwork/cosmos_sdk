@@ -49,8 +49,7 @@ class OsmosisSuperfluidAllIntermediaryAccountsResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisSuperfluidTypes.allIntermediaryAccountsResponse.typeUrl;
+  TypeUrl get typeUrl => OsmosisSuperfluidTypes.allIntermediaryAccountsResponse;
 
   @override
   List get values => [accounts, pagination];

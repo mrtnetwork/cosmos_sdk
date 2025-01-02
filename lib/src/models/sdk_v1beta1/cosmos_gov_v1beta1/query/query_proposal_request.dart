@@ -18,15 +18,12 @@ class GovQueryProposalRequest extends CosmosMessage
   List<int> get fieldIds => [1];
 
   @override
-  String get queryPath => GovV1beta1types.queryGovProposal.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {"proposal_id": proposalId.toString()};
   }
 
   @override
-  String get typeUrl => GovV1beta1types.govQueryProposalRequest.typeUrl;
+  TypeUrl get typeUrl => GovV1beta1types.govQueryProposalRequest;
 
   @override
   List get values => [proposalId];
@@ -35,4 +32,12 @@ class GovQueryProposalRequest extends CosmosMessage
   GovQueryProposalResponse onResponse(List<int> bytes) {
     return GovQueryProposalResponse.deserialize(bytes);
   }
+
+  @override
+  GovQueryProposalResponse onJsonResponse(Map<String, dynamic> json) {
+    return GovQueryProposalResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters => [proposalId.toString()];
 }

@@ -13,6 +13,16 @@ class QueryDenomOwnersResponse extends CosmosMessage {
   final PageResponse? pagination;
 
   const QueryDenomOwnersResponse({required this.denomOwners, this.pagination});
+  factory QueryDenomOwnersResponse.fromRpc(Map<String, dynamic> json) {
+    return QueryDenomOwnersResponse(
+        denomOwners: (json["denom_owners"] as List)
+            .map((e) => DenomOwner.fromRpc(e))
+            .toList(),
+        pagination: json["pagination"] == null
+            ? null
+            : PageResponse.fromRpc(json["pagination"]));
+  }
+
   factory QueryDenomOwnersResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryDenomOwnersResponse(
@@ -34,7 +44,7 @@ class QueryDenomOwnersResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => BankV1beta1Types.denomOwnersResponse.typeUrl;
+  TypeUrl get typeUrl => BankV1beta1Types.denomOwnersResponse;
 
   @override
   List get values => [denomOwners, pagination];

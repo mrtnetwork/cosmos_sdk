@@ -3,13 +3,11 @@ import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_lockup/types/type
 import 'account_locked_longer_duration_response.dart';
 
 class OsmosisLockupAccountLockedLongerDurationRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisLockupAccountLockedLongerDurationResponse>,
-        RPCMessage<OsmosisLockupAccountLockedLongerDurationResponse> {
-  final String? owner;
+    with QueryMessage<OsmosisLockupAccountLockedLongerDurationResponse> {
+  final String owner;
   final ProtobufDuration duration;
   const OsmosisLockupAccountLockedLongerDurationRequest(
-      {this.owner, required this.duration});
+      {required this.owner, required this.duration});
   factory OsmosisLockupAccountLockedLongerDurationRequest.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -26,8 +24,7 @@ class OsmosisLockupAccountLockedLongerDurationRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      OsmosisLockupTypes.accountLockedLongerDurationRequest.typeUrl;
+  TypeUrl get typeUrl => OsmosisLockupTypes.accountLockedLongerDurationRequest;
 
   @override
   List get values => [owner, duration];
@@ -36,10 +33,6 @@ class OsmosisLockupAccountLockedLongerDurationRequest extends CosmosMessage
   OsmosisLockupAccountLockedLongerDurationResponse onResponse(List<int> bytes) {
     return OsmosisLockupAccountLockedLongerDurationResponse.deserialize(bytes);
   }
-
-  @override
-  String get queryPath =>
-      OsmosisLockupTypes.accountLockedLongerDuration.typeUrl;
 
   @override
   OsmosisLockupAccountLockedLongerDurationResponse onJsonResponse(
@@ -51,6 +44,5 @@ class OsmosisLockupAccountLockedLongerDurationRequest extends CosmosMessage
   Map<String, String?> get queryParameters => {};
 
   @override
-  String get rpcPath => OsmosisLockupTypes.accountLockedLongerDuration
-      .rpcUrl(pathParameters: [owner]);
+  List<String> get pathParameters => [owner];
 }

@@ -1,11 +1,8 @@
-import 'package:cosmos_sdk/src/models/core/type_url/type_url.dart';
+import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 
 class OsmosisValidatorPreferenceV1beta1Types extends TypeUrl {
-  @override
-  final String typeUrl;
-  @override
-  final String? rpc;
-  const OsmosisValidatorPreferenceV1beta1Types._(this.typeUrl, {this.rpc});
+  const OsmosisValidatorPreferenceV1beta1Types._(super.typeUrl,
+      {super.query, super.rpc});
 
   static const OsmosisValidatorPreferenceV1beta1Types validatorPreference =
       OsmosisValidatorPreferenceV1beta1Types._(
@@ -49,17 +46,14 @@ class OsmosisValidatorPreferenceV1beta1Types extends TypeUrl {
 
   static const OsmosisValidatorPreferenceV1beta1Types
       queryUserValidatorPreferences = OsmosisValidatorPreferenceV1beta1Types._(
-          "/osmosis.validatorpreference.v1beta1.QueryUserValidatorPreferences");
+          "/osmosis.validatorpreference.v1beta1.QueryUserValidatorPreferences",
+          query:
+              "/osmosis.validatorpreference.v1beta1.Query/UserValidatorPreferences",
+          rpc: "/osmosis/validator-preference/v1beta1/:user");
   static const OsmosisValidatorPreferenceV1beta1Types
       queryUserValidatorPreferenceResponse =
       OsmosisValidatorPreferenceV1beta1Types._(
           "/osmosis.validatorpreference.v1beta1.QueryUserValidatorPreferenceResponse");
-
-  /// query
-  static const OsmosisValidatorPreferenceV1beta1Types userValidatorPreferences =
-      OsmosisValidatorPreferenceV1beta1Types._(
-          "/osmosis.validatorpreference.v1beta1.Query/UserValidatorPreferences",
-          rpc: "/osmosis/validator-preference/v1beta1/:user");
 
   /// services
 

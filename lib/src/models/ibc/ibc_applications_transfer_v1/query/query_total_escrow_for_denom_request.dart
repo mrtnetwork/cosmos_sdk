@@ -6,8 +6,8 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 /// QueryTotalEscrowForDenomRequest is the request type for TotalEscrowForDenom RPC method.
 class QueryTotalEscrowForDenomRequest extends CosmosMessage
     with QueryMessage<QueryTotalEscrowForDenomResponse> {
-  final String? denom;
-  const QueryTotalEscrowForDenomRequest({this.denom});
+  final String denom;
+  const QueryTotalEscrowForDenomRequest({required this.denom});
   factory QueryTotalEscrowForDenomRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryTotalEscrowForDenomRequest(denom: decode.getField(1));
@@ -17,15 +17,12 @@ class QueryTotalEscrowForDenomRequest extends CosmosMessage
   List<int> get fieldIds => [1];
 
   @override
-  String get queryPath => IbcTypes.totalEscrowForDenom.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {"denom": denom};
   }
 
   @override
-  String get typeUrl => IbcTypes.queryTotalEscrowForDenomRequest.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryTotalEscrowForDenomRequest;
 
   @override
   List get values => [denom];
@@ -34,4 +31,12 @@ class QueryTotalEscrowForDenomRequest extends CosmosMessage
   QueryTotalEscrowForDenomResponse onResponse(List<int> bytes) {
     return QueryTotalEscrowForDenomResponse.deserialize(bytes);
   }
+
+  @override
+  QueryTotalEscrowForDenomResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryTotalEscrowForDenomResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters => [denom];
 }

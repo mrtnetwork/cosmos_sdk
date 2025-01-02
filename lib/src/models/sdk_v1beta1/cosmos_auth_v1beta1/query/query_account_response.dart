@@ -30,5 +30,5 @@ class QueryAccountResponse extends CosmosMessage {
   List get values => [account];
 
   @override
-  String get typeUrl => AuthV1beta1Types.queryAccountResponse.typeUrl;
+  TypeUrl get typeUrl => AuthV1beta1Types.queryAccountResponse;
 }

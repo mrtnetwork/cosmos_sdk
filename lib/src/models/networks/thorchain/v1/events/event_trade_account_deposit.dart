@@ -38,7 +38,7 @@ class ThorchainEventTradeAccountDeposit extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.eventTradeAccountDeposit.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.eventTradeAccountDeposit;
 
   @override
   List get values =>

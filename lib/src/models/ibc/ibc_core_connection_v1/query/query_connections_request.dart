@@ -20,15 +20,12 @@ class IbcConnectionQueryConnectionsRequest extends CosmosMessage
   List<int> get fieldIds => [1];
 
   @override
-  String get queryPath => IbcTypes.ibcConnectionConnections.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {"pagination": pagination?.toJson()};
   }
 
   @override
-  String get typeUrl => IbcTypes.ibcConnectionQueryConnectionsRequest.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.ibcConnectionQueryConnectionsRequest;
 
   @override
   List get values => [pagination];
@@ -36,4 +33,13 @@ class IbcConnectionQueryConnectionsRequest extends CosmosMessage
   IbcCOnnectionQueryConnectionsResponse onResponse(List<int> bytes) {
     return IbcCOnnectionQueryConnectionsResponse.deserialize(bytes);
   }
+
+  @override
+  IbcCOnnectionQueryConnectionsResponse onJsonResponse(
+      Map<String, dynamic> json) {
+    return IbcCOnnectionQueryConnectionsResponse.fromRpc(json);
+  }
+
+  @override
+  Map<String, String?> get queryParameters => pagination?.queryParameters ?? {};
 }

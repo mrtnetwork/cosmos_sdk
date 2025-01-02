@@ -71,7 +71,7 @@ class IbcChannelPacket extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.packet.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.packet;
 
   @override
   List get values => [

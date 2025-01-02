@@ -31,7 +31,7 @@ class OsmosisIncentiveMsgAddToGauge extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3];
 
   @override
-  String get service => OsmosisIncentivesTypes.addToGauge.typeUrl;
+  TypeUrl get service => OsmosisIncentivesTypes.addToGauge;
 
   @override
   List<String?> get signers => [owner];
@@ -46,7 +46,7 @@ class OsmosisIncentiveMsgAddToGauge extends CosmosMessage
   }
 
   @override
-  String get typeUrl => OsmosisIncentivesTypes.msgAddToGauge.typeUrl;
+  TypeUrl get typeUrl => OsmosisIncentivesTypes.msgAddToGauge;
 
   @override
   List get values => [owner, gaugeId, rewards];
@@ -54,6 +54,6 @@ class OsmosisIncentiveMsgAddToGauge extends CosmosMessage
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        OsmosisIncentivesTypes.msgAddToGaugeResponse.typeUrl);
+        OsmosisIncentivesTypes.msgAddToGaugeResponse);
   }
 }

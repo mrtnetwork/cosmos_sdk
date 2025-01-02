@@ -25,7 +25,7 @@ class MsgPruneAcknowledgements extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3, 4];
 
   @override
-  String get service => IbcTypes.pruneAcknowledgements.typeUrl;
+  TypeUrl get service => IbcTypes.pruneAcknowledgements;
 
   @override
   Map<String, dynamic> toJson() {
@@ -38,7 +38,7 @@ class MsgPruneAcknowledgements extends CosmosMessage
   }
 
   @override
-  String get typeUrl => IbcTypes.msgPruneAcknowledgements.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.msgPruneAcknowledgements;
 
   @override
   List get values => [portId, channelId, limit, signer];

@@ -28,7 +28,7 @@ class ThorchainEventLimitOrder extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.eventLimitOrder.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.eventLimitOrder;
 
   @override
   List get values => [source, target, txId];

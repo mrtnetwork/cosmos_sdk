@@ -36,8 +36,8 @@ class OsmosisPoolincentivesQueryExternalIncentiveGaugesResponse
   }
 
   @override
-  String get typeUrl => OsmosisPoolincentivesV1beta1Types
-      .queryExternalIncentiveGaugesResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisPoolincentivesV1beta1Types.queryExternalIncentiveGaugesResponse;
   @override
   List get values => [data];
 }

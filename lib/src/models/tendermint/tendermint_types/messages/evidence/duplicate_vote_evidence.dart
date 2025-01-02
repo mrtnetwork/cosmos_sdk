@@ -45,7 +45,7 @@ class DuplicateVoteEvidence extends BaseEvidence {
   }
 
   @override
-  String get typeUrl => TendermintTypes.duplicateVoteEvidence.typeUrl;
+  TypeUrl get typeUrl => TendermintTypes.duplicateVoteEvidence;
 
   @override
   List get values =>

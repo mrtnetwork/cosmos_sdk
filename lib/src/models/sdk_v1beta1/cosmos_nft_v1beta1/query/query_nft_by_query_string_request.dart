@@ -10,10 +10,10 @@ class QueryNFTByQueryStringRequest extends CosmosMessage
   final String? classId;
 
   /// id is a unique identifier of the NFT.
-  final String? id;
+  final String id;
 
   /// Constructs a new instance of [QueryNFTByQueryStringRequest].
-  const QueryNFTByQueryStringRequest({this.classId, this.id});
+  const QueryNFTByQueryStringRequest({required this.classId, required this.id});
   factory QueryNFTByQueryStringRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryNFTByQueryStringRequest(
@@ -32,10 +32,7 @@ class QueryNFTByQueryStringRequest extends CosmosMessage
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get queryPath => NFTV1beta1Types.nftByQueryString.typeUrl;
-
-  @override
-  String get typeUrl => NFTV1beta1Types.queryNFTByQueryStringRequest.typeUrl;
+  TypeUrl get typeUrl => NFTV1beta1Types.queryNFTByQueryStringRequest;
 
   @override
   List get values => [classId, id];
@@ -44,4 +41,15 @@ class QueryNFTByQueryStringRequest extends CosmosMessage
   QueryNFTByQueryStringResponse onResponse(List<int> bytes) {
     return QueryNFTByQueryStringResponse.deserialize(bytes);
   }
+
+  @override
+  QueryNFTByQueryStringResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryNFTByQueryStringResponse.fromRpc(json);
+  }
+
+  @override
+  Map<String, String?> get queryParameters => {
+        'class_id': classId,
+        'id': id,
+      };
 }

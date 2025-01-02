@@ -16,16 +16,19 @@ class InterchainAccountsHostQueryParamsRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      IbcTypes.interchainAccountsHostQueryParamsRequest.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.interchainAccountsHostQueryParamsRequest;
 
   @override
   List get values => [];
 
   @override
-  String get queryPath => IbcTypes.queryInterchainAccountsHostParams.typeUrl;
-  @override
   InterchainAccountsHostQueryParamsResponse onResponse(List<int> bytes) {
     return InterchainAccountsHostQueryParamsResponse.deserialize(bytes);
+  }
+
+  @override
+  InterchainAccountsHostQueryParamsResponse onJsonResponse(
+      Map<String, dynamic> json) {
+    return InterchainAccountsHostQueryParamsResponse.fromRpc(json);
   }
 }

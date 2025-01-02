@@ -29,7 +29,7 @@ class ThorchainTxOut extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.txOut.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.txOut;
 
   @override
   List get values => [height, txArray];

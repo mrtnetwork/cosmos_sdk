@@ -4,7 +4,7 @@ import 'package:cosmos_sdk/src/provider/tendermint/core/tendermint.dart';
 /// Get data about unconfirmed transactions
 /// https://docs.tendermint.com/v0.34/rpc/#/Info/num_unconfirmed_txs
 class TendermintRequestNumUnconfirmedTxs
-    extends TendermintRequestParam<Map<String, dynamic>, Map<String, dynamic>> {
+    extends TendermintRequest<Map<String, dynamic>, Map<String, dynamic>> {
   TendermintRequestNumUnconfirmedTxs();
 
   /// Get data about unconfirmed transactions

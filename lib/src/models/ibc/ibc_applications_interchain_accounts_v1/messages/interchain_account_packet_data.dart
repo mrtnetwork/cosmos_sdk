@@ -31,7 +31,7 @@ class InterchainAccountPacketData extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.interchainAccountPacketData.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.interchainAccountPacketData;
 
   @override
   List get values => [type?.value, data, memo];

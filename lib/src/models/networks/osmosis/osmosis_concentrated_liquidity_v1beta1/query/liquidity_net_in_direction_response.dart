@@ -58,8 +58,8 @@ class OsmosisConcentratedLiquidityLiquidityNetInDirectionResponse
   }
 
   @override
-  String get typeUrl => OsmosisConcentratedLiquidityV1beta1Types
-      .liquidityNetInDirectionResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisConcentratedLiquidityV1beta1Types.liquidityNetInDirectionResponse;
 
   @override
   List get values =>

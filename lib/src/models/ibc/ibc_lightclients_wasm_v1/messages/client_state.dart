@@ -36,7 +36,7 @@ class IbcLightClientsWasmClientState extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.ibcLightClientsWasmClientState.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.ibcLightClientsWasmClientState;
 
   @override
   List get values => [data, checksum, latestHeight];

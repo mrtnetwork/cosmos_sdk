@@ -9,8 +9,8 @@ class QueryModuleVersionsRequest extends CosmosMessage
   /// module_name is a field to query a specific module
   /// consensus version from state. Leaving this empty will
   /// fetch the full list of module versions from state
-  final String? moduleName;
-  const QueryModuleVersionsRequest({this.moduleName});
+  final String moduleName;
+  const QueryModuleVersionsRequest({required this.moduleName});
   factory QueryModuleVersionsRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryModuleVersionsRequest(moduleName: decode.getField(1));
@@ -20,15 +20,12 @@ class QueryModuleVersionsRequest extends CosmosMessage
   List<int> get fieldIds => [1];
 
   @override
-  String get queryPath => UpgradeV1beta1Types.moduleVersions.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {"module_name": moduleName};
   }
 
   @override
-  String get typeUrl => UpgradeV1beta1Types.queryModuleVersionsRequest.typeUrl;
+  TypeUrl get typeUrl => UpgradeV1beta1Types.queryModuleVersionsRequest;
 
   @override
   List get values => [moduleName];
@@ -37,4 +34,12 @@ class QueryModuleVersionsRequest extends CosmosMessage
   QueryModuleVersionsResponse onResponse(List<int> bytes) {
     return QueryModuleVersionsResponse.deserialize(bytes);
   }
+
+  @override
+  QueryModuleVersionsResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryModuleVersionsResponse.fromRpc(json);
+  }
+
+  @override
+  Map<String, String?> get queryParameters => {"module_name": moduleName};
 }

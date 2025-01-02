@@ -40,7 +40,7 @@ class SignatureDescriptor extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => TxSigningV1beta1Types.signatureDescriptor.typeUrl;
+  TypeUrl get typeUrl => TxSigningV1beta1Types.signatureDescriptor;
 
   @override
   List get values => [1, 2, 3];

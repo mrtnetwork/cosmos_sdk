@@ -7,8 +7,8 @@ import 'query_get_proto_rev_all_route_statistics_response.dart';
 class OsmosisProtorevQueryGetProtoRevAllRouteStatisticsRequest
     extends CosmosMessage
     with
-        QueryMessage<OsmosisProtorevQueryGetProtoRevAllRouteStatisticsResponse>,
-        RPCMessage<OsmosisProtorevQueryGetProtoRevAllRouteStatisticsResponse> {
+        QueryMessage<
+            OsmosisProtorevQueryGetProtoRevAllRouteStatisticsResponse> {
   const OsmosisProtorevQueryGetProtoRevAllRouteStatisticsRequest();
   factory OsmosisProtorevQueryGetProtoRevAllRouteStatisticsRequest.deserialize(
       List<int> bytes) {
@@ -41,17 +41,9 @@ class OsmosisProtorevQueryGetProtoRevAllRouteStatisticsRequest
   }
 
   @override
-  String get typeUrl => OsmosisProtorevV1beta1Types
-      .queryGetProtoRevAllRouteStatisticsRequest.typeUrl;
-
-  @override
-  String get queryPath =>
-      OsmosisProtorevV1beta1Types.getProtoRevAllRouteStatistics.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisProtorevV1beta1Types.queryGetProtoRevAllRouteStatisticsRequest;
 
   @override
   Map<String, String?> get queryParameters => {};
-
-  @override
-  String get rpcPath =>
-      OsmosisProtorevV1beta1Types.getProtoRevAllRouteStatistics.rpcUrl();
 }

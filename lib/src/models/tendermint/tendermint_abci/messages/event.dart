@@ -8,6 +8,15 @@ class Event extends CosmosMessage {
   final String type;
   final List<EventAttribute> attributes;
   const Event({required this.type, required this.attributes});
+  factory Event.fromRpc(Map<String, dynamic> json) {
+    return Event(
+        type: json["type"],
+        attributes: (json["attributes"] as List?)
+                ?.map((e) => EventAttribute.fromRpc(e))
+                .toList() ??
+            []);
+  }
+
   factory Event.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Event(
@@ -30,7 +39,7 @@ class Event extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => TendermintTypes.event.typeUrl;
+  TypeUrl get typeUrl => TendermintTypes.event;
 
   @override
   List get values => [type, attributes];

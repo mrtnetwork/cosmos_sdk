@@ -1,3 +1,4 @@
+import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_query_v1beta1/messages/page_response.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_tendermint_v1beta1/messages/validator.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_tendermint_v1beta1/types/types.dart';
@@ -8,20 +9,34 @@ import 'package:blockchain_utils/helper/helper.dart';
 /// GetValidatorSetByHeightResponse is the response type for the Query/GetValidatorSetByHeight RPC method.
 class GetValidatorSetByHeightResponse extends CosmosMessage {
   final BigInt? blockHeight;
-  final List<CosmosTendermintValidator> validator;
+  final List<CosmosTendermintValidator> validators;
 
   /// pagination defines an pagination for the response.
   final PageResponse? pagination;
+
+  factory GetValidatorSetByHeightResponse.fromRpc(Map<String, dynamic> json) {
+    return GetValidatorSetByHeightResponse(
+      validators: (json["validators"] as List?)
+              ?.map((e) => CosmosTendermintValidator.fromRpc(e))
+              .toList() ??
+          [],
+      blockHeight: BigintUtils.tryParse(json["block_height"]),
+      pagination: json["pagination"] == null
+          ? null
+          : PageResponse.fromRpc(json["pagination"]),
+    );
+  }
+
   GetValidatorSetByHeightResponse(
       {this.blockHeight,
-      required List<CosmosTendermintValidator> validator,
+      required List<CosmosTendermintValidator> validators,
       this.pagination})
-      : validator = validator.immutable;
+      : validators = validators.immutable;
   factory GetValidatorSetByHeightResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GetValidatorSetByHeightResponse(
         blockHeight: decode.getField(1),
-        validator: decode
+        validators: decode
             .getFields<List<int>>(2)
             .map((e) => CosmosTendermintValidator.deserialize(e))
             .toList(),
@@ -37,15 +52,15 @@ class GetValidatorSetByHeightResponse extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "block_height": blockHeight?.toString(),
-      "validator": validator.map((e) => e.toJson()).toList(),
+      "validator": validators.map((e) => e.toJson()).toList(),
       "pagination": pagination?.toJson()
     };
   }
 
   @override
-  String get typeUrl =>
-      BaseTendermintV1beta1Types.getValidatorSetByHeightResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      BaseTendermintV1beta1Types.getValidatorSetByHeightResponse;
 
   @override
-  List get values => [blockHeight, validator, pagination];
+  List get values => [blockHeight, validators, pagination];
 }

@@ -11,6 +11,16 @@ class StringEvent extends CosmosMessage {
   final List<Attribute> attributes;
   StringEvent({this.type, required List<Attribute> attributes})
       : attributes = attributes.immutable;
+  factory StringEvent.fromRpc(Map<String, dynamic> json) {
+    return StringEvent(
+      type: json["type"],
+      attributes: (json["attributes"] as List?)
+              ?.map((e) => Attribute.fromRpc(e))
+              .toList() ??
+          [],
+    );
+  }
+
   factory StringEvent.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return StringEvent(
@@ -32,7 +42,7 @@ class StringEvent extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => BaseAbciV1beta1.stringEvent.typeUrl;
+  TypeUrl get typeUrl => BaseAbciV1beta1.stringEvent;
 
   @override
   List get values => [type, attributes];

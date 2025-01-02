@@ -26,8 +26,7 @@ class OsmosisGammQueryTotalSharesResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisGammV1beta1Types.queryTotalSharesResponse.typeUrl;
+  TypeUrl get typeUrl => OsmosisGammV1beta1Types.queryTotalSharesResponse;
 
   @override
   List get values => [totalShares];

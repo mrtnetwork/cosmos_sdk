@@ -1,6 +1,7 @@
 import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_slashing_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/utils.dart';
 
 /// Params represents the parameters used for by the slashing module.
 class SlashingParams extends CosmosMessage {
@@ -9,6 +10,19 @@ class SlashingParams extends CosmosMessage {
   final ProtobufDuration downtimeJailDuration;
   final List<int> slashFractionDoubleSign;
   final List<int> slashFractionDowntime;
+
+  factory SlashingParams.fromRpc(Map<String, dynamic> json) {
+    return SlashingParams(
+      minSignedPerWindow: CosmosUtils.toBytes(json["min_signed_per_window"]),
+      signedBlocksWindow: BigintUtils.tryParse(json["signed_blocks_window"]),
+      downtimeJailDuration:
+          ProtobufDuration.fromString(json["downtime_jail_duration"]),
+      slashFractionDoubleSign:
+          CosmosUtils.toBytes(json["slash_fraction_double_sign"]),
+      slashFractionDowntime:
+          CosmosUtils.toBytes(json["slash_fraction_downtime"]),
+    );
+  }
 
   SlashingParams(
       {this.signedBlocksWindow,
@@ -38,16 +52,16 @@ class SlashingParams extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "signed_blocks_window": signedBlocksWindow?.toString(),
-      "min_signed_per_window": BytesUtils.toHexString(minSignedPerWindow),
+      "min_signed_per_window": CosmosUtils.toBase64(minSignedPerWindow),
       "slash_fraction_double_sign":
-          BytesUtils.toHexString(slashFractionDoubleSign),
-      "slash_fraction_downtime": BytesUtils.toHexString(slashFractionDowntime),
+          CosmosUtils.toBase64(slashFractionDoubleSign),
+      "slash_fraction_downtime": CosmosUtils.toBase64(slashFractionDowntime),
       "downtime_jail_duration": downtimeJailDuration.toJson()
     };
   }
 
   @override
-  String get typeUrl => SlashingV1beta1Types.slashingParams.typeUrl;
+  TypeUrl get typeUrl => SlashingV1beta1Types.slashingParams;
 
   @override
   List get values => [

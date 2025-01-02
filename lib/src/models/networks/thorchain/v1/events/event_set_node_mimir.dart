@@ -23,7 +23,7 @@ class ThorchainEventSetNodeMimir extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.eventSetNodeMimir.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.eventSetNodeMimir;
 
   @override
   List get values => [key, value, address];

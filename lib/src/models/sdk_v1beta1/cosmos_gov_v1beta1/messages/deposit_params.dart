@@ -12,6 +12,15 @@ class GovDepositParams extends CosmosMessage {
   /// Maximum period for Atom holders to deposit on a proposal. Initial value: 2
   /// months.
   final ProtobufDuration maxDepositPeriod;
+  factory GovDepositParams.fromRpc(Map<String, dynamic> json) {
+    return GovDepositParams(
+      minDeposit: (json["min_deposit"] as List?)
+              ?.map((e) => Coin.fromRpc(e))
+              .toList() ??
+          [],
+      maxDepositPeriod: ProtobufDuration.fromString(json["max_deposit_period"]),
+    );
+  }
   GovDepositParams(
       {required List<Coin> minDeposit, required this.maxDepositPeriod})
       : minDeposit = minDeposit.immutable;
@@ -35,7 +44,7 @@ class GovDepositParams extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => GovV1beta1types.govDepositParams.typeUrl;
+  TypeUrl get typeUrl => GovV1beta1types.govDepositParams;
 
   @override
   List get values => [minDeposit, maxDepositPeriod];

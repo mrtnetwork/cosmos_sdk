@@ -1,6 +1,6 @@
 import 'package:cosmos_sdk/src/address/address.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_v1beta1/messages/coin.dart';
-import 'package:cosmos_sdk/src/crypto/public_key/public_key.dart';
+import 'package:cosmos_sdk/src/crypto/keypair/public_key.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_staking_v1beta1/types/types.dart';
@@ -21,7 +21,7 @@ class MsgCreateValidator extends CosmosMessage
   /// address bytes refer to the same account while creating validator (defer only in bech32 notation).
   final CosmosBaseAddress? delegatorAddress;
   final CosmosBaseAddress? validatorAddress;
-  final CosmosPublicKeyInfo? pubkey;
+  final CosmosPublicKey? pubkey;
   final Coin value;
 
   const MsgCreateValidator({
@@ -45,8 +45,8 @@ class MsgCreateValidator extends CosmosMessage
         validatorAddress: decode
             .getResult(5)
             ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        pubkey: decode.getResult(6)?.to<CosmosPublicKeyInfo, List<int>>(
-            (e) => CosmosPublicKeyInfo.fromAnyBytes(e)),
+        pubkey: decode.getResult(6)?.to<CosmosPublicKey, List<int>>(
+            (e) => CosmosPublicKey.fromAnyBytes(e)),
         value: Coin.deserialize(decode.getField(7)));
   }
 
@@ -66,7 +66,7 @@ class MsgCreateValidator extends CosmosMessage
   @override
   List<int> get fieldIds => [1, 2, 3, 4, 5, 6, 7];
   @override
-  String get typeUrl => StakingV1beta1Types.msgCreateValidator.typeUrl;
+  TypeUrl get typeUrl => StakingV1beta1Types.msgCreateValidator;
 
   @override
   List get values => [
@@ -80,13 +80,13 @@ class MsgCreateValidator extends CosmosMessage
       ];
 
   @override
-  String get service => StakingV1beta1Types.createValidator.typeUrl;
+  TypeUrl get service => StakingV1beta1Types.createValidator;
   @override
   List<String?> get signers => [validatorAddress?.address];
 
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        StakingV1beta1Types.msgCreateValidatorResponse.typeUrl);
+        StakingV1beta1Types.msgCreateValidatorResponse);
   }
 }

@@ -24,15 +24,12 @@ class QueryTotalSupplyRequest extends CosmosMessage
   List<int> get fieldIds => [1];
 
   @override
-  String get queryPath => BankV1beta1Types.totalSupply.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {"pagination": pagination?.toJson()};
   }
 
   @override
-  String get typeUrl => BankV1beta1Types.totalSupplyRequest.typeUrl;
+  TypeUrl get typeUrl => BankV1beta1Types.totalSupplyRequest;
 
   @override
   List get values => [pagination];
@@ -41,4 +38,13 @@ class QueryTotalSupplyRequest extends CosmosMessage
   QueryTotalSupplyResponse onResponse(List<int> bytes) {
     return QueryTotalSupplyResponse.deserialize(bytes);
   }
+
+  @override
+  QueryTotalSupplyResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryTotalSupplyResponse.fromRpc(json);
+  }
+
+  @override
+  Map<String, String?> get queryParameters =>
+      {...pagination?.queryParameters ?? {}};
 }

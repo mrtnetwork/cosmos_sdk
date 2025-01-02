@@ -7,9 +7,9 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class QueryNFTSupplyByQueryStringRequest extends CosmosMessage
     with QueryMessage<QueryNFTSupplyByQueryStringResponse> {
   /// class_id associated with the nft.
-  final String? classId;
+  final String classId;
 
-  const QueryNFTSupplyByQueryStringRequest({this.classId});
+  const QueryNFTSupplyByQueryStringRequest({required this.classId});
   factory QueryNFTSupplyByQueryStringRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryNFTSupplyByQueryStringRequest(classId: decode.getField(1));
@@ -24,11 +24,7 @@ class QueryNFTSupplyByQueryStringRequest extends CosmosMessage
   List<int> get fieldIds => [1];
 
   @override
-  String get queryPath => NFTV1beta1Types.nftSupplyByQueryString.typeUrl;
-
-  @override
-  String get typeUrl =>
-      NFTV1beta1Types.queryNFTSupplyByQueryStringRequest.typeUrl;
+  TypeUrl get typeUrl => NFTV1beta1Types.queryNFTSupplyByQueryStringRequest;
 
   @override
   List get values => [classId];
@@ -37,4 +33,13 @@ class QueryNFTSupplyByQueryStringRequest extends CosmosMessage
   QueryNFTSupplyByQueryStringResponse onResponse(List<int> bytes) {
     return QueryNFTSupplyByQueryStringResponse.deserialize(bytes);
   }
+
+  @override
+  QueryNFTSupplyByQueryStringResponse onJsonResponse(
+      Map<String, dynamic> json) {
+    return QueryNFTSupplyByQueryStringResponse.fromRpc(json);
+  }
+
+  @override
+  Map<String, String?> get queryParameters => {'class_id': classId};
 }

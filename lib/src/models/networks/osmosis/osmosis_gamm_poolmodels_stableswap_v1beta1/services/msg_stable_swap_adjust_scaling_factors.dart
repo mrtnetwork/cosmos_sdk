@@ -35,12 +35,12 @@ class OsmosisGammPoolmodelsStableSwapMsgStableSwapAdjustScalingFactors
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
         OsmosisGammPoolmodelsStableswaPV1beta1Types
-            .msgStableSwapAdjustScalingFactorsResponse.typeUrl);
+            .msgStableSwapAdjustScalingFactorsResponse);
   }
 
   @override
-  String get service => OsmosisGammPoolmodelsStableswaPV1beta1Types
-      .stableSwapAdjustScalingFactors.typeUrl;
+  TypeUrl get service => OsmosisGammPoolmodelsStableswaPV1beta1Types
+      .stableSwapAdjustScalingFactors;
 
   @override
   List<String?> get signers => [sender];
@@ -55,8 +55,8 @@ class OsmosisGammPoolmodelsStableSwapMsgStableSwapAdjustScalingFactors
   }
 
   @override
-  String get typeUrl => OsmosisGammPoolmodelsStableswaPV1beta1Types
-      .msgStableSwapAdjustScalingFactors.typeUrl;
+  TypeUrl get typeUrl => OsmosisGammPoolmodelsStableswaPV1beta1Types
+      .msgStableSwapAdjustScalingFactors;
 
   @override
   List get values => [sender, poolId, scalingFactors];

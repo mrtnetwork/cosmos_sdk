@@ -50,12 +50,12 @@ class OsmosisGammPoolmodelsBalancerMsgCreateBalancerPool extends CosmosMessage
   List get values => [sender, poolParams, poolAssets, futurePoolGovernor];
 
   @override
-  String get typeUrl =>
-      OsmosisGammPoolmodelsBalancerV1beta1Types.msgCreateBalancerPool.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisGammPoolmodelsBalancerV1beta1Types.msgCreateBalancerPool;
 
   @override
-  String get service =>
-      OsmosisGammPoolmodelsBalancerV1beta1Types.createBalancerPool.typeUrl;
+  TypeUrl get service =>
+      OsmosisGammPoolmodelsBalancerV1beta1Types.createBalancerPool;
 
   @override
   List<String?> get signers => [sender];

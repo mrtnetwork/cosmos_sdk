@@ -43,15 +43,15 @@ class OsmosisSuperfluidMsgCreateFullRangePositionAndSuperfluidDelegate
   }
 
   @override
-  String get typeUrl => OsmosisSuperfluidTypes
-      .msgCreateFullRangePositionAndSuperfluidDelegate.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisSuperfluidTypes.msgCreateFullRangePositionAndSuperfluidDelegate;
 
   @override
   List get values => [sender, coins, valAddr, poolId];
 
   @override
-  String get service => OsmosisSuperfluidTypes
-      .createFullRangePositionAndSuperfluidDelegate.typeUrl;
+  TypeUrl get service =>
+      OsmosisSuperfluidTypes.createFullRangePositionAndSuperfluidDelegate;
 
   @override
   List<String?> get signers => [sender];

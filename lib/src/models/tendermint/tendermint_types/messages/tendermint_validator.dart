@@ -37,7 +37,7 @@ class TendermintValidator extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => TendermintTypes.tendermintValidator.typeUrl;
+  TypeUrl get typeUrl => TendermintTypes.tendermintValidator;
 
   @override
   List get values => [address, pubkey, votingPower, proposerPriority];

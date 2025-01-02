@@ -6,6 +6,9 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class SlashingQueryParamsResponse extends CosmosMessage {
   final SlashingParams params;
   const SlashingQueryParamsResponse(this.params);
+  factory SlashingQueryParamsResponse.fromRpc(Map<String, dynamic> json) {
+    return SlashingQueryParamsResponse(SlashingParams.fromRpc(json["params"]));
+  }
   factory SlashingQueryParamsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return SlashingQueryParamsResponse(
@@ -21,8 +24,7 @@ class SlashingQueryParamsResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      SlashingV1beta1Types.slashingQueryParamsResponse.typeUrl;
+  TypeUrl get typeUrl => SlashingV1beta1Types.slashingQueryParamsResponse;
 
   @override
   List get values => [params];

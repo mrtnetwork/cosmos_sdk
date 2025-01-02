@@ -32,7 +32,7 @@ class TxMsgData extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => BaseAbciV1beta1.txMsgData.typeUrl;
+  TypeUrl get typeUrl => BaseAbciV1beta1.txMsgData;
 
   @override
   List get values => [data, msgResponses];

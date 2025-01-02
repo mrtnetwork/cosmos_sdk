@@ -20,15 +20,12 @@ class QueryTotalRecvFeesRequest extends CosmosMessage
   List<int> get fieldIds => [1];
 
   @override
-  String get queryPath => IbcTypes.totalRecvFees.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {"packet_id": packetId.toJson()};
   }
 
   @override
-  String get typeUrl => IbcTypes.queryTotalRecvFeesRequest.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryTotalRecvFeesRequest;
 
   @override
   List get values => [packetId];
@@ -37,4 +34,13 @@ class QueryTotalRecvFeesRequest extends CosmosMessage
   QueryTotalRecvFeesResponse onResponse(List<int> bytes) {
     return QueryTotalRecvFeesResponse.deserialize(bytes);
   }
+
+  @override
+  QueryTotalRecvFeesResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryTotalRecvFeesResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters =>
+      [packetId.channelId, packetId.portId, packetId.sequence.toString()];
 }

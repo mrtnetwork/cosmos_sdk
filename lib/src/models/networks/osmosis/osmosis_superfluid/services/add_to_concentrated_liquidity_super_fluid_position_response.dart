@@ -46,8 +46,8 @@ class OsmosisSuperfluidMsgAddToConcentratedLiquiditySuperfluidPositionResponse
   }
 
   @override
-  String get typeUrl => OsmosisSuperfluidTypes
-      .msgAddToConcentratedLiquiditySuperfluidPositionResponse.typeUrl;
+  TypeUrl get typeUrl => OsmosisSuperfluidTypes
+      .msgAddToConcentratedLiquiditySuperfluidPositionResponse;
 
   @override
   List get values => [positionId, amount0, amount1, lockId, newLiquidity];

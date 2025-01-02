@@ -11,6 +11,18 @@ class QueryIncentivizedPacketsForChannelResponse extends CosmosMessage {
 
   /// pagination defines the pagination in the response.
   final PageResponse? pagination;
+  factory QueryIncentivizedPacketsForChannelResponse.fromRpc(
+      Map<String, dynamic> json) {
+    return QueryIncentivizedPacketsForChannelResponse(
+      incentivizedPackets: (json["incentivized_packets"] as List?)
+              ?.map((e) => IbcFeeIdentifiedPacketFees.fromRpc(e))
+              .toList() ??
+          [],
+      pagination: json["pagination"] == null
+          ? null
+          : PageResponse.fromRpc(json["pagination"]),
+    );
+  }
   QueryIncentivizedPacketsForChannelResponse(
       {required List<IbcFeeIdentifiedPacketFees> incentivizedPackets,
       this.pagination})
@@ -42,8 +54,7 @@ class QueryIncentivizedPacketsForChannelResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      IbcTypes.queryIncentivizedPacketsForChannelResponse.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryIncentivizedPacketsForChannelResponse;
 
   @override
   List get values => [incentivizedPackets, pagination];

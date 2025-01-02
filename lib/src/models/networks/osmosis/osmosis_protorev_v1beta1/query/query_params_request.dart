@@ -3,9 +3,7 @@ import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_protorev_v1beta1/
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
 class OsmosisProtorevQueryParamsRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisProtorevQueryParamsResponse>,
-        RPCMessage<OsmosisProtorevQueryParamsResponse> {
+    with QueryMessage<OsmosisProtorevQueryParamsResponse> {
   const OsmosisProtorevQueryParamsRequest();
   factory OsmosisProtorevQueryParamsRequest.deserialize(List<int> bytes) {
     return const OsmosisProtorevQueryParamsRequest();
@@ -33,14 +31,8 @@ class OsmosisProtorevQueryParamsRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl => OsmosisProtorevV1beta1Types.queryParamsRequest.typeUrl;
-
-  @override
-  String get queryPath => OsmosisProtorevV1beta1Types.queryParams.typeUrl;
+  TypeUrl get typeUrl => OsmosisProtorevV1beta1Types.queryParamsRequest;
 
   @override
   Map<String, String?> get queryParameters => {};
-
-  @override
-  String get rpcPath => OsmosisProtorevV1beta1Types.queryParams.rpcUrl();
 }

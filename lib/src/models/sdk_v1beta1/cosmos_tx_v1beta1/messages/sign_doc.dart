@@ -52,5 +52,5 @@ class SignDoc extends CosmosMessage {
   @override
   List get values => [bodyBytes, authInfoBytes, chainId, accountNumber];
   @override
-  String get typeUrl => TxV1beta1Types.signDoc.typeUrl;
+  TypeUrl get typeUrl => TxV1beta1Types.signDoc;
 }

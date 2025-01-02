@@ -4,9 +4,7 @@ import 'query_get_proto_rev_pool_response.dart';
 
 /// GetProtoRevPool queries the pool id used via the highest liquidity method for arbitrage route building given a pair of denominations
 class OsmosisProtorevQueryGetProtoRevPoolRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisProtorevQueryGetProtoRevPoolResponse>,
-        RPCMessage<OsmosisProtorevQueryGetProtoRevPoolResponse> {
+    with QueryMessage<OsmosisProtorevQueryGetProtoRevPoolResponse> {
   /// base_denom is the base denom set in protorev for the denom pair to pool
   /// mapping
   final String? baseDenom;
@@ -45,15 +43,9 @@ class OsmosisProtorevQueryGetProtoRevPoolRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      OsmosisProtorevV1beta1Types.queryGetProtoRevPoolRequest.typeUrl;
-
-  @override
-  String get queryPath => OsmosisProtorevV1beta1Types.getProtoRevPool.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisProtorevV1beta1Types.queryGetProtoRevPoolRequest;
 
   @override
   Map<String, String?> get queryParameters => {};
-
-  @override
-  String get rpcPath => OsmosisProtorevV1beta1Types.getProtoRevPool.rpcUrl();
 }

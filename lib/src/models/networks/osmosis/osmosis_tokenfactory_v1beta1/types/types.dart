@@ -1,11 +1,8 @@
-import 'package:cosmos_sdk/src/models/core/type_url/type_url.dart';
+import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 
 class OsmosisTokenFactoryV1beta1Types extends TypeUrl {
-  @override
-  final String typeUrl;
-  @override
-  final String? rpc;
-  const OsmosisTokenFactoryV1beta1Types._(this.typeUrl, {this.rpc});
+  const OsmosisTokenFactoryV1beta1Types._(super.typeUrl,
+      {super.query, super.rpc});
 
   static const OsmosisTokenFactoryV1beta1Types params =
       OsmosisTokenFactoryV1beta1Types._("/osmosis.tokenfactory.v1beta1.Params");
@@ -58,39 +55,31 @@ class OsmosisTokenFactoryV1beta1Types extends TypeUrl {
 
   static const OsmosisTokenFactoryV1beta1Types queryParamsRequest =
       OsmosisTokenFactoryV1beta1Types._(
-          "/osmosis.tokenfactory.v1beta1.QueryParamsRequest");
+          "/osmosis.tokenfactory.v1beta1.QueryParamsRequest",
+          query: "/osmosis.tokenfactory.v1beta1.Query/Params",
+          rpc: "/osmosis/tokenfactory/v1beta1/params");
   static const OsmosisTokenFactoryV1beta1Types queryParamsResponse =
       OsmosisTokenFactoryV1beta1Types._(
           "/osmosis.tokenfactory.v1beta1.QueryParamsResponse");
 
   static const OsmosisTokenFactoryV1beta1Types
       queryDenomAuthorityMetadataRequest = OsmosisTokenFactoryV1beta1Types._(
-          "/osmosis.tokenfactory.v1beta1.QueryDenomAuthorityMetadataRequest");
+          "/osmosis.tokenfactory.v1beta1.QueryDenomAuthorityMetadataRequest",
+          query: "/osmosis.tokenfactory.v1beta1.Query/DenomAuthorityMetadata",
+          rpc:
+              "/osmosis/tokenfactory/v1beta1/denoms/:denom/authority_metadata");
   static const OsmosisTokenFactoryV1beta1Types
       queryDenomAuthorityMetadataResponse = OsmosisTokenFactoryV1beta1Types._(
           "/osmosis.tokenfactory.v1beta1.QueryDenomAuthorityMetadataResponse");
 
   static const OsmosisTokenFactoryV1beta1Types queryDenomsFromCreatorRequest =
       OsmosisTokenFactoryV1beta1Types._(
-          "/osmosis.tokenfactory.v1beta1.QueryDenomsFromCreatorRequest");
+          "/osmosis.tokenfactory.v1beta1.QueryDenomsFromCreatorRequest",
+          query: "/osmosis.tokenfactory.v1beta1.Query/DenomsFromCreator",
+          rpc: "/osmosis/tokenfactory/v1beta1/denoms_from_creator/:creator");
   static const OsmosisTokenFactoryV1beta1Types queryDenomsFromCreatorResponse =
       OsmosisTokenFactoryV1beta1Types._(
           "/osmosis.tokenfactory.v1beta1.QueryDenomsFromCreatorResponse");
-
-  /// query
-  static const OsmosisTokenFactoryV1beta1Types denomsFromCreator =
-      OsmosisTokenFactoryV1beta1Types._(
-          "/osmosis.tokenfactory.v1beta1.Query/DenomsFromCreator",
-          rpc: "/osmosis/tokenfactory/v1beta1/denoms_from_creator/:creator");
-  static const OsmosisTokenFactoryV1beta1Types queryDenomAuthorityMetadata =
-      OsmosisTokenFactoryV1beta1Types._(
-          "/osmosis.tokenfactory.v1beta1.Query/DenomAuthorityMetadata",
-          rpc:
-              "/osmosis/tokenfactory/v1beta1/denoms/:denom/authority_metadata");
-  static const OsmosisTokenFactoryV1beta1Types queryParams =
-      OsmosisTokenFactoryV1beta1Types._(
-          "/osmosis.tokenfactory.v1beta1.Query/Params",
-          rpc: "/osmosis/tokenfactory/v1beta1/params");
 
   /// services
 

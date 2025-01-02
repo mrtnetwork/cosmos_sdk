@@ -8,36 +8,30 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class DistributionQueryValidatorDistributionInfoRequest extends CosmosMessage
     with QueryMessage<DistributionQueryValidatorDistributionInfoResponse> {
   /// validator_address defines the validator address to query for.
-  final CosmosBaseAddress? validatorAddress;
+  final CosmosBaseAddress validatorAddress;
   const DistributionQueryValidatorDistributionInfoRequest(
-      {this.validatorAddress});
+      {required this.validatorAddress});
   factory DistributionQueryValidatorDistributionInfoRequest.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionQueryValidatorDistributionInfoRequest(
-        validatorAddress: decode
-            .getResult(1)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)));
+        validatorAddress: CosmosBaseAddress(decode.getField(1)));
   }
 
   @override
   List<int> get fieldIds => [1];
 
   @override
-  String get queryPath =>
-      DistributionV1beta1Types.distributionValidatorDistributionInfo.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
-    return {"validator_address": validatorAddress?.address};
+    return {"validator_address": validatorAddress.address};
   }
 
   @override
-  String get typeUrl => DistributionV1beta1Types
-      .distributionQueryValidatorDistributionInfoRequest.typeUrl;
+  TypeUrl get typeUrl => DistributionV1beta1Types
+      .distributionQueryValidatorDistributionInfoRequest;
 
   @override
-  List get values => [validatorAddress?.address];
+  List get values => [validatorAddress.address];
 
   @override
   DistributionQueryValidatorDistributionInfoResponse onResponse(
@@ -45,4 +39,13 @@ class DistributionQueryValidatorDistributionInfoRequest extends CosmosMessage
     return DistributionQueryValidatorDistributionInfoResponse.deserialize(
         bytes);
   }
+
+  @override
+  DistributionQueryValidatorDistributionInfoResponse onJsonResponse(
+      Map<String, dynamic> json) {
+    return DistributionQueryValidatorDistributionInfoResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters => [validatorAddress.address];
 }

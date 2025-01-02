@@ -82,7 +82,7 @@ class Vote extends CosmosMessage {
   List<int> get fieldIds => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   @override
-  String get typeUrl => TendermintTypes.vote.typeUrl;
+  TypeUrl get typeUrl => TendermintTypes.vote;
 
   @override
   List get values => [

@@ -22,7 +22,7 @@ class ThorchainEventPoolBalanceChanged extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.eventPoolBalanceChanged.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.eventPoolBalanceChanged;
 
   @override
   List get values => [poolChange, reason];

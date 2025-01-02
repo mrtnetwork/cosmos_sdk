@@ -26,8 +26,7 @@ class OsmosisPoolincentivesQueryParamsResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisPoolincentivesV1beta1Types.queryParamsResponse.typeUrl;
+  TypeUrl get typeUrl => OsmosisPoolincentivesV1beta1Types.queryParamsResponse;
   @override
   List get values => [params];
 }

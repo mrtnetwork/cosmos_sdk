@@ -20,7 +20,7 @@ class Owner extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.owner.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.owner;
 
   @override
   List get values => [module, name];

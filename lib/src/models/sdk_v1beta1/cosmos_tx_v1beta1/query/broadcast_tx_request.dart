@@ -17,20 +17,25 @@ class BroadcastTxRequest extends CosmosMessage
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get queryPath => TxV1beta1Types.broadcastTx.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {"tx_bytes": BytesUtils.toHexString(txBytes), "mode": mode?.value};
   }
 
   @override
-  String get typeUrl => TxV1beta1Types.broadcastTxRequest.typeUrl;
+  TypeUrl get typeUrl => TxV1beta1Types.broadcastTxRequest;
 
   @override
   List get values => [txBytes, mode?.value];
+
+  @override
+  Map<String, dynamic> get body => toJson();
   @override
   BroadcastTxResponse onResponse(List<int> bytes) {
     return BroadcastTxResponse.deserialize(bytes);
+  }
+
+  @override
+  BroadcastTxResponse onJsonResponse(Map<String, dynamic> json) {
+    return BroadcastTxResponse.fromRpc(json);
   }
 }

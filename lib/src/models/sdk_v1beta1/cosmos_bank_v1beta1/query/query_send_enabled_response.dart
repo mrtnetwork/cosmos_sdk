@@ -12,7 +12,17 @@ class QuerySendEnabledResponse extends CosmosMessage {
   /// pagination defines the pagination in the response. This field is only
   /// populated if the denoms field in the request is empty.
   final PageResponse? pagination;
-
+  factory QuerySendEnabledResponse.fromRpc(Map<String, dynamic> json) {
+    return QuerySendEnabledResponse(
+      pagination: json["pagination"] == null
+          ? null
+          : PageResponse.fromRpc(json["pagination"]),
+      sendEnabled: (json["send_enabled"] as List?)
+              ?.map((e) => SendEnabled.fromRpc(e))
+              .toList() ??
+          [],
+    );
+  }
   const QuerySendEnabledResponse({required this.sendEnabled, this.pagination});
   factory QuerySendEnabledResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -37,7 +47,7 @@ class QuerySendEnabledResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => BankV1beta1Types.sendEnabledResponse.typeUrl;
+  TypeUrl get typeUrl => BankV1beta1Types.sendEnabledResponse;
 
   @override
   List get values => [sendEnabled, pagination];

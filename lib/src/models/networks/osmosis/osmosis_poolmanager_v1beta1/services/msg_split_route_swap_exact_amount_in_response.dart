@@ -22,8 +22,8 @@ class OsmosisPoolManagerMsgSplitRouteSwapExactAmountInResponse
   }
 
   @override
-  String get typeUrl => OsmosisPoolManagerV1beta1Types
-      .msgSplitRouteSwapExactAmountInResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisPoolManagerV1beta1Types.msgSplitRouteSwapExactAmountInResponse;
 
   @override
   List get values => [tokenOutAmount.toString()];

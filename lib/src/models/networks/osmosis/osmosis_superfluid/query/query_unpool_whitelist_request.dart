@@ -4,9 +4,7 @@ import 'query_unpool_whitelist_response.dart';
 
 /// Params returns the total set of superfluid parameters.
 class OsmosisSuperfluidQueryUnpoolWhitelistRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisSuperfluidQueryUnpoolWhitelistResponse>,
-        RPCMessage<OsmosisSuperfluidQueryUnpoolWhitelistResponse> {
+    with QueryMessage<OsmosisSuperfluidQueryUnpoolWhitelistResponse> {
   const OsmosisSuperfluidQueryUnpoolWhitelistRequest();
   factory OsmosisSuperfluidQueryUnpoolWhitelistRequest.deserialize(
       List<int> bytes) {
@@ -22,20 +20,13 @@ class OsmosisSuperfluidQueryUnpoolWhitelistRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      OsmosisSuperfluidTypes.queryUnpoolWhitelistRequest.typeUrl;
+  TypeUrl get typeUrl => OsmosisSuperfluidTypes.queryUnpoolWhitelistRequest;
 
   @override
   List get values => [];
 
   @override
   Map<String, String?> get queryParameters => {};
-
-  @override
-  String get queryPath => OsmosisSuperfluidTypes.unpoolWhitelist.typeUrl;
-
-  @override
-  String get rpcPath => OsmosisSuperfluidTypes.unpoolWhitelist.rpcUrl();
 
   @override
   OsmosisSuperfluidQueryUnpoolWhitelistResponse onJsonResponse(

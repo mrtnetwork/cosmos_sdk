@@ -17,16 +17,18 @@ class QueryMintParamsRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl => MintV1beta1Types.queryMintParamsRequest.typeUrl;
+  TypeUrl get typeUrl => MintV1beta1Types.queryMintParamsRequest;
 
   @override
   List get values => [];
 
   @override
-  String get queryPath => MintV1beta1Types.queryMintParams.typeUrl;
-
-  @override
   QueryMintParamsResponse onResponse(List<int> bytes) {
     return QueryMintParamsResponse.deserialize(bytes);
+  }
+
+  @override
+  QueryMintParamsResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryMintParamsResponse.fromRpc(json);
   }
 }

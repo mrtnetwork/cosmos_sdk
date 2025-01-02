@@ -1,15 +1,24 @@
 import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 import 'package:cosmos_sdk/src/provider/tendermint/core/core.dart';
+import 'package:cosmos_sdk/src/utils/utils.dart';
 
 class TendermintRequestRPCMessage<Response>
-    extends TendermintRequestParam<Response, Map<String, dynamic>> {
+    extends TendermintRequest<Response, Map<String, dynamic>> {
   TendermintRequestRPCMessage({required this.request});
 
-  final RPCMessage<Response> request;
+  final QueryMessage<Response> request;
+  String rpcUrl({List<dynamic> pathParameters = const []}) {
+    final paths = CosmosUtils.extractParams(request.typeUrl.rpc!);
+    String params = request.typeUrl.rpc!;
+    for (int i = 0; i < pathParameters.length; i++) {
+      params = params.replaceFirst(paths[i], pathParameters[i].toString());
+    }
+    return params;
+  }
 
   /// Query the application for some information.
   @override
-  String get method => request.rpcPath;
+  String get method => rpcUrl(pathParameters: request.pathParameters);
 
   @override
   List<String> get pathParameters => [];

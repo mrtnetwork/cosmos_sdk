@@ -9,6 +9,9 @@ class GetSyncingResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GetSyncingResponse(syncing: decode.getField(1));
   }
+  factory GetSyncingResponse.fromRpc(Map<String, dynamic> json) {
+    return GetSyncingResponse(syncing: json["syncing"]);
+  }
 
   @override
   List<int> get fieldIds => [1];
@@ -19,7 +22,7 @@ class GetSyncingResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => BaseTendermintV1beta1Types.getSyncingResponse.typeUrl;
+  TypeUrl get typeUrl => BaseTendermintV1beta1Types.getSyncingResponse;
 
   @override
   List get values => [syncing];

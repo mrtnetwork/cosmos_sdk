@@ -35,8 +35,7 @@ class OsmosisSuperfluidQueryUnpoolWhitelistResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisSuperfluidTypes.queryUnpoolWhitelistResponse.typeUrl;
+  TypeUrl get typeUrl => OsmosisSuperfluidTypes.queryUnpoolWhitelistResponse;
 
   @override
   List get values => [poolIds];

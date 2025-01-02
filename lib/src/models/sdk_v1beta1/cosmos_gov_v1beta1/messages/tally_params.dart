@@ -2,6 +2,7 @@ import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_gov_v1beta1/types/types.dart';
 
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/utils.dart';
 
 /// TallyParams defines the params for tallying votes on governance proposals.
 class GovTallyParams extends CosmosMessage {
@@ -15,6 +16,14 @@ class GovTallyParams extends CosmosMessage {
   /// Minimum value of Veto votes to Total votes ratio for proposal to be
   /// vetoed. Default value: 1/3.
   final List<int> vetoThreshold;
+
+  factory GovTallyParams.fromRpc(Map<String, dynamic> json) {
+    return GovTallyParams(
+      quorum: CosmosUtils.toBytes(json["quorum"]),
+      threshold: CosmosUtils.toBytes(json["threshold"]),
+      vetoThreshold: CosmosUtils.toBytes(json["veto_threshold"]),
+    );
+  }
   GovTallyParams(
       {required List<int> quorum,
       required List<int> threshold,
@@ -36,14 +45,14 @@ class GovTallyParams extends CosmosMessage {
   @override
   Map<String, dynamic> toJson() {
     return {
-      "quorum": BytesUtils.toHexString(quorum),
-      "threshold": BytesUtils.toHexString(threshold),
-      "veto_threshold": BytesUtils.toHexString(vetoThreshold)
+      "quorum": CosmosUtils.toBase64(quorum),
+      "threshold": CosmosUtils.toBase64(threshold),
+      "veto_threshold": CosmosUtils.toBase64(vetoThreshold)
     };
   }
 
   @override
-  String get typeUrl => GovV1beta1types.govTallyParams.typeUrl;
+  TypeUrl get typeUrl => GovV1beta1types.govTallyParams;
 
   @override
   List get values => [quorum, threshold, vetoThreshold];

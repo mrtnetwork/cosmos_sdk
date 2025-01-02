@@ -40,5 +40,5 @@ class ModuleCredential extends CosmosMessage {
   List get values => [moduleName, derivationKeys];
 
   @override
-  String get typeUrl => AuthV1beta1Types.moduleCredential.typeUrl;
+  TypeUrl get typeUrl => AuthV1beta1Types.moduleCredential;
 }

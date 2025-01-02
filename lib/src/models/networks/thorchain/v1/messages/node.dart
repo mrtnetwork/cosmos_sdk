@@ -31,7 +31,7 @@ class ThorchainNode extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.node.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.node;
 
   @override
   List get values => [pubkey, blameData, blameSignature];

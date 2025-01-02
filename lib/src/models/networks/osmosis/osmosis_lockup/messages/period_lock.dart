@@ -74,7 +74,7 @@ class OsmosisLockupPeriodLock extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisLockupTypes.periodLock.typeUrl;
+  TypeUrl get typeUrl => OsmosisLockupTypes.periodLock;
 
   @override
   List get values => [id, owner, duration, endTime, coins];

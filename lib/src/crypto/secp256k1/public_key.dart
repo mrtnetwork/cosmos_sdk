@@ -1,13 +1,10 @@
 import 'package:blockchain_utils/blockchain_utils.dart';
-import 'package:cosmos_sdk/src/address/address/addr_utils.dart';
-import 'package:cosmos_sdk/src/address/address/address.dart';
-import 'package:cosmos_sdk/src/address/address/address_const.dart';
-import 'package:cosmos_sdk/src/crypto/public_key/public_key.dart';
-import 'package:cosmos_sdk/src/crypto/ed25519/types/types.dart';
+import 'package:cosmos_sdk/src/crypto/keypair/public_key.dart';
+import 'package:cosmos_sdk/src/crypto/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 import 'package:cosmos_sdk/src/protobuf/codec/decoder.dart';
 
-class CosmosSecp256K1PublicKey extends CosmosPublicKeyInfo {
+class CosmosSecp256K1PublicKey extends CosmosPublicKey {
   final Secp256k1PublicKeyEcdsa _publicKey;
   const CosmosSecp256K1PublicKey._(this._publicKey);
   factory CosmosSecp256K1PublicKey.fromBytes(List<int> keyBytes) {
@@ -22,30 +19,26 @@ class CosmosSecp256K1PublicKey extends CosmosPublicKeyInfo {
     return CosmosSecp256K1PublicKey._(
         Secp256k1PublicKeyEcdsa.fromBytes(decode.getField(1)));
   }
+  @override
   List<int> toBytes({bool compressed = true}) {
     if (compressed) return _publicKey.compressed;
     return _publicKey.uncompressed;
   }
 
-  CosmosBaseAddress toAddresss({String hrp = CosmosAddrConst.accHRP}) {
-    return CosmosBaseAddress.fromBytes(
-        CosmosAddrUtils.secp256k1PubKeyToAddress(toBytes()),
-        hrp: hrp);
-  }
-
   @override
   List<int> get fieldIds => [1];
-
+  @override
+  List get values => [toBytes()];
   @override
   Map<String, dynamic> toJson() {
     return {"key": _publicKey.toHex()};
   }
 
   @override
-  List get values => [toBytes()];
+  TypeUrl get typeUrl => CosmosCryptoKeysTypes.secp256k1Publickey;
 
   @override
-  String get typeUrl => CryptoTypes.secp256k1Publickey.typeUrl;
+  CosmosKeysAlgs get algorithm => CosmosKeysAlgs.secp256k1;
   @override
   String toString() {
     return _publicKey.toHex();

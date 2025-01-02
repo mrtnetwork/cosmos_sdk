@@ -34,8 +34,7 @@ class OsmosisDowntimeDetectorGenesisState extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisDowntimeDetectorV1beta1Types.genesisState.typeUrl;
+  TypeUrl get typeUrl => OsmosisDowntimeDetectorV1beta1Types.genesisState;
 
   @override
   List get values => [downtimes, lastBlockTime];

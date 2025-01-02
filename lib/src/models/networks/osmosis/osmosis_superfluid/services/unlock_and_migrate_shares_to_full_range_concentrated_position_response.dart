@@ -37,8 +37,8 @@ class OsmosisSuperfluidMsgUnlockAndMigrateSharesToFullRangeConcentratedPositionR
   }
 
   @override
-  String get typeUrl => OsmosisSuperfluidTypes
-      .msgUnlockAndMigrateSharesToFullRangeConcentratedPositionResponse.typeUrl;
+  TypeUrl get typeUrl => OsmosisSuperfluidTypes
+      .msgUnlockAndMigrateSharesToFullRangeConcentratedPositionResponse;
 
   @override
   List get values =>

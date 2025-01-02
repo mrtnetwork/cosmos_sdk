@@ -28,7 +28,7 @@ class MsgIBCSoftwareUpgrade extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3];
 
   @override
-  String get service => IbcTypes.iBCSoftwareUpgrade.typeUrl;
+  TypeUrl get service => IbcTypes.iBCSoftwareUpgrade;
 
   @override
   Map<String, dynamic> toJson() {
@@ -40,7 +40,7 @@ class MsgIBCSoftwareUpgrade extends CosmosMessage
   }
 
   @override
-  String get typeUrl => IbcTypes.msgIBCSoftwareUpgrade.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.msgIBCSoftwareUpgrade;
 
   @override
   List get values => [plan, upgradedClientState, signer];
@@ -49,7 +49,6 @@ class MsgIBCSoftwareUpgrade extends CosmosMessage
 
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
-    return EmptyServiceRequestResponse(
-        IbcTypes.msgIBCSoftwareUpgradeResponse.typeUrl);
+    return EmptyServiceRequestResponse(IbcTypes.msgIBCSoftwareUpgradeResponse);
   }
 }

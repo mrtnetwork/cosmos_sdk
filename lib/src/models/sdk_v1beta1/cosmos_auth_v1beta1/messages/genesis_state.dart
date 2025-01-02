@@ -31,7 +31,7 @@ class AuthGenesisState extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => AuthV1beta1Types.authGenesisState.typeUrl;
+  TypeUrl get typeUrl => AuthV1beta1Types.authGenesisState;
 
   @override
   List get values => [params, accounts];

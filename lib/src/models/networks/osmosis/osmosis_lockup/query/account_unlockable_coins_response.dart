@@ -29,8 +29,7 @@ class OsmosisLockupAccountUnlockableCoinsResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisLockupTypes.accountUnlockableCoinsResponse.typeUrl;
+  TypeUrl get typeUrl => OsmosisLockupTypes.accountUnlockableCoinsResponse;
 
   @override
   List get values => [coins];

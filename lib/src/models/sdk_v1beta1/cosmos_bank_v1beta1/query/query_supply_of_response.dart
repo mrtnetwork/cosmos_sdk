@@ -12,6 +12,9 @@ class QuerySupplyOfResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QuerySupplyOfResponse(amount: Coin.deserialize(decode.getField(1)));
   }
+  factory QuerySupplyOfResponse.fromRpc(Map<String, dynamic> json) {
+    return QuerySupplyOfResponse(amount: Coin.fromRpc(json["amount"]));
+  }
   @override
   List<int> get fieldIds => [1];
 
@@ -21,7 +24,7 @@ class QuerySupplyOfResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => BankV1beta1Types.supplyOfResponse.typeUrl;
+  TypeUrl get typeUrl => BankV1beta1Types.supplyOfResponse;
 
   @override
   List get values => [amount];

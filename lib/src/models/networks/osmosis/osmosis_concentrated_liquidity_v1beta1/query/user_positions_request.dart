@@ -4,16 +4,14 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'user_positions_response.dart';
 
 class OsmosisConcentratedLiquidityUserPositionsRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisConcentratedLiquidityUserPositionsResponse>,
-        RPCMessage<OsmosisConcentratedLiquidityUserPositionsResponse> {
-  final String? address;
+    with QueryMessage<OsmosisConcentratedLiquidityUserPositionsResponse> {
+  final String address;
   final BigInt? poolId;
 
   /// pagination defines an optional pagination for the request.
   final PageRequest? pagination;
   OsmosisConcentratedLiquidityUserPositionsRequest({
-    this.address,
+    required this.address,
     this.poolId,
     this.pagination,
   });
@@ -35,12 +33,7 @@ class OsmosisConcentratedLiquidityUserPositionsRequest extends CosmosMessage
   Map<String, String?> get queryParameters => {"pool_id": poolId?.toString()};
 
   @override
-  String get queryPath =>
-      OsmosisConcentratedLiquidityV1beta1Types.userPositions.typeUrl;
-
-  @override
-  String get rpcPath => OsmosisConcentratedLiquidityV1beta1Types.userPositions
-      .rpcUrl(pathParameters: [address]);
+  List<String> get pathParameters => [address];
 
   @override
   Map<String, dynamic> toJson() {
@@ -52,8 +45,8 @@ class OsmosisConcentratedLiquidityUserPositionsRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      OsmosisConcentratedLiquidityV1beta1Types.userPositionsRequest.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisConcentratedLiquidityV1beta1Types.userPositionsRequest;
 
   @override
   List get values => [address, poolId, pagination];

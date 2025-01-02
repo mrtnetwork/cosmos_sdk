@@ -18,7 +18,7 @@ class ThorchainEventVersion extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.eventVersion.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.eventVersion;
 
   @override
   List get values => [version];

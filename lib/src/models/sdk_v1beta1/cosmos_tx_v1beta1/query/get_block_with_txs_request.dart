@@ -9,11 +9,11 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class GetBlockWithTxsRequest extends CosmosMessage
     with QueryMessage<GetBlockWithTxsResponse> {
   /// height is the height of the block to query.
-  final BigInt? height;
+  final BigInt height;
 
   /// pagination defines a pagination for the request.
   final PageRequest? pagination;
-  const GetBlockWithTxsRequest({this.height, this.pagination});
+  const GetBlockWithTxsRequest({required this.height, this.pagination});
   factory GetBlockWithTxsRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GetBlockWithTxsRequest(
@@ -27,15 +27,12 @@ class GetBlockWithTxsRequest extends CosmosMessage
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get queryPath => TxV1beta1Types.getBlockWithTxs.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
-    return {"height": height?.toString(), "pagination": pagination?.toJson()};
+    return {"height": height.toString(), "pagination": pagination?.toJson()};
   }
 
   @override
-  String get typeUrl => TxV1beta1Types.getBlockWithTxsRequest.typeUrl;
+  TypeUrl get typeUrl => TxV1beta1Types.getBlockWithTxsRequest;
 
   @override
   List get values => [height, pagination];
@@ -43,4 +40,14 @@ class GetBlockWithTxsRequest extends CosmosMessage
   GetBlockWithTxsResponse onResponse(List<int> bytes) {
     return GetBlockWithTxsResponse.deserialize(bytes);
   }
+
+  @override
+  GetBlockWithTxsResponse onJsonResponse(Map<String, dynamic> json) {
+    return GetBlockWithTxsResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters => [height.toString()];
+  @override
+  Map<String, String?> get queryParameters => pagination?.queryParameters ?? {};
 }

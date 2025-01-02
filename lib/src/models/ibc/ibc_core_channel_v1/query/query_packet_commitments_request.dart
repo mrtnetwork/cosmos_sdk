@@ -8,15 +8,15 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class QueryPacketCommitmentsRequest extends CosmosMessage
     with QueryMessage<QueryPacketCommitmentsResponse> {
   /// port unique identifier
-  final String? portId;
+  final String portId;
 
   /// channel unique identifier
-  final String? channelId;
+  final String channelId;
 
   /// pagination request
   final PageRequest? pagination;
   const QueryPacketCommitmentsRequest(
-      {this.portId, this.channelId, this.pagination});
+      {required this.portId, required this.channelId, this.pagination});
   factory QueryPacketCommitmentsRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryPacketCommitmentsRequest(
@@ -31,9 +31,6 @@ class QueryPacketCommitmentsRequest extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3];
 
   @override
-  String get queryPath => IbcTypes.packetCommitments.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {
       "port_id": portId,
@@ -43,7 +40,7 @@ class QueryPacketCommitmentsRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl => IbcTypes.queryPacketCommitmentsRequest.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryPacketCommitmentsRequest;
 
   @override
   List get values => [portId, channelId, pagination];
@@ -51,5 +48,10 @@ class QueryPacketCommitmentsRequest extends CosmosMessage
   @override
   QueryPacketCommitmentsResponse onResponse(List<int> bytes) {
     return QueryPacketCommitmentsResponse.deserialize(bytes);
+  }
+
+  @override
+  QueryPacketCommitmentsResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryPacketCommitmentsResponse.fromRpc(json);
   }
 }

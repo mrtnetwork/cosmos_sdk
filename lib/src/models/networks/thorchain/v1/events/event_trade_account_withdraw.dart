@@ -38,7 +38,7 @@ class ThorchainEventTradeAccountWithdraw extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.eventTradeAccountWithdraw.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.eventTradeAccountWithdraw;
 
   @override
   List get values =>

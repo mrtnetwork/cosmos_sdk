@@ -4,7 +4,7 @@ import 'package:cosmos_sdk/src/provider/tendermint/core/tendermint.dart';
 /// Get consensus state
 /// https://docs.tendermint.com/v0.34/rpc/#/Info/consensus_state
 class TendermintRequestConsensusState
-    extends TendermintRequestParam<Map<String, dynamic>, Map<String, dynamic>> {
+    extends TendermintRequest<Map<String, dynamic>, Map<String, dynamic>> {
   TendermintRequestConsensusState();
 
   /// Get consensus state

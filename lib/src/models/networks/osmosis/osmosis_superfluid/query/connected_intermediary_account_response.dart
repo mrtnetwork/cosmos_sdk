@@ -34,8 +34,8 @@ class OsmosisSuperfluidConnectedIntermediaryAccountResponse
   }
 
   @override
-  String get typeUrl =>
-      OsmosisSuperfluidTypes.connectedIntermediaryAccountResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisSuperfluidTypes.connectedIntermediaryAccountResponse;
 
   @override
   List get values => [account];

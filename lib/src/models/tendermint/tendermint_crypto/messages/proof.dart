@@ -38,7 +38,7 @@ class Proof extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => TendermintTypes.proof.typeUrl;
+  TypeUrl get typeUrl => TendermintTypes.proof;
 
   @override
   List get values => [total, index, leafHash, aunts];

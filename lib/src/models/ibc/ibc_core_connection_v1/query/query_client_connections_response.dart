@@ -3,6 +3,7 @@ import 'package:cosmos_sdk/src/models/ibc/ibc_core_client_v1/messages/height.dar
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:blockchain_utils/helper/helper.dart';
+import 'package:cosmos_sdk/src/utils/utils.dart';
 
 /// QueryClientConnectionsResponse is the response type for the Query/ClientConnections RPC method
 class IbcConnectionQueryClientConnectionsResponse extends CosmosMessage {
@@ -14,6 +15,14 @@ class IbcConnectionQueryClientConnectionsResponse extends CosmosMessage {
 
   /// height at which the proof was generated
   final IbcClientHeight proofHeight;
+
+  factory IbcConnectionQueryClientConnectionsResponse.fromRpc(
+      Map<String, dynamic> json) {
+    return IbcConnectionQueryClientConnectionsResponse(
+        proofHeight: IbcClientHeight.fromRpc(json["proof_height"]),
+        connectionPaths: (json["connection_paths"] as List?)?.cast(),
+        proof: CosmosUtils.tryToBytes(json["proof"]));
+  }
   IbcConnectionQueryClientConnectionsResponse(
       {List<String>? connectionPaths,
       List<int>? proof,
@@ -43,8 +52,7 @@ class IbcConnectionQueryClientConnectionsResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      IbcTypes.ibcConnectionQueryClientConnectionsResponse.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.ibcConnectionQueryClientConnectionsResponse;
 
   @override
   List get values => [connectionPaths, proof, proofHeight];

@@ -37,7 +37,7 @@ class BlockMeta extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => TendermintTypes.blockMeta.typeUrl;
+  TypeUrl get typeUrl => TendermintTypes.blockMeta;
 
   @override
   List get values => [blockID, blockSize, header, numTxs];

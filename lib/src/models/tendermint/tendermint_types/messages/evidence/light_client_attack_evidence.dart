@@ -50,7 +50,7 @@ class LightClientAttackEvidence extends BaseEvidence {
   }
 
   @override
-  String get typeUrl => TendermintTypes.lightClientAttackEvidence.typeUrl;
+  TypeUrl get typeUrl => TendermintTypes.lightClientAttackEvidence;
 
   @override
   List get values => [

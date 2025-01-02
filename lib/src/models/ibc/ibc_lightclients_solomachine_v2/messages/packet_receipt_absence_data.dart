@@ -22,7 +22,7 @@ class IbcSoloMachineV2PacketReceiptAbsenceData extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.soloMachineV2PacketReceiptAbsenceData.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.soloMachineV2PacketReceiptAbsenceData;
 
   @override
   List get values => [path];

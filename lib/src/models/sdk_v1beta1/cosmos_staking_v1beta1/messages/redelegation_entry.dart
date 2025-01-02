@@ -21,7 +21,16 @@ class RedelegationEntry extends CosmosMessage {
 
   /// Strictly positive if this entry's unbonding has been stopped by external modules
   final BigInt? unbondingOnHoldRefCount;
-
+  factory RedelegationEntry.fromRpc(Map<String, dynamic> json) {
+    return RedelegationEntry(
+        completionTime: ProtobufTimestamp.fromString(json["completion_time"]),
+        initialBalance: BigintUtils.parse(json["initial_balance"]),
+        sharesDst: json["shares_dst"],
+        creationHeight: IntUtils.tryParse(json["creation_height"]),
+        unbondingId: BigintUtils.tryParse(json["unbonding_id"]),
+        unbondingOnHoldRefCount:
+            BigintUtils.tryParse("unbonding_on_hold_ref_count"));
+  }
   const RedelegationEntry({
     this.creationHeight,
     required this.completionTime,
@@ -57,7 +66,7 @@ class RedelegationEntry extends CosmosMessage {
   List<int> get fieldIds => [1, 2, 3, 4, 5, 6];
 
   @override
-  String get typeUrl => StakingV1beta1Types.redelegationEntry.typeUrl;
+  TypeUrl get typeUrl => StakingV1beta1Types.redelegationEntry;
 
   @override
   List get values => [

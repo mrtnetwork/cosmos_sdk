@@ -50,7 +50,7 @@ class MsgEditValidator extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3, 4];
 
   @override
-  String get typeUrl => StakingV1beta1Types.msgEditValidator.typeUrl;
+  TypeUrl get typeUrl => StakingV1beta1Types.msgEditValidator;
 
   @override
   List get values => [
@@ -61,13 +61,13 @@ class MsgEditValidator extends CosmosMessage
       ];
 
   @override
-  String get service => StakingV1beta1Types.editValidator.typeUrl;
+  TypeUrl get service => StakingV1beta1Types.editValidator;
   @override
   List<String?> get signers => [validatorAddress?.address];
 
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        StakingV1beta1Types.msgEditValidatorResponse.typeUrl);
+        StakingV1beta1Types.msgEditValidatorResponse);
   }
 }

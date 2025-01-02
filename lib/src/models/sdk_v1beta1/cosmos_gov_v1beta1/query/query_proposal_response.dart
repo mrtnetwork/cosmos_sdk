@@ -7,6 +7,9 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class GovQueryProposalResponse extends CosmosMessage {
   final GovProposal proposal;
   const GovQueryProposalResponse(this.proposal);
+  factory GovQueryProposalResponse.fromRpc(Map<String, dynamic> json) {
+    return GovQueryProposalResponse(GovProposal.fromRpc(json["proposal"]));
+  }
   factory GovQueryProposalResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GovQueryProposalResponse(
@@ -21,7 +24,7 @@ class GovQueryProposalResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => GovV1beta1types.govQueryProposalResponse.typeUrl;
+  TypeUrl get typeUrl => GovV1beta1types.govQueryProposalResponse;
 
   @override
   List get values => [proposal];

@@ -60,7 +60,7 @@ class ExtendedCommitSig extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => TendermintTypes.extendedCommitSig.typeUrl;
+  TypeUrl get typeUrl => TendermintTypes.extendedCommitSig;
 
   @override
   List get values => [1, 2, 3, 4, 5, 6];

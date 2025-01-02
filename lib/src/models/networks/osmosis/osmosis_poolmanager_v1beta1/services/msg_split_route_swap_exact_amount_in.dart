@@ -47,16 +47,16 @@ class OsmosisPoolManagerMsgSplitRouteSwapExactAmountIn extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      OsmosisPoolManagerV1beta1Types.msgSplitRouteSwapExactAmountIn.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisPoolManagerV1beta1Types.msgSplitRouteSwapExactAmountIn;
 
   @override
   List get values =>
       [sender, routes, tokenInDenom, tokenOutMinAmount.toString()];
 
   @override
-  String get service =>
-      OsmosisPoolManagerV1beta1Types.splitRouteSwapExactAmountIn.typeUrl;
+  TypeUrl get service =>
+      OsmosisPoolManagerV1beta1Types.splitRouteSwapExactAmountIn;
 
   @override
   List<String?> get signers => [sender];

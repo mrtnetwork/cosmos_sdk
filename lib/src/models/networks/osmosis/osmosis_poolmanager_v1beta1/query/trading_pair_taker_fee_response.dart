@@ -23,8 +23,8 @@ class OsmosisPoolManagerTradingPairTakerFeeResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisPoolManagerV1beta1Types.tradingPairTakerFeeResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisPoolManagerV1beta1Types.tradingPairTakerFeeResponse;
 
   @override
   List get values => [takerFee];

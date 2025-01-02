@@ -33,7 +33,7 @@ class ThorchainEventSwitch extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.eventSwitch.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.eventSwitch;
 
   @override
   List get values => [toAddress, fromAddress, burn, txId];

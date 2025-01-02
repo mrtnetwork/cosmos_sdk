@@ -25,8 +25,8 @@ class OsmosisSuperfluidMsgSuperfluidUndelegateAndUnbondLockResponse
   }
 
   @override
-  String get typeUrl => OsmosisSuperfluidTypes
-      .msgSuperfluidUndelegateAndUnbondLockResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisSuperfluidTypes.msgSuperfluidUndelegateAndUnbondLockResponse;
 
   @override
   List get values => [lockId];

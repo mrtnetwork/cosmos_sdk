@@ -1,11 +1,8 @@
-import 'package:cosmos_sdk/src/models/core/type_url/type_url.dart';
+import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 
 class OsmosisValSetprefV1beta1Types extends TypeUrl {
-  @override
-  final String typeUrl;
-  @override
-  final String? rpc;
-  const OsmosisValSetprefV1beta1Types._(this.typeUrl, {this.rpc});
+  const OsmosisValSetprefV1beta1Types._(super.typeUrl,
+      {super.query, super.rpc});
   static const OsmosisValSetprefV1beta1Types validatorPreference =
       OsmosisValSetprefV1beta1Types._(
           "/osmosis.valsetpref.v1beta1.ValidatorPreference");
@@ -69,12 +66,8 @@ class OsmosisValSetprefV1beta1Types extends TypeUrl {
 
   static const OsmosisValSetprefV1beta1Types userValidatorPreferencesRequest =
       OsmosisValSetprefV1beta1Types._(
-          "/osmosis.valsetpref.v1beta1.UserValidatorPreferencesRequest");
-
-  /// query
-  static const OsmosisValSetprefV1beta1Types userValidatorPreferences =
-      OsmosisValSetprefV1beta1Types._(
-          "/osmosis.valsetpref.v1beta1.Query/UserValidatorPreferences",
+          "/osmosis.valsetpref.v1beta1.UserValidatorPreferencesRequest",
+          query: "/osmosis.valsetpref.v1beta1.Query/UserValidatorPreferences",
           rpc: "/osmosis/valset-pref/v1beta1/:address");
 
   /// services

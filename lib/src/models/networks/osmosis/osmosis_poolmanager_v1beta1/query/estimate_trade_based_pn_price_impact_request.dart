@@ -6,8 +6,8 @@ import 'estimate_trade_based_on_price_impact_response.dart';
 class OsmosisPoolManagerEstimateTradeBasedOnPriceImpactRequest
     extends CosmosMessage
     with
-        QueryMessage<OsmosisPoolManagerEstimateTradeBasedOnPriceImpactResponse>,
-        RPCMessage<OsmosisPoolManagerEstimateTradeBasedOnPriceImpactResponse> {
+        QueryMessage<
+            OsmosisPoolManagerEstimateTradeBasedOnPriceImpactResponse> {
   /// from_coin is the total amount of tokens that the user wants to sell.
   final Coin fromCoin;
 
@@ -17,7 +17,7 @@ class OsmosisPoolManagerEstimateTradeBasedOnPriceImpactRequest
 
   /// pool_id is the identifier of the liquidity pool that the trade will occur
   /// on.
-  final BigInt? poolId;
+  final BigInt poolId;
 
   /// max_price_impact is the maximum percentage that the user is willing
   /// to affect the price of the liquidity pool.
@@ -31,7 +31,7 @@ class OsmosisPoolManagerEstimateTradeBasedOnPriceImpactRequest
   OsmosisPoolManagerEstimateTradeBasedOnPriceImpactRequest({
     required this.fromCoin,
     this.toCoinDenom,
-    this.poolId,
+    required this.poolId,
     required this.maxPriceImpact,
     required this.externalPrice,
   });
@@ -67,34 +67,29 @@ class OsmosisPoolManagerEstimateTradeBasedOnPriceImpactRequest
   Map<String, String?> get queryParameters => {
         "to_coin_denom": toCoinDenom,
         "max_price_impact": maxPriceImpact,
-        "external_price": externalPrice
+        "external_price": externalPrice,
+        ...fromCoin.toQueryParam("from_coin")
       };
-
-  @override
-  String get queryPath =>
-      OsmosisPoolManagerV1beta1Types.estimateTradeBasedOnPriceImpact.typeUrl;
-
-  @override
-  String get rpcPath =>
-      OsmosisPoolManagerV1beta1Types.estimateTradeBasedOnPriceImpact
-          .rpcUrl(pathParameters: [poolId?.toString()]);
 
   @override
   Map<String, dynamic> toJson() {
     return {
       "from_coin": fromCoin.toJson(),
       "to_coin_denom": toCoinDenom,
-      "pool_id": poolId?.toString(),
+      "pool_id": poolId.toString(),
       "max_price_impact": maxPriceImpact,
       "external_price": externalPrice
     };
   }
 
   @override
-  String get typeUrl => OsmosisPoolManagerV1beta1Types
-      .estimateTradeBasedOnPriceImpactRequest.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisPoolManagerV1beta1Types.estimateTradeBasedOnPriceImpactRequest;
 
   @override
   List get values =>
       [fromCoin, toCoinDenom, poolId, maxPriceImpact, externalPrice];
+
+  @override
+  List<String> get pathParameters => [poolId.toString()];
 }

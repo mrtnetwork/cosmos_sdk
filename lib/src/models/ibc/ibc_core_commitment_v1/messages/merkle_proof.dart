@@ -30,7 +30,7 @@ class IbcCommitmentMerkleProof extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.merkleProof.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.merkleProof;
 
   @override
   List get values => [proofs];

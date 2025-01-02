@@ -18,15 +18,12 @@ class QueryDenomMetadataRequest extends CosmosMessage
   List<int> get fieldIds => [1];
 
   @override
-  String get queryPath => BankV1beta1Types.denomMetadata.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {"denom": denom};
   }
 
   @override
-  String get typeUrl => BankV1beta1Types.denomMetadataRequest.typeUrl;
+  TypeUrl get typeUrl => BankV1beta1Types.denomMetadataRequest;
 
   @override
   List get values => [denom];
@@ -34,5 +31,10 @@ class QueryDenomMetadataRequest extends CosmosMessage
   @override
   QueryDenomMetadataResponse onResponse(List<int> bytes) {
     return QueryDenomMetadataResponse.deserialize(bytes);
+  }
+
+  @override
+  QueryDenomMetadataResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryDenomMetadataResponse.fromRpc(json);
   }
 }

@@ -12,6 +12,10 @@ class DistributionQueryParamsResponse extends CosmosMessage {
     return DistributionQueryParamsResponse(
         DistributionParams.deserialize(decode.getField(1)));
   }
+  factory DistributionQueryParamsResponse.fromRpc(Map<String, dynamic> json) {
+    return DistributionQueryParamsResponse(
+        DistributionParams.fromRpc(json["params"]));
+  }
 
   @override
   List<int> get fieldIds => [1];
@@ -22,8 +26,8 @@ class DistributionQueryParamsResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      DistributionV1beta1Types.distributionQueryParamsResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      DistributionV1beta1Types.distributionQueryParamsResponse;
 
   @override
   List get values => [params];

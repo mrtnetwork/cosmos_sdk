@@ -57,7 +57,7 @@ class AuxSignerData extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => TxV1beta1Types.auxSignerData.typeUrl;
+  TypeUrl get typeUrl => TxV1beta1Types.auxSignerData;
 
   @override
   List get values => [address?.address, signDoc, mode?.value, sig];

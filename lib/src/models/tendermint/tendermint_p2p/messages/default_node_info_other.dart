@@ -5,7 +5,10 @@ class DefaultNodeInfoOther extends CosmosMessage {
   final String? txIndex;
   final String? rpcAddress;
   const DefaultNodeInfoOther({this.txIndex, this.rpcAddress});
-
+  factory DefaultNodeInfoOther.fromRpc(Map<String, dynamic> json) {
+    return DefaultNodeInfoOther(
+        rpcAddress: json["rpc_address"], txIndex: json["tx_index"]);
+  }
   factory DefaultNodeInfoOther.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DefaultNodeInfoOther(
@@ -21,7 +24,7 @@ class DefaultNodeInfoOther extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => TendermintTypes.defaultNodeInfoOther.typeUrl;
+  TypeUrl get typeUrl => TendermintTypes.defaultNodeInfoOther;
 
   @override
   List get values => [txIndex, rpcAddress];

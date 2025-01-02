@@ -23,8 +23,7 @@ class IbcLightClientsWasmMsgStoreCodeResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      IbcTypes.ibcLightClientsWasmMsgStoreCodeResponse.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.ibcLightClientsWasmMsgStoreCodeResponse;
 
   @override
   List get values => [checksum];

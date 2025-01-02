@@ -5,12 +5,10 @@ import 'user_validator_preferences_response.dart';
 
 /// Request type for UserValidatorPreferences.
 class OsmosisValSetprefUserValidatorPreferencesRequest extends CosmosMessage
-    with
-        RPCMessage<OsmosisValSetprefUserValidatorPreferencesResponse>,
-        QueryMessage<OsmosisValSetprefUserValidatorPreferencesResponse> {
+    with QueryMessage<OsmosisValSetprefUserValidatorPreferencesResponse> {
   /// user account address
-  final String? address;
-  OsmosisValSetprefUserValidatorPreferencesRequest({this.address});
+  final String address;
+  OsmosisValSetprefUserValidatorPreferencesRequest({required this.address});
   factory OsmosisValSetprefUserValidatorPreferencesRequest.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -32,8 +30,8 @@ class OsmosisValSetprefUserValidatorPreferencesRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      OsmosisValSetprefV1beta1Types.userValidatorPreferencesRequest.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisValSetprefV1beta1Types.userValidatorPreferencesRequest;
 
   @override
   List get values => [address];
@@ -54,10 +52,5 @@ class OsmosisValSetprefUserValidatorPreferencesRequest extends CosmosMessage
   Map<String, String?> get queryParameters => {};
 
   @override
-  String get queryPath => OsmosisValSetprefV1beta1Types.userValidatorPreferences
-      .rpcUrl(pathParameters: [address]);
-
-  @override
-  String get rpcPath =>
-      OsmosisValSetprefV1beta1Types.userValidatorPreferences.typeUrl;
+  List<String> get pathParameters => [address];
 }

@@ -97,7 +97,7 @@ class IbcTendermintClientState extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.ibcTendermintV1ClientState.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.ibcTendermintV1ClientState;
 
   @override
   List get values => [

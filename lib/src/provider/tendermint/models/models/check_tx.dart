@@ -31,6 +31,7 @@ class CheckTxResponse {
         data = BytesUtils.tryToBytes(data, unmodifiable: true);
 
   factory CheckTxResponse.fromJson(Map<String, dynamic> json) {
+    final String log = json["log"] ?? '';
     return CheckTxResponse(
         events: (json["events"] as List?)
                 ?.map((e) => EventResponse.fromJson(e))
@@ -40,7 +41,7 @@ class CheckTxResponse {
         gasUsed: BigintUtils.parse(json["gas_used"]),
         code: IntUtils.tryParse(json["code"]),
         data: StringUtils.tryEncode(json["data"], type: StringEncoding.base64),
-        log: json["log"],
+        log: log.trim().isEmpty ? null : log,
         info: json["info"],
         codespace: json["codespace"],
         sender: json["sender"],

@@ -10,6 +10,9 @@ class Attribute extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Attribute(key: decode.getField(1), value: decode.getField(2));
   }
+  factory Attribute.fromRpc(Map<String, dynamic> json) {
+    return Attribute(key: json["key"], value: json["value"]);
+  }
 
   @override
   List<int> get fieldIds => [1, 2];
@@ -20,7 +23,7 @@ class Attribute extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => BaseAbciV1beta1.attribute.typeUrl;
+  TypeUrl get typeUrl => BaseAbciV1beta1.attribute;
 
   @override
   List get values => [key, value];

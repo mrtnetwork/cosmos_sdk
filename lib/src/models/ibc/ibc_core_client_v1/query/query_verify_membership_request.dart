@@ -5,6 +5,7 @@ import 'package:cosmos_sdk/src/models/ibc/ibc_core_commitment_v1/messages/merkle
 
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/utils.dart';
 
 /// QueryVerifyMembershipRequest is the request type for the Query/VerifyMembership RPC method
 class QueryVerifyMembershipRequest extends CosmosMessage
@@ -55,23 +56,20 @@ class QueryVerifyMembershipRequest extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3, 4, 5, 6, 7];
 
   @override
-  String get queryPath => IbcTypes.verifyMembership.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {
       "client_id": clientId,
-      "proof": BytesUtils.tryToHexString(proof),
+      "proof": CosmosUtils.tryToBase64(proof),
       "proof_height": proofHeight.toJson(),
       "merkle_path": merklePath.toJson(),
-      "value": BytesUtils.tryToHexString(value),
+      "value": CosmosUtils.tryToBase64(value),
       "time_delay": timeDelay?.toString(),
       "block_delay": blockDelay?.toString()
     };
   }
 
   @override
-  String get typeUrl => IbcTypes.queryVerifyMembershipRequest.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryVerifyMembershipRequest;
 
   @override
   List get values =>
@@ -81,4 +79,12 @@ class QueryVerifyMembershipRequest extends CosmosMessage
   QueryVerifyMembershipResponse onResponse(List<int> bytes) {
     return QueryVerifyMembershipResponse.deserialize(bytes);
   }
+
+  @override
+  QueryVerifyMembershipResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryVerifyMembershipResponse.fromRpc(json);
+  }
+
+  @override
+  Map<String, dynamic> get body => toJson();
 }

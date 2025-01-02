@@ -7,11 +7,12 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class QueryEscrowAddressRequest extends CosmosMessage
     with QueryMessage<QueryEscrowAddressResponse> {
   /// unique port identifier
-  final String? portId;
+  final String portId;
 
   /// unique channel identifier
-  final String? channelId;
-  const QueryEscrowAddressRequest({this.portId, this.channelId});
+  final String channelId;
+  const QueryEscrowAddressRequest(
+      {required this.portId, required this.channelId});
   factory QueryEscrowAddressRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryEscrowAddressRequest(
@@ -27,16 +28,21 @@ class QueryEscrowAddressRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl => IbcTypes.queryEscrowAddressRequest.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryEscrowAddressRequest;
 
   @override
   List get values => [portId, channelId];
 
   @override
-  String get queryPath => IbcTypes.escrowAddress.typeUrl;
-
-  @override
   QueryEscrowAddressResponse onResponse(List<int> bytes) {
     return QueryEscrowAddressResponse.deserialize(bytes);
   }
+
+  @override
+  QueryEscrowAddressResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryEscrowAddressResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters => [channelId, portId];
 }

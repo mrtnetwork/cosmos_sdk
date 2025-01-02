@@ -6,8 +6,8 @@ import 'query_get_proto_rev_token_pair_arb_routes_response.dart';
 class OsmosisProtorevQueryGetProtoRevTokenPairArbRoutesRequest
     extends CosmosMessage
     with
-        QueryMessage<OsmosisProtorevQueryGetProtoRevTokenPairArbRoutesResponse>,
-        RPCMessage<OsmosisProtorevQueryGetProtoRevTokenPairArbRoutesResponse> {
+        QueryMessage<
+            OsmosisProtorevQueryGetProtoRevTokenPairArbRoutesResponse> {
   const OsmosisProtorevQueryGetProtoRevTokenPairArbRoutesRequest();
   factory OsmosisProtorevQueryGetProtoRevTokenPairArbRoutesRequest.deserialize(
       List<int> bytes) {
@@ -40,17 +40,9 @@ class OsmosisProtorevQueryGetProtoRevTokenPairArbRoutesRequest
   }
 
   @override
-  String get typeUrl => OsmosisProtorevV1beta1Types
-      .queryGetProtoRevTokenPairArbRoutesRequest.typeUrl;
-
-  @override
-  String get queryPath =>
-      OsmosisProtorevV1beta1Types.getProtoRevTokenPairArbRoutes.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisProtorevV1beta1Types.queryGetProtoRevTokenPairArbRoutesRequest;
 
   @override
   Map<String, String?> get queryParameters => {};
-
-  @override
-  String get rpcPath =>
-      OsmosisProtorevV1beta1Types.getProtoRevTokenPairArbRoutes.rpcUrl();
 }

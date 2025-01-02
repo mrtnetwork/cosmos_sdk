@@ -8,6 +8,11 @@ class QueryNFTResponse extends CosmosMessage {
   final NFT? nft;
 
   const QueryNFTResponse({this.nft});
+  factory QueryNFTResponse.fromRpc(Map<String, dynamic> json) {
+    return QueryNFTResponse(
+      nft: json["nft"] == null ? null : NFT.fromRpc(json["nft"]),
+    );
+  }
   factory QueryNFTResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryNFTResponse(
@@ -26,7 +31,7 @@ class QueryNFTResponse extends CosmosMessage {
   List<int> get fieldIds => [1];
 
   @override
-  String get typeUrl => NFTV1beta1Types.queryNFTResponse.typeUrl;
+  TypeUrl get typeUrl => NFTV1beta1Types.queryNFTResponse;
 
   @override
   List get values => [nft];

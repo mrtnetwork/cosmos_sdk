@@ -1,4 +1,4 @@
-import 'package:blockchain_utils/blockchain_utils.dart';
+import 'package:cosmos_sdk/src/exception/exception.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_tx_signing_v1beta1/messages/multi.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_tx_signing_v1beta1/messages/single.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
@@ -14,6 +14,7 @@ abstract class BaseSignatureDescriptorData extends CosmosMessage {
     } else if (decode.hasTag(2)) {
       return SignatureDescriptorDataMulti.desrialize(bytes);
     }
-    throw const MessageException("Invalid SignatureDescriptorData bytes.");
+    throw const DartCosmosSdkPluginException(
+        "Invalid SignatureDescriptorData bytes.");
   }
 }

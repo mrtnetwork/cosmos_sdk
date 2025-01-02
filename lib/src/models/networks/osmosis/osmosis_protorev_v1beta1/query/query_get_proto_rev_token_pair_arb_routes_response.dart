@@ -41,6 +41,6 @@ class OsmosisProtorevQueryGetProtoRevTokenPairArbRoutesResponse
   List get values => [routes];
 
   @override
-  String get typeUrl => OsmosisProtorevV1beta1Types
-      .queryGetProtoRevTokenPairArbRoutesResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisProtorevV1beta1Types.queryGetProtoRevTokenPairArbRoutesResponse;
 }

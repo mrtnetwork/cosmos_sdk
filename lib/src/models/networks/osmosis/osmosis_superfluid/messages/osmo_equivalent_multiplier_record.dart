@@ -47,8 +47,7 @@ class OsmosisSuperfluidOsmoEquivalentMultiplierRecord extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisSuperfluidTypes.osmoEquivalentMultiplierRecord.typeUrl;
+  TypeUrl get typeUrl => OsmosisSuperfluidTypes.osmoEquivalentMultiplierRecord;
 
   @override
   List get values => [epochNumber, denom, multiplier];

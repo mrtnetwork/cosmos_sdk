@@ -9,6 +9,17 @@ class QueryValidatorDelegationsResponse extends CosmosMessage {
   final PageResponse? pagination;
   const QueryValidatorDelegationsResponse(
       {required this.delegationResponse, this.pagination});
+  factory QueryValidatorDelegationsResponse.fromRpc(Map<String, dynamic> json) {
+    return QueryValidatorDelegationsResponse(
+      delegationResponse: (json["delegation_responses"] as List?)
+              ?.map((e) => DelegationResponse.fromRpc(e))
+              .toList() ??
+          [],
+      pagination: json["pagination"] == null
+          ? null
+          : PageResponse.fromRpc(json["pagination"]),
+    );
+  }
   factory QueryValidatorDelegationsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryValidatorDelegationsResponse(
@@ -34,8 +45,7 @@ class QueryValidatorDelegationsResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      StakingV1beta1Types.queryValidatorDelegationsResponse.typeUrl;
+  TypeUrl get typeUrl => StakingV1beta1Types.queryValidatorDelegationsResponse;
 
   @override
   List get values => [delegationResponse, pagination];

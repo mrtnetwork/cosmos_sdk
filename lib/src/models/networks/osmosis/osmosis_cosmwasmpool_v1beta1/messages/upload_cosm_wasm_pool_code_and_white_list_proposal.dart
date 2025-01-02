@@ -38,8 +38,8 @@ class OsmosisCosmWasmPoolUploadCosmWasmPoolCodeAndWhiteListProposal
   }
 
   @override
-  String get typeUrl => OsmosisCosmWasmPoolV1beta1Types
-      .uploadCosmWasmPoolCodeAndWhiteListProposal.typeUrl;
+  TypeUrl get typeUrl => OsmosisCosmWasmPoolV1beta1Types
+      .uploadCosmWasmPoolCodeAndWhiteListProposal;
 
   @override
   List get values => [title, description, wasmByteCode];

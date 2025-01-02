@@ -4,7 +4,7 @@ import 'package:cosmos_sdk/src/provider/tendermint/core/tendermint.dart';
 /// Unsubscribe from all events via WebSocket
 /// https://docs.tendermint.com/v0.34/rpc/#/Websocket/unsubscribe_all
 class TendermintRequestUnSubscribeAll
-    extends TendermintRequestParam<Map<String, dynamic>, Map<String, dynamic>> {
+    extends TendermintRequest<Map<String, dynamic>, Map<String, dynamic>> {
   TendermintRequestUnSubscribeAll();
 
   /// Unsubscribe from all events via WebSocket

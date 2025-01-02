@@ -34,7 +34,7 @@ class CapabilityGenesisState extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.capabilityGenesisState.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.capabilityGenesisState;
 
   @override
   List get values => [index, owners];

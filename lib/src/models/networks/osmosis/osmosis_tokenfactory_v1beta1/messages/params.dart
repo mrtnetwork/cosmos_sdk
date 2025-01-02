@@ -31,7 +31,7 @@ class OsmosisTokenFactoryParams extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisTokenFactoryV1beta1Types.params.typeUrl;
+  TypeUrl get typeUrl => OsmosisTokenFactoryV1beta1Types.params;
 
   @override
   List get values => [denomCreationFee];

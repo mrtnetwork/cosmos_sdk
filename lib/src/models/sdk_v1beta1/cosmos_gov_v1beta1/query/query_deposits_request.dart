@@ -27,9 +27,6 @@ class GovQueryDepositsRequest extends CosmosMessage
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get queryPath => GovV1beta1types.queryGovDeposits.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {
       "proposal_id": proposalId.toString(),
@@ -38,7 +35,7 @@ class GovQueryDepositsRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl => GovV1beta1types.govQueryDepositsRequest.typeUrl;
+  TypeUrl get typeUrl => GovV1beta1types.govQueryDepositsRequest;
 
   @override
   List get values => [proposalId, pagination];
@@ -47,4 +44,15 @@ class GovQueryDepositsRequest extends CosmosMessage
   GovQueryDepositsResponse onResponse(List<int> bytes) {
     return GovQueryDepositsResponse.deserialize(bytes);
   }
+
+  @override
+  GovQueryDepositsResponse onJsonResponse(Map<String, dynamic> json) {
+    return GovQueryDepositsResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters => [proposalId.toString()];
+
+  @override
+  Map<String, String?> get queryParameters => pagination?.queryParameters ?? {};
 }

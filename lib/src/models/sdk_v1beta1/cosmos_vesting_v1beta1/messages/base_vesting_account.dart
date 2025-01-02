@@ -63,7 +63,7 @@ class BaseVestingAccount extends CosmosMessage {
   List<int> get fieldIds => [1, 2, 3, 4, 5];
 
   @override
-  String get typeUrl => VestingV1beta1Types.baseVestingAccount.typeUrl;
+  TypeUrl get typeUrl => VestingV1beta1Types.baseVestingAccount;
 
   @override
   List get values =>

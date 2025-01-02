@@ -47,16 +47,15 @@ class MsgMultiSend extends CosmosMessage
 
   @override
   @override
-  String get typeUrl => BankV1beta1Types.msgMultiSend.typeUrl;
+  TypeUrl get typeUrl => BankV1beta1Types.msgMultiSend;
 
   @override
-  String get service => BankV1beta1Types.multiSend.typeUrl;
+  TypeUrl get service => BankV1beta1Types.multiSend;
 
   @override
   List<String?> get signers => inputs.map((e) => e.address.address).toList();
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
-    return EmptyServiceRequestResponse(
-        BankV1beta1Types.msgMultiSendResponse.typeUrl);
+    return EmptyServiceRequestResponse(BankV1beta1Types.msgMultiSendResponse);
   }
 }

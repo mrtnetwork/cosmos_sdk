@@ -39,13 +39,13 @@ class MsgRegisterInterchainAccount extends CosmosMessage
   }
 
   @override
-  String get typeUrl => IbcTypes.msgRegisterInterchainAccount.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.msgRegisterInterchainAccount;
 
   @override
   List get values => [owner, connectionId, version, ordering];
 
   @override
-  String get service => IbcTypes.registerInterchainAccount.typeUrl;
+  TypeUrl get service => IbcTypes.registerInterchainAccount;
 
   @override
   List<String?> get signers => [owner];

@@ -30,7 +30,7 @@ class ThorchainMsgSwitch extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.msgSwitch.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.msgSwitch;
 
   @override
   List get values => [tx, destination, signer];

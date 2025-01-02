@@ -21,7 +21,7 @@ class AuthzGenericAuthorization extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => AuthzV1beta1Types.authzGenericAuthorization.typeUrl;
+  TypeUrl get typeUrl => AuthzV1beta1Types.authzGenericAuthorization;
 
   @override
   List get values => [msg];

@@ -41,7 +41,7 @@ class PageResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => BaseQueryV1beta1Types.pageResponse.typeUrl;
+  TypeUrl get typeUrl => BaseQueryV1beta1Types.pageResponse;
 
   @override
   List get values => [nextKey, total];

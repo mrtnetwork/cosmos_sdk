@@ -47,7 +47,7 @@ class OsmosisProtorevAllProtocolRevenue extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisProtorevV1beta1Types.allProtocolRevenue.typeUrl;
+  TypeUrl get typeUrl => OsmosisProtorevV1beta1Types.allProtocolRevenue;
 
   @override
   List get values => [takerFeesTracker, txFeesTracker, cyclicArbTracker];

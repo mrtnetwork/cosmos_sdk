@@ -1,4 +1,4 @@
-import 'package:blockchain_utils/exception/exception.dart';
+import 'package:cosmos_sdk/src/exception/exception.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
 /// Infraction indicates the infraction a validator committed.
@@ -23,7 +23,7 @@ class Infraction implements CosmosEnum {
   static Infraction fromValue(int? value) {
     return values.firstWhere(
       (e) => e.value == value,
-      orElse: () => throw MessageException(
+      orElse: () => throw DartCosmosSdkPluginException(
           "No Infraction element found for the given value.",
           details: {"value": value}),
     );

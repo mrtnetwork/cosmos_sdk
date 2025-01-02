@@ -38,7 +38,7 @@ class OsmosisProtorevCosmwasmPoolInfo extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisProtorevV1beta1Types.cosmwasmPoolInfo.typeUrl;
+  TypeUrl get typeUrl => OsmosisProtorevV1beta1Types.cosmwasmPoolInfo;
 
   @override
   List get values => [weightMaps];

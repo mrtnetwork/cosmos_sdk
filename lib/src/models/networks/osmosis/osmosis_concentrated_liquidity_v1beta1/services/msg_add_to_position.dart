@@ -70,8 +70,8 @@ class OsmosisConcentratedLiquidityMsgAddToPosition extends CosmosMessage
       ];
 
   @override
-  String get typeUrl =>
-      OsmosisConcentratedLiquidityV1beta1Types.msgAddToPosition.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisConcentratedLiquidityV1beta1Types.msgAddToPosition;
 
   @override
   OsmosisConcentratedLiquidityMsgAddToPositionResponse onResponse(
@@ -81,8 +81,7 @@ class OsmosisConcentratedLiquidityMsgAddToPosition extends CosmosMessage
   }
 
   @override
-  String get service =>
-      OsmosisConcentratedLiquidityV1beta1Types.addToPosition.typeUrl;
+  TypeUrl get service => OsmosisConcentratedLiquidityV1beta1Types.addToPosition;
 
   @override
   List<String?> get signers => [sender];

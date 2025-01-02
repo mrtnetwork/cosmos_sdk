@@ -50,7 +50,7 @@ class ThorchainEventAddLiquidity extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.eventAddLiquidity.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.eventAddLiquidity;
 
   @override
   List get values => [

@@ -84,7 +84,7 @@ class ThorchainNodeAccount extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.nodeAccount.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.nodeAccount;
 
   @override
   List get values => [

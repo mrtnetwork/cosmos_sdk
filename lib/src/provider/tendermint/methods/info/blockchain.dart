@@ -4,7 +4,7 @@ import 'package:cosmos_sdk/src/provider/tendermint/core/tendermint.dart';
 /// Get block headers (max: 20) for minHeight <= height <= maxHeight.
 /// https://docs.tendermint.com/v0.34/rpc/#/Info/blockchain
 class TendermintRequestBlockchain
-    extends TendermintRequestParam<Map<String, dynamic>, Map<String, dynamic>> {
+    extends TendermintRequest<Map<String, dynamic>, Map<String, dynamic>> {
   TendermintRequestBlockchain({this.minHeight, this.maxHeight});
 
   /// Minimum block height to return

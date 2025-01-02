@@ -36,7 +36,7 @@ class ActiveChannel extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.activeChannel.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.activeChannel;
 
   @override
   List get values => [channelId, portId, channelId, isMiddlewareEnabled];

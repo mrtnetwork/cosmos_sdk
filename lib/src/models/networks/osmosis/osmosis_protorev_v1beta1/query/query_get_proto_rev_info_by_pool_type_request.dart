@@ -4,9 +4,7 @@ import 'query_get_proto_rev_info_by_pool_type_response.dart';
 
 /// QueryGetProtoRevInfoByPoolTypeRequest is request type for the Query/GetProtoRevInfoByPoolType RPC method.
 class OsmosisProtorevQueryGetProtoRevInfoByPoolTypeRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisProtorevQueryGetProtoRevInfoByPoolTypeResponse>,
-        RPCMessage<OsmosisProtorevQueryGetProtoRevInfoByPoolTypeResponse> {
+    with QueryMessage<OsmosisProtorevQueryGetProtoRevInfoByPoolTypeResponse> {
   const OsmosisProtorevQueryGetProtoRevInfoByPoolTypeRequest();
   factory OsmosisProtorevQueryGetProtoRevInfoByPoolTypeRequest.deserialize(
       List<int> bytes) {
@@ -38,17 +36,9 @@ class OsmosisProtorevQueryGetProtoRevInfoByPoolTypeRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      OsmosisProtorevV1beta1Types.queryGetProtoRevInfoByPoolTypeRequest.typeUrl;
-
-  @override
-  String get queryPath =>
-      OsmosisProtorevV1beta1Types.getProtoRevInfoByPoolType.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisProtorevV1beta1Types.queryGetProtoRevInfoByPoolTypeRequest;
 
   @override
   Map<String, String?> get queryParameters => {};
-
-  @override
-  String get rpcPath =>
-      OsmosisProtorevV1beta1Types.getProtoRevInfoByPoolType.rpcUrl();
 }

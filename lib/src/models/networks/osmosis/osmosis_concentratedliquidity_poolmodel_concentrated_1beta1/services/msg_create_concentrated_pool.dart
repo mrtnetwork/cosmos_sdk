@@ -40,9 +40,9 @@ class OsmosisConcentratedliquidityPoolmodelConcentratedMsgCreateConcentratedPool
   }
 
   @override
-  String get service =>
+  TypeUrl get service =>
       OsmosisConcentratedliquidityPoolmodelConcentratedV1beta1Types
-          .createConcentratedPool.typeUrl;
+          .createConcentratedPool;
 
   @override
   List<String?> get signers => [sender];
@@ -59,9 +59,9 @@ class OsmosisConcentratedliquidityPoolmodelConcentratedMsgCreateConcentratedPool
   }
 
   @override
-  String get typeUrl =>
+  TypeUrl get typeUrl =>
       OsmosisConcentratedliquidityPoolmodelConcentratedV1beta1Types
-          .msgCreateConcentratedPool.typeUrl;
+          .msgCreateConcentratedPool;
 
   @override
   List get values => [sender, denom0, denom1, tickSpacing, spreadFactor];

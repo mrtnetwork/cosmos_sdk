@@ -41,7 +41,7 @@ class OsmosisAccumAccumulatorContent extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisAccumV1beta1Types.accumulatorContent.typeUrl;
+  TypeUrl get typeUrl => OsmosisAccumV1beta1Types.accumulatorContent;
 
   @override
   List get values => [accumValue, totalShares];

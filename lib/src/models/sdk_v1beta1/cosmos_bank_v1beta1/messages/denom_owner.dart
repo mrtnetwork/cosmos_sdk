@@ -20,6 +20,11 @@ class DenomOwner extends CosmosMessage {
         address: CosmosBaseAddress(decode.getField(1)),
         balance: Coin.deserialize(decode.getField(2)));
   }
+  factory DenomOwner.fromRpc(Map<String, dynamic> json) {
+    return DenomOwner(
+        address: CosmosBaseAddress(json["address"]),
+        balance: Coin.fromRpc(json["balance"]));
+  }
 
   @override
   List<int> get fieldIds => [1, 2];
@@ -30,7 +35,7 @@ class DenomOwner extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => BankV1beta1Types.denomOwner.typeUrl;
+  TypeUrl get typeUrl => BankV1beta1Types.denomOwner;
 
   @override
   List get values => [address.address, balance];

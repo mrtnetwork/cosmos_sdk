@@ -30,7 +30,7 @@ class IbcSoloMachineV3TimestampedSignatureData extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.soloMachineV3TimestampedSignatureData.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.soloMachineV3TimestampedSignatureData;
 
   @override
   List get values => [signatureData, timestamp];

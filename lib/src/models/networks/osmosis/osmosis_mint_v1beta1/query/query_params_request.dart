@@ -5,9 +5,7 @@ import 'query_params_response.dart';
 
 /// QueryParamsRequest is the request type for the Query/Params RPC method.
 class OsmosisMintQueryParamsRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisMintQueryParamsResponse>,
-        RPCMessage<OsmosisMintQueryParamsResponse> {
+    with QueryMessage<OsmosisMintQueryParamsResponse> {
   const OsmosisMintQueryParamsRequest();
 
   @override
@@ -19,7 +17,7 @@ class OsmosisMintQueryParamsRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl => OsmosisMintV1beta1Types.queryParamsRequest.typeUrl;
+  TypeUrl get typeUrl => OsmosisMintV1beta1Types.queryParamsRequest;
 
   @override
   List get values => [];
@@ -36,10 +34,4 @@ class OsmosisMintQueryParamsRequest extends CosmosMessage
 
   @override
   Map<String, String?> get queryParameters => {};
-
-  @override
-  String get queryPath => OsmosisMintV1beta1Types.queryParams.typeUrl;
-
-  @override
-  String get rpcPath => OsmosisMintV1beta1Types.queryParams.rpcUrl();
 }

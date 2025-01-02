@@ -37,7 +37,7 @@ class BasicAllowance extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => FeegrantV1beta1Types.basicAllowance.typeUrl;
+  TypeUrl get typeUrl => FeegrantV1beta1Types.basicAllowance;
 
   @override
   List get values => [spendLimit, expiration];

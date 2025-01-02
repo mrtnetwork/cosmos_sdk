@@ -28,17 +28,21 @@ class IbcLightClientsWasmQueryChecksumsRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      IbcTypes.ibcLightClientsWasmQueryChecksumsRequest.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.ibcLightClientsWasmQueryChecksumsRequest;
 
   @override
   List get values => [pagination];
-
-  @override
-  String get queryPath => IbcTypes.ibcLightClientsWasmChecksums.typeUrl;
-
   @override
   IbcLightClientsWasmQueryChecksumsResponse onResponse(List<int> bytes) {
     return IbcLightClientsWasmQueryChecksumsResponse.deserialize(bytes);
   }
+
+  @override
+  IbcLightClientsWasmQueryChecksumsResponse onJsonResponse(
+      Map<String, dynamic> json) {
+    return IbcLightClientsWasmQueryChecksumsResponse.fromRpc(json);
+  }
+
+  @override
+  Map<String, String?> get queryParameters => pagination?.queryParameters ?? {};
 }

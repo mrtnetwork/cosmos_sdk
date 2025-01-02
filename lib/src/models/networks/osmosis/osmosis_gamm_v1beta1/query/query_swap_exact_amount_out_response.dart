@@ -28,8 +28,8 @@ class OsmosisGammQuerySwapExactAmountOutResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisGammV1beta1Types.querySwapExactAmountOutResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisGammV1beta1Types.querySwapExactAmountOutResponse;
 
   @override
   List get values => [tokenInAmount.toString()];

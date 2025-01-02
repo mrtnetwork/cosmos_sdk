@@ -49,7 +49,7 @@ class CosmosBlock extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => BaseTendermintV1beta1Types.cosmosBlock.typeUrl;
+  TypeUrl get typeUrl => BaseTendermintV1beta1Types.cosmosBlock;
 
   @override
   List get values => [1, 2, 3, 4];

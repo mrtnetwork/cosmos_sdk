@@ -4,9 +4,7 @@ import 'query_get_proto_rev_base_denoms_response.dart';
 
 /// GetProtoRevBaseDenoms queries the base denoms that the module is currently utilizing for arbitrage
 class OsmosisProtorevQueryGetProtoRevBaseDenomsRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisProtorevQueryGetProtoRevBaseDenomsResponse>,
-        RPCMessage<OsmosisProtorevQueryGetProtoRevBaseDenomsResponse> {
+    with QueryMessage<OsmosisProtorevQueryGetProtoRevBaseDenomsResponse> {
   const OsmosisProtorevQueryGetProtoRevBaseDenomsRequest();
   factory OsmosisProtorevQueryGetProtoRevBaseDenomsRequest.deserialize(
       List<int> bytes) {
@@ -37,17 +35,9 @@ class OsmosisProtorevQueryGetProtoRevBaseDenomsRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      OsmosisProtorevV1beta1Types.queryGetProtoRevBaseDenomsRequest.typeUrl;
-
-  @override
-  String get queryPath =>
-      OsmosisProtorevV1beta1Types.getProtoRevBaseDenoms.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisProtorevV1beta1Types.queryGetProtoRevBaseDenomsRequest;
 
   @override
   Map<String, String?> get queryParameters => {};
-
-  @override
-  String get rpcPath =>
-      OsmosisProtorevV1beta1Types.getProtoRevBaseDenoms.rpcUrl();
 }

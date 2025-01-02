@@ -32,7 +32,7 @@ class PacketMsg extends PacketMessage {
   }
 
   @override
-  String get typeUrl => TendermintTypes.packetMsg.typeUrl;
+  TypeUrl get typeUrl => TendermintTypes.packetMsg;
 
   @override
   List get values => [channelId, eof, data];

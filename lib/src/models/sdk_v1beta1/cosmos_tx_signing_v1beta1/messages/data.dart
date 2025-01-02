@@ -23,7 +23,7 @@ class SignatureDescriptorData extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => TxSigningV1beta1Types.data.typeUrl;
+  TypeUrl get typeUrl => TxSigningV1beta1Types.data;
 
   @override
   List get values => [sum];

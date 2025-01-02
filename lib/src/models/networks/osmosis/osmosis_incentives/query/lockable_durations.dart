@@ -3,9 +3,7 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'query_lockable_durations_response.dart';
 
 class OsmosisIncentiveQueryLockableDurationsRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisIncentiveQueryLockableDurationsResponse>,
-        RPCMessage<OsmosisIncentiveQueryLockableDurationsResponse> {
+    with QueryMessage<OsmosisIncentiveQueryLockableDurationsResponse> {
   const OsmosisIncentiveQueryLockableDurationsRequest();
   factory OsmosisIncentiveQueryLockableDurationsRequest.fromBytes(
       List<int> bytes) {
@@ -21,16 +19,12 @@ class OsmosisIncentiveQueryLockableDurationsRequest extends CosmosMessage
   }
 
   @override
-  String get queryPath => OsmosisIncentivesTypes.lockableDurations.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {};
   }
 
   @override
-  String get typeUrl =>
-      OsmosisIncentivesTypes.queryLockableDurationsRequest.typeUrl;
+  TypeUrl get typeUrl => OsmosisIncentivesTypes.queryLockableDurationsRequest;
 
   @override
   List get values => [];
@@ -43,8 +37,4 @@ class OsmosisIncentiveQueryLockableDurationsRequest extends CosmosMessage
 
   @override
   Map<String, String> get queryParameters => {};
-
-  @override
-  String get rpcPath =>
-      OsmosisIncentivesTypes.lockableDurations.rpcUrl(pathParameters: []);
 }

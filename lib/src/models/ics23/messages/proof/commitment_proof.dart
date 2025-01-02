@@ -35,7 +35,7 @@ class Ics23CommitmentProof extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => Ics23Types.commitmentProof.typeUrl;
+  TypeUrl get typeUrl => Ics23Types.commitmentProof;
 
   @override
   List get values => [proof];

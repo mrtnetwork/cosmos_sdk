@@ -27,7 +27,7 @@ class OsmosisPoolManagerModuleRoute extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisPoolManagerV1beta1Types.moduleRoute.typeUrl;
+  TypeUrl get typeUrl => OsmosisPoolManagerV1beta1Types.moduleRoute;
 
   @override
   List get values => [poolType, poolId];

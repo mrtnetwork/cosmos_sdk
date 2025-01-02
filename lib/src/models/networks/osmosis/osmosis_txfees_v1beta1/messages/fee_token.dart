@@ -29,7 +29,7 @@ class OsmosisTxfeesFeeToken extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisTxfeesV1beta1Types.feeToken.typeUrl;
+  TypeUrl get typeUrl => OsmosisTxfeesV1beta1Types.feeToken;
 
   @override
   List get values => [denom, poolID];

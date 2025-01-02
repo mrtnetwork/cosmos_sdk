@@ -16,9 +16,6 @@ class QueryModuleAccountsRequest extends CosmosMessage
   List<int> get fieldIds => [];
 
   @override
-  String get queryPath => AuthV1beta1Types.moduleAccounts.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {};
   }
@@ -27,10 +24,15 @@ class QueryModuleAccountsRequest extends CosmosMessage
   List get values => [];
 
   @override
-  String get typeUrl => AuthV1beta1Types.moduleAccountsRequest.typeUrl;
+  TypeUrl get typeUrl => AuthV1beta1Types.moduleAccountsRequest;
 
   @override
   QueryModuleAccountsResponse onResponse(List<int> bytes) {
     return QueryModuleAccountsResponse.deserialize(bytes);
+  }
+
+  @override
+  QueryModuleAccountsResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryModuleAccountsResponse.fromRpc(json);
   }
 }

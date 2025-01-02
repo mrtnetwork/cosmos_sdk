@@ -7,6 +7,12 @@ class IbcTransferQueryParamsResponse extends CosmosMessage {
   /// params defines the parameters of the module.
   final IbcTransaferParams? params;
   const IbcTransferQueryParamsResponse({this.params});
+  factory IbcTransferQueryParamsResponse.fromRpc(Map<String, dynamic> json) {
+    return IbcTransferQueryParamsResponse(
+        params: json["params"] == null
+            ? null
+            : IbcTransaferParams.fromRpc(json["params"]));
+  }
   factory IbcTransferQueryParamsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcTransferQueryParamsResponse(
@@ -23,7 +29,7 @@ class IbcTransferQueryParamsResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.queryParamsRequest.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryParamsRequest;
 
   @override
   List get values => [params];

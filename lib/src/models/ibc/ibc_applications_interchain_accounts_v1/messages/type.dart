@@ -1,4 +1,4 @@
-import 'package:blockchain_utils/exception/exception.dart';
+import 'package:cosmos_sdk/src/exception/exception.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
 /// Type defines a classification of message
@@ -21,7 +21,7 @@ class InterchainAccountType implements CosmosEnum {
   static InterchainAccountType fromValue(int? value) {
     return values.firstWhere(
       (e) => e.value == value,
-      orElse: () => throw MessageException(
+      orElse: () => throw DartCosmosSdkPluginException(
           "No InterchainAccountType element found for the given value.",
           details: {"value": value}),
     );

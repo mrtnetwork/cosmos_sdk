@@ -66,7 +66,7 @@ class ThorchainEventSwap extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.eventSwap.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.eventSwap;
 
   @override
   List get values => [

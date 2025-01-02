@@ -10,6 +10,9 @@ class QueryFeeEnabledChannelResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryFeeEnabledChannelResponse(feeEnabled: decode.getField(1));
   }
+  factory QueryFeeEnabledChannelResponse.fromRpc(Map<String, dynamic> json) {
+    return QueryFeeEnabledChannelResponse(feeEnabled: json["fee_enabled"]);
+  }
 
   @override
   List<int> get fieldIds => [1];
@@ -20,7 +23,7 @@ class QueryFeeEnabledChannelResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.queryFeeEnabledChannelResponse.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryFeeEnabledChannelResponse;
 
   @override
   List get values => [feeEnabled];

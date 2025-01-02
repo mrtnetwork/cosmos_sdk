@@ -9,6 +9,17 @@ class SlashingQuerySigningInfosResponse extends CosmosMessage {
   /// info is the signing info of all validators
   final List<SlashingValidatorSigningInfo> info;
   final PageResponse? pagination;
+  factory SlashingQuerySigningInfosResponse.fromRpc(Map<String, dynamic> json) {
+    return SlashingQuerySigningInfosResponse(
+      info: (json["info"] as List?)
+              ?.map((e) => SlashingValidatorSigningInfo.fromRpc(e))
+              .toList() ??
+          [],
+      pagination: json["pagination"] == null
+          ? null
+          : PageResponse.fromRpc(json["pagination"]),
+    );
+  }
   SlashingQuerySigningInfosResponse(
       {required List<SlashingValidatorSigningInfo> info, this.pagination})
       : info = info.immutable;
@@ -36,8 +47,7 @@ class SlashingQuerySigningInfosResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      SlashingV1beta1Types.slashingQuerySigningInfosResponse.typeUrl;
+  TypeUrl get typeUrl => SlashingV1beta1Types.slashingQuerySigningInfosResponse;
 
   @override
   List get values => [info, pagination];

@@ -49,8 +49,8 @@ class OsmosisConcentratedLiquidityClaimableIncentivesResponse
   }
 
   @override
-  String get typeUrl => OsmosisConcentratedLiquidityV1beta1Types
-      .claimableIncentivesResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisConcentratedLiquidityV1beta1Types.claimableIncentivesResponse;
 
   @override
   List get values => [claimableIncentives, forfeitedIncentives];

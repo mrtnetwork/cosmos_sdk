@@ -11,6 +11,13 @@ class QueryModuleVersionsResponse extends CosmosMessage {
   final List<ModuleVersion> moduleVersions;
   QueryModuleVersionsResponse({required List<ModuleVersion> moduleVersions})
       : moduleVersions = moduleVersions.immutable;
+  factory QueryModuleVersionsResponse.fromRpc(Map<String, dynamic> json) {
+    return QueryModuleVersionsResponse(
+        moduleVersions: (json["module_versions"] as List?)
+                ?.map((e) => ModuleVersion.fromRpc(e))
+                .toList() ??
+            []);
+  }
   factory QueryModuleVersionsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryModuleVersionsResponse(
@@ -29,7 +36,7 @@ class QueryModuleVersionsResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => UpgradeV1beta1Types.queryModuleVersionsResponse.typeUrl;
+  TypeUrl get typeUrl => UpgradeV1beta1Types.queryModuleVersionsResponse;
 
   @override
   List get values => [moduleVersions];

@@ -15,15 +15,12 @@ class QueryParamsRequest extends CosmosMessage
   List<int> get fieldIds => [];
 
   @override
-  String get queryPath => BankV1beta1Types.queryParams.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {};
   }
 
   @override
-  String get typeUrl => BankV1beta1Types.paramsRequest.typeUrl;
+  TypeUrl get typeUrl => BankV1beta1Types.paramsRequest;
 
   @override
   List get values => [];
@@ -31,5 +28,10 @@ class QueryParamsRequest extends CosmosMessage
   @override
   QueryParamsResponse onResponse(List<int> bytes) {
     return QueryParamsResponse.deserialize(bytes);
+  }
+
+  @override
+  QueryParamsResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryParamsResponse.fromRpc(json);
   }
 }

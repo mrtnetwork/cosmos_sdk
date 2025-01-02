@@ -7,9 +7,7 @@ import 'query_all_balances_response.dart';
 /// AllBalances queries the balance of all coins for a single account.
 /// When called from another module, this query might consume a high amount of gas if the pagination field is incorrectly set.
 class QueryAllBalancesRequest extends CosmosMessage
-    with
-        QueryMessage<QueryAllBalancesResponse>,
-        RPCMessage<QueryAllBalancesResponse> {
+    with QueryMessage<QueryAllBalancesResponse> {
   /// address is the address to query balances for.
   final CosmosBaseAddress address;
 
@@ -37,9 +35,6 @@ class QueryAllBalancesRequest extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3];
 
   @override
-  String get queryPath => BankV1beta1Types.allBalances.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {
       "address": address.address,
@@ -49,7 +44,7 @@ class QueryAllBalancesRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl => BankV1beta1Types.allBalancesRequest.typeUrl;
+  TypeUrl get typeUrl => BankV1beta1Types.allBalancesRequest;
 
   @override
   List get values => [address.address, pagination, resolveDenom];
@@ -65,9 +60,11 @@ class QueryAllBalancesRequest extends CosmosMessage
   }
 
   @override
-  String get rpcPath =>
-      BankV1beta1Types.allBalances.rpcUrl(pathParameters: [address.address]);
+  Map<String, String?> get queryParameters => {
+        "resolve_denom": resolveDenom?.toString(),
+        ...pagination?.queryParameters ?? {}
+      };
 
   @override
-  Map<String, String> get queryParameters => {};
+  List<String> get pathParameters => [address.address];
 }

@@ -4,11 +4,9 @@ import 'query_denoms_from_creator_response.dart';
 
 /// QueryDenomsFromCreatorRequest defines the request structure for the DenomsFromCreator gRPC query.
 class OsmosisTokenFactoryQueryDenomsFromCreatorRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisTokenFactoryQueryDenomsFromCreatorResponse>,
-        RPCMessage<OsmosisTokenFactoryQueryDenomsFromCreatorResponse> {
-  final String? creator;
-  OsmosisTokenFactoryQueryDenomsFromCreatorRequest({this.creator});
+    with QueryMessage<OsmosisTokenFactoryQueryDenomsFromCreatorResponse> {
+  final String creator;
+  OsmosisTokenFactoryQueryDenomsFromCreatorRequest({required this.creator});
   factory OsmosisTokenFactoryQueryDenomsFromCreatorRequest.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -25,8 +23,8 @@ class OsmosisTokenFactoryQueryDenomsFromCreatorRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      OsmosisTokenFactoryV1beta1Types.queryDenomsFromCreatorRequest.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisTokenFactoryV1beta1Types.queryDenomsFromCreatorRequest;
 
   @override
   List get values => [creator];
@@ -47,10 +45,5 @@ class OsmosisTokenFactoryQueryDenomsFromCreatorRequest extends CosmosMessage
   Map<String, String?> get queryParameters => {};
 
   @override
-  String get queryPath =>
-      OsmosisTokenFactoryV1beta1Types.denomsFromCreator.typeUrl;
-
-  @override
-  String get rpcPath => OsmosisTokenFactoryV1beta1Types.denomsFromCreator
-      .rpcUrl(pathParameters: [creator]);
+  List<String> get pathParameters => [creator];
 }

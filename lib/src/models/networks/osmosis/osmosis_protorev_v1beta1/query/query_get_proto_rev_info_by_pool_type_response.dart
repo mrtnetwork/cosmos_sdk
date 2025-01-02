@@ -34,6 +34,6 @@ class OsmosisProtorevQueryGetProtoRevInfoByPoolTypeResponse
   List get values => [infoByPoolType];
 
   @override
-  String get typeUrl => OsmosisProtorevV1beta1Types
-      .queryGetProtoRevInfoByPoolTypeResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisProtorevV1beta1Types.queryGetProtoRevInfoByPoolTypeResponse;
 }

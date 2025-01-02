@@ -30,7 +30,7 @@ class ThorchainFee extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.fee.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.fee;
 
   @override
   List get values => [coins, poolDeduct];

@@ -38,7 +38,7 @@ class OsmosisCosmWasmPoolParams extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisCosmWasmPoolV1beta1Types.params.typeUrl;
+  TypeUrl get typeUrl => OsmosisCosmWasmPoolV1beta1Types.params;
 
   @override
   List get values => [codeIdWhitelist, poolMigrationLimit];

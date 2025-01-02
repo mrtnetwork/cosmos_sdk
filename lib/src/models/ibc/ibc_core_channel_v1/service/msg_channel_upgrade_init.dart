@@ -28,7 +28,7 @@ class MsgChannelUpgradeInit extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3, 4];
 
   @override
-  String get service => IbcTypes.channelUpgradeInit.typeUrl;
+  TypeUrl get service => IbcTypes.channelUpgradeInit;
 
   @override
   Map<String, dynamic> toJson() {
@@ -41,7 +41,7 @@ class MsgChannelUpgradeInit extends CosmosMessage
   }
 
   @override
-  String get typeUrl => IbcTypes.msgChannelUpgradeInit.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.msgChannelUpgradeInit;
 
   @override
   List get values => [portId, channelId, fields, signer];

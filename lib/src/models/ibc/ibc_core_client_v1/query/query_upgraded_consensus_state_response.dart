@@ -1,3 +1,4 @@
+import 'package:cosmos_sdk/src/models/global_messages/unknown_message.dart';
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
@@ -5,13 +6,21 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 /// QueryUpgradedConsensusStateResponse is the response type for the Query/UpgradedConsensusState RPC method.
 class QueryUpgradedConsensusStateResponse extends CosmosMessage {
   /// Consensus state associated with the request identifier
-  final Any? upgradedConsensusState;
+  final AnyMessage? upgradedConsensusState;
   const QueryUpgradedConsensusStateResponse({this.upgradedConsensusState});
+  factory QueryUpgradedConsensusStateResponse.fromRpc(
+      Map<String, dynamic> json) {
+    return QueryUpgradedConsensusStateResponse(
+        upgradedConsensusState: json["upgraded_consensus_state"] == null
+            ? null
+            : AnyMessage.fromRpc(json["upgraded_consensus_state"]));
+  }
   factory QueryUpgradedConsensusStateResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryUpgradedConsensusStateResponse(
-        upgradedConsensusState:
-            decode.getResult(1)?.to<Any, List<int>>((e) => Any.deserialize(e)));
+        upgradedConsensusState: decode
+            .getResult(1)
+            ?.to<AnyMessage, List<int>>((e) => AnyMessage.deserialize(e)));
   }
 
   @override
@@ -23,7 +32,7 @@ class QueryUpgradedConsensusStateResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.queryUpgradedConsensusStateResponse.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryUpgradedConsensusStateResponse;
 
   @override
   List get values => [upgradedConsensusState];

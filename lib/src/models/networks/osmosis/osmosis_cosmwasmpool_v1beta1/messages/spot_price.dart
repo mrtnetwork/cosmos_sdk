@@ -29,7 +29,7 @@ class OsmosisCosmWasmPoolSpotPrice extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisCosmWasmPoolV1beta1Types.spotPrice.typeUrl;
+  TypeUrl get typeUrl => OsmosisCosmWasmPoolV1beta1Types.spotPrice;
 
   @override
   List get values => [quoteAssetDenom, baseAssetDenom];

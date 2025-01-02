@@ -21,9 +21,6 @@ class QueryAccountInfoRequest extends CosmosMessage
   List<int> get fieldIds => [1];
 
   @override
-  String get queryPath => AuthV1beta1Types.accountInfo.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {"address": address.address};
   }
@@ -32,10 +29,18 @@ class QueryAccountInfoRequest extends CosmosMessage
   List get values => [address.address];
 
   @override
-  String get typeUrl => AuthV1beta1Types.accountInfoRequest.typeUrl;
+  TypeUrl get typeUrl => AuthV1beta1Types.accountInfoRequest;
 
   @override
   QueryAccountInfoResponse onResponse(List<int> bytes) {
     return QueryAccountInfoResponse.deserialize(bytes);
   }
+
+  @override
+  QueryAccountInfoResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryAccountInfoResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters => [address.address];
 }

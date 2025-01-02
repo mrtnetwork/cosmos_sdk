@@ -38,7 +38,7 @@ class MsgChannelCloseConfirm extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3, 4, 5, 6];
 
   @override
-  String get service => IbcTypes.channelCloseConfirm.typeUrl;
+  TypeUrl get service => IbcTypes.channelCloseConfirm;
 
   @override
   Map<String, dynamic> toJson() {
@@ -53,7 +53,7 @@ class MsgChannelCloseConfirm extends CosmosMessage
   }
 
   @override
-  String get typeUrl => IbcTypes.msgChannelCloseConfirm.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.msgChannelCloseConfirm;
 
   @override
   List get values => [
@@ -70,7 +70,6 @@ class MsgChannelCloseConfirm extends CosmosMessage
 
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
-    return EmptyServiceRequestResponse(
-        IbcTypes.msgChannelCloseConfirmResponse.typeUrl);
+    return EmptyServiceRequestResponse(IbcTypes.msgChannelCloseConfirmResponse);
   }
 }

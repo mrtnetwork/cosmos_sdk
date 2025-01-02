@@ -8,6 +8,11 @@ class DistributionQueryValidatorCommissionResponse extends CosmosMessage {
   /// commission defines the commission the validator received.
   final DistributionValidatorAccumulatedCommission commission;
   const DistributionQueryValidatorCommissionResponse(this.commission);
+  factory DistributionQueryValidatorCommissionResponse.fromRpc(
+      Map<String, dynamic> json) {
+    return DistributionQueryValidatorCommissionResponse(
+        DistributionValidatorAccumulatedCommission.fromRpc(json["commission"]));
+  }
   factory DistributionQueryValidatorCommissionResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -25,8 +30,8 @@ class DistributionQueryValidatorCommissionResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => DistributionV1beta1Types
-      .distributionQueryValidatorCommissionResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      DistributionV1beta1Types.distributionQueryValidatorCommissionResponse;
 
   @override
   List get values => [commission];

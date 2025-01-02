@@ -1,3 +1,4 @@
+import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/address/address.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_v1beta1/messages/coin.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_gov_v1beta1/types/types.dart';
@@ -15,6 +16,16 @@ class GovDeposit extends CosmosMessage {
 
   /// amount to be deposited by depositor.
   final List<Coin> amount;
+  factory GovDeposit.fromRpc(Map<String, dynamic> json) {
+    return GovDeposit(
+      proposalId: BigintUtils.tryParse(json["proposal_id"]),
+      depositor: json["depositor"] == null
+          ? null
+          : CosmosBaseAddress(json["depositor"]),
+      amount:
+          (json["amount"] as List?)?.map((e) => Coin.fromRpc(e)).toList() ?? [],
+    );
+  }
   GovDeposit({this.proposalId, this.depositor, required List<Coin> amount})
       : amount = amount.immutable;
   factory GovDeposit.deserialize(List<int> bytes) {
@@ -41,7 +52,7 @@ class GovDeposit extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => GovV1beta1types.govDeposit.typeUrl;
+  TypeUrl get typeUrl => GovV1beta1types.govDeposit;
 
   @override
   List get values => [proposalId, depositor, amount];

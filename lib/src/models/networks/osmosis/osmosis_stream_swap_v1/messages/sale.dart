@@ -145,7 +145,7 @@ class OsmosisStreamSwapSale extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisStreamSwapV1Types.sale.typeUrl;
+  TypeUrl get typeUrl => OsmosisStreamSwapV1Types.sale;
 
   @override
   List get values => [

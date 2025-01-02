@@ -36,7 +36,7 @@ class Entry extends CosmosMessage {
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get typeUrl => NFTV1beta1Types.entry.typeUrl;
+  TypeUrl get typeUrl => NFTV1beta1Types.entry;
 
   @override
   List get values => [owner, nfts];

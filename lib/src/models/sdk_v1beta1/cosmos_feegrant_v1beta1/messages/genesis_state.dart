@@ -24,7 +24,7 @@ class FeeGrantGenesisState extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => FeegrantV1beta1Types.feeGrantGenesisState.typeUrl;
+  TypeUrl get typeUrl => FeegrantV1beta1Types.feeGrantGenesisState;
 
   @override
   List get values => [allowances];

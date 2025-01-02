@@ -48,12 +48,10 @@ class MsgCreatePermanentLockedAccount extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3];
 
   @override
-  String get service =>
-      VestingV1beta1Types.createPermanentLockedAccount.typeUrl;
+  TypeUrl get service => VestingV1beta1Types.createPermanentLockedAccount;
 
   @override
-  String get typeUrl =>
-      VestingV1beta1Types.msgCreatePermanentLockedAccount.typeUrl;
+  TypeUrl get typeUrl => VestingV1beta1Types.msgCreatePermanentLockedAccount;
 
   @override
   List get values => [fromAddress?.address, toAddress?.address, amount];
@@ -64,6 +62,6 @@ class MsgCreatePermanentLockedAccount extends CosmosMessage
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        VestingV1beta1Types.msgCreatePermanentLockedAccountResponse.typeUrl);
+        VestingV1beta1Types.msgCreatePermanentLockedAccountResponse);
   }
 }

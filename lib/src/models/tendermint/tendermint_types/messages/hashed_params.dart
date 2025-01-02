@@ -26,7 +26,7 @@ class HashedParams extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => TendermintTypes.hashedParams.typeUrl;
+  TypeUrl get typeUrl => TendermintTypes.hashedParams;
 
   @override
   List get values => [blockMaxBytes, blockMaxGas];

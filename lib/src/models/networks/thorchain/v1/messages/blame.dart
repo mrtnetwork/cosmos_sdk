@@ -39,7 +39,7 @@ class ThorchainBlame extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.blame.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.blame;
 
   @override
   List get values => [failReason, isUnicast, blameNodes, round];

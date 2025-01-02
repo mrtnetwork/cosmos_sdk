@@ -4,7 +4,7 @@ import 'package:cosmos_sdk/src/provider/tendermint/core/tendermint.dart';
 /// Get transactions by hash
 /// https://docs.tendermint.com/v0.34/rpc/#/Info/tx
 class TendermintRequestTx
-    extends TendermintRequestParam<Map<String, dynamic>, Map<String, dynamic>> {
+    extends TendermintRequest<Map<String, dynamic>, Map<String, dynamic>> {
   TendermintRequestTx({required this.hash, this.prove});
 
   /// hash of transaction to retrieve

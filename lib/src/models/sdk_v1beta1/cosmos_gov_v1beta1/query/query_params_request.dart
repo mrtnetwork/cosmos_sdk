@@ -20,15 +20,12 @@ class GovQueryParamsRequest extends CosmosMessage
   List<int> get fieldIds => [1];
 
   @override
-  String get queryPath => GovV1beta1types.queryGovParams.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {"params_type": paramsType};
   }
 
   @override
-  String get typeUrl => GovV1beta1types.govQueryParamsRequest.typeUrl;
+  TypeUrl get typeUrl => GovV1beta1types.govQueryParamsRequest;
 
   @override
   List get values => [paramsType];
@@ -37,4 +34,12 @@ class GovQueryParamsRequest extends CosmosMessage
   GovQueryParamsResponse onResponse(List<int> bytes) {
     return GovQueryParamsResponse.deserialize(bytes);
   }
+
+  @override
+  GovQueryParamsResponse onJsonResponse(Map<String, dynamic> json) {
+    return GovQueryParamsResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters => [paramsType];
 }

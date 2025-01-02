@@ -26,7 +26,7 @@ class PartSetHeader extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => TendermintTypes.partSetHeader.typeUrl;
+  TypeUrl get typeUrl => TendermintTypes.partSetHeader;
 
   @override
   List get values => [total, hash];

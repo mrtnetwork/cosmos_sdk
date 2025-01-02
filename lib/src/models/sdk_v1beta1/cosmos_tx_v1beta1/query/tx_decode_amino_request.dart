@@ -20,16 +20,18 @@ class TxDecodeAminoRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl => TxV1beta1Types.txDecodeAminoRequest.typeUrl;
+  TypeUrl get typeUrl => TxV1beta1Types.txDecodeAminoRequest;
 
   @override
   List get values => [aminoBinary];
 
   @override
-  String get queryPath => TxV1beta1Types.txDecodeAmino.typeUrl;
-
-  @override
   TxDecodeAminoResponse onResponse(List<int> bytes) {
     return TxDecodeAminoResponse.deserialize(bytes);
+  }
+
+  @override
+  TxDecodeAminoResponse onJsonResponse(Map<String, dynamic> json) {
+    throw UnimplementedError();
   }
 }

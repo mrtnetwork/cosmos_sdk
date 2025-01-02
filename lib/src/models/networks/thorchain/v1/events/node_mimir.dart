@@ -29,7 +29,7 @@ class ThorchainNodeMimir extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.nodeMimir.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.nodeMimir;
 
   @override
   List get values => [key, value, signer];

@@ -6,11 +6,12 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class QueryCounterpartyPayeeRequest extends CosmosMessage
     with QueryMessage<QueryCounterpartyPayeeResponse> {
   /// unique channel identifier
-  final String? channelId;
+  final String channelId;
 
   /// the relayer address to which the counterparty is registered
-  final String? relayer;
-  const QueryCounterpartyPayeeRequest({this.channelId, this.relayer});
+  final String relayer;
+  const QueryCounterpartyPayeeRequest(
+      {required this.channelId, required this.relayer});
   factory QueryCounterpartyPayeeRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryCounterpartyPayeeRequest(
@@ -21,15 +22,12 @@ class QueryCounterpartyPayeeRequest extends CosmosMessage
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get queryPath => IbcTypes.counterpartyPayee.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {"channel_id": channelId, "relayer": relayer};
   }
 
   @override
-  String get typeUrl => IbcTypes.queryCounterpartyPayeeRequest.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryCounterpartyPayeeRequest;
 
   @override
   List get values => [channelId, relayer];
@@ -38,4 +36,12 @@ class QueryCounterpartyPayeeRequest extends CosmosMessage
   QueryCounterpartyPayeeResponse onResponse(List<int> bytes) {
     return QueryCounterpartyPayeeResponse.deserialize(bytes);
   }
+
+  @override
+  QueryCounterpartyPayeeResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryCounterpartyPayeeResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters => [channelId, relayer];
 }

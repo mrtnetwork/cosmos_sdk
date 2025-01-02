@@ -72,6 +72,6 @@ class OsmosisConcentratedLiquidityMsgCreatePositionResponse
       ];
 
   @override
-  String get typeUrl => OsmosisConcentratedLiquidityV1beta1Types
-      .msgCreatePositionResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisConcentratedLiquidityV1beta1Types.msgCreatePositionResponse;
 }

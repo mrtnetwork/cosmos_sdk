@@ -8,11 +8,12 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class QueryConnectionChannelsRequest extends CosmosMessage
     with QueryMessage<QueryConnectionChannelsResponse> {
   /// connection unique identifier
-  final String? connection;
+  final String connection;
 
   /// pagination request
   final PageRequest? pagination;
-  const QueryConnectionChannelsRequest({this.connection, this.pagination});
+  const QueryConnectionChannelsRequest(
+      {required this.connection, this.pagination});
   factory QueryConnectionChannelsRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryConnectionChannelsRequest(
@@ -26,15 +27,12 @@ class QueryConnectionChannelsRequest extends CosmosMessage
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get queryPath => IbcTypes.connectionChannels.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {"connection": connection, "pagination": pagination?.toJson()};
   }
 
   @override
-  String get typeUrl => IbcTypes.queryConnectionChannelsRequest.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryConnectionChannelsRequest;
 
   @override
   List get values => [connection, pagination];
@@ -43,4 +41,15 @@ class QueryConnectionChannelsRequest extends CosmosMessage
   QueryConnectionChannelsResponse onResponse(List<int> bytes) {
     return QueryConnectionChannelsResponse.deserialize(bytes);
   }
+
+  @override
+  QueryConnectionChannelsResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryConnectionChannelsResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters => [connection];
+
+  @override
+  Map<String, String?> get queryParameters => pagination?.queryParameters ?? {};
 }

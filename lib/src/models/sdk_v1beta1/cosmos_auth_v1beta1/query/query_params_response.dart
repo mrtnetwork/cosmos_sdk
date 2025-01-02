@@ -13,6 +13,10 @@ class AuthQueryParamsResponse extends CosmosMessage {
     return AuthQueryParamsResponse(AuthParams.deserialize(decode.getField(1)));
   }
 
+  factory AuthQueryParamsResponse.fromRpc(Map<String, dynamic> json) {
+    return AuthQueryParamsResponse(AuthParams.fromRpc(json["params"]));
+  }
+
   @override
   List<int> get fieldIds => [1];
 
@@ -25,5 +29,5 @@ class AuthQueryParamsResponse extends CosmosMessage {
   List get values => [params];
 
   @override
-  String get typeUrl => AuthV1beta1Types.authParamsResponse.typeUrl;
+  TypeUrl get typeUrl => AuthV1beta1Types.authParamsResponse;
 }

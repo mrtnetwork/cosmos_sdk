@@ -20,16 +20,12 @@ class SlashingQuerySigningInfosRequest extends CosmosMessage
   List<int> get fieldIds => [1];
 
   @override
-  String get queryPath => SlashingV1beta1Types.slashingSigningInfos.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {"pagination": pagination?.toJson()};
   }
 
   @override
-  String get typeUrl =>
-      SlashingV1beta1Types.slashingQuerySigningInfosRequest.typeUrl;
+  TypeUrl get typeUrl => SlashingV1beta1Types.slashingQuerySigningInfosRequest;
 
   @override
   List get values => [pagination];
@@ -37,4 +33,12 @@ class SlashingQuerySigningInfosRequest extends CosmosMessage
   SlashingQuerySigningInfosResponse onResponse(List<int> bytes) {
     return SlashingQuerySigningInfosResponse.deserialize(bytes);
   }
+
+  @override
+  SlashingQuerySigningInfosResponse onJsonResponse(Map<String, dynamic> json) {
+    return SlashingQuerySigningInfosResponse.fromRpc(json);
+  }
+
+  @override
+  Map<String, String?> get queryParameters => pagination?.queryParameters ?? {};
 }

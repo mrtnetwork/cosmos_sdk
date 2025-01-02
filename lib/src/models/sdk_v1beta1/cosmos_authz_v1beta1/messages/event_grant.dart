@@ -41,7 +41,7 @@ class AuthzEventGrant extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => AuthzV1beta1Types.authzEventGrant.typeUrl;
+  TypeUrl get typeUrl => AuthzV1beta1Types.authzEventGrant;
 
   @override
   List get values => [msgTypeUrl, granter?.address, grantee?.address];

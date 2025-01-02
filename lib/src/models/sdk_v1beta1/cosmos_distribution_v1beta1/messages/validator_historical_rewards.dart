@@ -41,8 +41,8 @@ class DistributionValidatorHistoricalRewards extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      DistributionV1beta1Types.distributionValidatorHistoricalRewards.typeUrl;
+  TypeUrl get typeUrl =>
+      DistributionV1beta1Types.distributionValidatorHistoricalRewards;
 
   @override
   List get values => [cumulativeRewardRatio, referenceCount];

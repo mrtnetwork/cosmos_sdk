@@ -37,21 +37,20 @@ class OsmosisValSetprefMsgDelegateToValidatorSet extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      OsmosisValSetprefV1beta1Types.msgDelegateToValidatorSet.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisValSetprefV1beta1Types.msgDelegateToValidatorSet;
 
   @override
   List get values => [delegator, coin];
 
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
-    return EmptyServiceRequestResponse(OsmosisValSetprefV1beta1Types
-        .msgDelegateToValidatorSetResponse.typeUrl);
+    return EmptyServiceRequestResponse(
+        OsmosisValSetprefV1beta1Types.msgDelegateToValidatorSetResponse);
   }
 
   @override
-  String get service =>
-      OsmosisValSetprefV1beta1Types.delegateToValidatorSet.typeUrl;
+  TypeUrl get service => OsmosisValSetprefV1beta1Types.delegateToValidatorSet;
 
   @override
   List<String?> get signers => [delegator];

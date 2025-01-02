@@ -79,7 +79,7 @@ Experience effortless interaction with a Cosmos SDK-based network in Dart, facil
 
   /// Querying account info from the blockchain
   final accountInfo = await provider.request(TendermintRequestAbciQuery(
-      request: QueryAccountInfoRequest(pubkey.toAddresss())));
+      request: QueryAccountInfoRequest(pubkey.toAddress())));
 
   /// Querying the latest block information
   final latestBlock = await provider.request(
@@ -102,7 +102,7 @@ Experience effortless interaction with a Cosmos SDK-based network in Dart, facil
 
   /// Creating a transaction message to send tokens
   final message = MsgSend(
-      fromAddress: pubkey.toAddresss(),
+      fromAddress: pubkey.toAddress(),
       toAddress: CosmosBaseAddress("cosmos1qhslf0sx2fegltfqq0p5j6etmdznjgfnm2j6nc"),
       amount: [Coin(denom: "uatom", amount: BigInt.from(1000000))]);
 
@@ -150,7 +150,7 @@ Experience effortless interaction with a Cosmos SDK-based network in Dart, facil
 
   /// Generate the corresponding public key and address for Secp256k1
   final pubkey = CosmosSecp256K1PublicKey.fromBytes(bip44.publicKey.compressed);
-  final cosmosAddress = pubkey.toAddresss(hrp: "cosmos");
+  final cosmosAddress = pubkey.toAddress(hrp: "cosmos");
 
   /// Sign the provided digest using the Secp256k1 private key
   final sign = privateKey.sign(digest);
@@ -160,7 +160,7 @@ Experience effortless interaction with a Cosmos SDK-based network in Dart, facil
 
   /// Generate the corresponding public key and address for ED25519
   final edPublicKey = ed25519PrivateKey.toPublicKey();
-  final validatorAddr = edPublicKey.toAddresss(hrp: "cosmosvaloper");
+  final validatorAddr = edPublicKey.toAddress(hrp: "cosmosvaloper");
 
   /// Sign the provided digest using the ED25519 private key
   final edSign = ed25519PrivateKey.sign(digest);
@@ -170,7 +170,7 @@ Experience effortless interaction with a Cosmos SDK-based network in Dart, facil
 
   /// Generate the corresponding public key and base address for NIST P-256
   final nistPublicKey = nistPrivateKey.toPublicKey();
-  final baseAddress = nistPublicKey.toAddresss();
+  final baseAddress = nistPublicKey.toAddress();
 
   /// Sign the provided digest using the NIST P-256 private key
   final nistSign = nistPrivateKey.sign(digest);
@@ -189,7 +189,7 @@ Experience effortless interaction with a Cosmos SDK-based network in Dart, facil
 
   /// Query account information using the provider
   final accountInfo = await provider.request(TendermintRequestAbciQuery(
-      request: QueryAccountInfoRequest(pubkey.toAddresss())));
+      request: QueryAccountInfoRequest(pubkey.toAddress())));
 
   /// Get the latest block information using the provider
   final latestBlock = await provider.request(

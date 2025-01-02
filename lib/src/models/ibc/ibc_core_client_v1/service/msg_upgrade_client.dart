@@ -68,7 +68,7 @@ class MsgUpgradeClient extends CosmosMessage
   }
 
   @override
-  String get typeUrl => IbcTypes.msgUpgradeClient.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.msgUpgradeClient;
 
   @override
   List get values => [
@@ -81,13 +81,12 @@ class MsgUpgradeClient extends CosmosMessage
       ];
 
   @override
-  String get service => IbcTypes.upgradeClient.typeUrl;
+  TypeUrl get service => IbcTypes.upgradeClient;
   @override
   List<String?> get signers => [signer];
 
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
-    return EmptyServiceRequestResponse(
-        IbcTypes.msgUpgradeClientResponse.typeUrl);
+    return EmptyServiceRequestResponse(IbcTypes.msgUpgradeClientResponse);
   }
 }

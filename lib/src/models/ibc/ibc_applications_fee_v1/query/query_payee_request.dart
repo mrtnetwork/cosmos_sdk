@@ -7,11 +7,11 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class QueryPayeeRequest extends CosmosMessage
     with QueryMessage<QueryPayeeResponse> {
   /// unique channel identifier
-  final String? channelId;
+  final String channelId;
 
   /// the relayer address to which the distribution address is registered
-  final String? relayer;
-  const QueryPayeeRequest({this.channelId, this.relayer});
+  final String relayer;
+  const QueryPayeeRequest({required this.channelId, required this.relayer});
   factory QueryPayeeRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryPayeeRequest(
@@ -22,15 +22,12 @@ class QueryPayeeRequest extends CosmosMessage
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get queryPath => IbcTypes.payee.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {"channel_id": channelId, "relayer": relayer};
   }
 
   @override
-  String get typeUrl => IbcTypes.queryPayeeRequest.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryPayeeRequest;
 
   @override
   List get values => [channelId, relayer];
@@ -38,4 +35,12 @@ class QueryPayeeRequest extends CosmosMessage
   QueryPayeeResponse onResponse(List<int> bytes) {
     return QueryPayeeResponse.deserialize(bytes);
   }
+
+  @override
+  QueryPayeeResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryPayeeResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters => [channelId, relayer];
 }

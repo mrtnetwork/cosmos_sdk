@@ -34,7 +34,7 @@ class EventMint extends CosmosMessage {
   List<int> get fieldIds => [1, 2, 3];
 
   @override
-  String get typeUrl => NFTV1beta1Types.eventMint.typeUrl;
+  TypeUrl get typeUrl => NFTV1beta1Types.eventMint;
 
   @override
   List get values => [classId, id, owner];

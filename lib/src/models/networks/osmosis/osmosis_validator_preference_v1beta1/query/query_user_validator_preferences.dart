@@ -8,13 +8,12 @@ class OsmosisValidatorPreferenceQueryUserValidatorPreferences
     extends CosmosMessage
     with
         QueryMessage<
-            OsmosisValidatorPreferenceQueryUserValidatorPreferenceResponse>,
-        RPCMessage<
             OsmosisValidatorPreferenceQueryUserValidatorPreferenceResponse> {
   /// user account address
-  final String? user;
+  final String user;
 
-  const OsmosisValidatorPreferenceQueryUserValidatorPreferences({this.user});
+  const OsmosisValidatorPreferenceQueryUserValidatorPreferences(
+      {required this.user});
   factory OsmosisValidatorPreferenceQueryUserValidatorPreferences.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -31,8 +30,8 @@ class OsmosisValidatorPreferenceQueryUserValidatorPreferences
   }
 
   @override
-  String get typeUrl => OsmosisValidatorPreferenceV1beta1Types
-      .queryUserValidatorPreferences.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisValidatorPreferenceV1beta1Types.queryUserValidatorPreferences;
 
   @override
   List get values => [user];
@@ -55,11 +54,5 @@ class OsmosisValidatorPreferenceQueryUserValidatorPreferences
   Map<String, String?> get queryParameters => {};
 
   @override
-  String get queryPath =>
-      OsmosisValidatorPreferenceV1beta1Types.userValidatorPreferences.typeUrl;
-
-  @override
-  String get rpcPath =>
-      OsmosisValidatorPreferenceV1beta1Types.userValidatorPreferences
-          .rpcUrl(pathParameters: [user]);
+  List<String> get pathParameters => [user];
 }

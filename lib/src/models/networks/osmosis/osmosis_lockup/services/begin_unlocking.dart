@@ -29,7 +29,7 @@ class OsmosisLockupMsgBeginUnlocking extends CosmosMessage
   }
 
   @override
-  String get service => OsmosisLockupTypes.beginUnlocking.typeUrl;
+  TypeUrl get service => OsmosisLockupTypes.beginUnlocking;
 
   @override
   List<String?> get signers => [owner];
@@ -44,7 +44,7 @@ class OsmosisLockupMsgBeginUnlocking extends CosmosMessage
   }
 
   @override
-  String get typeUrl => OsmosisLockupTypes.msgBeginUnlocking.typeUrl;
+  TypeUrl get typeUrl => OsmosisLockupTypes.msgBeginUnlocking;
 
   @override
   List get values => [owner, id, coins];

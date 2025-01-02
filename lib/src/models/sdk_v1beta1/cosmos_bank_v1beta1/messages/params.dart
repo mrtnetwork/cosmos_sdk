@@ -13,6 +13,14 @@ class BankParams extends CosmosMessage {
   final bool defaultSendEnabled;
   const BankParams(
       {this.sendEnabled = const [], required this.defaultSendEnabled});
+  factory BankParams.fromRpc(Map<String, dynamic> json) {
+    return BankParams(
+        sendEnabled: (json["send_enabled"] as List?)
+                ?.map((e) => SendEnabled.fromRpc(e))
+                .toList() ??
+            [],
+        defaultSendEnabled: json["default_send_enabled"]);
+  }
   factory BankParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return BankParams(
@@ -35,7 +43,7 @@ class BankParams extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => BankV1beta1Types.params.typeUrl;
+  TypeUrl get typeUrl => BankV1beta1Types.params;
 
   @override
   List get values => [sendEnabled, defaultSendEnabled];

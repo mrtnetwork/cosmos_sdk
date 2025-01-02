@@ -6,8 +6,6 @@ class OsmosisConcentratedLiquidityTickAccumulatorTrackersRequest
     extends CosmosMessage
     with
         QueryMessage<
-            OsmosisConcentratedLiquidityTickAccumulatorTrackersResponse>,
-        RPCMessage<
             OsmosisConcentratedLiquidityTickAccumulatorTrackersResponse> {
   final BigInt? poolId;
   final BigInt? tickIndex;
@@ -28,21 +26,13 @@ class OsmosisConcentratedLiquidityTickAccumulatorTrackersRequest
       {"pool_id": poolId?.toString(), "tick_index": tickIndex?.toString()};
 
   @override
-  String get queryPath =>
-      OsmosisConcentratedLiquidityV1beta1Types.tickAccumulatorTrackers.typeUrl;
-
-  @override
-  String get rpcPath =>
-      OsmosisConcentratedLiquidityV1beta1Types.tickAccumulatorTrackers.rpcUrl();
-
-  @override
   Map<String, dynamic> toJson() {
     return {"pool_id": poolId?.toString(), "tick_index": tickIndex?.toString()};
   }
 
   @override
-  String get typeUrl => OsmosisConcentratedLiquidityV1beta1Types
-      .tickAccumulatorTrackersRequest.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisConcentratedLiquidityV1beta1Types.tickAccumulatorTrackersRequest;
 
   @override
   List get values => [poolId, tickIndex];

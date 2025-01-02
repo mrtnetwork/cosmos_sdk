@@ -1,3 +1,4 @@
+import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_upgrade_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
@@ -10,6 +11,10 @@ class ModuleVersion extends CosmosMessage {
 
   /// consensus version of the app module
   final BigInt? version;
+  factory ModuleVersion.fromRpc(Map<String, dynamic> json) {
+    return ModuleVersion(
+        name: json["name"], version: BigintUtils.tryParse(json["version"]));
+  }
   const ModuleVersion({this.name, this.version});
   factory ModuleVersion.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -25,7 +30,7 @@ class ModuleVersion extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => UpgradeV1beta1Types.moduleVersion.typeUrl;
+  TypeUrl get typeUrl => UpgradeV1beta1Types.moduleVersion;
 
   @override
   List get values => [name, version];

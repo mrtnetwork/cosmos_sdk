@@ -48,8 +48,8 @@ class OsmosisConcentratedLiquidityLiquidityPerTickRangeResponse
   }
 
   @override
-  String get typeUrl => OsmosisConcentratedLiquidityV1beta1Types
-      .liquidityPerTickRangeResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisConcentratedLiquidityV1beta1Types.liquidityPerTickRangeResponse;
 
   @override
   List get values => [liquidity, bucketIndex];

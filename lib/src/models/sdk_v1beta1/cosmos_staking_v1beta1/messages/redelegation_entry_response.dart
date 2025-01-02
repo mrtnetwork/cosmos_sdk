@@ -10,6 +10,13 @@ class RedelegationEntryResponse extends CosmosMessage {
   final BigInt balance;
   const RedelegationEntryResponse(
       {required this.redelegationEntry, required this.balance});
+  factory RedelegationEntryResponse.fromRpc(Map<String, dynamic> json) {
+    return RedelegationEntryResponse(
+        redelegationEntry:
+            RedelegationEntry.fromRpc(json["redelegation_entry"]),
+        balance: BigintUtils.parse(json["balance"]));
+  }
+
   factory RedelegationEntryResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return RedelegationEntryResponse(
@@ -29,7 +36,7 @@ class RedelegationEntryResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => StakingV1beta1Types.redelegationEntryResponse.typeUrl;
+  TypeUrl get typeUrl => StakingV1beta1Types.redelegationEntryResponse;
 
   @override
   List get values => [redelegationEntry, balance.toString()];

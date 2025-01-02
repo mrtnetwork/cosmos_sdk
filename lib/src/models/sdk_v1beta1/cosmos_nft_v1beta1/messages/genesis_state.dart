@@ -36,7 +36,7 @@ class NFTGenesisState extends CosmosMessage {
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get typeUrl => NFTV1beta1Types.nFTGenesisState.typeUrl;
+  TypeUrl get typeUrl => NFTV1beta1Types.nFTGenesisState;
 
   @override
   List get values => [classes, entries];

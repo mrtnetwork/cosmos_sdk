@@ -42,15 +42,15 @@ class OsmosisSuperfluidMsgAddToConcentratedLiquiditySuperfluidPosition
   }
 
   @override
-  String get typeUrl => OsmosisSuperfluidTypes
-      .msgAddToConcentratedLiquiditySuperfluidPosition.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisSuperfluidTypes.msgAddToConcentratedLiquiditySuperfluidPosition;
 
   @override
   List get values => [positionId, sender, tokenDesired0, tokenDesired1];
 
   @override
-  String get service => OsmosisSuperfluidTypes
-      .adToConcentratedLiquiditySuperfluidPosition.typeUrl;
+  TypeUrl get service =>
+      OsmosisSuperfluidTypes.adToConcentratedLiquiditySuperfluidPosition;
 
   @override
   List<String?> get signers => [sender];

@@ -43,7 +43,7 @@ class ThorchainMsgTradeAccountDeposit extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.msgTradeAccountDeposit.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.msgTradeAccountDeposit;
 
   @override
   List get values => [tx, asset, amount.toString(), address, signer];

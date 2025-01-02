@@ -1,11 +1,7 @@
-import 'package:cosmos_sdk/src/models/core/type_url/type_url.dart';
+import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 
 class OsmosisStreamSwapV1Types extends TypeUrl {
-  @override
-  final String typeUrl;
-  @override
-  final String? rpc;
-  const OsmosisStreamSwapV1Types._(this.typeUrl, {this.rpc});
+  const OsmosisStreamSwapV1Types._(super.typeUrl, {super.query, super.rpc});
   static const OsmosisStreamSwapV1Types userPosition =
       OsmosisStreamSwapV1Types._("/osmosis.streamswap.v1.UserPosition");
   static const OsmosisStreamSwapV1Types userPositionKV =
@@ -50,32 +46,29 @@ class OsmosisStreamSwapV1Types extends TypeUrl {
       OsmosisStreamSwapV1Types._(
           "/osmosis.streamswap.v1.MsgFinalizeSaleResponse");
 
-  static const OsmosisStreamSwapV1Types querySales =
-      OsmosisStreamSwapV1Types._("/osmosis.streamswap.v1.QuerySales");
+  static const OsmosisStreamSwapV1Types querySales = OsmosisStreamSwapV1Types._(
+      "/osmosis.streamswap.v1.QuerySales",
+      query: "/osmosis.streamswap.v1.Query/Sales",
+      rpc: "/cosmos/streamswap/v1/sales");
   static const OsmosisStreamSwapV1Types querySalesResponse =
       OsmosisStreamSwapV1Types._("/osmosis.streamswap.v1.QuerySalesResponse");
 
   static const OsmosisStreamSwapV1Types querySaleRequest =
-      OsmosisStreamSwapV1Types._("/osmosis.streamswap.v1.QuerySale");
+      OsmosisStreamSwapV1Types._("/osmosis.streamswap.v1.QuerySale",
+          query: "/osmosis.streamswap.v1.Query/Sale",
+          rpc: "/cosmos/streamswap/v1/sales/:sale_id");
   static const OsmosisStreamSwapV1Types querySaleResponse =
       OsmosisStreamSwapV1Types._("/osmosis.streamswap.v1.QuerySaleResponse");
 
   static const OsmosisStreamSwapV1Types queryUserPositionRequest =
-      OsmosisStreamSwapV1Types._("/osmosis.streamswap.v1.QueryUserPosition");
+      OsmosisStreamSwapV1Types._("/osmosis.streamswap.v1.QueryUserPosition",
+          query: "/osmosis.streamswap.v1.Query/UserPosition",
+          rpc: "/cosmos/streamswap/v1/sales/:sale_id/:user");
   static const OsmosisStreamSwapV1Types queryUserPositionResponse =
       OsmosisStreamSwapV1Types._(
           "/osmosis.streamswap.v1.QueryUserPositionResponse");
 
   /// query
-  static const OsmosisStreamSwapV1Types queryUserPosition =
-      OsmosisStreamSwapV1Types._("/osmosis.streamswap.v1.Query/UserPosition",
-          rpc: "/cosmos/streamswap/v1/sales/:sale_id/:user");
-  static const OsmosisStreamSwapV1Types querySale = OsmosisStreamSwapV1Types._(
-      "/osmosis.streamswap.v1.Query/Sale",
-      rpc: "/cosmos/streamswap/v1/sales/:sale_id");
-  static const OsmosisStreamSwapV1Types sales = OsmosisStreamSwapV1Types._(
-      "/osmosis.streamswap.v1.Query/Sales",
-      rpc: "/cosmos/streamswap/v1/sales");
 
   /// service
   static const OsmosisStreamSwapV1Types finalizeSale =

@@ -27,7 +27,7 @@ class OsmosisIbchooksMsgEmitIBCAck extends CosmosMessage
   }
 
   @override
-  String get service => OsmosisIbchooksTypes.emitIBCAck.typeUrl;
+  TypeUrl get service => OsmosisIbchooksTypes.emitIBCAck;
 
   @override
   List<String?> get signers => [sender];
@@ -42,7 +42,7 @@ class OsmosisIbchooksMsgEmitIBCAck extends CosmosMessage
   }
 
   @override
-  String get typeUrl => OsmosisIbchooksTypes.msgEmitIBCAck.typeUrl;
+  TypeUrl get typeUrl => OsmosisIbchooksTypes.msgEmitIBCAck;
 
   @override
   List get values => [sender, packetSequence, channel];

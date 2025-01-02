@@ -22,7 +22,7 @@ class MsgRecvPacketResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.msgRecvPacketResponse.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.msgRecvPacketResponse;
 
   @override
   List get values => [result?.value];

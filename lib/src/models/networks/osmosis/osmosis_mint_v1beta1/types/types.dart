@@ -1,11 +1,7 @@
-import 'package:cosmos_sdk/src/models/core/type_url/type_url.dart';
+import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 
 class OsmosisMintV1beta1Types extends TypeUrl {
-  @override
-  final String typeUrl;
-  @override
-  final String? rpc;
-  const OsmosisMintV1beta1Types._(this.typeUrl, {this.rpc});
+  const OsmosisMintV1beta1Types._(super.typeUrl, {super.query, super.rpc});
   static const OsmosisMintV1beta1Types weightedAddress =
       OsmosisMintV1beta1Types._("/osmosis.mint.v1beta1.WeightedAddress");
   static const OsmosisMintV1beta1Types distributionProportions =
@@ -19,22 +15,18 @@ class OsmosisMintV1beta1Types extends TypeUrl {
       OsmosisMintV1beta1Types._("/osmosis.mint.v1beta1.GenesisState");
 
   static const OsmosisMintV1beta1Types queryParamsRequest =
-      OsmosisMintV1beta1Types._("/osmosis.mint.v1beta1.QueryParamsRequest");
+      OsmosisMintV1beta1Types._("/osmosis.mint.v1beta1.QueryParamsRequest",
+          query: "/osmosis.mint.v1beta1.Query/Params",
+          rpc: "/osmosis/mint/v1beta1/params");
   static const OsmosisMintV1beta1Types queryParamsResponse =
       OsmosisMintV1beta1Types._("/osmosis.mint.v1beta1.QueryParamsResponse");
 
   static const OsmosisMintV1beta1Types queryEpochProvisionsRequest =
       OsmosisMintV1beta1Types._(
-          "/osmosis.mint.v1beta1.QueryEpochProvisionsRequest");
+          "/osmosis.mint.v1beta1.QueryEpochProvisionsRequest",
+          query: "/osmosis.mint.v1beta1.Query/EpochProvisions",
+          rpc: "/osmosis/mint/v1beta1/epoch_provisions");
   static const OsmosisMintV1beta1Types queryEpochProvisionsResponse =
       OsmosisMintV1beta1Types._(
           "/osmosis.mint.v1beta1.QueryEpochProvisionsResponse");
-
-  /// query
-  static const OsmosisMintV1beta1Types epochProvisions =
-      OsmosisMintV1beta1Types._("/osmosis.mint.v1beta1.Query/EpochProvisions",
-          rpc: "/osmosis/mint/v1beta1/epoch_provisions");
-  static const OsmosisMintV1beta1Types queryParams = OsmosisMintV1beta1Types._(
-      "/osmosis.mint.v1beta1.Query/Params",
-      rpc: "/osmosis/mint/v1beta1/params");
 }

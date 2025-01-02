@@ -41,8 +41,8 @@ class OsmosisValidatorPreferenceMsgSetValidatorSetPreference
   }
 
   @override
-  String get typeUrl => OsmosisValidatorPreferenceV1beta1Types
-      .msgSetValidatorSetPreference.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisValidatorPreferenceV1beta1Types.msgSetValidatorSetPreference;
 
   @override
   List get values => [delegator, preferences];
@@ -50,12 +50,12 @@ class OsmosisValidatorPreferenceMsgSetValidatorSetPreference
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(OsmosisValidatorPreferenceV1beta1Types
-        .msgSetValidatorSetPreferenceResponse.typeUrl);
+        .msgSetValidatorSetPreferenceResponse);
   }
 
   @override
-  String get service =>
-      OsmosisValidatorPreferenceV1beta1Types.setValidatorSetPreference.typeUrl;
+  TypeUrl get service =>
+      OsmosisValidatorPreferenceV1beta1Types.setValidatorSetPreference;
 
   @override
   List<String?> get signers => [delegator];

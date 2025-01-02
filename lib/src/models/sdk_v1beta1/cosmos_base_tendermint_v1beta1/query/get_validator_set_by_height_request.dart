@@ -1,3 +1,4 @@
+import 'package:blockchain_utils/utils/numbers/utils/bigint_utils.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_query_v1beta1/messages/page_request.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_tendermint_v1beta1/query/get_validator_set_by_height_response.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_tendermint_v1beta1/types/types.dart';
@@ -7,11 +8,12 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 /// GetValidatorSetByHeightRequest is the request type for the Query/GetValidatorSetByHeight RPC method.
 class GetValidatorSetByHeightRequest extends CosmosMessage
     with QueryMessage<GetValidatorSetByHeightResponse> {
-  final BigInt? height;
+  /// height must be a int for grpc and can be string tag like 'latest' for RPC
+  final String height;
 
   /// pagination defines an pagination for the request.
   final PageRequest? pagination;
-  const GetValidatorSetByHeightRequest({this.height, this.pagination});
+  const GetValidatorSetByHeightRequest({required this.height, this.pagination});
   factory GetValidatorSetByHeightRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GetValidatorSetByHeightRequest(
@@ -25,23 +27,30 @@ class GetValidatorSetByHeightRequest extends CosmosMessage
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get queryPath =>
-      BaseTendermintV1beta1Types.getValidatorSetByHeight.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
-    return {"height": height?.toString(), "pagination": pagination?.toJson()};
+    return {"height": height, "pagination": pagination?.toJson()};
   }
 
   @override
-  String get typeUrl =>
-      BaseTendermintV1beta1Types.getValidatorSetByHeightRequest.typeUrl;
+  TypeUrl get typeUrl =>
+      BaseTendermintV1beta1Types.getValidatorSetByHeightRequest;
 
   @override
-  List get values => [height, pagination];
+  List get values => [BigintUtils.tryParse(height), pagination];
 
   @override
   GetValidatorSetByHeightResponse onResponse(List<int> bytes) {
     return GetValidatorSetByHeightResponse.deserialize(bytes);
   }
+
+  @override
+  GetValidatorSetByHeightResponse onJsonResponse(Map<String, dynamic> json) {
+    return GetValidatorSetByHeightResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters => [height];
+
+  @override
+  Map<String, String?> get queryParameters => pagination?.queryParameters ?? {};
 }

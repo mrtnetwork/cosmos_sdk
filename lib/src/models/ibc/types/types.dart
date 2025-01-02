@@ -1,6 +1,8 @@
-class IbcTypes {
-  final String typeUrl;
-  const IbcTypes._(this.typeUrl);
+import 'package:blockchain_utils/service/models/params.dart';
+import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
+
+class IbcTypes extends TypeUrl {
+  const IbcTypes._(super.typeUrl, {super.rpc, super.query, super.method});
   static const IbcTypes capability = IbcTypes._("capability.v1.Capability");
   static const IbcTypes owner = IbcTypes._("capability.v1.Owner");
   static const IbcTypes capabilityOwners =
@@ -40,44 +42,70 @@ class IbcTypes {
       IbcTypes._("ibc.applications.fee.v1.MsgPayPacketFeeAsync");
   static const IbcTypes msgPayPacketFeeAsyncResponse =
       IbcTypes._("ibc.applications.fee.v1.MsgPayPacketFeeAsyncResponse");
-  static const IbcTypes queryIncentivizedPacketsRequest =
-      IbcTypes._("ibc.applications.fee.v1.QueryIncentivizedPacketsRequest");
+  static const IbcTypes queryIncentivizedPacketsRequest = IbcTypes._(
+      "ibc.applications.fee.v1.QueryIncentivizedPacketsRequest",
+      query: "/ibc.applications.fee.v1.Query/IncentivizedPackets",
+      rpc: "/ibc/apps/fee/v1/incentivized_packets");
   static const IbcTypes queryIncentivizedPacketsResponse =
       IbcTypes._("ibc.applications.fee.v1.QueryIncentivizedPacketsResponse");
-  static const IbcTypes queryIncentivizedPacketRequest =
-      IbcTypes._("ibc.applications.fee.v1.QueryIncentivizedPacketRequest");
+  static const IbcTypes queryIncentivizedPacketRequest = IbcTypes._(
+      "ibc.applications.fee.v1.QueryIncentivizedPacketRequest",
+      query: "/ibc.applications.fee.v1.Query/IncentivizedPacket",
+      rpc:
+          "/ibc/apps/fee/v1/channels/:channel_id/ports/:port_id/sequences/:sequence/incentivized_packet");
   static const IbcTypes queryIncentivizedPacketResponse =
       IbcTypes._("ibc.applications.fee.v1.QueryIncentivizedPacketResponse");
   static const IbcTypes queryIncentivizedPacketsForChannelRequest = IbcTypes._(
-      "ibc.applications.fee.v1.QueryIncentivizedPacketsForChannelRequest");
+      "ibc.applications.fee.v1.QueryIncentivizedPacketsForChannelRequest",
+      query: "/ibc.applications.fee.v1.Query/IncentivizedPacketsForChannel",
+      rpc:
+          "/ibc/apps/fee/v1/channels/:channel_id/ports/:port_id/incentivized_packets");
   static const IbcTypes queryIncentivizedPacketsForChannelResponse = IbcTypes._(
       "ibc.applications.fee.v1.QueryIncentivizedPacketsForChannelResponse");
-  static const IbcTypes queryTotalRecvFeesRequest =
-      IbcTypes._("ibc.applications.fee.v1.QueryTotalRecvFeesRequest");
+  static const IbcTypes queryTotalRecvFeesRequest = IbcTypes._(
+      "ibc.applications.fee.v1.QueryTotalRecvFeesRequest",
+      query: "/ibc.applications.fee.v1.Query/TotalRecvFees",
+      rpc:
+          "/ibc/apps/fee/v1/channels/:channel_id/ports/:port_id/sequences/:sequence/total_recv_fees");
   static const IbcTypes queryTotalRecvFeesResponse =
       IbcTypes._("ibc.applications.fee.v1.queryTotalRecvFeesResponse");
-  static const IbcTypes queryTotalAckFeesRequest =
-      IbcTypes._("ibc.applications.fee.v1.QueryTotalAckFeesRequest");
+  static const IbcTypes queryTotalAckFeesRequest = IbcTypes._(
+      "ibc.applications.fee.v1.QueryTotalAckFeesRequest",
+      query: "/ibc.applications.fee.v1.Query/TotalAckFees",
+      rpc:
+          "/ibc/apps/fee/v1/channels/:channel_id/ports/:port_id/sequences/:sequence/total_ack_fees");
   static const IbcTypes queryTotalAckFeesResponse =
       IbcTypes._("ibc.applications.fee.v1.QueryTotalAckFeesResponse");
-  static const IbcTypes queryTotalTimeoutFeesRequest =
-      IbcTypes._("ibc.applications.fee.v1.QueryTotalTimeoutFeesRequest");
+  static const IbcTypes queryTotalTimeoutFeesRequest = IbcTypes._(
+      "ibc.applications.fee.v1.QueryTotalTimeoutFeesRequest",
+      query: "/ibc.applications.fee.v1.Query/TotalTimeoutFees",
+      rpc:
+          "/ibc/apps/fee/v1/channels/:channel_id/ports/:port_id/sequences/:sequence/total_timeout_fees");
   static const IbcTypes queryTotalTimeoutFeesResponse =
       IbcTypes._("ibc.applications.fee.v1.QueryTotalTimeoutFeesResponse");
-  static const IbcTypes queryPayeeRequest =
-      IbcTypes._("ibc.applications.fee.v1.QueryPayeeRequest");
+  static const IbcTypes queryPayeeRequest = IbcTypes._(
+      "ibc.applications.fee.v1.QueryPayeeRequest",
+      query: "/ibc.applications.fee.v1.Query/Payee",
+      rpc: "/ibc/apps/fee/v1/channels/:channel_id/relayers/:relayer/payee");
   static const IbcTypes queryPayeeResponse =
       IbcTypes._("ibc.applications.fee.v1.QueryPayeeResponse");
-  static const IbcTypes queryCounterpartyPayeeRequest =
-      IbcTypes._("ibc.applications.fee.v1.QueryCounterpartyPayeeRequest");
+  static const IbcTypes queryCounterpartyPayeeRequest = IbcTypes._(
+      "ibc.applications.fee.v1.QueryCounterpartyPayeeRequest",
+      query: "/ibc.applications.fee.v1.Query/CounterpartyPayee",
+      rpc:
+          "/ibc/apps/fee/v1/channels/:channel_id/relayers/:relayer/counterparty_payee");
   static const IbcTypes queryCounterpartyPayeeResponse =
       IbcTypes._("ibc.applications.fee.v1.QueryCounterpartyPayeeResponse");
-  static const IbcTypes queryFeeEnabledChannelsRequest =
-      IbcTypes._("ibc.applications.fee.v1.QueryFeeEnabledChannelsRequest");
+  static const IbcTypes queryFeeEnabledChannelsRequest = IbcTypes._(
+      "ibc.applications.fee.v1.QueryFeeEnabledChannelsRequest",
+      query: "/ibc.applications.fee.v1.Query/FeeEnabledChannels",
+      rpc: "/ibc/apps/fee/v1/fee_enabled");
   static const IbcTypes queryFeeEnabledChannelsResponse =
       IbcTypes._("ibc.applications.fee.v1.QueryFeeEnabledChannelsResponse");
-  static const IbcTypes queryFeeEnabledChannelRequest =
-      IbcTypes._("ibc.applications.fee.v1.QueryFeeEnabledChannelRequest");
+  static const IbcTypes queryFeeEnabledChannelRequest = IbcTypes._(
+      "ibc.applications.fee.v1.QueryFeeEnabledChannelRequest",
+      query: "/ibc.applications.fee.v1.Query/FeeEnabledChannel",
+      rpc: "/ibc/apps/fee/v1/channels/:channel_id/ports/:port_id/fee_enabled");
   static const IbcTypes queryFeeEnabledChannelResponse =
       IbcTypes._("ibc.applications.fee.v1.QueryFeeEnabledChannelResponse");
 
@@ -175,74 +203,120 @@ class IbcTypes {
       IbcTypes._("ibc.core.channel.v1.MsgPruneAcknowledgements");
   static const IbcTypes msgPruneAcknowledgementsResponse =
       IbcTypes._("ibc.core.channel.v1.MsgPruneAcknowledgementsResponse");
-  static const IbcTypes queryChannelRequest =
-      IbcTypes._("ibc.core.channel.v1.QueryChannelRequest");
+  static const IbcTypes queryChannelRequest = IbcTypes._(
+      "ibc.core.channel.v1.QueryChannelRequest",
+      query: "/ibc.core.channel.v1.Query/Channel",
+      rpc: "/ibc/core/channel/v1/channels/:channel_id/ports/:port_id");
   static const IbcTypes queryChannelResponse =
       IbcTypes._("ibc.core.channel.v1.QueryChannelResponse");
-  static const IbcTypes queryChannelsRequest =
-      IbcTypes._("ibc.core.channel.v1.QueryChannelsRequest");
+  static const IbcTypes queryChannelsRequest = IbcTypes._(
+      "ibc.core.channel.v1.QueryChannelsRequest",
+      query: "/ibc.core.channel.v1.Query/Channels",
+      rpc: "/ibc/core/channel/v1/channels");
   static const IbcTypes queryChannelsResponse =
       IbcTypes._("ibc.core.channel.v1.QueryChannelsResponse");
-  static const IbcTypes queryConnectionChannelsRequest =
-      IbcTypes._("ibc.core.channel.v1.QueryConnectionChannelsRequest");
+  static const IbcTypes queryConnectionChannelsRequest = IbcTypes._(
+      "ibc.core.channel.v1.QueryConnectionChannelsRequest",
+      query: "/ibc.core.channel.v1.Query/ConnectionChannels",
+      rpc: "/ibc/core/channel/v1/connections/:connection/channels");
   static const IbcTypes queryConnectionChannelsResponse =
       IbcTypes._("ibc.core.channel.v1.QueryConnectionChannelsResponse");
-  static const IbcTypes queryChannelClientStateRequest =
-      IbcTypes._("ibc.core.channel.v1.QueryChannelClientStateRequest");
+  static const IbcTypes queryChannelClientStateRequest = IbcTypes._(
+      "ibc.core.channel.v1.QueryChannelClientStateRequest",
+      query: "/ibc.core.channel.v1.Query/ChannelClientState",
+      rpc:
+          "/ibc/core/channel/v1/channels/:channel_id/ports/:port_id/client_state");
   static const IbcTypes queryChannelClientStateResponse =
       IbcTypes._("ibc.core.channel.v1.QueryChannelClientStateResponse");
-  static const IbcTypes queryChannelConsensusStateRequest =
-      IbcTypes._("ibc.core.channel.v1.QueryChannelConsensusStateRequest");
+  static const IbcTypes queryChannelConsensusStateRequest = IbcTypes._(
+      "ibc.core.channel.v1.QueryChannelConsensusStateRequest",
+      query: "/ibc.core.channel.v1.Query/ChannelConsensusState",
+      rpc:
+          "/ibc/core/channel/v1/channels/:channel_id/ports/:port_id/consensus_state/revision/:revision_number/height/:revision_height");
   static const IbcTypes queryChannelConsensusStateResponse =
       IbcTypes._("ibc.core.channel.v1.QueryChannelConsensusStateResponse");
-  static const IbcTypes queryPacketCommitmentRequest =
-      IbcTypes._("ibc.core.channel.v1.QueryPacketCommitmentRequest");
+  static const IbcTypes queryPacketCommitmentRequest = IbcTypes._(
+      "ibc.core.channel.v1.QueryPacketCommitmentRequest",
+      query: "/ibc.core.channel.v1.Query/PacketCommitment",
+      rpc:
+          "/ibc/core/channel/v1/channels/:channel_id/ports/:port_id/packet_commitments/:sequence");
   static const IbcTypes queryPacketCommitmentResponse =
       IbcTypes._("ibc.core.channel.v1.QueryPacketCommitmentResponse");
   static const IbcTypes packetState =
       IbcTypes._("ibc.core.channel.v1.PacketState");
-  static const IbcTypes queryPacketCommitmentsRequest =
-      IbcTypes._("ibc.core.channel.v1.QueryPacketCommitmentsRequest");
+  static const IbcTypes queryPacketCommitmentsRequest = IbcTypes._(
+      "ibc.core.channel.v1.QueryPacketCommitmentsRequest",
+      query: "/ibc.core.channel.v1.Query/PacketCommitments",
+      rpc:
+          "/ibc/core/channel/v1/channels/:channel_id/ports/:port_id/packet_commitments");
   static const IbcTypes queryPacketCommitmentsResponse =
       IbcTypes._("ibc.core.channel.v1.QueryPacketCommitmentsResponse");
-  static const IbcTypes queryPacketReceiptRequest =
-      IbcTypes._("ibc.core.channel.v1.QueryPacketReceiptRequest");
+  static const IbcTypes queryPacketReceiptRequest = IbcTypes._(
+      "ibc.core.channel.v1.QueryPacketReceiptRequest",
+      query: "/ibc.core.channel.v1.Query/PacketReceipt",
+      rpc:
+          "/ibc/core/channel/v1/channels/:channel_id/ports/:port_id/packet_receipts/:sequence");
   static const IbcTypes queryPacketReceiptResponse =
       IbcTypes._("ibc.core.channel.v1.QueryPacketReceiptResponse");
-  static const IbcTypes queryPacketAcknowledgementRequest =
-      IbcTypes._("ibc.core.channel.v1.QueryPacketAcknowledgementRequest");
+  static const IbcTypes queryPacketAcknowledgementRequest = IbcTypes._(
+      "ibc.core.channel.v1.QueryPacketAcknowledgementRequest",
+      query: "/ibc.core.channel.v1.Query/PacketAcknowledgement",
+      rpc:
+          "/ibc/core/channel/v1/channels/:channel_id/ports/:port_id/packet_acks/:sequence");
   static const IbcTypes queryPacketAcknowledgementResponse =
       IbcTypes._("ibc.core.channel.v1.QueryPacketAcknowledgementResponse");
-  static const IbcTypes queryPacketAcknowledgementsRequest =
-      IbcTypes._("ibc.core.channel.v1.QueryPacketAcknowledgementsRequest");
+  static const IbcTypes queryPacketAcknowledgementsRequest = IbcTypes._(
+      "ibc.core.channel.v1.QueryPacketAcknowledgementsRequest",
+      query: "/ibc.core.channel.v1.Query/PacketAcknowledgements",
+      rpc:
+          "/ibc/core/channel/v1/channels/:channel_id/ports/:port_id/packet_acknowledgements");
   static const IbcTypes queryPacketAcknowledgementsResponse =
       IbcTypes._("ibc.core.channel.v1.QueryPacketAcknowledgementsResponse");
-  static const IbcTypes queryUnreceivedPacketsRequest =
-      IbcTypes._("ibc.core.channel.v1.QueryUnreceivedPacketsRequest");
+  static const IbcTypes queryUnreceivedPacketsRequest = IbcTypes._(
+      "ibc.core.channel.v1.QueryUnreceivedPacketsRequest",
+      query: "/ibc.core.channel.v1.Query/UnreceivedPackets",
+      rpc:
+          "/ibc/core/channel/v1/channels/:channel_id/ports/:port_id/packet_commitments/:packet_commitment_sequences/unreceived_packets");
   static const IbcTypes queryUnreceivedPacketsResponse =
       IbcTypes._("ibc.core.channel.v1.QueryUnreceivedPacketsResponse");
-  static const IbcTypes queryUnreceivedAcksRequest =
-      IbcTypes._("ibc.core.channel.v1.QueryUnreceivedAcksRequest");
+  static const IbcTypes queryUnreceivedAcksRequest = IbcTypes._(
+      "ibc.core.channel.v1.QueryUnreceivedAcksRequest",
+      query: "/ibc.core.channel.v1.Query/UnreceivedAcks",
+      rpc:
+          "/ibc/core/channel/v1/channels/:channel_id/ports/:port_id/packet_commitments/:packet_ack_sequences/unreceived_acks");
   static const IbcTypes queryUnreceivedAcksResponse =
       IbcTypes._("ibc.core.channel.v1.QueryUnreceivedAcksResponse");
-  static const IbcTypes queryNextSequenceReceiveRequest =
-      IbcTypes._("ibc.core.channel.v1.QueryNextSequenceReceiveRequest");
+  static const IbcTypes queryNextSequenceReceiveRequest = IbcTypes._(
+      "ibc.core.channel.v1.QueryNextSequenceReceiveRequest",
+      query: "/ibc.core.channel.v1.Query/NextSequenceReceive",
+      rpc:
+          "/ibc/core/channel/v1/channels/:channel_id/ports/:port_id/next_sequence");
   static const IbcTypes queryNextSequenceReceiveResponse =
       IbcTypes._("ibc.core.channel.v1.QueryNextSequenceReceiveResponse");
-  static const IbcTypes queryNextSequenceSendRequest =
-      IbcTypes._("ibc.core.channel.v1.QueryNextSequenceSendRequest");
+  static const IbcTypes queryNextSequenceSendRequest = IbcTypes._(
+      "ibc.core.channel.v1.QueryNextSequenceSendRequest",
+      query: "/ibc.core.channel.v1.Query/NextSequenceSend",
+      rpc:
+          "/ibc/core/channel/v1/channels/:channel_id/ports/:port_id/next_sequence_send");
   static const IbcTypes queryNextSequenceSendResponse =
       IbcTypes._("ibc.core.channel.v1.QueryNextSequenceSendResponse");
-  static const IbcTypes queryUpgradeErrorRequest =
-      IbcTypes._("ibc.core.channel.v1.QueryUpgradeErrorRequest");
+  static const IbcTypes queryUpgradeErrorRequest = IbcTypes._(
+      "ibc.core.channel.v1.QueryUpgradeErrorRequest",
+      query: "/ibc.core.channel.v1.Query/UpgradeError",
+      rpc:
+          "/ibc/core/channel/v1/channels/:channel_id/ports/:port_id/upgrade_error");
   static const IbcTypes queryUpgradeErrorResponse =
       IbcTypes._("ibc.core.channel.v1.QueryUpgradeErrorResponse");
-  static const IbcTypes queryUpgradeRequest =
-      IbcTypes._("ibc.core.channel.v1.QueryUpgradeRequest");
+  static const IbcTypes queryUpgradeRequest = IbcTypes._(
+      "ibc.core.channel.v1.QueryUpgradeRequest",
+      query: "/ibc.core.channel.v1.Query/Upgrade",
+      rpc: "/ibc/core/channel/v1/channels/:channel_id/ports/:port_id/upgrade");
   static const IbcTypes queryUpgradeResponse =
       IbcTypes._("ibc.core.channel.v1.QueryUpgradeResponse");
-  static const IbcTypes queryChannelParamsRequest =
-      IbcTypes._("ibc.core.channel.v1.QueryChannelParamsRequest");
+  static const IbcTypes queryChannelParamsRequest = IbcTypes._(
+      "ibc.core.channel.v1.QueryChannelParamsRequest",
+      query: "/ibc.core.channel.v1.Query/ChannelParams",
+      rpc: "/ibc/core/channel/v1/params");
   static const IbcTypes queryChannelParamsResponse =
       IbcTypes._("ibc.core.channel.v1.QueryChannelParamsResponse");
   static const IbcTypes ibcChannelGenesisState =
@@ -282,46 +356,68 @@ class IbcTypes {
       IbcTypes._("ibc.core.client.v1.MsgUpdateParams");
   static const IbcTypes msgUpdateParamsResponse =
       IbcTypes._("ibc.core.client.v1.MsgIBCSoftwareUpgradeResponse");
-  static const IbcTypes queryClientStateRequest =
-      IbcTypes._("ibc.core.client.v1.QueryClientStateRequest");
+  static const IbcTypes queryClientStateRequest = IbcTypes._(
+      "ibc.core.client.v1.QueryClientStateRequest",
+      query: "/ibc.core.client.v1.Query/ClientState",
+      rpc: "/ibc/core/client/v1/client_states/:client_id");
   static const IbcTypes queryClientStateResponse =
       IbcTypes._("ibc.core.client.v1.QueryClientStateResponse");
-  static const IbcTypes queryClientStatesRequest =
-      IbcTypes._("ibc.core.client.v1.QueryClientStatesRequest");
+  static const IbcTypes queryClientStatesRequest = IbcTypes._(
+      "ibc.core.client.v1.QueryClientStatesRequest",
+      query: "/ibc.core.client.v1.Query/ClientStates",
+      rpc: "/ibc/core/client/v1/client_states");
   static const IbcTypes queryClientStatesResponse =
       IbcTypes._("ibc.core.client.v1.QueryClientStatesResponse");
-  static const IbcTypes queryConsensusStateRequest =
-      IbcTypes._("ibc.core.client.v1.QueryConsensusStateRequest");
+  static const IbcTypes queryConsensusStateRequest = IbcTypes._(
+      "ibc.core.client.v1.QueryConsensusStateRequest",
+      query: "/ibc.core.client.v1.Query/ConsensusState",
+      rpc:
+          "/ibc/core/client/v1/consensus_states/:client_id/revision/:revision_number/height/:revision_height");
   static const IbcTypes queryConsensusStateResponse =
       IbcTypes._("ibc.core.client.v1.QueryConsensusStateResponse");
-  static const IbcTypes queryConsensusStatesRequest =
-      IbcTypes._("ibc.core.client.v1.QueryConsensusStatesRequest");
+  static const IbcTypes queryConsensusStatesRequest = IbcTypes._(
+      "ibc.core.client.v1.QueryConsensusStatesRequest",
+      query: "/ibc.core.client.v1.Query/ConsensusStates",
+      rpc: "/ibc/core/client/v1/consensus_states/:client_id");
   static const IbcTypes queryConsensusStatesResponse =
       IbcTypes._("ibc.core.client.v1.QueryConsensusStatesResponse");
   static const IbcTypes consensusStateWithHeight =
       IbcTypes._("ibc.core.client.v1.ConsensusStateWithHeight");
-  static const IbcTypes queryConsensusStateHeightsRequest =
-      IbcTypes._("ibc.core.client.v1.QueryConsensusStateHeightsRequest");
+  static const IbcTypes queryConsensusStateHeightsRequest = IbcTypes._(
+      "ibc.core.client.v1.QueryConsensusStateHeightsRequest",
+      query: "/ibc.core.client.v1.Query/ConsensusStateHeights",
+      rpc: "/ibc/core/client/v1/consensus_states/:client_id/heights");
   static const IbcTypes queryConsensusStateHeightsResponse =
       IbcTypes._("ibc.core.client.v1.QueryConsensusStateHeightsResponse");
-  static const IbcTypes queryClientStatusRequest =
-      IbcTypes._("ibc.core.client.v1.QueryClientStatusRequest");
+  static const IbcTypes queryClientStatusRequest = IbcTypes._(
+      "ibc.core.client.v1.QueryClientStatusRequest",
+      query: "/ibc.core.client.v1.Query/ClientStatus",
+      rpc: "/ibc/core/client/v1/client_status/:client_id");
   static const IbcTypes queryClientStatusResponse =
       IbcTypes._("ibc.core.client.v1.QueryClientStatusResponse");
-  static const IbcTypes queryClientParamsRequest =
-      IbcTypes._("ibc.core.client.v1.QueryClientParamsRequest");
+  static const IbcTypes queryClientParamsRequest = IbcTypes._(
+      "ibc.core.client.v1.QueryClientParamsRequest",
+      query: "/ibc.core.client.v1.Query/ClientParams",
+      rpc: "/ibc/core/client/v1/params");
   static const IbcTypes queryClientParamsResponse =
       IbcTypes._("ibc.core.client.v1.QueryClientParamsResponse");
-  static const IbcTypes queryUpgradedClientStateRequest =
-      IbcTypes._("ibc.core.client.v1.QueryUpgradedClientStateRequest");
+  static const IbcTypes queryUpgradedClientStateRequest = IbcTypes._(
+      "ibc.core.client.v1.QueryUpgradedClientStateRequest",
+      query: "/ibc.core.client.v1.Query/UpgradedClientState",
+      rpc: "/ibc/core/client/v1/upgraded_client_states");
   static const IbcTypes queryUpgradedClientStateResponse =
       IbcTypes._("ibc.core.client.v1.QueryUpgradedClientStateResponse");
-  static const IbcTypes queryUpgradedConsensusStateRequest =
-      IbcTypes._("ibc.core.client.v1.QueryUpgradedConsensusStateRequest");
+  static const IbcTypes queryUpgradedConsensusStateRequest = IbcTypes._(
+      "ibc.core.client.v1.QueryUpgradedConsensusStateRequest",
+      query: "/ibc.core.client.v1.Query/UpgradedConsensusState",
+      rpc: "/ibc/core/client/v1/upgraded_consensus_states");
   static const IbcTypes queryUpgradedConsensusStateResponse =
       IbcTypes._("ibc.core.client.v1.QueryUpgradedConsensusStateResponse");
-  static const IbcTypes queryVerifyMembershipRequest =
-      IbcTypes._("ibc.core.client.v1.QueryVerifyMembershipRequest");
+  static const IbcTypes queryVerifyMembershipRequest = IbcTypes._(
+      "ibc.core.client.v1.QueryVerifyMembershipRequest",
+      query: "/ibc.core.client.v1.Query/VerifyMembership",
+      rpc: "/ibc/core/client/v1/verify_membership",
+      method: RequestServiceType.post);
   static const IbcTypes queryVerifyMembershipResponse =
       IbcTypes._("ibc.core.client.v1.QueryVerifyMembershipResponse");
   static const IbcTypes ibClientClientConsensusStates =
@@ -353,30 +449,63 @@ class IbcTypes {
       IbcTypes._("ibc.applications.transfer.v1.MsgUpdateParams");
   static const IbcTypes ibcTransfermsgUpdateParamsResponse =
       IbcTypes._("ibc.applications.transfer.v1.MsgUpdateParamsResponse");
-  static const IbcTypes queryDenomTracesRequest =
-      IbcTypes._("ibc.applications.transfer.v1.QueryDenomTracesRequest");
+  static const IbcTypes queryDenomTracesRequest = IbcTypes._(
+      "ibc.applications.transfer.v1.QueryDenomTracesRequest",
+      query: "/ibc.applications.transfer.v1.Query/DenomTraces");
   static const IbcTypes queryDenomTracesResponse =
       IbcTypes._("ibc.applications.transfer.v1.QueryDenomTracesResponse");
-  static const IbcTypes queryDenomTraceRequest =
-      IbcTypes._("ibc.applications.transfer.v1.QueryDenomTraceRequest");
+  static const IbcTypes queryDenomTraceRequest = IbcTypes._(
+      "ibc.applications.transfer.v1.QueryDenomTraceRequest",
+      query: "/ibc.applications.transfer.v1.Query/DenomTrace");
   static const IbcTypes queryDenomTraceResponse =
       IbcTypes._("ibc.applications.transfer.v1.QueryDenomTraceResponse");
-  static const IbcTypes queryParamsRequest =
-      IbcTypes._("ibc.applications.transfer.v1.QueryParamsRequest");
+  static const IbcTypes queryParamsRequest = IbcTypes._(
+      "ibc.applications.transfer.v1.QueryParamsRequest",
+      query: "/ibc.applications.transfer.v1.Query/Params",
+      rpc: "/ibc/apps/transfer/v1/params");
   static const IbcTypes queryParamsResponse =
       IbcTypes._("ibc.applications.transfer.v1.QueryParamsResponse");
-  static const IbcTypes queryDenomHashRequest =
-      IbcTypes._("ibc.applications.transfer.v1.QueryDenomHashRequest");
+  static const IbcTypes queryDenomHashRequest = IbcTypes._(
+      "ibc.applications.transfer.v1.QueryDenomHashRequest",
+      query: "/ibc.applications.transfer.v1.Query/DenomHash",
+      rpc: "/ibc/apps/transfer/v1/denom_hashes/:trace");
   static const IbcTypes queryDenomHashResponse =
       IbcTypes._("ibc.applications.transfer.v1.QueryDenomHashResponse");
-  static const IbcTypes queryEscrowAddressRequest =
-      IbcTypes._("ibc.applications.transfer.v1.QueryEscrowAddressRequest");
+  static const IbcTypes queryEscrowAddressRequest = IbcTypes._(
+      "ibc.applications.transfer.v1.QueryEscrowAddressRequest",
+      query: "/ibc.applications.transfer.v1.Query/EscrowAddress",
+      rpc:
+          "/ibc/apps/transfer/v1/channels/:channel_id/ports/:port_id/escrow_address");
   static const IbcTypes queryEscrowAddressResponse =
       IbcTypes._("ibc.applications.transfer.v1.QueryEscrowAddressResponse");
   static const IbcTypes queryTotalEscrowForDenomRequest = IbcTypes._(
-      "ibc.applications.transfer.v1.QueryTotalEscrowForDenomRequest");
+      "ibc.applications.transfer.v1.QueryTotalEscrowForDenomRequest",
+      query: "/ibc.applications.transfer.v1.Query/TotalEscrowForDenom",
+      rpc: "/ibc/apps/transfer/v1/denoms/:denom/total_escrow");
   static const IbcTypes queryTotalEscrowForDenomResponse = IbcTypes._(
       "ibc.applications.transfer.v1.QueryTotalEscrowForDenomResponse");
+  static const IbcTypes hop = IbcTypes._("ibc.applications.transfer.v1.Hop");
+  static const IbcTypes denom =
+      IbcTypes._("ibc.applications.transfer.v2.Denom");
+  static const IbcTypes token =
+      IbcTypes._("ibc.applications.transfer.v2.Token");
+  static const IbcTypes forwardingPacketData =
+      IbcTypes._("ibc.applications.transfer.v2.ForwardingPacketData");
+  static const IbcTypes fungibleTokenPacketDataV2 =
+      IbcTypes._("ibc.applications.transfer.v2.FungibleTokenPacketDataV2");
+  static const IbcTypes queryDenomRequest = IbcTypes._(
+      "ibc.applications.transfer.v2.QueryDenomRequest",
+      query: "ibc.applications.transfer.v2.Query/Denom",
+      rpc: "/ibc/apps/transfer/v2/denoms/:hash");
+  static const IbcTypes queryDenomsRequest = IbcTypes._(
+      "ibc.applications.transfer.v2.QueryDenomsRequest",
+      query: "ibc.applications.transfer.v2.Query/Denoms",
+      rpc: "/ibc/apps/transfer/v2/denoms");
+
+  static const IbcTypes queryDenomsRespone =
+      IbcTypes._("ibc.applications.transfer.v2.QueryDenomsResponse");
+  static const IbcTypes queryDenomRespone =
+      IbcTypes._("ibc.applications.transfer.v2.QueryDenomResponse");
 
   /// ibc.applications.transfer.v1
   static const IbcTypes fungibleTokenPacketData =
@@ -400,11 +529,18 @@ class IbcTypes {
       IbcTypes._(
           "ibc.applications.interchain_accounts.controller.v1.MsgUpdateParamsResponse");
   static const IbcTypes queryInterchainAccountRequest = IbcTypes._(
-      "ibc.applications.interchain_accounts.controller.v1.QueryInterchainAccountRequest");
+      "ibc.applications.interchain_accounts.controller.v1.QueryInterchainAccountRequest",
+      query:
+          "/ibc.applications.interchain_accounts.controller.v1.Query/InterchainAccount",
+      rpc:
+          "/ibc/apps/interchain_accounts/controller/v1/owners/:owner/connections/:connection_id");
   static const IbcTypes queryInterchainAccountResponse = IbcTypes._(
       "ibc.applications.interchain_accounts.controller.v1.QueryInterchainAccountResponse");
   static const IbcTypes interchainAccoutsControllerQueryParamsRequest = IbcTypes
-      ._("ibc.applications.interchain_accounts.controller.v1.QueryParamsRequest");
+      ._("ibc.applications.interchain_accounts.controller.v1.QueryParamsRequest",
+          query:
+              "/ibc.applications.interchain_accounts.controller.v1.Query/Params",
+          rpc: "/ibc/apps/interchain_accounts/controller/v1/params");
   static const IbcTypes interchainAccoutsControllerQueryParamsResponse = IbcTypes._(
       "ibc.applications.interchain_accounts.controller.v1.QueryParamsResponse");
 
@@ -446,7 +582,9 @@ class IbcTypes {
       IbcTypes._(
           "ibc.applications.interchain_accounts.host.v1.MsgModuleQuerySafeResponse");
   static const IbcTypes interchainAccountsHostQueryParamsRequest = IbcTypes._(
-      "ibc.applications.interchain_accounts.host.v1.QueryParamsRequest");
+      "ibc.applications.interchain_accounts.host.v1.QueryParamsRequest",
+      query: "/ibc.applications.interchain_accounts.host.v1.Query/Params",
+      rpc: "/ibc/apps/interchain_accounts/host/v1/params");
   static const IbcTypes interchainAccountsHostQueryParamsResponse = IbcTypes._(
       "ibc.applications.interchain_accounts.host.v1.QueryParamsResponse");
 
@@ -487,29 +625,43 @@ class IbcTypes {
       IbcTypes._("ibc.core.connection.v1.MsgUpdateParams");
   static const IbcTypes ibcConnectionMsgUpdateParamsResponse =
       IbcTypes._("ibc.core.connection.v1.MsgUpdateParamsResponse");
-  static const IbcTypes ibcConnectionQueryConnectionRequest =
-      IbcTypes._("ibc.core.connection.v1.QueryConnectionRequest");
+  static const IbcTypes ibcConnectionQueryConnectionRequest = IbcTypes._(
+      "ibc.core.connection.v1.QueryConnectionRequest",
+      query: "/ibc.core.connection.v1.Query/Connection",
+      rpc: "/ibc/core/connection/v1/connections/:connection_id");
   static const IbcTypes ibcConnectionQueryConnectionResponse =
       IbcTypes._("ibc.core.connection.v1.QueryConnectionResponse");
-  static const IbcTypes ibcConnectionQueryConnectionsRequest =
-      IbcTypes._("ibc.core.connection.v1.QueryConnectionsRequest");
+  static const IbcTypes ibcConnectionQueryConnectionsRequest = IbcTypes._(
+      "ibc.core.connection.v1.QueryConnectionsRequest",
+      query: "/ibc.core.connection.v1.Query/Connections",
+      rpc: "/ibc/core/connection/v1/connections");
   static const IbcTypes ibcConnectionQueryConnectionsResponse =
       IbcTypes._("ibc.core.connection.v1.QueryConnectionsResponse");
-  static const IbcTypes ibcConnectionQueryClientConnectionsRequest =
-      IbcTypes._("ibc.core.connection.v1.QueryClientConnectionsRequest");
+  static const IbcTypes ibcConnectionQueryClientConnectionsRequest = IbcTypes._(
+      "ibc.core.connection.v1.QueryClientConnectionsRequest",
+      query: "/ibc.core.connection.v1.Query/ClientConnections",
+      rpc: "/ibc/core/connection/v1/client_connections/:client_id");
   static const IbcTypes ibcConnectionQueryClientConnectionsResponse =
       IbcTypes._("ibc.core.connection.v1.QueryClientConnectionsResponse");
   static const IbcTypes ibcConnectionQueryConnectionClientStateRequest =
-      IbcTypes._("ibc.core.connection.v1.QueryConnectionClientStateRequest");
+      IbcTypes._("ibc.core.connection.v1.QueryConnectionClientStateRequest",
+          query: "/ibc.core.connection.v1.Query/ConnectionClientState",
+          rpc:
+              "/ibc/core/connection/v1/connections/:connection_id/client_state");
   static const IbcTypes ibcConnectionQueryConnectionClientStateResponse =
       IbcTypes._("ibc.core.connection.v1.QueryConnectionClientStateResponse");
   static const IbcTypes ibcConnectionQueryConnectionConsensusStateRequest =
-      IbcTypes._("ibc.core.connection.v1.QueryConnectionConsensusStateRequest");
+      IbcTypes._("ibc.core.connection.v1.QueryConnectionConsensusStateRequest",
+          query: "/ibc.core.connection.v1.Query/ConnectionConsensusState",
+          rpc:
+              "/ibc/core/connection/v1/connections/:connection_id/consensus_state/revision/:revision_number/height/:revision_height");
   static const IbcTypes ibcConnectionQueryConnectionConsensusStateResponse =
       IbcTypes._(
           "ibc.core.connection.v1.QueryConnectionConsensusStateResponse");
-  static const IbcTypes ibcConnectionQueryConnectionParamsRequest =
-      IbcTypes._("ibc.core.connection.v1.QueryConnectionParamsRequest");
+  static const IbcTypes ibcConnectionQueryConnectionParamsRequest = IbcTypes._(
+      "ibc.core.connection.v1.QueryConnectionParamsRequest",
+      query: "/ibc.core.connection.v1.Query/ConnectionParams",
+      rpc: "/ibc/core/connection/v1/params");
   static const IbcTypes ibcConnectionQueryConnectionParamsResponse =
       IbcTypes._("ibc.core.connection.v1.QueryConnectionParamsResponse");
   static const IbcTypes ibcConnectionGenesisState =
@@ -600,12 +752,16 @@ class IbcTypes {
       IbcTypes._("ibc.lightclients.wasm.v1.MsgMigrateContract");
   static const IbcTypes ibcLightClientsWasmMsgMigrateContractResponse =
       IbcTypes._("ibc.lightclients.wasm.v1.MsgMigrateContractResponse");
-  static const IbcTypes ibcLightClientsWasmQueryChecksumsRequest =
-      IbcTypes._("ibc.lightclients.wasm.v1.QueryChecksumsRequest");
+  static const IbcTypes ibcLightClientsWasmQueryChecksumsRequest = IbcTypes._(
+      "ibc.lightclients.wasm.v1.QueryChecksumsRequest",
+      query: "/ibc.lightclients.wasm.v1.Query/Checksums",
+      rpc: "/ibc/lightclients/wasm/v1/checksums");
   static const IbcTypes ibcLightClientsWasmQueryChecksumsResponse =
       IbcTypes._("ibc.lightclients.wasm.v1.QueryChecksumsResponse");
-  static const IbcTypes ibcLightClientsWasmQueryCodeRequest =
-      IbcTypes._("ibc.lightclients.wasm.v1.QueryCodeRequest");
+  static const IbcTypes ibcLightClientsWasmQueryCodeRequest = IbcTypes._(
+      "ibc.lightclients.wasm.v1.QueryCodeRequest",
+      query: "/ibc.lightclients.wasm.v1.Query/Code",
+      rpc: "/ibc/lightclients/wasm/v1/checksums/:checksum/code");
   static const IbcTypes ibcLightClientsWasmQueryCodeResponse =
       IbcTypes._("ibc.lightclients.wasm.v1.QueryCodeResponse");
   static const IbcTypes ibcLightClientsWasmClientMessage =
@@ -725,128 +881,8 @@ class IbcTypes {
   static const IbcTypes ibcLightClientsWasmMigrateContract =
       IbcTypes._("ibc.lightclients.wasm.v1.Msg/MigrateContract");
 
-  /// queries
-  /// ibc.core.client.v1
-  static const IbcTypes clientState =
-      IbcTypes._("/ibc.core.client.v1.Query/ClientState");
-  static const IbcTypes clientStates =
-      IbcTypes._("/ibc.core.client.v1.Query/ClientStates");
-  static const IbcTypes consensusState =
-      IbcTypes._("/ibc.core.client.v1.Query/ConsensusState");
-  static const IbcTypes consensusStates =
-      IbcTypes._("/ibc.core.client.v1.Query/ConsensusStates");
-  static const IbcTypes consensusStateHeights =
-      IbcTypes._("/ibc.core.client.v1.Query/ConsensusStateHeights");
-  static const IbcTypes clientStatus =
-      IbcTypes._("/ibc.core.client.v1.Query/ClientStatus");
-  static const IbcTypes clientParams =
-      IbcTypes._("/ibc.core.client.v1.Query/ClientParams");
-  static const IbcTypes upgradedClientState =
-      IbcTypes._("/ibc.core.client.v1.Query/UpgradedClientState");
-  static const IbcTypes upgradedConsensusState =
-      IbcTypes._("/ibc.core.client.v1.Query/UpgradedConsensusState");
-  static const IbcTypes verifyMembership =
-      IbcTypes._("/ibc.core.client.v1.Query/VerifyMembership");
-
   /// ibc.core.channel.v1
-  static const IbcTypes queryChannel =
-      IbcTypes._("/ibc.core.channel.v1.Query/Channel");
-  static const IbcTypes channels =
-      IbcTypes._("/ibc.core.channel.v1.Query/Channels");
-  static const IbcTypes connectionChannels =
-      IbcTypes._("/ibc.core.channel.v1.Query/ConnectionChannels");
-  static const IbcTypes channelClientState =
-      IbcTypes._("/ibc.core.channel.v1.Query/ChannelClientState");
-  static const IbcTypes channelConsensusState =
-      IbcTypes._("/ibc.core.channel.v1.Query/ChannelConsensusState");
-  static const IbcTypes packetCommitment =
-      IbcTypes._("/ibc.core.channel.v1.Query/PacketCommitment");
-  static const IbcTypes packetCommitments =
-      IbcTypes._("/ibc.core.channel.v1.Query/PacketCommitments");
-  static const IbcTypes packetReceipt =
-      IbcTypes._("/ibc.core.channel.v1.Query/PacketReceipt");
-  static const IbcTypes packetAcknowledgement =
-      IbcTypes._("/ibc.core.channel.v1.Query/PacketAcknowledgement");
-  static const IbcTypes packetAcknowledgements =
-      IbcTypes._("/ibc.core.channel.v1.Query/PacketAcknowledgements");
-  static const IbcTypes unreceivedPackets =
-      IbcTypes._("/ibc.core.channel.v1.Query/UnreceivedPackets");
-  static const IbcTypes unreceivedAcks =
-      IbcTypes._("/ibc.core.channel.v1.Query/UnreceivedAcks");
-  static const IbcTypes nextSequenceReceive =
-      IbcTypes._("/ibc.core.channel.v1.Query/NextSequenceReceive");
-  static const IbcTypes nextSequenceSend =
-      IbcTypes._("/ibc.core.channel.v1.Query/NextSequenceSend");
-  static const IbcTypes upgradeError =
-      IbcTypes._("/ibc.core.channel.v1.Query/UpgradeError");
-  static const IbcTypes queryUpgrade =
-      IbcTypes._("/ibc.core.channel.v1.Query/Upgrade");
-  static const IbcTypes channelParams =
-      IbcTypes._("/ibc.core.channel.v1.Query/ChannelParams");
 
-  /// ibc.applications.fee.v1.Query
-  static const IbcTypes incentivizedPackets =
-      IbcTypes._("/ibc.applications.fee.v1.Query/IncentivizedPackets");
-  static const IbcTypes incentivizedPacket =
-      IbcTypes._("/ibc.applications.fee.v1.Query/IncentivizedPacket");
-  static const IbcTypes incentivizedPacketsForChannel = IbcTypes._(
-      "/ibc.applications.fee.v1.Query/IncentivizedPacketsForChannel");
-  static const IbcTypes totalRecvFees =
-      IbcTypes._("/ibc.applications.fee.v1.Query/TotalRecvFees");
-  static const IbcTypes totalAckFees =
-      IbcTypes._("/ibc.applications.fee.v1.Query/TotalAckFees");
-  static const IbcTypes totalTimeoutFees =
-      IbcTypes._("/ibc.applications.fee.v1.Query/TotalTimeoutFees");
-  static const IbcTypes payee =
-      IbcTypes._("/ibc.applications.fee.v1.Query/Payee");
-  static const IbcTypes counterpartyPayee =
-      IbcTypes._("/ibc.applications.fee.v1.Query/CounterpartyPayee");
-  static const IbcTypes feeEnabledChannels =
-      IbcTypes._("/ibc.applications.fee.v1.Query/FeeEnabledChannels");
-  static const IbcTypes queryFeeEnabledChannel =
-      IbcTypes._("/ibc.applications.fee.v1.Query/FeeEnabledChannel");
-
-  /// ibc.applications.transfer.v1
-  static const IbcTypes denomTraces =
-      IbcTypes._("/ibc.applications.transfer.v1.Query/DenomTraces");
-  static const IbcTypes queryDenomTrace =
-      IbcTypes._("/ibc.applications.transfer.v1.Query/DenomTrace");
-  static const IbcTypes queryIbcTransferParams =
-      IbcTypes._("/ibc.applications.transfer.v1.Query/Params");
-  static const IbcTypes denomHash =
-      IbcTypes._("/ibc.applications.transfer.v1.Query/DenomHash");
   static const IbcTypes escrowAddress =
       IbcTypes._("/ibc.applications.transfer.v1.Query/EscrowAddress");
-  static const IbcTypes totalEscrowForDenom =
-      IbcTypes._("/ibc.applications.transfer.v1.Query/TotalEscrowForDenom");
-
-  /// ibc.applications.interchain_accounts.controller.v1
-  static const IbcTypes queryInterchainAccount = IbcTypes._(
-      "/ibc.applications.interchain_accounts.controller.v1.Query/InterchainAccount");
-  static const IbcTypes queryInterchainAccountsControllerParams = IbcTypes._(
-      "/ibc.applications.interchain_accounts.controller.v1.Query/Params");
-
-  /// ibc.applications.interchain_accounts.host.v1
-  static const IbcTypes queryInterchainAccountsHostParams =
-      IbcTypes._("/ibc.applications.interchain_accounts.host.v1.Query/Params");
-
-  /// bc.core.connection.v1
-  static const IbcTypes ibcConnectionConnection =
-      IbcTypes._("/ibc.core.connection.v1.Query/Connection");
-  static const IbcTypes ibcConnectionConnections =
-      IbcTypes._("/ibc.core.connection.v1.Query/Connections");
-  static const IbcTypes ibcConnectionClientConnections =
-      IbcTypes._("/ibc.core.connection.v1.Query/ClientConnections");
-  static const IbcTypes ibcConnectionConnectionClientState =
-      IbcTypes._("/ibc.core.connection.v1.Query/ConnectionClientState");
-  static const IbcTypes ibcConnectionConnectionConsensusState =
-      IbcTypes._("/ibc.core.connection.v1.Query/ConnectionConsensusState");
-  static const IbcTypes ibcConnectionConnectionParams =
-      IbcTypes._("/ibc.core.connection.v1.Query/ConnectionParams");
-
-  /// ibc.lightclients.wasm.v1
-  static const IbcTypes ibcLightClientsWasmChecksums =
-      IbcTypes._("/ibc.lightclients.wasm.v1.Query/Checksums");
-  static const IbcTypes ibcLightClientsWasmCode =
-      IbcTypes._("/ibc.lightclients.wasm.v1.Query/Code");
 }

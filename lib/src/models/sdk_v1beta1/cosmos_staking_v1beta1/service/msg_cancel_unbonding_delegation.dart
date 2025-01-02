@@ -46,8 +46,7 @@ class MsgCancelUnbondingDelegation extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3, 4];
 
   @override
-  String get typeUrl =>
-      StakingV1beta1Types.msgCancelUnbondingDelegation.typeUrl;
+  TypeUrl get typeUrl => StakingV1beta1Types.msgCancelUnbondingDelegation;
 
   @override
   List get values => [
@@ -58,13 +57,13 @@ class MsgCancelUnbondingDelegation extends CosmosMessage
       ];
 
   @override
-  String get service => StakingV1beta1Types.cancelUnbondingDelegation.typeUrl;
+  TypeUrl get service => StakingV1beta1Types.cancelUnbondingDelegation;
   @override
   List<String?> get signers => [delegatorAddress?.address];
 
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        StakingV1beta1Types.msgCancelUnbondingDelegationResponse.typeUrl);
+        StakingV1beta1Types.msgCancelUnbondingDelegationResponse);
   }
 }

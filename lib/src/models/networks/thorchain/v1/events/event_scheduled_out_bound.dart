@@ -19,7 +19,7 @@ class ThorchainEventScheduledOutbound extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.eventScheduledOutbound.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.eventScheduledOutbound;
 
   @override
   List get values => [outTx];

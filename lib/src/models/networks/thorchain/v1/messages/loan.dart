@@ -50,7 +50,7 @@ class ThorchainLoan extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.loan.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.loan;
 
   @override
   List get values => [

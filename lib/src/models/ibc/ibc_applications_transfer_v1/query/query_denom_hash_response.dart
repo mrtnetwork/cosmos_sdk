@@ -10,6 +10,9 @@ class QueryDenomHashResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryDenomHashResponse(hash: decode.getField(1));
   }
+  factory QueryDenomHashResponse.fromRpc(Map<String, dynamic> json) {
+    return QueryDenomHashResponse(hash: json["hash"]);
+  }
 
   @override
   List<int> get fieldIds => [1];
@@ -20,7 +23,7 @@ class QueryDenomHashResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.queryDenomHashResponse.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryDenomHashResponse;
 
   @override
   List get values => [hash];

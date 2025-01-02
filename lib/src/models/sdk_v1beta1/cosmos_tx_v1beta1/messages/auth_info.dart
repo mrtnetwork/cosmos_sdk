@@ -25,7 +25,15 @@ class AuthInfo extends CosmosMessage {
   ///
   /// Since: cosmos-sdk 0.46
   final Tip? tip;
-
+  factory AuthInfo.fromRpc(Map<String, dynamic> json) {
+    return AuthInfo(
+        signerInfos: (json["signer_infos"] as List?)
+                ?.map((e) => SignerInfo.fromRpc(e))
+                .toList() ??
+            [],
+        fee: Fee.fromRpc(json["fee"]),
+        tip: json["tip"] == null ? null : Tip.fromRpc(json["tip"]));
+  }
   AuthInfo({required List<SignerInfo> signerInfos, required this.fee, this.tip})
       : signerInfos = List<SignerInfo>.unmodifiable(signerInfos);
 
@@ -70,5 +78,5 @@ class AuthInfo extends CosmosMessage {
   List get values => [signerInfos, fee, tip];
 
   @override
-  String get typeUrl => TxV1beta1Types.authInfo.typeUrl;
+  TypeUrl get typeUrl => TxV1beta1Types.authInfo;
 }

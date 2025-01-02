@@ -3,11 +3,10 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'connected_intermediary_account_response.dart';
 
 class OsmosisSuperfluidConnectedIntermediaryAccountRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisSuperfluidConnectedIntermediaryAccountResponse>,
-        RPCMessage<OsmosisSuperfluidConnectedIntermediaryAccountResponse> {
-  final BigInt? lockId;
-  const OsmosisSuperfluidConnectedIntermediaryAccountRequest({this.lockId});
+    with QueryMessage<OsmosisSuperfluidConnectedIntermediaryAccountResponse> {
+  final BigInt lockId;
+  const OsmosisSuperfluidConnectedIntermediaryAccountRequest(
+      {required this.lockId});
   factory OsmosisSuperfluidConnectedIntermediaryAccountRequest.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -20,26 +19,18 @@ class OsmosisSuperfluidConnectedIntermediaryAccountRequest extends CosmosMessage
 
   @override
   Map<String, dynamic> toJson() {
-    return {"lock_id": lockId?.toString()};
+    return {"lock_id": lockId.toString()};
   }
 
   @override
-  String get typeUrl =>
-      OsmosisSuperfluidTypes.connectedIntermediaryAccountRequest.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisSuperfluidTypes.connectedIntermediaryAccountRequest;
 
   @override
   List get values => [lockId];
 
   @override
   Map<String, String?> get queryParameters => {};
-
-  @override
-  String get queryPath =>
-      OsmosisSuperfluidTypes.connectedIntermediaryAccount.typeUrl;
-
-  @override
-  String get rpcPath => OsmosisSuperfluidTypes.connectedIntermediaryAccount
-      .rpcUrl(pathParameters: [lockId?.toString()]);
 
   @override
   OsmosisSuperfluidConnectedIntermediaryAccountResponse onJsonResponse(
@@ -53,4 +44,7 @@ class OsmosisSuperfluidConnectedIntermediaryAccountRequest extends CosmosMessage
     return OsmosisSuperfluidConnectedIntermediaryAccountResponse.deserialize(
         bytes);
   }
+
+  @override
+  List<String> get pathParameters => [lockId.toString()];
 }

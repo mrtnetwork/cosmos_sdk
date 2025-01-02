@@ -7,8 +7,8 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class IbcConnectionQueryClientConnectionsRequest extends CosmosMessage
     with QueryMessage<IbcConnectionQueryClientConnectionsResponse> {
   /// client identifier associated with a connection
-  final String? clientId;
-  const IbcConnectionQueryClientConnectionsRequest({this.clientId});
+  final String clientId;
+  const IbcConnectionQueryClientConnectionsRequest({required this.clientId});
   factory IbcConnectionQueryClientConnectionsRequest.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -20,16 +20,12 @@ class IbcConnectionQueryClientConnectionsRequest extends CosmosMessage
   List<int> get fieldIds => [1];
 
   @override
-  String get queryPath => IbcTypes.ibcConnectionClientConnections.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {"client_id": clientId};
   }
 
   @override
-  String get typeUrl =>
-      IbcTypes.ibcConnectionQueryClientConnectionsRequest.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.ibcConnectionQueryClientConnectionsRequest;
 
   @override
   List get values => [clientId];
@@ -38,4 +34,13 @@ class IbcConnectionQueryClientConnectionsRequest extends CosmosMessage
   IbcConnectionQueryClientConnectionsResponse onResponse(List<int> bytes) {
     return IbcConnectionQueryClientConnectionsResponse.deserialize(bytes);
   }
+
+  @override
+  IbcConnectionQueryClientConnectionsResponse onJsonResponse(
+      Map<String, dynamic> json) {
+    return IbcConnectionQueryClientConnectionsResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters => [clientId];
 }

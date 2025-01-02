@@ -30,7 +30,7 @@ class MsgPruneAcknowledgementsResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.msgPruneAcknowledgementsResponse.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.msgPruneAcknowledgementsResponse;
 
   @override
   List get values => [totalPrunedSequences, totalRemainingSequences];

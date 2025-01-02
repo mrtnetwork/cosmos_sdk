@@ -91,7 +91,7 @@ class ThorchainVault extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.vault.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.vault;
 
   @override
   List get values => [

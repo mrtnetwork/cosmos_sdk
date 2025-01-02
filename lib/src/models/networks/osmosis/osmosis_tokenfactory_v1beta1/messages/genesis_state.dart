@@ -35,7 +35,7 @@ class OsmosisTokenFactoryGenesisState extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisTokenFactoryV1beta1Types.genesisState.typeUrl;
+  TypeUrl get typeUrl => OsmosisTokenFactoryV1beta1Types.genesisState;
 
   @override
   List get values => [params, factoryDenoms];

@@ -33,7 +33,7 @@ class OsmosisStreamSwapUserPositionKV extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisStreamSwapV1Types.userPositionKV.typeUrl;
+  TypeUrl get typeUrl => OsmosisStreamSwapV1Types.userPositionKV;
 
   @override
   List get values => [accAddress, saleId, userPosition];

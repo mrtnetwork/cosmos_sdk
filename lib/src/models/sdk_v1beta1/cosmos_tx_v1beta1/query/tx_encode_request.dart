@@ -25,16 +25,21 @@ class TxEncodeRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl => TxV1beta1Types.txEncodeRequest.typeUrl;
+  Map<String, dynamic> get body => toJson();
+
+  @override
+  TypeUrl get typeUrl => TxV1beta1Types.txEncodeRequest;
 
   @override
   List get values => [tx];
 
   @override
-  String get queryPath => TxV1beta1Types.txEncode.typeUrl;
-
-  @override
   TxEncodeResponse onResponse(List<int> bytes) {
     return TxEncodeResponse.deserialize(bytes);
+  }
+
+  @override
+  TxEncodeResponse onJsonResponse(Map<String, dynamic> json) {
+    return TxEncodeResponse.fromRpc(json);
   }
 }

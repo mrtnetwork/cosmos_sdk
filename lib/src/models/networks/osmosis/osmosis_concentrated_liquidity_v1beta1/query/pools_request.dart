@@ -5,9 +5,7 @@ import '../../../../sdk_v1beta1/cosmos_base_query_v1beta1/messages/page_request.
 import 'pools_response.dart';
 
 class OsmosisConcentratedLiquidityPoolsRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisConcentratedLiquidityPoolsResponse>,
-        RPCMessage<OsmosisConcentratedLiquidityPoolsResponse> {
+    with QueryMessage<OsmosisConcentratedLiquidityPoolsResponse> {
   /// pagination defines an optional pagination for the request.
   final PageRequest? pagination;
   OsmosisConcentratedLiquidityPoolsRequest({this.pagination});
@@ -24,14 +22,7 @@ class OsmosisConcentratedLiquidityPoolsRequest extends CosmosMessage
   List<int> get fieldIds => [2];
 
   @override
-  Map<String, String?> get queryParameters => {};
-
-  @override
-  String get queryPath =>
-      OsmosisConcentratedLiquidityV1beta1Types.pools.typeUrl;
-
-  @override
-  String get rpcPath => OsmosisConcentratedLiquidityV1beta1Types.pools.rpcUrl();
+  Map<String, String?> get queryParameters => pagination?.queryParameters ?? {};
 
   @override
   Map<String, dynamic> toJson() {
@@ -39,8 +30,7 @@ class OsmosisConcentratedLiquidityPoolsRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      OsmosisConcentratedLiquidityV1beta1Types.poolsRequest.typeUrl;
+  TypeUrl get typeUrl => OsmosisConcentratedLiquidityV1beta1Types.poolsRequest;
 
   @override
   List get values => [pagination];

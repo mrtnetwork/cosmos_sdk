@@ -3,14 +3,12 @@ import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_lockup/types/type
 import 'account_locked_longer_duration_denom_response.dart';
 
 class OsmosisLockupAccountLockedLongerDurationDenomRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisLockupAccountLockedLongerDurationDenomResponse>,
-        RPCMessage<OsmosisLockupAccountLockedLongerDurationDenomResponse> {
-  final String? owner;
+    with QueryMessage<OsmosisLockupAccountLockedLongerDurationDenomResponse> {
+  final String owner;
   final ProtobufDuration duration;
   final String? denom;
   const OsmosisLockupAccountLockedLongerDurationDenomRequest(
-      {this.owner, required this.duration, this.denom});
+      {required this.owner, required this.duration, this.denom});
   factory OsmosisLockupAccountLockedLongerDurationDenomRequest.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -28,8 +26,8 @@ class OsmosisLockupAccountLockedLongerDurationDenomRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      OsmosisLockupTypes.accountLockedLongerDurationDenomRequest.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisLockupTypes.accountLockedLongerDurationDenomRequest;
 
   @override
   List get values => [owner, duration, denom];
@@ -42,10 +40,6 @@ class OsmosisLockupAccountLockedLongerDurationDenomRequest extends CosmosMessage
   }
 
   @override
-  String get queryPath =>
-      OsmosisLockupTypes.accountLockedLongerDurationDenom.typeUrl;
-
-  @override
   OsmosisLockupAccountLockedLongerDurationDenomResponse onJsonResponse(
       Map<String, dynamic> json) {
     return OsmosisLockupAccountLockedLongerDurationDenomResponse.fromRpc(json);
@@ -55,6 +49,5 @@ class OsmosisLockupAccountLockedLongerDurationDenomRequest extends CosmosMessage
   Map<String, String?> get queryParameters => {};
 
   @override
-  String get rpcPath => OsmosisLockupTypes.accountLockedLongerDurationDenom
-      .rpcUrl(pathParameters: [owner]);
+  List<String> get pathParameters => [owner];
 }

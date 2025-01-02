@@ -28,7 +28,7 @@ class InterchainAccountsHostQueryRequest extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.interchainAccountsQueryRequest.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.interchainAccountsQueryRequest;
 
   @override
   List get values => [path, data];

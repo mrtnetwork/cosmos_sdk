@@ -31,7 +31,7 @@ class OsmosisLockupMsgLockTokens extends CosmosMessage
   }
 
   @override
-  String get service => OsmosisLockupTypes.lockTokens.typeUrl;
+  TypeUrl get service => OsmosisLockupTypes.lockTokens;
 
   @override
   List<String?> get signers => [owner];
@@ -46,7 +46,7 @@ class OsmosisLockupMsgLockTokens extends CosmosMessage
   }
 
   @override
-  String get typeUrl => OsmosisLockupTypes.msgLockTokens.typeUrl;
+  TypeUrl get typeUrl => OsmosisLockupTypes.msgLockTokens;
 
   @override
   List get values => [owner, duration, coins];

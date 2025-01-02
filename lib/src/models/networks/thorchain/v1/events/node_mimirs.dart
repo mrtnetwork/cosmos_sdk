@@ -23,7 +23,7 @@ class ThorchainNodeMimirs extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.nodeMimirs.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.nodeMimirs;
 
   @override
   List get values => [mimirs];

@@ -24,8 +24,7 @@ class OsmosisTxfeesQueryDenomPoolIdResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisTxfeesV1beta1Types.queryDenomPoolIdResponse.typeUrl;
+  TypeUrl get typeUrl => OsmosisTxfeesV1beta1Types.queryDenomPoolIdResponse;
 
   @override
   List get values => [poolID];

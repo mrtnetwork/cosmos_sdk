@@ -55,7 +55,7 @@ class ThorchainTx extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.tx.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.tx;
 
   @override
   List get values => [id, chain, fromAddress, toAddress, coins, gas, memo];

@@ -29,8 +29,8 @@ class OsmosisProtorevSetProtoRevAdminAccountProposal extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisProtorevV1beta1Types.setProtoRevAdminAccountProposal.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisProtorevV1beta1Types.setProtoRevAdminAccountProposal;
 
   @override
   List get values => [title, description, account];

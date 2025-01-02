@@ -49,8 +49,7 @@ class OsmosisCosmWasmPoolSwapExactAmountOut extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisCosmWasmPoolV1beta1Types.swapExactAmountOut.typeUrl;
+  TypeUrl get typeUrl => OsmosisCosmWasmPoolV1beta1Types.swapExactAmountOut;
 
   @override
   List get values =>

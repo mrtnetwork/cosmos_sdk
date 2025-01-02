@@ -90,6 +90,5 @@ class OsmosisConcentratedLiquidityTickInfo extends CosmosMessage {
       ];
 
   @override
-  String get typeUrl =>
-      OsmosisConcentratedLiquidityV1beta1Types.tickInfo.typeUrl;
+  TypeUrl get typeUrl => OsmosisConcentratedLiquidityV1beta1Types.tickInfo;
 }

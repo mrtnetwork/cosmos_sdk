@@ -6,12 +6,11 @@ class OsmosisLockupAccountLockedPastTimeNotUnlockingOnlyRequest
     extends CosmosMessage
     with
         QueryMessage<
-            OsmosisLockupAccountLockedPastTimeNotUnlockingOnlyResponse>,
-        RPCMessage<OsmosisLockupAccountLockedPastTimeNotUnlockingOnlyResponse> {
-  final String? owner;
+            OsmosisLockupAccountLockedPastTimeNotUnlockingOnlyResponse> {
+  final String owner;
   final ProtobufTimestamp timestamp;
   const OsmosisLockupAccountLockedPastTimeNotUnlockingOnlyRequest(
-      {this.owner, required this.timestamp});
+      {required this.owner, required this.timestamp});
   factory OsmosisLockupAccountLockedPastTimeNotUnlockingOnlyRequest.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -31,8 +30,8 @@ class OsmosisLockupAccountLockedPastTimeNotUnlockingOnlyRequest
   }
 
   @override
-  String get typeUrl =>
-      OsmosisLockupTypes.accountLockedPastTimeNotUnlockingOnlyRequest.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisLockupTypes.accountLockedPastTimeNotUnlockingOnlyRequest;
 
   @override
   List get values => [owner, timestamp];
@@ -45,10 +44,6 @@ class OsmosisLockupAccountLockedPastTimeNotUnlockingOnlyRequest
   }
 
   @override
-  String get queryPath =>
-      OsmosisLockupTypes.accountLockedPastTimeNotUnlockingOnly.typeUrl;
-
-  @override
   OsmosisLockupAccountLockedPastTimeNotUnlockingOnlyResponse onJsonResponse(
       Map<String, dynamic> json) {
     return OsmosisLockupAccountLockedPastTimeNotUnlockingOnlyResponse.fromRpc(
@@ -56,9 +51,8 @@ class OsmosisLockupAccountLockedPastTimeNotUnlockingOnlyRequest
   }
 
   @override
-  Map<String, String?> get queryParameters => {};
-
+  Map<String, String?> get queryParameters =>
+      {"timestamp": timestamp.toString()};
   @override
-  String get rpcPath => OsmosisLockupTypes.accountLockedPastTimeNotUnlockingOnly
-      .rpcUrl(pathParameters: [owner]);
+  List<String> get pathParameters => [owner];
 }

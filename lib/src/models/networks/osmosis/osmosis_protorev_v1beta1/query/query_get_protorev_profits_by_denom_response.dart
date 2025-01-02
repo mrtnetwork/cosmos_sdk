@@ -32,6 +32,6 @@ class OsmosisProtorevQueryGetProtoRevProfitsByDenomResponse
   List get values => [profit];
 
   @override
-  String get typeUrl => OsmosisProtorevV1beta1Types
-      .queryGetProtoRevProfitsByDenomResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisProtorevV1beta1Types.queryGetProtoRevProfitsByDenomResponse;
 }

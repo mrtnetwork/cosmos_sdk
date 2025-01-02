@@ -25,7 +25,7 @@ class OsmosisSuperfluidQueryParamsResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisSuperfluidTypes.queryParamsResponse.typeUrl;
+  TypeUrl get typeUrl => OsmosisSuperfluidTypes.queryParamsResponse;
 
   @override
   List get values => [params];

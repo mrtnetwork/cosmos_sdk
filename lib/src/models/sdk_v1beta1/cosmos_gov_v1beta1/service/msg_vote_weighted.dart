@@ -37,7 +37,7 @@ class GovMsgVoteWeighted extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3];
 
   @override
-  String get service => GovV1beta1types.serviceGovVoteWeighted.typeUrl;
+  TypeUrl get service => GovV1beta1types.serviceGovVoteWeighted;
 
   @override
   Map<String, dynamic> toJson() {
@@ -49,7 +49,7 @@ class GovMsgVoteWeighted extends CosmosMessage
   }
 
   @override
-  String get typeUrl => GovV1beta1types.govMsgVoteWeighted.typeUrl;
+  TypeUrl get typeUrl => GovV1beta1types.govMsgVoteWeighted;
 
   @override
   List get values => [propoosalId, voter?.address, options];
@@ -58,6 +58,6 @@ class GovMsgVoteWeighted extends CosmosMessage
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        GovV1beta1types.govMsgVoteWeightedResponse.typeUrl);
+        GovV1beta1types.govMsgVoteWeightedResponse);
   }
 }

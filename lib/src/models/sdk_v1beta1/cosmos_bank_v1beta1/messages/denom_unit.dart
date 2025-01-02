@@ -1,3 +1,4 @@
+import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_bank_v1beta1/types/types.dart';
 
@@ -16,6 +17,13 @@ class DenomUnit extends CosmosMessage {
   /// aliases is a list of string aliases for the given denom
   final List<String> aliases;
   const DenomUnit({required this.denom, this.exponent, required this.aliases});
+  factory DenomUnit.fromRpc(Map<String, dynamic> json) {
+    return DenomUnit(
+        denom: json["denom"],
+        aliases: (json["aliases"] as List?)?.cast() ?? [],
+        exponent: IntUtils.tryParse(json["exponent"]));
+  }
+
   factory DenomUnit.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DenomUnit(
@@ -33,7 +41,7 @@ class DenomUnit extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => BankV1beta1Types.denomUnit.typeUrl;
+  TypeUrl get typeUrl => BankV1beta1Types.denomUnit;
 
   @override
   List get values => [denom, exponent, aliases];

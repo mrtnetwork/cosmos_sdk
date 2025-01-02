@@ -5,9 +5,10 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 /// QueryInterchainAccountRequest is the request type for the Query/InterchainAccount RPC method.
 class QueryInterchainAccountRequest extends CosmosMessage
     with QueryMessage<QueryInterchainAccountResponse> {
-  final String? owner;
-  final String? connectionId;
-  const QueryInterchainAccountRequest({this.owner, this.connectionId});
+  final String owner;
+  final String connectionId;
+  const QueryInterchainAccountRequest(
+      {required this.owner, required this.connectionId});
   factory QueryInterchainAccountRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryInterchainAccountRequest(
@@ -23,16 +24,21 @@ class QueryInterchainAccountRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl => IbcTypes.queryInterchainAccountRequest.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryInterchainAccountRequest;
 
   @override
   List get values => [owner, connectionId];
 
   @override
-  String get queryPath => IbcTypes.queryInterchainAccount.typeUrl;
-
-  @override
   QueryInterchainAccountResponse onResponse(List<int> bytes) {
     return QueryInterchainAccountResponse.deserialize(bytes);
   }
+
+  @override
+  QueryInterchainAccountResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryInterchainAccountResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters => [owner, connectionId];
 }

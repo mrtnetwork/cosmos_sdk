@@ -31,7 +31,7 @@ class BlockData extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => TendermintTypes.data.typeUrl;
+  TypeUrl get typeUrl => TendermintTypes.data;
 
   @override
   List get values => [txs];

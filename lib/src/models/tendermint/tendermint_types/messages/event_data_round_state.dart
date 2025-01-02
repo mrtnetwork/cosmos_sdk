@@ -24,7 +24,7 @@ class EventDataRoundState extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => TendermintTypes.eventDataRoundState.typeUrl;
+  TypeUrl get typeUrl => TendermintTypes.eventDataRoundState;
 
   @override
   List get values => [height, round, step];

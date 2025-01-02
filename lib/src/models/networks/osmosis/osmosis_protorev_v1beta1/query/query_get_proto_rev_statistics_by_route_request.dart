@@ -8,8 +8,7 @@ import 'query_get_proto_rev_statistics_by_route_response.dart';
 class OsmosisProtorevQueryGetProtoRevStatisticsByRouteRequest
     extends CosmosMessage
     with
-        QueryMessage<OsmosisProtorevQueryGetProtoRevStatisticsByRouteResponse>,
-        RPCMessage<OsmosisProtorevQueryGetProtoRevStatisticsByRouteResponse> {
+        QueryMessage<OsmosisProtorevQueryGetProtoRevStatisticsByRouteResponse> {
   /// [route] is the set of pool ids to query statistics by i.e. 1,2,3
   final List<BigInt>? route;
 
@@ -52,18 +51,9 @@ class OsmosisProtorevQueryGetProtoRevStatisticsByRouteRequest
   }
 
   @override
-  String get typeUrl => OsmosisProtorevV1beta1Types
-      .queryGetProtoRevStatisticsByRouteRequest.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisProtorevV1beta1Types.queryGetProtoRevStatisticsByRouteRequest;
 
   @override
-  String get queryPath =>
-      OsmosisProtorevV1beta1Types.getProtoRevStatisticsByRoute.typeUrl;
-
-  @override
-  Map<String, String?> get queryParameters =>
-      {"route": route?.map((e) => e.toString()).join(",")};
-
-  @override
-  String get rpcPath =>
-      OsmosisProtorevV1beta1Types.getProtoRevStatisticsByRoute.rpcUrl();
+  Map<String, String?> get queryParameters => {"route": route?.join(",")};
 }

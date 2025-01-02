@@ -21,7 +21,7 @@ class ThorchainAffiliateFeeCollector extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.afiliateFeeCollector.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.afiliateFeeCollector;
 
   @override
   List get values => [ownerAddress, runeAmount.toString()];

@@ -38,8 +38,7 @@ class OsmosisGammMsgJoinSwapExternAmountIn extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      OsmosisGammV1beta1Types.msgJoinSwapExternAmountIn.typeUrl;
+  TypeUrl get typeUrl => OsmosisGammV1beta1Types.msgJoinSwapExternAmountIn;
 
   @override
   List get values => [sender, poolId, tokenIn, shareOutMintAmount.toString()];
@@ -50,7 +49,7 @@ class OsmosisGammMsgJoinSwapExternAmountIn extends CosmosMessage
   }
 
   @override
-  String get service => OsmosisGammV1beta1Types.joinSwapExternAmountIn.typeUrl;
+  TypeUrl get service => OsmosisGammV1beta1Types.joinSwapExternAmountIn;
 
   @override
   List<String?> get signers => [sender];

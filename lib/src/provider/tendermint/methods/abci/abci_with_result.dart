@@ -7,7 +7,7 @@ import 'package:blockchain_utils/blockchain_utils.dart';
 /// Query the application for some information.
 /// https://docs.tendermint.com/v0.34/rpc/#/ABCI/abci_query
 class TendermintRequestAbciQuery<Response>
-    extends TendermintRequestParam<Response, Map<String, dynamic>> {
+    extends TendermintRequest<Response, Map<String, dynamic>> {
   TendermintRequestAbciQuery({required this.request, this.height, this.prove});
 
   final QueryMessage<Response> request;
@@ -29,7 +29,7 @@ class TendermintRequestAbciQuery<Response>
 
   @override
   Map<String, String?> get parameters => {
-        "path": '''"${request.queryPath}"''',
+        "path": '''"${request.typeUrl.query!}"''',
         "data": BytesUtils.toHexString(request.toBuffer(), prefix: "0x"),
         "height": height?.toString(),
         "prove": prove?.toString()

@@ -49,8 +49,8 @@ class OsmosisConcentratedLiquidityUserPositionsResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisConcentratedLiquidityV1beta1Types.userPositionsResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisConcentratedLiquidityV1beta1Types.userPositionsResponse;
 
   @override
   List get values => [positions, pagination];

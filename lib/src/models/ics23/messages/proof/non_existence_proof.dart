@@ -37,7 +37,7 @@ class Ics23NonExistenceProof extends Ics23BatchEntryBase {
   }
 
   @override
-  String get typeUrl => Ics23Types.nonExistenceProof.typeUrl;
+  TypeUrl get typeUrl => Ics23Types.nonExistenceProof;
 
   @override
   List get values => [key, left, right];

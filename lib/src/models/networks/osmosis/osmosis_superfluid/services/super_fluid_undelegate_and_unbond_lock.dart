@@ -37,15 +37,15 @@ class OsmosisSuperfluidMsgSuperfluidUndelegateAndUnbondLock
   }
 
   @override
-  String get typeUrl =>
-      OsmosisSuperfluidTypes.msgSuperfluidUndelegateAndUnbondLock.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisSuperfluidTypes.msgSuperfluidUndelegateAndUnbondLock;
 
   @override
   List get values => [sender, lockId];
 
   @override
-  String get service =>
-      OsmosisSuperfluidTypes.superfluidUndelegateAndUnbondLock.typeUrl;
+  TypeUrl get service =>
+      OsmosisSuperfluidTypes.superfluidUndelegateAndUnbondLock;
 
   @override
   List<String?> get signers => [sender];

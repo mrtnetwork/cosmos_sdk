@@ -22,7 +22,7 @@ class MsgChannelUpgradeAckResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.msgChannelUpgradeAckResponse.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.msgChannelUpgradeAckResponse;
 
   @override
   List get values => [1];

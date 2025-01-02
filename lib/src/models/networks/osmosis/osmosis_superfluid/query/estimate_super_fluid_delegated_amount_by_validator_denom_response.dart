@@ -36,8 +36,8 @@ class OsmosisSuperfluidEstimateSuperfluidDelegatedAmountByValidatorDenomResponse
   }
 
   @override
-  String get typeUrl => OsmosisSuperfluidTypes
-      .estimateSuperfluidDelegatedAmountByValidatorDenomResponse.typeUrl;
+  TypeUrl get typeUrl => OsmosisSuperfluidTypes
+      .estimateSuperfluidDelegatedAmountByValidatorDenomResponse;
 
   @override
   List get values => [totalDelegatedCoins];

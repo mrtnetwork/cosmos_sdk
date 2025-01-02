@@ -11,6 +11,9 @@ class QueryAuthorityResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryAuthorityResponse(address: decode.getField(1));
   }
+  factory QueryAuthorityResponse.fromRpc(Map<String, dynamic> json) {
+    return QueryAuthorityResponse(address: json["address"]);
+  }
 
   @override
   List<int> get fieldIds => [1];
@@ -21,7 +24,7 @@ class QueryAuthorityResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => UpgradeV1beta1Types.queryAuthorityResponse.typeUrl;
+  TypeUrl get typeUrl => UpgradeV1beta1Types.queryAuthorityResponse;
 
   @override
   List get values => [address];

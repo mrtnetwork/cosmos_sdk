@@ -7,6 +7,13 @@ class IbcConnectionQueryConnectionParamsResponse extends CosmosMessage {
   /// params defines the parameters of the module.
   final IbcConnectionParams? params;
   const IbcConnectionQueryConnectionParamsResponse({this.params});
+  factory IbcConnectionQueryConnectionParamsResponse.fromRpc(
+      Map<String, dynamic> json) {
+    return IbcConnectionQueryConnectionParamsResponse(
+        params: json["params"] == null
+            ? null
+            : IbcConnectionParams.fromRpc(json["params"]));
+  }
   factory IbcConnectionQueryConnectionParamsResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -24,8 +31,7 @@ class IbcConnectionQueryConnectionParamsResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      IbcTypes.ibcConnectionQueryConnectionParamsResponse.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.ibcConnectionQueryConnectionParamsResponse;
 
   @override
   List get values => [params];

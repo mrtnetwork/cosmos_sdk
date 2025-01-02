@@ -24,7 +24,7 @@ class MsgData extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => BaseAbciV1beta1.msgData.typeUrl;
+  TypeUrl get typeUrl => BaseAbciV1beta1.msgData;
 
   @override
   List get values => [msgType, data];

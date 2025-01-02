@@ -11,6 +11,17 @@ class QueryClientStatesResponse extends CosmosMessage {
 
   /// pagination response
   final PageResponse? pagination;
+  factory QueryClientStatesResponse.fromRpc(Map<String, dynamic> json) {
+    return QueryClientStatesResponse(
+      clinetStates: (json["client_states"] as List?)
+              ?.map((e) => IbcClientIdentifiedClientState.fromRpc(e))
+              .toList() ??
+          [],
+      pagination: json["pagination"] == null
+          ? null
+          : PageResponse.fromRpc(json["pagination"]),
+    );
+  }
   QueryClientStatesResponse(
       {required List<IbcClientIdentifiedClientState> clinetStates,
       this.pagination})
@@ -39,7 +50,7 @@ class QueryClientStatesResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.queryClientStatesResponse.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryClientStatesResponse;
 
   @override
   List get values => [clinetStates, pagination];

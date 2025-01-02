@@ -41,7 +41,7 @@ class IbcTendermintConsensusState extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.ibcTendermintV1ConsensusState.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.ibcTendermintV1ConsensusState;
 
   @override
   List get values => [1, 2, 3];

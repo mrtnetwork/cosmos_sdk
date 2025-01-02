@@ -29,7 +29,7 @@ class ThorchainEventFee extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.eventFee.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.eventFee;
 
   @override
   List get values => [txId, fee, synthUnits.toString()];

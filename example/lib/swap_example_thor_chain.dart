@@ -5,7 +5,7 @@ import 'package:example/thor_node_provider.dart';
 
 void main() async {
   final privateKey = CosmosSecp256K1PrivateKey.fromHex("");
-  final addr = privateKey.toPublicKey().toAddresss(hrp: "thor");
+  final addr = privateKey.toPublicKey().toAddress(hrp: "thor");
   const String url = "https://thornode.ninerealms.com/thorchain";
   final nodeApi = ThorNodeProvider(ThornodeHTTPProvider(url: url));
   const bnbAddr = "0xcCCdde90083900E8431e0364fa9655bA54A2616c";

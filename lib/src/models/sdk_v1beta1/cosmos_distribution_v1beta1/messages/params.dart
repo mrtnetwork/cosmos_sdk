@@ -26,7 +26,13 @@ class DistributionParams extends CosmosMessage {
         bonusProposerReward: decode.getField(3),
         withdrawAddrEnabled: decode.getField(4));
   }
-
+  factory DistributionParams.fromRpc(Map<String, dynamic> json) {
+    return DistributionParams(
+        communityTax: json["community_tax"],
+        baseProposerReward: json["base_proposer_reward"],
+        bonusProposerReward: json["bonus_proposer_reward"],
+        withdrawAddrEnabled: json["withdraw_addr_enabled"]);
+  }
   @override
   List<int> get fieldIds => [1, 2, 3, 4];
 
@@ -41,7 +47,7 @@ class DistributionParams extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => DistributionV1beta1Types.distributionParams.typeUrl;
+  TypeUrl get typeUrl => DistributionV1beta1Types.distributionParams;
 
   @override
   List get values => [

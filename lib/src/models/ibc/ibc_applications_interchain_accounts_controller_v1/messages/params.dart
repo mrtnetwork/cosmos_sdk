@@ -7,6 +7,12 @@ class InterchainAccountsControllerParams extends CosmosMessage {
   /// controller_enabled enables or disables the controller submodule.
   final bool? controllerEnabled;
   const InterchainAccountsControllerParams({this.controllerEnabled});
+  factory InterchainAccountsControllerParams.fromRpc(
+      Map<String, dynamic> json) {
+    return InterchainAccountsControllerParams(
+        controllerEnabled: json["controller_enabled"]);
+  }
+
   factory InterchainAccountsControllerParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return InterchainAccountsControllerParams(
@@ -22,7 +28,7 @@ class InterchainAccountsControllerParams extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.interchainAccountsControllerParams.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.interchainAccountsControllerParams;
 
   @override
   List get values => [controllerEnabled];

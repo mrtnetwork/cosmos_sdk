@@ -29,8 +29,8 @@ class OsmosisPoolManagerTotalVolumeForPoolResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisPoolManagerV1beta1Types.totalVolumeForPoolResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisPoolManagerV1beta1Types.totalVolumeForPoolResponse;
 
   @override
   List get values => [volume];

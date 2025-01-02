@@ -30,8 +30,7 @@ class OsmosisIncentiveModuleToDistributeCoinsResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisIncentivesTypes.moduleToDistributeCoinsResponse.typeUrl;
+  TypeUrl get typeUrl => OsmosisIncentivesTypes.moduleToDistributeCoinsResponse;
 
   @override
   List get values => [coins];

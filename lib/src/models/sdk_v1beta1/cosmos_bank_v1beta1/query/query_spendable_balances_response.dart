@@ -12,6 +12,17 @@ class QuerySpendableBalancesResponse extends CosmosMessage {
 
   /// pagination defines the pagination in the response.
   final PageResponse? pagination;
+
+  factory QuerySpendableBalancesResponse.fromRpc(Map<String, dynamic> json) {
+    return QuerySpendableBalancesResponse(
+      balances:
+          (json["balances"] as List?)?.map((e) => Coin.fromRpc(e)).toList() ??
+              [],
+      pagination: json["pagination"] == null
+          ? null
+          : PageResponse.fromRpc(json["pagination"]),
+    );
+  }
   const QuerySpendableBalancesResponse(
       {required this.balances, this.pagination});
   factory QuerySpendableBalancesResponse.deserialize(List<int> bytes) {
@@ -37,7 +48,7 @@ class QuerySpendableBalancesResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => BankV1beta1Types.spendableBalancesResponse.typeUrl;
+  TypeUrl get typeUrl => BankV1beta1Types.spendableBalancesResponse;
 
   @override
   List get values => [balances, pagination];

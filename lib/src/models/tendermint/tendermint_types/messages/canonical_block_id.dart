@@ -28,7 +28,7 @@ class CanonicalBlockID extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => TendermintTypes.canonicalBlockID.typeUrl;
+  TypeUrl get typeUrl => TendermintTypes.canonicalBlockID;
 
   @override
   List get values => [hash, partSetHeader];

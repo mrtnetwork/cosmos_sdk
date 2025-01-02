@@ -4,9 +4,7 @@ import 'query_params_response.dart';
 
 /// Params defines a gRPC query method that returns the tokenfactory module's parameters.
 class OsmosisTokenFactoryQueryParamsRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisTokenFactoryQueryParamsResponse>,
-        RPCMessage<OsmosisTokenFactoryQueryParamsResponse> {
+    with QueryMessage<OsmosisTokenFactoryQueryParamsResponse> {
   OsmosisTokenFactoryQueryParamsRequest();
   factory OsmosisTokenFactoryQueryParamsRequest.deserialize(List<int> bytes) {
     return OsmosisTokenFactoryQueryParamsRequest();
@@ -21,8 +19,7 @@ class OsmosisTokenFactoryQueryParamsRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      OsmosisTokenFactoryV1beta1Types.queryParamsRequest.typeUrl;
+  TypeUrl get typeUrl => OsmosisTokenFactoryV1beta1Types.queryParamsRequest;
 
   @override
   List get values => [];
@@ -40,10 +37,4 @@ class OsmosisTokenFactoryQueryParamsRequest extends CosmosMessage
 
   @override
   Map<String, String?> get queryParameters => {};
-
-  @override
-  String get queryPath => OsmosisTokenFactoryV1beta1Types.queryParams.typeUrl;
-
-  @override
-  String get rpcPath => OsmosisTokenFactoryV1beta1Types.queryParams.rpcUrl();
 }

@@ -3,9 +3,7 @@ import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_gamm_v1beta1/type
 import 'query_total_liquidity_response.dart';
 
 class OsmosisGammQueryTotalLiquidityRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisGammQueryTotalLiquidityResponse>,
-        RPCMessage<OsmosisGammQueryTotalLiquidityResponse> {
+    with QueryMessage<OsmosisGammQueryTotalLiquidityResponse> {
   const OsmosisGammQueryTotalLiquidityRequest();
   factory OsmosisGammQueryTotalLiquidityRequest.fromBytes(List<int> bytes) {
     return const OsmosisGammQueryTotalLiquidityRequest();
@@ -20,16 +18,12 @@ class OsmosisGammQueryTotalLiquidityRequest extends CosmosMessage
   }
 
   @override
-  String get queryPath => OsmosisGammV1beta1Types.totalLiquidity.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {};
   }
 
   @override
-  String get typeUrl =>
-      OsmosisGammV1beta1Types.queryTotalLiquidityRequest.typeUrl;
+  TypeUrl get typeUrl => OsmosisGammV1beta1Types.queryTotalLiquidityRequest;
 
   @override
   List get values => [];
@@ -42,7 +36,4 @@ class OsmosisGammQueryTotalLiquidityRequest extends CosmosMessage
 
   @override
   Map<String, String> get queryParameters => {};
-
-  @override
-  String get rpcPath => OsmosisGammV1beta1Types.totalLiquidity.rpcUrl();
 }

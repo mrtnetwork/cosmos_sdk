@@ -19,7 +19,7 @@ void main() async {
 
   /// Querying account info from the blockchain
   final accountInfo = await provider.request(TendermintRequestAbciQuery(
-      request: QueryAccountInfoRequest(pubkey.toAddresss())));
+      request: QueryAccountInfoRequest(pubkey.toAddress())));
 
   /// Querying the latest block information
   final latestBlock = await provider.request(
@@ -42,7 +42,7 @@ void main() async {
 
   /// Creating a transaction message to send tokens
   final message = MsgSend(
-      fromAddress: pubkey.toAddresss(),
+      fromAddress: pubkey.toAddress(),
       toAddress:
           CosmosBaseAddress("cosmos1qhslf0sx2fegltfqq0p5j6etmdznjgfnm2j6nc"),
       amount: [Coin(denom: "uatom", amount: BigInt.from(1000000))]);

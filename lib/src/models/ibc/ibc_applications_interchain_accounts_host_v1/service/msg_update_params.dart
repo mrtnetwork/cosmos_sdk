@@ -26,7 +26,7 @@ class InterchainAccountsHostUpdateParams extends CosmosMessage
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get service => IbcTypes.interchainAccountsHostUpdateParams.typeUrl;
+  TypeUrl get service => IbcTypes.interchainAccountsHostUpdateParams;
 
   @override
   Map<String, dynamic> toJson() {
@@ -34,7 +34,7 @@ class InterchainAccountsHostUpdateParams extends CosmosMessage
   }
 
   @override
-  String get typeUrl => IbcTypes.interchainAccountsHostMsgUpdateParams.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.interchainAccountsHostMsgUpdateParams;
 
   @override
   List get values => [signer, params];
@@ -44,6 +44,6 @@ class InterchainAccountsHostUpdateParams extends CosmosMessage
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        IbcTypes.interchainAccountsHostMsgUpdateParamsResponse.typeUrl);
+        IbcTypes.interchainAccountsHostMsgUpdateParamsResponse);
   }
 }

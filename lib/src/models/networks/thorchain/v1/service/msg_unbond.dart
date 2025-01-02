@@ -47,7 +47,7 @@ class ThorchainMsgUnBond extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.msgUnBond.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.msgUnBond;
 
   @override
   List get values => [

@@ -37,6 +37,6 @@ class OsmosisConcentratedLiquidityPositionWithPeriodLock extends CosmosMessage {
   List get values => [position, locks];
 
   @override
-  String get typeUrl =>
-      OsmosisConcentratedLiquidityV1beta1Types.positionWithPeriodLock.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisConcentratedLiquidityV1beta1Types.positionWithPeriodLock;
 }

@@ -44,9 +44,6 @@ class GovQueryProposalsRequest extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3, 4];
 
   @override
-  String get queryPath => GovV1beta1types.queryGovProposals.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {
       "proposal_status": proposalStatus?.value,
@@ -57,7 +54,7 @@ class GovQueryProposalsRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl => GovV1beta1types.govQueryProposalsRequest.typeUrl;
+  TypeUrl get typeUrl => GovV1beta1types.govQueryProposalsRequest;
 
   @override
   List get values =>
@@ -67,4 +64,17 @@ class GovQueryProposalsRequest extends CosmosMessage
   GovQueryProposalsResponse onResponse(List<int> bytes) {
     return GovQueryProposalsResponse.deserialize(bytes);
   }
+
+  @override
+  GovQueryProposalsResponse onJsonResponse(Map<String, dynamic> json) {
+    return GovQueryProposalsResponse.fromRpc(json);
+  }
+
+  @override
+  Map<String, String?> get queryParameters => {
+        "proposal_status": proposalStatus?.value.toString(),
+        "voter": voter?.address,
+        "depositor": depositor?.address,
+        ...pagination?.queryParameters ?? {}
+      };
 }

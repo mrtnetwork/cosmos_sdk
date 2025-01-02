@@ -20,16 +20,18 @@ class QueryAnnualProvisionsRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl => MintV1beta1Types.queryAnnualProvisionsRequest.typeUrl;
+  TypeUrl get typeUrl => MintV1beta1Types.queryAnnualProvisionsRequest;
 
   @override
   List get values => [];
 
   @override
-  String get queryPath => MintV1beta1Types.annualProvisions.typeUrl;
-
-  @override
   QueryAnnualProvisionsResponse onResponse(List<int> bytes) {
     return QueryAnnualProvisionsResponse.deserialize(bytes);
+  }
+
+  @override
+  QueryAnnualProvisionsResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryAnnualProvisionsResponse.fromRpc(json);
   }
 }

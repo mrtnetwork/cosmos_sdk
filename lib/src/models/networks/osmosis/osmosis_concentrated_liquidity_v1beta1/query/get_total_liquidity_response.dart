@@ -35,8 +35,8 @@ class OsmosisConcentratedLiquidityGetTotalLiquidityResponse
   }
 
   @override
-  String get typeUrl => OsmosisConcentratedLiquidityV1beta1Types
-      .getTotalLiquidityResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisConcentratedLiquidityV1beta1Types.getTotalLiquidityResponse;
 
   @override
   List get values => [totalLiquidity];

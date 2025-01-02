@@ -10,6 +10,14 @@ class DistributionValidatorAccumulatedCommission extends CosmosMessage {
   final List<DecCoin> commission;
   DistributionValidatorAccumulatedCommission(List<DecCoin> commission)
       : commission = commission.immutable;
+  factory DistributionValidatorAccumulatedCommission.fromRpc(
+      Map<String, dynamic> json) {
+    return DistributionValidatorAccumulatedCommission(
+        (json["commission"] as List?)
+                ?.map((e) => DecCoin.fromRpc(e))
+                .toList() ??
+            []);
+  }
   factory DistributionValidatorAccumulatedCommission.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -28,8 +36,8 @@ class DistributionValidatorAccumulatedCommission extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => DistributionV1beta1Types
-      .distributionValidatorAccumulatedCommission.typeUrl;
+  TypeUrl get typeUrl =>
+      DistributionV1beta1Types.distributionValidatorAccumulatedCommission;
 
   @override
   List get values => [commission];

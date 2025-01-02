@@ -1,4 +1,4 @@
-import 'package:blockchain_utils/exception/exception.dart';
+import 'package:cosmos_sdk/src/exception/exception.dart';
 import 'package:cosmos_sdk/src/protobuf/types/cosmos_enum.dart';
 
 /// BroadcastMode specifies the broadcast mode for the TxService.Broadcast RPC method.
@@ -29,7 +29,7 @@ class BroadcastMode implements CosmosEnum {
   static BroadcastMode fromValue(int? value) {
     return values.firstWhere(
       (e) => e.value == value,
-      orElse: () => throw MessageException(
+      orElse: () => throw DartCosmosSdkPluginException(
           "No BroadcastMode element found for the given value.",
           details: {"value": value}),
     );

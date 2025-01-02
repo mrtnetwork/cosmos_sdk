@@ -78,7 +78,7 @@ class OsmosisAccumRecord extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisAccumV1beta1Types.record.typeUrl;
+  TypeUrl get typeUrl => OsmosisAccumV1beta1Types.record;
 
   @override
   List get values => [numShares, accumValuePerShare, unclaimedRewardsTotal];

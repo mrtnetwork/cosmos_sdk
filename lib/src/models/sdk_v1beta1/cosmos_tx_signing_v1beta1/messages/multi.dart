@@ -40,7 +40,7 @@ class SignatureDescriptorDataMulti extends BaseSignatureDescriptorData {
   }
 
   @override
-  String get typeUrl => TxSigningV1beta1Types.multi.typeUrl;
+  TypeUrl get typeUrl => TxSigningV1beta1Types.multi;
 
   @override
   List get values => [bitarray, signatures];

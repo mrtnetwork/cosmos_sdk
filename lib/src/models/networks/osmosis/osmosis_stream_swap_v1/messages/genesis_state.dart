@@ -48,7 +48,7 @@ class OsmosisStreamSwapGenesisState extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisStreamSwapV1Types.genesisState.typeUrl;
+  TypeUrl get typeUrl => OsmosisStreamSwapV1Types.genesisState;
 
   @override
   List get values => [sales, userPositions, nextSaleId, params];

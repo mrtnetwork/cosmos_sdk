@@ -43,7 +43,7 @@ class OsmosisProtorevRouteCyclicArbTracker extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisProtorevV1beta1Types.cyclicArbTracker.typeUrl;
+  TypeUrl get typeUrl => OsmosisProtorevV1beta1Types.cyclicArbTracker;
 
   @override
   List get values => [cyclicArb, heightAccountingStartsFrom];

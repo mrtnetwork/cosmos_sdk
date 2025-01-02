@@ -8,39 +8,36 @@ import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_staking_v1beta1/types/t
 class QueryRedelegationsRequest extends CosmosMessage
     with QueryMessage<QueryRedelegationsResponse> {
   /// delegator_addr defines the delegator address to query for.
-  final CosmosBaseAddress? delegatorAddr;
+  final CosmosBaseAddress delegatorAddr;
 
   /// src_validator_addr defines the validator address to redelegate from.
-  final CosmosBaseAddress? srcValidatorAddr;
+  final CosmosBaseAddress srcValidatorAddr;
 
   /// dst_validator_addr defines the validator address to redelegate to.
-  final CosmosBaseAddress? dstValidatorAddr;
+  final CosmosBaseAddress dstValidatorAddr;
 
   /// pagination defines an optional pagination for the request.
   final PageRequest? pagination;
   const QueryRedelegationsRequest(
-      {this.delegatorAddr,
-      this.srcValidatorAddr,
-      this.dstValidatorAddr,
+      {required this.delegatorAddr,
+      required this.srcValidatorAddr,
+      required this.dstValidatorAddr,
       this.pagination});
   @override
   List<int> get fieldIds => [1, 2, 3, 4];
 
   @override
-  String get queryPath => StakingV1beta1Types.queryRedelegations.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {
-      "delegator_addr": delegatorAddr?.address,
-      "src_validator_addr": srcValidatorAddr?.address,
-      "dst_validator_addr": dstValidatorAddr?.address,
+      "delegator_addr": delegatorAddr.address,
+      "src_validator_addr": srcValidatorAddr.address,
+      "dst_validator_addr": dstValidatorAddr.address,
       "pagination": pagination?.toJson()
     };
   }
 
   @override
-  String get typeUrl => StakingV1beta1Types.queryRedelegationsRequest.typeUrl;
+  TypeUrl get typeUrl => StakingV1beta1Types.queryRedelegationsRequest;
 
   @override
   List get values =>
@@ -50,4 +47,18 @@ class QueryRedelegationsRequest extends CosmosMessage
   QueryRedelegationsResponse onResponse(List<int> bytes) {
     return QueryRedelegationsResponse.deserialize(bytes);
   }
+
+  @override
+  QueryRedelegationsResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryRedelegationsResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters => [delegatorAddr.address];
+  @override
+  Map<String, String?> get queryParameters => {
+        "src_validator_addr": srcValidatorAddr.address,
+        "dst_validator_addr": dstValidatorAddr.address,
+        ...pagination?.queryParameters ?? {}
+      };
 }

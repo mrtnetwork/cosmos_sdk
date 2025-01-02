@@ -28,8 +28,7 @@ class OsmosisMintQueryEpochProvisionsResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisMintV1beta1Types.queryEpochProvisionsResponse.typeUrl;
+  TypeUrl get typeUrl => OsmosisMintV1beta1Types.queryEpochProvisionsResponse;
 
   @override
   List get values => [epochProvisions];

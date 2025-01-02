@@ -25,7 +25,7 @@ class IbcTendermintFraction extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.ibcTendermintV1Fraction.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.ibcTendermintV1Fraction;
 
   @override
   List get values => [numerator, denominator];

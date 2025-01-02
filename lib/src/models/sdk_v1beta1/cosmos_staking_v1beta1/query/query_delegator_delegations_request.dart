@@ -8,39 +8,26 @@ import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_staking_v1beta1/types/t
 class QueryDelegatorDelegationsRequest extends CosmosMessage
     with QueryMessage<QueryDelegatorDelegationsResponse> {
   /// delegator_addr defines the delegator address to query for
-  final CosmosBaseAddress? delegatorAddr;
+  final CosmosBaseAddress delegatorAddr;
 
   /// pagination defines an optional pagination for the request.
   final PageRequest? pagination;
-  const QueryDelegatorDelegationsRequest({this.delegatorAddr, this.pagination});
-  factory QueryDelegatorDelegationsRequest.deserialize(List<int> bytes) {
-    final decode = CosmosProtocolBuffer.decode(bytes);
-    return QueryDelegatorDelegationsRequest(
-        delegatorAddr: decode
-            .getResult(1)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)));
-  }
+  const QueryDelegatorDelegationsRequest(
+      {required this.delegatorAddr, this.pagination});
 
   @override
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get queryPath => StakingV1beta1Types.queryDelegatorDelegations.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {
-      "delegator_addr": delegatorAddr?.address,
+      "delegator_addr": delegatorAddr.address,
       "pagination": pagination?.toJson()
     };
   }
 
   @override
-  String get typeUrl =>
-      StakingV1beta1Types.queryDelegatorDelegationsRequest.typeUrl;
+  TypeUrl get typeUrl => StakingV1beta1Types.queryDelegatorDelegationsRequest;
 
   @override
   List get values => [delegatorAddr, pagination];
@@ -49,4 +36,15 @@ class QueryDelegatorDelegationsRequest extends CosmosMessage
   QueryDelegatorDelegationsResponse onResponse(List<int> bytes) {
     return QueryDelegatorDelegationsResponse.deserialize(bytes);
   }
+
+  @override
+  QueryDelegatorDelegationsResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryDelegatorDelegationsResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters => [delegatorAddr.address];
+
+  @override
+  Map<String, String?> get queryParameters => pagination?.queryParameters ?? {};
 }

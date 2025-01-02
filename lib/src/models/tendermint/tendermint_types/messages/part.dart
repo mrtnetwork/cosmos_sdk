@@ -32,7 +32,7 @@ class Part extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => TendermintTypes.tendermintPart.typeUrl;
+  TypeUrl get typeUrl => TendermintTypes.tendermintPart;
 
   @override
   List get values => [index, bytes, proof];

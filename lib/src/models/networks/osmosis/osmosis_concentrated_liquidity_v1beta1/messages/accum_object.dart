@@ -37,6 +37,5 @@ class OsmosisConcentratedLiquidityAccumObject extends CosmosMessage {
   List get values => [name, accumContent];
 
   @override
-  String get typeUrl =>
-      OsmosisConcentratedLiquidityV1beta1Types.accumObject.typeUrl;
+  TypeUrl get typeUrl => OsmosisConcentratedLiquidityV1beta1Types.accumObject;
 }

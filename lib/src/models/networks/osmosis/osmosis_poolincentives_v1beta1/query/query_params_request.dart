@@ -3,9 +3,7 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'query_params_response.dart';
 
 class OsmosisPoolincentivesQueryParamsRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisPoolincentivesQueryParamsResponse>,
-        RPCMessage<OsmosisPoolincentivesQueryParamsResponse> {
+    with QueryMessage<OsmosisPoolincentivesQueryParamsResponse> {
   OsmosisPoolincentivesQueryParamsRequest();
   factory OsmosisPoolincentivesQueryParamsRequest.deserialize(List<int> bytes) {
     return OsmosisPoolincentivesQueryParamsRequest();
@@ -31,18 +29,10 @@ class OsmosisPoolincentivesQueryParamsRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      OsmosisPoolincentivesV1beta1Types.queryParamsRequest.typeUrl;
+  TypeUrl get typeUrl => OsmosisPoolincentivesV1beta1Types.queryParamsRequest;
   @override
   List get values => [];
 
   @override
   Map<String, String?> get queryParameters => {};
-
-  @override
-  String get queryPath => OsmosisPoolincentivesV1beta1Types.queryParams.typeUrl;
-
-  @override
-  String get rpcPath =>
-      OsmosisPoolincentivesV1beta1Types.queryParams.rpcUrl(pathParameters: []);
 }

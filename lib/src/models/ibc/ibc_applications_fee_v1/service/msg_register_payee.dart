@@ -31,7 +31,7 @@ class MsgRegisterPayee extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3, 4];
 
   @override
-  String get service => IbcTypes.registerPayee.typeUrl;
+  TypeUrl get service => IbcTypes.registerPayee;
 
   @override
   Map<String, dynamic> toJson() {
@@ -44,7 +44,7 @@ class MsgRegisterPayee extends CosmosMessage
   }
 
   @override
-  String get typeUrl => IbcTypes.msgRegisterPayee.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.msgRegisterPayee;
 
   @override
   List get values => [portId, channelId, relayer, payee];
@@ -54,7 +54,6 @@ class MsgRegisterPayee extends CosmosMessage
 
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
-    return EmptyServiceRequestResponse(
-        IbcTypes.msgRegisterPayeeResponse.typeUrl);
+    return EmptyServiceRequestResponse(IbcTypes.msgRegisterPayeeResponse);
   }
 }

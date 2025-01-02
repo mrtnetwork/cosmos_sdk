@@ -16,16 +16,18 @@ class NodeConfigRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl => BaseNodeV1beta1Types.nodeConfigRequest.typeUrl;
+  TypeUrl get typeUrl => BaseNodeV1beta1Types.nodeConfigRequest;
 
   @override
   List get values => [];
 
   @override
-  String get queryPath => BaseNodeV1beta1Types.nodeConfig.typeUrl;
-
-  @override
   NodeConfigResponse onResponse(List<int> bytes) {
     return NodeConfigResponse.deserialize(bytes);
+  }
+
+  @override
+  NodeConfigResponse onJsonResponse(Map<String, dynamic> json) {
+    return NodeConfigResponse.fromRpc(json);
   }
 }

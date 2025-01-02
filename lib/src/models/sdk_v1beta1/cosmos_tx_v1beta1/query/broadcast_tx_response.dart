@@ -12,6 +12,10 @@ class BroadcastTxResponse extends CosmosMessage {
     return BroadcastTxResponse(
         txResponse: TxResponse.deserialize(decode.getField(1)));
   }
+  factory BroadcastTxResponse.fromRpc(Map<String, dynamic> json) {
+    return BroadcastTxResponse(
+        txResponse: TxResponse.fromRpc(json["tx_response"]));
+  }
 
   @override
   List<int> get fieldIds => [1];
@@ -22,7 +26,7 @@ class BroadcastTxResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => TxV1beta1Types.broadcastTxResponse.typeUrl;
+  TypeUrl get typeUrl => TxV1beta1Types.broadcastTxResponse;
 
   @override
   List get values => [txResponse];

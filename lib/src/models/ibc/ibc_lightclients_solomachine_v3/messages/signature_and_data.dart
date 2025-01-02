@@ -37,7 +37,7 @@ class IbcSoloMachineV3SignatureAndData extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.soloMachineV3SignatureAndData.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.soloMachineV3SignatureAndData;
 
   @override
   List get values => [signature, path, data, timestamp];

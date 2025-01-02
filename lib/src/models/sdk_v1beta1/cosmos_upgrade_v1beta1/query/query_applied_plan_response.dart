@@ -1,3 +1,4 @@
+import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_upgrade_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
@@ -10,6 +11,10 @@ class QueryAppliedPlanResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryAppliedPlanResponse(height: decode.getField(1));
   }
+  factory QueryAppliedPlanResponse.fromRpc(Map<String, dynamic> json) {
+    return QueryAppliedPlanResponse(
+        height: BigintUtils.tryParse(json["height"]));
+  }
 
   @override
   List<int> get fieldIds => [1];
@@ -20,7 +25,7 @@ class QueryAppliedPlanResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => UpgradeV1beta1Types.queryAppliedPlanResponse.typeUrl;
+  TypeUrl get typeUrl => UpgradeV1beta1Types.queryAppliedPlanResponse;
 
   @override
   List get values => [height];

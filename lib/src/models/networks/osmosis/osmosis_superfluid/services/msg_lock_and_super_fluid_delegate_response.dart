@@ -23,8 +23,8 @@ class OsmosisSuperfluidMsgLockAndSuperfluidDelegateResponse
   }
 
   @override
-  String get typeUrl =>
-      OsmosisSuperfluidTypes.msgLockAndSuperfluidDelegateResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisSuperfluidTypes.msgLockAndSuperfluidDelegateResponse;
 
   @override
   List get values => [id];

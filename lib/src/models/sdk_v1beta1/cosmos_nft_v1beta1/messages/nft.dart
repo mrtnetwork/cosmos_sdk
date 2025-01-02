@@ -1,3 +1,4 @@
+import 'package:cosmos_sdk/src/models/global_messages/unknown_message.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_nft_v1beta1/types/types.dart';
 
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
@@ -17,8 +18,15 @@ class NFT extends CosmosMessage {
   final String? uriHash;
 
   /// App-specific data of the NFT. Optional.
-  final Any? data;
-
+  final AnyMessage? data;
+  factory NFT.fromRpc(Map<String, dynamic> json) {
+    return NFT(
+        classId: json["class_id"],
+        id: json["id"],
+        uri: json["uri"],
+        uriHash: json["uri_hash"],
+        data: json["data"] == null ? null : AnyMessage.fromRpc(json["data"]));
+  }
   const NFT({
     this.classId,
     this.id,
@@ -36,7 +44,7 @@ class NFT extends CosmosMessage {
         uriHash: decode.getField(4),
         data: decode
             .getResult(10)
-            ?.to<Any, List<int>>((e) => Any.deserialize(e)));
+            ?.to<AnyMessage, List<int>>((e) => AnyMessage.deserialize(e)));
   }
 
   @override
@@ -54,7 +62,7 @@ class NFT extends CosmosMessage {
   List<int> get fieldIds => [1, 2, 3, 4, 10];
 
   @override
-  String get typeUrl => NFTV1beta1Types.nFT.typeUrl;
+  TypeUrl get typeUrl => NFTV1beta1Types.nFT;
 
   @override
   List get values => [classId, id, uri, uriHash, data];

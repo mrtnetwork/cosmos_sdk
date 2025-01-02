@@ -22,7 +22,7 @@ class OsmosisGammMsgExitPoolResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisGammV1beta1Types.msgExitPoolResponse.typeUrl;
+  TypeUrl get typeUrl => OsmosisGammV1beta1Types.msgExitPoolResponse;
 
   @override
   List get values => [tokenOut];

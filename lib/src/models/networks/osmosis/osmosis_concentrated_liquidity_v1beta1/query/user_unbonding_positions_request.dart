@@ -6,12 +6,11 @@ class OsmosisConcentratedLiquidityUserUnbondingPositionsRequest
     extends CosmosMessage
     with
         QueryMessage<
-            OsmosisConcentratedLiquidityUserUnbondingPositionsResponse>,
-        RPCMessage<OsmosisConcentratedLiquidityUserUnbondingPositionsResponse> {
-  final String? address;
+            OsmosisConcentratedLiquidityUserUnbondingPositionsResponse> {
+  final String address;
 
   const OsmosisConcentratedLiquidityUserUnbondingPositionsRequest(
-      {this.address});
+      {required this.address});
   factory OsmosisConcentratedLiquidityUserUnbondingPositionsRequest.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -26,22 +25,15 @@ class OsmosisConcentratedLiquidityUserUnbondingPositionsRequest
   Map<String, String?> get queryParameters => {};
 
   @override
-  String get queryPath =>
-      OsmosisConcentratedLiquidityV1beta1Types.userUnbondingPositions.typeUrl;
-
-  @override
-  String get rpcPath =>
-      OsmosisConcentratedLiquidityV1beta1Types.userUnbondingPositions
-          .rpcUrl(pathParameters: [address]);
-
-  @override
   Map<String, dynamic> toJson() {
     return {"address": address};
   }
 
   @override
-  String get typeUrl => OsmosisConcentratedLiquidityV1beta1Types
-      .userUnbondingPositionsRequest.typeUrl;
+  List<String> get pathParameters => [address];
+  @override
+  TypeUrl get typeUrl =>
+      OsmosisConcentratedLiquidityV1beta1Types.userUnbondingPositionsRequest;
 
   @override
   List get values => [address];

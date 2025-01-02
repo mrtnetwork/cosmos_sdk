@@ -17,7 +17,7 @@ class SlashingMsgUnjail extends CosmosMessage
   List<int> get fieldIds => [1];
 
   @override
-  String get service => SlashingV1beta1Types.slashingUnjail.typeUrl;
+  TypeUrl get service => SlashingV1beta1Types.slashingUnjail;
 
   @override
   Map<String, dynamic> toJson() {
@@ -25,7 +25,7 @@ class SlashingMsgUnjail extends CosmosMessage
   }
 
   @override
-  String get typeUrl => SlashingV1beta1Types.slashingMsgUnjail.typeUrl;
+  TypeUrl get typeUrl => SlashingV1beta1Types.slashingMsgUnjail;
 
   @override
   List get values => [validatorAddr.address];
@@ -35,6 +35,6 @@ class SlashingMsgUnjail extends CosmosMessage
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        SlashingV1beta1Types.slashingMsgUnjailResponse.typeUrl);
+        SlashingV1beta1Types.slashingMsgUnjailResponse);
   }
 }

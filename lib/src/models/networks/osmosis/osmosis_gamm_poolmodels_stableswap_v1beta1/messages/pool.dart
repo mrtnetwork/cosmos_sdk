@@ -1,4 +1,4 @@
-import 'package:blockchain_utils/exception/exceptions.dart';
+import 'package:cosmos_sdk/src/exception/exception.dart';
 import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_gamm_poolmodels_stableswap_v1beta1/messages/pool_params.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_gamm_poolmodels_stableswap_v1beta1/types/types.dart';
@@ -86,7 +86,7 @@ class OsmosisGammPoolmodelsStableSwapPool extends CosmosMessage {
   factory OsmosisGammPoolmodelsStableSwapPool.fromAny(Any any) {
     if (any.typeUrl !=
         OsmosisGammPoolmodelsStableswaPV1beta1Types.pool.typeUrl) {
-      throw MessageException("Invalid type url.", details: {
+      throw DartCosmosSdkPluginException("Invalid type url.", details: {
         "excepted": OsmosisGammPoolmodelsStableswaPV1beta1Types.pool.typeUrl,
         "type_url": any.typeUrl
       });
@@ -112,8 +112,7 @@ class OsmosisGammPoolmodelsStableSwapPool extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisGammPoolmodelsStableswaPV1beta1Types.pool.typeUrl;
+  TypeUrl get typeUrl => OsmosisGammPoolmodelsStableswaPV1beta1Types.pool;
 
   @override
   List get values => [

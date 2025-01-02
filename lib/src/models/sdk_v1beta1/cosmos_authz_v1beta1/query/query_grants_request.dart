@@ -37,9 +37,6 @@ class AuthzQueryGrantsRequest extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3, 4];
 
   @override
-  String get queryPath => AuthzV1beta1Types.authzGrants.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {
       "granter": granter?.address,
@@ -50,7 +47,15 @@ class AuthzQueryGrantsRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl => AuthzV1beta1Types.authzQueryGrantsRequest.typeUrl;
+  Map<String, String?> get queryParameters => {
+        "granter": granter?.address,
+        "grantee": grantee?.address,
+        "msg_type_url": msgTypeUrl,
+        ...pagination?.queryParameters ?? {}
+      };
+
+  @override
+  TypeUrl get typeUrl => AuthzV1beta1Types.authzQueryGrantsRequest;
 
   @override
   List get values =>
@@ -59,5 +64,10 @@ class AuthzQueryGrantsRequest extends CosmosMessage
   @override
   AuthzQueryGrantsResponse onResponse(List<int> bytes) {
     return AuthzQueryGrantsResponse.deserialize(bytes);
+  }
+
+  @override
+  AuthzQueryGrantsResponse onJsonResponse(Map<String, dynamic> json) {
+    return AuthzQueryGrantsResponse.fromRpc(json);
   }
 }

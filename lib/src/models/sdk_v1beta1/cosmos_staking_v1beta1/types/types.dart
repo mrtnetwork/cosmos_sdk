@@ -1,6 +1,11 @@
-class StakingV1beta1Types {
-  final String typeUrl;
-  const StakingV1beta1Types._(this.typeUrl);
+import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
+
+class StakingV1beta1Types extends TypeUrl {
+  const StakingV1beta1Types._(super.typeUrl, {super.query, super.rpc});
+  static const StakingV1beta1Types validator =
+      StakingV1beta1Types._("/cosmos.staking.v1beta1.Validator");
+  static const StakingV1beta1Types unbondingDelegation =
+      StakingV1beta1Types._("/cosmos.staking.v1beta1.UnbondingDelegation");
   static const StakingV1beta1Types commissionRates =
       StakingV1beta1Types._("/cosmos.staking.v1beta1.CommissionRates");
   static const StakingV1beta1Types delegation =
@@ -59,8 +64,7 @@ class StakingV1beta1Types {
   static const StakingV1beta1Types consPubKeyRotationHistory =
       StakingV1beta1Types._(
           "/cosmos.staking.v1beta1.ConsPubKeyRotationHistory");
-  static const StakingV1beta1Types validator =
-      StakingV1beta1Types._("/cosmos.staking.v1beta1.Validator");
+
   static const StakingV1beta1Types unbondingDelegationEntry =
       StakingV1beta1Types._("/cosmos.staking.v1beta1.UnbondingDelegationEntry");
   static const StakingV1beta1Types stakingMsgUpdateParams =
@@ -73,44 +77,65 @@ class StakingV1beta1Types {
       StakingV1beta1Types._(
           "/cosmos.staking.v1beta1.MsgRotateConsPubKeyResponse");
   static const StakingV1beta1Types queryValidatorsRequest =
-      StakingV1beta1Types._("/cosmos.staking.v1beta1.QueryValidatorsRequest");
+      StakingV1beta1Types._("/cosmos.staking.v1beta1.QueryValidatorsRequest",
+          query: "/cosmos.staking.v1beta1.Query/Validators",
+          rpc: "/cosmos/staking/v1beta1/validators");
   static const StakingV1beta1Types queryValidatorsResponse =
       StakingV1beta1Types._("/cosmos.staking.v1beta1.QueryValidatorsResponse");
   static const StakingV1beta1Types queryValidatorRequest =
-      StakingV1beta1Types._("/cosmos.staking.v1beta1.QueryValidatorRequest");
+      StakingV1beta1Types._("/cosmos.staking.v1beta1.QueryValidatorRequest",
+          query: "/cosmos.staking.v1beta1.Query/Validator",
+          rpc: "/cosmos/staking/v1beta1/validators/:validator_addr");
   static const StakingV1beta1Types queryValidatorResponse =
       StakingV1beta1Types._("/cosmos.staking.v1beta1.QueryValidatorResponse");
   static const StakingV1beta1Types queryValidatorDelegationsRequest =
       StakingV1beta1Types._(
-          "/cosmos.staking.v1beta1.QueryValidatorDelegationsRequest");
+          "/cosmos.staking.v1beta1.QueryValidatorDelegationsRequest",
+          query: "/cosmos.staking.v1beta1.Query/ValidatorDelegations",
+          rpc:
+              "/cosmos/staking/v1beta1/validators/:validator_addr/delegations");
   static const StakingV1beta1Types queryValidatorDelegationsResponse =
       StakingV1beta1Types._(
           "/cosmos.staking.v1beta1.QueryValidatorDelegationsResponse");
   static const StakingV1beta1Types queryValidatorUnbondingDelegationsRequest =
       StakingV1beta1Types._(
-          "/cosmos.staking.v1beta1.QueryValidatorUnbondingDelegationsRequest");
+          "/cosmos.staking.v1beta1.QueryValidatorUnbondingDelegationsRequest",
+          query: "/cosmos.staking.v1beta1.Query/ValidatorUnbondingDelegations",
+          rpc:
+              "/cosmos/staking/v1beta1/validators/:validator_addr/unbonding_delegations");
   static const StakingV1beta1Types queryValidatorUnbondingDelegationsResponse =
       StakingV1beta1Types._(
           "/cosmos.staking.v1beta1.QueryValidatorUnbondingDelegationsResponse");
-  static const StakingV1beta1Types queryDelegationRequest =
-      StakingV1beta1Types._("/cosmos.staking.v1beta1.QueryDelegationRequest");
+  static const StakingV1beta1Types queryDelegationRequest = StakingV1beta1Types._(
+      "/cosmos.staking.v1beta1.QueryDelegationRequest",
+      query: "/cosmos.staking.v1beta1.Query/Delegation",
+      rpc:
+          "/cosmos/staking/v1beta1/validators/:validator_addr/delegations/:delegator_addr");
   static const StakingV1beta1Types queryDelegationResponse =
       StakingV1beta1Types._("/cosmos.staking.v1beta1.QueryDelegationResponse");
   static const StakingV1beta1Types queryUnbondingDelegationRequest =
       StakingV1beta1Types._(
-          "/cosmos.staking.v1beta1.QueryUnbondingDelegationRequest");
+          "/cosmos.staking.v1beta1.QueryUnbondingDelegationRequest",
+          query: "/cosmos.staking.v1beta1.Query/UnbondingDelegation",
+          rpc:
+              "/cosmos/staking/v1beta1/validators/:validator_addr/delegations/:delegator_addr/unbonding_delegation");
   static const StakingV1beta1Types queryUnbondingDelegationResponse =
       StakingV1beta1Types._(
           "/cosmos.staking.v1beta1.QueryUnbondingDelegationResponse");
   static const StakingV1beta1Types queryDelegatorDelegationsRequest =
       StakingV1beta1Types._(
-          "/cosmos.staking.v1beta1.QueryDelegatorDelegationsRequest");
+          "/cosmos.staking.v1beta1.QueryDelegatorDelegationsRequest",
+          query: "/cosmos.staking.v1beta1.Query/DelegatorDelegations",
+          rpc: "/cosmos/staking/v1beta1/delegations/:delegator_addr");
   static const StakingV1beta1Types queryDelegatorDelegationsResponse =
       StakingV1beta1Types._(
           "/cosmos.staking.v1beta1.QueryDelegatorDelegationsResponse");
   static const StakingV1beta1Types queryDelegatorUnbondingDelegationsRequest =
       StakingV1beta1Types._(
-          "/cosmos.staking.v1beta1.QueryDelegatorUnbondingDelegationsRequest");
+          "/cosmos.staking.v1beta1.QueryDelegatorUnbondingDelegationsRequest",
+          query: "/cosmos.staking.v1beta1.Query/DelegatorUnbondingDelegations",
+          rpc:
+              "/cosmos/staking/v1beta1/delegators/:delegator_addr/unbonding_delegations");
   static const StakingV1beta1Types queryDelegatorUnbondingDelegationsResponse =
       StakingV1beta1Types._(
           "/cosmos.staking.v1beta1.QueryDelegatorUnbondingDelegationsResponse");
@@ -120,59 +145,44 @@ class StakingV1beta1Types {
   static const StakingV1beta1Types redelegationResponse =
       StakingV1beta1Types._("/cosmos.staking.v1beta1.RedelegationResponse");
   static const StakingV1beta1Types queryRedelegationsRequest =
-      StakingV1beta1Types._(
-          "/cosmos.staking.v1beta1.QueryRedelegationsRequest");
+      StakingV1beta1Types._("/cosmos.staking.v1beta1.QueryRedelegationsRequest",
+          query: "/cosmos.staking.v1beta1.Query/Redelegations",
+          rpc:
+              "/cosmos/staking/v1beta1/delegators/:delegator_addr/redelegations");
   static const StakingV1beta1Types queryRedelegationsResponse =
       StakingV1beta1Types._(
           "/cosmos.staking.v1beta1.QueryRedelegationsResponse");
   static const StakingV1beta1Types queryDelegatorValidatorsRequest =
       StakingV1beta1Types._(
-          "/cosmos.staking.v1beta1.QueryDelegatorValidatorsRequest");
+          "/cosmos.staking.v1beta1.QueryDelegatorValidatorsRequest",
+          query: "/cosmos.staking.v1beta1.Query/DelegatorValidators",
+          rpc: "/cosmos/staking/v1beta1/delegators/:delegator_addr/validators");
   static const StakingV1beta1Types queryDelegatorValidatorsResponse =
       StakingV1beta1Types._(
           "/cosmos.staking.v1beta1.QueryDelegatorValidatorsResponse");
   static const StakingV1beta1Types queryDelegatorValidatorRequest =
       StakingV1beta1Types._(
-          "/cosmos.staking.v1beta1.QueryDelegatorValidatorRequest");
+          "/cosmos.staking.v1beta1.QueryDelegatorValidatorRequest",
+          query: "/cosmos.staking.v1beta1.Query/DelegatorValidator",
+          rpc:
+              "/cosmos/staking/v1beta1/delegators/:delegator_addr/validators/:validator_addr");
   static const StakingV1beta1Types queryDelegatorValidatorResponse =
       StakingV1beta1Types._(
           "/cosmos.staking.v1beta1.QueryDelegatorValidatorResponse");
-  static const StakingV1beta1Types unbondingDelegation =
-      StakingV1beta1Types._("/cosmos.staking.v1beta1.UnbondingDelegation");
+
   static const StakingV1beta1Types stakingGenesisState =
       StakingV1beta1Types._("/cosmos.staking.v1beta1.GenesisState");
   static const StakingV1beta1Types historicalRecord =
       StakingV1beta1Types._("/cosmos.staking.v1beta1.HistoricalRecord");
 
   /// queries
-  static const StakingV1beta1Types queryValidators =
-      StakingV1beta1Types._("/cosmos.staking.v1beta1.Query/Validators");
+
   static const StakingV1beta1Types queryValidator =
       StakingV1beta1Types._("/cosmos.staking.v1beta1.Query/Validator");
-  static const StakingV1beta1Types queryValidatorDelegations =
-      StakingV1beta1Types._(
-          "/cosmos.staking.v1beta1.Query/ValidatorDelegations");
-  static const StakingV1beta1Types queryValidatorUnbondingDelegations =
-      StakingV1beta1Types._(
-          "/cosmos.staking.v1beta1.Query/ValidatorUnbondingDelegations");
-  static const StakingV1beta1Types queryDelegation =
-      StakingV1beta1Types._("/cosmos.staking.v1beta1.Query/Delegation");
+
   static const StakingV1beta1Types queryUnbondingDelegation =
       StakingV1beta1Types._(
           "/cosmos.staking.v1beta1.Query/UnbondingDelegation");
-  static const StakingV1beta1Types queryDelegatorDelegations =
-      StakingV1beta1Types._(
-          "/cosmos.staking.v1beta1.Query/DelegatorDelegations");
-  static const StakingV1beta1Types queryDelegatorUnbondingDelegations =
-      StakingV1beta1Types._(
-          "/cosmos.staking.v1beta1.Query/DelegatorUnbondingDelegations");
-  static const StakingV1beta1Types queryRedelegations =
-      StakingV1beta1Types._("/cosmos.staking.v1beta1.Query/Redelegations");
-  static const StakingV1beta1Types queryDelegatorValidators =
-      StakingV1beta1Types._(
-          "/cosmos.staking.v1beta1.Query/DelegatorValidators");
-  static const StakingV1beta1Types queryDelegatorValidator =
-      StakingV1beta1Types._("/cosmos.staking.v1beta1.Query/DelegatorValidator");
 
   /// services
   static const StakingV1beta1Types createValidator =

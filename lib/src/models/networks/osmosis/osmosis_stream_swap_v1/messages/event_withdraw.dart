@@ -25,7 +25,7 @@ class OsmosisStreamSwapEventWithdraw extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisStreamSwapV1Types.eventWithdraw.typeUrl;
+  TypeUrl get typeUrl => OsmosisStreamSwapV1Types.eventWithdraw;
 
   @override
   List get values => [sender, saleId, amount];

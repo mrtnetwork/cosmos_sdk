@@ -17,8 +17,8 @@ class BrodcastTxResponse {
         checkTx: CheckTxResponse.fromJson(json["check_tx"]),
         hash: json["hash"],
         height: BigintUtils.parse(json["height"]),
-        deliverTx: DeliverTxResponse.fromJson(
-            Map<String, dynamic>.from(json["deliver_tx"] ?? {})));
+        deliverTx: DeliverTxResponse.fromJson(Map<String, dynamic>.from(
+            json["deliver_tx"] ?? json["tx_result"] ?? {})));
   }
   Map<String, dynamic> toJson() {
     return {
@@ -29,7 +29,8 @@ class BrodcastTxResponse {
     };
   }
 
-  bool get isSuccess => height > BigInt.zero && checkTx.code == 0;
+  bool get isSuccess =>
+      height > BigInt.zero && checkTx.code == 0 && deliverTx.code == 0;
 
   String? get error {
     if (isSuccess) return null;

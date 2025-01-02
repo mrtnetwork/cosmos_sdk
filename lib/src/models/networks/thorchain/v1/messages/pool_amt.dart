@@ -21,7 +21,7 @@ class ThorchainPoolAmt extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.poolAmt.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.poolAmt;
 
   @override
   List get values => [asset, amount];

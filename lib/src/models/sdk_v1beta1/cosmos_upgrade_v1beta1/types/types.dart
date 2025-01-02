@@ -1,6 +1,7 @@
-class UpgradeV1beta1Types {
-  final String typeUrl;
-  const UpgradeV1beta1Types._(this.typeUrl);
+import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
+
+class UpgradeV1beta1Types extends TypeUrl {
+  const UpgradeV1beta1Types._(super.typeUrl, {super.query, super.rpc});
   static const UpgradeV1beta1Types plan =
       UpgradeV1beta1Types._("/cosmos.upgrade.v1beta1.Plan");
   static const UpgradeV1beta1Types msgSoftwareUpgrade =
@@ -13,35 +14,33 @@ class UpgradeV1beta1Types {
   static const UpgradeV1beta1Types msgCancelUpgradeResponse =
       UpgradeV1beta1Types._("/cosmos.upgrade.v1beta1.MsgCancelUpgrade");
   static const UpgradeV1beta1Types queryCurrentPlanRequest =
-      UpgradeV1beta1Types._("/cosmos.upgrade.v1beta1.QueryCurrentPlanRequest");
+      UpgradeV1beta1Types._("/cosmos.upgrade.v1beta1.QueryCurrentPlanRequest",
+          query: "/cosmos.upgrade.v1beta1.Query/CurrentPlan",
+          rpc: "/cosmos/upgrade/v1beta1/current_plan");
   static const UpgradeV1beta1Types queryCurrentPlanResponse =
       UpgradeV1beta1Types._("/cosmos.upgrade.v1beta1.QueryCurrentPlanResponse");
   static const UpgradeV1beta1Types queryAppliedPlanRequest =
-      UpgradeV1beta1Types._("/cosmos.upgrade.v1beta1.QueryAppliedPlanRequest");
+      UpgradeV1beta1Types._("/cosmos.upgrade.v1beta1.QueryAppliedPlanRequest",
+          query: "/cosmos.upgrade.v1beta1.Query/AppliedPlan",
+          rpc: "/cosmos/upgrade/v1beta1/applied_plan/:name");
   static const UpgradeV1beta1Types queryAppliedPlanResponse =
       UpgradeV1beta1Types._("/cosmos.upgrade.v1beta1.QueryAppliedPlanResponse");
   static const UpgradeV1beta1Types queryModuleVersionsRequest =
       UpgradeV1beta1Types._(
-          "/cosmos.upgrade.v1beta1.QueryModuleVersionsRequest");
+          "/cosmos.upgrade.v1beta1.QueryModuleVersionsRequest",
+          query: "/cosmos.upgrade.v1beta1.Query/ModuleVersions",
+          rpc: "/cosmos/upgrade/v1beta1/module_versions");
   static const UpgradeV1beta1Types queryModuleVersionsResponse =
       UpgradeV1beta1Types._(
           "/cosmos.upgrade.v1beta1.QueryModuleVersionsResponse");
   static const UpgradeV1beta1Types moduleVersion =
       UpgradeV1beta1Types._("/cosmos.upgrade.v1beta1.ModuleVersion");
   static const UpgradeV1beta1Types queryAuthorityRequest =
-      UpgradeV1beta1Types._("/cosmos.upgrade.v1beta1.QueryAuthorityRequest");
+      UpgradeV1beta1Types._("/cosmos.upgrade.v1beta1.QueryAuthorityRequest",
+          query: "/cosmos.upgrade.v1beta1.Query/Authority",
+          rpc: "/cosmos/upgrade/v1beta1/authority");
   static const UpgradeV1beta1Types queryAuthorityResponse =
       UpgradeV1beta1Types._("/cosmos.upgrade.v1beta1.QueryAuthorityResponse");
-
-  /// queries
-  static const UpgradeV1beta1Types currentPlan =
-      UpgradeV1beta1Types._("/cosmos.upgrade.v1beta1.Query/CurrentPlan");
-  static const UpgradeV1beta1Types appliedPlan =
-      UpgradeV1beta1Types._("/cosmos.upgrade.v1beta1.Query/AppliedPlan");
-  static const UpgradeV1beta1Types moduleVersions =
-      UpgradeV1beta1Types._("/cosmos.upgrade.v1beta1.Query/ModuleVersions");
-  static const UpgradeV1beta1Types authority =
-      UpgradeV1beta1Types._("/cosmos.upgrade.v1beta1.Query/Authority");
 
   /// services
   static const UpgradeV1beta1Types softwareUpgrade =

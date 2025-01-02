@@ -20,15 +20,12 @@ class QueryTotalTimeoutFeesRequest extends CosmosMessage
   List<int> get fieldIds => [1];
 
   @override
-  String get queryPath => IbcTypes.totalTimeoutFees.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {"packet_id": packetId.toJson()};
   }
 
   @override
-  String get typeUrl => IbcTypes.queryTotalTimeoutFeesRequest.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryTotalTimeoutFeesRequest;
 
   @override
   List get values => [packetId];
@@ -37,4 +34,13 @@ class QueryTotalTimeoutFeesRequest extends CosmosMessage
   QueryTotalTimeoutFeesResponse onResponse(List<int> bytes) {
     return QueryTotalTimeoutFeesResponse.deserialize(bytes);
   }
+
+  @override
+  QueryTotalTimeoutFeesResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryTotalTimeoutFeesResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters =>
+      [packetId.channelId, packetId.portId, packetId.sequence.toString()];
 }

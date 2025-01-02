@@ -27,16 +27,21 @@ class QueryChannelsRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl => IbcTypes.queryChannelsRequest.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryChannelsRequest;
 
   @override
   List get values => [pagination];
 
   @override
-  String get queryPath => IbcTypes.channels.typeUrl;
-
-  @override
   QueryChannelsResponse onResponse(List<int> bytes) {
     return QueryChannelsResponse.deserialize(bytes);
   }
+
+  @override
+  QueryChannelsResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryChannelsResponse.fromRpc(json);
+  }
+
+  @override
+  Map<String, String?> get queryParameters => pagination?.queryParameters ?? {};
 }

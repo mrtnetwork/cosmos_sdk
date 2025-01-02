@@ -36,8 +36,7 @@ class OsmosisValSetprefMsgDelegateBondedTokens extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      OsmosisValSetprefV1beta1Types.msgDelegateBondedTokens.typeUrl;
+  TypeUrl get typeUrl => OsmosisValSetprefV1beta1Types.msgDelegateBondedTokens;
 
   @override
   List get values => [delegator, lockId];
@@ -45,12 +44,11 @@ class OsmosisValSetprefMsgDelegateBondedTokens extends CosmosMessage
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        OsmosisValSetprefV1beta1Types.msgDelegateBondedTokensResponse.typeUrl);
+        OsmosisValSetprefV1beta1Types.msgDelegateBondedTokensResponse);
   }
 
   @override
-  String get service =>
-      OsmosisValSetprefV1beta1Types.delegateBondedTokens.typeUrl;
+  TypeUrl get service => OsmosisValSetprefV1beta1Types.delegateBondedTokens;
 
   @override
   List<String?> get signers => [delegator];

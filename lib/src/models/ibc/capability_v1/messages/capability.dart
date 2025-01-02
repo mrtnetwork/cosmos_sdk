@@ -21,7 +21,7 @@ class Capability extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.capability.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.capability;
 
   @override
   List get values => [index];

@@ -4,7 +4,7 @@ import 'package:cosmos_sdk/src/provider/tendermint/core/tendermint.dart';
 /// Add Peers/Persistent Peers
 /// https://docs.tendermint.com/v0.34/rpc/#/Unsafe/dial_peers
 class TendermintRequestBroadcastDialPeers
-    extends TendermintRequestParam<Map<String, dynamic>, Map<String, dynamic>> {
+    extends TendermintRequest<Map<String, dynamic>, Map<String, dynamic>> {
   TendermintRequestBroadcastDialPeers(
       {this.peers, this.unconditional, this.persistent, this.private});
 

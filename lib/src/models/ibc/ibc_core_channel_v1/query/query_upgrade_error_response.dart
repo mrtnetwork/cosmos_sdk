@@ -3,6 +3,7 @@ import 'package:cosmos_sdk/src/models/ibc/ibc_core_channel_v1/messages/error_rec
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_client_v1/messages/height.dart';
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/utils.dart';
 
 /// QueryUpgradeErrorResponse is the response type for the Query/QueryUpgradeError RPC method
 class QueryUpgradeErrorResponse extends CosmosMessage {
@@ -13,6 +14,13 @@ class QueryUpgradeErrorResponse extends CosmosMessage {
 
   /// height at which the proof was retrieved
   final IbcClientHeight proofHeight;
+  factory QueryUpgradeErrorResponse.fromRpc(Map<String, dynamic> json) {
+    return QueryUpgradeErrorResponse(
+      errorReceipt: IbcChannelErrorReceipt.fromRpc(json["error_receipt"]),
+      proof: CosmosUtils.tryToBytes(json["proof"]),
+      proofHeight: IbcClientHeight.fromRpc(json["proof_height"]),
+    );
+  }
   QueryUpgradeErrorResponse(
       {required this.errorReceipt, List<int>? proof, required this.proofHeight})
       : proof = BytesUtils.tryToBytes(proof, unmodifiable: true);
@@ -38,7 +46,7 @@ class QueryUpgradeErrorResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.queryUpgradeErrorResponse.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryUpgradeErrorResponse;
 
   @override
   List get values => [errorReceipt, proof, proofHeight];

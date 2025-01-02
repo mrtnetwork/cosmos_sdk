@@ -85,7 +85,7 @@ class GovGenesisState extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => GovV1beta1types.govGenesisState.typeUrl;
+  TypeUrl get typeUrl => GovV1beta1types.govGenesisState;
 
   @override
   List get values => [

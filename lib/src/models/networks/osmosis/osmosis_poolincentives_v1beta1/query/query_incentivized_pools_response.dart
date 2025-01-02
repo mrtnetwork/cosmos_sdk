@@ -38,8 +38,8 @@ class OsmosisPoolincentivesQueryIncentivizedPoolsResponse
   }
 
   @override
-  String get typeUrl =>
-      OsmosisPoolincentivesV1beta1Types.queryIncentivizedPoolsResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisPoolincentivesV1beta1Types.queryIncentivizedPoolsResponse;
   @override
   List get values => [incentivizedPools];
 }

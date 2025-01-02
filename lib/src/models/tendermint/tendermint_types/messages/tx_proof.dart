@@ -34,7 +34,7 @@ class TxProof extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => TendermintTypes.txProof.typeUrl;
+  TypeUrl get typeUrl => TendermintTypes.txProof;
 
   @override
   List get values => [rootHash, data, proof];

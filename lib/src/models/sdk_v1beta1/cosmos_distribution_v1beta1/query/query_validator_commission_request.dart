@@ -8,32 +8,27 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class DistributionQueryValidatorCommissionRequest extends CosmosMessage
     with QueryMessage<DistributionQueryValidatorCommissionResponse> {
   /// validator_address defines the validator address to query for.
-  final CosmosBaseAddress? validatorAddress;
-  const DistributionQueryValidatorCommissionRequest({this.validatorAddress});
+  final CosmosBaseAddress validatorAddress;
+  const DistributionQueryValidatorCommissionRequest(
+      {required this.validatorAddress});
   factory DistributionQueryValidatorCommissionRequest.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionQueryValidatorCommissionRequest(
-        validatorAddress: decode
-            .getResult(1)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)));
+        validatorAddress: CosmosBaseAddress(decode.getField(1)));
   }
 
   @override
   List<int> get fieldIds => [1];
 
   @override
-  String get queryPath =>
-      DistributionV1beta1Types.distributionValidatorCommission.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
-    return {"validator_address": validatorAddress?.address};
+    return {"validator_address": validatorAddress.address};
   }
 
   @override
-  String get typeUrl => DistributionV1beta1Types
-      .distributionQueryValidatorCommissionRequest.typeUrl;
+  TypeUrl get typeUrl =>
+      DistributionV1beta1Types.distributionQueryValidatorCommissionRequest;
 
   @override
   List get values => [validatorAddress];
@@ -42,4 +37,13 @@ class DistributionQueryValidatorCommissionRequest extends CosmosMessage
   DistributionQueryValidatorCommissionResponse onResponse(List<int> bytes) {
     return DistributionQueryValidatorCommissionResponse.deserialize(bytes);
   }
+
+  @override
+  DistributionQueryValidatorCommissionResponse onJsonResponse(
+      Map<String, dynamic> json) {
+    return DistributionQueryValidatorCommissionResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters => [validatorAddress.address];
 }

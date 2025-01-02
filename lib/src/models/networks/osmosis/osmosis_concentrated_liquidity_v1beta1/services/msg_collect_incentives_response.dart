@@ -53,6 +53,6 @@ class OsmosisConcentratedLiquidityMsgCollectIncentivesResponse
   List get values => [collectedIncentives, forfeitedIncentives];
 
   @override
-  String get typeUrl => OsmosisConcentratedLiquidityV1beta1Types
-      .msgCollectIncentivesResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisConcentratedLiquidityV1beta1Types.msgCollectIncentivesResponse;
 }

@@ -41,7 +41,7 @@ class OsmosisProtorevTrade extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisProtorevV1beta1Types.trade.typeUrl;
+  TypeUrl get typeUrl => OsmosisProtorevV1beta1Types.trade;
 
   @override
   List get values => [pool, tokenIn, tokenOut];

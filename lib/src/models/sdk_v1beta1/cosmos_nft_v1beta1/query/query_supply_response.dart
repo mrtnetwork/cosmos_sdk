@@ -1,3 +1,4 @@
+import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_nft_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
@@ -10,6 +11,9 @@ class QueryNFTSupplyResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryNFTSupplyResponse(amount: decode.getField(1));
   }
+  factory QueryNFTSupplyResponse.fromRpc(Map<String, dynamic> json) {
+    return QueryNFTSupplyResponse(amount: BigintUtils.tryParse(json["amount"]));
+  }
 
   @override
   List<int> get fieldIds => [1];
@@ -20,7 +24,7 @@ class QueryNFTSupplyResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => NFTV1beta1Types.queryNFTSupplyResponse.typeUrl;
+  TypeUrl get typeUrl => NFTV1beta1Types.queryNFTSupplyResponse;
 
   @override
   List get values => [amount];

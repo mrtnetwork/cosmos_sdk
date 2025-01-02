@@ -27,7 +27,7 @@ class MsgRecoverClient extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3];
 
   @override
-  String get service => IbcTypes.recoverClient.typeUrl;
+  TypeUrl get service => IbcTypes.recoverClient;
 
   @override
   Map<String, dynamic> toJson() {
@@ -39,7 +39,7 @@ class MsgRecoverClient extends CosmosMessage
   }
 
   @override
-  String get typeUrl => IbcTypes.msgRecoverClient.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.msgRecoverClient;
 
   @override
   List get values => [subjectClientId, substituteClientId, signer];
@@ -48,7 +48,6 @@ class MsgRecoverClient extends CosmosMessage
 
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
-    return EmptyServiceRequestResponse(
-        IbcTypes.msgRecoverClientResponse.typeUrl);
+    return EmptyServiceRequestResponse(IbcTypes.msgRecoverClientResponse);
   }
 }

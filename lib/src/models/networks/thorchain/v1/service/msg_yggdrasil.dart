@@ -49,7 +49,7 @@ class ThorchainMsgYggdrasil extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.msgYggdrasil.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.msgYggdrasil;
 
   @override
   List get values => [tx, pubKey, addFunds, coins, blockHeight, signer];

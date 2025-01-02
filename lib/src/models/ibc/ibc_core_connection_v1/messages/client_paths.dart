@@ -22,7 +22,7 @@ class IbcConnectionClientPaths extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.ibcConnectionClientPaths.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.ibcConnectionClientPaths;
 
   @override
   List get values => [paths];

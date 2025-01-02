@@ -3,16 +3,11 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'query_epochs_info_response.dart';
 
 class OmosisEpochsQueryEpochsInfoRequest extends CosmosMessage
-    with
-        QueryMessage<OmosisEpochsQueryEpochsInfoResponse>,
-        RPCMessage<OmosisEpochsQueryEpochsInfoResponse> {
+    with QueryMessage<OmosisEpochsQueryEpochsInfoResponse> {
   const OmosisEpochsQueryEpochsInfoRequest();
 
   @override
   List<int> get fieldIds => [];
-
-  @override
-  String get queryPath => OsmosisEpochsV1beta1Types.epochInfos.typeUrl;
 
   @override
   Map<String, dynamic> toJson() {
@@ -20,7 +15,7 @@ class OmosisEpochsQueryEpochsInfoRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl => OsmosisEpochsV1beta1Types.epochsInfoRequest.typeUrl;
+  TypeUrl get typeUrl => OsmosisEpochsV1beta1Types.epochsInfoRequest;
 
   @override
   List get values => [];
@@ -38,7 +33,4 @@ class OmosisEpochsQueryEpochsInfoRequest extends CosmosMessage
 
   @override
   Map<String, String> get queryParameters => {};
-
-  @override
-  String get rpcPath => OsmosisEpochsV1beta1Types.epochInfos.rpcUrl();
 }

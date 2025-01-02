@@ -20,8 +20,7 @@ class OsmosisTokenFactoryMsgCreateDenomResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisTokenFactoryV1beta1Types.msgCreateDenomResponse.typeUrl;
+  TypeUrl get typeUrl => OsmosisTokenFactoryV1beta1Types.msgCreateDenomResponse;
 
   @override
   List get values => [newTokenDenom];

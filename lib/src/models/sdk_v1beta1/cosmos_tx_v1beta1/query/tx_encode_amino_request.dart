@@ -23,16 +23,20 @@ class TxEncodeAminoRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl => TxV1beta1Types.txEncodeAminoRequest.typeUrl;
+  Map<String, dynamic> get body => toJson();
+  @override
+  TypeUrl get typeUrl => TxV1beta1Types.txEncodeAminoRequest;
 
   @override
   List get values => [aminoJson];
 
   @override
-  String get queryPath => TxV1beta1Types.txEncodeAmino.typeUrl;
-
-  @override
   TxEncodeAminoResponse onResponse(List<int> bytes) {
     return TxEncodeAminoResponse.deserialize(bytes);
+  }
+
+  @override
+  TxEncodeAminoResponse onJsonResponse(Map<String, dynamic> json) {
+    return TxEncodeAminoResponse.fromRpc(json);
   }
 }

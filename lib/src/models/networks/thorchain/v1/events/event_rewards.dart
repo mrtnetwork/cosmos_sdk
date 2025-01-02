@@ -31,7 +31,7 @@ class ThorchainEventRewards extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.eventRewards.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.eventRewards;
 
   @override
   List get values => [bondReward.toString(), poolRewards];

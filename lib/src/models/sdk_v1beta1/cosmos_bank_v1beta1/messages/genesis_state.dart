@@ -76,5 +76,5 @@ class BankGenesisState extends CosmosMessage {
 
   @override
   @override
-  String get typeUrl => BankV1beta1Types.genesisState.typeUrl;
+  TypeUrl get typeUrl => BankV1beta1Types.genesisState;
 }

@@ -131,7 +131,7 @@ class Header extends CosmosMessage {
   List<int> get fieldIds => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
 
   @override
-  String get typeUrl => TendermintTypes.header.typeUrl;
+  TypeUrl get typeUrl => TendermintTypes.header;
 
   @override
   List get values => [

@@ -30,7 +30,7 @@ class LightBlock extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => TendermintTypes.lightBlock.typeUrl;
+  TypeUrl get typeUrl => TendermintTypes.lightBlock;
 
   @override
   List get values => [signedHeader, validatorSet];

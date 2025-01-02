@@ -9,6 +9,11 @@ class ListImplementationsResponse extends CosmosMessage {
   ListImplementationsResponse(
       {required List<String> implementationMessageNames})
       : implementationMessageNames = implementationMessageNames.immutable;
+  factory ListImplementationsResponse.fromRpc(Map<String, dynamic> json) {
+    return ListImplementationsResponse(
+        implementationMessageNames:
+            (json["implementation_message_names"] as List?)?.cast() ?? []);
+  }
   factory ListImplementationsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ListImplementationsResponse(
@@ -24,8 +29,7 @@ class ListImplementationsResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      BaseReflectionV1beta1.listImplementationsResponse.typeUrl;
+  TypeUrl get typeUrl => BaseReflectionV1beta1.listImplementationsResponse;
 
   @override
   List get values => [implementationMessageNames];

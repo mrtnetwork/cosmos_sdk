@@ -51,7 +51,7 @@ class Commit extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => TendermintTypes.commit.typeUrl;
+  TypeUrl get typeUrl => TendermintTypes.commit;
 
   @override
   List get values => [height, round, blockID, signatures];

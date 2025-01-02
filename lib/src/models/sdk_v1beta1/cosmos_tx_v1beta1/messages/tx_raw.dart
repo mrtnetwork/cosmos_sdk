@@ -57,5 +57,5 @@ class TxRaw extends CosmosMessage {
   List get values => [bodyBytes, authInfoBytes, signatures];
 
   @override
-  String get typeUrl => TxV1beta1Types.txRaw.typeUrl;
+  TypeUrl get typeUrl => TxV1beta1Types.txRaw;
 }

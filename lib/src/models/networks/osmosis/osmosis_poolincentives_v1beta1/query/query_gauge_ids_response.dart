@@ -38,8 +38,8 @@ class OsmosisPoolincentivesQueryGaugeIdsResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisPoolincentivesV1beta1Types.queryGaugeIdsResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisPoolincentivesV1beta1Types.queryGaugeIdsResponse;
   @override
   List get values => [gaugeIdsWithDuration];
 }

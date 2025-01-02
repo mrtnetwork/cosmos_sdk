@@ -42,8 +42,8 @@ class OsmosisValSetprefMsgUndelegateFromRebalancedValidatorSet
   }
 
   @override
-  String get typeUrl => OsmosisValSetprefV1beta1Types
-      .msgUndelegateFromRebalancedValidatorSet.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisValSetprefV1beta1Types.msgUndelegateFromRebalancedValidatorSet;
 
   @override
   List get values => [delegator, coin];
@@ -51,12 +51,12 @@ class OsmosisValSetprefMsgUndelegateFromRebalancedValidatorSet
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(OsmosisValSetprefV1beta1Types
-        .msgUndelegateFromRebalancedValidatorSetResponse.typeUrl);
+        .msgUndelegateFromRebalancedValidatorSetResponse);
   }
 
   @override
-  String get service => OsmosisValSetprefV1beta1Types
-      .undelegateFromRebalancedValidatorSet.typeUrl;
+  TypeUrl get service =>
+      OsmosisValSetprefV1beta1Types.undelegateFromRebalancedValidatorSet;
 
   @override
   List<String?> get signers => [delegator];

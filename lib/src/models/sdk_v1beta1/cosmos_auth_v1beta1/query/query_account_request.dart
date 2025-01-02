@@ -7,7 +7,7 @@ import 'query_account_response.dart';
 
 /// QueryAccountResponse is the response type for the Query/Account RPC method.
 class QueryAccountRequest extends CosmosMessage
-    with QueryMessage<QueryAccountResponse>, RPCMessage<QueryAccountResponse> {
+    with QueryMessage<QueryAccountResponse> {
   /// account defines the account of the corresponding address.
   final CosmosBaseAddress address;
   const QueryAccountRequest(this.address);
@@ -20,9 +20,6 @@ class QueryAccountRequest extends CosmosMessage
   List<int> get fieldIds => [1];
 
   @override
-  String get queryPath => AuthV1beta1Types.account.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {"address": address.address};
   }
@@ -31,7 +28,7 @@ class QueryAccountRequest extends CosmosMessage
   List get values => [address.address];
 
   @override
-  String get typeUrl => AuthV1beta1Types.queryAccountRequest.typeUrl;
+  TypeUrl get typeUrl => AuthV1beta1Types.queryAccountRequest;
 
   @override
   QueryAccountResponse onResponse(List<int> bytes) {
@@ -44,8 +41,8 @@ class QueryAccountRequest extends CosmosMessage
   }
 
   @override
-  String get rpcPath =>
-      AuthV1beta1Types.account.rpcUrl(pathParameters: [address.address]);
-  @override
   Map<String, String> get queryParameters => {};
+
+  @override
+  List<String> get pathParameters => [address.address];
 }

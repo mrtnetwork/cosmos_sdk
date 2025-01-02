@@ -27,8 +27,8 @@ class OsmosisDowntimeDetectorRecoveredSinceDowntimeOfLengthResponse
   }
 
   @override
-  String get typeUrl => OsmosisDowntimeDetectorV1beta1Types
-      .recoveredSinceDowntimeOfLengthResponse.typeUrl;
+  TypeUrl get typeUrl => OsmosisDowntimeDetectorV1beta1Types
+      .recoveredSinceDowntimeOfLengthResponse;
 
   @override
   List get values => [succesfullyRecovered];

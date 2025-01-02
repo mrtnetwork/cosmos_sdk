@@ -26,7 +26,7 @@ class BlockParams extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => TendermintTypes.blockParams.typeUrl;
+  TypeUrl get typeUrl => TendermintTypes.blockParams;
 
   @override
   List get values => [maxBytes, maxGas];

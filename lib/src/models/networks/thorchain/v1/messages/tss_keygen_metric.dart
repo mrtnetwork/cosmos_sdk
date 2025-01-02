@@ -30,7 +30,7 @@ class ThorchainTssKeygenMetric extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.tssKeygenMetric.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.tssKeygenMetric;
 
   @override
   List get values => [pubKey, nodeTssTimes];

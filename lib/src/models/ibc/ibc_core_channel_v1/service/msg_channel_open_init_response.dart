@@ -21,7 +21,7 @@ class MsgChannelOpenInitResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.msgChannelOpenInitResponse.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.msgChannelOpenInitResponse;
 
   @override
   List get values => [channelId, version];

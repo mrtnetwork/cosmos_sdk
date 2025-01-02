@@ -9,17 +9,18 @@ import 'package:blockchain_utils/helper/helper.dart';
 class QueryUnreceivedPacketsRequest extends CosmosMessage
     with QueryMessage<QueryUnreceivedPacketsResponse> {
   /// port unique identifier
-  final String? portId;
+  final String portId;
 
   /// channel unique identifier
-  final String? channelId;
+  final String channelId;
 
   /// packet sequence
-  final List<BigInt>? packetCommitmentSequences;
+  final List<BigInt> packetCommitmentSequences;
   QueryUnreceivedPacketsRequest(
-      {this.portId, this.channelId, List<BigInt>? packetCommitmentSequences})
-      : packetCommitmentSequences =
-            packetCommitmentSequences?.emptyAsNull?.immutable;
+      {required this.portId,
+      required this.channelId,
+      required List<BigInt> packetCommitmentSequences})
+      : packetCommitmentSequences = packetCommitmentSequences.immutable;
   factory QueryUnreceivedPacketsRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryUnreceivedPacketsRequest(
@@ -36,20 +37,17 @@ class QueryUnreceivedPacketsRequest extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3];
 
   @override
-  String get queryPath => IbcTypes.unreceivedPackets.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {
       "port_id": portId,
       "channel_id": channelId,
       "packet_commitment_sequences":
-          packetCommitmentSequences?.map((e) => e.toString()).toList()
+          packetCommitmentSequences.map((e) => e.toString()).toList()
     };
   }
 
   @override
-  String get typeUrl => IbcTypes.queryUnreceivedPacketsRequest.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryUnreceivedPacketsRequest;
 
   @override
   List get values => [portId, channelId, packetCommitmentSequences];
@@ -57,4 +55,13 @@ class QueryUnreceivedPacketsRequest extends CosmosMessage
   QueryUnreceivedPacketsResponse onResponse(List<int> bytes) {
     return QueryUnreceivedPacketsResponse.deserialize(bytes);
   }
+
+  @override
+  QueryUnreceivedPacketsResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryUnreceivedPacketsResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters =>
+      [channelId, portId, packetCommitmentSequences.join(",")];
 }

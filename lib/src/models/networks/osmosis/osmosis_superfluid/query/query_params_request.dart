@@ -5,9 +5,7 @@ import 'query_params_response.dart';
 
 /// Params returns the total set of superfluid parameters.
 class OsmosisSuperfluidQueryParamsRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisSuperfluidQueryParamsResponse>,
-        RPCMessage<OsmosisSuperfluidQueryParamsResponse> {
+    with QueryMessage<OsmosisSuperfluidQueryParamsResponse> {
   const OsmosisSuperfluidQueryParamsRequest();
   factory OsmosisSuperfluidQueryParamsRequest.deserialize(List<int> bytes) {
     return const OsmosisSuperfluidQueryParamsRequest();
@@ -22,19 +20,13 @@ class OsmosisSuperfluidQueryParamsRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl => OsmosisSuperfluidTypes.queryParamsRequest.typeUrl;
+  TypeUrl get typeUrl => OsmosisSuperfluidTypes.queryParamsRequest;
 
   @override
   List get values => [];
 
   @override
   Map<String, String?> get queryParameters => {};
-
-  @override
-  String get queryPath => OsmosisSuperfluidTypes.queryParams.typeUrl;
-
-  @override
-  String get rpcPath => OsmosisSuperfluidTypes.queryParams.rpcUrl();
 
   @override
   OsmosisSuperfluidQueryParamsResponse onJsonResponse(

@@ -2,7 +2,7 @@ import 'package:cosmos_sdk/src/crypto/multisig_v1beta1/compact_bitarray.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_tx_signing_v1beta1/messages/sign_mode.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_tx_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:blockchain_utils/exception/exception.dart';
+import 'package:cosmos_sdk/src/exception/exception.dart';
 
 /// ModeInfo describes the signing mode of a single or nested multisig signer.
 class ModeInfo extends CosmosMessage {
@@ -18,9 +18,11 @@ class ModeInfo extends CosmosMessage {
     if (multiMode != null) {
       return ModeInfo.deserialize(multiMode);
     }
-    throw const MessageException("Invalid mode info bytes.");
+    throw const DartCosmosSdkPluginException("Invalid mode info bytes.");
   }
-
+  factory ModeInfo.fromRpc(Map<String, dynamic> json) {
+    throw UnimplementedError();
+  }
   @override
   List<int> get fieldIds => [mode.id];
 
@@ -30,7 +32,7 @@ class ModeInfo extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => TxV1beta1Types.modeInfo.typeUrl;
+  TypeUrl get typeUrl => TxV1beta1Types.modeInfo;
   @override
   List get values => [mode];
 }
@@ -51,6 +53,9 @@ class ModeInfoSignle extends ModeInfoMode {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ModeInfoSignle(SignMode.fromValue(decode.getField(1)));
   }
+  factory ModeInfoSignle.fromRpc(Map<String, dynamic> json) {
+    return ModeInfoSignle(SignMode.fromName(json["mode"]));
+  }
 
   @override
   List<int> get fieldIds => [1];
@@ -66,7 +71,7 @@ class ModeInfoSignle extends ModeInfoMode {
   @override
   int get id => 1;
   @override
-  String get typeUrl => TxV1beta1Types.modeInfoSingle.typeUrl;
+  TypeUrl get typeUrl => TxV1beta1Types.modeInfoSingle;
 }
 
 /// Multi is the mode info for a multisig public key
@@ -105,5 +110,5 @@ class ModeInfoMulti extends ModeInfoMode {
   @override
   int get id => 2;
   @override
-  String get typeUrl => TxV1beta1Types.modeInfoMulti.typeUrl;
+  TypeUrl get typeUrl => TxV1beta1Types.modeInfoMulti;
 }

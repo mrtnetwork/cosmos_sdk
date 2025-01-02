@@ -1,11 +1,7 @@
-import 'package:cosmos_sdk/src/models/core/type_url/type_url.dart';
+import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 
 class OsmosisAccumV1beta1Types extends TypeUrl {
-  @override
-  final String typeUrl;
-  @override
-  final String? rpc = null;
-  const OsmosisAccumV1beta1Types._(this.typeUrl);
+  const OsmosisAccumV1beta1Types._(super.typeUrl);
   static const OsmosisAccumV1beta1Types accumulatorContent =
       OsmosisAccumV1beta1Types._("/osmosis.accum.v1beta1.AccumulatorContent");
   static const OsmosisAccumV1beta1Types options =

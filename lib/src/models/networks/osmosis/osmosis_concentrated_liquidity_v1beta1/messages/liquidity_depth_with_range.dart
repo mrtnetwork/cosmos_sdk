@@ -42,6 +42,6 @@ class OsmosisConcentratedLiquidityLiquidityDepthWithRange
   List get values => [liquidityAmount, lowerTick, upperTick];
 
   @override
-  String get typeUrl =>
-      OsmosisConcentratedLiquidityV1beta1Types.liquidityDepthWithRange.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisConcentratedLiquidityV1beta1Types.liquidityDepthWithRange;
 }

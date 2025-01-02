@@ -72,7 +72,7 @@ class OsmosisPoolGenesisState extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisPoolManagerV1beta1Types.genesisState.typeUrl;
+  TypeUrl get typeUrl => OsmosisPoolManagerV1beta1Types.genesisState;
 
   @override
   List get values => [

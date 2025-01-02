@@ -20,10 +20,10 @@ void main() async {
   final latestBlock = await provider.request(
       TendermintRequestAbciQuery(request: const GetLatestBlockRequest()));
   final accountQuery = await provider.request(TendermintRequestAbciQuery(
-      request: QueryAccountRequest(pubkey.toAddresss(hrp: "smaya"))));
+      request: QueryAccountRequest(pubkey.toAddress(hrp: "smaya"))));
   final BaseAccount account = accountQuery.account as BaseAccount;
   final message = ThorchainMsgSend(
-      fromAddress: pubkey.toAddresss(hrp: "smaya"),
+      fromAddress: pubkey.toAddress(hrp: "smaya"),
       toAddress:
           CosmosBaseAddress("smaya1wqzpmju4gl0kcajhjls6ufrqecaedxm9xlrkv4"),
       amount: [

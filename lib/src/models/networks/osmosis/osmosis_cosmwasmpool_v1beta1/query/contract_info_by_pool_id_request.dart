@@ -3,9 +3,7 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'contract_info_by_pool_id_response.dart';
 
 class OsmosisCosmWasmPoolContractInfoByPoolIdRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisCosmWasmContractInfoByPoolIdResponse>,
-        RPCMessage<OsmosisCosmWasmContractInfoByPoolIdResponse> {
+    with QueryMessage<OsmosisCosmWasmContractInfoByPoolIdResponse> {
   /// pool_id is the pool id of the requested pool
   final BigInt? poolId;
   OsmosisCosmWasmPoolContractInfoByPoolIdRequest({this.poolId});
@@ -25,8 +23,8 @@ class OsmosisCosmWasmPoolContractInfoByPoolIdRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      OsmosisCosmWasmPoolV1beta1Types.contractInfoByPoolIdRequest.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisCosmWasmPoolV1beta1Types.contractInfoByPoolIdRequest;
 
   @override
   List get values => [poolId];
@@ -44,11 +42,4 @@ class OsmosisCosmWasmPoolContractInfoByPoolIdRequest extends CosmosMessage
 
   @override
   Map<String, String?> get queryParameters => {"pool_id": poolId?.toString()};
-  @override
-  String get queryPath =>
-      OsmosisCosmWasmPoolV1beta1Types.contractInfoByPoolId.typeUrl;
-
-  @override
-  String get rpcPath =>
-      OsmosisCosmWasmPoolV1beta1Types.contractInfoByPoolId.rpcUrl();
 }

@@ -11,6 +11,17 @@ class QueryDelegatorValidatorsResponse extends CosmosMessage {
 
   /// pagination defines the pagination in the response.
   final PageResponse? pagination;
+  factory QueryDelegatorValidatorsResponse.fromRpc(Map<String, dynamic> json) {
+    return QueryDelegatorValidatorsResponse(
+      validators: (json["validators"] as List?)
+              ?.map((e) => StakingValidator.fromRpc(e))
+              .toList() ??
+          [],
+      pagination: json["pagination"] == null
+          ? null
+          : PageResponse.fromRpc(json["pagination"]),
+    );
+  }
   QueryDelegatorValidatorsResponse(
       {required List<StakingValidator> validators, this.pagination})
       : validators = validators.immutable;
@@ -38,8 +49,7 @@ class QueryDelegatorValidatorsResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      StakingV1beta1Types.queryDelegatorValidatorsResponse.typeUrl;
+  TypeUrl get typeUrl => StakingV1beta1Types.queryDelegatorValidatorsResponse;
 
   @override
   List get values => [validators, pagination];

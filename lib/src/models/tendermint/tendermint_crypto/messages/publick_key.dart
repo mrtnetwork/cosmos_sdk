@@ -42,7 +42,7 @@ class TendermintPublicKey extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => TendermintTypes.publicKey.typeUrl;
+  TypeUrl get typeUrl => TendermintTypes.publicKey;
 
   @override
   List get values => [_ed25519?.compressed.sublist(1), _secp256k1?.compressed];

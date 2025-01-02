@@ -5,9 +5,7 @@ import 'params_response.dart';
 
 /// Params holds parameters for the twap module.
 class OsmosisTwapParamsRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisTwapParamsResponse>,
-        RPCMessage<OsmosisTwapParamsResponse> {
+    with QueryMessage<OsmosisTwapParamsResponse> {
   OsmosisTwapParamsRequest();
   factory OsmosisTwapParamsRequest.deserialize(List<int> bytes) {
     return OsmosisTwapParamsRequest();
@@ -22,19 +20,13 @@ class OsmosisTwapParamsRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl => OsmosisTwapV1beta1Types.paramsRequest.typeUrl;
+  TypeUrl get typeUrl => OsmosisTwapV1beta1Types.paramsRequest;
 
   @override
   List get values => [];
 
   @override
   Map<String, String?> get queryParameters => {};
-
-  @override
-  String get queryPath => OsmosisTwapV1beta1Types.queryParams.typeUrl;
-
-  @override
-  String get rpcPath => OsmosisTwapV1beta1Types.queryParams.rpcUrl();
 
   @override
   OsmosisTwapParamsResponse onJsonResponse(Map<String, dynamic> json) {

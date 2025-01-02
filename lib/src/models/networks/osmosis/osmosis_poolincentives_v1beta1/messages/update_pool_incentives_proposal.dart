@@ -40,8 +40,8 @@ class OsmosisPoolincentivesUpdatePoolIncentivesProposal extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisPoolincentivesV1beta1Types.updatePoolIncentivesProposal.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisPoolincentivesV1beta1Types.updatePoolIncentivesProposal;
   @override
   List get values => [title, description, records];
 }

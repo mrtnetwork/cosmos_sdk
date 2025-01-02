@@ -34,8 +34,8 @@ class OsmosisLockupAccountLockedPastTimeNotUnlockingOnlyResponse
   }
 
   @override
-  String get typeUrl =>
-      OsmosisLockupTypes.accountLockedPastTimeNotUnlockingOnlyResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisLockupTypes.accountLockedPastTimeNotUnlockingOnlyResponse;
 
   @override
   List get values => [locks];

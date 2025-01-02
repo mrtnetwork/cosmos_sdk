@@ -34,8 +34,8 @@ class OsmosisLockupAccountLockedLongerDurationDenomResponse
   }
 
   @override
-  String get typeUrl =>
-      OsmosisLockupTypes.accountLockedLongerDurationDenomResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisLockupTypes.accountLockedLongerDurationDenomResponse;
 
   @override
   List get values => [locks];

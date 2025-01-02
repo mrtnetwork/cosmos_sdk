@@ -30,8 +30,8 @@ class DistributionValidatorSlashEvents extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      DistributionV1beta1Types.distributionValidatorSlashEvents.typeUrl;
+  TypeUrl get typeUrl =>
+      DistributionV1beta1Types.distributionValidatorSlashEvents;
 
   @override
   List get values => [validatorSlashEvents];

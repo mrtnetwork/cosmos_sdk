@@ -8,6 +8,13 @@ class InterchainAccountsHostQueryParamsResponse extends CosmosMessage {
   final InterchainAccountsHostParams? params;
 
   const InterchainAccountsHostQueryParamsResponse({this.params});
+  factory InterchainAccountsHostQueryParamsResponse.fromRpc(
+      Map<String, dynamic> json) {
+    return InterchainAccountsHostQueryParamsResponse(
+        params: json["params"] == null
+            ? null
+            : InterchainAccountsHostParams.fromRpc(json["params"]));
+  }
   factory InterchainAccountsHostQueryParamsResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -26,8 +33,7 @@ class InterchainAccountsHostQueryParamsResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      IbcTypes.interchainAccountsHostQueryParamsResponse.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.interchainAccountsHostQueryParamsResponse;
 
   @override
   List get values => [params];

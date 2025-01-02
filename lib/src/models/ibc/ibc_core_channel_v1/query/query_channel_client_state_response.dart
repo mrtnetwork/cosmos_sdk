@@ -3,6 +3,7 @@ import 'package:cosmos_sdk/src/models/ibc/ibc_core_client_v1/messages/height.dar
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_client_v1/messages/identified_client_state.dart';
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/utils.dart';
 
 /// QueryChannelClientStateResponse is the Response type for the Query/QueryChannelClientState RPC method
 class QueryChannelClientStateResponse extends CosmosMessage {
@@ -14,6 +15,16 @@ class QueryChannelClientStateResponse extends CosmosMessage {
 
   /// height at which the proof was retrieved
   final IbcClientHeight proofHeight;
+
+  factory QueryChannelClientStateResponse.fromRpc(Map<String, dynamic> json) {
+    return QueryChannelClientStateResponse(
+        proof: CosmosUtils.tryToBytes(json["proof"]),
+        proofHeight: IbcClientHeight.fromRpc(json["proof_height"]),
+        identifiedClientState: json["identified_client_state"] == null
+            ? null
+            : IbcClientIdentifiedClientState.fromRpc(
+                json["identified_client_state"]));
+  }
   QueryChannelClientStateResponse(
       {this.identifiedClientState, List<int>? proof, required this.proofHeight})
       : proof = BytesUtils.tryToBytes(proof, unmodifiable: true);
@@ -42,7 +53,7 @@ class QueryChannelClientStateResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.queryChannelClientStateResponse.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryChannelClientStateResponse;
 
   @override
   List get values => [identifiedClientState, proof, proofHeight];

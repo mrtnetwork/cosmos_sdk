@@ -20,7 +20,7 @@ class MsgBeginRedelegateResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => StakingV1beta1Types.msgBeginRedelegateResponse.typeUrl;
+  TypeUrl get typeUrl => StakingV1beta1Types.msgBeginRedelegateResponse;
 
   @override
   List get values => [completionTime];

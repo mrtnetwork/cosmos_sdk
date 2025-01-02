@@ -6,10 +6,10 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class QueryNFTBalanceRequest extends CosmosMessage
     with QueryMessage<QueryNFTBalanceResponse> {
   /// class_id associated with the nft.
-  final String? classId;
+  final String classId;
 
   /// owner is the owner address of the nft.
-  final String? owner;
+  final String owner;
 
   QueryNFTBalanceRequest({required this.classId, required this.owner});
 
@@ -31,10 +31,7 @@ class QueryNFTBalanceRequest extends CosmosMessage
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get queryPath => NFTV1beta1Types.nftBalance.typeUrl;
-
-  @override
-  String get typeUrl => NFTV1beta1Types.queryNFTBalanceRequest.typeUrl;
+  TypeUrl get typeUrl => NFTV1beta1Types.queryNFTBalanceRequest;
 
   @override
   List get values => [classId, owner];
@@ -42,4 +39,12 @@ class QueryNFTBalanceRequest extends CosmosMessage
   QueryNFTBalanceResponse onResponse(List<int> bytes) {
     return QueryNFTBalanceResponse.deserialize(bytes);
   }
+
+  @override
+  QueryNFTBalanceResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryNFTBalanceResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters => [owner, classId];
 }

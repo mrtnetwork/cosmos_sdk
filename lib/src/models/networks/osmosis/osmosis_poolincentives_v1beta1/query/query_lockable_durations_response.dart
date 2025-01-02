@@ -37,8 +37,8 @@ class OsmosisPoolincentivesQueryLockableDurationsResponse
   }
 
   @override
-  String get typeUrl =>
-      OsmosisPoolincentivesV1beta1Types.queryLockableDurationsResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisPoolincentivesV1beta1Types.queryLockableDurationsResponse;
   @override
   List get values => [lockableDurations];
 }

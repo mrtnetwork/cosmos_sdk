@@ -15,6 +15,17 @@ class QueryChannelsResponse extends CosmosMessage {
 
   /// query block height
   final IbcClientHeight height;
+  factory QueryChannelsResponse.fromRpc(Map<String, dynamic> json) {
+    return QueryChannelsResponse(
+      channels: (json["channels"] as List?)
+          ?.map((e) => IbcChannelIdentifiedChannel.fromRpc(e))
+          .toList(),
+      height: IbcClientHeight.fromRpc(json["height"]),
+      pagination: json["pagination"] == null
+          ? null
+          : PageResponse.fromRpc(json["pagination"]),
+    );
+  }
   QueryChannelsResponse(
       {List<IbcChannelIdentifiedChannel>? channels,
       this.pagination,
@@ -47,7 +58,7 @@ class QueryChannelsResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.queryChannelsResponse.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryChannelsResponse;
 
   @override
   List get values => [channels, pagination, height];

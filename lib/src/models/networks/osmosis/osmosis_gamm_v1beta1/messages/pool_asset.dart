@@ -34,7 +34,7 @@ class OsmosisGammPoolAsset extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisGammV1beta1Types.poolAsset.typeUrl;
+  TypeUrl get typeUrl => OsmosisGammV1beta1Types.poolAsset;
 
   @override
   List get values => [token, weight];

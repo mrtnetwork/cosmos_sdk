@@ -45,15 +45,13 @@ class OsmosisPoolManagerMsgSwapExactAmountOut extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      OsmosisPoolManagerV1beta1Types.msgSwapExactAmountOut.typeUrl;
+  TypeUrl get typeUrl => OsmosisPoolManagerV1beta1Types.msgSwapExactAmountOut;
 
   @override
   List get values => [sender, routes, tokenInMaxAmount.toString(), tokenOut];
 
   @override
-  String get service =>
-      OsmosisPoolManagerV1beta1Types.swapExactAmountOut.typeUrl;
+  TypeUrl get service => OsmosisPoolManagerV1beta1Types.swapExactAmountOut;
 
   @override
   List<String?> get signers => [sender];

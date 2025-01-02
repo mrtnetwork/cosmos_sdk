@@ -1,3 +1,4 @@
+import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_client_v1/messages/height.dart';
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
@@ -11,6 +12,12 @@ class IbcChannelTimeout extends CosmosMessage {
 
   /// block timestamp (in nanoseconds) after which the packet or upgrade times out
   final BigInt? timestamp;
+
+  factory IbcChannelTimeout.fromRpc(Map<String, dynamic> json) {
+    return IbcChannelTimeout(
+        height: IbcClientHeight.fromRpc(json["height"]),
+        timestamp: BigintUtils.tryParse(json["timestamp"]));
+  }
   const IbcChannelTimeout({required this.height, this.timestamp});
   factory IbcChannelTimeout.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -28,7 +35,7 @@ class IbcChannelTimeout extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.timeout.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.timeout;
 
   @override
   List get values => [height, timestamp];

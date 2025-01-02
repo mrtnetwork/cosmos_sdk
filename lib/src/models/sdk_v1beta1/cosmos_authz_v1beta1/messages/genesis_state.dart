@@ -29,7 +29,7 @@ class AuthzGenesisState extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => AuthzV1beta1Types.authzGenesisState.typeUrl;
+  TypeUrl get typeUrl => AuthzV1beta1Types.authzGenesisState;
 
   @override
   List get values => [authorization];

@@ -15,6 +15,11 @@ class IbcFeeFeeEnabledChannel extends CosmosMessage {
         portId: decode.getField(1), channelId: decode.getField(2));
   }
 
+  factory IbcFeeFeeEnabledChannel.fromRpc(Map<String, dynamic> json) {
+    return IbcFeeFeeEnabledChannel(
+        portId: json["port_id"], channelId: json["channel_id"]);
+  }
+
   @override
   List<int> get fieldIds => [1, 2];
 
@@ -24,7 +29,7 @@ class IbcFeeFeeEnabledChannel extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.feeEnabledChannel.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.feeEnabledChannel;
 
   @override
   List get values => [portId, channelId];

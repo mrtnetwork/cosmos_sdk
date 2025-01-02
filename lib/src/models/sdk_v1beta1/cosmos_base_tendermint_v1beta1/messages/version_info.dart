@@ -30,17 +30,29 @@ class VersionInfo extends CosmosMessage {
   factory VersionInfo.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return VersionInfo(
-        name: decode.getField(1),
-        appName: decode.getField(2),
-        version: decode.getField(3),
-        gitCommit: decode.getField(4),
-        buildTags: decode.getField(5),
-        goVersion: decode.getField(6),
-        buildDeps:
-            decode.getFields(7).map((e) => Module.deserialize(e)).toList(),
-        cosmosSdkVersion: decode.getField(8));
+      name: decode.getField(1),
+      appName: decode.getField(2),
+      version: decode.getField(3),
+      gitCommit: decode.getField(4),
+      buildTags: decode.getField(5),
+      goVersion: decode.getField(6),
+      buildDeps: decode.getFields(7).map((e) => Module.deserialize(e)).toList(),
+      cosmosSdkVersion: decode.getField(8),
+    );
   }
-
+  factory VersionInfo.fromRpc(Map<String, dynamic> json) {
+    return VersionInfo(
+      name: json["name"],
+      appName: json["app_name"],
+      version: json["version"],
+      gitCommit: json["git_commit"],
+      buildTags: json["build_tags"],
+      goVersion: json["go_version"],
+      buildDeps:
+          (json["build_deps"] as List?)?.map((e) => Module.fromRpc(e)).toList(),
+      cosmosSdkVersion: json["cosmos_sdk_version"],
+    );
+  }
   @override
   List<int> get fieldIds => [1, 2, 3, 4, 5, 6, 7, 8];
 
@@ -59,7 +71,7 @@ class VersionInfo extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => BaseTendermintV1beta1Types.versionInfo.typeUrl;
+  TypeUrl get typeUrl => BaseTendermintV1beta1Types.versionInfo;
 
   @override
   List get values => [

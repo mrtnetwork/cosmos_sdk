@@ -16,7 +16,7 @@ class OsmosisAccumOptions extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisAccumV1beta1Types.options.typeUrl;
+  TypeUrl get typeUrl => OsmosisAccumV1beta1Types.options;
 
   @override
   List get values => [];

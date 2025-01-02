@@ -42,7 +42,7 @@ class Evidence extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => TendermintTypes.evidence.typeUrl;
+  TypeUrl get typeUrl => TendermintTypes.evidence;
 
   @override
   List get values => [evidence];

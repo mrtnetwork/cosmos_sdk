@@ -61,6 +61,6 @@ class OsmosisConcentratedLiquidityTickSpacingDecreaseProposal
   List get values => [title, description, poolIdToTickSpacingRecords];
 
   @override
-  String get typeUrl => OsmosisConcentratedLiquidityV1beta1Types
-      .tickSpacingDecreaseProposal.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisConcentratedLiquidityV1beta1Types.tickSpacingDecreaseProposal;
 }

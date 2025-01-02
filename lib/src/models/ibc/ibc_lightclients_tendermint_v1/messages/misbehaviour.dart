@@ -34,7 +34,7 @@ class IbcTendermintMisbehaviour extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.ibcTendermintV1Misbehaviour.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.ibcTendermintV1Misbehaviour;
 
   @override
   List get values => [clientId, header1, header2];

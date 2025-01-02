@@ -5,7 +5,7 @@ import 'package:cosmos_sdk/src/provider/tendermint/models/models.dart';
 /// Returns with the responses from CheckTx and DeliverTx.
 /// https://docs.tendermint.com/v0.34/rpc/#/Tx/broadcast_tx_commit
 class TendermintRequestBroadcastTxCommit
-    extends TendermintRequestParam<BrodcastTxResponse, Map<String, dynamic>> {
+    extends TendermintRequest<BrodcastTxResponse, Map<String, dynamic>> {
   TendermintRequestBroadcastTxCommit(this.tx);
 
   /// The transaction

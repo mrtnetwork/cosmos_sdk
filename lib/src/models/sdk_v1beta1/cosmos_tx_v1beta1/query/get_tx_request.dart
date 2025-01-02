@@ -11,15 +11,12 @@ class GetTxRequest extends CosmosMessage with QueryMessage<GetTxResponse> {
   List<int> get fieldIds => [1];
 
   @override
-  String get queryPath => TxV1beta1Types.getTx.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {"hash": hash};
   }
 
   @override
-  String get typeUrl => TxV1beta1Types.getTxRequest.typeUrl;
+  TypeUrl get typeUrl => TxV1beta1Types.getTxRequest;
 
   @override
   List get values => [hash];
@@ -28,4 +25,12 @@ class GetTxRequest extends CosmosMessage with QueryMessage<GetTxResponse> {
   GetTxResponse onResponse(List<int> bytes) {
     return GetTxResponse.deserialize(bytes);
   }
+
+  @override
+  GetTxResponse onJsonResponse(Map<String, dynamic> json) {
+    return GetTxResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters => [hash];
 }

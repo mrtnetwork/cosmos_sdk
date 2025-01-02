@@ -1,3 +1,4 @@
+import 'package:blockchain_utils/utils/numbers/numbers.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_tx_v1beta1/messages/tx.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_abci_v1beta1/messages/tx_response.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_query_v1beta1/messages/page_response.dart';
@@ -19,6 +20,18 @@ class GetTxsEventResponse extends CosmosMessage {
 
   /// total is total number of results available
   final BigInt? total;
+  factory GetTxsEventResponse.fromRpc(Map<String, dynamic> json) {
+    return GetTxsEventResponse(
+        txResponses: (json["tx_responses"] as List?)
+                ?.map((e) => TxResponse.fromRpc(e))
+                .toList() ??
+            [],
+        txs: (json["txs"] as List?)?.map((e) => Tx.fromRpc(e)).toList() ?? [],
+        pagination: json["pagination"] == null
+            ? null
+            : PageResponse.fromRpc(json["pagination"]),
+        total: BigintUtils.tryParse(json["total"]));
+  }
   GetTxsEventResponse(
       {required List<Tx> txs,
       required List<TxResponse> txResponses,
@@ -57,7 +70,7 @@ class GetTxsEventResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => TxV1beta1Types.getTxsEventResponse.typeUrl;
+  TypeUrl get typeUrl => TxV1beta1Types.getTxsEventResponse;
 
   @override
   List get values => [txs, txResponses, pagination, total];

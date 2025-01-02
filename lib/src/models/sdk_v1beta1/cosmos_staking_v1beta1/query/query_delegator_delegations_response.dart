@@ -10,6 +10,17 @@ class QueryDelegatorDelegationsResponse extends CosmosMessage {
 
   /// pagination defines the pagination in the response.
   final PageResponse? pagination;
+  factory QueryDelegatorDelegationsResponse.fromRpc(Map<String, dynamic> json) {
+    return QueryDelegatorDelegationsResponse(
+      delegationResponses: (json["delegation_responses"] as List?)
+              ?.map((e) => DelegationResponse.fromRpc(e))
+              .toList() ??
+          [],
+      pagination: json["pagination"] == null
+          ? null
+          : PageResponse.fromRpc(json["pagination"]),
+    );
+  }
 
   const QueryDelegatorDelegationsResponse(
       {required this.delegationResponses, this.pagination});
@@ -38,8 +49,7 @@ class QueryDelegatorDelegationsResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      StakingV1beta1Types.queryDelegatorDelegationsResponse.typeUrl;
+  TypeUrl get typeUrl => StakingV1beta1Types.queryDelegatorDelegationsResponse;
 
   @override
   List get values => [delegationResponses, pagination];

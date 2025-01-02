@@ -3,9 +3,7 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'total_super_fluid_delegations_response.dart';
 
 class OsmosisSuperfluidTotalSuperfluidDelegationsRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisSuperfluidTotalSuperfluidDelegationsResponse>,
-        RPCMessage<OsmosisSuperfluidTotalSuperfluidDelegationsResponse> {
+    with QueryMessage<OsmosisSuperfluidTotalSuperfluidDelegationsResponse> {
   const OsmosisSuperfluidTotalSuperfluidDelegationsRequest();
   factory OsmosisSuperfluidTotalSuperfluidDelegationsRequest.deserialize(
       List<int> bytes) {
@@ -21,22 +19,14 @@ class OsmosisSuperfluidTotalSuperfluidDelegationsRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      OsmosisSuperfluidTypes.totalSuperfluidDelegationsRequest.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisSuperfluidTypes.totalSuperfluidDelegationsRequest;
 
   @override
   List get values => [];
 
   @override
   Map<String, String?> get queryParameters => {};
-
-  @override
-  String get queryPath =>
-      OsmosisSuperfluidTypes.totalSuperfluidDelegations.typeUrl;
-
-  @override
-  String get rpcPath =>
-      OsmosisSuperfluidTypes.totalSuperfluidDelegations.rpcUrl();
 
   @override
   OsmosisSuperfluidTotalSuperfluidDelegationsResponse onJsonResponse(

@@ -39,8 +39,8 @@ class OsmosisPoolManagerEstimateTradeBasedOnPriceImpactResponse
   }
 
   @override
-  String get typeUrl => OsmosisPoolManagerV1beta1Types
-      .estimateTradeBasedOnPriceImpactResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisPoolManagerV1beta1Types.estimateTradeBasedOnPriceImpactResponse;
 
   @override
   List get values => [inputCoin, outputCoin];

@@ -62,7 +62,7 @@ class ThorchainLiquidityProvider extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.liquidityProvider.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.liquidityProvider;
 
   @override
   List get values => [

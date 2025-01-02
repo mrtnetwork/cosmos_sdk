@@ -1,11 +1,7 @@
-import 'package:cosmos_sdk/src/models/core/type_url/type_url.dart';
+import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 
 class OsmosisGammPoolmodelsBalancerV1beta1Types extends TypeUrl {
-  @override
-  final String typeUrl;
-  @override
-  final String? rpc = null;
-  const OsmosisGammPoolmodelsBalancerV1beta1Types._(this.typeUrl);
+  const OsmosisGammPoolmodelsBalancerV1beta1Types._(super.typeUrl);
   static const OsmosisGammPoolmodelsBalancerV1beta1Types msgCreateBalancerPool =
       OsmosisGammPoolmodelsBalancerV1beta1Types._(
           "/osmosis.gamm.poolmodels.balancer.v1beta1.MsgCreateBalancerPool");

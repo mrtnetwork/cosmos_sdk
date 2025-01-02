@@ -4,9 +4,7 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'params_response.dart';
 
 class OsmosisPoolManagerParamsRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisPoolManagerParamsResponse>,
-        RPCMessage<OsmosisPoolManagerParamsResponse> {
+    with QueryMessage<OsmosisPoolManagerParamsResponse> {
   @override
   List<int> get fieldIds => [];
 
@@ -24,18 +22,12 @@ class OsmosisPoolManagerParamsRequest extends CosmosMessage
   Map<String, String?> get queryParameters => {};
 
   @override
-  String get queryPath => OsmosisPoolManagerV1beta1Types.queryParams.typeUrl;
-
-  @override
-  String get rpcPath => OsmosisPoolManagerV1beta1Types.queryParams.rpcUrl();
-
-  @override
   Map<String, dynamic> toJson() {
     return {};
   }
 
   @override
-  String get typeUrl => OsmosisPoolManagerV1beta1Types.paramsRequest.typeUrl;
+  TypeUrl get typeUrl => OsmosisPoolManagerV1beta1Types.paramsRequest;
 
   @override
   List get values => [];

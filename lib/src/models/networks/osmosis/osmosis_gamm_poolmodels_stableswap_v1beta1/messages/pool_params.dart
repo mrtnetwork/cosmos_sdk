@@ -31,8 +31,7 @@ class OsmosisGammPoolmodelsStableSwapPoolParams extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisGammPoolmodelsStableswaPV1beta1Types.poolParams.typeUrl;
+  TypeUrl get typeUrl => OsmosisGammPoolmodelsStableswaPV1beta1Types.poolParams;
 
   @override
   List get values => [swapFee, exitFee];

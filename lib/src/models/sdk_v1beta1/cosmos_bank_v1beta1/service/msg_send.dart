@@ -42,16 +42,15 @@ class MsgSend extends CosmosMessage
 
   @override
   @override
-  String get typeUrl => BankV1beta1Types.msgSend.typeUrl;
+  TypeUrl get typeUrl => BankV1beta1Types.msgSend;
 
   @override
-  String get service => BankV1beta1Types.send.typeUrl;
+  TypeUrl get service => BankV1beta1Types.send;
 
   @override
   List<String?> get signers => [fromAddress.address];
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
-    return EmptyServiceRequestResponse(
-        BankV1beta1Types.msgSendResponse.typeUrl);
+    return EmptyServiceRequestResponse(BankV1beta1Types.msgSendResponse);
   }
 }

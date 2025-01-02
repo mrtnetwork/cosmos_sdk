@@ -40,7 +40,7 @@ class ThorchainTradeAccount extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.tradeAccount.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.tradeAccount;
 
   @override
   List get values =>

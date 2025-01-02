@@ -34,6 +34,6 @@ class OsmosisProtorevQueryGetProtoRevMaxPoolPointsPerTxResponse
   List get values => [maxPoolPointsPerTx];
 
   @override
-  String get typeUrl => OsmosisProtorevV1beta1Types
-      .queryGetProtoRevMaxPoolPointsPerTxResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisProtorevV1beta1Types.queryGetProtoRevMaxPoolPointsPerTxResponse;
 }

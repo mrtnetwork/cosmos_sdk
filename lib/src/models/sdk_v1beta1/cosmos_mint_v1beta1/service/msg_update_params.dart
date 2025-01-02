@@ -43,10 +43,10 @@ class MsgUpdateMintParams extends CosmosMessage
   List<int> get fieldIds => [1, 2];
 
   @override
-  String get service => MintV1beta1Types.mintUpdateParams.typeUrl;
+  TypeUrl get service => MintV1beta1Types.mintUpdateParams;
 
   @override
-  String get typeUrl => MintV1beta1Types.msgUpdateMintParams.typeUrl;
+  TypeUrl get typeUrl => MintV1beta1Types.msgUpdateMintParams;
 
   @override
   List get values => [authority?.address, params];
@@ -56,6 +56,6 @@ class MsgUpdateMintParams extends CosmosMessage
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        MintV1beta1Types.msgUpdateMintParamsResponse.typeUrl);
+        MintV1beta1Types.msgUpdateMintParamsResponse);
   }
 }

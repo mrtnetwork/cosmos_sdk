@@ -20,8 +20,8 @@ class OsmosisGammMsgExitSwapShareAmountInResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      OsmosisGammV1beta1Types.msgExitSwapShareAmountInResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisGammV1beta1Types.msgExitSwapShareAmountInResponse;
 
   @override
   List get values => [tokenOutAmount.toString()];

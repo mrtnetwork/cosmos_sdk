@@ -1,14 +1,20 @@
+import 'package:cosmos_sdk/src/models/global_messages/unknown_message.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_auth_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
 /// QueryModuleAccountByNameResponse is the response type for the Query/ModuleAccountByName RPC method.
 class QueryModuleAccountByNameResponse extends CosmosMessage {
-  final Any account;
+  final AnyMessage account;
   QueryModuleAccountByNameResponse(this.account);
   factory QueryModuleAccountByNameResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryModuleAccountByNameResponse(
-        Any.deserialize(decode.getField(1)));
+        AnyMessage.deserialize(decode.getField(1)));
+  }
+
+  factory QueryModuleAccountByNameResponse.fromRpc(Map<String, dynamic> json) {
+    return QueryModuleAccountByNameResponse(
+        AnyMessage.fromRpc(json["account"]));
   }
 
   @override
@@ -23,5 +29,5 @@ class QueryModuleAccountByNameResponse extends CosmosMessage {
   List get values => [account];
 
   @override
-  String get typeUrl => AuthV1beta1Types.moduleAccountByNameResponse.typeUrl;
+  TypeUrl get typeUrl => AuthV1beta1Types.moduleAccountByNameResponse;
 }

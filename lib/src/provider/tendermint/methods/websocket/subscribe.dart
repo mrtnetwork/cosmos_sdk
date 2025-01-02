@@ -4,7 +4,7 @@ import 'package:cosmos_sdk/src/provider/tendermint/core/tendermint.dart';
 /// Subscribe for events via WebSocket.
 /// https://docs.tendermint.com/v0.34/rpc/#/Websocket/subscribe
 class TendermintRequestSubscribe
-    extends TendermintRequestParam<Map<String, dynamic>, Map<String, dynamic>> {
+    extends TendermintRequest<Map<String, dynamic>, Map<String, dynamic>> {
   TendermintRequestSubscribe(this.query);
 
   /// query is a string, which has a form:

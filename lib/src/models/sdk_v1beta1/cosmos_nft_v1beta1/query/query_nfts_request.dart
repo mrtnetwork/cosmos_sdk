@@ -40,10 +40,7 @@ class QueryNFTsRequest extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3];
 
   @override
-  String get queryPath => NFTV1beta1Types.nfts.typeUrl;
-
-  @override
-  String get typeUrl => NFTV1beta1Types.queryNFTsRequest.typeUrl;
+  TypeUrl get typeUrl => NFTV1beta1Types.queryNFTsRequest;
 
   @override
   List get values => [classId, owner, pagination];
@@ -52,4 +49,16 @@ class QueryNFTsRequest extends CosmosMessage
   QueryNFTsResponse onResponse(List<int> bytes) {
     return QueryNFTsResponse.deserialize(bytes);
   }
+
+  @override
+  QueryNFTsResponse onJsonResponse(Map<String, dynamic> json) {
+    return QueryNFTsResponse.fromRpc(json);
+  }
+
+  @override
+  Map<String, String?> get queryParameters => {
+        ...pagination?.queryParameters ?? {},
+        'class_id': classId,
+        'owner': owner,
+      };
 }

@@ -44,7 +44,7 @@ class AuthzEventRevoke extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => AuthzV1beta1Types.authzEventRevoke.typeUrl;
+  TypeUrl get typeUrl => AuthzV1beta1Types.authzEventRevoke;
 
   @override
   List get values => [msgTypeUrl, granter, grantee];

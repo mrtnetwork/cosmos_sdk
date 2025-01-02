@@ -10,10 +10,10 @@ import 'package:blockchain_utils/helper/helper.dart';
 class QueryPacketAcknowledgementsRequest extends CosmosMessage
     with QueryMessage<QueryPacketAcknowledgementsResponse> {
   /// port unique identifier
-  final String? portId;
+  final String portId;
 
   /// channel unique identifier
-  final String? channelId;
+  final String channelId;
 
   /// pagination request
   final PageRequest? pagination;
@@ -21,8 +21,8 @@ class QueryPacketAcknowledgementsRequest extends CosmosMessage
   /// list of packet sequences
   final List<BigInt>? packetCommitmentSequences;
   QueryPacketAcknowledgementsRequest({
-    this.portId,
-    this.channelId,
+    required this.portId,
+    required this.channelId,
     this.pagination,
     List<BigInt>? packetCommitmentSequences,
   }) : packetCommitmentSequences =
@@ -46,9 +46,6 @@ class QueryPacketAcknowledgementsRequest extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3, 4];
 
   @override
-  String get queryPath => IbcTypes.packetAcknowledgements.typeUrl;
-
-  @override
   Map<String, dynamic> toJson() {
     return {
       "port_id": portId,
@@ -60,7 +57,7 @@ class QueryPacketAcknowledgementsRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl => IbcTypes.queryPacketAcknowledgementsRequest.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryPacketAcknowledgementsRequest;
 
   @override
   List get values => [portId, channelId, pagination, packetCommitmentSequences];
@@ -69,4 +66,19 @@ class QueryPacketAcknowledgementsRequest extends CosmosMessage
   QueryPacketAcknowledgementsResponse onResponse(List<int> bytes) {
     return QueryPacketAcknowledgementsResponse.deserialize(bytes);
   }
+
+  @override
+  QueryPacketAcknowledgementsResponse onJsonResponse(
+      Map<String, dynamic> json) {
+    return QueryPacketAcknowledgementsResponse.fromRpc(json);
+  }
+
+  @override
+  List<String> get pathParameters => [channelId, portId];
+
+  @override
+  Map<String, String?> get queryParameters => {
+        "packet_commitment_sequences": packetCommitmentSequences?.join(","),
+        ...pagination?.queryParameters ?? {}
+      };
 }

@@ -40,7 +40,7 @@ class IncentivizedAcknowledgement extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.incentivizedAcknowledgement.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.incentivizedAcknowledgement;
 
   @override
   List get values =>

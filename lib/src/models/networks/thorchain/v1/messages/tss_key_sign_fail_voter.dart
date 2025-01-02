@@ -36,7 +36,7 @@ class ThorchainTssKeysignFailVoter extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.tssKeysignFailVoter.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.tssKeysignFailVoter;
 
   @override
   List get values => [id, height, signers, round7Count];

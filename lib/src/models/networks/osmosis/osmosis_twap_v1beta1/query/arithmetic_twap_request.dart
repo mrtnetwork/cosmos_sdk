@@ -4,9 +4,7 @@ import 'arithmetic_twap_response.dart';
 
 /// Params holds parameters for the twap module.
 class OsmosisTwapArithmeticTwapRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisTwapArithmeticTwapResponse>,
-        RPCMessage<OsmosisTwapArithmeticTwapResponse> {
+    with QueryMessage<OsmosisTwapArithmeticTwapResponse> {
   final BigInt? poolId;
   final String? baseAsset;
   final String? quoteAsset;
@@ -45,19 +43,19 @@ class OsmosisTwapArithmeticTwapRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl => OsmosisTwapV1beta1Types.arithmeticTwapRequest.typeUrl;
+  TypeUrl get typeUrl => OsmosisTwapV1beta1Types.arithmeticTwapRequest;
 
   @override
   List get values => [poolId, baseAsset, quoteAsset, startTime, endTime];
 
   @override
-  Map<String, String?> get queryParameters => {};
-
-  @override
-  String get queryPath => OsmosisTwapV1beta1Types.arithmeticTwap.typeUrl;
-
-  @override
-  String get rpcPath => OsmosisTwapV1beta1Types.arithmeticTwap.rpcUrl();
+  Map<String, String?> get queryParameters => {
+        "pool_id": poolId?.toString(),
+        "base_asset": baseAsset,
+        "quote_asset": quoteAsset,
+        "start_time": startTime.toString(),
+        "end_time": endTime?.toString()
+      };
 
   @override
   OsmosisTwapArithmeticTwapResponse onJsonResponse(Map<String, dynamic> json) {

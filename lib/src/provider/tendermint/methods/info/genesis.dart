@@ -4,7 +4,7 @@ import 'package:cosmos_sdk/src/provider/tendermint/core/tendermint.dart';
 /// Get Genesis
 /// https://docs.tendermint.com/v0.34/rpc/#/Info/genesis
 class TendermintRequestGenesis
-    extends TendermintRequestParam<Map<String, dynamic>, Map<String, dynamic>> {
+    extends TendermintRequest<Map<String, dynamic>, Map<String, dynamic>> {
   TendermintRequestGenesis();
 
   /// Get Genesis

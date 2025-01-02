@@ -105,7 +105,7 @@ class OsmosisMintParams extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => OsmosisMintV1beta1Types.params.typeUrl;
+  TypeUrl get typeUrl => OsmosisMintV1beta1Types.params;
 
   @override
   List get values => [

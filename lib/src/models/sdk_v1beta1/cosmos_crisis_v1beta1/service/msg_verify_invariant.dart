@@ -31,7 +31,7 @@ class MsgVerifyInvariant extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3];
 
   @override
-  String get service => CrisisV1beta1.verifyInvariant.typeUrl;
+  TypeUrl get service => CrisisV1beta1.verifyInvariant;
 
   @override
   Map<String, dynamic> toJson() {
@@ -43,7 +43,7 @@ class MsgVerifyInvariant extends CosmosMessage
   }
 
   @override
-  String get typeUrl => CrisisV1beta1.msgVerifyInvariant.typeUrl;
+  TypeUrl get typeUrl => CrisisV1beta1.msgVerifyInvariant;
 
   @override
   List get values => [sender?.address, invariantModuleName, invariantRoute];
@@ -53,6 +53,6 @@ class MsgVerifyInvariant extends CosmosMessage
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        CrisisV1beta1.msgVerifyInvariantResponse.typeUrl);
+        CrisisV1beta1.msgVerifyInvariantResponse);
   }
 }

@@ -9,7 +9,10 @@ class QuerySpendableBalanceByDenomResponse extends CosmosMessage {
   /// balance is the balance of the coin.
   final Coin balance;
   const QuerySpendableBalanceByDenomResponse(this.balance);
-
+  factory QuerySpendableBalanceByDenomResponse.fromRpc(
+      Map<String, dynamic> json) {
+    return QuerySpendableBalanceByDenomResponse(Coin.fromRpc(json["balance"]));
+  }
   factory QuerySpendableBalanceByDenomResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QuerySpendableBalanceByDenomResponse(
@@ -25,8 +28,7 @@ class QuerySpendableBalanceByDenomResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      BankV1beta1Types.spendableBalanceByDenomResponse.typeUrl;
+  TypeUrl get typeUrl => BankV1beta1Types.spendableBalanceByDenomResponse;
 
   @override
   List get values => [balance];

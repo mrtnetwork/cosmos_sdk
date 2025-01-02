@@ -1,12 +1,13 @@
 import 'package:blockchain_utils/bip/ecc/keys/ed25519_keys.dart';
-import 'package:blockchain_utils/signer/solana/solana_signer.dart';
+import 'package:blockchain_utils/signer/signer.dart';
 import 'package:blockchain_utils/utils/utils.dart';
-import 'package:cosmos_sdk/src/crypto/ed25519/types/types.dart';
+import 'package:cosmos_sdk/src/crypto/keypair/private_key.dart';
+import 'package:cosmos_sdk/src/crypto/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 import 'package:cosmos_sdk/src/protobuf/codec/decoder.dart';
 import 'public_key.dart';
 
-class CosmosED25519PrivateKey extends CosmosMessage {
+class CosmosED25519PrivateKey extends CosmosPrivateKey {
   final Ed25519PrivateKey _privateKey;
   const CosmosED25519PrivateKey._(this._privateKey);
   factory CosmosED25519PrivateKey.fromBytes(List<int> keyBytes) {
@@ -21,14 +22,17 @@ class CosmosED25519PrivateKey extends CosmosMessage {
     return CosmosED25519PrivateKey.fromBytes(BytesUtils.fromHexString(keyHex));
   }
 
+  @override
   CosmosED25519PublicKey toPublicKey() =>
       CosmosED25519PublicKey.fromBytes(_privateKey.publicKey.compressed);
 
+  @override
   List<int> sign(List<int> digest) {
-    final signer = SolanaSigner.fromKeyBytes(toBytes());
+    final signer = CosmosED25519Signer.fromKeyBytes(toBytes());
     return signer.sign(digest);
   }
 
+  @override
   List<int> toBytes() {
     return _privateKey.raw;
   }
@@ -45,5 +49,5 @@ class CosmosED25519PrivateKey extends CosmosMessage {
   List get values => [toBytes()];
 
   @override
-  String get typeUrl => CryptoTypes.ed25519Privatekey.typeUrl;
+  TypeUrl get typeUrl => CosmosCryptoKeysTypes.ed25519Privatekey;
 }

@@ -39,7 +39,7 @@ class EventSend extends CosmosMessage {
   List<int> get fieldIds => [1, 2, 3, 4];
 
   @override
-  String get typeUrl => NFTV1beta1Types.eventSend.typeUrl;
+  TypeUrl get typeUrl => NFTV1beta1Types.eventSend;
 
   @override
   List get values => [classId, id, sender, receiver];

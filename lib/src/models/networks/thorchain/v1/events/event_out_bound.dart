@@ -22,7 +22,7 @@ class ThorchainEventOutbound extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => ThorchainV1Types.eventOutbound.typeUrl;
+  TypeUrl get typeUrl => ThorchainV1Types.eventOutbound;
 
   @override
   List get values => [inTxId, tx];

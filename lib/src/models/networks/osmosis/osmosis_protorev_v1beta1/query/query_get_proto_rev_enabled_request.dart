@@ -4,9 +4,7 @@ import 'query_get_proto_rev_enabled_response.dart';
 
 /// GetProtoRevEnabled queries whether the module is enabled or not
 class OsmosisProtorevQueryGetProtoRevEnabledRequest extends CosmosMessage
-    with
-        QueryMessage<OsmosisProtorevQueryGetProtoRevEnabledResponse>,
-        RPCMessage<OsmosisProtorevQueryGetProtoRevEnabledResponse> {
+    with QueryMessage<OsmosisProtorevQueryGetProtoRevEnabledResponse> {
   const OsmosisProtorevQueryGetProtoRevEnabledRequest();
   factory OsmosisProtorevQueryGetProtoRevEnabledRequest.deserialize(
       List<int> bytes) {
@@ -36,16 +34,9 @@ class OsmosisProtorevQueryGetProtoRevEnabledRequest extends CosmosMessage
   }
 
   @override
-  String get typeUrl =>
-      OsmosisProtorevV1beta1Types.queryGetProtoRevEnabledRequest.typeUrl;
-
-  @override
-  String get queryPath =>
-      OsmosisProtorevV1beta1Types.getProtoRevEnabled.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisProtorevV1beta1Types.queryGetProtoRevEnabledRequest;
 
   @override
   Map<String, String?> get queryParameters => {};
-
-  @override
-  String get rpcPath => OsmosisProtorevV1beta1Types.getProtoRevEnabled.rpcUrl();
 }

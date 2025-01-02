@@ -34,8 +34,8 @@ class DistributionDelegatorStartingInfo extends CosmosMessage {
   }
 
   @override
-  String get typeUrl =>
-      DistributionV1beta1Types.distributionDelegatorStartingInfo.typeUrl;
+  TypeUrl get typeUrl =>
+      DistributionV1beta1Types.distributionDelegatorStartingInfo;
 
   @override
   List get values => [previousPeriod, stake, height];

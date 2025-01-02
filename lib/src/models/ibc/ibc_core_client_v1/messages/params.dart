@@ -8,6 +8,10 @@ class IbcClientParams extends CosmosMessage {
   /// and interacted with. If a client type is removed from the allowed clients list, usage
   /// of this client will be disabled until it is added again to the list.
   final List<String>? allowedClients;
+  factory IbcClientParams.fromRpc(Map<String, dynamic> json) {
+    return IbcClientParams(
+        allowedClients: (json["allowed_clients"] as List?)?.cast());
+  }
   IbcClientParams({List<String>? allowedClients})
       : allowedClients = allowedClients?.emptyAsNull?.immutable;
   factory IbcClientParams.deserialize(List<int> bytes) {
@@ -24,7 +28,7 @@ class IbcClientParams extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.ibcClientParams.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.ibcClientParams;
 
   @override
   List get values => [allowedClients];

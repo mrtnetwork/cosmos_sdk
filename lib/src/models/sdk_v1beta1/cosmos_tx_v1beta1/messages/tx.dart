@@ -3,6 +3,7 @@ import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_tx_v1beta1/messages/tx_
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_tx_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:blockchain_utils/utils/utils.dart';
+import 'package:cosmos_sdk/src/utils/utils.dart';
 
 /// Tx is the standard type used for broadcasting transactions.
 class Tx extends CosmosMessage {
@@ -17,6 +18,16 @@ class Tx extends CosmosMessage {
   /// AuthInfo's signer_infos to allow connecting signature meta information like
   /// public key and signing mode by position.
   final List<List<int>> signatures;
+
+  factory Tx.fromRpc(Map<String, dynamic> json) {
+    return Tx(
+        body: TXBody.fromRpc(json["body"]),
+        authInfo: AuthInfo.fromRpc(json["auth_info"]),
+        signatures: (json["signatures"] as List?)
+                ?.map((e) => CosmosUtils.toBytes(e))
+                .toList() ??
+            []);
+  }
   Tx(
       {required this.body,
       required this.authInfo,
@@ -40,7 +51,7 @@ class Tx extends CosmosMessage {
     return {
       "body": body.toJson(),
       "auth_info": authInfo.toJson(),
-      "signatures": signatures.map((e) => BytesUtils.toHexString(e)).toList()
+      "signatures": signatures.map((e) => CosmosUtils.toBase64(e)).toList()
     };
   }
 
@@ -48,5 +59,5 @@ class Tx extends CosmosMessage {
   List get values => [body, authInfo, signatures];
 
   @override
-  String get typeUrl => TxV1beta1Types.tx.typeUrl;
+  TypeUrl get typeUrl => TxV1beta1Types.tx;
 }

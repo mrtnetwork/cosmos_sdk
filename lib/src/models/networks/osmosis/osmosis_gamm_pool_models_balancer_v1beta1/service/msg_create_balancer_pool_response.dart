@@ -30,6 +30,6 @@ class OsmosisGammPoolmodelsBalancerMsgCreateBalancerPoolResponse
   List get values => [poolId];
 
   @override
-  String get typeUrl => OsmosisGammPoolmodelsBalancerV1beta1Types
-      .msgCreateBalancerPoolResponse.typeUrl;
+  TypeUrl get typeUrl =>
+      OsmosisGammPoolmodelsBalancerV1beta1Types.msgCreateBalancerPoolResponse;
 }

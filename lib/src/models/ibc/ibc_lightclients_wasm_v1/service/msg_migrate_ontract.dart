@@ -36,7 +36,7 @@ class IbcLightClientsWasmMsgMigrateContract extends CosmosMessage
   List<int> get fieldIds => [1, 2, 3, 4];
 
   @override
-  String get service => IbcTypes.ibcLightClientsWasmMigrateContract.typeUrl;
+  TypeUrl get service => IbcTypes.ibcLightClientsWasmMigrateContract;
 
   @override
   Map<String, dynamic> toJson() {
@@ -49,7 +49,7 @@ class IbcLightClientsWasmMsgMigrateContract extends CosmosMessage
   }
 
   @override
-  String get typeUrl => IbcTypes.ibcLightClientsWasmMsgMigrateContract.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.ibcLightClientsWasmMsgMigrateContract;
 
   @override
   List get values => [signer, clientId, checksum, msg];
@@ -60,6 +60,6 @@ class IbcLightClientsWasmMsgMigrateContract extends CosmosMessage
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        IbcTypes.ibcLightClientsWasmMsgMigrateContractResponse.typeUrl);
+        IbcTypes.ibcLightClientsWasmMsgMigrateContractResponse);
   }
 }

@@ -9,6 +9,15 @@ class QueryTotalTimeoutFeesResponse extends CosmosMessage {
   final List<Coin> timeoutFees;
   QueryTotalTimeoutFeesResponse({required List<Coin> timeoutFees})
       : timeoutFees = timeoutFees.immutable;
+
+  factory QueryTotalTimeoutFeesResponse.fromRpc(Map<String, dynamic> json) {
+    return QueryTotalTimeoutFeesResponse(
+        timeoutFees: (json["timeout_fees"] as List?)
+                ?.map((e) => Coin.fromRpc(e))
+                .toList() ??
+            []);
+  }
+
   factory QueryTotalTimeoutFeesResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryTotalTimeoutFeesResponse(
@@ -25,7 +34,7 @@ class QueryTotalTimeoutFeesResponse extends CosmosMessage {
   }
 
   @override
-  String get typeUrl => IbcTypes.queryTotalTimeoutFeesResponse.typeUrl;
+  TypeUrl get typeUrl => IbcTypes.queryTotalTimeoutFeesResponse;
 
   @override
   List get values => [timeoutFees];
