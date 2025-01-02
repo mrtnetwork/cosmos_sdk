@@ -23,7 +23,7 @@ class Result extends CosmosMessage {
   /// msg_responses contains the Msg handler responses type packed in Anys.
   ///
   /// Since: cosmos-sdk 0.46
-  final List<Any> msgResponses;
+  final List<AnyMessage> msgResponses;
   factory Result.fromRpc(Map<String, dynamic> json) {
     return Result(
       data: CosmosUtils.toBytes(json["data"]),
@@ -44,7 +44,7 @@ class Result extends CosmosMessage {
       required List<AnyMessage> msgResponses})
       : data = BytesUtils.tryToBytes(data, unmodifiable: true),
         events = List<Event>.unmodifiable(events),
-        msgResponses = List<Any>.unmodifiable(msgResponses);
+        msgResponses = List<AnyMessage>.unmodifiable(msgResponses);
   factory Result.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Result(

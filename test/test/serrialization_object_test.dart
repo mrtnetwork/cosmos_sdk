@@ -126,7 +126,7 @@ void _moudleAccounts() {
     final resp = QueryModuleAccountsResponse.deserialize(
         BytesUtils.fromHexString(responseHex));
     for (final i in resp.accounts) {
-      expect(i.typeUrl, "/cosmos.auth.v1beta1.ModuleAccount");
+      expect(i.typeUrl.typeUrl, "/cosmos.auth.v1beta1.ModuleAccount");
     }
     expect(resp.toHex, responseHex);
   });
