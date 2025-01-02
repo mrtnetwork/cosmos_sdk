@@ -158,6 +158,9 @@ extension QuickProtocolBufferResult on ProtocolBufferDecoderResult {
         return (value == 1 ? true : false) as T;
       }
     }
+    if(0 is T && value is BigInt) {
+      return (value as BigInt).toInt() as T;
+    }
     throw MessageException("Invalid type.",
         details: {"type": "$T", "Excepted": value.runtimeType.toString()});
   }
