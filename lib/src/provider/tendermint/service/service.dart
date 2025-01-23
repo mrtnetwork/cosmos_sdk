@@ -8,7 +8,7 @@ mixin TendermintServiceProvider
     implements BaseServiceProvider<TendermintRequestDetails> {
   /// Example:
   ///  @override
-  ///   Future<TendermintServiceResponse<T>> doRequest<T>(TendermintRequestDetails params,
+  ///   Future<`TendermintServiceResponse<T>`> doRequest<`T`>(TendermintRequestDetails params,
   ///       {Duration? timeout}) async {
   ///     if (params.type.isPostRequest) {
   ///       final response = await client

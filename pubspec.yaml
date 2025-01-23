@@ -1,6 +1,6 @@
 name: cosmos_sdk
 description: Engage seamlessly with a Cosmos SDK-based network (cosmos hub, osmosis, thor, kujira and etc ... ), enabling the creation, signing, and transmission of transactions. (Beta version)
-version: 2.0.0
+version: 2.1.0
 homepage: "https://github.com/mrtnetwork/cosmos_sdk"
 repository: "https://github.com/mrtnetwork/cosmos_sdk"
 Author: mrhaydari.t@gmail.com
@@ -15,14 +15,14 @@ environment:
   sdk: '>=3.3.0 <4.0.0'
 # Add regular dependencies here.
 dependencies:
-  blockchain_utils: ^4.0.0
+  blockchain_utils: ^4.0.1
   # blockchain_utils:
   #   path: ../../blockchain_utils
 
     
 
 dev_dependencies:
-  lints: ^5.0.0
+  lints: ^5.1.1
   test: ^1.25.9
   flutter_lints: ^5.0.0
 

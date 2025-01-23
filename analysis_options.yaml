@@ -11,17 +11,17 @@
 # (the recommended set includes the core lints).
 # The core lints are also what is used by pub.dev for scoring packages.
 
-# include: package:lints/recommended.yaml
-include: package:flutter_lints/flutter.yaml
+# include: package:flutter_lints/flutter.yaml
+include: package:lints/recommended.yaml
 
 # Uncomment the following section to specify additional rules.
 
 linter:
   rules:
-    - unnecessary_const
-    - prefer_const_declarations
-    - prefer_final_locals      # Warns when a local variable could be final
-    - prefer_final_in_for_each # Warns when a forEach variable could be final
+    # - unnecessary_const
+    # - prefer_const_declarations
+    # - prefer_final_locals      # Warns when a local variable could be final
+    # - prefer_final_in_for_each # Warns when a forEach variable could be final
 
 # analyzer:
 #   exclude:
