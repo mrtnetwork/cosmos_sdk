@@ -42,7 +42,7 @@ class CosmosSecp256R1PublicKey extends CosmosPublicKey {
   List get values => [toBytes()];
 
   @override
-  TypeUrl get typeUrl => CosmosCryptoKeysTypes.ethSecp256k1Publickey;
+  TypeUrl get typeUrl => CosmosCryptoKeysTypes.secp256R1Publickey;
 
   @override
   CosmosKeysAlgs get algorithm => CosmosKeysAlgs.secp256r1;

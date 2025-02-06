@@ -26,7 +26,7 @@ class CosmosNist256p1PrivateKey extends CosmosPrivateKey {
 
   @override
   List<int> sign(List<int> digest) {
-    final signer = CosmosNist256p1Signer.fromKeyBytes(toBytes());
+    final signer = Nist256p1Signer.fromKeyBytes(toBytes());
     return signer.sign(digest);
   }
 
@@ -47,5 +47,5 @@ class CosmosNist256p1PrivateKey extends CosmosPrivateKey {
   List get values => [toBytes()];
 
   @override
-  TypeUrl get typeUrl => CosmosCryptoKeysTypes.ethSecp256k1Privatekey;
+  TypeUrl get typeUrl => CosmosCryptoKeysTypes.secp256R1Privatekey;
 }

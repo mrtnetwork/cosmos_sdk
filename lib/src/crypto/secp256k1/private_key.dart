@@ -27,7 +27,7 @@ class CosmosSecp256K1PrivateKey extends CosmosPrivateKey {
 
   @override
   List<int> sign(List<int> digest) {
-    final signer = CosmosSecp256k1Signer.fromKeyBytes(toBytes());
+    final signer = Secp256k1Signer.fromKeyBytes(toBytes());
     return signer.sign(digest);
   }
 

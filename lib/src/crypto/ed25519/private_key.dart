@@ -28,7 +28,7 @@ class CosmosED25519PrivateKey extends CosmosPrivateKey {
 
   @override
   List<int> sign(List<int> digest) {
-    final signer = CosmosED25519Signer.fromKeyBytes(toBytes());
+    final signer = Ed25519Signer.fromKeyBytes(toBytes());
     return signer.sign(digest);
   }
 
