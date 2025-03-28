@@ -41,7 +41,7 @@ class QueryDelegatorUnbondingDelegationsRequest extends CosmosMessage
   @override
   QueryDelegatorUnbondingDelegationsResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return QueryDelegatorUnbondingDelegationsResponse.fromRpc(json);
+    return QueryDelegatorUnbondingDelegationsResponse.fromJson(json);
   }
 
   @override

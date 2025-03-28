@@ -16,15 +16,15 @@ class QueryIncentivizedPacketsResponse extends CosmosMessage {
       this.pagination})
       : incentivizedPackets = incentivizedPackets.immutable;
 
-  factory QueryIncentivizedPacketsResponse.fromRpc(Map<String, dynamic> json) {
+  factory QueryIncentivizedPacketsResponse.fromJson(Map<String, dynamic> json) {
     return QueryIncentivizedPacketsResponse(
       incentivizedPackets: (json["incentivized_packets"] as List?)
-              ?.map((e) => IbcFeeIdentifiedPacketFees.fromRpc(e))
+              ?.map((e) => IbcFeeIdentifiedPacketFees.fromJson(e))
               .toList() ??
           [],
       pagination: json["pagination"] == null
           ? null
-          : PageResponse.fromRpc(json["pagination"]),
+          : PageResponse.fromJson(json["pagination"]),
     );
   }
 
@@ -32,7 +32,7 @@ class QueryIncentivizedPacketsResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryIncentivizedPacketsResponse(
         incentivizedPackets: decode
-            .getFields(1)
+            .getFields<List<int>>(1)
             .map((e) => IbcFeeIdentifiedPacketFees.deserialize(e))
             .toList(),
         pagination: decode

@@ -11,10 +11,10 @@ class OsmosisPoolincentivesQueryParamsResponse extends CosmosMessage {
     return OsmosisPoolincentivesQueryParamsResponse(
         OsmosisPoolincentivesParams.deserialize(decode.getField(1)));
   }
-  factory OsmosisPoolincentivesQueryParamsResponse.fromRpc(
+  factory OsmosisPoolincentivesQueryParamsResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisPoolincentivesQueryParamsResponse(
-        OsmosisPoolincentivesParams.fromRpc(json["params"]));
+        OsmosisPoolincentivesParams.fromJson(json["params"]));
   }
 
   @override

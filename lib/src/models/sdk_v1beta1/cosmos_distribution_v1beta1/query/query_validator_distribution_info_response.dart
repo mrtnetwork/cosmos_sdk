@@ -15,15 +15,15 @@ class DistributionQueryValidatorDistributionInfoResponse extends CosmosMessage {
 
   /// commission defines the commission the validator received.
   final List<DecCoin> commission;
-  factory DistributionQueryValidatorDistributionInfoResponse.fromRpc(
+  factory DistributionQueryValidatorDistributionInfoResponse.fromJson(
       Map<String, dynamic> json) {
     return DistributionQueryValidatorDistributionInfoResponse(
         commission: (json["commission"] as List?)
-                ?.map((e) => DecCoin.fromRpc(e))
+                ?.map((e) => DecCoin.fromJson(e))
                 .toList() ??
             [],
         selfBondRewards: (json["self_bond_rewards"] as List?)
-                ?.map((e) => DecCoin.fromRpc(e))
+                ?.map((e) => DecCoin.fromJson(e))
                 .toList() ??
             [],
         operatorAddress: json["operator_address"] == null
@@ -43,10 +43,14 @@ class DistributionQueryValidatorDistributionInfoResponse extends CosmosMessage {
         operatorAddress: decode
             .getResult(1)
             ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        selfBondRewards:
-            decode.getFields(2).map((e) => DecCoin.deserialize(e)).toList(),
-        commission:
-            decode.getFields(3).map((e) => DecCoin.deserialize(e)).toList());
+        selfBondRewards: decode
+            .getFields<List<int>>(2)
+            .map((e) => DecCoin.deserialize(e))
+            .toList(),
+        commission: decode
+            .getFields<List<int>>(3)
+            .map((e) => DecCoin.deserialize(e))
+            .toList());
   }
 
   @override

@@ -32,7 +32,7 @@ class OsmosisProtorevQueryGetProtoRevNumberOfTradesRequest extends CosmosMessage
   @override
   OsmosisProtorevQueryGetProtoRevNumberOfTradesResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisProtorevQueryGetProtoRevNumberOfTradesResponse.fromRpc(json);
+    return OsmosisProtorevQueryGetProtoRevNumberOfTradesResponse.fromJson(json);
   }
 
   @override

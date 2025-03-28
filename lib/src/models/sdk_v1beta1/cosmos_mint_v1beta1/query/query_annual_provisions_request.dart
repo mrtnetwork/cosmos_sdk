@@ -32,6 +32,6 @@ class QueryAnnualProvisionsRequest extends CosmosMessage
 
   @override
   QueryAnnualProvisionsResponse onJsonResponse(Map<String, dynamic> json) {
-    return QueryAnnualProvisionsResponse.fromRpc(json);
+    return QueryAnnualProvisionsResponse.fromJson(json);
   }
 }

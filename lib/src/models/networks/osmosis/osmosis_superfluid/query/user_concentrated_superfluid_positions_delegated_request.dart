@@ -38,7 +38,7 @@ class OsmosisSuperfluidTotalSuperfluidDelegationsRequest extends CosmosMessage
   OsmosisSuperfluidUserConcentratedSuperfluidPositionsDelegatedResponse
       onJsonResponse(Map<String, dynamic> json) {
     return OsmosisSuperfluidUserConcentratedSuperfluidPositionsDelegatedResponse
-        .fromRpc(json);
+        .fromJson(json);
   }
 
   @override

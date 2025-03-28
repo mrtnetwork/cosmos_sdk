@@ -10,7 +10,7 @@ class QueryNFTOwnerResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryNFTOwnerResponse(owner: decode.getField(1));
   }
-  factory QueryNFTOwnerResponse.fromRpc(Map<String, dynamic> json) {
+  factory QueryNFTOwnerResponse.fromJson(Map<String, dynamic> json) {
     return QueryNFTOwnerResponse(owner: json["owner"]);
   }
 

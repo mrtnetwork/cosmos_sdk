@@ -15,7 +15,7 @@ class BlockData extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return BlockData(txs: decode.getFields<List<int>>(1));
   }
-  factory BlockData.fromRpc(Map<String, dynamic> json) {
+  factory BlockData.fromJson(Map<String, dynamic> json) {
     return BlockData(
         txs: (json["txs"] as List)
             .map((e) => StringUtils.encode(e, type: StringEncoding.base64))

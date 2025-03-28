@@ -1,10 +1,12 @@
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
+import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_protorev_v1beta1/core/service.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_protorev_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// MsgSetDeveloperAccount defines the Msg/SetDeveloperAccount request type.
-class OsmosisProtorevMsgSetDeveloperAccount extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class OsmosisProtorevMsgSetDeveloperAccount
+    extends OsmosisProtorevV1Beta1<EmptyServiceRequestResponse> {
   /// [admin] is the account that is authorized to set the developer account.
   final String? admin;
 
@@ -14,7 +16,12 @@ class OsmosisProtorevMsgSetDeveloperAccount extends CosmosMessage
 
   const OsmosisProtorevMsgSetDeveloperAccount(
       {this.admin, this.developerAccount});
-
+  factory OsmosisProtorevMsgSetDeveloperAccount.fromJson(
+      Map<String, dynamic> json) {
+    return OsmosisProtorevMsgSetDeveloperAccount(
+        admin: json.as("admin"),
+        developerAccount: json.as("developer_account"));
+  }
   factory OsmosisProtorevMsgSetDeveloperAccount.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisProtorevMsgSetDeveloperAccount(
@@ -40,9 +47,6 @@ class OsmosisProtorevMsgSetDeveloperAccount extends CosmosMessage
     return EmptyServiceRequestResponse(
         OsmosisProtorevV1beta1Types.msgSetDeveloperAccountResponse);
   }
-
-  @override
-  TypeUrl get service => OsmosisProtorevV1beta1Types.setDeveloperAccount;
 
   @override
   List<String?> get signers => [admin];

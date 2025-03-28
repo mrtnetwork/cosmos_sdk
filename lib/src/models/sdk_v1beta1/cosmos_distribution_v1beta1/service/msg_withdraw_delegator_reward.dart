@@ -1,11 +1,14 @@
 import 'package:cosmos_sdk/src/address/address.dart';
+import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_distribution_v1beta1/core/service.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_distribution_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 import 'msg_withdraw_delegator_reward_response.dart';
 
 /// MsgWithdrawDelegatorReward represents delegation withdrawal to a delegator from a single validator.
-class DistributionMsgWithdrawDelegatorReward extends CosmosMessage
-    with ServiceMessage<DistributionMsgWithdrawDelegatorRewardResponse> {
+class DistributionMsgWithdrawDelegatorReward extends DistributionV1Beta1Service<
+        DistributionMsgWithdrawDelegatorRewardResponse>
+    with AminoMessage<DistributionMsgWithdrawDelegatorRewardResponse> {
   final CosmosBaseAddress? delegatorAddress;
   final CosmosBaseAddress? validatorAddress;
   const DistributionMsgWithdrawDelegatorReward(
@@ -20,13 +23,16 @@ class DistributionMsgWithdrawDelegatorReward extends CosmosMessage
             .getResult(2)
             ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)));
   }
+  factory DistributionMsgWithdrawDelegatorReward.fromJson(
+      Map<String, dynamic> json) {
+    return DistributionMsgWithdrawDelegatorReward(
+      delegatorAddress: json.asAddress("delegator_address"),
+      validatorAddress: json.asAddress("validator_address"),
+    );
+  }
 
   @override
   List<int> get fieldIds => [1, 2];
-
-  @override
-  TypeUrl get service =>
-      DistributionV1beta1Types.distributionWithdrawDelegatorReward;
 
   @override
   Map<String, dynamic> toJson() {

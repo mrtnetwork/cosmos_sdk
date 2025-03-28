@@ -10,9 +10,9 @@ class Commission extends CosmosMessage {
   /// update_time is the last time the commission rate was changed.
   final ProtobufTimestamp updateTime;
 
-  factory Commission.fromRpc(Map<String, dynamic> json) {
+  factory Commission.fromJson(Map<String, dynamic> json) {
     return Commission(
-        commissionRates: CommissionRates.fromRpc(json["commission_rates"]),
+        commissionRates: CommissionRates.fromJson(json["commission_rates"]),
         updateTime: ProtobufTimestamp.fromString(json["update_time"]));
   }
   const Commission({required this.commissionRates, required this.updateTime});

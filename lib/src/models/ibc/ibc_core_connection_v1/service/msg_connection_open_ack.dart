@@ -1,4 +1,5 @@
 import 'package:blockchain_utils/utils/utils.dart';
+import 'package:cosmos_sdk/src/models/ibc/core/service.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_client_v1/messages/height.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_connection_v1/messages/version.dart';
 
@@ -6,10 +7,11 @@ import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
 
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// MsgConnectionOpenAck defines a msg sent by a Relayer to Chain A to acknowledge the change of connection state to TRYOPEN on Chain B.
-class IbcConnectionMsgConnectionOpenAck extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class IbcConnectionMsgConnectionOpenAck
+    extends IbcService<EmptyServiceRequestResponse> {
   /// Deprecated: this field is unused. Crossing hellos are no longer supported in core IBC
   final String? connectionId;
   final String? counterpartyConnectionId;
@@ -64,14 +66,29 @@ class IbcConnectionMsgConnectionOpenAck extends CosmosMessage
         proofConsensus: decode.getField(8),
         consensusHeight: IbcClientHeight.deserialize(decode.getField(9)),
         signer: decode.getField(10),
-        hostConsensusStateProof: decode.getField(1));
+        hostConsensusStateProof: decode.getField(11));
+  }
+  factory IbcConnectionMsgConnectionOpenAck.fromJson(
+      Map<String, dynamic> json) {
+    return IbcConnectionMsgConnectionOpenAck(
+        connectionId: json.as("connection_id"),
+        counterpartyConnectionId: json.as("counterparty_connection_id"),
+        version: json.maybeAs<IbcConnectionVersion, Map<String, dynamic>>(
+            key: "version", onValue: IbcConnectionVersion.fromJson),
+        clientState: json.maybeAs<Any, Map<String, dynamic>>(
+            key: "client_state", onValue: Any.fromJson),
+        proofHeight: IbcClientHeight.fromJson(json.asMap("proof_height")),
+        proofTry: json.asBytes("proof_try"),
+        proofClient: json.asBytes("proof_client"),
+        proofConsensus: json.asBytes("proof_consensus"),
+        consensusHeight:
+            IbcClientHeight.fromJson(json.asMap("consensus_height")),
+        signer: json.as("signer"),
+        hostConsensusStateProof: json.asBytes("host_consensus_state_proof"));
   }
 
   @override
   List<int> get fieldIds => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
-
-  @override
-  TypeUrl get service => IbcTypes.ibcConnectionConnectionOpenAck;
 
   @override
   Map<String, dynamic> toJson() {

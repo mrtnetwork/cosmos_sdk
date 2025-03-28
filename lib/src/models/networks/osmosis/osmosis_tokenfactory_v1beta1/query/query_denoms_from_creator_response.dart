@@ -13,7 +13,7 @@ class OsmosisTokenFactoryQueryDenomsFromCreatorResponse extends CosmosMessage {
     return OsmosisTokenFactoryQueryDenomsFromCreatorResponse(
         denoms: decode.getFields<String>(1));
   }
-  factory OsmosisTokenFactoryQueryDenomsFromCreatorResponse.fromRpc(
+  factory OsmosisTokenFactoryQueryDenomsFromCreatorResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisTokenFactoryQueryDenomsFromCreatorResponse(
         denoms: (json["denoms"] as List?)?.cast());

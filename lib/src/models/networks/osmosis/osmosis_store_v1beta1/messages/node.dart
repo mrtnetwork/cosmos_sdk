@@ -11,7 +11,7 @@ class OsmosisStoreNode extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisStoreNode(
         children: decode
-            .getFields(1)
+            .getFields<List<int>>(1)
             .map((e) => OsmosisStoreChild.deserialize(e))
             .toList());
   }

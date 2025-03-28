@@ -13,7 +13,7 @@ class OsmosisGammQuerySwapExactAmountOutResponse extends CosmosMessage {
     return OsmosisGammQuerySwapExactAmountOutResponse(
         BigInt.parse(decode.getField(1)));
   }
-  factory OsmosisGammQuerySwapExactAmountOutResponse.fromRpc(
+  factory OsmosisGammQuerySwapExactAmountOutResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisGammQuerySwapExactAmountOutResponse(
         BigintUtils.parse(json["token_in_amount"]));

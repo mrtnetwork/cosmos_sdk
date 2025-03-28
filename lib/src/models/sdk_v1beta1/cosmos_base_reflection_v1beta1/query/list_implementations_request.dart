@@ -35,7 +35,7 @@ class ListImplementationsRequest extends CosmosMessage
 
   @override
   ListImplementationsResponse onJsonResponse(Map<String, dynamic> json) {
-    return ListImplementationsResponse.fromRpc(json);
+    return ListImplementationsResponse.fromJson(json);
   }
 
   @override

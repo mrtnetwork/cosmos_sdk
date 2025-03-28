@@ -14,11 +14,11 @@ class OsmosisLockupAccountLockedLongerDurationNotUnlockingOnlyResponse
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisLockupAccountLockedLongerDurationNotUnlockingOnlyResponse(
         decode
-            .getFields(1)
+            .getFields<List<int>>(1)
             .map((e) => OsmosisLockupPeriodLock.deserialize(e))
             .toList());
   }
-  factory OsmosisLockupAccountLockedLongerDurationNotUnlockingOnlyResponse.fromRpc(
+  factory OsmosisLockupAccountLockedLongerDurationNotUnlockingOnlyResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisLockupAccountLockedLongerDurationNotUnlockingOnlyResponse(
         (json["locks"] as List?)

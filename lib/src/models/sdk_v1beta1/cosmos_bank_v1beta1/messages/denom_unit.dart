@@ -17,7 +17,7 @@ class DenomUnit extends CosmosMessage {
   /// aliases is a list of string aliases for the given denom
   final List<String> aliases;
   const DenomUnit({required this.denom, this.exponent, required this.aliases});
-  factory DenomUnit.fromRpc(Map<String, dynamic> json) {
+  factory DenomUnit.fromJson(Map<String, dynamic> json) {
     return DenomUnit(
         denom: json["denom"],
         aliases: (json["aliases"] as List?)?.cast() ?? [],

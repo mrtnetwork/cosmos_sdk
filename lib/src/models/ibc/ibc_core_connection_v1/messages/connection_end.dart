@@ -26,16 +26,16 @@ class IbcConnectionConnectionEnd extends CosmosMessage {
   /// packet-verification NOTE: delay period logic is only implemented by some
   /// clients.
   final BigInt? delayPeriod;
-  factory IbcConnectionConnectionEnd.fromRpc(Map<String, dynamic> json) {
+  factory IbcConnectionConnectionEnd.fromJson(Map<String, dynamic> json) {
     return IbcConnectionConnectionEnd(
       clientId: json["client_id"],
-      counterparty: IbcConnectionCounterparty.fromRpc(json["counterparty"]),
+      counterparty: IbcConnectionCounterparty.fromJson(json["counterparty"]),
       delayPeriod: BigintUtils.tryParse(json["delay_period"]),
       state: json["state"] == null
           ? null
           : IbcConnectionState.fromValue(json["state"]),
       versions: (json["versions"] as List?)
-          ?.map((e) => IbcConnectionVersion.fromRpc(e))
+          ?.map((e) => IbcConnectionVersion.fromJson(e))
           .toList(),
     );
   }
@@ -51,7 +51,7 @@ class IbcConnectionConnectionEnd extends CosmosMessage {
     return IbcConnectionConnectionEnd(
         clientId: decode.getField(1),
         versions: decode
-            .getFields(2)
+            .getFields<List<int>>(2)
             .map((e) => IbcConnectionVersion.deserialize(e))
             .toList(),
         state: decode.getResult(3)?.to<IbcConnectionState, int>(

@@ -40,7 +40,7 @@ class OsmosisValidatorPreferenceQueryUserValidatorPreferences
   OsmosisValidatorPreferenceQueryUserValidatorPreferenceResponse onJsonResponse(
       Map<String, dynamic> json) {
     return OsmosisValidatorPreferenceQueryUserValidatorPreferenceResponse
-        .fromRpc(json);
+        .fromJson(json);
   }
 
   @override

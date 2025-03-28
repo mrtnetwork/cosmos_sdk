@@ -18,7 +18,7 @@ class OsmosisProtorevConcentratedPoolInfo extends CosmosMessage {
     return OsmosisProtorevConcentratedPoolInfo(
         weight: decode.getField(1), maxTicksCrossed: decode.getField(2));
   }
-  factory OsmosisProtorevConcentratedPoolInfo.fromRpc(
+  factory OsmosisProtorevConcentratedPoolInfo.fromJson(
       Map<String, dynamic> json) {
     return OsmosisProtorevConcentratedPoolInfo(
         weight: BigintUtils.tryParse(json["weight"]),

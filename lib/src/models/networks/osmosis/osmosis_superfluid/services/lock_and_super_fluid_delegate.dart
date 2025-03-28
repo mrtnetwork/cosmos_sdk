@@ -1,13 +1,15 @@
+import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_superfluid/core/service.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_superfluid/types/types.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_v1beta1/messages/coin.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:blockchain_utils/helper/helper.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 import 'msg_lock_and_super_fluid_delegate_response.dart';
 
 /// Execute superfluid delegation for a lockup
-class OsmosisSuperfluidMsgLockAndSuperfluidDelegate extends CosmosMessage
-    with ServiceMessage<OsmosisSuperfluidMsgLockAndSuperfluidDelegateResponse> {
+class OsmosisSuperfluidMsgLockAndSuperfluidDelegate extends OsmosisSuperfluid<
+    OsmosisSuperfluidMsgLockAndSuperfluidDelegateResponse> {
   final String? sender;
   final List<Coin> coins;
   final String? valAddr;
@@ -19,9 +21,21 @@ class OsmosisSuperfluidMsgLockAndSuperfluidDelegate extends CosmosMessage
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidMsgLockAndSuperfluidDelegate(
-        coins: decode.getFields(2).map((e) => Coin.deserialize(e)).toList(),
+        coins: decode
+            .getFields<List<int>>(2)
+            .map((e) => Coin.deserialize(e))
+            .toList(),
         sender: decode.getField(1),
         valAddr: decode.getField(3));
+  }
+  factory OsmosisSuperfluidMsgLockAndSuperfluidDelegate.fromJson(
+      Map<String, dynamic> json) {
+    return OsmosisSuperfluidMsgLockAndSuperfluidDelegate(
+        coins:
+            json.asListOfMap("coins")?.map((e) => Coin.fromJson(e)).toList() ??
+                [],
+        sender: json.as("sender"),
+        valAddr: json.as("val_addr"));
   }
 
   @override
@@ -41,9 +55,6 @@ class OsmosisSuperfluidMsgLockAndSuperfluidDelegate extends CosmosMessage
 
   @override
   List get values => [sender, coins, valAddr];
-
-  @override
-  TypeUrl get service => OsmosisSuperfluidTypes.lockAndSuperfluidDelegate;
 
   @override
   List<String?> get signers => [sender];

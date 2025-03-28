@@ -41,7 +41,7 @@ class DistributionQueryValidatorCommissionRequest extends CosmosMessage
   @override
   DistributionQueryValidatorCommissionResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return DistributionQueryValidatorCommissionResponse.fromRpc(json);
+    return DistributionQueryValidatorCommissionResponse.fromJson(json);
   }
 
   @override

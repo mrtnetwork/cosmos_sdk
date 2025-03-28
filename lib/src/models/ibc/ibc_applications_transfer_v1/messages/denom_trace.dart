@@ -10,7 +10,7 @@ class DenomTrace extends CosmosMessage {
   /// base denomination of the relayed fungible token.
   final String? baseDenom;
   const DenomTrace({this.path, this.baseDenom});
-  factory DenomTrace.fromRpc(Map<String, dynamic> json) {
+  factory DenomTrace.fromJson(Map<String, dynamic> json) {
     return DenomTrace(baseDenom: json["base_denom"], path: json["path"]);
   }
   factory DenomTrace.deserialize(List<int> bytes) {

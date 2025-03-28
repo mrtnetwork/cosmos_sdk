@@ -2,6 +2,7 @@ import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_applications_interchain_accounts_v1/messages/type.dart';
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 class InterchainAccountPacketData extends CosmosMessage {
   final InterchainAccountType? type;
@@ -16,6 +17,13 @@ class InterchainAccountPacketData extends CosmosMessage {
             (e) => InterchainAccountType.fromValue(e)),
         data: decode.getField(2),
         memo: decode.getField(3));
+  }
+  factory InterchainAccountPacketData.fromJson(Map<String, dynamic> json) {
+    return InterchainAccountPacketData(
+        type: json.maybeAs<InterchainAccountType, String>(
+            key: "type", onValue: InterchainAccountType.fromValue),
+        data: json.asBytes("data"),
+        memo: json.as("memo"));
   }
 
   @override

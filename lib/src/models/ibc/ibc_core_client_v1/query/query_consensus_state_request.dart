@@ -60,7 +60,7 @@ class IbcClientQueryConsensusStateRequest extends CosmosMessage
   @override
   IbcClientQueryConsensusStateResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return IbcClientQueryConsensusStateResponse.fromRpc(json);
+    return IbcClientQueryConsensusStateResponse.fromJson(json);
   }
 
   @override

@@ -25,7 +25,7 @@ class ThorchainTHORName extends CosmosMessage {
       owner: decode.getField(3),
       preferredAsset: ThorchainAsset.deserialize(decode.getField(4)),
       aliases: decode
-          .getFields(5)
+          .getFields<List<int>>(5)
           .map((e) => ThorchainTHORNameAlias.deserialize(e))
           .toList(),
     );

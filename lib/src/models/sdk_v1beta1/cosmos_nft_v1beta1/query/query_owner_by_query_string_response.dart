@@ -11,7 +11,7 @@ class QueryOwnerByQueryStringResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryOwnerByQueryStringResponse(owner: decode.getField(1));
   }
-  factory QueryOwnerByQueryStringResponse.fromRpc(Map<String, dynamic> json) {
+  factory QueryOwnerByQueryStringResponse.fromJson(Map<String, dynamic> json) {
     return QueryOwnerByQueryStringResponse(owner: json["owner"]);
   }
 

@@ -13,14 +13,14 @@ class QuerySpendableBalancesResponse extends CosmosMessage {
   /// pagination defines the pagination in the response.
   final PageResponse? pagination;
 
-  factory QuerySpendableBalancesResponse.fromRpc(Map<String, dynamic> json) {
+  factory QuerySpendableBalancesResponse.fromJson(Map<String, dynamic> json) {
     return QuerySpendableBalancesResponse(
       balances:
-          (json["balances"] as List?)?.map((e) => Coin.fromRpc(e)).toList() ??
+          (json["balances"] as List?)?.map((e) => Coin.fromJson(e)).toList() ??
               [],
       pagination: json["pagination"] == null
           ? null
-          : PageResponse.fromRpc(json["pagination"]),
+          : PageResponse.fromJson(json["pagination"]),
     );
   }
   const QuerySpendableBalancesResponse(

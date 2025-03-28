@@ -38,7 +38,7 @@ class OsmosisStreamSwapQueryUserPosition extends CosmosMessage
   @override
   OsmosisStreamSwapQueryUserPositionResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisStreamSwapQueryUserPositionResponse.fromRpc(json);
+    return OsmosisStreamSwapQueryUserPositionResponse.fromJson(json);
   }
 
   @override

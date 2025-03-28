@@ -1,12 +1,14 @@
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
+import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_tokenfactory_v1beta1/core/service.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_tokenfactory_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_v1beta1/messages/coin.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// MsgBurn is the sdk.Msg type for allowing an admin account to burn a token.
 /// For now, we only support burning from the sender account.
-class OsmosisTokenFactoryMsgBurn extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class OsmosisTokenFactoryMsgBurn
+    extends OsmosisTokenFactoryV1Beta1<EmptyServiceRequestResponse> {
   final String? sender;
 
   final Coin amount;
@@ -16,6 +18,10 @@ class OsmosisTokenFactoryMsgBurn extends CosmosMessage
     return OsmosisTokenFactoryMsgBurn(
         sender: decode.getField(1),
         amount: Coin.deserialize(decode.getField(2)));
+  }
+  factory OsmosisTokenFactoryMsgBurn.fromJson(Map<String, dynamic> json) {
+    return OsmosisTokenFactoryMsgBurn(
+        sender: json.as("sender"), amount: Coin.fromJson(json.asMap("amount")));
   }
 
   @override
@@ -37,9 +43,6 @@ class OsmosisTokenFactoryMsgBurn extends CosmosMessage
     return EmptyServiceRequestResponse(
         OsmosisTokenFactoryV1beta1Types.msgBurnResponse);
   }
-
-  @override
-  TypeUrl get service => OsmosisTokenFactoryV1beta1Types.burn;
 
   @override
   List<String?> get signers => [sender];

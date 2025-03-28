@@ -14,13 +14,13 @@ class QueryPacketAcknowledgementsResponse extends CosmosMessage {
 
   /// query block height
   final IbcClientHeight height;
-  factory QueryPacketAcknowledgementsResponse.fromRpc(
+  factory QueryPacketAcknowledgementsResponse.fromJson(
       Map<String, dynamic> json) {
     return QueryPacketAcknowledgementsResponse(
-      height: IbcClientHeight.fromRpc(json["height"]),
+      height: IbcClientHeight.fromJson(json["height"]),
       pagination: json["pagination"] == null
           ? null
-          : PageResponse.fromRpc(json["pagination"]),
+          : PageResponse.fromJson(json["pagination"]),
     );
   }
   QueryPacketAcknowledgementsResponse(
@@ -32,7 +32,7 @@ class QueryPacketAcknowledgementsResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryPacketAcknowledgementsResponse(
       acknowledgements: decode
-          .getFields(1)
+          .getFields<List<int>>(1)
           .map((e) => IbcChannelPacketState.deserialize(e))
           .toList(),
       pagination: decode

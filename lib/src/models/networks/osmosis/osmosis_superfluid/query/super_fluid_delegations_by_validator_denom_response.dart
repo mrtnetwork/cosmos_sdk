@@ -17,18 +17,18 @@ class OsmosisSuperfluidSuperfluidDelegationsByValidatorDenomResponse
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidSuperfluidDelegationsByValidatorDenomResponse(
         superfluidDelegationRecords: decode
-            .getFields(1)
+            .getFields<List<int>>(1)
             .map((e) =>
                 OsmosisSuperfluidSuperfluidDelegationRecord.deserialize(e))
             .toList());
   }
-  factory OsmosisSuperfluidSuperfluidDelegationsByValidatorDenomResponse.fromRpc(
+  factory OsmosisSuperfluidSuperfluidDelegationsByValidatorDenomResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisSuperfluidSuperfluidDelegationsByValidatorDenomResponse(
         superfluidDelegationRecords:
             (json["superfluid_delegation_records"] as List?)
                     ?.map((e) =>
-                        OsmosisSuperfluidSuperfluidDelegationRecord.fromRpc(e))
+                        OsmosisSuperfluidSuperfluidDelegationRecord.fromJson(e))
                     .toList() ??
                 <OsmosisSuperfluidSuperfluidDelegationRecord>[]);
   }

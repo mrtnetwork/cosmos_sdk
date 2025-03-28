@@ -23,7 +23,7 @@ class ThorchainObservedNetworkFeeVoter extends CosmosMessage {
         blockHeight: decode.getField(1),
         reportBlockHeight: decode.getField(2),
         chain: decode.getField(3),
-        signers: decode.getFields(4),
+        signers: decode.getFields<String>(4),
         feeRate: decode.getField(5),
         transactionSize: decode.getField(6));
   }

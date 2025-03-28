@@ -1,14 +1,16 @@
 import 'package:blockchain_utils/blockchain_utils.dart';
+import 'package:cosmos_sdk/src/models/ibc/core/service.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_channel_v1/messages/packet.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_client_v1/messages/height.dart';
 
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 import 'msg_timeout_response.dart';
 
 /// MsgTimeout receives timed-out packet
-class MsgTimeout extends CosmosMessage with ServiceMessage<MsgTimeoutResponse> {
+class MsgTimeout extends IbcService<MsgTimeoutResponse> {
   final IbcChannelPacket packet;
   final List<int>? proofUnreceived;
   final IbcClientHeight proofHeight;
@@ -31,12 +33,16 @@ class MsgTimeout extends CosmosMessage with ServiceMessage<MsgTimeoutResponse> {
         nextSequenceRecv: decode.getField(4),
         signer: decode.getField(5));
   }
-
+  factory MsgTimeout.fromJson(Map<String, dynamic> json) {
+    return MsgTimeout(
+        packet: IbcChannelPacket.fromJson(json.asMap("packet")),
+        proofUnreceived: json.asBytes("proof_unreceived"),
+        proofHeight: IbcClientHeight.fromJson(json.asMap("proof_unreceived")),
+        nextSequenceRecv: json.asBigInt("next_sequence_recv"),
+        signer: json.as("signer"));
+  }
   @override
   List<int> get fieldIds => [1, 2, 3, 4, 5];
-
-  @override
-  TypeUrl get service => IbcTypes.serviceTimeout;
 
   @override
   Map<String, dynamic> toJson() {

@@ -1,8 +1,9 @@
+import 'package:blockchain_utils/helper/helper.dart';
 import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 
 class OsmosisLockupTypes extends TypeUrl {
   const OsmosisLockupTypes._(super.typeUrl, {super.query, super.rpc});
-
+  static const String root = "/osmosis.lockup";
   static const OsmosisLockupTypes periodLock =
       OsmosisLockupTypes._("/osmosis.lockup.PeriodLock");
   static const OsmosisLockupTypes syntheticLock =
@@ -148,15 +149,13 @@ class OsmosisLockupTypes extends TypeUrl {
           rpc:
               "/osmosis/lockup/v1beta1/account_locked_longer_duration_denom/:owner");
 
-  ///
-
-  /// service
-  static const OsmosisLockupTypes lockTokens =
-      OsmosisLockupTypes._("/osmosis.lockup.Msg/LockTokens");
-  static const OsmosisLockupTypes beginUnlockingAll =
-      OsmosisLockupTypes._("/osmosis.lockup.Msg/BeginUnlockingAll");
-  static const OsmosisLockupTypes beginUnlocking =
-      OsmosisLockupTypes._("/osmosis.lockup.Msg/BeginUnlocking");
-  static const OsmosisLockupTypes extendLockup =
-      OsmosisLockupTypes._("/osmosis.lockup.Msg/ExtendLockup");
+  static const List<TypeUrl> services = [
+    msgBeginUnlockingAll,
+    msgBeginUnlocking,
+    msgExtendLockup,
+    msgLockTokens
+  ];
+  static TypeUrl? findService(String? typeUrl) {
+    return services.firstWhereNullable((e) => e.typeUrl == typeUrl);
+  }
 }

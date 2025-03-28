@@ -14,12 +14,12 @@ class OsmosisLockupSyntheticLockupsByLockupIDResponse extends CosmosMessage {
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisLockupSyntheticLockupsByLockupIDResponse(decode
-        .getFields(1)
+        .getFields<List<int>>(1)
         .map((e) => OsmosisLockupSyntheticLock.deserialize(e))
         .toList());
   }
 
-  factory OsmosisLockupSyntheticLockupsByLockupIDResponse.fromRpc(
+  factory OsmosisLockupSyntheticLockupsByLockupIDResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisLockupSyntheticLockupsByLockupIDResponse(
         (json["synthetic_locks"] as List?)

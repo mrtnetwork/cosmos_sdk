@@ -10,15 +10,16 @@ class QueryDelegatorDelegationsResponse extends CosmosMessage {
 
   /// pagination defines the pagination in the response.
   final PageResponse? pagination;
-  factory QueryDelegatorDelegationsResponse.fromRpc(Map<String, dynamic> json) {
+  factory QueryDelegatorDelegationsResponse.fromJson(
+      Map<String, dynamic> json) {
     return QueryDelegatorDelegationsResponse(
       delegationResponses: (json["delegation_responses"] as List?)
-              ?.map((e) => DelegationResponse.fromRpc(e))
+              ?.map((e) => DelegationResponse.fromJson(e))
               .toList() ??
           [],
       pagination: json["pagination"] == null
           ? null
-          : PageResponse.fromRpc(json["pagination"]),
+          : PageResponse.fromJson(json["pagination"]),
     );
   }
 

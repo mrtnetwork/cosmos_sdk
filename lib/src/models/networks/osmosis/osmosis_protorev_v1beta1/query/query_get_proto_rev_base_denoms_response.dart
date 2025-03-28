@@ -14,15 +14,15 @@ class OsmosisProtorevQueryGetProtoRevBaseDenomsResponse extends CosmosMessage {
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisProtorevQueryGetProtoRevBaseDenomsResponse(decode
-        .getFields(1)
+        .getFields<List<int>>(1)
         .map((e) => OsmosisProtorevBaseDenom.deserialize(e))
         .toList());
   }
-  factory OsmosisProtorevQueryGetProtoRevBaseDenomsResponse.fromRpc(
+  factory OsmosisProtorevQueryGetProtoRevBaseDenomsResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisProtorevQueryGetProtoRevBaseDenomsResponse(
         (json["base_denoms"] as List?)
-                ?.map((e) => OsmosisProtorevBaseDenom.fromRpc(e))
+                ?.map((e) => OsmosisProtorevBaseDenom.fromJson(e))
                 .toList() ??
             <OsmosisProtorevBaseDenom>[]);
   }

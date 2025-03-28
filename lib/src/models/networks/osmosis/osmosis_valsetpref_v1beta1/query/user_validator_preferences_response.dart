@@ -14,15 +14,15 @@ class OsmosisValSetprefUserValidatorPreferencesResponse extends CosmosMessage {
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisValSetprefUserValidatorPreferencesResponse(decode
-        .getFields(1)
+        .getFields<List<int>>(1)
         .map((e) => OsmosisValSetprefValidatorPreference.deserialize(e))
         .toList());
   }
-  factory OsmosisValSetprefUserValidatorPreferencesResponse.fromRpc(
+  factory OsmosisValSetprefUserValidatorPreferencesResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisValSetprefUserValidatorPreferencesResponse(
         (json["preferences"] as List?)
-                ?.map((e) => OsmosisValSetprefValidatorPreference.fromRpc(e))
+                ?.map((e) => OsmosisValSetprefValidatorPreference.fromJson(e))
                 .toList() ??
             <OsmosisValSetprefValidatorPreference>[]);
   }

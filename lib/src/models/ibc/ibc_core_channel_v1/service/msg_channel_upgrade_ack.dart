@@ -1,15 +1,16 @@
 import 'package:blockchain_utils/blockchain_utils.dart';
+import 'package:cosmos_sdk/src/models/ibc/core/service.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_channel_v1/messages/upgrade.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_client_v1/messages/height.dart';
 
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 import 'msg_channel_upgrade_ack_response.dart';
 
 /// MsgChannelUpgradeAck defines the request type for the ChannelUpgradeAck rpc
-class MsgChannelUpgradeAck extends CosmosMessage
-    with ServiceMessage<MsgChannelUpgradeAckResponse> {
+class MsgChannelUpgradeAck extends IbcService<MsgChannelUpgradeAckResponse> {
   final String? portId;
   final String? channelId;
   final IbcChannelUpgrade counterpartyUpgrade;
@@ -38,12 +39,20 @@ class MsgChannelUpgradeAck extends CosmosMessage
         proofHeight: IbcClientHeight.deserialize(decode.getField(6)),
         signer: decode.getField(7));
   }
+  factory MsgChannelUpgradeAck.fromJson(Map<String, dynamic> json) {
+    return MsgChannelUpgradeAck(
+        portId: json.as("port_id"),
+        channelId: json.as("channel_id"),
+        counterpartyUpgrade:
+            IbcChannelUpgrade.fromJson(json.asMap("counterparty_upgrade")),
+        proofChannel: json.asBytes("proof_channel"),
+        proofUpgrade: json.asBytes("proof_upgrade"),
+        proofHeight: IbcClientHeight.fromJson(json.asMap("proof_height")),
+        signer: json.as("signer"));
+  }
 
   @override
   List<int> get fieldIds => [1, 2, 3, 4, 5, 6, 7];
-
-  @override
-  TypeUrl get service => IbcTypes.channelUpgradeAck;
 
   @override
   Map<String, dynamic> toJson() {

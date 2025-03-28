@@ -1,5 +1,6 @@
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_poolmanager_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 class OsmosisPoolManagerSwapAmountOutRoute extends CosmosMessage {
   final BigInt? poolId;
@@ -11,6 +12,12 @@ class OsmosisPoolManagerSwapAmountOutRoute extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolManagerSwapAmountOutRoute(
         poolId: decode.getField(1), tokenInDenom: decode.getField(2));
+  }
+  factory OsmosisPoolManagerSwapAmountOutRoute.fromJson(
+      Map<String, dynamic> json) {
+    return OsmosisPoolManagerSwapAmountOutRoute(
+        poolId: json.asBigInt("pool_id"),
+        tokenInDenom: json.as("token_in_denom"));
   }
 
   @override

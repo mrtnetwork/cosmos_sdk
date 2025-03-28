@@ -8,7 +8,7 @@ import 'package:cosmos_sdk/src/utils/utils.dart';
 /// be append(Path.KeyPath, append(Path.KeyPrefix, key...))
 class IbcCommitmentMerklePrefix extends CosmosMessage {
   final List<int>? keyPrefix;
-  factory IbcCommitmentMerklePrefix.fromRpc(Map<String, dynamic> json) {
+  factory IbcCommitmentMerklePrefix.fromJson(Map<String, dynamic> json) {
     return IbcCommitmentMerklePrefix(
         keyPrefix: CosmosUtils.tryToBytes(json["key_prefix"]));
   }

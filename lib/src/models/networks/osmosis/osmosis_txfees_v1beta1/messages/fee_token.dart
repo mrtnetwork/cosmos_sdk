@@ -16,7 +16,7 @@ class OsmosisTxfeesFeeToken extends CosmosMessage {
       poolID: decode.getField(2),
     );
   }
-  factory OsmosisTxfeesFeeToken.fromRpc(Map<String, dynamic> json) {
+  factory OsmosisTxfeesFeeToken.fromJson(Map<String, dynamic> json) {
     return OsmosisTxfeesFeeToken(denom: json["denom"], poolID: json["poolID"]);
   }
 

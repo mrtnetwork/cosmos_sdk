@@ -31,7 +31,7 @@ class OsmosisSuperfluidAssetTypeRequest extends CosmosMessage
 
   @override
   OsmosisSuperfluidAssetTypeResponse onJsonResponse(Map<String, dynamic> json) {
-    return OsmosisSuperfluidAssetTypeResponse.fromRpc(json);
+    return OsmosisSuperfluidAssetTypeResponse.fromJson(json);
   }
 
   @override

@@ -1,12 +1,14 @@
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
+import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_incentives/core/service.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_incentives/types/types.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_v1beta1/messages/coin.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:blockchain_utils/helper/helper.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// MsgAddToGauge adds coins to a previously created gauge
-class OsmosisIncentiveMsgAddToGauge extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class OsmosisIncentiveMsgAddToGauge
+    extends OsmosisIncentives<EmptyServiceRequestResponse> {
   /// owner is the gauge owner's address
   final String? owner;
 
@@ -24,14 +26,24 @@ class OsmosisIncentiveMsgAddToGauge extends CosmosMessage
     return OsmosisIncentiveMsgAddToGauge(
         owner: decode.getField(1),
         gaugeId: decode.getField(2),
-        rewards: decode.getFields(3).map((e) => Coin.deserialize(e)).toList());
+        rewards: decode
+            .getFields<List<int>>(3)
+            .map((e) => Coin.deserialize(e))
+            .toList());
+  }
+  factory OsmosisIncentiveMsgAddToGauge.fromJson(Map<String, dynamic> json) {
+    return OsmosisIncentiveMsgAddToGauge(
+        owner: json.as("owner"),
+        gaugeId: json.asBigInt("gauge_id"),
+        rewards: json
+                .asListOfMap("rewards")
+                ?.map((e) => Coin.fromJson(e))
+                .toList() ??
+            []);
   }
 
   @override
   List<int> get fieldIds => [1, 2, 3];
-
-  @override
-  TypeUrl get service => OsmosisIncentivesTypes.addToGauge;
 
   @override
   List<String?> get signers => [owner];

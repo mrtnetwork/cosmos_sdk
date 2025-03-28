@@ -17,8 +17,10 @@ class DistributionValidatorCurrentRewards extends CosmosMessage {
   factory DistributionValidatorCurrentRewards.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionValidatorCurrentRewards(
-        rewards:
-            decode.getFields(1).map((e) => DecCoin.deserialize(e)).toList(),
+        rewards: decode
+            .getFields<List<int>>(1)
+            .map((e) => DecCoin.deserialize(e))
+            .toList(),
         period: decode.getField(2));
   }
 

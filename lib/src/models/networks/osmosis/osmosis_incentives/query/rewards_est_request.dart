@@ -61,7 +61,7 @@ class OsmosisIncentiveRewardsEstRequest extends CosmosMessage
 
   @override
   OsmosisIncentiveRewardsEstResponse onJsonResponse(Map<String, dynamic> json) {
-    return OsmosisIncentiveRewardsEstResponse.fromRpc(json);
+    return OsmosisIncentiveRewardsEstResponse.fromJson(json);
   }
 
   @override

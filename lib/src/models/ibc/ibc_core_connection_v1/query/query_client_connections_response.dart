@@ -16,10 +16,10 @@ class IbcConnectionQueryClientConnectionsResponse extends CosmosMessage {
   /// height at which the proof was generated
   final IbcClientHeight proofHeight;
 
-  factory IbcConnectionQueryClientConnectionsResponse.fromRpc(
+  factory IbcConnectionQueryClientConnectionsResponse.fromJson(
       Map<String, dynamic> json) {
     return IbcConnectionQueryClientConnectionsResponse(
-        proofHeight: IbcClientHeight.fromRpc(json["proof_height"]),
+        proofHeight: IbcClientHeight.fromJson(json["proof_height"]),
         connectionPaths: (json["connection_paths"] as List?)?.cast(),
         proof: CosmosUtils.tryToBytes(json["proof"]));
   }

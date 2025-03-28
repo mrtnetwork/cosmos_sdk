@@ -35,7 +35,7 @@ class OsmosisProtorevQueryGetProtoRevTokenPairArbRoutesRequest
   @override
   OsmosisProtorevQueryGetProtoRevTokenPairArbRoutesResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisProtorevQueryGetProtoRevTokenPairArbRoutesResponse.fromRpc(
+    return OsmosisProtorevQueryGetProtoRevTokenPairArbRoutesResponse.fromJson(
         json);
   }
 

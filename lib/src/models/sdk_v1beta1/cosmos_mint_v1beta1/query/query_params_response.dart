@@ -11,8 +11,8 @@ class QueryMintParamsResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryMintParamsResponse(MintParams.deserialize(decode.getField(1)));
   }
-  factory QueryMintParamsResponse.fromRpc(Map<String, dynamic> json) {
-    return QueryMintParamsResponse(MintParams.fromRpc(json["params"]));
+  factory QueryMintParamsResponse.fromJson(Map<String, dynamic> json) {
+    return QueryMintParamsResponse(MintParams.fromJson(json["params"]));
   }
   @override
   List<int> get fieldIds => [1];

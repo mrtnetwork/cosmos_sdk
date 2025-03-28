@@ -40,7 +40,7 @@ class QueryUpgradeErrorRequest extends CosmosMessage
 
   @override
   QueryUpgradeErrorResponse onJsonResponse(Map<String, dynamic> json) {
-    return QueryUpgradeErrorResponse.fromRpc(json);
+    return QueryUpgradeErrorResponse.fromJson(json);
   }
 
   @override

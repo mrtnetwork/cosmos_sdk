@@ -13,7 +13,7 @@ class QueryAccountAddressByIDResponse extends CosmosMessage {
     return QueryAccountAddressByIDResponse(
         CosmosBaseAddress(decode.getField(1)));
   }
-  factory QueryAccountAddressByIDResponse.fromRpc(Map<String, dynamic> json) {
+  factory QueryAccountAddressByIDResponse.fromJson(Map<String, dynamic> json) {
     return QueryAccountAddressByIDResponse(
         CosmosBaseAddress.fromBytes(json["account_address"]));
   }

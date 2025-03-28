@@ -11,8 +11,10 @@ class FeeGrantGenesisState extends CosmosMessage {
       : allowances = allowances.immutable;
   factory FeeGrantGenesisState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return FeeGrantGenesisState(
-        decode.getFields(1).map((e) => FeeGrant.deserialize(e)).toList());
+    return FeeGrantGenesisState(decode
+        .getFields<List<int>>(1)
+        .map((e) => FeeGrant.deserialize(e))
+        .toList());
   }
 
   @override

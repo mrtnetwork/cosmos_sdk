@@ -1,7 +1,9 @@
+import 'package:blockchain_utils/helper/helper.dart';
 import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 
 class NFTV1beta1Types extends TypeUrl {
   const NFTV1beta1Types._(super.typeUrl, {super.query, super.rpc});
+  static const String root = "/cosmos.nft.v1beta1";
   static const NFTV1beta1Types msgNFTSend =
       NFTV1beta1Types._("/cosmos.nft.v1beta1.MsgSend");
   static const NFTV1beta1Types msgNFTSendResponse =
@@ -97,6 +99,8 @@ class NFTV1beta1Types extends TypeUrl {
   static const NFTV1beta1Types nftClasses =
       NFTV1beta1Types._("/cosmos.nft.v1beta1.Query/Classes");
 
-  static const NFTV1beta1Types nFTSend =
-      NFTV1beta1Types._("/cosmos.nft.v1beta1.Msg/Send");
+  static const List<TypeUrl> services = [msgNFTSend];
+  static TypeUrl? findService(String? typeUrl) {
+    return services.firstWhereNullable((e) => e.typeUrl == typeUrl);
+  }
 }

@@ -11,7 +11,7 @@ class ModuleVersion extends CosmosMessage {
 
   /// consensus version of the app module
   final BigInt? version;
-  factory ModuleVersion.fromRpc(Map<String, dynamic> json) {
+  factory ModuleVersion.fromJson(Map<String, dynamic> json) {
     return ModuleVersion(
         name: json["name"], version: BigintUtils.tryParse(json["version"]));
   }

@@ -17,9 +17,9 @@ class BlockID extends CosmosMessage {
         partSetHeader: PartSetHeader.deserialize(decode.getField(2)),
         hash: decode.getField(1));
   }
-  factory BlockID.fromRpc(Map<String, dynamic> json) {
+  factory BlockID.fromJson(Map<String, dynamic> json) {
     return BlockID(
-        partSetHeader: PartSetHeader.fromRpc(json["part_set_header"]),
+        partSetHeader: PartSetHeader.fromJson(json["part_set_header"]),
         hash: StringUtils.encode(json["hash"], type: StringEncoding.base64));
   }
   @override

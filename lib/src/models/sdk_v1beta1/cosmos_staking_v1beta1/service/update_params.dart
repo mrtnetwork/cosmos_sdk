@@ -1,13 +1,15 @@
 import 'package:cosmos_sdk/src/address/address.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
+import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_staking_v1beta1/core/service.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_staking_v1beta1/types/types.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 import '../messages/params.dart';
 
 /// MsgUpdateParams is the Msg/UpdateParams request type.
 /// Since: cosmos-sdk 0.47
-class StakingMsgUpdateParams extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class StakingMsgUpdateParams
+    extends StakingV1Beta1Service<EmptyServiceRequestResponse> {
   /// authority is the address that controls the module (defaults to x/gov unless overwritten)
   final CosmosBaseAddress? authority;
 
@@ -20,6 +22,11 @@ class StakingMsgUpdateParams extends CosmosMessage
     required this.authority,
     required this.params,
   });
+  factory StakingMsgUpdateParams.fromJson(Map<String, dynamic> json) {
+    return StakingMsgUpdateParams(
+        authority: json.asAddress("authority"),
+        params: StakingParams.fromJson(json.asMap("params")));
+  }
 
   factory StakingMsgUpdateParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -47,8 +54,6 @@ class StakingMsgUpdateParams extends CosmosMessage
   @override
   List get values => [authority?.address, params];
 
-  @override
-  TypeUrl get service => StakingV1beta1Types.updateParams;
   @override
   List<String?> get signers => [authority?.address];
 

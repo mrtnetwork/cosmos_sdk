@@ -9,9 +9,9 @@ class IbcTransferV2QueryDenomResponse extends CosmosMessage {
   final IbcTransferV2Denom denom;
 
   IbcTransferV2QueryDenomResponse({required this.denom});
-  factory IbcTransferV2QueryDenomResponse.fromRpc(Map<String, dynamic> json) {
+  factory IbcTransferV2QueryDenomResponse.fromJson(Map<String, dynamic> json) {
     return IbcTransferV2QueryDenomResponse(
-      denom: IbcTransferV2Denom.fromRpc(json["denom"]),
+      denom: IbcTransferV2Denom.fromJson(json["denom"]),
     );
   }
   factory IbcTransferV2QueryDenomResponse.deserialize(List<int> bytes) {

@@ -18,7 +18,7 @@ class OsmosisPoolManagerTotalVolumeForPoolRequest extends CosmosMessage
   @override
   OsmosisPoolManagerTotalVolumeForPoolResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisPoolManagerTotalVolumeForPoolResponse.fromRpc(json);
+    return OsmosisPoolManagerTotalVolumeForPoolResponse.fromJson(json);
   }
 
   @override

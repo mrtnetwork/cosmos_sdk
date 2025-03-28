@@ -36,7 +36,7 @@ class QueryInterchainAccountRequest extends CosmosMessage
 
   @override
   QueryInterchainAccountResponse onJsonResponse(Map<String, dynamic> json) {
-    return QueryInterchainAccountResponse.fromRpc(json);
+    return QueryInterchainAccountResponse.fromJson(json);
   }
 
   @override

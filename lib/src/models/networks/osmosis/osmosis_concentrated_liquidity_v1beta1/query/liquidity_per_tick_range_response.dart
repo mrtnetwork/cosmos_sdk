@@ -18,14 +18,14 @@ class OsmosisConcentratedLiquidityLiquidityPerTickRangeResponse
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityLiquidityPerTickRangeResponse(
         liquidity: decode
-            .getFields(1)
+            .getFields<List<int>>(1)
             .map((e) =>
                 OsmosisConcentratedLiquidityLiquidityDepthWithRange.deserialize(
                     e))
             .toList(),
         bucketIndex: decode.getField(2));
   }
-  factory OsmosisConcentratedLiquidityLiquidityPerTickRangeResponse.fromRpc(
+  factory OsmosisConcentratedLiquidityLiquidityPerTickRangeResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisConcentratedLiquidityLiquidityPerTickRangeResponse(
         liquidity: (json["liquidity"] as List?)

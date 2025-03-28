@@ -26,7 +26,7 @@ class NFTClass extends CosmosMessage {
   /// data is the app specific metadata of the NFT class. Optional
   final AnyMessage? data;
 
-  factory NFTClass.fromRpc(Map<String, dynamic> json) {
+  factory NFTClass.fromJson(Map<String, dynamic> json) {
     return NFTClass(
         id: json["id"],
         name: json["name"],
@@ -34,7 +34,7 @@ class NFTClass extends CosmosMessage {
         symbol: json["symbol"],
         uriHash: json["uri_hash"],
         uri: json["uri"],
-        data: json["data"] == null ? null : AnyMessage.fromRpc(json["data"]));
+        data: json["data"] == null ? null : AnyMessage.fromJson(json["data"]));
   }
 
   const NFTClass({

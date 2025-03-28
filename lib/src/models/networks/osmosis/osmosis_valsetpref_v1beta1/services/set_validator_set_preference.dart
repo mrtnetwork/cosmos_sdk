@@ -1,12 +1,13 @@
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
+import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_valsetpref_v1beta1/core/service.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_valsetpref_v1beta1/messages/validator_preference.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_valsetpref_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:blockchain_utils/helper/helper.dart';
 
 /// MsgCreateValidatorSetPreference is a list that holds validator-set.
-class OsmosisValSetprefMsgSetValidatorSetPreference extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class OsmosisValSetprefMsgSetValidatorSetPreference
+    extends OsmosisValSetprefV1Beta1<EmptyServiceRequestResponse> {
   /// delegator is the user who is trying to create a validator-set.
   final String? delegator;
 
@@ -23,17 +24,17 @@ class OsmosisValSetprefMsgSetValidatorSetPreference extends CosmosMessage
     return OsmosisValSetprefMsgSetValidatorSetPreference(
       delegator: decode.getField(1),
       preferences: decode
-          .getFields(2)
+          .getFields<List<int>>(2)
           .map((e) => OsmosisValSetprefValidatorPreference.deserialize(e))
           .toList(),
     );
   }
-  factory OsmosisValSetprefMsgSetValidatorSetPreference.fromRpc(
+  factory OsmosisValSetprefMsgSetValidatorSetPreference.fromJson(
       Map<String, dynamic> json) {
     return OsmosisValSetprefMsgSetValidatorSetPreference(
       delegator: json["delegator"],
       preferences: (json["preferences"] as List?)
-              ?.map((e) => OsmosisValSetprefValidatorPreference.fromRpc(e))
+              ?.map((e) => OsmosisValSetprefValidatorPreference.fromJson(e))
               .toList() ??
           <OsmosisValSetprefValidatorPreference>[],
     );
@@ -62,10 +63,6 @@ class OsmosisValSetprefMsgSetValidatorSetPreference extends CosmosMessage
     return EmptyServiceRequestResponse(
         OsmosisValSetprefV1beta1Types.msgSetValidatorSetPreferenceResponse);
   }
-
-  @override
-  TypeUrl get service =>
-      OsmosisValSetprefV1beta1Types.setValidatorSetPreference;
 
   @override
   List<String?> get signers => [delegator];

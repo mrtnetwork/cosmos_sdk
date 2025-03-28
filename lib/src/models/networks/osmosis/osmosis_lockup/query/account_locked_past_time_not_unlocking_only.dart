@@ -46,7 +46,7 @@ class OsmosisLockupAccountLockedPastTimeNotUnlockingOnlyRequest
   @override
   OsmosisLockupAccountLockedPastTimeNotUnlockingOnlyResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisLockupAccountLockedPastTimeNotUnlockingOnlyResponse.fromRpc(
+    return OsmosisLockupAccountLockedPastTimeNotUnlockingOnlyResponse.fromJson(
         json);
   }
 

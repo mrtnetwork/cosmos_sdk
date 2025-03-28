@@ -17,7 +17,7 @@ class OsmosisCosmWasmContractInfoByPoolIdResponse extends CosmosMessage {
     return OsmosisCosmWasmContractInfoByPoolIdResponse(
         contractAddress: decode.getField(1), codeId: decode.getField(2));
   }
-  factory OsmosisCosmWasmContractInfoByPoolIdResponse.fromRpc(
+  factory OsmosisCosmWasmContractInfoByPoolIdResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisCosmWasmContractInfoByPoolIdResponse(
         codeId: BigintUtils.tryParse(json["code_id"]),

@@ -1,8 +1,9 @@
+import 'package:blockchain_utils/helper/helper.dart';
 import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 
 class FeegrantV1beta1Types extends TypeUrl {
   const FeegrantV1beta1Types._(super.typeUrl, {super.query, super.rpc});
-
+  static const String root = "/cosmos.feegrant.v1beta1";
   static const FeegrantV1beta1Types feeGrant =
       FeegrantV1beta1Types._("/cosmos.feegrant.v1beta1.Grant");
   static const FeegrantV1beta1Types msgGrantAllowance =
@@ -48,11 +49,12 @@ class FeegrantV1beta1Types extends TypeUrl {
       FeegrantV1beta1Types._(
           "/cosmos.feegrant.v1beta1.QueryAllowancesByGranterResponse");
 
-  /// service
-  static const FeegrantV1beta1Types grantAllowance =
-      FeegrantV1beta1Types._("/cosmos.authz.v1beta1.Msg/GrantAllowance");
-  static const FeegrantV1beta1Types pruneAllowances =
-      FeegrantV1beta1Types._("/cosmos.authz.v1beta1.Msg/PruneAllowances");
-  static const FeegrantV1beta1Types revokeAllowance =
-      FeegrantV1beta1Types._("/cosmos.authz.v1beta1.Msg/RevokeAllowance");
+  static const List<TypeUrl> services = [
+    msgGrantAllowance,
+    msgPruneAllowances,
+    msgRevokeAllowance
+  ];
+  static TypeUrl? findService(String? typeUrl) {
+    return services.firstWhereNullable((e) => e.typeUrl == typeUrl);
+  }
 }

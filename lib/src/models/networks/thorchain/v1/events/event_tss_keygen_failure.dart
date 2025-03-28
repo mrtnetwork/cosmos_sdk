@@ -20,7 +20,7 @@ class ThorchainEventTssKeygenFailure extends CosmosMessage {
     return ThorchainEventTssKeygenFailure(
         failReason: decode.getField(1),
         isUnicast: decode.getField(2),
-        blameNodes: decode.getFields(3),
+        blameNodes: decode.getFields<String>(3),
         round: decode.getField(4),
         height: decode.getField(5));
   }

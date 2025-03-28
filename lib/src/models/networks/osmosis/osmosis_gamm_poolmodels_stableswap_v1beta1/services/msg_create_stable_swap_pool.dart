@@ -1,17 +1,17 @@
 import 'package:blockchain_utils/utils/utils.dart';
+import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_gamm_poolmodels_stableswap_v1beta1/core/service.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_gamm_poolmodels_stableswap_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_gamm_v1beta1/messages/pool_params.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_v1beta1/messages/coin.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:blockchain_utils/helper/helper.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 import 'msg_create_stable_swap_pool_response.dart';
 
 class OsmosisGammPoolmodelsStableSwapMsgCreateStableswapPool
-    extends CosmosMessage
-    with
-        ServiceMessage<
-            OsmosisGammPoolmodelsStableSwapMsgCreateStableswapPoolResponse> {
+    extends OsmosisGammPoolmodelsStableSwapV1Beta1<
+        OsmosisGammPoolmodelsStableSwapMsgCreateStableswapPoolResponse> {
   final String? sender;
   final OsmosisGammPoolParams? poolParams;
   final List<Coin> initialPoolLiquidity;
@@ -35,8 +35,10 @@ class OsmosisGammPoolmodelsStableSwapMsgCreateStableswapPool
         sender: decode.getField(1),
         poolParams: decode.getResult(2)?.to<OsmosisGammPoolParams, List<int>>(
             (e) => OsmosisGammPoolParams.deserialize(e)),
-        initialPoolLiquidity:
-            decode.getFields(3).map((e) => Coin.deserialize(e)).toList(),
+        initialPoolLiquidity: decode
+            .getFields<List<int>>(3)
+            .map((e) => Coin.deserialize(e))
+            .toList(),
         scalingFactors: decode
                 .getResult<ProtocolBufferDecoderResult?>(4)
                 ?.to<List<BigInt>, List<int>>(
@@ -44,6 +46,25 @@ class OsmosisGammPoolmodelsStableSwapMsgCreateStableswapPool
             <BigInt>[],
         futurePoolGovernor: decode.getField(5),
         scalingFactorController: decode.getField(6));
+  }
+  factory OsmosisGammPoolmodelsStableSwapMsgCreateStableswapPool.fromJson(
+      Map<String, dynamic> json) {
+    return OsmosisGammPoolmodelsStableSwapMsgCreateStableswapPool(
+        sender: json.as("sender"),
+        poolParams: json.maybeAs<OsmosisGammPoolParams, Map<String, dynamic>>(
+            key: "pool_params",
+            onValue: (e) => OsmosisGammPoolParams.fromJson(e)),
+        initialPoolLiquidity: json
+                .asListOfMap("initial_pool_liquidity")
+                ?.map((e) => Coin.fromJson(e))
+                .toList() ??
+            [],
+        scalingFactors: json
+            .as<List?>("scaling_factors")
+            ?.map((e) => BigintUtils.parse(e))
+            .toList(),
+        futurePoolGovernor: json.as("future_pool_governor"),
+        scalingFactorController: json.as("scaling_factor_controller"));
   }
 
   @override
@@ -55,10 +76,6 @@ class OsmosisGammPoolmodelsStableSwapMsgCreateStableswapPool
     return OsmosisGammPoolmodelsStableSwapMsgCreateStableswapPoolResponse
         .deserialize(bytes);
   }
-
-  @override
-  TypeUrl get service =>
-      OsmosisGammPoolmodelsStableswaPV1beta1Types.createStableswapPool;
 
   @override
   List<String?> get signers => [sender];
@@ -78,7 +95,7 @@ class OsmosisGammPoolmodelsStableSwapMsgCreateStableswapPool
 
   @override
   TypeUrl get typeUrl =>
-      OsmosisGammPoolmodelsStableswaPV1beta1Types.msgCreateStableswapPool;
+      OsmosisGammPoolmodelsStableSwapV1beta1Types.msgCreateStableswapPool;
 
   @override
   List get values => [

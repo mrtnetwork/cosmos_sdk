@@ -16,11 +16,11 @@ class ForwardingPacketData extends CosmosMessage {
 
   ForwardingPacketData({this.destinationMemo, List<IbcTransferV1Hop>? hops})
       : hops = hops?.immutable;
-  factory ForwardingPacketData.fromRpc(Map<String, dynamic> json) {
+  factory ForwardingPacketData.fromJson(Map<String, dynamic> json) {
     return ForwardingPacketData(
         destinationMemo: json["destination_memo"],
         hops: (json["hops"] as List?)
-            ?.map((e) => IbcTransferV1Hop.fromRpc(e))
+            ?.map((e) => IbcTransferV1Hop.fromJson(e))
             .toList());
   }
   factory ForwardingPacketData.deserialize(List<int> bytes) {

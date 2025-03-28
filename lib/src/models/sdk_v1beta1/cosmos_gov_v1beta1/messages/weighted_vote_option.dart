@@ -12,7 +12,7 @@ class GovWeightedVoteOption extends CosmosMessage {
   /// weight is the vote weight associated with the vote option.
   final String weight;
   const GovWeightedVoteOption({this.option, required this.weight});
-  factory GovWeightedVoteOption.fromRpc(Map<String, dynamic> json) {
+  factory GovWeightedVoteOption.fromJson(Map<String, dynamic> json) {
     return GovWeightedVoteOption(
         weight: json["weight"],
         option: json["option"] == null

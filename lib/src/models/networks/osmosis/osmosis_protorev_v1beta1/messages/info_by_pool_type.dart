@@ -39,13 +39,13 @@ class OsmosisProtorevInfoByPoolType extends CosmosMessage {
         cosmwasm:
             OsmosisProtorevCosmwasmPoolInfo.deserialize(decode.getField(4)));
   }
-  factory OsmosisProtorevInfoByPoolType.fromRpc(Map<String, dynamic> json) {
+  factory OsmosisProtorevInfoByPoolType.fromJson(Map<String, dynamic> json) {
     return OsmosisProtorevInfoByPoolType(
-        stable: OsmosisProtorevStablePoolInfo.fromRpc(json["stable"]),
-        balancer: OsmosisProtorevBalancerPoolInfo.fromRpc(json["balancer"]),
+        stable: OsmosisProtorevStablePoolInfo.fromJson(json["stable"]),
+        balancer: OsmosisProtorevBalancerPoolInfo.fromJson(json["balancer"]),
         concentrated:
-            OsmosisProtorevConcentratedPoolInfo.fromRpc(json["concentrated"]),
-        cosmwasm: OsmosisProtorevCosmwasmPoolInfo.fromRpc(json["cosmwasm"]));
+            OsmosisProtorevConcentratedPoolInfo.fromJson(json["concentrated"]),
+        cosmwasm: OsmosisProtorevCosmwasmPoolInfo.fromJson(json["cosmwasm"]));
   }
 
   @override

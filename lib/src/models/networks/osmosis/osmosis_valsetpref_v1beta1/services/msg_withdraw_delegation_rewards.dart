@@ -1,9 +1,10 @@
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
+import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_valsetpref_v1beta1/core/service.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_valsetpref_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
-class OsmosisValSetprefMsgWithdrawDelegationRewards extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class OsmosisValSetprefMsgWithdrawDelegationRewards
+    extends OsmosisValSetprefV1Beta1<EmptyServiceRequestResponse> {
   /// delegator is the user who is trying to claim staking rewards.
   final String? delegator;
 
@@ -14,7 +15,7 @@ class OsmosisValSetprefMsgWithdrawDelegationRewards extends CosmosMessage
     return OsmosisValSetprefMsgWithdrawDelegationRewards(
         delegator: decode.getField(1));
   }
-  factory OsmosisValSetprefMsgWithdrawDelegationRewards.fromRpc(
+  factory OsmosisValSetprefMsgWithdrawDelegationRewards.fromJson(
       Map<String, dynamic> json) {
     return OsmosisValSetprefMsgWithdrawDelegationRewards(
         delegator: json["delegator"]);
@@ -40,10 +41,6 @@ class OsmosisValSetprefMsgWithdrawDelegationRewards extends CosmosMessage
     return EmptyServiceRequestResponse(
         OsmosisValSetprefV1beta1Types.msgWithdrawDelegationRewardsResponse);
   }
-
-  @override
-  TypeUrl get service =>
-      OsmosisValSetprefV1beta1Types.withdrawDelegationRewards;
 
   @override
   List<String?> get signers => [delegator];

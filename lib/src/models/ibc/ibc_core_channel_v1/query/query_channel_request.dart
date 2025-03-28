@@ -11,7 +11,7 @@ class QueryChannelRequest extends CosmosMessage
 
   /// channel unique identifier
   final String channelId;
-  factory QueryChannelRequest.fromRpc(Map<String, dynamic> json) {
+  factory QueryChannelRequest.fromJson(Map<String, dynamic> json) {
     return QueryChannelRequest(
         channelId: json["channel_id"], portId: json["port_id"]);
   }
@@ -43,7 +43,7 @@ class QueryChannelRequest extends CosmosMessage
 
   @override
   QueryChannelResponse onJsonResponse(Map<String, dynamic> json) {
-    return QueryChannelResponse.fromRpc(json);
+    return QueryChannelResponse.fromJson(json);
   }
 
   @override

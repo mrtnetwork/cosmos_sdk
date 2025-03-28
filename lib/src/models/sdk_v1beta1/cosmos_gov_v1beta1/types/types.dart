@@ -1,13 +1,17 @@
+import 'package:blockchain_utils/helper/helper.dart';
 import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 
 class GovV1beta1types extends TypeUrl {
-  const GovV1beta1types._(super.typeUrl, {super.query, super.rpc});
+  const GovV1beta1types._(super.typeUrl,
+      {super.query, super.rpc, super.aminoType});
+  static const String root = "/cosmos.gov.v1beta1";
   static const GovV1beta1types govMsgSubmitProposal =
       GovV1beta1types._("/cosmos.gov.v1beta1.MsgSubmitProposal");
   static const GovV1beta1types govMsgSubmitProposalResponse =
       GovV1beta1types._("/cosmos.gov.v1beta1.MsgSubmitProposalResponse");
-  static const GovV1beta1types govMsgVote =
-      GovV1beta1types._("/cosmos.gov.v1beta1.MsgVote");
+  static const GovV1beta1types govMsgVote = GovV1beta1types._(
+      "/cosmos.gov.v1beta1.MsgVote",
+      aminoType: "cosmos-sdk/MsgVote");
   static const GovV1beta1types govMsgVoteResponse =
       GovV1beta1types._("/cosmos.gov.v1beta1.MsgVoteResponse");
   static const GovV1beta1types goveWeightedVoteOption =
@@ -83,18 +87,19 @@ class GovV1beta1types extends TypeUrl {
   static const GovV1beta1types govMsgVoteWeighted =
       GovV1beta1types._("/cosmos.gov.v1beta1.MsgVoteWeighted");
 
-  static const GovV1beta1types govMsgDeposit =
-      GovV1beta1types._("/cosmos.gov.v1beta1.MsgDeposit");
+  static const GovV1beta1types govMsgDeposit = GovV1beta1types._(
+      "/cosmos.gov.v1beta1.MsgDeposit",
+      aminoType: "cosmos-sdk/MsgDeposit");
   static const GovV1beta1types govMsgDepositResponse =
       GovV1beta1types._("/cosmos.gov.v1beta1.MsgDepositResponse");
 
-  /// service
-  static const GovV1beta1types serviceGovSubmitProposal =
-      GovV1beta1types._("/cosmos.gov.v1beta1.Msg/SubmitProposal");
-  static const GovV1beta1types serviceGovVote =
-      GovV1beta1types._("/cosmos.gov.v1beta1.Msg/Vote");
-  static const GovV1beta1types serviceGovVoteWeighted =
-      GovV1beta1types._("/cosmos.gov.v1beta1.Msg/VoteWeighted");
-  static const GovV1beta1types serviceGovDeposit =
-      GovV1beta1types._("/cosmos.gov.v1beta1.Msg/Deposit");
+  static const List<TypeUrl> services = [
+    govMsgDeposit,
+    govMsgSubmitProposal,
+    govMsgVoteWeighted,
+    govMsgVote
+  ];
+  static TypeUrl? findService(String? typeUrl) {
+    return services.firstWhereNullable((e) => e.typeUrl == typeUrl);
+  }
 }

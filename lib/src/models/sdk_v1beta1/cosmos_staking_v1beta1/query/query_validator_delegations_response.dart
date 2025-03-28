@@ -9,15 +9,16 @@ class QueryValidatorDelegationsResponse extends CosmosMessage {
   final PageResponse? pagination;
   const QueryValidatorDelegationsResponse(
       {required this.delegationResponse, this.pagination});
-  factory QueryValidatorDelegationsResponse.fromRpc(Map<String, dynamic> json) {
+  factory QueryValidatorDelegationsResponse.fromJson(
+      Map<String, dynamic> json) {
     return QueryValidatorDelegationsResponse(
       delegationResponse: (json["delegation_responses"] as List?)
-              ?.map((e) => DelegationResponse.fromRpc(e))
+              ?.map((e) => DelegationResponse.fromJson(e))
               .toList() ??
           [],
       pagination: json["pagination"] == null
           ? null
-          : PageResponse.fromRpc(json["pagination"]),
+          : PageResponse.fromJson(json["pagination"]),
     );
   }
   factory QueryValidatorDelegationsResponse.deserialize(List<int> bytes) {

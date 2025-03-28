@@ -14,7 +14,7 @@ class DistributionQueryDelegationRewardsRequest extends CosmosMessage
   const DistributionQueryDelegationRewardsRequest(
       {required this.delegatorAddress, required this.validatorAddress});
 
-  factory DistributionQueryDelegationRewardsRequest.fromRpc(
+  factory DistributionQueryDelegationRewardsRequest.fromJson(
       Map<String, dynamic> json) {
     return DistributionQueryDelegationRewardsRequest(
       delegatorAddress: CosmosBaseAddress(json["delegator_address"]),
@@ -55,7 +55,7 @@ class DistributionQueryDelegationRewardsRequest extends CosmosMessage
   @override
   DistributionQueryDelegationRewardsResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return DistributionQueryDelegationRewardsResponse.fromRpc(json);
+    return DistributionQueryDelegationRewardsResponse.fromJson(json);
   }
 
   @override

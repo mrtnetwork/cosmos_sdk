@@ -30,7 +30,7 @@ class OsmosisConcentratedLiquidityParamsRequest extends CosmosMessage
   @override
   OsmosisConcentratedLiquidityParamsResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisConcentratedLiquidityParamsResponse.fromRpc(json);
+    return OsmosisConcentratedLiquidityParamsResponse.fromJson(json);
   }
 
   @override

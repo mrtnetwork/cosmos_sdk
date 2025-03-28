@@ -11,13 +11,15 @@ class OsmosisProtorevQueryGetProtoRevAllProfitsResponse extends CosmosMessage {
   factory OsmosisProtorevQueryGetProtoRevAllProfitsResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return OsmosisProtorevQueryGetProtoRevAllProfitsResponse(
-        decode.getFields(1).map((e) => Coin.deserialize(e)).toList());
+    return OsmosisProtorevQueryGetProtoRevAllProfitsResponse(decode
+        .getFields<List<int>>(1)
+        .map((e) => Coin.deserialize(e))
+        .toList());
   }
-  factory OsmosisProtorevQueryGetProtoRevAllProfitsResponse.fromRpc(
+  factory OsmosisProtorevQueryGetProtoRevAllProfitsResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisProtorevQueryGetProtoRevAllProfitsResponse(
-        (json["profits"] as List?)?.map((e) => Coin.fromRpc(e)).toList() ??
+        (json["profits"] as List?)?.map((e) => Coin.fromJson(e)).toList() ??
             <Coin>[]);
   }
 

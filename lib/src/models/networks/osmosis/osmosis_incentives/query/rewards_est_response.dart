@@ -11,13 +11,15 @@ class OsmosisIncentiveRewardsEstResponse extends CosmosMessage {
       : coins = coins.immutable;
   factory OsmosisIncentiveRewardsEstResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return OsmosisIncentiveRewardsEstResponse(
-        decode.getFields(1).map((e) => Coin.deserialize(e)).toList());
+    return OsmosisIncentiveRewardsEstResponse(decode
+        .getFields<List<int>>(1)
+        .map((e) => Coin.deserialize(e))
+        .toList());
   }
-  factory OsmosisIncentiveRewardsEstResponse.fromRpc(
+  factory OsmosisIncentiveRewardsEstResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisIncentiveRewardsEstResponse(
-        (json["coins"] as List?)?.map((e) => Coin.fromRpc(e)).toList() ??
+        (json["coins"] as List?)?.map((e) => Coin.fromJson(e)).toList() ??
             <Coin>[]);
   }
 

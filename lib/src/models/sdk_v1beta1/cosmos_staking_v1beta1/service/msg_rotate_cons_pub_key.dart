@@ -1,11 +1,13 @@
 import 'package:cosmos_sdk/src/address/address.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
+import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_staking_v1beta1/core/service.dart';
 
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_staking_v1beta1/types/types.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
-class MsgRotateConsPubKey extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class MsgRotateConsPubKey
+    extends StakingV1Beta1Service<EmptyServiceRequestResponse> {
   final CosmosBaseAddress? validatorAddress;
   final Any? newPubkey;
 
@@ -23,6 +25,12 @@ class MsgRotateConsPubKey extends CosmosMessage
         newPubkey:
             decode.getResult(2)?.to<Any, List<int>>((e) => Any.deserialize(e)));
   }
+  factory MsgRotateConsPubKey.fromJson(Map<String, dynamic> json) {
+    return MsgRotateConsPubKey(
+        validatorAddress: json.asAddress("validator_address"),
+        newPubkey: json.maybeAs<Any, Map<String, dynamic>>(
+            key: "new_pubkey", onValue: (e) => Any.fromJson(e)));
+  }
 
   @override
   Map<String, dynamic> toJson() {
@@ -34,9 +42,6 @@ class MsgRotateConsPubKey extends CosmosMessage
 
   @override
   List<int> get fieldIds => [1, 2];
-
-  @override
-  TypeUrl get service => StakingV1beta1Types.rotateConsPubKey;
 
   @override
   TypeUrl get typeUrl => StakingV1beta1Types.msgRotateConsPubKey;

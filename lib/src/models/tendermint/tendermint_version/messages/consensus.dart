@@ -11,7 +11,7 @@ class Consensus extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Consensus(block: decode.getField(1), app: decode.getField(2));
   }
-  factory Consensus.fromRpc(Map<String, dynamic> json) {
+  factory Consensus.fromJson(Map<String, dynamic> json) {
     return Consensus(
         app: BigInt.tryParse(json["app"] ?? ""),
         block: BigInt.tryParse(json["block"] ?? ""));

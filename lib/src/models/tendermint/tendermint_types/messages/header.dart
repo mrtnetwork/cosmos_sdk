@@ -79,14 +79,14 @@ class Header extends CosmosMessage {
         evidenceHash: decode.getField(13),
         proposerAddress: decode.getField(14));
   }
-  factory Header.fromRpc(Map<String, dynamic> json) {
+  factory Header.fromJson(Map<String, dynamic> json) {
     return Header(
       appHash:
           StringUtils.tryEncode(json["app_hash"], type: StringEncoding.base64),
       height: BigInt.tryParse(json["height"] ?? ""),
-      version: Consensus.fromRpc(json["version"]),
+      version: Consensus.fromJson(json["version"]),
       time: ProtobufTimestamp.fromString(json["time"]),
-      lastBlockId: BlockID.fromRpc(json["last_block_id"]),
+      lastBlockId: BlockID.fromJson(json["last_block_id"]),
       chainId: json["chain_id"],
       lastCommitHash: StringUtils.tryEncode(json["last_commit_hash"],
           type: StringEncoding.base64),

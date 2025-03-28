@@ -27,7 +27,7 @@ class SlashingValidatorSigningInfo extends CosmosMessage {
   /// reads in the missed block bitmap.
   final BigInt? missedBlocksCounter;
 
-  factory SlashingValidatorSigningInfo.fromRpc(Map<String, dynamic> json) {
+  factory SlashingValidatorSigningInfo.fromJson(Map<String, dynamic> json) {
     return SlashingValidatorSigningInfo(
         jailedUntil: ProtobufTimestamp.fromString(json["jailed_until"]),
         address:

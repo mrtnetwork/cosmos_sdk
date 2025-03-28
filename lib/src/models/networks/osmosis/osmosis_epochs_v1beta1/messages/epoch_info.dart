@@ -72,7 +72,7 @@ class OmosisEpochsEpochInfo extends CosmosMessage {
         currentEpochStartHeight: decode.getField(8));
   }
 
-  factory OmosisEpochsEpochInfo.fromRpc(Map<String, dynamic> json) {
+  factory OmosisEpochsEpochInfo.fromJson(Map<String, dynamic> json) {
     return OmosisEpochsEpochInfo(
         identifier: json["identifier"],
         startTime: ProtobufTimestamp.fromString(json["start_time"]),

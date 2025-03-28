@@ -52,6 +52,6 @@ class QueryPacketCommitmentsRequest extends CosmosMessage
 
   @override
   QueryPacketCommitmentsResponse onJsonResponse(Map<String, dynamic> json) {
-    return QueryPacketCommitmentsResponse.fromRpc(json);
+    return QueryPacketCommitmentsResponse.fromJson(json);
   }
 }

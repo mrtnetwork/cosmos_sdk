@@ -10,9 +10,9 @@ class OsmosisPoolManagerParamsResponse extends CosmosMessage {
     return OsmosisPoolManagerParamsResponse(
         OsmosisPoolManagerParams.deserialize(decode.getField(1)));
   }
-  factory OsmosisPoolManagerParamsResponse.fromRpc(Map<String, dynamic> json) {
+  factory OsmosisPoolManagerParamsResponse.fromJson(Map<String, dynamic> json) {
     return OsmosisPoolManagerParamsResponse(
-        OsmosisPoolManagerParams.fromRpc(json["params"]));
+        OsmosisPoolManagerParams.fromJson(json["params"]));
   }
 
   @override

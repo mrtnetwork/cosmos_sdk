@@ -20,7 +20,7 @@ class OsmosisValSetprefValidatorPreference extends CosmosMessage {
     return OsmosisValSetprefValidatorPreference(
         weight: decode.getField(2), valOperAddress: decode.getField(1));
   }
-  factory OsmosisValSetprefValidatorPreference.fromRpc(
+  factory OsmosisValSetprefValidatorPreference.fromJson(
       Map<String, dynamic> json) {
     return OsmosisValSetprefValidatorPreference(
         weight: json["weight"], valOperAddress: json["val_oper_address"]);

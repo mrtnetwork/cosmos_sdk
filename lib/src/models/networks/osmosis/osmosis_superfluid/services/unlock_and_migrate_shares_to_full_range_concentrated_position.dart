@@ -1,14 +1,14 @@
+import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_superfluid/core/service.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_superfluid/types/types.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_v1beta1/cosmos_base_v1beta1.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:blockchain_utils/helper/helper.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 import 'unlock_and_migrate_shares_to_full_range_concentrated_position_response.dart';
 
 class OsmosisSuperfluidMsgUnlockAndMigrateSharesToFullRangeConcentratedPosition
-    extends CosmosMessage
-    with
-        ServiceMessage<
-            OsmosisSuperfluidMsgUnlockAndMigrateSharesToFullRangeConcentratedPositionResponse> {
+    extends OsmosisSuperfluid<
+        OsmosisSuperfluidMsgUnlockAndMigrateSharesToFullRangeConcentratedPositionResponse> {
   final String? sender;
   final BigInt? lockId;
   final Coin sharesToMigrate;
@@ -28,8 +28,23 @@ class OsmosisSuperfluidMsgUnlockAndMigrateSharesToFullRangeConcentratedPosition
       sender: decode.getField(1),
       lockId: decode.getField(2),
       sharesToMigrate: Coin.deserialize(decode.getField(3)),
-      tokenOutMins:
-          decode.getFields(4).map((e) => Coin.deserialize(e)).toList(),
+      tokenOutMins: decode
+          .getFields<List<int>>(4)
+          .map((e) => Coin.deserialize(e))
+          .toList(),
+    );
+  }
+  factory OsmosisSuperfluidMsgUnlockAndMigrateSharesToFullRangeConcentratedPosition.fromJson(
+      Map<String, dynamic> json) {
+    return OsmosisSuperfluidMsgUnlockAndMigrateSharesToFullRangeConcentratedPosition(
+      sender: json.as("sender"),
+      lockId: json.asBigInt("lock_id"),
+      sharesToMigrate: Coin.fromJson(json.asMap("shares_to_migrate")),
+      tokenOutMins: json
+              .asListOfMap("token_out_mins")
+              ?.map((e) => Coin.fromJson(e))
+              .toList() ??
+          [],
     );
   }
 
@@ -52,10 +67,6 @@ class OsmosisSuperfluidMsgUnlockAndMigrateSharesToFullRangeConcentratedPosition
 
   @override
   List get values => [sender, lockId, sharesToMigrate, tokenOutMins];
-
-  @override
-  TypeUrl get service => OsmosisSuperfluidTypes
-      .unlockAndMigrateSharesToFullRangeConcentratedPosition;
 
   @override
   List<String?> get signers => [sender];

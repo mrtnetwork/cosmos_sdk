@@ -16,7 +16,7 @@ class OsmosisProtorevQueryGetProtoRevMaxPoolPointsPerTxResponse
     return OsmosisProtorevQueryGetProtoRevMaxPoolPointsPerTxResponse(
         maxPoolPointsPerTx: BigInt.parse(decode.getField(1)));
   }
-  factory OsmosisProtorevQueryGetProtoRevMaxPoolPointsPerTxResponse.fromRpc(
+  factory OsmosisProtorevQueryGetProtoRevMaxPoolPointsPerTxResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisProtorevQueryGetProtoRevMaxPoolPointsPerTxResponse(
         maxPoolPointsPerTx: BigintUtils.parse(json["max_pool_points_per_tx"]));

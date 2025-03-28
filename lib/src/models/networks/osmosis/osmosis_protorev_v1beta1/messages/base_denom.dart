@@ -19,7 +19,7 @@ class OsmosisProtorevBaseDenom extends CosmosMessage {
     return OsmosisProtorevBaseDenom(
         denom: decode.getField(1), stepSize: decode.getField(2));
   }
-  factory OsmosisProtorevBaseDenom.fromRpc(Map<String, dynamic> json) {
+  factory OsmosisProtorevBaseDenom.fromJson(Map<String, dynamic> json) {
     return OsmosisProtorevBaseDenom(
         denom: json["denom"], stepSize: json["step_size"]);
   }

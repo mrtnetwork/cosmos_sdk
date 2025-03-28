@@ -1,12 +1,14 @@
+import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_stream_swap_v1/core/service.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_stream_swap_v1/types/types.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_v1beta1/messages/coin.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:blockchain_utils/helper/helper.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 import 'msg_create_sale_response.dart';
 
-class OsmosisStreamSwapMsgCreateSale extends CosmosMessage
-    with ServiceMessage<OsmosisStreamSwapMsgCreateSaleResponse> {
+class OsmosisStreamSwapMsgCreateSale
+    extends OsmosisStreamSwapV1<OsmosisStreamSwapMsgCreateSaleResponse> {
   // Sale creator and the account which provides token (token_out) to the sale.
   /// When processing this message, token_out
   final String? creator;
@@ -72,7 +74,22 @@ class OsmosisStreamSwapMsgCreateSale extends CosmosMessage
         name: decode.getField(8),
         url: decode.getField(9));
   }
-
+  factory OsmosisStreamSwapMsgCreateSale.fromJson(Map<String, dynamic> json) {
+    return OsmosisStreamSwapMsgCreateSale(
+        creator: json.as("creator"),
+        tokenIn: json.as("token_in"),
+        tokenOut: Coin.fromJson(json.asMap("token_out")),
+        maxFee: json
+                .asListOfMap("max_fee")
+                ?.map((e) => Coin.fromJson(e))
+                .toList() ??
+            [],
+        startTime: ProtobufTimestamp.fromString(json.as("start_time")),
+        duration: ProtobufDuration.fromString(json.as("duration")),
+        recipient: json.as("recipient"),
+        name: json.as("name"),
+        url: json.as("url"));
+  }
   @override
   List<int> get fieldIds => [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
@@ -111,9 +128,6 @@ class OsmosisStreamSwapMsgCreateSale extends CosmosMessage
   OsmosisStreamSwapMsgCreateSaleResponse onResponse(List<int> bytes) {
     return OsmosisStreamSwapMsgCreateSaleResponse.deserialize(bytes);
   }
-
-  @override
-  TypeUrl get service => OsmosisStreamSwapV1Types.createSale;
 
   @override
   List<String?> get signers => [creator];

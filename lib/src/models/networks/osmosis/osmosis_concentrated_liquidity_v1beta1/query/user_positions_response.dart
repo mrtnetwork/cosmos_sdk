@@ -18,23 +18,23 @@ class OsmosisConcentratedLiquidityUserPositionsResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityUserPositionsResponse(
         positions: decode
-            .getFields(1)
+            .getFields<List<int>>(1)
             .map((e) => FullPositionBreakdown.deserialize(e))
             .toList(),
         pagination: decode
             .getResult(2)
             ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
   }
-  factory OsmosisConcentratedLiquidityUserPositionsResponse.fromRpc(
+  factory OsmosisConcentratedLiquidityUserPositionsResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisConcentratedLiquidityUserPositionsResponse(
         positions: (json["positions"] as List?)
-                ?.map((e) => FullPositionBreakdown.fromRpc(e))
+                ?.map((e) => FullPositionBreakdown.fromJson(e))
                 .toList() ??
             <FullPositionBreakdown>[],
         pagination: json["pagination"] == null
             ? null
-            : PageResponse.fromRpc(json["pagination"]));
+            : PageResponse.fromJson(json["pagination"]));
   }
 
   @override

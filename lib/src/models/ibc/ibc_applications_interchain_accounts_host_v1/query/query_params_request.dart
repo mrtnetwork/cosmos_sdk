@@ -29,6 +29,6 @@ class InterchainAccountsHostQueryParamsRequest extends CosmosMessage
   @override
   InterchainAccountsHostQueryParamsResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return InterchainAccountsHostQueryParamsResponse.fromRpc(json);
+    return InterchainAccountsHostQueryParamsResponse.fromJson(json);
   }
 }

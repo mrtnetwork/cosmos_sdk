@@ -40,7 +40,7 @@ class QueryEscrowAddressRequest extends CosmosMessage
 
   @override
   QueryEscrowAddressResponse onJsonResponse(Map<String, dynamic> json) {
-    return QueryEscrowAddressResponse.fromRpc(json);
+    return QueryEscrowAddressResponse.fromJson(json);
   }
 
   @override

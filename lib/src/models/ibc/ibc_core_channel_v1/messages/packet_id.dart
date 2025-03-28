@@ -15,7 +15,7 @@ class IbcChannelPacketId extends CosmosMessage {
   final BigInt sequence;
   const IbcChannelPacketId(
       {required this.portId, required this.channelId, required this.sequence});
-  factory IbcChannelPacketId.fromRpc(Map<String, dynamic> json) {
+  factory IbcChannelPacketId.fromJson(Map<String, dynamic> json) {
     return IbcChannelPacketId(
       portId: json["port_id"],
       channelId: json["channel_id"],

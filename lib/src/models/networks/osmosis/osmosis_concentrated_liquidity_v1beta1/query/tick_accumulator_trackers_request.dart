@@ -40,7 +40,7 @@ class OsmosisConcentratedLiquidityTickAccumulatorTrackersRequest
   @override
   OsmosisConcentratedLiquidityTickAccumulatorTrackersResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisConcentratedLiquidityTickAccumulatorTrackersResponse.fromRpc(
+    return OsmosisConcentratedLiquidityTickAccumulatorTrackersResponse.fromJson(
         json);
   }
 

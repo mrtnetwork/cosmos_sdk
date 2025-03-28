@@ -2,6 +2,7 @@ import 'package:blockchain_utils/blockchain_utils.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_client_v1/messages/height.dart';
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// Packet defines a type that carries data across different chains through IBC
 class IbcChannelPacket extends CosmosMessage {
@@ -51,6 +52,18 @@ class IbcChannelPacket extends CosmosMessage {
         data: decode.getField(6),
         timeoutHeight: IbcClientHeight.deserialize(decode.getField(7)),
         timeoutTimestamp: decode.getField(8));
+  }
+  factory IbcChannelPacket.fromJson(Map<String, dynamic> json) {
+    return IbcChannelPacket(
+      sequence: json.asBigInt("sequence"),
+      sourcePort: json.as("source_port"),
+      sourceChannel: json.as("source_channel"),
+      destinationPort: json.as("destination_port"),
+      destinationChannel: json.as("destination_channel"),
+      data: json.asBytes("data"),
+      timeoutHeight: IbcClientHeight.fromJson(json.asMap("timeout_height")),
+      timeoutTimestamp: json.asBigInt("timeout_timestamp"),
+    );
   }
 
   @override

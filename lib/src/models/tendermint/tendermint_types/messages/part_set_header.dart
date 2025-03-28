@@ -11,7 +11,7 @@ class PartSetHeader extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return PartSetHeader(total: decode.getField(1), hash: decode.getField(2));
   }
-  factory PartSetHeader.fromRpc(Map<String, dynamic> json) {
+  factory PartSetHeader.fromJson(Map<String, dynamic> json) {
     return PartSetHeader(
         total: json["total"],
         hash: StringUtils.encode(json["hash"], type: StringEncoding.base64));

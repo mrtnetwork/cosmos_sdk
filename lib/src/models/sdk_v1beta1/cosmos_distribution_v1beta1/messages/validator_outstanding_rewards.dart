@@ -10,16 +10,18 @@ class DistributionValidatorOutstandingRewards extends CosmosMessage {
   final List<DecCoin> rewards;
   DistributionValidatorOutstandingRewards(List<DecCoin> rewards)
       : rewards = rewards.immutable;
-  factory DistributionValidatorOutstandingRewards.fromRpc(
+  factory DistributionValidatorOutstandingRewards.fromJson(
       Map<String, dynamic> json) {
     return DistributionValidatorOutstandingRewards(
-        (json["rewards"] as List?)?.map((e) => DecCoin.fromRpc(e)).toList() ??
+        (json["rewards"] as List?)?.map((e) => DecCoin.fromJson(e)).toList() ??
             []);
   }
   factory DistributionValidatorOutstandingRewards.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return DistributionValidatorOutstandingRewards(
-        decode.getFields(1).map((e) => DecCoin.deserialize(e)).toList());
+    return DistributionValidatorOutstandingRewards(decode
+        .getFields<List<int>>(1)
+        .map((e) => DecCoin.deserialize(e))
+        .toList());
   }
 
   @override

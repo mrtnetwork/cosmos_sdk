@@ -8,7 +8,7 @@ class IbcChannelCounterParty extends CosmosMessage {
 
   /// channel end on the counterparty chain
   final String? channelId;
-  factory IbcChannelCounterParty.fromRpc(Map<String, dynamic> json) {
+  factory IbcChannelCounterParty.fromJson(Map<String, dynamic> json) {
     return IbcChannelCounterParty(
         channelId: json["channel_id"], portId: json["port_id"]);
   }

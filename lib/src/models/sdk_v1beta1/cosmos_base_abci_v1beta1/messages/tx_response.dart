@@ -1,11 +1,10 @@
-import 'package:blockchain_utils/utils/numbers/utils/bigint_utils.dart';
-import 'package:blockchain_utils/utils/numbers/utils/int_utils.dart';
 import 'package:cosmos_sdk/src/models/global_messages/unknown_message.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_abci_v1beta1/types/types.dart';
 
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:cosmos_sdk/src/models/tendermint/tendermint_abci/messages/event.dart';
 import 'package:blockchain_utils/helper/helper.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 import 'abci_message_log.dart';
 
@@ -52,26 +51,29 @@ class TxResponse extends CosmosMessage {
   /// Events emitted by processing a transaction.
   final List<Event> events;
 
-  factory TxResponse.fromRpc(Map<String, dynamic> json) {
+  factory TxResponse.fromJson(Map<String, dynamic> json) {
     return TxResponse(
-        height: BigintUtils.parse(json["height"]),
-        data: json["data"],
-        gasUsed: BigintUtils.parse(json["gas_wanted"]),
-        events:
-            (json["events"] as List?)?.map((e) => Event.fromRpc(e)).toList() ??
-                [],
-        gasWanted: BigintUtils.parse(json["gas_wanted"]),
-        logs: (json["logs"] as List?)
-                ?.map((e) => ABCIMessageLog.fromRpc(e))
+        height: json.asBigInt("height"),
+        data: json.as("data"),
+        gasUsed: json.asBigInt("gas_wanted"),
+        events: json
+                .asListOfMap("events", throwOnNull: false)
+                ?.map((e) => Event.fromJson(e))
                 .toList() ??
             [],
-        rawLog: json["raw_log"],
-        timestamp: json["timestamp"],
-        tx: AnyMessage.fromRpc(json["tx"]),
-        txHash: json["txhash"],
-        code: IntUtils.tryParse(json["code"]),
-        codespace: json["codespace"],
-        info: json["info"]);
+        gasWanted: json.asBigInt("gas_wanted"),
+        logs: json
+                .asListOfMap("logs", throwOnNull: false)
+                ?.map((e) => ABCIMessageLog.fromJson(e))
+                .toList() ??
+            [],
+        rawLog: json.as("raw_log"),
+        timestamp: json.as("timestamp"),
+        tx: AnyMessage.fromJson(json.asMap("tx")),
+        txHash: json.as("txhash"),
+        code: json.asInt("code"),
+        codespace: json.as("codespace"),
+        info: json.as("info"));
   }
 
   TxResponse({

@@ -1,14 +1,15 @@
 import 'package:blockchain_utils/blockchain_utils.dart';
+import 'package:cosmos_sdk/src/models/ibc/core/service.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_channel_v1/messages/error_receipt.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_client_v1/messages/height.dart';
 
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// MsgChannelUpgradeCancel defines the request type for the ChannelUpgradeCancel rpc
-class MsgChannelUpgradeCancel extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class MsgChannelUpgradeCancel extends IbcService<EmptyServiceRequestResponse> {
   final String? portId;
   final String? channelId;
   final IbcChannelErrorReceipt errorReceipt;
@@ -34,12 +35,18 @@ class MsgChannelUpgradeCancel extends CosmosMessage
         proofHeight: IbcClientHeight.deserialize(decode.getField(5)),
         signer: decode.getField(6));
   }
+  factory MsgChannelUpgradeCancel.fromJson(Map<String, dynamic> json) {
+    return MsgChannelUpgradeCancel(
+        portId: json.as("port_id"),
+        channelId: json.as("channel_id"),
+        errorReceipt: IbcChannelErrorReceipt.fromJson(json.as("error_receipt")),
+        proofErrorReceipt: json.asBytes("proof_error_receipt"),
+        proofHeight: IbcClientHeight.fromJson(json.asMap("proof_height")),
+        signer: json.as("signer"));
+  }
 
   @override
   List<int> get fieldIds => [1, 2, 3, 4, 5, 6];
-
-  @override
-  TypeUrl get service => IbcTypes.channelUpgradeCancel;
 
   @override
   Map<String, dynamic> toJson() {

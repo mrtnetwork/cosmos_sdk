@@ -39,7 +39,7 @@ class OsmosisProtorevOsmosisProtorevQueryQueryGetProtoRevProfitsByDenomRequest
   @override
   OsmosisProtorevQueryGetProtoRevProfitsByDenomResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisProtorevQueryGetProtoRevProfitsByDenomResponse.fromRpc(json);
+    return OsmosisProtorevQueryGetProtoRevProfitsByDenomResponse.fromJson(json);
   }
 
   @override

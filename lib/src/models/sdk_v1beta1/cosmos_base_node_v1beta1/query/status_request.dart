@@ -28,6 +28,6 @@ class NodeStatusRequest extends CosmosMessage
 
   @override
   NodeStatusResponse onJsonResponse(Map<String, dynamic> json) {
-    return NodeStatusResponse.fromRpc(json);
+    return NodeStatusResponse.fromJson(json);
   }
 }

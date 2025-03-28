@@ -35,7 +35,7 @@ class OsmosisGammQueryPoolParamsRequest extends CosmosMessage
 
   @override
   OsmosisGammQueryPoolParamsResponse onJsonResponse(Map<String, dynamic> json) {
-    return OsmosisGammQueryPoolParamsResponse.fromRpc(json);
+    return OsmosisGammQueryPoolParamsResponse.fromJson(json);
   }
 
   @override

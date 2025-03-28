@@ -9,7 +9,7 @@ class GetSyncingResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GetSyncingResponse(syncing: decode.getField(1));
   }
-  factory GetSyncingResponse.fromRpc(Map<String, dynamic> json) {
+  factory GetSyncingResponse.fromJson(Map<String, dynamic> json) {
     return GetSyncingResponse(syncing: json["syncing"]);
   }
 

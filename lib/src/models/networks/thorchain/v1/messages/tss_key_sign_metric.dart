@@ -13,7 +13,7 @@ class ThorchainTssKeysignMetric extends CosmosMessage {
     return ThorchainTssKeysignMetric(
         txId: decode.getField(1),
         nodeTssTimes: decode
-            .getFields(2)
+            .getFields<List<int>>(2)
             .map((e) => ThorchainNodeTssTime.deserialized(e))
             .toList());
   }

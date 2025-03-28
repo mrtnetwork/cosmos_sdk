@@ -27,7 +27,7 @@ class OsmosisTokenFactoryQueryParamsRequest extends CosmosMessage
   @override
   OsmosisTokenFactoryQueryParamsResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisTokenFactoryQueryParamsResponse.fromRpc(json);
+    return OsmosisTokenFactoryQueryParamsResponse.fromJson(json);
   }
 
   @override

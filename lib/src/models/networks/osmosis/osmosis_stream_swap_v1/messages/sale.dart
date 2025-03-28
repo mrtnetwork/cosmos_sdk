@@ -95,7 +95,7 @@ class OsmosisStreamSwapSale extends CosmosMessage {
         name: decode.getField(20),
         url: decode.getField(21));
   }
-  factory OsmosisStreamSwapSale.fromRpc(Map<String, dynamic> json) {
+  factory OsmosisStreamSwapSale.fromJson(Map<String, dynamic> json) {
     return OsmosisStreamSwapSale(
       treasury: json["treasury"],
       id: BigintUtils.tryParse(json["id"]),

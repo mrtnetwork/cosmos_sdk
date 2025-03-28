@@ -1,13 +1,13 @@
+import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_superfluid/core/service.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_superfluid/types/types.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_v1beta1/cosmos_base_v1beta1.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 import 'super_fluid_undelegate_and_unbond_lock_response.dart';
 
 class OsmosisSuperfluidMsgSuperfluidUndelegateAndUnbondLock
-    extends CosmosMessage
-    with
-        ServiceMessage<
-            OsmosisSuperfluidMsgSuperfluidUndelegateAndUnbondLockResponse> {
+    extends OsmosisSuperfluid<
+        OsmosisSuperfluidMsgSuperfluidUndelegateAndUnbondLockResponse> {
   final String? sender;
   final BigInt? lockId;
 
@@ -15,6 +15,14 @@ class OsmosisSuperfluidMsgSuperfluidUndelegateAndUnbondLock
   final Coin coin;
   const OsmosisSuperfluidMsgSuperfluidUndelegateAndUnbondLock(
       {this.sender, this.lockId, required this.coin});
+  factory OsmosisSuperfluidMsgSuperfluidUndelegateAndUnbondLock.fromJson(
+      Map<String, dynamic> json) {
+    // final decode = CosmosProtocolBuffer.decode(bytes);
+    return OsmosisSuperfluidMsgSuperfluidUndelegateAndUnbondLock(
+        sender: json.as("sender"),
+        lockId: json.asBigInt("lock_id"),
+        coin: Coin.deserialize(json.asMap("coin")));
+  }
   factory OsmosisSuperfluidMsgSuperfluidUndelegateAndUnbondLock.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -42,10 +50,6 @@ class OsmosisSuperfluidMsgSuperfluidUndelegateAndUnbondLock
 
   @override
   List get values => [sender, lockId];
-
-  @override
-  TypeUrl get service =>
-      OsmosisSuperfluidTypes.superfluidUndelegateAndUnbondLock;
 
   @override
   List<String?> get signers => [sender];

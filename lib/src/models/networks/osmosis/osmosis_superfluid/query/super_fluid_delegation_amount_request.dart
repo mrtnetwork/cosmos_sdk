@@ -47,7 +47,7 @@ class OsmosisSuperfluidSuperfluidDelegationAmountRequest extends CosmosMessage
   @override
   OsmosisSuperfluidSuperfluidDelegationAmountResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisSuperfluidSuperfluidDelegationAmountResponse.fromRpc(json);
+    return OsmosisSuperfluidSuperfluidDelegationAmountResponse.fromJson(json);
   }
 
   @override

@@ -9,10 +9,10 @@ class InterchainAccountsControllerQueryParamsResponse extends CosmosMessage {
 
   /// This message has no fields.
   const InterchainAccountsControllerQueryParamsResponse({this.params});
-  factory InterchainAccountsControllerQueryParamsResponse.fromRpc(
+  factory InterchainAccountsControllerQueryParamsResponse.fromJson(
       Map<String, dynamic> json) {
     return InterchainAccountsControllerQueryParamsResponse(
-        params: InterchainAccountsControllerParams.fromRpc(json["params"]));
+        params: InterchainAccountsControllerParams.fromJson(json["params"]));
   }
   factory InterchainAccountsControllerQueryParamsResponse.deserialize(
       List<int> bytes) {

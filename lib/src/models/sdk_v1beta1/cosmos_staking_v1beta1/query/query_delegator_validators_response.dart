@@ -11,15 +11,15 @@ class QueryDelegatorValidatorsResponse extends CosmosMessage {
 
   /// pagination defines the pagination in the response.
   final PageResponse? pagination;
-  factory QueryDelegatorValidatorsResponse.fromRpc(Map<String, dynamic> json) {
+  factory QueryDelegatorValidatorsResponse.fromJson(Map<String, dynamic> json) {
     return QueryDelegatorValidatorsResponse(
       validators: (json["validators"] as List?)
-              ?.map((e) => StakingValidator.fromRpc(e))
+              ?.map((e) => StakingValidator.fromJson(e))
               .toList() ??
           [],
       pagination: json["pagination"] == null
           ? null
-          : PageResponse.fromRpc(json["pagination"]),
+          : PageResponse.fromJson(json["pagination"]),
     );
   }
   QueryDelegatorValidatorsResponse(
@@ -29,7 +29,7 @@ class QueryDelegatorValidatorsResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryDelegatorValidatorsResponse(
         validators: decode
-            .getFields(1)
+            .getFields<List<int>>(1)
             .map((e) => StakingValidator.deserialize(e))
             .toList(),
         pagination: decode

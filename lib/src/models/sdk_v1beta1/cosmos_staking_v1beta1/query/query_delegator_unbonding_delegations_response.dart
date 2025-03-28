@@ -13,16 +13,16 @@ class QueryDelegatorUnbondingDelegationsResponse extends CosmosMessage {
   QueryDelegatorUnbondingDelegationsResponse(
       {required List<UnbondingDelegation> unbondingResponses, this.pagination})
       : unbondingResponses = unbondingResponses.immutable;
-  factory QueryDelegatorUnbondingDelegationsResponse.fromRpc(
+  factory QueryDelegatorUnbondingDelegationsResponse.fromJson(
       Map<String, dynamic> json) {
     return QueryDelegatorUnbondingDelegationsResponse(
       unbondingResponses: (json["unbonding_responses"] as List?)
-              ?.map((e) => UnbondingDelegation.fromRpc(e))
+              ?.map((e) => UnbondingDelegation.fromJson(e))
               .toList() ??
           [],
       pagination: json["pagination"] == null
           ? null
-          : PageResponse.fromRpc(json["pagination"]),
+          : PageResponse.fromJson(json["pagination"]),
     );
   }
   factory QueryDelegatorUnbondingDelegationsResponse.deserialize(
@@ -30,7 +30,7 @@ class QueryDelegatorUnbondingDelegationsResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryDelegatorUnbondingDelegationsResponse(
         unbondingResponses: decode
-            .getFields(1)
+            .getFields<List<int>>(1)
             .map((e) => UnbondingDelegation.deserialize(e))
             .toList(),
         pagination: decode

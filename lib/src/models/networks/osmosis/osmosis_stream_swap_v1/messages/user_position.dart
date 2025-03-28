@@ -33,7 +33,7 @@ class OsmosisStreamSwapUserPosition extends CosmosMessage {
         spent: decode.getField(4),
         purchased: decode.getField(5));
   }
-  factory OsmosisStreamSwapUserPosition.fromRpc(Map<String, dynamic> json) {
+  factory OsmosisStreamSwapUserPosition.fromJson(Map<String, dynamic> json) {
     return OsmosisStreamSwapUserPosition(
         shares: json["shares"],
         staked: json["staked"],

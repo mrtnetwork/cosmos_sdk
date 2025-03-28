@@ -3,11 +3,14 @@ import 'package:cosmos_sdk/src/address/address/address.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
 import 'package:cosmos_sdk/src/models/networks/thorchain/v1/common/asset.dart';
 import 'package:cosmos_sdk/src/models/networks/thorchain/v1/common/tx.dart';
+import 'package:cosmos_sdk/src/models/networks/thorchain/v1/core/service.dart';
 import 'package:cosmos_sdk/src/models/networks/thorchain/v1/messages/order_type.dart';
 import 'package:cosmos_sdk/src/models/networks/thorchain/v1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
+import 'package:cosmos_sdk/src/utils/utils.dart';
 
-class ThorchainMsgSwap extends CosmosMessage with ServiceMessage {
+class ThorchainMsgSwap extends ThorchainV1Service<EmptyServiceRequestResponse> {
   final ThorchainTx tx;
   final ThorchainAsset targetAsset;
   final String? destination;
@@ -56,7 +59,29 @@ class ThorchainMsgSwap extends CosmosMessage with ServiceMessage {
       streamInterval: decode.getField(13),
     );
   }
-
+  factory ThorchainMsgSwap.fromJson(Map<String, dynamic> json) {
+    return ThorchainMsgSwap(
+      tx: ThorchainTx.fromJson(json.asMap("tx")),
+      targetAsset: ThorchainAsset.fromJson(json.asMap("target_asset")),
+      destination: json.as("destination"),
+      tradeTarget: json.asBigInt("trade_target"),
+      affiliateAddress: json.as("affiliate_address"),
+      affiliateBasisPoints: json.asBigInt("affiliate_basis_points"),
+      signer: json.maybeAs<CosmosBaseAddress, String>(
+        key: "signer",
+        onValue: (e) {
+          return CosmosBaseAddress.fromBytes(CosmosUtils.toBytes(e));
+        },
+      ),
+      aggregator: json.as("aggregator"),
+      aggregatorTargetAddress: json.as("aggregator_target_address"),
+      aggregatorTargetLimit: json.asBigInt("aggregator_target_limit"),
+      orderType: json.maybeAs<ThorchainOrderType, String>(
+          key: "order_type", onValue: ThorchainOrderType.fromValue),
+      streamQuantity: json.asBigInt("stream_quantity"),
+      streamInterval: json.asBigInt("stream_interval"),
+    );
+  }
   @override
   List<int> get fieldIds => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
 
@@ -80,7 +105,7 @@ class ThorchainMsgSwap extends CosmosMessage with ServiceMessage {
   }
 
   @override
-  TypeUrl get typeUrl => ThorchainV1Types.msgSwap;
+  ThorchainV1Types get typeUrl => ThorchainV1Types.msgSwap;
 
   @override
   List get values => [
@@ -103,9 +128,6 @@ class ThorchainMsgSwap extends CosmosMessage with ServiceMessage {
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(typeUrl);
   }
-
-  @override
-  TypeUrl get service => typeUrl;
 
   @override
   List<String?> get signers => [signer?.address];

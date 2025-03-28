@@ -1,3 +1,4 @@
+import 'package:blockchain_utils/service/models/params.dart';
 import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 import 'package:cosmos_sdk/src/provider/tendermint/core/core.dart';
 import 'package:cosmos_sdk/src/utils/utils.dart';
@@ -21,7 +22,13 @@ class TendermintRequestRPCMessage<Response>
   String get method => rpcUrl(pathParameters: request.pathParameters);
 
   @override
+  RequestServiceType get requestType => request.typeUrl.method;
+
+  @override
   List<String> get pathParameters => [];
+
+  @override
+  Map<String, dynamic> get body => request.body;
 
   @override
   Map<String, String?> get parameters => request.queryParameters;

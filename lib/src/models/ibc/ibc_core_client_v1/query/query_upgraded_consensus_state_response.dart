@@ -8,12 +8,12 @@ class QueryUpgradedConsensusStateResponse extends CosmosMessage {
   /// Consensus state associated with the request identifier
   final AnyMessage? upgradedConsensusState;
   const QueryUpgradedConsensusStateResponse({this.upgradedConsensusState});
-  factory QueryUpgradedConsensusStateResponse.fromRpc(
+  factory QueryUpgradedConsensusStateResponse.fromJson(
       Map<String, dynamic> json) {
     return QueryUpgradedConsensusStateResponse(
         upgradedConsensusState: json["upgraded_consensus_state"] == null
             ? null
-            : AnyMessage.fromRpc(json["upgraded_consensus_state"]));
+            : AnyMessage.fromJson(json["upgraded_consensus_state"]));
   }
   factory QueryUpgradedConsensusStateResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

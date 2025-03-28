@@ -13,9 +13,9 @@ class IbcChannelTimeout extends CosmosMessage {
   /// block timestamp (in nanoseconds) after which the packet or upgrade times out
   final BigInt? timestamp;
 
-  factory IbcChannelTimeout.fromRpc(Map<String, dynamic> json) {
+  factory IbcChannelTimeout.fromJson(Map<String, dynamic> json) {
     return IbcChannelTimeout(
-        height: IbcClientHeight.fromRpc(json["height"]),
+        height: IbcClientHeight.fromJson(json["height"]),
         timestamp: BigintUtils.tryParse(json["timestamp"]));
   }
   const IbcChannelTimeout({required this.height, this.timestamp});

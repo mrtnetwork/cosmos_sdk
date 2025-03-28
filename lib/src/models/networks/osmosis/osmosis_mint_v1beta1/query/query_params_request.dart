@@ -24,7 +24,7 @@ class OsmosisMintQueryParamsRequest extends CosmosMessage
 
   @override
   OsmosisMintQueryParamsResponse onJsonResponse(Map<String, dynamic> json) {
-    return OsmosisMintQueryParamsResponse.fromRpc(json);
+    return OsmosisMintQueryParamsResponse.fromJson(json);
   }
 
   @override

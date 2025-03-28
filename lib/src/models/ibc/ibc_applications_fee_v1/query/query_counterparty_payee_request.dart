@@ -39,7 +39,7 @@ class QueryCounterpartyPayeeRequest extends CosmosMessage
 
   @override
   QueryCounterpartyPayeeResponse onJsonResponse(Map<String, dynamic> json) {
-    return QueryCounterpartyPayeeResponse.fromRpc(json);
+    return QueryCounterpartyPayeeResponse.fromJson(json);
   }
 
   @override

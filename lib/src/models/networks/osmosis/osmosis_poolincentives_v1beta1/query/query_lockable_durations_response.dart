@@ -13,11 +13,11 @@ class OsmosisPoolincentivesQueryLockableDurationsResponse
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolincentivesQueryLockableDurationsResponse(decode
-        .getFields(1)
+        .getFields<List<int>>(1)
         .map((e) => ProtobufDuration.deserialize(e))
         .toList());
   }
-  factory OsmosisPoolincentivesQueryLockableDurationsResponse.fromRpc(
+  factory OsmosisPoolincentivesQueryLockableDurationsResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisPoolincentivesQueryLockableDurationsResponse(
         (json["lockable_durations"] as List?)

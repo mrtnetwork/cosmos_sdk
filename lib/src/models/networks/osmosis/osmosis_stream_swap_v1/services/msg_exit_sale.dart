@@ -1,10 +1,12 @@
+import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_stream_swap_v1/core/service.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_stream_swap_v1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 import 'msg_exit_sale_response.dart';
 
-class OsmosisStreamSwapMsgExitSale extends CosmosMessage
-    with ServiceMessage<OsmosisStreamSwapMsgExitSaleResponse> {
+class OsmosisStreamSwapMsgExitSale
+    extends OsmosisStreamSwapV1<OsmosisStreamSwapMsgExitSaleResponse> {
   /// sender is an account address exiting a sale
   final String? sender;
 
@@ -16,6 +18,10 @@ class OsmosisStreamSwapMsgExitSale extends CosmosMessage
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisStreamSwapMsgExitSale(
         sender: decode.getField(1), saleId: decode.getField(2));
+  }
+  factory OsmosisStreamSwapMsgExitSale.fromJson(Map<String, dynamic> json) {
+    return OsmosisStreamSwapMsgExitSale(
+        sender: json.as("sender"), saleId: json.asBigInt("sale_id"));
   }
 
   @override
@@ -36,9 +42,6 @@ class OsmosisStreamSwapMsgExitSale extends CosmosMessage
   OsmosisStreamSwapMsgExitSaleResponse onResponse(List<int> bytes) {
     return OsmosisStreamSwapMsgExitSaleResponse.deserialize(bytes);
   }
-
-  @override
-  TypeUrl get service => OsmosisStreamSwapV1Types.exitSale;
 
   @override
   List<String?> get signers => [sender];

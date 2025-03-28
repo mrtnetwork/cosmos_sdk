@@ -50,6 +50,21 @@ class ProtocolBufferDecoder {
     return _Result(value: value, consumed: index);
   }
 
+  static BigInt decodeBigInt(List<int> data) {
+    BigInt value = BigInt.zero;
+    int shift = 0;
+    int index = 0;
+    while (true) {
+      final byte = data[index++];
+      value |= BigInt.from((byte & 0x7F)) << shift;
+      if ((byte & 0x80) == 0) {
+        break;
+      }
+      shift += 7;
+    }
+    return value;
+  }
+
   static _Result<BigInt> _decodeBigVarint(List<int> data) {
     BigInt value = BigInt.zero;
     int shift = 0;
@@ -143,6 +158,15 @@ extension QuickProtocolBufferResults on List<ProtocolBufferDecoderResult> {
     if (result.isEmpty && !allowNull) {
       throw DartCosmosSdkPluginException("field id does not exist.",
           details: {"fieldIds": map((e) => e.tagNumber).join(", "), "id": tag});
+    }
+    // if (dynamic is T) {
+
+    // }
+    if (BigInt.zero is T) {
+      return result
+          .map((e) => ProtocolBufferDecoder.decodeBigInt(e.value))
+          .toList()
+          .cast<T>();
     }
     return result.map((e) => e.get<T>()).toList();
   }

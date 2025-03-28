@@ -17,14 +17,14 @@ class OsmosisProtorevCosmwasmPoolInfo extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisProtorevCosmwasmPoolInfo(
         weightMaps: decode
-            .getFields(1)
+            .getFields<List<int>>(1)
             .map((e) => OsmosisProtorevWeightMap.deserialize(e))
             .toList());
   }
-  factory OsmosisProtorevCosmwasmPoolInfo.fromRpc(Map<String, dynamic> json) {
+  factory OsmosisProtorevCosmwasmPoolInfo.fromJson(Map<String, dynamic> json) {
     return OsmosisProtorevCosmwasmPoolInfo(
         weightMaps: (json["weight_maps"] as List?)
-                ?.map((e) => OsmosisProtorevWeightMap.fromRpc(e))
+                ?.map((e) => OsmosisProtorevWeightMap.fromJson(e))
                 .toList() ??
             <OsmosisProtorevWeightMap>[]);
   }

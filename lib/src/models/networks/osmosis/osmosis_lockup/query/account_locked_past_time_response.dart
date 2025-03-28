@@ -12,11 +12,11 @@ class OsmosisLockupAccountLockedPastTimeResponse extends CosmosMessage {
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisLockupAccountLockedPastTimeResponse(decode
-        .getFields(1)
+        .getFields<List<int>>(1)
         .map((e) => OsmosisLockupPeriodLock.deserialize(e))
         .toList());
   }
-  factory OsmosisLockupAccountLockedPastTimeResponse.fromRpc(
+  factory OsmosisLockupAccountLockedPastTimeResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisLockupAccountLockedPastTimeResponse((json["locks"] as List?)
             ?.map((e) => OsmosisLockupPeriodLock.deserialize(e))

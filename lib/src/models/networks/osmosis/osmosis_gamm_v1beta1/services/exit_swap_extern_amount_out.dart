@@ -1,10 +1,12 @@
+import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_gamm_v1beta1/core/service.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_gamm_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/sdk_v1beta1.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 import 'exit_swap_extern_amount_out_response.dart';
 
-class OsmosisGammMsgExitSwapExternAmountOut extends CosmosMessage
-    with ServiceMessage<OsmosisGammMsgExitSwapExternAmountOutResponse> {
+class OsmosisGammMsgExitSwapExternAmountOut
+    extends OsmosisGammV1Beta1<OsmosisGammMsgExitSwapExternAmountOutResponse> {
   final String? sender;
   final BigInt? poolId;
   final Coin tokenOut;
@@ -24,7 +26,15 @@ class OsmosisGammMsgExitSwapExternAmountOut extends CosmosMessage
       tokenOut: Coin.deserialize(decode.getField(3)),
     );
   }
-
+  factory OsmosisGammMsgExitSwapExternAmountOut.fromJson(
+      Map<String, dynamic> json) {
+    return OsmosisGammMsgExitSwapExternAmountOut(
+      sender: json.as("sender"),
+      poolId: json.asBigInt("pool_id"),
+      shareInMaxAmount: json.asBigInt("share_in_max_amount"),
+      tokenOut: Coin.fromJson(json.asMap("token_out")),
+    );
+  }
   @override
   List<int> get fieldIds => [1, 2, 3, 4];
 
@@ -48,9 +58,6 @@ class OsmosisGammMsgExitSwapExternAmountOut extends CosmosMessage
   OsmosisGammMsgExitSwapExternAmountOutResponse onResponse(List<int> bytes) {
     return OsmosisGammMsgExitSwapExternAmountOutResponse.deserialize(bytes);
   }
-
-  @override
-  TypeUrl get service => OsmosisGammV1beta1Types.exitSwapExternAmountOut;
 
   @override
   List<String?> get signers => [sender];

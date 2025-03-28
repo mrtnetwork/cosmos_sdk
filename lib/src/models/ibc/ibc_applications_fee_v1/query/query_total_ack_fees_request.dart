@@ -37,7 +37,7 @@ class QueryTotalAckFeesRequest extends CosmosMessage
 
   @override
   QueryTotalAckFeesResponse onJsonResponse(Map<String, dynamic> json) {
-    return QueryTotalAckFeesResponse.fromRpc(json);
+    return QueryTotalAckFeesResponse.fromJson(json);
   }
 
   @override

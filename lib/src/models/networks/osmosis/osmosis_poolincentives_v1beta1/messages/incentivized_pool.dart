@@ -15,7 +15,7 @@ class OsmosisPoolincentivesIncentivizedPool extends CosmosMessage {
         lockableDuration: ProtobufDuration.deserialize(decode.getField(2)),
         gaugeId: decode.getField(3));
   }
-  factory OsmosisPoolincentivesIncentivizedPool.fromRpc(
+  factory OsmosisPoolincentivesIncentivizedPool.fromJson(
       Map<String, dynamic> json) {
     return OsmosisPoolincentivesIncentivizedPool(
         poolId: BigintUtils.tryParse(json["pool_id"]),

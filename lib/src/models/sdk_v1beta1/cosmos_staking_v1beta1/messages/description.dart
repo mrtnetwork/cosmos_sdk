@@ -18,7 +18,7 @@ class Description extends CosmosMessage {
   // details define other optional details.
   final String? details;
 
-  factory Description.fromRpc(Map<String, dynamic> json) {
+  factory Description.fromJson(Map<String, dynamic> json) {
     return Description(
         details: json["details"],
         identity: json["identity"],

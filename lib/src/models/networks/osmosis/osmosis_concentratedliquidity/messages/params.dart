@@ -69,14 +69,14 @@ class OsmosisConcentratedLiquidityParams extends CosmosMessage {
         balancerSharesRewardDiscount: decode.getField(3),
         authorizedQuoteDenoms: decode.getFields<String>(4),
         authorizedUptimes: decode
-            .getFields(5)
+            .getFields<List<int>>(5)
             .map((e) => ProtobufDuration.deserialize(e))
             .toList(),
         isPermissionlessPoolCreationEnabled: decode.getField(6),
-        unrestrictedPoolCreatorWhitelist: decode.getFields(7),
+        unrestrictedPoolCreatorWhitelist: decode.getFields<String>(7),
         hookGasLimit: decode.getField(8));
   }
-  factory OsmosisConcentratedLiquidityParams.fromRpc(
+  factory OsmosisConcentratedLiquidityParams.fromJson(
       Map<String, dynamic> json) {
     return OsmosisConcentratedLiquidityParams(
         authorizedTickSpacing: (json["authorized_tick_spacing"] as List?)

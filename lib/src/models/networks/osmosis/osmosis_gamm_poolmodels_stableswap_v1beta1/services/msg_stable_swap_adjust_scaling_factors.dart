@@ -1,12 +1,15 @@
 import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
+import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_gamm_poolmodels_stableswap_v1beta1/core/service.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_gamm_poolmodels_stableswap_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:blockchain_utils/helper/helper.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// Sender must be the pool's scaling_factor_governor in order for the tx to succeed. Adjusts stableswap scaling factors.
 class OsmosisGammPoolmodelsStableSwapMsgStableSwapAdjustScalingFactors
-    extends CosmosMessage with ServiceMessage<EmptyServiceRequestResponse> {
+    extends OsmosisGammPoolmodelsStableSwapV1Beta1<
+        EmptyServiceRequestResponse> {
   final String? sender;
   final BigInt? poolId;
   final List<BigInt>? scalingFactors;
@@ -27,6 +30,17 @@ class OsmosisGammPoolmodelsStableSwapMsgStableSwapAdjustScalingFactors
           <BigInt>[],
     );
   }
+  factory OsmosisGammPoolmodelsStableSwapMsgStableSwapAdjustScalingFactors.fromJson(
+      Map<String, dynamic> json) {
+    return OsmosisGammPoolmodelsStableSwapMsgStableSwapAdjustScalingFactors(
+      sender: json.as("sender"),
+      poolId: json.asBigInt("pool_id"),
+      scalingFactors: json
+          .as<List?>("scaling_factors")
+          ?.map((e) => BigintUtils.parse(e))
+          .toList(),
+    );
+  }
 
   @override
   List<int> get fieldIds => [1, 2, 3];
@@ -34,13 +48,9 @@ class OsmosisGammPoolmodelsStableSwapMsgStableSwapAdjustScalingFactors
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        OsmosisGammPoolmodelsStableswaPV1beta1Types
+        OsmosisGammPoolmodelsStableSwapV1beta1Types
             .msgStableSwapAdjustScalingFactorsResponse);
   }
-
-  @override
-  TypeUrl get service => OsmosisGammPoolmodelsStableswaPV1beta1Types
-      .stableSwapAdjustScalingFactors;
 
   @override
   List<String?> get signers => [sender];
@@ -55,7 +65,7 @@ class OsmosisGammPoolmodelsStableSwapMsgStableSwapAdjustScalingFactors
   }
 
   @override
-  TypeUrl get typeUrl => OsmosisGammPoolmodelsStableswaPV1beta1Types
+  TypeUrl get typeUrl => OsmosisGammPoolmodelsStableSwapV1beta1Types
       .msgStableSwapAdjustScalingFactors;
 
   @override

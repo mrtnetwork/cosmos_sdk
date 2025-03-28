@@ -22,7 +22,7 @@ class PageResponse extends CosmosMessage {
         nextKey: decode.getField(1),
         total: decode.getResult(2)?.cast<BigInt>());
   }
-  factory PageResponse.fromRpc(Map<String, dynamic> json) {
+  factory PageResponse.fromJson(Map<String, dynamic> json) {
     return PageResponse(
         nextKey: StringUtils.tryEncode(json["next_key"],
             type: StringEncoding.base64),

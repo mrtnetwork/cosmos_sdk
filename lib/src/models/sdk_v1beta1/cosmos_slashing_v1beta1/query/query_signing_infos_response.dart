@@ -9,15 +9,16 @@ class SlashingQuerySigningInfosResponse extends CosmosMessage {
   /// info is the signing info of all validators
   final List<SlashingValidatorSigningInfo> info;
   final PageResponse? pagination;
-  factory SlashingQuerySigningInfosResponse.fromRpc(Map<String, dynamic> json) {
+  factory SlashingQuerySigningInfosResponse.fromJson(
+      Map<String, dynamic> json) {
     return SlashingQuerySigningInfosResponse(
       info: (json["info"] as List?)
-              ?.map((e) => SlashingValidatorSigningInfo.fromRpc(e))
+              ?.map((e) => SlashingValidatorSigningInfo.fromJson(e))
               .toList() ??
           [],
       pagination: json["pagination"] == null
           ? null
-          : PageResponse.fromRpc(json["pagination"]),
+          : PageResponse.fromJson(json["pagination"]),
     );
   }
   SlashingQuerySigningInfosResponse(
@@ -30,7 +31,7 @@ class SlashingQuerySigningInfosResponse extends CosmosMessage {
             .getResult(2)
             ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
         info: decode
-            .getFields(1)
+            .getFields<List<int>>(1)
             .map((e) => SlashingValidatorSigningInfo.deserialize(e))
             .toList());
   }

@@ -6,7 +6,7 @@ class ParamChange extends CosmosMessage {
   final String? subspace;
   final String? key;
   final String? value;
-  factory ParamChange.fromRpc(Map<String, dynamic> json) {
+  factory ParamChange.fromJson(Map<String, dynamic> json) {
     return ParamChange(
         key: json["key"], subspace: json["subspace"], value: json["value"]);
   }

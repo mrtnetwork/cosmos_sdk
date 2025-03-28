@@ -16,11 +16,11 @@ class QueryPacketReceiptResponse extends CosmosMessage {
   /// height at which the proof was retrieved
   final IbcClientHeight proofHeight;
 
-  factory QueryPacketReceiptResponse.fromRpc(Map<String, dynamic> json) {
+  factory QueryPacketReceiptResponse.fromJson(Map<String, dynamic> json) {
     return QueryPacketReceiptResponse(
       received: json["received"],
       proof: CosmosUtils.tryToBytes(json["proof"]),
-      proofHeight: IbcClientHeight.fromRpc(json["proof_height"]),
+      proofHeight: IbcClientHeight.fromJson(json["proof_height"]),
     );
   }
   QueryPacketReceiptResponse(

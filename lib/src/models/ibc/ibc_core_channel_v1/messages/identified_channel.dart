@@ -34,13 +34,13 @@ class IbcChannelIdentifiedChannel extends CosmosMessage {
   /// the value of 0 indicates the channel has never been upgraded
   final BigInt? upgradeSequence;
 
-  factory IbcChannelIdentifiedChannel.fromRpc(Map<String, dynamic> json) {
+  factory IbcChannelIdentifiedChannel.fromJson(Map<String, dynamic> json) {
     return IbcChannelIdentifiedChannel(
         channelId: json["channel_id"],
         connectionHops: (json["connection_hops"] as List?)?.cast(),
         counterparty: json["counterparty"] == null
             ? null
-            : IbcChannelCounterParty.fromRpc(json["counterparty"]),
+            : IbcChannelCounterParty.fromJson(json["counterparty"]),
         ordering: json["ordering"] == null
             ? null
             : IbcChannelOrder.fromValue(json["ordering"]),
@@ -74,7 +74,7 @@ class IbcChannelIdentifiedChannel extends CosmosMessage {
             .getResult(3)
             ?.to<IbcChannelCounterParty, List<int>>(
                 (e) => IbcChannelCounterParty.deserialize(e)),
-        connectionHops: decode.getFields(4),
+        connectionHops: decode.getFields<String>(4),
         version: decode.getField(5),
         portId: decode.getField(6),
         channelId: decode.getField(7),

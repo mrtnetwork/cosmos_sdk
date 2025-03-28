@@ -19,9 +19,14 @@ class NFTGenesisState extends CosmosMessage {
   factory NFTGenesisState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return NFTGenesisState(
-        classes:
-            decode.getFields(1).map((e) => NFTClass.deserialize(e)).toList(),
-        entries: decode.getFields(2).map((e) => Entry.deserialize(e)).toList());
+        classes: decode
+            .getFields<List<int>>(1)
+            .map((e) => NFTClass.deserialize(e))
+            .toList(),
+        entries: decode
+            .getFields<List<int>>(2)
+            .map((e) => Entry.deserialize(e))
+            .toList());
   }
 
   @override

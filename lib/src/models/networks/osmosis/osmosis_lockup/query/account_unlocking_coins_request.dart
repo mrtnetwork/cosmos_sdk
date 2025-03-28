@@ -33,7 +33,7 @@ class OsmosisLockupAccountUnlockingCoinsRequest extends CosmosMessage
   @override
   OsmosisLockupAccountUnlockingCoinsResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisLockupAccountUnlockingCoinsResponse.fromRpc(json);
+    return OsmosisLockupAccountUnlockingCoinsResponse.fromJson(json);
   }
 
   @override

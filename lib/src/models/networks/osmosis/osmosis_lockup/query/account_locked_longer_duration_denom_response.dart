@@ -13,11 +13,11 @@ class OsmosisLockupAccountLockedLongerDurationDenomResponse
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisLockupAccountLockedLongerDurationDenomResponse(decode
-        .getFields(1)
+        .getFields<List<int>>(1)
         .map((e) => OsmosisLockupPeriodLock.deserialize(e))
         .toList());
   }
-  factory OsmosisLockupAccountLockedLongerDurationDenomResponse.fromRpc(
+  factory OsmosisLockupAccountLockedLongerDurationDenomResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisLockupAccountLockedLongerDurationDenomResponse(
         (json["locks"] as List?)

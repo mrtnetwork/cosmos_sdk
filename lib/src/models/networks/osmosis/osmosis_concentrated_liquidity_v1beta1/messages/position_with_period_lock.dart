@@ -17,11 +17,11 @@ class OsmosisConcentratedLiquidityPositionWithPeriodLock extends CosmosMessage {
             decode.getField(1)),
         locks: OsmosisLockupPeriodLock.deserialize(decode.getField(2)));
   }
-  factory OsmosisConcentratedLiquidityPositionWithPeriodLock.fromRpc(
+  factory OsmosisConcentratedLiquidityPositionWithPeriodLock.fromJson(
       Map<String, dynamic> json) {
     return OsmosisConcentratedLiquidityPositionWithPeriodLock(
-      position: OsmosisConcentratedLiquidityPosition.fromRpc(json["position"]),
-      locks: OsmosisLockupPeriodLock.fromRpc(json["locks"]),
+      position: OsmosisConcentratedLiquidityPosition.fromJson(json["position"]),
+      locks: OsmosisLockupPeriodLock.fromJson(json["locks"]),
     );
   }
 

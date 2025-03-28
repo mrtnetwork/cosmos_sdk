@@ -7,11 +7,11 @@ class QueryChannelParamsResponse extends CosmosMessage {
   /// params defines the parameters of the module.
   final IbcChannelParams? params;
   const QueryChannelParamsResponse({this.params});
-  factory QueryChannelParamsResponse.fromRpc(Map<String, dynamic> json) {
+  factory QueryChannelParamsResponse.fromJson(Map<String, dynamic> json) {
     return QueryChannelParamsResponse(
         params: json["params"] == null
             ? null
-            : IbcChannelParams.fromRpc(json["params"]));
+            : IbcChannelParams.fromJson(json["params"]));
   }
   factory QueryChannelParamsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

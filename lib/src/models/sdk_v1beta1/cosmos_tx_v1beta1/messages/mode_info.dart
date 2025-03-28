@@ -20,7 +20,7 @@ class ModeInfo extends CosmosMessage {
     }
     throw const DartCosmosSdkPluginException("Invalid mode info bytes.");
   }
-  factory ModeInfo.fromRpc(Map<String, dynamic> json) {
+  factory ModeInfo.fromJson(Map<String, dynamic> json) {
     throw UnimplementedError();
   }
   @override
@@ -53,7 +53,7 @@ class ModeInfoSignle extends ModeInfoMode {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ModeInfoSignle(SignMode.fromValue(decode.getField(1)));
   }
-  factory ModeInfoSignle.fromRpc(Map<String, dynamic> json) {
+  factory ModeInfoSignle.fromJson(Map<String, dynamic> json) {
     return ModeInfoSignle(SignMode.fromName(json["mode"]));
   }
 

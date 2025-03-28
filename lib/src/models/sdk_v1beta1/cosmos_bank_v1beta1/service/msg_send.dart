@@ -1,19 +1,31 @@
+import 'package:blockchain_utils/helper/extensions/extensions.dart';
 import 'package:cosmos_sdk/src/address/address.dart';
+import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_bank_v1beta1/core/service.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_v1beta1/messages/coin.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_bank_v1beta1/types/types.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// MsgSend represents a message to send coins from one account to another.
-class MsgSend extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class MsgSend extends BankV1Beta1Service<EmptyServiceRequestResponse>
+    with AminoMessage<EmptyServiceRequestResponse> {
   final CosmosBaseAddress fromAddress;
   final CosmosBaseAddress toAddress;
   final List<Coin> amount;
-  const MsgSend(
+  factory MsgSend.fromJson(Map<String, dynamic> json) {
+    return MsgSend(
+        fromAddress: CosmosBaseAddress(json.as("from_address")),
+        toAddress: CosmosBaseAddress(json.as("to_address")),
+        amount:
+            json.asListOfMap("amount")!.map((e) => Coin.fromJson(e)).toList());
+  }
+
+  MsgSend(
       {required this.fromAddress,
       required this.toAddress,
-      required this.amount});
+      required List<Coin> amount})
+      : amount = amount.immutable;
   factory MsgSend.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgSend(
@@ -31,9 +43,9 @@ class MsgSend extends CosmosMessage
   @override
   Map<String, dynamic> toJson() {
     return {
+      "amount": amount.map((e) => e.toJson()).toList(),
       "from_address": fromAddress.address,
       "to_address": toAddress.address,
-      "amount": amount.map((e) => e.toJson()).toList()
     };
   }
 
@@ -43,9 +55,6 @@ class MsgSend extends CosmosMessage
   @override
   @override
   TypeUrl get typeUrl => BankV1beta1Types.msgSend;
-
-  @override
-  TypeUrl get service => BankV1beta1Types.send;
 
   @override
   List<String?> get signers => [fromAddress.address];

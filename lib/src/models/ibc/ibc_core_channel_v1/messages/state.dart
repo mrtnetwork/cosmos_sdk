@@ -51,4 +51,9 @@ class IbcChannelState implements CosmosEnum {
           details: {"value": value}),
     );
   }
+
+  @override
+  String toString() {
+    return "IbcChannelState.$name";
+  }
 }

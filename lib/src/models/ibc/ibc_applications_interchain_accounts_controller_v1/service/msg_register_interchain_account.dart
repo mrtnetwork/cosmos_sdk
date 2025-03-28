@@ -1,13 +1,15 @@
+import 'package:cosmos_sdk/src/models/ibc/core/service.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_channel_v1/messages/order.dart';
 
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 import 'msg_register_interchain_account_response.dart';
 
 /// MsgRegisterInterchainAccount defines the payload for Msg/RegisterAccount
-class MsgRegisterInterchainAccount extends CosmosMessage
-    with ServiceMessage<MsgRegisterInterchainAccountResponse> {
+class MsgRegisterInterchainAccount
+    extends IbcService<MsgRegisterInterchainAccountResponse> {
   final String? owner;
   final String? connectionId;
   final String? version;
@@ -23,6 +25,14 @@ class MsgRegisterInterchainAccount extends CosmosMessage
         ordering: decode
             .getResult(4)
             ?.to<IbcChannelOrder, int>((e) => IbcChannelOrder.fromValue(e)));
+  }
+  factory MsgRegisterInterchainAccount.fromJson(Map<String, dynamic> json) {
+    return MsgRegisterInterchainAccount(
+        owner: json.as("owner"),
+        connectionId: json.as("connection_id"),
+        version: json.as("version"),
+        ordering: json.maybeAs<IbcChannelOrder, String>(
+            key: "ordering", onValue: IbcChannelOrder.fromValue));
   }
 
   @override
@@ -43,9 +53,6 @@ class MsgRegisterInterchainAccount extends CosmosMessage
 
   @override
   List get values => [owner, connectionId, version, ordering];
-
-  @override
-  TypeUrl get service => IbcTypes.registerInterchainAccount;
 
   @override
   List<String?> get signers => [owner];

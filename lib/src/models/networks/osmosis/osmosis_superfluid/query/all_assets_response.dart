@@ -12,15 +12,15 @@ class OsmosisSuperfluidAllAssetsResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidAllAssetsResponse(
         assets: decode
-            .getFields(1)
+            .getFields<List<int>>(1)
             .map((e) => OsmosisSuperfluidSuperfluidAsset.deserialize(e))
             .toList());
   }
-  factory OsmosisSuperfluidAllAssetsResponse.fromRpc(
+  factory OsmosisSuperfluidAllAssetsResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisSuperfluidAllAssetsResponse(
         assets: (json["assets"] as List?)
-                ?.map((e) => OsmosisSuperfluidSuperfluidAsset.fromRpc(e))
+                ?.map((e) => OsmosisSuperfluidSuperfluidAsset.fromJson(e))
                 .toList() ??
             <OsmosisSuperfluidSuperfluidAsset>[]);
   }

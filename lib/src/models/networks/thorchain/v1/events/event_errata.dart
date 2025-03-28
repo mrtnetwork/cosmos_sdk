@@ -12,7 +12,7 @@ class ThorchainEventErrata extends CosmosMessage {
     return ThorchainEventErrata(
         txId: decode.getField(1),
         pools: decode
-            .getFields(2)
+            .getFields<List<int>>(2)
             .map((e) => ThorchainPoolMode.deserialize(e))
             .toList());
   }

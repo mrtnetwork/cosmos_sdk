@@ -8,7 +8,7 @@ class IbcLightClientsWasmQueryCodeResponse extends CosmosMessage {
   final List<int>? data;
   IbcLightClientsWasmQueryCodeResponse({List<int>? data})
       : data = BytesUtils.tryToBytes(data, unmodifiable: true);
-  factory IbcLightClientsWasmQueryCodeResponse.fromRpc(
+  factory IbcLightClientsWasmQueryCodeResponse.fromJson(
       Map<String, dynamic> json) {
     return IbcLightClientsWasmQueryCodeResponse(
         data: CosmosUtils.tryToBytes(json["data"]));

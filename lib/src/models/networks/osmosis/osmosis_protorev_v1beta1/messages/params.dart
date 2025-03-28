@@ -15,7 +15,7 @@ class OsmosisProtorevParams extends CosmosMessage {
     return OsmosisProtorevParams(
         enabled: decode.getField(1), admin: decode.getField(2));
   }
-  factory OsmosisProtorevParams.fromRpc(Map<String, dynamic> json) {
+  factory OsmosisProtorevParams.fromJson(Map<String, dynamic> json) {
     return OsmosisProtorevParams(
         admin: json["admin"], enabled: json["enabled"]);
   }

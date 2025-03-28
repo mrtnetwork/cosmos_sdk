@@ -11,13 +11,13 @@ class IbcLightClientsWasmQueryChecksumsResponse extends CosmosMessage {
   /// pagination defines the pagination in the response.
   final PageResponse? pagination;
 
-  factory IbcLightClientsWasmQueryChecksumsResponse.fromRpc(
+  factory IbcLightClientsWasmQueryChecksumsResponse.fromJson(
       Map<String, dynamic> json) {
     return IbcLightClientsWasmQueryChecksumsResponse(
       checksums: (json["checksums"] as List?)?.cast(),
       pagination: json["pagination"] == null
           ? null
-          : PageResponse.fromRpc(json["pagination"]),
+          : PageResponse.fromJson(json["pagination"]),
     );
   }
   IbcLightClientsWasmQueryChecksumsResponse(
@@ -27,7 +27,7 @@ class IbcLightClientsWasmQueryChecksumsResponse extends CosmosMessage {
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcLightClientsWasmQueryChecksumsResponse(
-        checksums: decode.getFields(1),
+        checksums: decode.getFields<String>(1),
         pagination: decode
             .getResult(2)
             ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));

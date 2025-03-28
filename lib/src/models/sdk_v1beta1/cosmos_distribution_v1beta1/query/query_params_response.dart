@@ -12,9 +12,9 @@ class DistributionQueryParamsResponse extends CosmosMessage {
     return DistributionQueryParamsResponse(
         DistributionParams.deserialize(decode.getField(1)));
   }
-  factory DistributionQueryParamsResponse.fromRpc(Map<String, dynamic> json) {
+  factory DistributionQueryParamsResponse.fromJson(Map<String, dynamic> json) {
     return DistributionQueryParamsResponse(
-        DistributionParams.fromRpc(json["params"]));
+        DistributionParams.fromJson(json["params"]));
   }
 
   @override

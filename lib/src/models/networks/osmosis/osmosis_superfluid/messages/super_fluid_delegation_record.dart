@@ -26,15 +26,15 @@ class OsmosisSuperfluidSuperfluidDelegationRecord extends CosmosMessage {
             .getResult(4)
             ?.to<Coin, List<int>>((e) => Coin.deserialize(e)));
   }
-  factory OsmosisSuperfluidSuperfluidDelegationRecord.fromRpc(
+  factory OsmosisSuperfluidSuperfluidDelegationRecord.fromJson(
       Map<String, dynamic> json) {
     return OsmosisSuperfluidSuperfluidDelegationRecord(
         delegatorAddress: json["delegator_address"],
         validatorAddress: json["validator_address"],
-        delegationAmount: Coin.fromRpc(json["delegation_amount"]),
+        delegationAmount: Coin.fromJson(json["delegation_amount"]),
         equivalentStakedAmount: json["equivalent_staked_amount"] == null
             ? null
-            : Coin.fromRpc(json["equivalent_staked_amount"]));
+            : Coin.fromJson(json["equivalent_staked_amount"]));
   }
 
   @override

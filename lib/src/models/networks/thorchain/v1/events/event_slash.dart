@@ -13,7 +13,7 @@ class ThorchainEventSlash extends CosmosMessage {
     return ThorchainEventSlash(
         pool: ThorchainAsset.deserialize(decode.getField(1)),
         slashAmount: decode
-            .getFields(2)
+            .getFields<List<int>>(2)
             .map((e) => ThorchainPoolAmt.deserialize(e))
             .toList());
   }

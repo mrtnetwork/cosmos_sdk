@@ -20,7 +20,7 @@ class OsmosisPoolManagerTradingPairTakerFeeRequest extends CosmosMessage
   @override
   OsmosisPoolManagerTradingPairTakerFeeResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisPoolManagerTradingPairTakerFeeResponse.fromRpc(json);
+    return OsmosisPoolManagerTradingPairTakerFeeResponse.fromJson(json);
   }
 
   @override

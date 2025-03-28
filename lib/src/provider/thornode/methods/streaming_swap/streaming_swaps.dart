@@ -5,7 +5,8 @@ import 'package:cosmos_sdk/src/provider/thornode/models/models/streaming_swap_st
 /// Returns the state of all streaming swaps
 class ThorNodeRequestStreamingSwapsState extends ThorNodeRequestParam<
     List<StreamingSwapStateResponse>, List<Map<String, dynamic>>> {
-  ThorNodeRequestStreamingSwapsState({this.height});
+  ThorNodeRequestStreamingSwapsState(this.hash, {this.height});
+  final String hash;
 
   /// optional block height, defaults to current tip
   final BigInt? height;
@@ -13,7 +14,7 @@ class ThorNodeRequestStreamingSwapsState extends ThorNodeRequestParam<
   String get method => ThorNodeMethods.streamingState.url;
 
   @override
-  List<String> get pathParameters => [];
+  List<String> get pathParameters => [hash];
 
   @override
   Map<String, String?> get parameters => {"height": height?.toString()};

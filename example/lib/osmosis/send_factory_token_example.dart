@@ -33,8 +33,6 @@ void main() async {
             denom: "factory/osmo1htg7dmhelazdsmuwm9ngtg0tpe82006ugka49q/MRT",
             amount: BigInt.from(100))
       ]);
-  // print(
-  //     "address ${publickey.toAddress(hrp: CosmosAddrConst.osmosis).address}");
 
   /// Querying account info from the blockchain
   final accountInfo = await provider.request(TendermintRequestAbciQuery(
@@ -49,7 +47,7 @@ void main() async {
   final authInfo = AuthInfo(
       signerInfos: [
         SignerInfo(
-            publicKey: publickey,
+            publicKey: publickey.toAny(),
             modeInfo: const ModeInfo(ModeInfoSignle(SignMode.signModeDirect)),
             sequence: accountInfo.info.sequence)
       ],

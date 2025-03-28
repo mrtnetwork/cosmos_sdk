@@ -28,6 +28,6 @@ class GetSyncingRequest extends CosmosMessage
 
   @override
   GetSyncingResponse onJsonResponse(Map<String, dynamic> json) {
-    return GetSyncingResponse.fromRpc(json);
+    return GetSyncingResponse.fromJson(json);
   }
 }

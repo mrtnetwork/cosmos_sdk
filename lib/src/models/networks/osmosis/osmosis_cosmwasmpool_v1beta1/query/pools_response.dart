@@ -23,13 +23,13 @@ class OsmosisCosmWasmPoolPoolsResponse extends CosmosMessage {
           ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
     );
   }
-  factory OsmosisCosmWasmPoolPoolsResponse.fromRpc(Map<String, dynamic> json) {
+  factory OsmosisCosmWasmPoolPoolsResponse.fromJson(Map<String, dynamic> json) {
     return OsmosisCosmWasmPoolPoolsResponse(
       pools:
-          (json["pools"] as List?)?.map((e) => AnyMessage.fromRpc(e)).toList(),
+          (json["pools"] as List?)?.map((e) => AnyMessage.fromJson(e)).toList(),
       pagination: json["pagination"] == null
           ? null
-          : PageResponse.fromRpc(json["pagination"]),
+          : PageResponse.fromJson(json["pagination"]),
     );
   }
 

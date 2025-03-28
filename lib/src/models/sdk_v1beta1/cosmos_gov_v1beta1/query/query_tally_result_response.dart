@@ -7,8 +7,8 @@ class GovQueryTallyResultResponse extends CosmosMessage {
   /// tally defines the requested tally.
   final GovTallyResult tally;
   const GovQueryTallyResultResponse(this.tally);
-  factory GovQueryTallyResultResponse.fromRpc(Map<String, dynamic> json) {
-    return GovQueryTallyResultResponse(GovTallyResult.fromRpc(json["tally"]));
+  factory GovQueryTallyResultResponse.fromJson(Map<String, dynamic> json) {
+    return GovQueryTallyResultResponse(GovTallyResult.fromJson(json["tally"]));
   }
   factory GovQueryTallyResultResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

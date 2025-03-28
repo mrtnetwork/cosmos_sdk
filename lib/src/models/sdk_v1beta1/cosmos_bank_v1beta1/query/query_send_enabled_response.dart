@@ -12,13 +12,13 @@ class QuerySendEnabledResponse extends CosmosMessage {
   /// pagination defines the pagination in the response. This field is only
   /// populated if the denoms field in the request is empty.
   final PageResponse? pagination;
-  factory QuerySendEnabledResponse.fromRpc(Map<String, dynamic> json) {
+  factory QuerySendEnabledResponse.fromJson(Map<String, dynamic> json) {
     return QuerySendEnabledResponse(
       pagination: json["pagination"] == null
           ? null
-          : PageResponse.fromRpc(json["pagination"]),
+          : PageResponse.fromJson(json["pagination"]),
       sendEnabled: (json["send_enabled"] as List?)
-              ?.map((e) => SendEnabled.fromRpc(e))
+              ?.map((e) => SendEnabled.fromJson(e))
               .toList() ??
           [],
     );

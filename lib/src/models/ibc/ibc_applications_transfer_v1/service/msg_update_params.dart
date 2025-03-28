@@ -1,12 +1,14 @@
+import 'package:cosmos_sdk/src/models/ibc/core/service.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_applications_transfer_v1/messages/params.dart';
 
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// MsgUpdateParams is the Msg/UpdateParams request type.
-class IbcTransferMsgUpdateParams extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class IbcTransferMsgUpdateParams
+    extends IbcService<EmptyServiceRequestResponse> {
   /// signer address
   final String? signer;
 
@@ -22,12 +24,14 @@ class IbcTransferMsgUpdateParams extends CosmosMessage
       params: IbcTransaferParams.deserialize(decode.getField(2)),
     );
   }
+  factory IbcTransferMsgUpdateParams.fromJson(Map<String, dynamic> json) {
+    return IbcTransferMsgUpdateParams(
+        signer: json.as("signer"),
+        params: IbcTransaferParams.fromJson(json.asMap("params")));
+  }
 
   @override
   List<int> get fieldIds => [1, 2];
-
-  @override
-  TypeUrl get service => IbcTypes.ibcTransferUpdateParams;
 
   @override
   Map<String, dynamic> toJson() {

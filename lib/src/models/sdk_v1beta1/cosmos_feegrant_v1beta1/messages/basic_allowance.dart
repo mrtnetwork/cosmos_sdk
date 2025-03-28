@@ -19,8 +19,10 @@ class BasicAllowance extends CosmosMessage {
   factory BasicAllowance.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return BasicAllowance(
-        spendLimit:
-            decode.getFields(1).map((e) => Coin.deserialize(e)).toList(),
+        spendLimit: decode
+            .getFields<List<int>>(1)
+            .map((e) => Coin.deserialize(e))
+            .toList(),
         expiration: decode.getResult(2)?.to<ProtobufTimestamp, List<int>>(
             (e) => ProtobufTimestamp.deserialize(e)));
   }

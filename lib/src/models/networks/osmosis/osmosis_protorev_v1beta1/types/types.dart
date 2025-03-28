@@ -1,7 +1,9 @@
+import 'package:blockchain_utils/helper/extensions/extensions.dart';
 import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 
 class OsmosisProtorevV1beta1Types extends TypeUrl {
   const OsmosisProtorevV1beta1Types._(super.typeUrl, {super.query, super.rpc});
+  static const String root = "/osmosis.protorev";
   static const OsmosisProtorevV1beta1Types weightMap =
       OsmosisProtorevV1beta1Types._("/osmosis.protorev.v1beta1.WeightMap");
   static const OsmosisProtorevV1beta1Types trade =
@@ -245,26 +247,15 @@ class OsmosisProtorevV1beta1Types extends TypeUrl {
       OsmosisProtorevV1beta1Types._(
           "/osmosis.protorev.v1beta1.QueryGetAllProtocolRevenueResponse");
 
-  /// query
-
-  /// services
-  static const OsmosisProtorevV1beta1Types setBaseDenoms =
-      OsmosisProtorevV1beta1Types._(
-          "/osmosis.protorev.v1beta1.Msg/SetBaseDenoms");
-  static const OsmosisProtorevV1beta1Types setInfoByPoolType =
-      OsmosisProtorevV1beta1Types._(
-          "/osmosis.protorev.v1beta1.Msg/SetInfoByPoolType");
-  static const OsmosisProtorevV1beta1Types setMaxPoolPointsPerBlock =
-      OsmosisProtorevV1beta1Types._(
-          "/osmosis.protorev.v1beta1.Msg/SetMaxPoolPointsPerBlock");
-  static const OsmosisProtorevV1beta1Types setMaxPoolPointsPerTx =
-      OsmosisProtorevV1beta1Types._(
-          "/osmosis.protorev.v1beta1.Msg/SetMaxPoolPointsPerTx");
-
-  static const OsmosisProtorevV1beta1Types setDeveloperAccount =
-      OsmosisProtorevV1beta1Types._(
-          "/osmosis.protorev.v1beta1.Msg/SetDeveloperAccount");
-  static const OsmosisProtorevV1beta1Types setHotRoutes =
-      OsmosisProtorevV1beta1Types._(
-          "/osmosis.protorev.v1beta1.Msg/SetHotRoutes");
+  static const List<TypeUrl> services = [
+    msgSetBaseDenoms,
+    msgSetDeveloperAccount,
+    msgSetHotRoutes,
+    msgSetInfoByPoolType,
+    msgSetMaxPoolPointsPerBlock,
+    msgSetMaxPoolPointsPerTx
+  ];
+  static TypeUrl? findService(String? typeUrl) {
+    return services.firstWhereNullable((e) => e.typeUrl == typeUrl);
+  }
 }

@@ -47,7 +47,7 @@ class QueryAccountAddressByIDRequest extends CosmosMessage
 
   @override
   QueryAccountAddressByIDResponse onJsonResponse(Map<String, dynamic> json) {
-    return QueryAccountAddressByIDResponse.fromRpc(json);
+    return QueryAccountAddressByIDResponse.fromJson(json);
   }
 
   @override

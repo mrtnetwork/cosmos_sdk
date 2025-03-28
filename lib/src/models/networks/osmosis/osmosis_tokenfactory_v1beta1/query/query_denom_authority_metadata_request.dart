@@ -33,7 +33,8 @@ class OsmosisTokenFactoryQueryDenomAuthorityMetadataRequest
   @override
   OsmosisTokenFactoryQueryDenomAuthorityMetadataResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisTokenFactoryQueryDenomAuthorityMetadataResponse.fromRpc(json);
+    return OsmosisTokenFactoryQueryDenomAuthorityMetadataResponse.fromJson(
+        json);
   }
 
   @override

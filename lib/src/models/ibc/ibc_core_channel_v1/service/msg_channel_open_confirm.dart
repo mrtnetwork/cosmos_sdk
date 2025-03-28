@@ -1,14 +1,15 @@
 import 'package:blockchain_utils/blockchain_utils.dart';
+import 'package:cosmos_sdk/src/models/ibc/core/service.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_client_v1/messages/height.dart';
 
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// MsgChannelOpenConfirm defines a msg sent by a Relayer to Chain
 /// B to acknowledge the change of channel state to OPEN on Chain A.
-class MsgChannelOpenConfirm extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class MsgChannelOpenConfirm extends IbcService<EmptyServiceRequestResponse> {
   final String? portId;
   final String? channelId;
   final List<int>? proofAck;
@@ -30,12 +31,17 @@ class MsgChannelOpenConfirm extends CosmosMessage
         proofHeight: IbcClientHeight.deserialize(decode.getField(4)),
         signer: decode.getField(5));
   }
+  factory MsgChannelOpenConfirm.fromJson(Map<String, dynamic> json) {
+    return MsgChannelOpenConfirm(
+        portId: json.as("port_id"),
+        channelId: json.as("channel_id"),
+        proofAck: json.asBytes("proof_ack"),
+        proofHeight: IbcClientHeight.fromJson(json.asMap("proof_height")),
+        signer: json.as("signer"));
+  }
 
   @override
   List<int> get fieldIds => [1, 2, 3, 4, 5];
-
-  @override
-  TypeUrl get service => IbcTypes.channelOpenConfirm;
 
   @override
   Map<String, dynamic> toJson() {

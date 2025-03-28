@@ -19,22 +19,22 @@ class AuthzQueryGranterGrantsResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return AuthzQueryGranterGrantsResponse(
         grants: decode
-            .getFields(1)
+            .getFields<List<int>>(1)
             .map((e) => AuthzGrantAuthorization.deserialize(e))
             .toList(),
         pagination: decode
             .getResult(2)
             ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
   }
-  factory AuthzQueryGranterGrantsResponse.fromRpc(Map<String, dynamic> json) {
+  factory AuthzQueryGranterGrantsResponse.fromJson(Map<String, dynamic> json) {
     return AuthzQueryGranterGrantsResponse(
         grants: (json["grants"] as List?)
-                ?.map((e) => AuthzGrantAuthorization.fromRpc(e))
+                ?.map((e) => AuthzGrantAuthorization.fromJson(e))
                 .toList() ??
             [],
         pagination: json["pagination"] == null
             ? null
-            : PageResponse.fromRpc(json["pagination"]));
+            : PageResponse.fromJson(json["pagination"]));
   }
   @override
   List<int> get fieldIds => [1, 2];

@@ -16,15 +16,15 @@ class OsmosisPoolincentivesDistrInfo extends CosmosMessage {
     return OsmosisPoolincentivesDistrInfo(
         totalWeight: decode.getField(1),
         records: decode
-            .getFields(2)
+            .getFields<List<int>>(2)
             .map((e) => OsmosisPoolincentivesDistrRecord.deserialize(e))
             .toList());
   }
-  factory OsmosisPoolincentivesDistrInfo.fromRpc(Map<String, dynamic> json) {
+  factory OsmosisPoolincentivesDistrInfo.fromJson(Map<String, dynamic> json) {
     return OsmosisPoolincentivesDistrInfo(
         totalWeight: json["total_weight"],
         records: (json["records"] as List?)
-                ?.map((e) => OsmosisPoolincentivesDistrRecord.fromRpc(e))
+                ?.map((e) => OsmosisPoolincentivesDistrRecord.fromJson(e))
                 .toList() ??
             <OsmosisPoolincentivesDistrRecord>[]);
   }

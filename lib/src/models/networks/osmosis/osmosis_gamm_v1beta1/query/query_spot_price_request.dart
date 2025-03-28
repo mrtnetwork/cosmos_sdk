@@ -46,7 +46,7 @@ class OsmosisGammQuerySpotPriceRequest extends CosmosMessage
 
   @override
   OsmosisGammQuerySpotPriceResponse onJsonResponse(Map<String, dynamic> json) {
-    return OsmosisGammQuerySpotPriceResponse.fromRpc(json);
+    return OsmosisGammQuerySpotPriceResponse.fromJson(json);
   }
 
   @override

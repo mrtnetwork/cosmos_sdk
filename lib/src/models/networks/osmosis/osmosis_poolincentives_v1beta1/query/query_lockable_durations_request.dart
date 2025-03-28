@@ -21,7 +21,7 @@ class OsmosisPoolincentivesQueryLockableDurationsRequest extends CosmosMessage
   @override
   OsmosisPoolincentivesQueryLockableDurationsResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisPoolincentivesQueryLockableDurationsResponse.fromRpc(json);
+    return OsmosisPoolincentivesQueryLockableDurationsResponse.fromJson(json);
   }
 
   @override

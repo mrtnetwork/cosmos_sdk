@@ -24,7 +24,7 @@ class OsmosisPoolincentivesGenesisState extends CosmosMessage {
     return OsmosisPoolincentivesGenesisState(
       params: OsmosisPoolincentivesParams.deserialize(decode.getField(1)),
       lockableDurations: decode
-          .getFields(2)
+          .getFields<List<int>>(2)
           .map((e) => ProtobufDuration.deserialize(e))
           .toList(),
       distrInfo: decode

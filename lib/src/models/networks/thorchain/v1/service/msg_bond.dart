@@ -1,9 +1,11 @@
 import 'package:cosmos_sdk/src/address/address/address.dart';
 import 'package:cosmos_sdk/src/models/models.dart';
+import 'package:cosmos_sdk/src/models/networks/thorchain/v1/core/service.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
+import 'package:cosmos_sdk/src/utils/utils.dart';
 
-class ThorchainMsgBond extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class ThorchainMsgBond extends ThorchainV1Service<EmptyServiceRequestResponse> {
   final ThorchainTx txIn;
   final CosmosBaseAddress? nodeAddress;
   final String bond;
@@ -35,6 +37,31 @@ class ThorchainMsgBond extends CosmosMessage
                 (e) => CosmosBaseAddress.fromBytes(e)),
         operatorFee: decode.getField(7));
   }
+  factory ThorchainMsgBond.fromJson(Map<String, dynamic> json) {
+    return ThorchainMsgBond(
+        txIn: ThorchainTx.fromJson(json.asMap("tx_in")),
+        nodeAddress: json.maybeAs<CosmosBaseAddress, String>(
+          key: "node_address",
+          onValue: (e) {
+            return CosmosBaseAddress.fromBytes(CosmosUtils.toBytes(e));
+          },
+        ),
+        bond: json.as("bond"),
+        bondAddress: json.as("bond_address"),
+        signer: json.maybeAs<CosmosBaseAddress, String>(
+          key: "signer",
+          onValue: (e) {
+            return CosmosBaseAddress.fromBytes(CosmosUtils.toBytes(e));
+          },
+        ),
+        bondProviderAddress: json.maybeAs<CosmosBaseAddress, String>(
+          key: "bond_provider_address",
+          onValue: (e) {
+            return CosmosBaseAddress.fromBytes(CosmosUtils.toBytes(e));
+          },
+        ),
+        operatorFee: json.asBigInt("operator_fee"));
+  }
 
   @override
   List<int> get fieldIds => [1, 2, 3, 4, 5, 6, 7];
@@ -53,7 +80,7 @@ class ThorchainMsgBond extends CosmosMessage
   }
 
   @override
-  TypeUrl get typeUrl => ThorchainV1Types.msgBond;
+  ThorchainV1Types get typeUrl => ThorchainV1Types.msgBond;
 
   @override
   List get values => [
@@ -70,9 +97,6 @@ class ThorchainMsgBond extends CosmosMessage
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(typeUrl);
   }
-
-  @override
-  TypeUrl get service => typeUrl;
 
   @override
   List<String?> get signers => [signer?.address];

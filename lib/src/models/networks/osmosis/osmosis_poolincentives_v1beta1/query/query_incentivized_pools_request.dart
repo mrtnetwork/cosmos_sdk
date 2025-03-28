@@ -21,7 +21,7 @@ class OsmosisPoolincentivesQueryIncentivizedPoolsRequest extends CosmosMessage
   @override
   OsmosisPoolincentivesQueryIncentivizedPoolsResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisPoolincentivesQueryIncentivizedPoolsResponse.fromRpc(json);
+    return OsmosisPoolincentivesQueryIncentivizedPoolsResponse.fromJson(json);
   }
 
   @override

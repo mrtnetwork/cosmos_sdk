@@ -10,14 +10,16 @@ class OsmosisConcentratedLiquidityUptimeTracker extends CosmosMessage {
   factory OsmosisConcentratedLiquidityUptimeTracker.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return OsmosisConcentratedLiquidityUptimeTracker(
-        decode.getFields(1).map((e) => DecCoin.deserialize(e)).toList());
+    return OsmosisConcentratedLiquidityUptimeTracker(decode
+        .getFields<List<int>>(1)
+        .map((e) => DecCoin.deserialize(e))
+        .toList());
   }
-  factory OsmosisConcentratedLiquidityUptimeTracker.fromRpc(
+  factory OsmosisConcentratedLiquidityUptimeTracker.fromJson(
       Map<String, dynamic> json) {
     return OsmosisConcentratedLiquidityUptimeTracker(
         (json["uptime_growth_outside"] as List?)
-                ?.map((e) => DecCoin.fromRpc(e))
+                ?.map((e) => DecCoin.fromJson(e))
                 .toList() ??
             <DecCoin>[]);
   }

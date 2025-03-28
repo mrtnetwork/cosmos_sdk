@@ -37,7 +37,7 @@ class QueryTotalTimeoutFeesRequest extends CosmosMessage
 
   @override
   QueryTotalTimeoutFeesResponse onJsonResponse(Map<String, dynamic> json) {
-    return QueryTotalTimeoutFeesResponse.fromRpc(json);
+    return QueryTotalTimeoutFeesResponse.fromJson(json);
   }
 
   @override

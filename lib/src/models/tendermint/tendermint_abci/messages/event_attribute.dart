@@ -6,7 +6,7 @@ class EventAttribute extends CosmosMessage {
   final String? key;
   final String? value;
   final bool? index;
-  factory EventAttribute.fromRpc(Map<String, dynamic> json) {
+  factory EventAttribute.fromJson(Map<String, dynamic> json) {
     return EventAttribute(
         index: json["index"], key: json["key"], value: json["value"]);
   }

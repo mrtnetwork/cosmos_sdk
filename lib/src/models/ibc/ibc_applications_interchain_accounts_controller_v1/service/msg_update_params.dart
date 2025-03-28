@@ -1,12 +1,14 @@
+import 'package:cosmos_sdk/src/models/ibc/core/service.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_applications_interchain_accounts_controller_v1/messages/params.dart';
 
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// MsgUpdateParams defines the payload for Msg/UpdateParams
-class InterchainAccountsControllerMsgUpdateParams extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class InterchainAccountsControllerMsgUpdateParams
+    extends IbcService<EmptyServiceRequestResponse> {
   /// signer address
   final String? signer;
 
@@ -25,6 +27,13 @@ class InterchainAccountsControllerMsgUpdateParams extends CosmosMessage
           InterchainAccountsControllerParams.deserialize(decode.getField(2)),
     );
   }
+  factory InterchainAccountsControllerMsgUpdateParams.fromJson(
+      Map<String, dynamic> json) {
+    return InterchainAccountsControllerMsgUpdateParams(
+      signer: json.as("signer"),
+      params: InterchainAccountsControllerParams.fromJson(json.asMap("params")),
+    );
+  }
 
   @override
   List<int> get fieldIds => [1, 2];
@@ -39,9 +48,6 @@ class InterchainAccountsControllerMsgUpdateParams extends CosmosMessage
 
   @override
   List get values => [signer, params];
-
-  @override
-  TypeUrl get service => IbcTypes.interchainAccountsControllerUpdateParams;
 
   @override
   List<String?> get signers => [signer];

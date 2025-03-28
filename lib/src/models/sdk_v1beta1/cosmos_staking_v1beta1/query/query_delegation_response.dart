@@ -7,11 +7,11 @@ class QueryDelegationResponse extends CosmosMessage {
   /// delegation_responses defines the delegation info of a delegation.
   final DelegationResponse? delegationResponse;
   const QueryDelegationResponse({this.delegationResponse});
-  factory QueryDelegationResponse.fromRpc(Map<String, dynamic> json) {
+  factory QueryDelegationResponse.fromJson(Map<String, dynamic> json) {
     return QueryDelegationResponse(
         delegationResponse: (json["delegation_response"] == null
             ? null
-            : DelegationResponse.fromRpc(json["delegation_response"])));
+            : DelegationResponse.fromJson(json["delegation_response"])));
   }
 
   factory QueryDelegationResponse.deserialize(List<int> bytes) {

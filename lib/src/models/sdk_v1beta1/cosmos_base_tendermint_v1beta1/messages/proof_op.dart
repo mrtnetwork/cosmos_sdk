@@ -9,7 +9,7 @@ class CosmosProofOp extends CosmosMessage {
   final String? type;
   final List<int>? key;
   final List<int>? data;
-  factory CosmosProofOp.fromRpc(Map<String, dynamic> json) {
+  factory CosmosProofOp.fromJson(Map<String, dynamic> json) {
     return CosmosProofOp(
         type: json["type"],
         key: CosmosUtils.tryToBytes(json["key"]),

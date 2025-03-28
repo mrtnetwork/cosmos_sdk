@@ -28,7 +28,7 @@ class OmosisEpochsQueryEpochsInfoRequest extends CosmosMessage
   @override
   OmosisEpochsQueryEpochsInfoResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OmosisEpochsQueryEpochsInfoResponse.fromRpc(json);
+    return OmosisEpochsQueryEpochsInfoResponse.fromJson(json);
   }
 
   @override

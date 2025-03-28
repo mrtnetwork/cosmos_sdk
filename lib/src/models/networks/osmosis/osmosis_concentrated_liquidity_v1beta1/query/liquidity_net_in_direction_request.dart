@@ -69,7 +69,7 @@ class OsmosisConcentratedLiquidityLiquidityNetInDirectionRequest
   @override
   OsmosisConcentratedLiquidityLiquidityNetInDirectionResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisConcentratedLiquidityLiquidityNetInDirectionResponse.fromRpc(
+    return OsmosisConcentratedLiquidityLiquidityNetInDirectionResponse.fromJson(
         json);
   }
 

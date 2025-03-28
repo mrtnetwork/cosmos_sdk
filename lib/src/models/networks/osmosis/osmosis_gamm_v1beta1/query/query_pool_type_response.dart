@@ -9,7 +9,7 @@ class OsmosisGammQueryPoolTypeResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisGammQueryPoolTypeResponse(poolType: decode.getField(1));
   }
-  factory OsmosisGammQueryPoolTypeResponse.fromRpc(Map<String, dynamic> json) {
+  factory OsmosisGammQueryPoolTypeResponse.fromJson(Map<String, dynamic> json) {
     return OsmosisGammQueryPoolTypeResponse(poolType: json["pool_type"]);
   }
 

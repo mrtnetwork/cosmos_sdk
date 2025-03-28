@@ -23,7 +23,7 @@ class AuthParams extends CosmosMessage {
         sigVerifyCostEd25519: decode.getField(4),
         sigVerifyCostSecp256k1: decode.getField(5));
   }
-  factory AuthParams.fromRpc(Map<String, dynamic> json) {
+  factory AuthParams.fromJson(Map<String, dynamic> json) {
     return AuthParams(
         maxMemoCharacters: BigintUtils.parse(json["max_memo_characters"]),
         txSigLimit: BigintUtils.parse(json["tx_sig_limit"]),

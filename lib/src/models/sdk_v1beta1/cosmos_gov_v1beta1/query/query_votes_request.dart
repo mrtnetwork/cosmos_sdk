@@ -44,7 +44,7 @@ class GovQueryVotesRequest extends CosmosMessage
 
   @override
   GovQueryVotesResponse onJsonResponse(Map<String, dynamic> json) {
-    return GovQueryVotesResponse.fromRpc(json);
+    return GovQueryVotesResponse.fromJson(json);
   }
 
   @override

@@ -36,7 +36,7 @@ class OsmosisIncentiveGaugeByIDRequest extends CosmosMessage
 
   @override
   OsmosisIncentiveGaugeByIDResponse onJsonResponse(Map<String, dynamic> json) {
-    return OsmosisIncentiveGaugeByIDResponse.fromRpc(json);
+    return OsmosisIncentiveGaugeByIDResponse.fromJson(json);
   }
 
   @override

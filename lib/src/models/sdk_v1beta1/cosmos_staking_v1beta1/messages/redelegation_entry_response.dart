@@ -10,10 +10,10 @@ class RedelegationEntryResponse extends CosmosMessage {
   final BigInt balance;
   const RedelegationEntryResponse(
       {required this.redelegationEntry, required this.balance});
-  factory RedelegationEntryResponse.fromRpc(Map<String, dynamic> json) {
+  factory RedelegationEntryResponse.fromJson(Map<String, dynamic> json) {
     return RedelegationEntryResponse(
         redelegationEntry:
-            RedelegationEntry.fromRpc(json["redelegation_entry"]),
+            RedelegationEntry.fromJson(json["redelegation_entry"]),
         balance: BigintUtils.parse(json["balance"]));
   }
 

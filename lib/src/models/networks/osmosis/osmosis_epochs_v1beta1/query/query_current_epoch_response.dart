@@ -9,7 +9,7 @@ class OmosisEpochsQueryCurrentEpochResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OmosisEpochsQueryCurrentEpochResponse(decode.getField(1));
   }
-  factory OmosisEpochsQueryCurrentEpochResponse.fromRpc(
+  factory OmosisEpochsQueryCurrentEpochResponse.fromJson(
       Map<String, dynamic> json) {
     return OmosisEpochsQueryCurrentEpochResponse(
         BigintUtils.tryParse(json["current_epoch"]));

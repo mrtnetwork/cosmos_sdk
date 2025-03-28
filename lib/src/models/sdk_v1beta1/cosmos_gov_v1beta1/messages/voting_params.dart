@@ -6,7 +6,7 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class GovVotingParams extends CosmosMessage {
   /// Duration of the voting period.
   final ProtobufDuration votingPeriod;
-  factory GovVotingParams.fromRpc(Map<String, dynamic> json) {
+  factory GovVotingParams.fromJson(Map<String, dynamic> json) {
     return GovVotingParams(ProtobufDuration.fromString(json["voting_period"]));
   }
   const GovVotingParams(this.votingPeriod);

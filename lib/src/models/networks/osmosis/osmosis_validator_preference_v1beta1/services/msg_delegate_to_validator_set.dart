@@ -1,11 +1,13 @@
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
+import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_validator_preference_v1beta1/core/service.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_validator_preference_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_v1beta1/messages/coin.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// MsgDelegateToValidatorSet allows users to delegate to an existing validator-set
-class OsmosisValidatorPreferenceMsgDelegateToValidatorSet extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class OsmosisValidatorPreferenceMsgDelegateToValidatorSet
+    extends OsmosisValidatorPreferenceV1Beta1<EmptyServiceRequestResponse> {
   /// delegator is the user who is trying to delegate.
   final String? delegator;
 
@@ -24,7 +26,12 @@ class OsmosisValidatorPreferenceMsgDelegateToValidatorSet extends CosmosMessage
         delegator: decode.getField(1),
         coin: Coin.deserialize(decode.getField(2)));
   }
-
+  factory OsmosisValidatorPreferenceMsgDelegateToValidatorSet.fromJson(
+      Map<String, dynamic> json) {
+    return OsmosisValidatorPreferenceMsgDelegateToValidatorSet(
+        delegator: json.as("delegator"),
+        coin: Coin.fromJson(json.asMap("coin")));
+  }
   @override
   List<int> get fieldIds => [1, 2];
 
@@ -48,10 +55,6 @@ class OsmosisValidatorPreferenceMsgDelegateToValidatorSet extends CosmosMessage
     return EmptyServiceRequestResponse(OsmosisValidatorPreferenceV1beta1Types
         .msgDelegateToValidatorSetResponse);
   }
-
-  @override
-  TypeUrl get service =>
-      OsmosisValidatorPreferenceV1beta1Types.delegateToValidatorSet;
 
   @override
   List<String?> get signers => [delegator];

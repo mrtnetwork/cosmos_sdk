@@ -12,7 +12,7 @@ class OsmosisPoolincentivesDistrRecord extends CosmosMessage {
         gaugeId: decode.getField(1), weight: decode.getField(2));
   }
 
-  factory OsmosisPoolincentivesDistrRecord.fromRpc(Map<String, dynamic> json) {
+  factory OsmosisPoolincentivesDistrRecord.fromJson(Map<String, dynamic> json) {
     return OsmosisPoolincentivesDistrRecord(
         weight: json["weight"],
         gaugeId: BigintUtils.tryParse(json["gauge_id"]));

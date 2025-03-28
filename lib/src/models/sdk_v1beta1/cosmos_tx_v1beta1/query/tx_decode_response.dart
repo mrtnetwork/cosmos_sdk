@@ -13,8 +13,8 @@ class TxDecodeResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return TxDecodeResponse(Tx.deserialize(decode.getField(1)));
   }
-  factory TxDecodeResponse.fromRpc(Map<String, dynamic> json) {
-    return TxDecodeResponse(Tx.fromRpc(json["tx"]));
+  factory TxDecodeResponse.fromJson(Map<String, dynamic> json) {
+    return TxDecodeResponse(Tx.fromJson(json["tx"]));
   }
 
   @override

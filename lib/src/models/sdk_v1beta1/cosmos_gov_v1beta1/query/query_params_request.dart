@@ -37,7 +37,7 @@ class GovQueryParamsRequest extends CosmosMessage
 
   @override
   GovQueryParamsResponse onJsonResponse(Map<String, dynamic> json) {
-    return GovQueryParamsResponse.fromRpc(json);
+    return GovQueryParamsResponse.fromJson(json);
   }
 
   @override

@@ -9,7 +9,7 @@ class QueryInflationResponse extends CosmosMessage {
   final List<int> inflation;
   QueryInflationResponse({required List<int> inflation})
       : inflation = BytesUtils.toBytes(inflation, unmodifiable: true);
-  factory QueryInflationResponse.fromRpc(Map<String, dynamic> json) {
+  factory QueryInflationResponse.fromJson(Map<String, dynamic> json) {
     return QueryInflationResponse(
         inflation: CosmosUtils.toBytes(json["inflation"]));
   }

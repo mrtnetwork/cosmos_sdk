@@ -72,7 +72,7 @@ class DistributionQueryValidatorSlashesRequest extends CosmosMessage
   @override
   DistributionQueryValidatorSlashesResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return DistributionQueryValidatorSlashesResponse.fromRpc(json);
+    return DistributionQueryValidatorSlashesResponse.fromJson(json);
   }
 
   @override

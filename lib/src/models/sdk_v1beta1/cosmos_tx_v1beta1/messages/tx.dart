@@ -19,10 +19,10 @@ class Tx extends CosmosMessage {
   /// public key and signing mode by position.
   final List<List<int>> signatures;
 
-  factory Tx.fromRpc(Map<String, dynamic> json) {
+  factory Tx.fromJson(Map<String, dynamic> json) {
     return Tx(
-        body: TXBody.fromRpc(json["body"]),
-        authInfo: AuthInfo.fromRpc(json["auth_info"]),
+        body: TXBody.fromJson(json["body"]),
+        authInfo: AuthInfo.fromJson(json["auth_info"]),
         signatures: (json["signatures"] as List?)
                 ?.map((e) => CosmosUtils.toBytes(e))
                 .toList() ??

@@ -1,8 +1,10 @@
+import 'package:blockchain_utils/helper/helper.dart';
 import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 
 class OsmosisCosmWasmPoolV1beta1Types extends TypeUrl {
   const OsmosisCosmWasmPoolV1beta1Types._(super.typeUrl,
       {super.query, super.rpc});
+  static const String root = "/osmosis.cosmwasmpool.v1beta1";
   static const OsmosisCosmWasmPoolV1beta1Types
       uploadCosmWasmPoolCodeAndWhiteListProposal =
       OsmosisCosmWasmPoolV1beta1Types._(
@@ -78,7 +80,9 @@ class OsmosisCosmWasmPoolV1beta1Types extends TypeUrl {
           "/osmosis.cosmwasmpool.v1beta1.ContractInfoByPoolIdResponse");
 
   ///service
-  static const OsmosisCosmWasmPoolV1beta1Types createCosmWasmPool =
-      OsmosisCosmWasmPoolV1beta1Types._(
-          "/osmosis.cosmwasmpool.v1beta1.MsgCreator/CreateCosmWasmPool");
+
+  static const List<TypeUrl> services = [msgCreateCosmWasmPool];
+  static TypeUrl? findService(String? typeUrl) {
+    return services.firstWhereNullable((e) => e.typeUrl == typeUrl);
+  }
 }

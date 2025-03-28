@@ -11,7 +11,7 @@ class QueryAppliedPlanResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryAppliedPlanResponse(height: decode.getField(1));
   }
-  factory QueryAppliedPlanResponse.fromRpc(Map<String, dynamic> json) {
+  factory QueryAppliedPlanResponse.fromJson(Map<String, dynamic> json) {
     return QueryAppliedPlanResponse(
         height: BigintUtils.tryParse(json["height"]));
   }

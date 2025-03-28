@@ -29,6 +29,6 @@ class QueryAuthorityRequest extends CosmosMessage
 
   @override
   QueryAuthorityResponse onJsonResponse(Map<String, dynamic> json) {
-    return QueryAuthorityResponse.fromRpc(json);
+    return QueryAuthorityResponse.fromJson(json);
   }
 }

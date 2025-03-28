@@ -13,14 +13,16 @@ class OsmosisConcentratedLiquidityGetTotalLiquidityResponse
   factory OsmosisConcentratedLiquidityGetTotalLiquidityResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return OsmosisConcentratedLiquidityGetTotalLiquidityResponse(
-        decode.getFields(1).map((e) => Coin.deserialize(e)).toList());
+    return OsmosisConcentratedLiquidityGetTotalLiquidityResponse(decode
+        .getFields<List<int>>(1)
+        .map((e) => Coin.deserialize(e))
+        .toList());
   }
-  factory OsmosisConcentratedLiquidityGetTotalLiquidityResponse.fromRpc(
+  factory OsmosisConcentratedLiquidityGetTotalLiquidityResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisConcentratedLiquidityGetTotalLiquidityResponse(
       (json["total_liquidity"] as List?)
-              ?.map((e) => Coin.fromRpc(e))
+              ?.map((e) => Coin.fromJson(e))
               .toList() ??
           <Coin>[],
     );

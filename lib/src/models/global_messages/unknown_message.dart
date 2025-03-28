@@ -1,3 +1,4 @@
+import 'package:cosmos_sdk/src/exception/exception.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
 abstract class AnyMessage extends CosmosMessage {
@@ -5,16 +6,27 @@ abstract class AnyMessage extends CosmosMessage {
   factory AnyMessage.deserialize(List<int> bytes) {
     return AnyBytesMessage.deserialize(bytes);
   }
-  factory AnyMessage.fromRpc(Map<String, dynamic> json) {
+  factory AnyMessage.fromJson(Map<String, dynamic> json) {
     return AnyJsonMessage(json);
   }
 }
 
 class AnyBytesMessage extends AnyMessage {
   final Any _any;
+  List<int> get value => _any.value;
   const AnyBytesMessage(this._any);
   factory AnyBytesMessage.deserialize(List<int> bytes) {
     return AnyBytesMessage(Any.deserialize(bytes));
+  }
+
+  @override
+  Any toAny() {
+    return _any;
+  }
+
+  @override
+  List<int> toBuffer() {
+    return _any.toBuffer();
   }
 
   @override
@@ -39,7 +51,8 @@ class AnyJsonMessage extends AnyMessage {
     return AnyJsonMessage._(json, UnknownTypeUrl(json["@type"]));
   }
   @override
-  List<int> get fieldIds => throw UnimplementedError();
+  List<int> get fieldIds => throw DartCosmosSdkPluginException(
+      "Failed to convert unknown message to Protobuf.");
 
   @override
   Map<String, dynamic> toJson() {
@@ -50,5 +63,6 @@ class AnyJsonMessage extends AnyMessage {
   final TypeUrl typeUrl;
 
   @override
-  List get values => throw UnimplementedError();
+  List get values => throw DartCosmosSdkPluginException(
+      "Failed to convert unknown message to Protobuf.");
 }

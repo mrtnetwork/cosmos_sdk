@@ -82,7 +82,7 @@ class QueryVerifyMembershipRequest extends CosmosMessage
 
   @override
   QueryVerifyMembershipResponse onJsonResponse(Map<String, dynamic> json) {
-    return QueryVerifyMembershipResponse.fromRpc(json);
+    return QueryVerifyMembershipResponse.fromJson(json);
   }
 
   @override

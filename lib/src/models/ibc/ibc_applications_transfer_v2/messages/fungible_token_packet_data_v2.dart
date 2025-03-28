@@ -25,10 +25,10 @@ class FungibleTokenPacketDataV2 extends CosmosMessage {
       required this.receiver,
       this.memo,
       this.forwarding});
-  factory FungibleTokenPacketDataV2.fromRpc(Map<String, dynamic> json) {
+  factory FungibleTokenPacketDataV2.fromJson(Map<String, dynamic> json) {
     return FungibleTokenPacketDataV2(
         tokens: (json["tokens"] as List?)
-                ?.map((e) => IbcTransferV2Token.fromRpc(e))
+                ?.map((e) => IbcTransferV2Token.fromJson(e))
                 .toList() ??
             [],
         sender: json["sender"],
@@ -36,7 +36,7 @@ class FungibleTokenPacketDataV2 extends CosmosMessage {
         memo: json["memo"],
         forwarding: json["forwarding"] == null
             ? null
-            : ForwardingPacketData.fromRpc(json["forwarding"]));
+            : ForwardingPacketData.fromJson(json["forwarding"]));
   }
   factory FungibleTokenPacketDataV2.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

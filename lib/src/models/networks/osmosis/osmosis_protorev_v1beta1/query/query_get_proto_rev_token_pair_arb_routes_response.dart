@@ -16,15 +16,15 @@ class OsmosisProtorevQueryGetProtoRevTokenPairArbRoutesResponse
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisProtorevQueryGetProtoRevTokenPairArbRoutesResponse(decode
-        .getFields(1)
+        .getFields<List<int>>(1)
         .map((e) => OsmosisProtorevTokenPairArbRoutes.deserialize(e))
         .toList());
   }
-  factory OsmosisProtorevQueryGetProtoRevTokenPairArbRoutesResponse.fromRpc(
+  factory OsmosisProtorevQueryGetProtoRevTokenPairArbRoutesResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisProtorevQueryGetProtoRevTokenPairArbRoutesResponse(
         (json["routes"] as List?)
-                ?.map((e) => OsmosisProtorevTokenPairArbRoutes.fromRpc(e))
+                ?.map((e) => OsmosisProtorevTokenPairArbRoutes.fromJson(e))
                 .toList() ??
             <OsmosisProtorevTokenPairArbRoutes>[]);
   }

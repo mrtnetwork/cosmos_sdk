@@ -20,10 +20,10 @@ class DenomOwner extends CosmosMessage {
         address: CosmosBaseAddress(decode.getField(1)),
         balance: Coin.deserialize(decode.getField(2)));
   }
-  factory DenomOwner.fromRpc(Map<String, dynamic> json) {
+  factory DenomOwner.fromJson(Map<String, dynamic> json) {
     return DenomOwner(
         address: CosmosBaseAddress(json["address"]),
-        balance: Coin.fromRpc(json["balance"]));
+        balance: Coin.fromJson(json["balance"]));
   }
 
   @override

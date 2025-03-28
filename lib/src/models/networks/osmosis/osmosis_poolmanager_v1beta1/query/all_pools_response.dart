@@ -10,14 +10,16 @@ class OsmosisPoolManagerAllPoolsResponse extends CosmosMessage {
   factory OsmosisPoolManagerAllPoolsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolManagerAllPoolsResponse(
-        pools:
-            decode.getFields(1).map((e) => AnyMessage.deserialize(e)).toList());
+        pools: decode
+            .getFields<List<int>>(1)
+            .map((e) => AnyMessage.deserialize(e))
+            .toList());
   }
-  factory OsmosisPoolManagerAllPoolsResponse.fromRpc(
+  factory OsmosisPoolManagerAllPoolsResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisPoolManagerAllPoolsResponse(
         pools: (json["pools"] as List?)
-            ?.map((e) => AnyMessage.fromRpc(e))
+            ?.map((e) => AnyMessage.fromJson(e))
             .toList());
   }
 

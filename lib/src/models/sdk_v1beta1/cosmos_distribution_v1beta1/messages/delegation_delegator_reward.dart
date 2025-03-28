@@ -12,14 +12,14 @@ class DistributionDelegationDelegatorReward extends CosmosMessage {
   DistributionDelegationDelegatorReward(
       {this.validatorddress, required List<DecCoin> reward})
       : reward = reward.immutable;
-  factory DistributionDelegationDelegatorReward.fromRpc(
+  factory DistributionDelegationDelegatorReward.fromJson(
       Map<String, dynamic> json) {
     return DistributionDelegationDelegatorReward(
         validatorddress: json["validator_address"] == null
             ? null
             : CosmosBaseAddress(json["validator_address"]),
         reward: (json["reward"] as List?)
-                ?.map((e) => DecCoin.fromRpc(e))
+                ?.map((e) => DecCoin.fromJson(e))
                 .toList() ??
             []);
   }
@@ -29,8 +29,10 @@ class DistributionDelegationDelegatorReward extends CosmosMessage {
         validatorddress: decode
             .getResult(1)
             ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        reward:
-            decode.getFields(2).map((e) => DecCoin.deserialize(e)).toList());
+        reward: decode
+            .getFields<List<int>>(2)
+            .map((e) => DecCoin.deserialize(e))
+            .toList());
   }
 
   @override

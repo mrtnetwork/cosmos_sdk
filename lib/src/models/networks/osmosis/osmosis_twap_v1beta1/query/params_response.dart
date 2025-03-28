@@ -12,8 +12,9 @@ class OsmosisTwapParamsResponse extends CosmosMessage {
     return OsmosisTwapParamsResponse(
         OsmosisTwapParams.deserialize(decode.getField(1)));
   }
-  factory OsmosisTwapParamsResponse.fromRpc(Map<String, dynamic> json) {
-    return OsmosisTwapParamsResponse(OsmosisTwapParams.fromRpc(json["params"]));
+  factory OsmosisTwapParamsResponse.fromJson(Map<String, dynamic> json) {
+    return OsmosisTwapParamsResponse(
+        OsmosisTwapParams.fromJson(json["params"]));
   }
 
   @override

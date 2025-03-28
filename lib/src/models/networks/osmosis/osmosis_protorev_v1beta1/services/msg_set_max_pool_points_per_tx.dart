@@ -1,9 +1,11 @@
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
+import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_protorev_v1beta1/core/service.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_protorev_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
-class OsmosisProtorevMsgSetMaxPoolPointsPerTx extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class OsmosisProtorevMsgSetMaxPoolPointsPerTx
+    extends OsmosisProtorevV1Beta1<EmptyServiceRequestResponse> {
   /// [admin] is the account that is authorized to set the max pool points per tx.
   final String? admin;
 
@@ -19,7 +21,12 @@ class OsmosisProtorevMsgSetMaxPoolPointsPerTx extends CosmosMessage
     return OsmosisProtorevMsgSetMaxPoolPointsPerTx(
         admin: decode.getField(1), maxPoolPointsPerTx: decode.getField(2));
   }
-
+  factory OsmosisProtorevMsgSetMaxPoolPointsPerTx.fromJson(
+      Map<String, dynamic> json) {
+    return OsmosisProtorevMsgSetMaxPoolPointsPerTx(
+        admin: json.as("admin"),
+        maxPoolPointsPerTx: json.asBigInt("max_pool_points_per_tx"));
+  }
   @override
   List<int> get fieldIds => [1, 2];
 
@@ -42,9 +49,6 @@ class OsmosisProtorevMsgSetMaxPoolPointsPerTx extends CosmosMessage
     return EmptyServiceRequestResponse(
         OsmosisProtorevV1beta1Types.msgSetMaxPoolPointsPerTxResponse);
   }
-
-  @override
-  TypeUrl get service => OsmosisProtorevV1beta1Types.setMaxPoolPointsPerTx;
 
   @override
   List<String?> get signers => [admin];

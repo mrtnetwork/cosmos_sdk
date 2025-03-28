@@ -11,15 +11,15 @@ class QueryClientStatesResponse extends CosmosMessage {
 
   /// pagination response
   final PageResponse? pagination;
-  factory QueryClientStatesResponse.fromRpc(Map<String, dynamic> json) {
+  factory QueryClientStatesResponse.fromJson(Map<String, dynamic> json) {
     return QueryClientStatesResponse(
       clinetStates: (json["client_states"] as List?)
-              ?.map((e) => IbcClientIdentifiedClientState.fromRpc(e))
+              ?.map((e) => IbcClientIdentifiedClientState.fromJson(e))
               .toList() ??
           [],
       pagination: json["pagination"] == null
           ? null
-          : PageResponse.fromRpc(json["pagination"]),
+          : PageResponse.fromJson(json["pagination"]),
     );
   }
   QueryClientStatesResponse(
@@ -30,7 +30,7 @@ class QueryClientStatesResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryClientStatesResponse(
         clinetStates: decode
-            .getFields(1)
+            .getFields<List<int>>(1)
             .map((e) => IbcClientIdentifiedClientState.deserialize(e))
             .toList(),
         pagination: decode

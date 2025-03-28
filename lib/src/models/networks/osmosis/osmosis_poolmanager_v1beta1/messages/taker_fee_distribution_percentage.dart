@@ -14,7 +14,7 @@ class OsmosisPoolManagerTakerFeeDistributionPercentage extends CosmosMessage {
     return OsmosisPoolManagerTakerFeeDistributionPercentage(
         stakingRewards: decode.getField(1), communityPool: decode.getField(2));
   }
-  factory OsmosisPoolManagerTakerFeeDistributionPercentage.fromRpc(
+  factory OsmosisPoolManagerTakerFeeDistributionPercentage.fromJson(
       Map<String, dynamic> json) {
     return OsmosisPoolManagerTakerFeeDistributionPercentage(
         stakingRewards: json["staking_rewards"],

@@ -40,7 +40,7 @@ class OsmosisLockupAccountUnlockedBeforeTimeRequest extends CosmosMessage
   @override
   OsmosisLockupAccountUnlockedBeforeTimeResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisLockupAccountUnlockedBeforeTimeResponse.fromRpc(json);
+    return OsmosisLockupAccountUnlockedBeforeTimeResponse.fromJson(json);
   }
 
   @override

@@ -1,11 +1,12 @@
+import 'package:cosmos_sdk/src/models/ibc/core/service.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_client_v1/messages/params.dart';
 
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
-class IbcClientMsgUpdateParams extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class IbcClientMsgUpdateParams extends IbcService<EmptyServiceRequestResponse> {
   /// signer address
   final String? signer;
 
@@ -21,12 +22,15 @@ class IbcClientMsgUpdateParams extends CosmosMessage
       params: IbcClientParams.deserialize(decode.getField(2)),
     );
   }
+  factory IbcClientMsgUpdateParams.fromJson(Map<String, dynamic> json) {
+    return IbcClientMsgUpdateParams(
+      signer: json.as("signer"),
+      params: IbcClientParams.fromJson(json.asMap("params")),
+    );
+  }
 
   @override
   List<int> get fieldIds => [1, 2];
-
-  @override
-  TypeUrl get service => IbcTypes.updateClientParams;
 
   @override
   Map<String, dynamic> toJson() {

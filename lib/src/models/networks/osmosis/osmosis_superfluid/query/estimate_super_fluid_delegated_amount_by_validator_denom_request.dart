@@ -41,7 +41,7 @@ class OsmosisSuperfluidEstimateSuperfluidDelegatedAmountByValidatorDenomRequest
   OsmosisSuperfluidEstimateSuperfluidDelegatedAmountByValidatorDenomResponse
       onJsonResponse(Map<String, dynamic> json) {
     return OsmosisSuperfluidEstimateSuperfluidDelegatedAmountByValidatorDenomResponse
-        .fromRpc(json);
+        .fromJson(json);
   }
 
   @override

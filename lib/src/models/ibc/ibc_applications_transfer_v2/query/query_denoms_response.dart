@@ -16,15 +16,15 @@ class IbcTransferV2QueryDenomsResponse extends CosmosMessage {
   IbcTransferV2QueryDenomsResponse(
       {required List<IbcTransferV2Denom> denoms, this.pagination})
       : denoms = denoms.immutable;
-  factory IbcTransferV2QueryDenomsResponse.fromRpc(Map<String, dynamic> json) {
+  factory IbcTransferV2QueryDenomsResponse.fromJson(Map<String, dynamic> json) {
     return IbcTransferV2QueryDenomsResponse(
       denoms: (json["denoms"] as List?)
-              ?.map((e) => IbcTransferV2Denom.fromRpc(e))
+              ?.map((e) => IbcTransferV2Denom.fromJson(e))
               .toList() ??
           [],
       pagination: json["pagination"] == null
           ? null
-          : PageResponse.fromRpc(json["pagination"]),
+          : PageResponse.fromJson(json["pagination"]),
     );
   }
   factory IbcTransferV2QueryDenomsResponse.deserialize(List<int> bytes) {

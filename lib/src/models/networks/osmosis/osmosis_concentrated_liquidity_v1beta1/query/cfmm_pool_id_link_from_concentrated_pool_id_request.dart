@@ -43,7 +43,7 @@ class OsmosisConcentratedLiquidityCFMMPoolIdLinkFromConcentratedPoolIdRequest
   OsmosisConcentratedLiquidityCFMMPoolIdLinkFromConcentratedPoolIdResponse
       onJsonResponse(Map<String, dynamic> json) {
     return OsmosisConcentratedLiquidityCFMMPoolIdLinkFromConcentratedPoolIdResponse
-        .fromRpc(json);
+        .fromJson(json);
   }
 
   @override

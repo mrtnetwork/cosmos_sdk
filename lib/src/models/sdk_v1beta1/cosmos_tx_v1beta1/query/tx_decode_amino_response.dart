@@ -11,7 +11,7 @@ class TxDecodeAminoResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return TxDecodeAminoResponse(decode.getField(1));
   }
-  factory TxDecodeAminoResponse.fromRpc(Map<String, dynamic> json) {
+  factory TxDecodeAminoResponse.fromJson(Map<String, dynamic> json) {
     return TxDecodeAminoResponse(json["amino_json"]);
   }
 

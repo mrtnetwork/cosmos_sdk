@@ -8,8 +8,8 @@ class GovQueryDepositResponse extends CosmosMessage {
   /// deposit defines the requested deposit.
   final GovDeposit deposit;
   const GovQueryDepositResponse(this.deposit);
-  factory GovQueryDepositResponse.fromRpc(Map<String, dynamic> json) {
-    return GovQueryDepositResponse(GovDeposit.fromRpc(json["deposit"]));
+  factory GovQueryDepositResponse.fromJson(Map<String, dynamic> json) {
+    return GovQueryDepositResponse(GovDeposit.fromJson(json["deposit"]));
   }
   factory GovQueryDepositResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

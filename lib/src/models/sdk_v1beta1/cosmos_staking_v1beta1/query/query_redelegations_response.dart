@@ -12,15 +12,15 @@ class QueryRedelegationsResponse extends CosmosMessage {
   const QueryRedelegationsResponse(
       {required this.redelegationResponses, this.pagination});
 
-  factory QueryRedelegationsResponse.fromRpc(Map<String, dynamic> json) {
+  factory QueryRedelegationsResponse.fromJson(Map<String, dynamic> json) {
     return QueryRedelegationsResponse(
       redelegationResponses: (json["redelegation_responses"] as List?)
-              ?.map((e) => RedelegationResponse.fromRpc(e))
+              ?.map((e) => RedelegationResponse.fromJson(e))
               .toList() ??
           [],
       pagination: json["pagination"] == null
           ? null
-          : PageResponse.fromRpc(json["pagination"]),
+          : PageResponse.fromJson(json["pagination"]),
     );
   }
   factory QueryRedelegationsResponse.deserialize(List<int> bytes) {

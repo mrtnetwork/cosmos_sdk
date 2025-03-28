@@ -14,17 +14,17 @@ class OsmosisValidatorPreferenceQueryUserValidatorPreferenceResponse
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisValidatorPreferenceQueryUserValidatorPreferenceResponse(decode
-        .getFields(1)
+        .getFields<List<int>>(1)
         .map(
             (e) => OsmosisValidatorPreferenceValidatorPreference.deserialize(e))
         .toList());
   }
-  factory OsmosisValidatorPreferenceQueryUserValidatorPreferenceResponse.fromRpc(
+  factory OsmosisValidatorPreferenceQueryUserValidatorPreferenceResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisValidatorPreferenceQueryUserValidatorPreferenceResponse(
         (json["preferences"] as List?)
                 ?.map((e) =>
-                    OsmosisValidatorPreferenceValidatorPreference.fromRpc(e))
+                    OsmosisValidatorPreferenceValidatorPreference.fromJson(e))
                 .toList() ??
             <OsmosisValidatorPreferenceValidatorPreference>[]);
   }

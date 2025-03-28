@@ -6,8 +6,8 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class SlashingQueryParamsResponse extends CosmosMessage {
   final SlashingParams params;
   const SlashingQueryParamsResponse(this.params);
-  factory SlashingQueryParamsResponse.fromRpc(Map<String, dynamic> json) {
-    return SlashingQueryParamsResponse(SlashingParams.fromRpc(json["params"]));
+  factory SlashingQueryParamsResponse.fromJson(Map<String, dynamic> json) {
+    return SlashingQueryParamsResponse(SlashingParams.fromJson(json["params"]));
   }
   factory SlashingQueryParamsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

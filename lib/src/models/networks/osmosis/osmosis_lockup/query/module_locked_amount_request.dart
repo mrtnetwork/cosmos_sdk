@@ -30,7 +30,7 @@ class OsmosisLockupModuleLockedAmountRequest extends CosmosMessage
   @override
   OsmosisLockupModuleLockedAmountResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisLockupModuleLockedAmountResponse.fromRpc(json);
+    return OsmosisLockupModuleLockedAmountResponse.fromJson(json);
   }
 
   @override

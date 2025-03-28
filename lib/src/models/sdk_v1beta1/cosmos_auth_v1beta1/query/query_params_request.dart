@@ -32,6 +32,6 @@ class AuthQueryParamsRequest extends CosmosMessage
 
   @override
   AuthQueryParamsResponse onJsonResponse(Map<String, dynamic> json) {
-    return AuthQueryParamsResponse.fromRpc(json);
+    return AuthQueryParamsResponse.fromJson(json);
   }
 }

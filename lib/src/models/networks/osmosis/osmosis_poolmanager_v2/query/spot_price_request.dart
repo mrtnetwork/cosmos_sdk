@@ -25,7 +25,7 @@ class OsmosisPoolManagerV2SpotPriceRequest extends CosmosMessage
   @override
   OsmosisPoolManagerV2SpotPriceResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisPoolManagerV2SpotPriceResponse.fromRpc(json);
+    return OsmosisPoolManagerV2SpotPriceResponse.fromJson(json);
   }
 
   @override

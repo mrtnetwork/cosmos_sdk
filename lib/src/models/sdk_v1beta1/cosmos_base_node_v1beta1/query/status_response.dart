@@ -9,7 +9,7 @@ class NodeStatusResponse extends CosmosMessage {
   final ProtobufTimestamp? timestamp;
   final List<int>? appHash;
   final List<int>? validatorHash;
-  factory NodeStatusResponse.fromRpc(Map<String, dynamic> json) {
+  factory NodeStatusResponse.fromJson(Map<String, dynamic> json) {
     return NodeStatusResponse(
       timestamp: json["timestamp"] == null
           ? null

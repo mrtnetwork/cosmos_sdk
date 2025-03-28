@@ -10,7 +10,7 @@ class IbcCommitmentMerklePath extends CosmosMessage {
       : keyPath = keyPath?.emptyAsNull?.immutable;
   factory IbcCommitmentMerklePath.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return IbcCommitmentMerklePath(keyPath: decode.getFields(1));
+    return IbcCommitmentMerklePath(keyPath: decode.getFields<String>(1));
   }
 
   @override

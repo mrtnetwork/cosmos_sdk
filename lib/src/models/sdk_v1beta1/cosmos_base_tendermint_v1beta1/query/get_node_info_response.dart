@@ -17,14 +17,14 @@ class GetNodeInfoResponse extends CosmosMessage {
             .getResult(2)
             ?.to<VersionInfo, List<int>>((e) => VersionInfo.deserialize(e)));
   }
-  factory GetNodeInfoResponse.fromRpc(Map<String, dynamic> json) {
+  factory GetNodeInfoResponse.fromJson(Map<String, dynamic> json) {
     return GetNodeInfoResponse(
         defaultNodeInfo: (json["default_node_info"] == null
             ? null
-            : DefaultNodeInfo.fromRpc(json["default_node_info"])),
+            : DefaultNodeInfo.fromJson(json["default_node_info"])),
         applicationVersion: (json["application_version"] == null
             ? null
-            : VersionInfo.fromRpc(json["application_version"])));
+            : VersionInfo.fromJson(json["application_version"])));
   }
   @override
   List<int> get fieldIds => [1, 2];

@@ -10,10 +10,12 @@ class OsmosisLockupAccountUnlockingCoinsResponse extends CosmosMessage {
   factory OsmosisLockupAccountUnlockingCoinsResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return OsmosisLockupAccountUnlockingCoinsResponse(
-        decode.getFields(1).map((e) => Coin.deserialize(e)).toList());
+    return OsmosisLockupAccountUnlockingCoinsResponse(decode
+        .getFields<List<int>>(1)
+        .map((e) => Coin.deserialize(e))
+        .toList());
   }
-  factory OsmosisLockupAccountUnlockingCoinsResponse.fromRpc(
+  factory OsmosisLockupAccountUnlockingCoinsResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisLockupAccountUnlockingCoinsResponse(
         (json["coins"] as List?)?.map((e) => Coin.deserialize(e)).toList() ??

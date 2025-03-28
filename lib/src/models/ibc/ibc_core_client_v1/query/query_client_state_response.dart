@@ -18,13 +18,14 @@ class IbcClientQueryClientStateResponse extends CosmosMessage {
 
   /// height at which the proof was retrieved
   final IbcClientHeight proofHeight;
-  factory IbcClientQueryClientStateResponse.fromRpc(Map<String, dynamic> json) {
+  factory IbcClientQueryClientStateResponse.fromJson(
+      Map<String, dynamic> json) {
     return IbcClientQueryClientStateResponse(
         clientState: json["client_state"] == null
             ? null
-            : AnyMessage.fromRpc(json["client_state"]),
+            : AnyMessage.fromJson(json["client_state"]),
         proof: CosmosUtils.tryToBytes(json["proof"]),
-        proofHeight: IbcClientHeight.fromRpc(json["proof_height"]));
+        proofHeight: IbcClientHeight.fromJson(json["proof_height"]));
   }
   IbcClientQueryClientStateResponse(
       {this.clientState, List<int>? proof, required this.proofHeight})

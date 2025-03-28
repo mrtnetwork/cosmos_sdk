@@ -3,9 +3,9 @@ class AssetPoolInformationResponse {
   final String? shortCode;
   final String status;
   final String pendingInboundAsset;
-  final String pendingInboundRune;
+  final String? pendingInboundRune;
   final String balanceAsset;
-  final String balanceRune;
+  final String? balanceRune;
   final String poolUnits;
   final String lpUnits;
   final String synthUnits;
@@ -13,11 +13,11 @@ class AssetPoolInformationResponse {
   final String saversDepth;
   final String saversUnits;
   final bool synthMintPaused;
-  final String synthSupplyRemaining;
-  final String loanCollateral;
-  final String loanCollateralRemaining;
-  final String loanCr;
-  final String derivedDepthBps;
+  final String? synthSupplyRemaining;
+  final String? loanCollateral;
+  final String? loanCollateralRemaining;
+  final String? loanCr;
+  final String? derivedDepthBps;
 
   AssetPoolInformationResponse({
     required this.asset,

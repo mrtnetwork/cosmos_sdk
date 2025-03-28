@@ -10,7 +10,7 @@ class QueryDenomHashResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryDenomHashResponse(hash: decode.getField(1));
   }
-  factory QueryDenomHashResponse.fromRpc(Map<String, dynamic> json) {
+  factory QueryDenomHashResponse.fromJson(Map<String, dynamic> json) {
     return QueryDenomHashResponse(hash: json["hash"]);
   }
 

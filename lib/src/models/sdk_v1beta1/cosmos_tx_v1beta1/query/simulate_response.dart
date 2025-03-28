@@ -10,10 +10,10 @@ class SimulateResponse extends CosmosMessage {
 
   /// result is the result of the simulation.
   final Result result;
-  factory SimulateResponse.fromRpc(Map<String, dynamic> json) {
+  factory SimulateResponse.fromJson(Map<String, dynamic> json) {
     return SimulateResponse(
-        gasInfo: GasInfo.fromRpc(json["gas_info"]),
-        result: Result.fromRpc(json["result"]));
+        gasInfo: GasInfo.fromJson(json["gas_info"]),
+        result: Result.fromJson(json["result"]));
   }
   const SimulateResponse({required this.gasInfo, required this.result});
 

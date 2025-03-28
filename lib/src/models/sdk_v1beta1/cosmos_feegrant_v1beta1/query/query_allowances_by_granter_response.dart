@@ -14,15 +14,15 @@ class QueryAllowancesByGranterResponse extends CosmosMessage {
   /// pagination defines an pagination for the response.
   final PageResponse? pagination;
 
-  factory QueryAllowancesByGranterResponse.fromRpc(Map<String, dynamic> json) {
+  factory QueryAllowancesByGranterResponse.fromJson(Map<String, dynamic> json) {
     return QueryAllowancesByGranterResponse(
       allowances: (json["allowances"] as List?)
-              ?.map((e) => FeeGrant.fromRpc(e))
+              ?.map((e) => FeeGrant.fromJson(e))
               .toList() ??
           [],
       pagination: json["pagination"] == null
           ? null
-          : PageResponse.fromRpc(json["pagination"]),
+          : PageResponse.fromJson(json["pagination"]),
     );
   }
   QueryAllowancesByGranterResponse(
@@ -32,8 +32,10 @@ class QueryAllowancesByGranterResponse extends CosmosMessage {
   factory QueryAllowancesByGranterResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryAllowancesByGranterResponse(
-        allowances:
-            decode.getFields(1).map((e) => FeeGrant.deserialize(e)).toList(),
+        allowances: decode
+            .getFields<List<int>>(1)
+            .map((e) => FeeGrant.deserialize(e))
+            .toList(),
         pagination: decode
             .getResult(2)
             ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));

@@ -12,11 +12,11 @@ class IbcFeeIdentifiedPacketFees extends CosmosMessage {
   /// list of packet fees
   final List<IbcFeePacketFee> packetFees;
 
-  factory IbcFeeIdentifiedPacketFees.fromRpc(Map<String, dynamic> json) {
+  factory IbcFeeIdentifiedPacketFees.fromJson(Map<String, dynamic> json) {
     return IbcFeeIdentifiedPacketFees(
-        packetId: IbcChannelPacketId.fromRpc(json["packet_id"]),
+        packetId: IbcChannelPacketId.fromJson(json["packet_id"]),
         packetFees: (json["packet_fees"] as List?)
-                ?.map((e) => IbcFeePacketFee.fromRpc(e))
+                ?.map((e) => IbcFeePacketFee.fromJson(e))
                 .toList() ??
             []);
   }
@@ -28,7 +28,7 @@ class IbcFeeIdentifiedPacketFees extends CosmosMessage {
     return IbcFeeIdentifiedPacketFees(
         packetId: IbcChannelPacketId.deserialize(decode.getField(1)),
         packetFees: decode
-            .getFields(2)
+            .getFields<List<int>>(2)
             .map((e) => IbcFeePacketFee.deserialize(e))
             .toList());
   }

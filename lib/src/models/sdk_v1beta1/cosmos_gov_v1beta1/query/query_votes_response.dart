@@ -12,14 +12,14 @@ class GovQueryVotesResponse extends CosmosMessage {
 
   /// pagination defines the pagination in the response.
   final PageResponse? pagination;
-  factory GovQueryVotesResponse.fromRpc(Map<String, dynamic> json) {
+  factory GovQueryVotesResponse.fromJson(Map<String, dynamic> json) {
     return GovQueryVotesResponse(
       votes:
-          (json["votes"] as List?)?.map((e) => GovVote.fromRpc(e)).toList() ??
+          (json["votes"] as List?)?.map((e) => GovVote.fromJson(e)).toList() ??
               [],
       pagination: json["pagination"] == null
           ? null
-          : PageResponse.fromRpc(json["pagination"]),
+          : PageResponse.fromJson(json["pagination"]),
     );
   }
   GovQueryVotesResponse({required List<GovVote> votes, this.pagination})

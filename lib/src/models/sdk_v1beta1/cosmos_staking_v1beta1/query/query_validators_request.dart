@@ -43,7 +43,7 @@ class QueryValidatorsRequest extends CosmosMessage
 
   @override
   QueryValidatorsResponse onJsonResponse(Map<String, dynamic> json) {
-    return QueryValidatorsResponse.fromRpc(json);
+    return QueryValidatorsResponse.fromJson(json);
   }
 
   @override

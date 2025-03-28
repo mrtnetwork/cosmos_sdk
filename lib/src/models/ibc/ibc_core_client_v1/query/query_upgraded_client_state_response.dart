@@ -8,11 +8,11 @@ class QueryUpgradedClientStateResponse extends CosmosMessage {
   /// client state associated with the request identifier
   final AnyMessage? upgradedClientState;
   const QueryUpgradedClientStateResponse({this.upgradedClientState});
-  factory QueryUpgradedClientStateResponse.fromRpc(Map<String, dynamic> json) {
+  factory QueryUpgradedClientStateResponse.fromJson(Map<String, dynamic> json) {
     return QueryUpgradedClientStateResponse(
         upgradedClientState: json["upgraded_client_state"] == null
             ? null
-            : AnyMessage.fromRpc(json["upgraded_client_state"]));
+            : AnyMessage.fromJson(json["upgraded_client_state"]));
   }
   factory QueryUpgradedClientStateResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

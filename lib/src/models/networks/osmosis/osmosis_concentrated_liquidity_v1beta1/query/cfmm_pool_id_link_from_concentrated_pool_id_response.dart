@@ -14,7 +14,7 @@ class OsmosisConcentratedLiquidityCFMMPoolIdLinkFromConcentratedPoolIdResponse
     return OsmosisConcentratedLiquidityCFMMPoolIdLinkFromConcentratedPoolIdResponse(
         cfmmPoolId: decode.getField(1));
   }
-  factory OsmosisConcentratedLiquidityCFMMPoolIdLinkFromConcentratedPoolIdResponse.fromRpc(
+  factory OsmosisConcentratedLiquidityCFMMPoolIdLinkFromConcentratedPoolIdResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisConcentratedLiquidityCFMMPoolIdLinkFromConcentratedPoolIdResponse(
         cfmmPoolId: BigintUtils.tryParse(json["cfmm_pool_id"]));

@@ -1,12 +1,14 @@
+import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_poolmanager_v1beta1/core/service.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_poolmanager_v1beta1/messages/swap_amount_out_route.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_poolmanager_v1beta1/services/msg_swap_exact_amount_out_response.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_poolmanager_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_v1beta1/messages/coin.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:blockchain_utils/helper/helper.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
-class OsmosisPoolManagerMsgSwapExactAmountOut extends CosmosMessage
-    with ServiceMessage<OsmosisPoolManagerMsgSwapExactAmountOutResponse> {
+class OsmosisPoolManagerMsgSwapExactAmountOut extends OsmosisPoolManagerV1Beta1<
+    OsmosisPoolManagerMsgSwapExactAmountOutResponse> {
   final String? sender;
   final List<OsmosisPoolManagerSwapAmountOutRoute> routes;
   final BigInt tokenInMaxAmount;
@@ -23,14 +25,26 @@ class OsmosisPoolManagerMsgSwapExactAmountOut extends CosmosMessage
     return OsmosisPoolManagerMsgSwapExactAmountOut(
       sender: decode.getField(1),
       routes: decode
-          .getFields(2)
+          .getFields<List<int>>(2)
           .map((e) => OsmosisPoolManagerSwapAmountOutRoute.deserialize(e))
           .toList(),
       tokenInMaxAmount: BigInt.parse(decode.getField(3)),
       tokenOut: Coin.deserialize(decode.getField(4)),
     );
   }
-
+  factory OsmosisPoolManagerMsgSwapExactAmountOut.fromJson(
+      Map<String, dynamic> json) {
+    return OsmosisPoolManagerMsgSwapExactAmountOut(
+      sender: json.as("sender"),
+      routes: json
+              .asListOfMap("routes")
+              ?.map((e) => OsmosisPoolManagerSwapAmountOutRoute.fromJson(e))
+              .toList() ??
+          [],
+      tokenInMaxAmount: json.asBigInt("token_in_max_amount"),
+      tokenOut: Coin.deserialize(json.asMap("token_out")),
+    );
+  }
   @override
   List<int> get fieldIds => [1, 2, 3, 4];
 
@@ -49,9 +63,6 @@ class OsmosisPoolManagerMsgSwapExactAmountOut extends CosmosMessage
 
   @override
   List get values => [sender, routes, tokenInMaxAmount.toString(), tokenOut];
-
-  @override
-  TypeUrl get service => OsmosisPoolManagerV1beta1Types.swapExactAmountOut;
 
   @override
   List<String?> get signers => [sender];

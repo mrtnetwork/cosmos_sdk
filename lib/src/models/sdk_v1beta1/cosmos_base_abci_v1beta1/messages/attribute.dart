@@ -10,7 +10,7 @@ class Attribute extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Attribute(key: decode.getField(1), value: decode.getField(2));
   }
-  factory Attribute.fromRpc(Map<String, dynamic> json) {
+  factory Attribute.fromJson(Map<String, dynamic> json) {
     return Attribute(key: json["key"], value: json["value"]);
   }
 

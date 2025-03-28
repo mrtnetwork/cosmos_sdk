@@ -11,7 +11,7 @@ class IbcChannelErrorReceipt extends CosmosMessage {
 
   /// the error message detailing the cause of failure
   final String? message;
-  factory IbcChannelErrorReceipt.fromRpc(Map<String, dynamic> json) {
+  factory IbcChannelErrorReceipt.fromJson(Map<String, dynamic> json) {
     return IbcChannelErrorReceipt(
       sequence: BigintUtils.parse(json["sequence"]),
       message: json["message"],

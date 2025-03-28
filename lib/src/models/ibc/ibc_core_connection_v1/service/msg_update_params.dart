@@ -1,12 +1,14 @@
+import 'package:cosmos_sdk/src/models/ibc/core/service.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_connection_v1/messages/params.dart';
 
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// UpdateConnectionParams defines a rpc handler method for MsgUpdateParams.
-class IbcConnectionMsgUpdateParams extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class IbcConnectionMsgUpdateParams
+    extends IbcService<EmptyServiceRequestResponse> {
   /// signer address
   final String? signer;
 
@@ -22,11 +24,15 @@ class IbcConnectionMsgUpdateParams extends CosmosMessage
       params: IbcConnectionParams.deserialize(decode.getField(2)),
     );
   }
-  @override
-  List<int> get fieldIds => [1, 2];
+  factory IbcConnectionMsgUpdateParams.fromJson(Map<String, dynamic> json) {
+    return IbcConnectionMsgUpdateParams(
+      signer: json.as("signer"),
+      params: IbcConnectionParams.fromJson(json.asMap("params")),
+    );
+  }
 
   @override
-  TypeUrl get service => IbcTypes.ibcConnectionUpdateConnectionParams;
+  List<int> get fieldIds => [1, 2];
 
   @override
   Map<String, dynamic> toJson() {

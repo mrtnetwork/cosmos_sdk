@@ -29,6 +29,6 @@ class DistributionQueryParamsRequest extends CosmosMessage
 
   @override
   DistributionQueryParamsResponse onJsonResponse(Map<String, dynamic> json) {
-    return DistributionQueryParamsResponse.fromRpc(json);
+    return DistributionQueryParamsResponse.fromJson(json);
   }
 }

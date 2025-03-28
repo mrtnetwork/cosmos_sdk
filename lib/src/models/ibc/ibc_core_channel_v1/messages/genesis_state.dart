@@ -41,31 +41,31 @@ class IbcChannelGenesisState extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcChannelGenesisState(
         channels: decode
-            .getFields(1)
+            .getFields<List<int>>(1)
             .map((e) => IbcChannelIdentifiedChannel.deserialize(e))
             .toList(),
         acknowledgements: decode
-            .getFields(2)
+            .getFields<List<int>>(2)
             .map((e) => IbcChannelPacketState.deserialize(e))
             .toList(),
         commitments: decode
-            .getFields(3)
+            .getFields<List<int>>(3)
             .map((e) => IbcChannelPacketState.deserialize(e))
             .toList(),
         receipts: decode
-            .getFields(4)
+            .getFields<List<int>>(4)
             .map((e) => IbcChannelPacketState.deserialize(e))
             .toList(),
         sendSequences: decode
-            .getFields(5)
+            .getFields<List<int>>(5)
             .map((e) => IbcChannelPacketSequence.deserialize(e))
             .toList(),
         recvSequences: decode
-            .getFields(6)
+            .getFields<List<int>>(6)
             .map((e) => IbcChannelPacketSequence.deserialize(e))
             .toList(),
         ackSequences: decode
-            .getFields(7)
+            .getFields<List<int>>(7)
             .map((e) => IbcChannelPacketSequence.deserialize(e))
             .toList(),
         nextChannelSequence: decode.getField(8),

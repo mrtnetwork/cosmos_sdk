@@ -19,7 +19,7 @@ class ThorchainBondProviders extends CosmosMessage {
       nodeAddress: decode.getField(1),
       nodeOperatorFee: BigInt.parse(decode.getField(2)),
       providers: decode
-          .getFields(3)
+          .getFields<List<int>>(3)
           .map((e) => ThorchainBondProvider.deserialize(e))
           .toList(),
     );

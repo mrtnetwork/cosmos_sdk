@@ -36,6 +36,6 @@ class BroadcastTxRequest extends CosmosMessage
 
   @override
   BroadcastTxResponse onJsonResponse(Map<String, dynamic> json) {
-    return BroadcastTxResponse.fromRpc(json);
+    return BroadcastTxResponse.fromJson(json);
   }
 }

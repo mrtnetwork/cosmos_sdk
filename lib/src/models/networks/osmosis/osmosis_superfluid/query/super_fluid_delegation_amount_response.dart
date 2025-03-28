@@ -11,13 +11,15 @@ class OsmosisSuperfluidSuperfluidDelegationAmountResponse
   factory OsmosisSuperfluidSuperfluidDelegationAmountResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return OsmosisSuperfluidSuperfluidDelegationAmountResponse(
-        decode.getFields(1).map((e) => Coin.deserialize(e)).toList());
+    return OsmosisSuperfluidSuperfluidDelegationAmountResponse(decode
+        .getFields<List<int>>(1)
+        .map((e) => Coin.deserialize(e))
+        .toList());
   }
-  factory OsmosisSuperfluidSuperfluidDelegationAmountResponse.fromRpc(
+  factory OsmosisSuperfluidSuperfluidDelegationAmountResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisSuperfluidSuperfluidDelegationAmountResponse(
-        (json["amount"] as List?)?.map((e) => Coin.fromRpc(e)).toList() ??
+        (json["amount"] as List?)?.map((e) => Coin.fromJson(e)).toList() ??
             <Coin>[]);
   }
 

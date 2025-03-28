@@ -17,7 +17,7 @@ class OsmosisConcentratedLiquidityMsgWithdrawPositionResponse
         amount0: BigInt.parse(decode.getField(2)),
         amount1: BigInt.parse(decode.getField(3)));
   }
-  factory OsmosisConcentratedLiquidityMsgWithdrawPositionResponse.fromRpc(
+  factory OsmosisConcentratedLiquidityMsgWithdrawPositionResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisConcentratedLiquidityMsgWithdrawPositionResponse(
         amount0: BigintUtils.parse(json["amount0"]),

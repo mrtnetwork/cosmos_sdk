@@ -32,7 +32,7 @@ class OsmosisIncentiveModuleToDistributeCoinsRequest extends CosmosMessage
   @override
   OsmosisIncentiveModuleToDistributeCoinsResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisIncentiveModuleToDistributeCoinsResponse.fromRpc(json);
+    return OsmosisIncentiveModuleToDistributeCoinsResponse.fromJson(json);
   }
 
   @override

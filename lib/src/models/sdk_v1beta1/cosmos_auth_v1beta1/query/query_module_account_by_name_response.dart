@@ -12,9 +12,9 @@ class QueryModuleAccountByNameResponse extends CosmosMessage {
         AnyMessage.deserialize(decode.getField(1)));
   }
 
-  factory QueryModuleAccountByNameResponse.fromRpc(Map<String, dynamic> json) {
+  factory QueryModuleAccountByNameResponse.fromJson(Map<String, dynamic> json) {
     return QueryModuleAccountByNameResponse(
-        AnyMessage.fromRpc(json["account"]));
+        AnyMessage.fromJson(json["account"]));
   }
 
   @override

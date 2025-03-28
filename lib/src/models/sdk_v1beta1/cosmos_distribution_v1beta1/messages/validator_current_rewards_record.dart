@@ -24,7 +24,7 @@ class DistributionValidatorCurrentRewardsRecord extends CosmosMessage {
             .getResult(1)
             ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
         rewards: decode
-            .getFields(2)
+            .getFields<List<int>>(2)
             .map((e) => DistributionValidatorCurrentRewards.deserialize(e))
             .toList());
   }

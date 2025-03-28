@@ -10,9 +10,9 @@ class ThorchainOrderType implements CosmosEnum {
   static const ThorchainOrderType market = ThorchainOrderType._("market", 0);
   static const ThorchainOrderType limit = ThorchainOrderType._("limit", 1);
   static const List<ThorchainOrderType> values = [market, limit];
-  static ThorchainOrderType fromValue(int? value) {
+  static ThorchainOrderType fromValue(Object? value) {
     return values.firstWhere(
-      (e) => e.value == value,
+      (e) => e.value == value || e.name == value,
       orElse: () => throw DartCosmosSdkPluginException(
           "No ThorchainOrderType element found for the given value.",
           details: {"value": value}),

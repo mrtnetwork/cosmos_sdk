@@ -20,9 +20,9 @@ class OsmosisGammPoolAsset extends CosmosMessage {
         token: Coin.deserialize(decode.getField(1)),
         weight: decode.getField(2));
   }
-  factory OsmosisGammPoolAsset.fromRpc(Map<String, dynamic> json) {
+  factory OsmosisGammPoolAsset.fromJson(Map<String, dynamic> json) {
     return OsmosisGammPoolAsset(
-        token: Coin.fromRpc(json["token"]), weight: json["weight"]);
+        token: Coin.fromJson(json["token"]), weight: json["weight"]);
   }
 
   @override

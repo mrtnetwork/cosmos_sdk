@@ -1,7 +1,9 @@
+import 'package:blockchain_utils/helper/helper.dart';
 import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 
 class MintV1beta1Types extends TypeUrl {
   const MintV1beta1Types._(super.typeUrl, {super.query, super.rpc});
+  static const String root = "/cosmos.mint.v1beta1";
   static const MintV1beta1Types mintParams =
       MintV1beta1Types._("/cosmos.mint.v1beta1.Params");
   static const MintV1beta1Types minter =
@@ -31,7 +33,8 @@ class MintV1beta1Types extends TypeUrl {
   static const MintV1beta1Types queryAnnualProvisionsResponse =
       MintV1beta1Types._("/cosmos.mint.v1beta1.QueryAnnualProvisionsResponse");
 
-  /// service
-  static const MintV1beta1Types mintUpdateParams =
-      MintV1beta1Types._("/cosmos.mint.v1beta1.Msg/UpdateParams");
+  static const List<TypeUrl> services = [msgUpdateMintParams];
+  static TypeUrl? findService(String? typeUrl) {
+    return services.firstWhereNullable((e) => e.typeUrl == typeUrl);
+  }
 }

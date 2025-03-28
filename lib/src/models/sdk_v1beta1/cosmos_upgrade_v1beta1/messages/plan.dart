@@ -32,13 +32,14 @@ class Plan extends CosmosMessage {
   /// If this field is not empty, an error will be thrown.
   final AnyMessage? upgradedClientState;
 
-  factory Plan.fromRpc(Map<String, dynamic> json) {
+  factory Plan.fromJson(Map<String, dynamic> json) {
     return Plan(
         time: ProtobufTimestamp.fromString(json["time"]),
         height: BigintUtils.tryParse(json["height"]),
         info: json["info"],
         name: json["name"],
-        upgradedClientState: AnyMessage.fromRpc(json["upgraded_client_state"]));
+        upgradedClientState:
+            AnyMessage.fromJson(json["upgraded_client_state"]));
   }
 
   Plan({

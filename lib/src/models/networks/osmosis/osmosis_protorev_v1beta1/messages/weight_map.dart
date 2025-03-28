@@ -18,7 +18,7 @@ class OsmosisProtorevWeightMap extends CosmosMessage {
         weight: decode.getField(1), contractAddress: decode.getField(2));
   }
 
-  factory OsmosisProtorevWeightMap.fromRpc(Map<String, dynamic> json) {
+  factory OsmosisProtorevWeightMap.fromJson(Map<String, dynamic> json) {
     return OsmosisProtorevWeightMap(
         weight: BigintUtils.tryParse(json["weight"]),
         contractAddress: json["contractAddress"]);

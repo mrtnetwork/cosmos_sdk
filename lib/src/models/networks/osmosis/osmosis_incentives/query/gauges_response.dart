@@ -18,20 +18,20 @@ class OsmosisIncentiveGaugesResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisIncentiveGaugesResponse(
         data: decode
-            .getFields(1)
+            .getFields<List<int>>(1)
             .map((e) => OsmosisIncentivesGauge.deserialize(e))
             .toList(),
         pagination: decode
             .getResult(2)
             ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
   }
-  factory OsmosisIncentiveGaugesResponse.fromRpc(Map<String, dynamic> json) {
+  factory OsmosisIncentiveGaugesResponse.fromJson(Map<String, dynamic> json) {
     return OsmosisIncentiveGaugesResponse(
         data: (json["data"] as List?)
-                ?.map((e) => OsmosisIncentivesGauge.fromRpc(e))
+                ?.map((e) => OsmosisIncentivesGauge.fromJson(e))
                 .toList() ??
             <OsmosisIncentivesGauge>[],
-        pagination: PageResponse.fromRpc(json["pagination"]));
+        pagination: PageResponse.fromJson(json["pagination"]));
   }
 
   @override

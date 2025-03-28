@@ -1,15 +1,17 @@
 import 'package:cosmos_sdk/src/address/address.dart';
+import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_bank_v1beta1/core/service.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_bank_v1beta1/messages/send_enabled.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
 
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_bank_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// MsgSetSendEnabled is the Msg/SetSendEnabled request type.
 /// Only entries to add/update/delete need to be included. Existing SendEnabled entries that are not included in this message are left unchanged.
 /// Since: cosmos-sdk 0.47
-class MsgSetSendEnabled extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class MsgSetSendEnabled
+    extends BankV1Beta1Service<EmptyServiceRequestResponse> {
   /// authority is the address that controls the module.
   final CosmosBaseAddress authority;
 
@@ -26,6 +28,16 @@ class MsgSetSendEnabled extends CosmosMessage
       {required this.authority,
       required this.sendEnabled,
       required this.useDefaultFor});
+  factory MsgSetSendEnabled.fromJson(Map<String, dynamic> json) {
+    return MsgSetSendEnabled(
+        authority: CosmosBaseAddress(json.as("authority")),
+        sendEnabled: json
+            .asListOfMap("send_enabled")!
+            .map((e) => SendEnabled.fromJson(e))
+            .toList(),
+        useDefaultFor: json.asListOfString("use_default_for")!);
+  }
+
   factory MsgSetSendEnabled.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgSetSendEnabled(
@@ -55,9 +67,6 @@ class MsgSetSendEnabled extends CosmosMessage
   @override
   @override
   TypeUrl get typeUrl => BankV1beta1Types.msgSetSendEnabled;
-
-  @override
-  TypeUrl get service => BankV1beta1Types.setSendEnabled;
 
   @override
   List<String?> get signers => [authority.address];

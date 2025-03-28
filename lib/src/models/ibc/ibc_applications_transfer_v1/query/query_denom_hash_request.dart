@@ -34,7 +34,7 @@ class QueryDenomHashRequest extends CosmosMessage
 
   @override
   QueryDenomHashResponse onJsonResponse(Map<String, dynamic> json) {
-    return QueryDenomHashResponse.fromRpc(json);
+    return QueryDenomHashResponse.fromJson(json);
   }
 
   @override

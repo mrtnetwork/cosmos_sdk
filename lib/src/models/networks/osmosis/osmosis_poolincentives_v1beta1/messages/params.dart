@@ -12,7 +12,7 @@ class OsmosisPoolincentivesParams extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolincentivesParams(mintedDenom: decode.getField(1));
   }
-  factory OsmosisPoolincentivesParams.fromRpc(Map<String, dynamic> json) {
+  factory OsmosisPoolincentivesParams.fromJson(Map<String, dynamic> json) {
     return OsmosisPoolincentivesParams(mintedDenom: json["minted_denom"]);
   }
 

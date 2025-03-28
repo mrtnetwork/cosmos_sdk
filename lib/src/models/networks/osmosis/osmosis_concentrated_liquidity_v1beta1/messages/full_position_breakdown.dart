@@ -36,20 +36,26 @@ class FullPositionBreakdown extends CosmosMessage {
             decode.getField(1)),
         asset0: Coin.deserialize(decode.getField(2)),
         asset1: Coin.deserialize(decode.getField(3)),
-        claimableSpreadRewards:
-            decode.getFields(4).map((e) => Coin.deserialize(e)).toList(),
-        claimableIncentives:
-            decode.getFields(5).map((e) => Coin.deserialize(e)).toList(),
-        forfeitedIncentives:
-            decode.getFields(6).map((e) => Coin.deserialize(e)).toList());
+        claimableSpreadRewards: decode
+            .getFields<List<int>>(4)
+            .map((e) => Coin.deserialize(e))
+            .toList(),
+        claimableIncentives: decode
+            .getFields<List<int>>(5)
+            .map((e) => Coin.deserialize(e))
+            .toList(),
+        forfeitedIncentives: decode
+            .getFields<List<int>>(6)
+            .map((e) => Coin.deserialize(e))
+            .toList());
   }
 
-  factory FullPositionBreakdown.fromRpc(Map<String, dynamic> json) {
+  factory FullPositionBreakdown.fromJson(Map<String, dynamic> json) {
     return FullPositionBreakdown(
         position:
             OsmosisConcentratedLiquidityPosition.deserialize(json["position"]),
-        asset0: Coin.fromRpc(json["asset0"]),
-        asset1: Coin.fromRpc(json["asset1"]),
+        asset0: Coin.fromJson(json["asset0"]),
+        asset1: Coin.fromJson(json["asset1"]),
         claimableSpreadRewards: (json["claimable_spread_rewards"] as List?)
                 ?.map((e) => Coin.deserialize(e))
                 .toList() ??

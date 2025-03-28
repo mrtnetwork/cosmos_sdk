@@ -13,7 +13,7 @@ class OsmosisPoolManagerEstimateSwapExactAmountInResponse
     return OsmosisPoolManagerEstimateSwapExactAmountInResponse(
         BigInt.parse(decode.getField(1)));
   }
-  factory OsmosisPoolManagerEstimateSwapExactAmountInResponse.fromRpc(
+  factory OsmosisPoolManagerEstimateSwapExactAmountInResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisPoolManagerEstimateSwapExactAmountInResponse(
         BigintUtils.parse(json["token_out_amount"]));

@@ -16,21 +16,21 @@ class OsmosisStreamSwapQuerySalesResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisStreamSwapQuerySalesResponse(
         sales: decode
-            .getFields(1)
+            .getFields<List<int>>(1)
             .map((e) => OsmosisStreamSwapSale.deserialize(e))
             .toList(),
         pagination: decode
             .getResult(2)
             ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
   }
-  factory OsmosisStreamSwapQuerySalesResponse.fromRpc(
+  factory OsmosisStreamSwapQuerySalesResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisStreamSwapQuerySalesResponse(
         sales: (json["sales"] as List?)
-                ?.map((e) => OsmosisStreamSwapSale.fromRpc(e))
+                ?.map((e) => OsmosisStreamSwapSale.fromJson(e))
                 .toList() ??
             <OsmosisStreamSwapSale>[],
-        pagination: PageResponse.fromRpc(json["pagination"]));
+        pagination: PageResponse.fromJson(json["pagination"]));
   }
 
   @override

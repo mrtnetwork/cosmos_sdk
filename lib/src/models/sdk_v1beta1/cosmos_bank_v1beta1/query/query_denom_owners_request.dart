@@ -44,7 +44,7 @@ class QueryDenomOwnersRequest extends CosmosMessage
 
   @override
   QueryDenomOwnersResponse onJsonResponse(Map<String, dynamic> json) {
-    return QueryDenomOwnersResponse.fromRpc(json);
+    return QueryDenomOwnersResponse.fromJson(json);
   }
 
   @override

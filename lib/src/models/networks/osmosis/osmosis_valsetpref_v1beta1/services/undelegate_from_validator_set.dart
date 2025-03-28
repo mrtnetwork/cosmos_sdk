@@ -1,12 +1,13 @@
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
+import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_valsetpref_v1beta1/core/service.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_valsetpref_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_v1beta1/messages/coin.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
 /// UndelegateFromValidatorSet gets the owner and coins and undelegates from validator-set.
 /// The unbonding logic will follow the Undelegate logic from the sdk.
-class OsmosisValSetprefMsgUndelegateFromValidatorSet extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class OsmosisValSetprefMsgUndelegateFromValidatorSet
+    extends OsmosisValSetprefV1Beta1<EmptyServiceRequestResponse> {
   /// delegator is the user who is trying to delegate.
   final String? delegator;
 
@@ -27,10 +28,10 @@ class OsmosisValSetprefMsgUndelegateFromValidatorSet extends CosmosMessage
       coin: Coin.deserialize(decode.getField(3)),
     );
   }
-  factory OsmosisValSetprefMsgUndelegateFromValidatorSet.fromRpc(
+  factory OsmosisValSetprefMsgUndelegateFromValidatorSet.fromJson(
       Map<String, dynamic> json) {
     return OsmosisValSetprefMsgUndelegateFromValidatorSet(
-        delegator: json["delegator"], coin: Coin.fromRpc(json["coin"]));
+        delegator: json["delegator"], coin: Coin.fromJson(json["coin"]));
   }
 
   @override
@@ -53,10 +54,6 @@ class OsmosisValSetprefMsgUndelegateFromValidatorSet extends CosmosMessage
     return EmptyServiceRequestResponse(
         OsmosisValSetprefV1beta1Types.msgUndelegateFromValidatorSetResponse);
   }
-
-  @override
-  TypeUrl get service =>
-      OsmosisValSetprefV1beta1Types.undelegateFromValidatorSet;
 
   @override
   List<String?> get signers => [delegator];

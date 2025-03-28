@@ -13,13 +13,16 @@ class OsmosisSuperfluidEstimateSuperfluidDelegatedAmountByValidatorDenomResponse
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidEstimateSuperfluidDelegatedAmountByValidatorDenomResponse(
-        decode.getFields(1).map((e) => Coin.fromRpc(e)).toList());
+        decode
+            .getFields<List<int>>(1)
+            .map((e) => Coin.deserialize(e))
+            .toList());
   }
-  factory OsmosisSuperfluidEstimateSuperfluidDelegatedAmountByValidatorDenomResponse.fromRpc(
+  factory OsmosisSuperfluidEstimateSuperfluidDelegatedAmountByValidatorDenomResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisSuperfluidEstimateSuperfluidDelegatedAmountByValidatorDenomResponse(
         (json["total_delegated_coins"] as List?)
-                ?.map((e) => Coin.fromRpc(e))
+                ?.map((e) => Coin.fromJson(e))
                 .toList() ??
             <Coin>[]);
   }

@@ -13,9 +13,9 @@ class IbcFeePacketFee extends CosmosMessage {
 
   /// optional list of relayers permitted to receive fees
   final List<String>? relayers;
-  factory IbcFeePacketFee.fromRpc(Map<String, dynamic> json) {
+  factory IbcFeePacketFee.fromJson(Map<String, dynamic> json) {
     return IbcFeePacketFee(
-        fee: IbcFeeFee.fromRpc(json["fee"]),
+        fee: IbcFeeFee.fromJson(json["fee"]),
         refundAddress: json["refund_address"],
         relayers: (json["relayers"] as List?)?.cast());
   }

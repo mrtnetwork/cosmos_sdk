@@ -29,7 +29,7 @@ class ThorchainMsgTssKeysignFail extends CosmosMessage {
         blame: ThorchainBlame.deserialize(decode.getField(3)),
         memo: decode.getField(4),
         coins: decode
-            .getFields(5)
+            .getFields<List<int>>(5)
             .map((e) => ThorchainCoin.deserialize(e))
             .toList(),
         pubKey: decode.getField(6),

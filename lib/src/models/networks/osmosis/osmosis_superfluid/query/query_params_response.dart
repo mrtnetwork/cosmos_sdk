@@ -10,7 +10,7 @@ class OsmosisSuperfluidQueryParamsResponse extends CosmosMessage {
     return OsmosisSuperfluidQueryParamsResponse(
         OsmosisSuperfluidParams.deserialize(decode.getField(1)));
   }
-  factory OsmosisSuperfluidQueryParamsResponse.fromRpc(
+  factory OsmosisSuperfluidQueryParamsResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisSuperfluidQueryParamsResponse(
         OsmosisSuperfluidParams.deserialize(json["params"]));

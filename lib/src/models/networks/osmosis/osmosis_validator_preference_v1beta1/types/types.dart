@@ -1,8 +1,10 @@
+import 'package:blockchain_utils/helper/extensions/extensions.dart';
 import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 
 class OsmosisValidatorPreferenceV1beta1Types extends TypeUrl {
   const OsmosisValidatorPreferenceV1beta1Types._(super.typeUrl,
       {super.query, super.rpc});
+  static const String root = "/osmosis.validatorpreference.v1beta1";
 
   static const OsmosisValidatorPreferenceV1beta1Types validatorPreference =
       OsmosisValidatorPreferenceV1beta1Types._(
@@ -55,18 +57,13 @@ class OsmosisValidatorPreferenceV1beta1Types extends TypeUrl {
       OsmosisValidatorPreferenceV1beta1Types._(
           "/osmosis.validatorpreference.v1beta1.QueryUserValidatorPreferenceResponse");
 
-  /// services
-
-  static const OsmosisValidatorPreferenceV1beta1Types
-      withdrawDelegationRewards = OsmosisValidatorPreferenceV1beta1Types._(
-          "/osmosis.validatorpreference.v1beta1.Msg/WithdrawDelegationRewards");
-  static const OsmosisValidatorPreferenceV1beta1Types
-      undelegateFromValidatorSet = OsmosisValidatorPreferenceV1beta1Types._(
-          "/osmosis.validatorpreference.v1beta1.Msg/UndelegateFromValidatorSet");
-  static const OsmosisValidatorPreferenceV1beta1Types delegateToValidatorSet =
-      OsmosisValidatorPreferenceV1beta1Types._(
-          "/osmosis.validatorpreference.v1beta1.Msg/DelegateToValidatorSet");
-  static const OsmosisValidatorPreferenceV1beta1Types
-      setValidatorSetPreference = OsmosisValidatorPreferenceV1beta1Types._(
-          "/osmosis.validatorpreference.v1beta1.Msg/SetValidatorSetPreference");
+  static const List<TypeUrl> services = [
+    msgDelegateToValidatorSet,
+    msgSetValidatorSetPreference,
+    msgUndelegateFromValidatorSet,
+    msgWithdrawDelegationRewards
+  ];
+  static TypeUrl? findService(String? typeUrl) {
+    return services.firstWhereNullable((e) => e.typeUrl == typeUrl);
+  }
 }

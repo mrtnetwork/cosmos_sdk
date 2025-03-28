@@ -2,6 +2,7 @@ import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_tx_v1beta1/query/simula
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_tx_v1beta1/types/types.dart';
 import 'package:blockchain_utils/utils/utils.dart';
+import 'package:cosmos_sdk/src/utils/utils.dart';
 
 /// Simulate simulates executing a transaction for estimating gas usage.
 class SimulateRequest extends CosmosMessage
@@ -22,7 +23,7 @@ class SimulateRequest extends CosmosMessage
 
   @override
   Map<String, dynamic> toJson() {
-    return {"tx_bytes": BytesUtils.toHexString(txBytes)};
+    return {"tx_bytes": CosmosUtils.toBase64(txBytes), "tx": null};
   }
 
   @override
@@ -38,6 +39,9 @@ class SimulateRequest extends CosmosMessage
 
   @override
   SimulateResponse onJsonResponse(Map<String, dynamic> json) {
-    return SimulateResponse.fromRpc(json);
+    return SimulateResponse.fromJson(json);
   }
+
+  @override
+  Map<String, dynamic> get body => toJson();
 }

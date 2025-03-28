@@ -11,7 +11,7 @@ class QueryCounterpartyPayeeResponse extends CosmosMessage {
     return QueryCounterpartyPayeeResponse(
         counterpartyPayee: decode.getField(1));
   }
-  factory QueryCounterpartyPayeeResponse.fromRpc(Map<String, dynamic> json) {
+  factory QueryCounterpartyPayeeResponse.fromJson(Map<String, dynamic> json) {
     return QueryCounterpartyPayeeResponse(
         counterpartyPayee: json["counterparty_payee"]);
   }

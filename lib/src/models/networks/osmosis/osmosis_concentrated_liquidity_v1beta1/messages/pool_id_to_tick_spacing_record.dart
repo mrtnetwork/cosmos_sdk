@@ -15,7 +15,7 @@ class OsmosisConcentratedLiquidityPoolIdToTickSpacingRecord
     return OsmosisConcentratedLiquidityPoolIdToTickSpacingRecord(
         poolId: decode.getField(1), newTickspacing: decode.getField(2));
   }
-  factory OsmosisConcentratedLiquidityPoolIdToTickSpacingRecord.fromRpc(
+  factory OsmosisConcentratedLiquidityPoolIdToTickSpacingRecord.fromJson(
       Map<String, dynamic> json) {
     return OsmosisConcentratedLiquidityPoolIdToTickSpacingRecord(
         poolId: BigintUtils.tryParse(json["pool_id"]),

@@ -40,7 +40,7 @@ class IbcLightClientsWasmQueryChecksumsRequest extends CosmosMessage
   @override
   IbcLightClientsWasmQueryChecksumsResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return IbcLightClientsWasmQueryChecksumsResponse.fromRpc(json);
+    return IbcLightClientsWasmQueryChecksumsResponse.fromJson(json);
   }
 
   @override

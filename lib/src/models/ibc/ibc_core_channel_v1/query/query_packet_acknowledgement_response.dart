@@ -16,12 +16,12 @@ class QueryPacketAcknowledgementResponse extends CosmosMessage {
   /// height at which the proof was retrieved
   final IbcClientHeight proofHeight;
 
-  factory QueryPacketAcknowledgementResponse.fromRpc(
+  factory QueryPacketAcknowledgementResponse.fromJson(
       Map<String, dynamic> json) {
     return QueryPacketAcknowledgementResponse(
         acknowledgement: CosmosUtils.tryToBytes(json["acknowledgement"]),
         proof: CosmosUtils.tryToBytes(json["proof"]),
-        proofHeight: IbcClientHeight.fromRpc(json["proof_height"]));
+        proofHeight: IbcClientHeight.fromJson(json["proof_height"]));
   }
   QueryPacketAcknowledgementResponse(
       {List<int>? acknowledgement, List<int>? proof, required this.proofHeight})

@@ -45,22 +45,22 @@ class OsmosisSuperfluidGenesisState extends CosmosMessage {
     return OsmosisSuperfluidGenesisState(
       params: OsmosisSuperfluidParams.deserialize(decode.getField(1)),
       superfluidAssets: decode
-          .getFields(2)
+          .getFields<List<int>>(2)
           .map((e) => OsmosisSuperfluidSuperfluidAsset.deserialize(e))
           .toList(),
       osmoEquivalentMultipliers: decode
-          .getFields(3)
+          .getFields<List<int>>(3)
           .map((e) =>
               OsmosisSuperfluidOsmoEquivalentMultiplierRecord.deserialize(e))
           .toList(),
       intermediaryAccounts: decode
-          .getFields(4)
+          .getFields<List<int>>(4)
           .map((e) =>
               OsmosisSuperfluidUnpoolSuperfluidIntermediaryAccount.deserialize(
                   e))
           .toList(),
       intemediaryAccountConnections: decode
-          .getFields(5)
+          .getFields<List<int>>(5)
           .map((e) =>
               OsmosisSuperfluidLockIdIntermediaryAccountConnection.deserialize(
                   e))

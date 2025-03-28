@@ -10,7 +10,7 @@ class DistributionQueryDelegatorWithdrawAddressResponse extends CosmosMessage {
   const DistributionQueryDelegatorWithdrawAddressResponse(
       {this.withdrawAddress});
 
-  factory DistributionQueryDelegatorWithdrawAddressResponse.fromRpc(
+  factory DistributionQueryDelegatorWithdrawAddressResponse.fromJson(
       Map<String, dynamic> json) {
     return DistributionQueryDelegatorWithdrawAddressResponse(
         withdrawAddress: json["withdraw_address"] == null

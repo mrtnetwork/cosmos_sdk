@@ -30,7 +30,7 @@ class OsmosisLockupModuleBalanceRequest extends CosmosMessage
 
   @override
   OsmosisLockupModuleBalanceResponse onJsonResponse(Map<String, dynamic> json) {
-    return OsmosisLockupModuleBalanceResponse.fromRpc(json);
+    return OsmosisLockupModuleBalanceResponse.fromJson(json);
   }
 
   @override

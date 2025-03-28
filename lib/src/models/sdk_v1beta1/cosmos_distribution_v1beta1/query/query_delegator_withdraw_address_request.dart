@@ -11,7 +11,7 @@ class DistributionQueryDelegatorWithdrawAddressRequest extends CosmosMessage
   final CosmosBaseAddress delegatorAddress;
   DistributionQueryDelegatorWithdrawAddressRequest(
       {required this.delegatorAddress});
-  factory DistributionQueryDelegatorWithdrawAddressRequest.fromRpc(
+  factory DistributionQueryDelegatorWithdrawAddressRequest.fromJson(
       Map<String, dynamic> json) {
     return DistributionQueryDelegatorWithdrawAddressRequest(
         delegatorAddress: CosmosBaseAddress(json["delegator_address"]));
@@ -47,7 +47,7 @@ class DistributionQueryDelegatorWithdrawAddressRequest extends CosmosMessage
   @override
   DistributionQueryDelegatorWithdrawAddressResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return DistributionQueryDelegatorWithdrawAddressResponse.fromRpc(json);
+    return DistributionQueryDelegatorWithdrawAddressResponse.fromJson(json);
   }
 
   @override

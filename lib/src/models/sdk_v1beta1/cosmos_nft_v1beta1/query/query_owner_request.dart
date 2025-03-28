@@ -43,7 +43,7 @@ class QueryNFTOwnerRequest extends CosmosMessage
 
   @override
   QueryNFTOwnerResponse onJsonResponse(Map<String, dynamic> json) {
-    return QueryNFTOwnerResponse.fromRpc(json);
+    return QueryNFTOwnerResponse.fromJson(json);
   }
 
   @override

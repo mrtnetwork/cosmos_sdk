@@ -32,7 +32,7 @@ class QueryAppliedPlanRequest extends CosmosMessage
 
   @override
   QueryAppliedPlanResponse onJsonResponse(Map<String, dynamic> json) {
-    return QueryAppliedPlanResponse.fromRpc(json);
+    return QueryAppliedPlanResponse.fromJson(json);
   }
 
   @override

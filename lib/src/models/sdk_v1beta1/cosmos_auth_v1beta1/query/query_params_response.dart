@@ -13,8 +13,8 @@ class AuthQueryParamsResponse extends CosmosMessage {
     return AuthQueryParamsResponse(AuthParams.deserialize(decode.getField(1)));
   }
 
-  factory AuthQueryParamsResponse.fromRpc(Map<String, dynamic> json) {
-    return AuthQueryParamsResponse(AuthParams.fromRpc(json["params"]));
+  factory AuthQueryParamsResponse.fromJson(Map<String, dynamic> json) {
+    return AuthQueryParamsResponse(AuthParams.fromJson(json["params"]));
   }
 
   @override

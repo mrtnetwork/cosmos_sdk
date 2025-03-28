@@ -12,10 +12,10 @@ class OsmosisProtorevQueryGetAllProtocolRevenueResponse extends CosmosMessage {
     return OsmosisProtorevQueryGetAllProtocolRevenueResponse(
         OsmosisProtorevAllProtocolRevenue.deserialize(decode.getField(1)));
   }
-  factory OsmosisProtorevQueryGetAllProtocolRevenueResponse.fromRpc(
+  factory OsmosisProtorevQueryGetAllProtocolRevenueResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisProtorevQueryGetAllProtocolRevenueResponse(
-        OsmosisProtorevAllProtocolRevenue.fromRpc(
+        OsmosisProtorevAllProtocolRevenue.fromJson(
             json["all_protocol_revenue"]));
   }
 

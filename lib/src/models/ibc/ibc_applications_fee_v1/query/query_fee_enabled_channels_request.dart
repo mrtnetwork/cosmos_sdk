@@ -47,7 +47,7 @@ class QueryFeeEnabledChannelsRequest extends CosmosMessage
 
   @override
   QueryFeeEnabledChannelsResponse onJsonResponse(Map<String, dynamic> json) {
-    return QueryFeeEnabledChannelsResponse.fromRpc(json);
+    return QueryFeeEnabledChannelsResponse.fromJson(json);
   }
 
   @override

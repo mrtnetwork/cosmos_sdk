@@ -13,7 +13,7 @@ class InterchainAccountsHostParams extends CosmosMessage {
   InterchainAccountsHostParams({this.hostEnabled, List<String>? allowMessages})
       : allowMessages = allowMessages?.emptyAsNull?.immutable;
 
-  factory InterchainAccountsHostParams.fromRpc(Map<String, dynamic> json) {
+  factory InterchainAccountsHostParams.fromJson(Map<String, dynamic> json) {
     return InterchainAccountsHostParams(
         allowMessages: (json["allow_messages"] as List?)?.cast(),
         hostEnabled: json["host_enabled"]);

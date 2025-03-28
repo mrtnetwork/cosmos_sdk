@@ -15,7 +15,7 @@ void main() async {
 
 // Initializing provider to interact with Tendermint node of Theta testnet
   final provider = TendermintProvider(TendermintHTTPProvider(
-      url: "https://rpc.sentry-02.theta-testnet.polypore.xyz"));
+      url: "https://rpc.provider-sentry-02.ics-testnet.polypore.xyz"));
 
   /// Querying account info from the blockchain
   final accountInfo = await provider.request(TendermintRequestAbciQuery(
@@ -29,7 +29,7 @@ void main() async {
   final authInfo = AuthInfo(
       signerInfos: [
         SignerInfo(
-            publicKey: pubkey,
+            publicKey: pubkey.toAny(),
             modeInfo: const ModeInfo(ModeInfoSignle(SignMode.signModeDirect)),
             sequence: accountInfo.info.sequence)
       ],
@@ -67,6 +67,8 @@ void main() async {
       signatures: [sign]);
 
   /// Broadcasting the raw transaction to the network
+  // await provider.request(TendermintRequestBroadcastTxCommit(
+  //     BytesUtils.toHexString(txRaw.toBuffer(), prefix: "0x")));
   await provider.request(TendermintRequestBroadcastTxCommit(
       BytesUtils.toHexString(txRaw.toBuffer(), prefix: "0x")));
 

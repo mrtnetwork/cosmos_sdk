@@ -1,6 +1,5 @@
 import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/address/address.dart';
-import 'package:cosmos_sdk/src/crypto/crypto.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_tendermint_v1beta1/types/types.dart';
 
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
@@ -8,7 +7,7 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 /// Validator is the type for the validator-set.
 class CosmosTendermintValidator extends CosmosMessage {
   final CosmosBaseAddress? address;
-  final CosmosPublicKey? pubKey;
+  final Any? pubKey;
   final BigInt? votingPower;
   final BigInt? proposerPriority;
   const CosmosTendermintValidator(
@@ -19,18 +18,16 @@ class CosmosTendermintValidator extends CosmosMessage {
         address: decode
             .getResult(1)
             ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        // pubKey: decode.getResult(2)?.to<CosmosPublicKey, List<int>>(
-        //     (e) => CosmosPublicKey.fromAnyBytes(e)),
+        pubKey:
+            decode.getResult(2)?.to<Any, List<int>>((e) => Any.deserialize(e)),
         votingPower: decode.getField(3),
         proposerPriority: decode.getField(4));
   }
-  factory CosmosTendermintValidator.fromRpc(Map<String, dynamic> json) {
+  factory CosmosTendermintValidator.fromJson(Map<String, dynamic> json) {
     return CosmosTendermintValidator(
         address:
             json["address"] == null ? null : CosmosBaseAddress(json["address"]),
-        pubKey: json["pub_key"] == null
-            ? null
-            : CosmosPublicKey.fromRpc(json["pub_key"]),
+        pubKey: json["pub_key"] == null ? null : Any.fromJson(json["pub_key"]),
         votingPower: BigintUtils.tryParse(json["voting_power"]),
         proposerPriority: BigintUtils.tryParse(json["proposer_priority"]));
   }

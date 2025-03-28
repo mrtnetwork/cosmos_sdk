@@ -1,12 +1,14 @@
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
+import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_incentives/core/service.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_incentives/types/types.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_lockup/messages/query_condition.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_v1beta1/messages/coin.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:blockchain_utils/helper/helper.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
-class OsmosisIncentiveMsgCreateGauge extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class OsmosisIncentiveMsgCreateGauge
+    extends OsmosisIncentives<EmptyServiceRequestResponse> {
   /// is_perpetual shows if it's a perpetual or non-perpetual gauge
   /// Non-perpetual gauges distribute their tokens equally per epoch while the
   /// gauge is in the active period. Perpetual gauges distribute all their tokens
@@ -46,16 +48,28 @@ class OsmosisIncentiveMsgCreateGauge extends CosmosMessage
         owner: decode.getField(2),
         distributeTo:
             OsmosisLockupQueryCondition.deserialize(decode.getField(3)),
-        coins: decode.getFields(4).map((e) => Coin.deserialize(e)).toList(),
+        coins: decode
+            .getFields<List<int>>(4)
+            .map((e) => Coin.deserialize(e))
+            .toList(),
         startTime: ProtobufTimestamp.deserialize(decode.getField(5)),
         numEpochsPaidOver: decode.getField(6));
+  }
+  factory OsmosisIncentiveMsgCreateGauge.fromJson(Map<String, dynamic> json) {
+    return OsmosisIncentiveMsgCreateGauge(
+        isPerpetual: json.as("is_perpetual"),
+        owner: json.as("owner"),
+        distributeTo: OsmosisLockupQueryCondition.deserialize(
+            json.asMap("distribute_to")),
+        coins:
+            json.asListOfMap("coins")?.map((e) => Coin.fromJson(e)).toList() ??
+                [],
+        startTime: ProtobufTimestamp.fromString(json.as("start_time")),
+        numEpochsPaidOver: json.asBigInt("num_epochs_paid_over"));
   }
 
   @override
   List<int> get fieldIds => [1, 2, 3, 4, 5, 6];
-
-  @override
-  TypeUrl get service => OsmosisIncentivesTypes.createGauge;
 
   @override
   List<String?> get signers => [owner];

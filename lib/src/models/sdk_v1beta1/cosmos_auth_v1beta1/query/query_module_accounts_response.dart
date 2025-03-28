@@ -15,9 +15,9 @@ class QueryModuleAccountsResponse extends CosmosMessage {
         .toList());
   }
 
-  factory QueryModuleAccountsResponse.fromRpc(Map<String, dynamic> json) {
+  factory QueryModuleAccountsResponse.fromJson(Map<String, dynamic> json) {
     return QueryModuleAccountsResponse(
-        (json["accounts"] as List).map((e) => AnyMessage.fromRpc(e)).toList());
+        (json["accounts"] as List).map((e) => AnyMessage.fromJson(e)).toList());
   }
 
   @override

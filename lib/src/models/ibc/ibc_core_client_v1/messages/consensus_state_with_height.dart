@@ -11,12 +11,12 @@ class ConsensusStateWithHeight extends CosmosMessage {
 
   /// consensus state
   final AnyMessage? consensusState;
-  factory ConsensusStateWithHeight.fromRpc(Map<String, dynamic> json) {
+  factory ConsensusStateWithHeight.fromJson(Map<String, dynamic> json) {
     return ConsensusStateWithHeight(
-        height: IbcClientHeight.fromRpc(json["height"]),
+        height: IbcClientHeight.fromJson(json["height"]),
         consensusState: json["consensus_state"] == null
             ? null
-            : AnyMessage.fromRpc(json["consensus_state"]));
+            : AnyMessage.fromJson(json["consensus_state"]));
   }
   const ConsensusStateWithHeight({required this.height, this.consensusState});
   factory ConsensusStateWithHeight.deserialize(List<int> bytes) {

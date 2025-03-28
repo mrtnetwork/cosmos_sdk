@@ -1,10 +1,12 @@
+import 'package:cosmos_sdk/src/models/ibc/core/service.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_applications_interchain_accounts_v1/messages/interchain_account_packet_data.dart';
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 import 'msg_send_tx_response.dart';
 
 /// MsgSendTx defines the payload for Msg/SendTx
-class MsgSendTx extends CosmosMessage with ServiceMessage<MsgSendTxResponse> {
+class MsgSendTx extends IbcService<MsgSendTxResponse> {
   final String? owner;
   final String? connectionId;
   final InterchainAccountPacketData packetData;
@@ -25,12 +27,17 @@ class MsgSendTx extends CosmosMessage with ServiceMessage<MsgSendTxResponse> {
         packetData: InterchainAccountPacketData.deserialize(decode.getField(3)),
         relativeTimeout: decode.getField(4));
   }
+  factory MsgSendTx.fromJson(Map<String, dynamic> json) {
+    return MsgSendTx(
+        owner: json.as("owner"),
+        connectionId: json.as("connection_id"),
+        packetData:
+            InterchainAccountPacketData.fromJson(json.asMap("packet_data")),
+        relativeTimeout: json.asBigInt("relative_timeout"));
+  }
 
   @override
   List<int> get fieldIds => [1, 2, 3, 4];
-
-  @override
-  TypeUrl get service => IbcTypes.serviceMsgSendTx;
 
   @override
   Map<String, dynamic> toJson() {

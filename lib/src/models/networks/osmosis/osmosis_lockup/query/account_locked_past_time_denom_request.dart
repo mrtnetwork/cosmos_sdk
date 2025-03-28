@@ -39,7 +39,7 @@ class OsmosisLockupAccountLockedPastTimeDenomRequest extends CosmosMessage
   @override
   OsmosisLockupAccountLockedPastTimeDenomResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisLockupAccountLockedPastTimeDenomResponse.fromRpc(json);
+    return OsmosisLockupAccountLockedPastTimeDenomResponse.fromJson(json);
   }
 
   @override

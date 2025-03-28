@@ -1,12 +1,14 @@
 import 'package:blockchain_utils/blockchain_utils.dart';
+import 'package:cosmos_sdk/src/models/ibc/core/service.dart';
 
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// MsgMigrateContract defines the request type for the MigrateContract rpc.
-class IbcLightClientsWasmMsgMigrateContract extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class IbcLightClientsWasmMsgMigrateContract
+    extends IbcService<EmptyServiceRequestResponse> {
   /// signer address
   final String? signer;
 
@@ -31,12 +33,18 @@ class IbcLightClientsWasmMsgMigrateContract extends CosmosMessage
       msg: decode.getField(4),
     );
   }
+  factory IbcLightClientsWasmMsgMigrateContract.fromJson(
+      Map<String, dynamic> json) {
+    return IbcLightClientsWasmMsgMigrateContract(
+      signer: json.as("signer"),
+      clientId: json.as("client_id"),
+      checksum: json.asBytes("checksum"),
+      msg: json.asBytes("msg"),
+    );
+  }
 
   @override
   List<int> get fieldIds => [1, 2, 3, 4];
-
-  @override
-  TypeUrl get service => IbcTypes.ibcLightClientsWasmMigrateContract;
 
   @override
   Map<String, dynamic> toJson() {

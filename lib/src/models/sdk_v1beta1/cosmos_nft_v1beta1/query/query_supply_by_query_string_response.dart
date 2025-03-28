@@ -11,7 +11,7 @@ class QueryNFTSupplyByQueryStringResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryNFTSupplyByQueryStringResponse(amount: decode.getField(1));
   }
-  factory QueryNFTSupplyByQueryStringResponse.fromRpc(
+  factory QueryNFTSupplyByQueryStringResponse.fromJson(
       Map<String, dynamic> json) {
     return QueryNFTSupplyByQueryStringResponse(
         amount: BigintUtils.tryParse(json["amount"]));

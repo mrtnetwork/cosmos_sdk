@@ -25,14 +25,14 @@ class CosmosBlock extends CosmosMessage {
             .getResult(4)
             ?.to<Commit, List<int>>((e) => Commit.deserialize(e)));
   }
-  factory CosmosBlock.fromRpc(Map<String, dynamic> json) {
+  factory CosmosBlock.fromJson(Map<String, dynamic> json) {
     return CosmosBlock(
-        header: Header.fromRpc(json["header"]),
-        data: BlockData.fromRpc(json["data"]),
+        header: Header.fromJson(json["header"]),
+        data: BlockData.fromJson(json["data"]),
         evidence: EvidenceList(evidence: []),
         lastCommit: json["last_commit"] == null
             ? null
-            : Commit.fromRpc(json["last_commit"]));
+            : Commit.fromJson(json["last_commit"]));
   }
 
   @override

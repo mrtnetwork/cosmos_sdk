@@ -8,10 +8,10 @@ class DistributionQueryValidatorOutstandingRewardsResponse
     extends CosmosMessage {
   final DistributionValidatorOutstandingRewards rewards;
   const DistributionQueryValidatorOutstandingRewardsResponse(this.rewards);
-  factory DistributionQueryValidatorOutstandingRewardsResponse.fromRpc(
+  factory DistributionQueryValidatorOutstandingRewardsResponse.fromJson(
       Map<String, dynamic> json) {
     return DistributionQueryValidatorOutstandingRewardsResponse(
-        DistributionValidatorOutstandingRewards.fromRpc(json["rewards"]));
+        DistributionValidatorOutstandingRewards.fromJson(json["rewards"]));
   }
   factory DistributionQueryValidatorOutstandingRewardsResponse.deserialize(
       List<int> bytes) {

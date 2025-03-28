@@ -9,7 +9,7 @@ class QueryInterchainAccountResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryInterchainAccountResponse(address: decode.getField(1));
   }
-  factory QueryInterchainAccountResponse.fromRpc(Map<String, dynamic> json) {
+  factory QueryInterchainAccountResponse.fromJson(Map<String, dynamic> json) {
     return QueryInterchainAccountResponse(address: json["address"]);
   }
 

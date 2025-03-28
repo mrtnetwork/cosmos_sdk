@@ -20,7 +20,7 @@ class OsmosisCosmWasmPoolParams extends CosmosMessage {
         codeIdWhitelist: decode.getField(1),
         poolMigrationLimit: decode.getField(2));
   }
-  factory OsmosisCosmWasmPoolParams.fromRpc(Map<String, dynamic> json) {
+  factory OsmosisCosmWasmPoolParams.fromJson(Map<String, dynamic> json) {
     return OsmosisCosmWasmPoolParams(
         poolMigrationLimit: BigintUtils.tryParse(json["pool_migration_limit"]),
         codeIdWhitelist: BigintUtils.tryParse(json["code_id_whitelist"]));

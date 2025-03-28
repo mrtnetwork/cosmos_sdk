@@ -1,10 +1,11 @@
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
+import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_valsetpref_v1beta1/core/service.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_valsetpref_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_v1beta1/messages/coin.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
 class OsmosisValSetprefMsgUndelegateFromRebalancedValidatorSet
-    extends CosmosMessage with ServiceMessage<EmptyServiceRequestResponse> {
+    extends OsmosisValSetprefV1Beta1<EmptyServiceRequestResponse> {
   /// delegator is the user who is trying to delegate.
   final String? delegator;
 
@@ -27,10 +28,10 @@ class OsmosisValSetprefMsgUndelegateFromRebalancedValidatorSet
       coin: Coin.deserialize(decode.getField(2)),
     );
   }
-  factory OsmosisValSetprefMsgUndelegateFromRebalancedValidatorSet.fromRpc(
+  factory OsmosisValSetprefMsgUndelegateFromRebalancedValidatorSet.fromJson(
       Map<String, dynamic> json) {
     return OsmosisValSetprefMsgUndelegateFromRebalancedValidatorSet(
-        delegator: json["delegator"], coin: Coin.fromRpc(json["coin"]));
+        delegator: json["delegator"], coin: Coin.fromJson(json["coin"]));
   }
 
   @override
@@ -53,10 +54,6 @@ class OsmosisValSetprefMsgUndelegateFromRebalancedValidatorSet
     return EmptyServiceRequestResponse(OsmosisValSetprefV1beta1Types
         .msgUndelegateFromRebalancedValidatorSetResponse);
   }
-
-  @override
-  TypeUrl get service =>
-      OsmosisValSetprefV1beta1Types.undelegateFromRebalancedValidatorSet;
 
   @override
   List<String?> get signers => [delegator];

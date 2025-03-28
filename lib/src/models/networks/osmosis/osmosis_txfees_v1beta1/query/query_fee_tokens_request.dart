@@ -9,7 +9,7 @@ class OsmosisTxfeesQueryFeeTokensRequest extends CosmosMessage
   factory OsmosisTxfeesQueryFeeTokensRequest.deserialize(List<int> bytes) {
     return const OsmosisTxfeesQueryFeeTokensRequest();
   }
-  factory OsmosisTxfeesQueryFeeTokensRequest.fromRpc(
+  factory OsmosisTxfeesQueryFeeTokensRequest.fromJson(
       Map<String, dynamic> json) {
     return const OsmosisTxfeesQueryFeeTokensRequest();
   }
@@ -31,7 +31,7 @@ class OsmosisTxfeesQueryFeeTokensRequest extends CosmosMessage
   @override
   OsmosisTxfeesQueryFeeTokensResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisTxfeesQueryFeeTokensResponse.fromRpc(json);
+    return OsmosisTxfeesQueryFeeTokensResponse.fromJson(json);
   }
 
   @override

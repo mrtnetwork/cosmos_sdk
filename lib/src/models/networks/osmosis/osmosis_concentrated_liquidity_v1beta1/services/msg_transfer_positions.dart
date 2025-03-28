@@ -1,11 +1,13 @@
 import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
+import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_concentrated_liquidity_v1beta1/core/service.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_concentrated_liquidity_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:blockchain_utils/helper/helper.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 class OsmosisConcentratedLiquidityMsgTransferPositionsResponse
-    extends CosmosMessage with ServiceMessage<EmptyServiceRequestResponse> {
+    extends OsmosisConcentratedLiquidityV1Beta1<EmptyServiceRequestResponse> {
   final List<BigInt>? positionIds;
   final String? sender;
   final String? newOwner;
@@ -25,7 +27,16 @@ class OsmosisConcentratedLiquidityMsgTransferPositionsResponse
         sender: decode.getField(2),
         newOwner: decode.getField(3));
   }
-
+  factory OsmosisConcentratedLiquidityMsgTransferPositionsResponse.fromJson(
+      Map<String, dynamic> json) {
+    return OsmosisConcentratedLiquidityMsgTransferPositionsResponse(
+        positionIds: json
+            .as<List?>("position_ids")
+            ?.map((e) => BigintUtils.parse(e))
+            .toList(),
+        sender: json.as("sender"),
+        newOwner: json.as("new_owner"));
+  }
   @override
   List<int> get fieldIds => [1, 2, 3];
 
@@ -50,10 +61,6 @@ class OsmosisConcentratedLiquidityMsgTransferPositionsResponse
     return EmptyServiceRequestResponse(
         OsmosisConcentratedLiquidityV1beta1Types.msgTransferPositionsResponse);
   }
-
-  @override
-  TypeUrl get service =>
-      OsmosisConcentratedLiquidityV1beta1Types.transferPositions;
 
   @override
   List<String?> get signers => [sender];

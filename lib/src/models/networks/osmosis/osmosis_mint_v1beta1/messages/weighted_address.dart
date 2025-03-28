@@ -14,7 +14,7 @@ class OsmosisMintWeightedAddress extends CosmosMessage {
       weight: decode.getField(2),
     );
   }
-  factory OsmosisMintWeightedAddress.fromRpc(Map<String, dynamic> json) {
+  factory OsmosisMintWeightedAddress.fromJson(Map<String, dynamic> json) {
     return OsmosisMintWeightedAddress(
         weight: json["weight"], address: json["address"]);
   }

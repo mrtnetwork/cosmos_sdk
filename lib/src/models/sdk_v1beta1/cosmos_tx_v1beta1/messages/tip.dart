@@ -12,10 +12,10 @@ class Tip extends CosmosMessage {
 
   /// tipper is the address of the account paying for the tip
   final CosmosBaseAddress? tipper;
-  factory Tip.fromRpc(Map<String, dynamic> json) {
+  factory Tip.fromJson(Map<String, dynamic> json) {
     return Tip(
         amount:
-            (json["amount"] as List?)?.map((e) => Coin.fromRpc(e)).toList() ??
+            (json["amount"] as List?)?.map((e) => Coin.fromJson(e)).toList() ??
                 [],
         tipper:
             json["tipper"] == null ? null : CosmosBaseAddress(json["tipper"]));

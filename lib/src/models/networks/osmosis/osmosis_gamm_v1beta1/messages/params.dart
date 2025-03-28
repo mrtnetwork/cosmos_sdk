@@ -12,12 +12,12 @@ class OsmosisGammParams extends CosmosMessage {
   factory OsmosisGammParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisGammParams(
-      decode.getFields(1).map((e) => Coin.deserialize(e)).toList(),
+      decode.getFields<List<int>>(1).map((e) => Coin.deserialize(e)).toList(),
     );
   }
-  factory OsmosisGammParams.fromRpc(Map<String, dynamic> json) {
+  factory OsmosisGammParams.fromJson(Map<String, dynamic> json) {
     return OsmosisGammParams((json["pool_creation_fee"] as List?)
-            ?.map((e) => Coin.fromRpc(e))
+            ?.map((e) => Coin.fromJson(e))
             .toList() ??
         <Coin>[]);
   }

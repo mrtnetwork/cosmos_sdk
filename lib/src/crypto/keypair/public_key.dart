@@ -1,6 +1,13 @@
-import 'package:cosmos_sdk/cosmos_sdk.dart';
+import 'package:cosmos_sdk/src/address/address/address.dart';
+import 'package:cosmos_sdk/src/address/address/address_const.dart';
+import 'package:cosmos_sdk/src/crypto/ed25519/public_key.dart';
+import 'package:cosmos_sdk/src/crypto/ethSecp256k1/public_key.dart';
+import 'package:cosmos_sdk/src/crypto/secp256k1/public_key.dart';
+import 'package:cosmos_sdk/src/crypto/secp256r1/public_key.dart';
+import 'package:cosmos_sdk/src/crypto/types/types.dart';
 import 'package:cosmos_sdk/src/exception/exception.dart';
 import 'package:blockchain_utils/blockchain_utils.dart';
+import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
 abstract class CosmosPublicKey extends CosmosMessage {
   const CosmosPublicKey();
@@ -39,7 +46,7 @@ abstract class CosmosPublicKey extends CosmosMessage {
             details: {"type": any.typeUrl});
     }
   }
-  factory CosmosPublicKey.fromRpc(Map<String, dynamic> json) {
+  factory CosmosPublicKey.fromJson(Map<String, dynamic> json) {
     final pubkeyType = CosmosCryptoKeysTypes.fromType(json["@type"]);
     final List<int> key =
         StringUtils.encode(json["key"], type: StringEncoding.base64);
@@ -57,7 +64,7 @@ abstract class CosmosPublicKey extends CosmosMessage {
             details: {"type": pubkeyType.typeUrl});
     }
   }
-  CosmosBaseAddress toAddress({String hrp = CosmosAddrConst.validatorHRP}) {
+  CosmosBaseAddress toAddress({String hrp = CosmosAddrConst.accHRP}) {
     return CosmosBaseAddress.fromPublicKey(
         pubkeyBytes: toBytes(), algorithm: algorithm, hrp: hrp);
   }

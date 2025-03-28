@@ -35,6 +35,6 @@ class QueryDenomMetadataRequest extends CosmosMessage
 
   @override
   QueryDenomMetadataResponse onJsonResponse(Map<String, dynamic> json) {
-    return QueryDenomMetadataResponse.fromRpc(json);
+    return QueryDenomMetadataResponse.fromJson(json);
   }
 }

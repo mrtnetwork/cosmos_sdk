@@ -31,7 +31,7 @@ class OsmosisSuperfluidQueryParamsRequest extends CosmosMessage
   @override
   OsmosisSuperfluidQueryParamsResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisSuperfluidQueryParamsResponse.fromRpc(json);
+    return OsmosisSuperfluidQueryParamsResponse.fromJson(json);
   }
 
   @override

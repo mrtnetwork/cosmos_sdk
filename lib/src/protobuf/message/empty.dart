@@ -1,7 +1,7 @@
 import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 
 /// https://buf.build/protocolbuffers/wellknowntypes/docs/main:google.protobuf#google.protobuf.Empty
-class ProtobufEmpty extends CosmosProtocolBuffer {
+class ProtobufEmpty extends CosmosMessage {
   const ProtobufEmpty();
 
   @override
@@ -14,4 +14,7 @@ class ProtobufEmpty extends CosmosProtocolBuffer {
 
   @override
   List get values => [];
+
+  @override
+  TypeUrl get typeUrl => UnknownTypeUrl("/google.protobuf.Empty");
 }

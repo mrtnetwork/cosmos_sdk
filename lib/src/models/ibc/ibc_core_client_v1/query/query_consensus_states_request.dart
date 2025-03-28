@@ -43,7 +43,7 @@ class QueryConsensusStatesRequest extends CosmosMessage
 
   @override
   QueryConsensusStatesResponse onJsonResponse(Map<String, dynamic> json) {
-    return QueryConsensusStatesResponse.fromRpc(json);
+    return QueryConsensusStatesResponse.fromJson(json);
   }
 
   @override

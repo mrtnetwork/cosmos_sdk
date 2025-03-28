@@ -1,9 +1,11 @@
+import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_gamm_v1beta1/core/service.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_gamm_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 import 'exit_swap_share_amount_in_response.dart';
 
-class OsmosisGammMsgExitSwapShareAmountIn extends CosmosMessage
-    with ServiceMessage<OsmosisGammMsgExitSwapShareAmountInResponse> {
+class OsmosisGammMsgExitSwapShareAmountIn
+    extends OsmosisGammV1Beta1<OsmosisGammMsgExitSwapShareAmountInResponse> {
   final String? sender;
   final BigInt? poolId;
   final String? tokenOutDenom;
@@ -25,6 +27,16 @@ class OsmosisGammMsgExitSwapShareAmountIn extends CosmosMessage
       tokenOutMinAmount: BigInt.parse(decode.getField(5)),
     );
   }
+  factory OsmosisGammMsgExitSwapShareAmountIn.fromJson(
+      Map<String, dynamic> json) {
+    return OsmosisGammMsgExitSwapShareAmountIn(
+      sender: json.as("sender"),
+      poolId: json.asBigInt("pool_id"),
+      tokenOutDenom: json.as("token_out_denom"),
+      shareInAmount: json.asBigInt("share_in_amount"),
+      tokenOutMinAmount: json.asBigInt("token_out_min_amount"),
+    );
+  }
 
   @override
   List<int> get fieldIds => [1, 2, 3, 4, 5];
@@ -33,9 +45,6 @@ class OsmosisGammMsgExitSwapShareAmountIn extends CosmosMessage
   OsmosisGammMsgExitSwapShareAmountInResponse onResponse(List<int> bytes) {
     return OsmosisGammMsgExitSwapShareAmountInResponse.deserialize(bytes);
   }
-
-  @override
-  TypeUrl get service => OsmosisGammV1beta1Types.exitSwapShareAmountIn;
 
   @override
   List<String?> get signers => [sender];

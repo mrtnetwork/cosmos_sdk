@@ -34,15 +34,17 @@ class ThorchainObservedTxVoter extends CosmosMessage {
         tx: ThorchainObservedTx.deserialize(decode.getField(2)),
         height: decode.getField(3),
         txs: decode
-            .getFields(4)
+            .getFields<List<int>>(4)
             .map((e) => ThorchainObservedTx.deserialize(e))
             .toList(),
         actions: decode
-            .getFields(5)
+            .getFields<List<int>>(5)
             .map((e) => ThorchainTxOutItem.deserialize(e))
             .toList(),
-        outTxs:
-            decode.getFields(6).map((e) => ThorchainTx.deserialize(e)).toList(),
+        outTxs: decode
+            .getFields<List<int>>(6)
+            .map((e) => ThorchainTx.deserialize(e))
+            .toList(),
         finalisedHeight: decode.getField(7),
         updatedVault: decode.getField(8),
         reverted: decode.getField(9),

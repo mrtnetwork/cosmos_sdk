@@ -41,7 +41,7 @@ class QueryTotalSupplyRequest extends CosmosMessage
 
   @override
   QueryTotalSupplyResponse onJsonResponse(Map<String, dynamic> json) {
-    return QueryTotalSupplyResponse.fromRpc(json);
+    return QueryTotalSupplyResponse.fromJson(json);
   }
 
   @override

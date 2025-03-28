@@ -9,7 +9,7 @@ class QueryClientStatusResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryClientStatusResponse(status: decode.getField(1));
   }
-  factory QueryClientStatusResponse.fromRpc(Map<String, dynamic> json) {
+  factory QueryClientStatusResponse.fromJson(Map<String, dynamic> json) {
     return QueryClientStatusResponse(status: json["status"]);
   }
 

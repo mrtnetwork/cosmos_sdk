@@ -20,26 +20,28 @@ class OsmosisConcentratedLiquidityTickAccumulatorTrackersResponse
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityTickAccumulatorTrackersResponse(
-        spreadRewardGrowthOppositeDirectionOfLastTraversal:
-            decode.getFields(1).map((e) => DecCoin.deserialize(e)).toList(),
+        spreadRewardGrowthOppositeDirectionOfLastTraversal: decode
+            .getFields<List<int>>(1)
+            .map((e) => DecCoin.deserialize(e))
+            .toList(),
         uptimeTrackers: decode
-            .getFields(2)
+            .getFields<List<int>>(2)
             .map(
                 (e) => OsmosisConcentratedLiquidityUptimeTracker.deserialize(e))
             .toList());
   }
-  factory OsmosisConcentratedLiquidityTickAccumulatorTrackersResponse.fromRpc(
+  factory OsmosisConcentratedLiquidityTickAccumulatorTrackersResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisConcentratedLiquidityTickAccumulatorTrackersResponse(
         spreadRewardGrowthOppositeDirectionOfLastTraversal:
             (json["spread_reward_growth_opposite_direction_of_last_traversal"]
                         as List?)
-                    ?.map((e) => DecCoin.fromRpc(e))
+                    ?.map((e) => DecCoin.fromJson(e))
                     .toList() ??
                 <DecCoin>[],
         uptimeTrackers: (json["uptime_trackers"] as List?)
-                ?.map(
-                    (e) => OsmosisConcentratedLiquidityUptimeTracker.fromRpc(e))
+                ?.map((e) =>
+                    OsmosisConcentratedLiquidityUptimeTracker.fromJson(e))
                 .toList() ??
             <OsmosisConcentratedLiquidityUptimeTracker>[]);
   }

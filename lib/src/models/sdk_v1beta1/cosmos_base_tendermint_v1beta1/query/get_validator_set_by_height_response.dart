@@ -14,16 +14,16 @@ class GetValidatorSetByHeightResponse extends CosmosMessage {
   /// pagination defines an pagination for the response.
   final PageResponse? pagination;
 
-  factory GetValidatorSetByHeightResponse.fromRpc(Map<String, dynamic> json) {
+  factory GetValidatorSetByHeightResponse.fromJson(Map<String, dynamic> json) {
     return GetValidatorSetByHeightResponse(
       validators: (json["validators"] as List?)
-              ?.map((e) => CosmosTendermintValidator.fromRpc(e))
+              ?.map((e) => CosmosTendermintValidator.fromJson(e))
               .toList() ??
           [],
       blockHeight: BigintUtils.tryParse(json["block_height"]),
       pagination: json["pagination"] == null
           ? null
-          : PageResponse.fromRpc(json["pagination"]),
+          : PageResponse.fromJson(json["pagination"]),
     );
   }
 

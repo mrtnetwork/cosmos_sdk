@@ -1,5 +1,6 @@
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_poolmanager_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 class OsmosisPoolManagerDenomPairTakerFee extends CosmosMessage {
   /// denom0 and denom1 get automatically lexigographically sorted
@@ -17,7 +18,13 @@ class OsmosisPoolManagerDenomPairTakerFee extends CosmosMessage {
         denom1: decode.getField(2),
         takerFee: decode.getField(3));
   }
-
+  factory OsmosisPoolManagerDenomPairTakerFee.fromJson(
+      Map<String, dynamic> json) {
+    return OsmosisPoolManagerDenomPairTakerFee(
+        denom0: json.as("denom0"),
+        denom1: json.as("denom1"),
+        takerFee: json.as("taker_fee"));
+  }
   @override
   List<int> get fieldIds => [1, 2, 3];
 

@@ -31,16 +31,16 @@ class OsmosisGammGenesisState extends CosmosMessage {
     );
   }
 
-  factory OsmosisGammGenesisState.fromRpc(Map<String, dynamic> json) {
+  factory OsmosisGammGenesisState.fromJson(Map<String, dynamic> json) {
     return OsmosisGammGenesisState(
         pools: (json["pools"] as List?)
-                ?.map((e) => AnyMessage.fromRpc(e))
+                ?.map((e) => AnyMessage.fromJson(e))
                 .toList() ??
             [],
         nextPoolNumber: BigintUtils.tryParse(json["next_pool_number"]),
         params: json["params"] == null
             ? null
-            : OsmosisGammParams.fromRpc(json["params"]));
+            : OsmosisGammParams.fromJson(json["params"]));
   }
 
   @override

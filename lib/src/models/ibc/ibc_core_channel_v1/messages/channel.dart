@@ -29,9 +29,9 @@ class IbcChannelChannel extends CosmosMessage {
   /// upgrade sequence indicates the latest upgrade attempt performed by this channel
   /// the value of 0 indicates the channel has never been upgraded
   final BigInt? upgradeSequence;
-  factory IbcChannelChannel.fromRpc(Map<String, dynamic> json) {
+  factory IbcChannelChannel.fromJson(Map<String, dynamic> json) {
     return IbcChannelChannel(
-        counterparty: IbcChannelCounterParty.fromRpc(json["counterparty"]),
+        counterparty: IbcChannelCounterParty.fromJson(json["counterparty"]),
         connectionHops: (json["connection_hops"] as List?)?.cast(),
         ordering: json["ordering"] == null
             ? null

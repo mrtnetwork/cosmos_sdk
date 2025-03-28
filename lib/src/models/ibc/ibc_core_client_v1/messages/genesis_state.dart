@@ -39,15 +39,15 @@ class IbcClientGenesisState extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcClientGenesisState(
         clients: decode
-            .getFields(1)
+            .getFields<List<int>>(1)
             .map((e) => IbcClientIdentifiedClientState.deserialize(e))
             .toList(),
         clientsConsensus: decode
-            .getFields(2)
+            .getFields<List<int>>(2)
             .map((e) => IbcClientClientConsensusStates.deserialize(e))
             .toList(),
         clientsMetadata: decode
-            .getFields(3)
+            .getFields<List<int>>(3)
             .map((e) => IbcClientIdentifiedGenesisMetadata.deserialize(e))
             .toList(),
         params: IbcClientParams.deserialize(decode.getField(4)),

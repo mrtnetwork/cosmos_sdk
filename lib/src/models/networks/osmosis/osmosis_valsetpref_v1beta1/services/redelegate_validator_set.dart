@@ -1,11 +1,12 @@
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
+import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_valsetpref_v1beta1/core/service.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_valsetpref_v1beta1/messages/validator_preference.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_valsetpref_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:blockchain_utils/helper/helper.dart';
 
-class OsmosisValSetprefMsgRedelegateValidatorSet extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class OsmosisValSetprefMsgRedelegateValidatorSet
+    extends OsmosisValSetprefV1Beta1<EmptyServiceRequestResponse> {
   /// delegator is the user who is trying to create a validator-set.
   final String? delegator;
 
@@ -22,12 +23,12 @@ class OsmosisValSetprefMsgRedelegateValidatorSet extends CosmosMessage
     return OsmosisValSetprefMsgRedelegateValidatorSet(
       delegator: decode.getField(1),
       preferences: decode
-          .getFields(2)
+          .getFields<List<int>>(2)
           .map((e) => OsmosisValSetprefValidatorPreference.deserialize(e))
           .toList(),
     );
   }
-  factory OsmosisValSetprefMsgRedelegateValidatorSet.fromRpc(
+  factory OsmosisValSetprefMsgRedelegateValidatorSet.fromJson(
       Map<String, dynamic> json) {
     return OsmosisValSetprefMsgRedelegateValidatorSet(
         delegator: json["delegator"],
@@ -61,9 +62,6 @@ class OsmosisValSetprefMsgRedelegateValidatorSet extends CosmosMessage
     return EmptyServiceRequestResponse(
         OsmosisValSetprefV1beta1Types.msgRedelegateValidatorSetResponse);
   }
-
-  @override
-  TypeUrl get service => OsmosisValSetprefV1beta1Types.redelegateValidatorSet;
 
   @override
   List<String?> get signers => [delegator];

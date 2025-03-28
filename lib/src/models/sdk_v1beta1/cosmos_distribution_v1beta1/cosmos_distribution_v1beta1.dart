@@ -39,3 +39,4 @@ export 'service/msg_withdraw_delegator_reward.dart';
 export 'service/msg_withdraw_delegator_reward_response.dart';
 export 'service/msg_withdraw_validator_commission.dart';
 export 'service/msg_withdraw_validator_commission_response.dart';
+export 'service/msg_fund_community_pool.dart';

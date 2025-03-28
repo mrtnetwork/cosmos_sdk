@@ -13,15 +13,15 @@ class GovQueryProposalsResponse extends CosmosMessage {
   /// pagination defines the pagination in the response.
   final PageResponse? pagination;
 
-  factory GovQueryProposalsResponse.fromRpc(Map<String, dynamic> json) {
+  factory GovQueryProposalsResponse.fromJson(Map<String, dynamic> json) {
     return GovQueryProposalsResponse(
       proposals: (json["proposals"] as List?)
-              ?.map((e) => GovProposal.fromRpc(e))
+              ?.map((e) => GovProposal.fromJson(e))
               .toList() ??
           [],
       pagination: json["pagination"] == null
           ? null
-          : PageResponse.fromRpc(json["pagination"]),
+          : PageResponse.fromJson(json["pagination"]),
     );
   }
   GovQueryProposalsResponse(
@@ -30,8 +30,10 @@ class GovQueryProposalsResponse extends CosmosMessage {
   factory GovQueryProposalsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GovQueryProposalsResponse(
-        proposals:
-            decode.getFields(1).map((e) => GovProposal.deserialize(e)).toList(),
+        proposals: decode
+            .getFields<List<int>>(1)
+            .map((e) => GovProposal.deserialize(e))
+            .toList(),
         pagination: decode
             .getResult(2)
             ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));

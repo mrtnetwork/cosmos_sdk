@@ -1,12 +1,14 @@
+import 'package:cosmos_sdk/src/models/ibc/core/service.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_channel_v1/messages/params.dart';
 
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// MsgUpdateParams is the MsgUpdateParams request type.
-class IbcChannelMsgUpdateParams extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class IbcChannelMsgUpdateParams
+    extends IbcService<EmptyServiceRequestResponse> {
   /// authority is the address that controls the module (defaults to x/gov unless overwritten).
   final String? authority;
 
@@ -22,12 +24,14 @@ class IbcChannelMsgUpdateParams extends CosmosMessage
       params: IbcChannelParams.deserialize(decode.getField(2)),
     );
   }
+  factory IbcChannelMsgUpdateParams.fromJson(Map<String, dynamic> json) {
+    return IbcChannelMsgUpdateParams(
+        authority: json.as("authority"),
+        params: IbcChannelParams.fromJson(json.asMap("params")));
+  }
 
   @override
   List<int> get fieldIds => [1, 2];
-
-  @override
-  TypeUrl get service => IbcTypes.updateChannelParams;
 
   @override
   Map<String, dynamic> toJson() {

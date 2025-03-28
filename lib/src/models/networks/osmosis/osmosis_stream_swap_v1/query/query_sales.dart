@@ -37,7 +37,7 @@ class OsmosisStreamSwapQuerySales extends CosmosMessage
   @override
   OsmosisStreamSwapQuerySalesResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisStreamSwapQuerySalesResponse.fromRpc(json);
+    return OsmosisStreamSwapQuerySalesResponse.fromJson(json);
   }
 
   @override

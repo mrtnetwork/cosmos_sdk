@@ -13,7 +13,7 @@ class OsmosisProtorevQueryGetProtoRevPoolResponse extends CosmosMessage {
     return OsmosisProtorevQueryGetProtoRevPoolResponse(
         poolId: decode.getField(1));
   }
-  factory OsmosisProtorevQueryGetProtoRevPoolResponse.fromRpc(
+  factory OsmosisProtorevQueryGetProtoRevPoolResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisProtorevQueryGetProtoRevPoolResponse(
         poolId: BigintUtils.tryParse(json["pool_id"]));

@@ -12,9 +12,9 @@ class OsmosisMintQueryParamsResponse extends CosmosMessage {
     return OsmosisMintQueryParamsResponse(
         OsmosisMintParams.deserialize(decode.getField(1)));
   }
-  factory OsmosisMintQueryParamsResponse.fromRpc(Map<String, dynamic> json) {
+  factory OsmosisMintQueryParamsResponse.fromJson(Map<String, dynamic> json) {
     return OsmosisMintQueryParamsResponse(
-        OsmosisMintParams.fromRpc(json["params"]));
+        OsmosisMintParams.fromJson(json["params"]));
   }
   @override
   List<int> get fieldIds => [1];

@@ -42,7 +42,7 @@ class QueryNFTBalanceRequest extends CosmosMessage
 
   @override
   QueryNFTBalanceResponse onJsonResponse(Map<String, dynamic> json) {
-    return QueryNFTBalanceResponse.fromRpc(json);
+    return QueryNFTBalanceResponse.fromJson(json);
   }
 
   @override

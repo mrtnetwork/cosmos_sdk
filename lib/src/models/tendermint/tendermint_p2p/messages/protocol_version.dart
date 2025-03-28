@@ -7,7 +7,7 @@ class ProtocolVersion extends CosmosMessage {
   final BigInt? block;
   final BigInt? app;
   const ProtocolVersion({this.p2p, this.block, this.app});
-  factory ProtocolVersion.fromRpc(Map<String, dynamic> json) {
+  factory ProtocolVersion.fromJson(Map<String, dynamic> json) {
     return ProtocolVersion(
       app: BigintUtils.tryParse(json["app"]),
       block: BigintUtils.tryParse(json["block"]),

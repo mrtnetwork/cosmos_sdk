@@ -18,7 +18,7 @@ class OsmosisConcentratedLiquidityLiquidityDepthWithRange
         lowerTick: decode.getField(2),
         upperTick: decode.getField(3));
   }
-  factory OsmosisConcentratedLiquidityLiquidityDepthWithRange.fromRpc(
+  factory OsmosisConcentratedLiquidityLiquidityDepthWithRange.fromJson(
       Map<String, dynamic> json) {
     return OsmosisConcentratedLiquidityLiquidityDepthWithRange(
         liquidityAmount: json["liquidity_amount"],

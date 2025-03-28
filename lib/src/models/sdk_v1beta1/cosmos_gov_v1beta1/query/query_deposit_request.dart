@@ -45,7 +45,7 @@ class GovQueryDepositRequest extends CosmosMessage
 
   @override
   GovQueryDepositResponse onJsonResponse(Map<String, dynamic> json) {
-    return GovQueryDepositResponse.fromRpc(json);
+    return GovQueryDepositResponse.fromJson(json);
   }
 
   @override

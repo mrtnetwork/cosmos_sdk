@@ -37,7 +37,7 @@ class OsmosisLockupAccountLockedDurationRequest extends CosmosMessage
   @override
   OsmosisLockupAccountLockedDurationResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisLockupAccountLockedDurationResponse.fromRpc(json);
+    return OsmosisLockupAccountLockedDurationResponse.fromJson(json);
   }
 
   @override

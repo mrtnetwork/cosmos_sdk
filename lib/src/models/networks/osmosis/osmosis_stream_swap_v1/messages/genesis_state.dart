@@ -23,11 +23,11 @@ class OsmosisStreamSwapGenesisState extends CosmosMessage {
     return OsmosisStreamSwapGenesisState(
       nextSaleId: decode.getField(3),
       sales: decode
-          .getFields(1)
+          .getFields<List<int>>(1)
           .map((e) => OsmosisStreamSwapSale.deserialize(e))
           .toList(),
       userPositions: decode
-          .getFields(2)
+          .getFields<List<int>>(2)
           .map((e) => OsmosisStreamSwapUserPositionKV.deserialize(e))
           .toList(),
       params: OsmosisStreamSwapParams.deserialize(decode.getField(4)),

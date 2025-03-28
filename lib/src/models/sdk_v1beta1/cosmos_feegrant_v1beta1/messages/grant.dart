@@ -15,7 +15,7 @@ class FeeGrant extends CosmosMessage {
   /// allowance can be any of basic, periodic, allowed fee allowance.
   final AnyMessage? allowance;
 
-  factory FeeGrant.fromRpc(Map<String, dynamic> json) {
+  factory FeeGrant.fromJson(Map<String, dynamic> json) {
     return FeeGrant(
         granter:
             json["granter"] == null ? null : CosmosBaseAddress(json["granter"]),
@@ -23,7 +23,7 @@ class FeeGrant extends CosmosMessage {
             json["grantee"] == null ? null : CosmosBaseAddress(json["grantee"]),
         allowance: json["allowance"] == null
             ? null
-            : AnyMessage.fromRpc(json["allowance"]));
+            : AnyMessage.fromJson(json["allowance"]));
   }
   const FeeGrant({this.granter, this.grantee, this.allowance});
   factory FeeGrant.deserialize(List<int> bytes) {

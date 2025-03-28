@@ -1,11 +1,13 @@
 import 'package:cosmos_sdk/src/address/address.dart';
+import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_upgrade_v1beta1/core/service.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_upgrade_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// MsgCancelUpgrade is the Msg/CancelUpgrade request type.
-class MsgCancelUpgrade extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class MsgCancelUpgrade
+    extends UpgradeV1Beta1Service<EmptyServiceRequestResponse> {
   /// authority is the address that controls the module (defaults to x/gov unless overwritten).
   final CosmosBaseAddress? authority;
 
@@ -18,6 +20,10 @@ class MsgCancelUpgrade extends CosmosMessage
             ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)));
   }
 
+  factory MsgCancelUpgrade.fromJson(Map<String, dynamic> json) {
+    return MsgCancelUpgrade(authority: json.asAddress("authority"));
+  }
+
   /// Converts the message to a JSON-serializable map.
   @override
   Map<String, dynamic> toJson() {
@@ -26,9 +32,6 @@ class MsgCancelUpgrade extends CosmosMessage
 
   @override
   List<int> get fieldIds => [1];
-
-  @override
-  TypeUrl get service => UpgradeV1beta1Types.cancelUpgrade;
 
   @override
   TypeUrl get typeUrl => UpgradeV1beta1Types.msgCancelUpgrade;

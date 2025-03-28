@@ -14,7 +14,7 @@ class TxEncodeAminoResponse extends CosmosMessage {
     return TxEncodeAminoResponse(aminoBinary: decode.getField(1));
   }
 
-  factory TxEncodeAminoResponse.fromRpc(Map<String, dynamic> json) {
+  factory TxEncodeAminoResponse.fromJson(Map<String, dynamic> json) {
     return TxEncodeAminoResponse(
         aminoBinary: CosmosUtils.toBytes(json["amino_binary"]));
   }

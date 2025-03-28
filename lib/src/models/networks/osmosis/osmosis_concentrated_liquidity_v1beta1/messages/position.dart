@@ -30,7 +30,7 @@ class OsmosisConcentratedLiquidityPosition extends CosmosMessage {
         joinTime: ProtobufTimestamp.deserialize(decode.getField(6)),
         liquidity: decode.getField(7));
   }
-  factory OsmosisConcentratedLiquidityPosition.fromRpc(
+  factory OsmosisConcentratedLiquidityPosition.fromJson(
       Map<String, dynamic> json) {
     return OsmosisConcentratedLiquidityPosition(
         positionId: BigintUtils.tryParse(json["position_id"]),

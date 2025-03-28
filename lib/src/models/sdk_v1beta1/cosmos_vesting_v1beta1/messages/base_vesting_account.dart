@@ -38,12 +38,18 @@ class BaseVestingAccount extends CosmosMessage {
         baseAccount: decode
             .getResult(1)
             ?.to<BaseAccount, List<int>>((e) => BaseAccount.deserialize(e)),
-        originalVesting:
-            decode.getFields(2).map((e) => Coin.deserialize(e)).toList(),
-        delegatedFree:
-            decode.getFields(3).map((e) => Coin.deserialize(e)).toList(),
-        delegatedVesting:
-            decode.getFields(4).map((e) => Coin.deserialize(e)).toList(),
+        originalVesting: decode
+            .getFields<List<int>>(2)
+            .map((e) => Coin.deserialize(e))
+            .toList(),
+        delegatedFree: decode
+            .getFields<List<int>>(3)
+            .map((e) => Coin.deserialize(e))
+            .toList(),
+        delegatedVesting: decode
+            .getFields<List<int>>(4)
+            .map((e) => Coin.deserialize(e))
+            .toList(),
         endTime: decode.getField(5));
   }
 

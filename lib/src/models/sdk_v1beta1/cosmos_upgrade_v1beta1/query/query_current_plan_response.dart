@@ -7,8 +7,8 @@ class QueryCurrentPlanResponse extends CosmosMessage {
   /// plan is the current upgrade plan.
   final Plan? plan;
   const QueryCurrentPlanResponse({this.plan});
-  factory QueryCurrentPlanResponse.fromRpc(Map<String, dynamic> json) {
-    return QueryCurrentPlanResponse(plan: Plan.fromRpc(json["plan"]));
+  factory QueryCurrentPlanResponse.fromJson(Map<String, dynamic> json) {
+    return QueryCurrentPlanResponse(plan: Plan.fromJson(json["plan"]));
   }
   factory QueryCurrentPlanResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

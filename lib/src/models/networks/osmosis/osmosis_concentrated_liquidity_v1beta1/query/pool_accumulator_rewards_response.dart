@@ -19,24 +19,26 @@ class OsmosisConcentratedLiquidityPoolAccumulatorRewardsResponse
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityPoolAccumulatorRewardsResponse(
-        spreadRewardGrowthGlobal:
-            decode.getFields(1).map((e) => DecCoin.deserialize(e)).toList(),
+        spreadRewardGrowthGlobal: decode
+            .getFields<List<int>>(1)
+            .map((e) => DecCoin.deserialize(e))
+            .toList(),
         uptimeGrowthGlobal: decode
-            .getFields(2)
+            .getFields<List<int>>(2)
             .map(
                 (e) => OsmosisConcentratedLiquidityUptimeTracker.deserialize(e))
             .toList());
   }
-  factory OsmosisConcentratedLiquidityPoolAccumulatorRewardsResponse.fromRpc(
+  factory OsmosisConcentratedLiquidityPoolAccumulatorRewardsResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisConcentratedLiquidityPoolAccumulatorRewardsResponse(
         spreadRewardGrowthGlobal: (json["spread_reward_growth_global"] as List?)
-                ?.map((e) => DecCoin.fromRpc(e))
+                ?.map((e) => DecCoin.fromJson(e))
                 .toList() ??
             <DecCoin>[],
         uptimeGrowthGlobal: (json["uptime_growth_global"] as List?)
-                ?.map(
-                    (e) => OsmosisConcentratedLiquidityUptimeTracker.fromRpc(e))
+                ?.map((e) =>
+                    OsmosisConcentratedLiquidityUptimeTracker.fromJson(e))
                 .toList() ??
             <OsmosisConcentratedLiquidityUptimeTracker>[]);
   }

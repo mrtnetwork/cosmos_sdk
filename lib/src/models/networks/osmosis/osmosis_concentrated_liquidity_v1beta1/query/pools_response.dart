@@ -18,21 +18,23 @@ class OsmosisConcentratedLiquidityPoolsResponse extends CosmosMessage {
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityPoolsResponse(
-        pools:
-            decode.getFields(1).map((e) => AnyMessage.deserialize(e)).toList(),
+        pools: decode
+            .getFields<List<int>>(1)
+            .map((e) => AnyMessage.deserialize(e))
+            .toList(),
         pagination: decode
             .getResult(2)
             ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
   }
-  factory OsmosisConcentratedLiquidityPoolsResponse.fromRpc(
+  factory OsmosisConcentratedLiquidityPoolsResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisConcentratedLiquidityPoolsResponse(
         pools: (json["pools"] as List?)
-            ?.map((e) => AnyMessage.fromRpc(e))
+            ?.map((e) => AnyMessage.fromJson(e))
             .toList(),
         pagination: json["pagination"] == null
             ? null
-            : PageResponse.fromRpc(json["pagination"]));
+            : PageResponse.fromJson(json["pagination"]));
   }
 
   @override

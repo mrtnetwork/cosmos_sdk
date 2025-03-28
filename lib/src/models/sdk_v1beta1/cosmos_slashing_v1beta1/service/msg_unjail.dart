@@ -1,23 +1,26 @@
 import 'package:cosmos_sdk/src/address/address.dart';
+import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_slashing_v1beta1/core/service.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_slashing_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// MsgUnjail defines the Msg/Unjail request type
-class SlashingMsgUnjail extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class SlashingMsgUnjail
+    extends SlashingV1Beta1Service<EmptyServiceRequestResponse>
+    with AminoMessage<EmptyServiceRequestResponse> {
   final CosmosBaseAddress validatorAddr;
   const SlashingMsgUnjail(this.validatorAddr);
   factory SlashingMsgUnjail.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return SlashingMsgUnjail(CosmosBaseAddress(decode.getField(1)));
   }
+  factory SlashingMsgUnjail.fromJson(Map<String, dynamic> json) {
+    return SlashingMsgUnjail(json.asAddress("validator_addr"));
+  }
 
   @override
   List<int> get fieldIds => [1];
-
-  @override
-  TypeUrl get service => SlashingV1beta1Types.slashingUnjail;
 
   @override
   Map<String, dynamic> toJson() {

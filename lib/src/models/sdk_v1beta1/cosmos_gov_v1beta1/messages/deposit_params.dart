@@ -12,10 +12,10 @@ class GovDepositParams extends CosmosMessage {
   /// Maximum period for Atom holders to deposit on a proposal. Initial value: 2
   /// months.
   final ProtobufDuration maxDepositPeriod;
-  factory GovDepositParams.fromRpc(Map<String, dynamic> json) {
+  factory GovDepositParams.fromJson(Map<String, dynamic> json) {
     return GovDepositParams(
       minDeposit: (json["min_deposit"] as List?)
-              ?.map((e) => Coin.fromRpc(e))
+              ?.map((e) => Coin.fromJson(e))
               .toList() ??
           [],
       maxDepositPeriod: ProtobufDuration.fromString(json["max_deposit_period"]),
@@ -27,8 +27,10 @@ class GovDepositParams extends CosmosMessage {
   factory GovDepositParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GovDepositParams(
-        minDeposit:
-            decode.getFields(1).map((e) => Coin.deserialize(e)).toList(),
+        minDeposit: decode
+            .getFields<List<int>>(1)
+            .map((e) => Coin.deserialize(e))
+            .toList(),
         maxDepositPeriod: ProtobufDuration.deserialize(decode.getField(2)));
   }
 

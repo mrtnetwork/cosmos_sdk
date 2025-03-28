@@ -1,11 +1,15 @@
+import 'package:blockchain_utils/helper/helper.dart';
 import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 
 class BankV1beta1Types extends TypeUrl {
-  const BankV1beta1Types._(super.typeUrl, {super.query, super.rpc});
+  const BankV1beta1Types._(super.typeUrl,
+      {super.query, super.rpc, super.aminoType});
+  static const String root = "/cosmos.bank.v1beta1";
 
   /// messages
-  static const BankV1beta1Types msgSend =
-      BankV1beta1Types._("/cosmos.bank.v1beta1.MsgSend");
+  static const BankV1beta1Types msgSend = BankV1beta1Types._(
+      "/cosmos.bank.v1beta1.MsgSend",
+      aminoType: "cosmos-sdk/MsgSend");
   static const BankV1beta1Types msgSendResponse =
       BankV1beta1Types._("/cosmos.bank.v1beta1.MsgSendResponse");
   static const BankV1beta1Types balanceRequest = BankV1beta1Types._(
@@ -104,10 +108,12 @@ class BankV1beta1Types extends TypeUrl {
       BankV1beta1Types._("/cosmos.bank.v1beta1.MsgBurn");
   static const BankV1beta1Types msgBurnResponse =
       BankV1beta1Types._("/cosmos.bank.v1beta1.MsgBurnResponse");
-  static const BankV1beta1Types msgMultiSend =
-      BankV1beta1Types._("/cosmos.bank.v1beta1.MsgMultiSend");
-  static const BankV1beta1Types msgMultiSendResponse =
-      BankV1beta1Types._("/cosmos.bank.v1beta1.MsgMultiSendResponse");
+  static const BankV1beta1Types msgMultiSend = BankV1beta1Types._(
+      "/cosmos.bank.v1beta1.MsgMultiSend",
+      aminoType: "cosmos-sdk/MsgMultiSend");
+  static const BankV1beta1Types msgMultiSendResponse = BankV1beta1Types._(
+    "/cosmos.bank.v1beta1.MsgMultiSendResponse",
+  );
   static const BankV1beta1Types msgSetSendEnabled =
       BankV1beta1Types._("/cosmos.bank.v1beta1.MsgSetSendEnabled");
   static const BankV1beta1Types msgSetSendEnabledResponse =
@@ -117,15 +123,14 @@ class BankV1beta1Types extends TypeUrl {
   static const BankV1beta1Types bankMsgUpdateParamsResponse =
       BankV1beta1Types._("/cosmos.bank.v1beta1.MsgUpdateParams");
 
-  /// services
-  static const BankV1beta1Types send =
-      BankV1beta1Types._("/cosmos.bank.v1beta1.Msg/Send");
-  static const BankV1beta1Types multiSend =
-      BankV1beta1Types._("/cosmos.bank.v1beta1.Msg/MultiSend");
-  static const BankV1beta1Types burn =
-      BankV1beta1Types._("/cosmos.bank.v1beta1.Msg/Burn");
-  static const BankV1beta1Types bankUpdateParams =
-      BankV1beta1Types._("/cosmos.bank.v1beta1.Msg/UpdateParams");
-  static const BankV1beta1Types setSendEnabled =
-      BankV1beta1Types._("/cosmos.bank.v1beta1.Msg/SetSendEnabled");
+  static const List<TypeUrl> services = [
+    msgBurn,
+    msgMultiSend,
+    msgSend,
+    msgSetSendEnabled,
+    msgUpdateParams
+  ];
+  static TypeUrl? findService(String? typeUrl) {
+    return services.firstWhereNullable((e) => e.typeUrl == typeUrl);
+  }
 }

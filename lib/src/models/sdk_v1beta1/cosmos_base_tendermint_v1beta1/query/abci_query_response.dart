@@ -26,7 +26,7 @@ class ABCIQueryResponse extends CosmosMessage {
       value: CosmosUtils.tryToBytes(json["value"]),
       proofOps: json["proof_ops"] == null
           ? null
-          : CosmosProofOps.fromRpc(json["proof_ops"]),
+          : CosmosProofOps.fromJson(json["proof_ops"]),
       codespace: json["codespace"],
       height: BigintUtils.tryParse(json["height"]),
     );

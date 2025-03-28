@@ -37,7 +37,7 @@ class QueryModuleVersionsRequest extends CosmosMessage
 
   @override
   QueryModuleVersionsResponse onJsonResponse(Map<String, dynamic> json) {
-    return QueryModuleVersionsResponse.fromRpc(json);
+    return QueryModuleVersionsResponse.fromJson(json);
   }
 
   @override

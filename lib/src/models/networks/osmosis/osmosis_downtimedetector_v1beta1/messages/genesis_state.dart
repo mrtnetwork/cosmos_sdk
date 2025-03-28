@@ -15,7 +15,7 @@ class OsmosisDowntimeDetectorGenesisState extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisDowntimeDetectorGenesisState(
         downtimes: decode
-            .getFields(1)
+            .getFields<List<int>>(1)
             .map((e) =>
                 OsmosisDowntimeDetectorGenesisDowntimeEntry.deserialize(e))
             .toList(),

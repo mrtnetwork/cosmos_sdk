@@ -30,7 +30,7 @@ class OsmosisDowntimeDetectorRecoveredSinceDowntimeOfLengthRequest
   OsmosisDowntimeDetectorRecoveredSinceDowntimeOfLengthResponse onJsonResponse(
       Map<String, dynamic> json) {
     return OsmosisDowntimeDetectorRecoveredSinceDowntimeOfLengthResponse
-        .fromRpc(json);
+        .fromJson(json);
   }
 
   @override

@@ -14,10 +14,10 @@ class QueryNFTClassResponse extends CosmosMessage {
             .getResult(1)
             ?.to<NFTClass, List<int>>((e) => NFTClass.deserialize(e)));
   }
-  factory QueryNFTClassResponse.fromRpc(Map<String, dynamic> json) {
+  factory QueryNFTClassResponse.fromJson(Map<String, dynamic> json) {
     return QueryNFTClassResponse(
         nftClass:
-            json["class"] == null ? null : NFTClass.fromRpc(json["class"]));
+            json["class"] == null ? null : NFTClass.fromJson(json["class"]));
   }
 
   @override

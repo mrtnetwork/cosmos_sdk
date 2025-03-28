@@ -11,7 +11,7 @@ class SlashingParams extends CosmosMessage {
   final List<int> slashFractionDoubleSign;
   final List<int> slashFractionDowntime;
 
-  factory SlashingParams.fromRpc(Map<String, dynamic> json) {
+  factory SlashingParams.fromJson(Map<String, dynamic> json) {
     return SlashingParams(
       minSignedPerWindow: CosmosUtils.toBytes(json["min_signed_per_window"]),
       signedBlocksWindow: BigintUtils.tryParse(json["signed_blocks_window"]),

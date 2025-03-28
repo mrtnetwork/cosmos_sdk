@@ -29,6 +29,6 @@ class QueryChannelParamsRequest extends CosmosMessage
 
   @override
   QueryChannelParamsResponse onJsonResponse(Map<String, dynamic> json) {
-    return QueryChannelParamsResponse.fromRpc(json);
+    return QueryChannelParamsResponse.fromJson(json);
   }
 }

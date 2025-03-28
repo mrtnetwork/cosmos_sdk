@@ -19,10 +19,10 @@ class DelegationResponse extends CosmosMessage {
         delegation: Delegation.deserialize(decode.getField(1)),
         balance: Coin.deserialize(decode.getField(2)));
   }
-  factory DelegationResponse.fromRpc(Map<String, dynamic> json) {
+  factory DelegationResponse.fromJson(Map<String, dynamic> json) {
     return DelegationResponse(
-        delegation: Delegation.fromRpc(json["delegation"]),
-        balance: Coin.fromRpc(json["balance"]));
+        delegation: Delegation.fromJson(json["delegation"]),
+        balance: Coin.fromJson(json["balance"]));
   }
 
   @override

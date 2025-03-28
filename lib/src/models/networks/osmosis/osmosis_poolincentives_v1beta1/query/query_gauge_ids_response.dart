@@ -14,15 +14,15 @@ class OsmosisPoolincentivesQueryGaugeIdsResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolincentivesQueryGaugeIdsResponse(
         gaugeIdsWithDuration: decode
-            .getFields(1)
+            .getFields<List<int>>(1)
             .map((e) => OsmosisPoolincentivesGaugeIdWithDuration.deserialize(e))
             .toList());
   }
-  factory OsmosisPoolincentivesQueryGaugeIdsResponse.fromRpc(
+  factory OsmosisPoolincentivesQueryGaugeIdsResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisPoolincentivesQueryGaugeIdsResponse(
         gaugeIdsWithDuration: (json["gauge_ids_with_duration"] as List?)
-            ?.map((e) => OsmosisPoolincentivesGaugeIdWithDuration.fromRpc(e))
+            ?.map((e) => OsmosisPoolincentivesGaugeIdWithDuration.fromJson(e))
             .toList());
   }
 

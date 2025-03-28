@@ -12,14 +12,14 @@ class OsmosisConcentratedLiquidityUptimeTrackers extends CosmosMessage {
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityUptimeTrackers(decode
-        .getFields(1)
+        .getFields<List<int>>(1)
         .map((e) => OsmosisConcentratedLiquidityUptimeTracker.deserialize(e))
         .toList());
   }
-  factory OsmosisConcentratedLiquidityUptimeTrackers.fromRpc(
+  factory OsmosisConcentratedLiquidityUptimeTrackers.fromJson(
       Map<String, dynamic> json) {
     return OsmosisConcentratedLiquidityUptimeTrackers((json["list"] as List?)
-            ?.map((e) => OsmosisConcentratedLiquidityUptimeTracker.fromRpc(e))
+            ?.map((e) => OsmosisConcentratedLiquidityUptimeTracker.fromJson(e))
             .toList() ??
         <OsmosisConcentratedLiquidityUptimeTracker>[]);
   }

@@ -11,16 +11,16 @@ class QueryIncentivizedPacketsForChannelResponse extends CosmosMessage {
 
   /// pagination defines the pagination in the response.
   final PageResponse? pagination;
-  factory QueryIncentivizedPacketsForChannelResponse.fromRpc(
+  factory QueryIncentivizedPacketsForChannelResponse.fromJson(
       Map<String, dynamic> json) {
     return QueryIncentivizedPacketsForChannelResponse(
       incentivizedPackets: (json["incentivized_packets"] as List?)
-              ?.map((e) => IbcFeeIdentifiedPacketFees.fromRpc(e))
+              ?.map((e) => IbcFeeIdentifiedPacketFees.fromJson(e))
               .toList() ??
           [],
       pagination: json["pagination"] == null
           ? null
-          : PageResponse.fromRpc(json["pagination"]),
+          : PageResponse.fromJson(json["pagination"]),
     );
   }
   QueryIncentivizedPacketsForChannelResponse(
@@ -33,7 +33,7 @@ class QueryIncentivizedPacketsForChannelResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryIncentivizedPacketsForChannelResponse(
         incentivizedPackets: decode
-            .getFields(1)
+            .getFields<List<int>>(1)
             .map((e) => IbcFeeIdentifiedPacketFees.deserialize(e))
             .toList(),
         pagination: decode

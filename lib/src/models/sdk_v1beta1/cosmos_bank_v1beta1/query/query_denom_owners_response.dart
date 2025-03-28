@@ -13,21 +13,23 @@ class QueryDenomOwnersResponse extends CosmosMessage {
   final PageResponse? pagination;
 
   const QueryDenomOwnersResponse({required this.denomOwners, this.pagination});
-  factory QueryDenomOwnersResponse.fromRpc(Map<String, dynamic> json) {
+  factory QueryDenomOwnersResponse.fromJson(Map<String, dynamic> json) {
     return QueryDenomOwnersResponse(
         denomOwners: (json["denom_owners"] as List)
-            .map((e) => DenomOwner.fromRpc(e))
+            .map((e) => DenomOwner.fromJson(e))
             .toList(),
         pagination: json["pagination"] == null
             ? null
-            : PageResponse.fromRpc(json["pagination"]));
+            : PageResponse.fromJson(json["pagination"]));
   }
 
   factory QueryDenomOwnersResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryDenomOwnersResponse(
-        denomOwners:
-            decode.getFields(1).map((e) => DenomOwner.deserialize(e)).toList(),
+        denomOwners: decode
+            .getFields<List<int>>(1)
+            .map((e) => DenomOwner.deserialize(e))
+            .toList(),
         pagination: decode
             .getResult(2)
             ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));

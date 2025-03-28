@@ -17,7 +17,7 @@ class Redelegation extends CosmosMessage {
 
   /// entries are the redelegation entries.
   final List<RedelegationEntry> entries;
-  factory Redelegation.fromRpc(Map<String, dynamic> json) {
+  factory Redelegation.fromJson(Map<String, dynamic> json) {
     return Redelegation(
         delegatorAddress: json["delegator_address"] == null
             ? null
@@ -29,7 +29,7 @@ class Redelegation extends CosmosMessage {
             ? null
             : CosmosBaseAddress("validator_src_address"),
         entries: (json["entries"] as List?)
-                ?.map((e) => RedelegationEntry.fromRpc(e))
+                ?.map((e) => RedelegationEntry.fromJson(e))
                 .toList() ??
             []);
   }

@@ -13,8 +13,10 @@ class OsmosisGammMsgJoinPoolResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisGammMsgJoinPoolResponse(
         shareOutAmount: decode.getField(1),
-        tokenInMaxs:
-            decode.getFields(2).map((e) => Coin.deserialize(e)).toList());
+        tokenInMaxs: decode
+            .getFields<List<int>>(2)
+            .map((e) => Coin.deserialize(e))
+            .toList());
   }
 
   @override

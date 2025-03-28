@@ -1,25 +1,30 @@
 import 'package:cosmos_sdk/src/exception/exception.dart';
-import 'package:cosmos_sdk/src/models/ethermint/types_v1/messages/eth_account.dart';
-import 'package:cosmos_sdk/src/models/ethermint/types_v1/types/types.dart';
+import 'package:cosmos_sdk/src/models/evmos/ethermint/types_v1/types_v1.dart';
+import 'package:cosmos_sdk/src/models/injective/message/eth_account.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_auth_v1beta1/messages/base_account.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_auth_v1beta1/messages/module_account.dart';
-import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_auth_v1beta1/types/types.dart';
+import 'package:cosmos_sdk/src/models/stride/message/priod_vesting_account.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
 abstract class CosmosBaseAccount extends CosmosMessage {
   const CosmosBaseAccount();
   static T fromAny<T extends CosmosBaseAccount>(Any account) {
     final CosmosBaseAccount acc;
-    final TypeUrl type = TypeUrl.fromValue(account.typeUrl);
-    switch (type) {
-      case AuthV1beta1Types.baseAccount:
+    switch (account.typeUrl) {
+      case "/cosmos.auth.v1beta1.BaseAccount":
         acc = BaseAccount.deserialize(account.value);
         break;
-      case AuthV1beta1Types.moduleAccount:
+      case "/cosmos.auth.v1beta1.ModuleAccount":
         acc = ModuleAccount.deserialize(account.value);
         break;
-      case EthermintTypesV1Types.ethAccount:
-        acc = EthermintTypesV1EthAccount.deserialize(account.value);
+      case "/ethermint.types.v1.EthAccount":
+        acc = EvmosEthermintTypesV1EthAccount.deserialize(account.value);
+        break;
+      case "/stride.vesting.StridePeriodicVestingAccount":
+        acc = StridePeriodicVestingAccount.deserialize(account.value);
+        break;
+      case "/injective.types.v1beta1.EthAccount":
+        acc = InjectiveTypesV1beta1EthAccount.deserialize(account.value);
         break;
       default:
         throw const DartCosmosSdkPluginException("Unsupported account type");
@@ -31,19 +36,26 @@ abstract class CosmosBaseAccount extends CosmosMessage {
     return acc;
   }
 
-  static T fromRpc<T extends CosmosBaseAccount>(Map<String, dynamic> json) {
+  static T fromJson<T extends CosmosBaseAccount>(Map<String, dynamic> json) {
     final CosmosBaseAccount acc;
-    final type = TypeUrl.fromValue(json["@type"]);
+    final type = json["@type"];
     switch (type) {
-      case AuthV1beta1Types.baseAccount:
-        acc = BaseAccount.fromRpc(json);
+      case "/cosmos.auth.v1beta1.BaseAccount":
+        acc = BaseAccount.fromJson(json);
         break;
-      case AuthV1beta1Types.moduleAccount:
-        acc = ModuleAccount.fromRpc(json);
+      case "/cosmos.auth.v1beta1.ModuleAccount":
+        acc = ModuleAccount.fromJson(json);
         break;
-      case EthermintTypesV1Types.ethAccount:
-        acc = EthermintTypesV1EthAccount.fromRpc(json);
+      case "/ethermint.types.v1.EthAccount":
+        acc = EvmosEthermintTypesV1EthAccount.fromJson(json);
         break;
+      case "/stride.vesting.StridePeriodicVestingAccount":
+        acc = StridePeriodicVestingAccount.fromJson(json);
+        break;
+      case "/injective.types.v1beta1.EthAccount":
+        acc = InjectiveTypesV1beta1EthAccount.fromJson(json);
+        break;
+
       default:
         throw DartCosmosSdkPluginException("Unsupported account type",
             details: {"type": type});

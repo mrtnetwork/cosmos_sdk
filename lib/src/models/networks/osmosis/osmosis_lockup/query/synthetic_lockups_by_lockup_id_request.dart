@@ -33,7 +33,7 @@ class OsmosisLockupSyntheticLockupsByLockupIDRequest extends CosmosMessage
 
   @override
   OsmosisLockupLockedResponse onJsonResponse(Map<String, dynamic> json) {
-    return OsmosisLockupLockedResponse.fromRpc(json);
+    return OsmosisLockupLockedResponse.fromJson(json);
   }
 
   @override

@@ -1,8 +1,10 @@
+import 'package:blockchain_utils/helper/helper.dart';
 import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 
 class OsmosisConcentratedLiquidityV1beta1Types extends TypeUrl {
   const OsmosisConcentratedLiquidityV1beta1Types._(super.typeUrl,
       {super.query, super.rpc});
+  static const String root = "/osmosis.concentratedliquidity.v1beta1";
   static const OsmosisConcentratedLiquidityV1beta1Types uptimeTrackers =
       OsmosisConcentratedLiquidityV1beta1Types._(
           "/osmosis.concentratedliquidity.v1beta1.UptimeTrackers");
@@ -283,25 +285,15 @@ class OsmosisConcentratedLiquidityV1beta1Types extends TypeUrl {
 
   /// query
 
-  /// services
-  static const OsmosisConcentratedLiquidityV1beta1Types transferPositions =
-      OsmosisConcentratedLiquidityV1beta1Types._(
-          "/osmosis.concentratedliquidity.v1beta1.Msg/TransferPositions");
-  static const OsmosisConcentratedLiquidityV1beta1Types collectIncentives =
-      OsmosisConcentratedLiquidityV1beta1Types._(
-          "/osmosis.concentratedliquidity.v1beta1.Msg/CollectIncentives");
-
-  static const OsmosisConcentratedLiquidityV1beta1Types collectSpreadRewards =
-      OsmosisConcentratedLiquidityV1beta1Types._(
-          "/osmosis.concentratedliquidity.v1beta1.Msg/CollectSpreadRewards");
-
-  static const OsmosisConcentratedLiquidityV1beta1Types addToPosition =
-      OsmosisConcentratedLiquidityV1beta1Types._(
-          "/osmosis.concentratedliquidity.v1beta1.Msg/AddToPosition");
-  static const OsmosisConcentratedLiquidityV1beta1Types withdrawPosition =
-      OsmosisConcentratedLiquidityV1beta1Types._(
-          "/osmosis.concentratedliquidity.v1beta1.Msg/WithdrawPosition");
-  static const OsmosisConcentratedLiquidityV1beta1Types createPosition =
-      OsmosisConcentratedLiquidityV1beta1Types._(
-          "/osmosis.concentratedliquidity.v1beta1.Msg/CreatePosition");
+  static const List<TypeUrl> services = [
+    msgAddToPosition,
+    msgCollectIncentives,
+    msgCollectSpreadRewards,
+    msgCreatePosition,
+    msgTransferPositions,
+    msgWithdrawPosition
+  ];
+  static TypeUrl? findService(String? typeUrl) {
+    return services.firstWhereNullable((e) => e.typeUrl == typeUrl);
+  }
 }

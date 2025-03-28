@@ -1,7 +1,9 @@
+import 'package:blockchain_utils/helper/extensions/extensions.dart';
 import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 
 class OsmosisGammV1beta1Types extends TypeUrl {
   const OsmosisGammV1beta1Types._(super.typeUrl, {super.query, super.rpc});
+  static const String root = "/osmosis.gamm.v1beta1";
   static const OsmosisGammV1beta1Types poolAsset =
       OsmosisGammV1beta1Types._("/osmosis.gamm.v1beta1.PoolAsset");
   static const OsmosisGammV1beta1Types pool =
@@ -153,28 +155,17 @@ class OsmosisGammV1beta1Types extends TypeUrl {
       OsmosisGammV1beta1Types._(
           "/osmosis.gamm.v1beta1.QuerySwapExactAmountOutResponse");
 
-  /// services
-  static const OsmosisGammV1beta1Types joinPool =
-      OsmosisGammV1beta1Types._("/osmosis.gamm.v1beta1.Msg/JoinPool");
-
-  static const OsmosisGammV1beta1Types exitPool =
-      OsmosisGammV1beta1Types._("/osmosis.gamm.v1beta1.Msg/ExitPool");
-  static const OsmosisGammV1beta1Types swapExactAmountIn =
-      OsmosisGammV1beta1Types._("/osmosis.gamm.v1beta1.Msg/SwapExactAmountIn");
-  static const OsmosisGammV1beta1Types swapExactAmountOut =
-      OsmosisGammV1beta1Types._("/osmosis.gamm.v1beta1.Msg/SwapExactAmountOut");
-
-  static const OsmosisGammV1beta1Types joinSwapExternAmountIn =
-      OsmosisGammV1beta1Types._(
-          "/osmosis.gamm.v1beta1.Msg/JoinSwapExternAmountIn");
-
-  static const OsmosisGammV1beta1Types joinSwapShareAmountOut =
-      OsmosisGammV1beta1Types._(
-          "/osmosis.gamm.v1beta1.Msg/JoinSwapShareAmountOut");
-  static const OsmosisGammV1beta1Types exitSwapExternAmountOut =
-      OsmosisGammV1beta1Types._(
-          "/osmosis.gamm.v1beta1.Msg/ExitSwapExternAmountOut");
-  static const OsmosisGammV1beta1Types exitSwapShareAmountIn =
-      OsmosisGammV1beta1Types._(
-          "/osmosis.gamm.v1beta1.Msg/ExitSwapShareAmountIn");
+  static const List<TypeUrl> services = [
+    msgExitPool,
+    msgExitSwapExternAmountOut,
+    msgExitSwapShareAmountIn,
+    msgJoinPool,
+    msgJoinSwapExternAmountIn,
+    msgJoinSwapShareAmountOut,
+    msgSwapExactAmountOut,
+    msgSwapExactAmountIn
+  ];
+  static TypeUrl? findService(String? typeUrl) {
+    return services.firstWhereNullable((e) => e.typeUrl == typeUrl);
+  }
 }

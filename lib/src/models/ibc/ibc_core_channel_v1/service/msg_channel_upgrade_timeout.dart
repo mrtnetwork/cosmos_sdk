@@ -1,14 +1,15 @@
 import 'package:blockchain_utils/blockchain_utils.dart';
+import 'package:cosmos_sdk/src/models/ibc/core/service.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_channel_v1/messages/channel.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_client_v1/messages/height.dart';
 
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// MsgChannelUpgradeTimeout defines the request type for the ChannelUpgradeTimeout rpc
-class MsgChannelUpgradeTimeout extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class MsgChannelUpgradeTimeout extends IbcService<EmptyServiceRequestResponse> {
   final String? portId;
   final String? channelId;
   final IbcChannelChannel counterpartyChannel;
@@ -33,12 +34,19 @@ class MsgChannelUpgradeTimeout extends CosmosMessage
         proofHeight: IbcClientHeight.deserialize(decode.getField(5)),
         signer: decode.getField(6));
   }
+  factory MsgChannelUpgradeTimeout.fromJson(Map<String, dynamic> json) {
+    return MsgChannelUpgradeTimeout(
+        portId: json.as("port_id"),
+        channelId: json.as("channel_id"),
+        counterpartyChannel:
+            IbcChannelChannel.fromJson(json.asMap("counterparty_channel")),
+        proofChannel: json.asBytes("proof_channel"),
+        proofHeight: IbcClientHeight.fromJson(json.asMap("proof_height")),
+        signer: json.as("signer"));
+  }
 
   @override
   List<int> get fieldIds => [1, 2, 3, 4, 5, 6];
-
-  @override
-  TypeUrl get service => IbcTypes.channelUpgradeTimeout;
 
   @override
   Map<String, dynamic> toJson() {

@@ -1,7 +1,9 @@
+import 'package:blockchain_utils/helper/helper.dart';
 import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 
 class UpgradeV1beta1Types extends TypeUrl {
   const UpgradeV1beta1Types._(super.typeUrl, {super.query, super.rpc});
+  static const String root = "/cosmos.upgrade.v1beta1";
   static const UpgradeV1beta1Types plan =
       UpgradeV1beta1Types._("/cosmos.upgrade.v1beta1.Plan");
   static const UpgradeV1beta1Types msgSoftwareUpgrade =
@@ -42,9 +44,8 @@ class UpgradeV1beta1Types extends TypeUrl {
   static const UpgradeV1beta1Types queryAuthorityResponse =
       UpgradeV1beta1Types._("/cosmos.upgrade.v1beta1.QueryAuthorityResponse");
 
-  /// services
-  static const UpgradeV1beta1Types softwareUpgrade =
-      UpgradeV1beta1Types._("/cosmos.upgrade.v1beta1.Msg/SoftwareUpgrade");
-  static const UpgradeV1beta1Types cancelUpgrade =
-      UpgradeV1beta1Types._("/cosmos.upgrade.v1beta1.Msg/CancelUpgrade");
+  static const List<TypeUrl> services = [msgCancelUpgrade, msgSoftwareUpgrade];
+  static TypeUrl? findService(String? typeUrl) {
+    return services.firstWhereNullable((e) => e.typeUrl == typeUrl);
+  }
 }

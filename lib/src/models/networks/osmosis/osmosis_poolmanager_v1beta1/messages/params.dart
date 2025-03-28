@@ -30,20 +30,22 @@ class OsmosisPoolManagerParams extends CosmosMessage {
   factory OsmosisPoolManagerParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolManagerParams(
-        poolCreationFee:
-            decode.getFields(1).map((e) => Coin.deserialize(e)).toList(),
+        poolCreationFee: decode
+            .getFields<List<int>>(1)
+            .map((e) => Coin.deserialize(e))
+            .toList(),
         takerFeeParams:
             OsmosisPoolManagerTakerFeeParams.deserialize(decode.getField(2)),
-        authorizedQuoteDenoms: decode.getFields(3));
+        authorizedQuoteDenoms: decode.getFields<String>(3));
   }
-  factory OsmosisPoolManagerParams.fromRpc(Map<String, dynamic> json) {
+  factory OsmosisPoolManagerParams.fromJson(Map<String, dynamic> json) {
     return OsmosisPoolManagerParams(
         poolCreationFee: (json["pool_creation_fee"] as List?)
-                ?.map((e) => Coin.fromRpc(e))
+                ?.map((e) => Coin.fromJson(e))
                 .toList() ??
             <Coin>[],
         takerFeeParams:
-            OsmosisPoolManagerTakerFeeParams.fromRpc(json["taker_fee_params"]),
+            OsmosisPoolManagerTakerFeeParams.fromJson(json["taker_fee_params"]),
         authorizedQuoteDenoms: json["authorized_quote_denoms"]);
   }
 

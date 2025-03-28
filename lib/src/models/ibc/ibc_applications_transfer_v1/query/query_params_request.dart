@@ -28,6 +28,6 @@ class IbcTransferQueryParamsRequest extends CosmosMessage
 
   @override
   IbcTransferQueryParamsResponse onJsonResponse(Map<String, dynamic> json) {
-    return IbcTransferQueryParamsResponse.fromRpc(json);
+    return IbcTransferQueryParamsResponse.fromJson(json);
   }
 }

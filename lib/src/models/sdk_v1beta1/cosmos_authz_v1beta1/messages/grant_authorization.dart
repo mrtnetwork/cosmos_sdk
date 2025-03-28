@@ -13,7 +13,7 @@ class AuthzGrantAuthorization extends CosmosMessage {
   final ProtobufTimestamp? expiration;
   const AuthzGrantAuthorization(
       {this.granter, this.grantee, this.authorization, this.expiration});
-  factory AuthzGrantAuthorization.fromRpc(Map<String, dynamic> json) {
+  factory AuthzGrantAuthorization.fromJson(Map<String, dynamic> json) {
     return AuthzGrantAuthorization(
         grantee:
             json["grantee"] == null ? null : CosmosBaseAddress(json["grantee"]),
@@ -21,7 +21,7 @@ class AuthzGrantAuthorization extends CosmosMessage {
             json["granter"] == null ? null : CosmosBaseAddress(json["granter"]),
         authorization: json["authorization"] == null
             ? null
-            : AnyMessage.fromRpc(json["authorization"]),
+            : AnyMessage.fromJson(json["authorization"]),
         expiration: json["expiration"] == null
             ? null
             : ProtobufTimestamp.fromString(json["expiration"]));

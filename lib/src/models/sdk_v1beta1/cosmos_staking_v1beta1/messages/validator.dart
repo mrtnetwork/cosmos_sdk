@@ -56,17 +56,17 @@ class StakingValidator extends CosmosMessage {
 
   /// list of unbonding ids, each uniquely identifying an unbonding of this validator
   final List<BigInt>? unbondingIds;
-  factory StakingValidator.fromRpc(Map<String, dynamic> json) {
+  factory StakingValidator.fromJson(Map<String, dynamic> json) {
     return StakingValidator(
-        commission: Commission.fromRpc(json["commission"]),
+        commission: Commission.fromJson(json["commission"]),
         delegatorShares: json["delegator_shares"],
-        description: Description.fromRpc(json["description"]),
+        description: Description.fromJson(json["description"]),
         minSelfDelegation: BigintUtils.parse(json["min_self_delegation"]),
         tokens: BigintUtils.parse(json["tokens"]),
         unbondingTime: ProtobufTimestamp.fromString(json[""]),
         consensusPubkey: json["consensus_pubkey"] == null
             ? null
-            : AnyMessage.fromRpc(json["consensus_pubkey"]),
+            : AnyMessage.fromJson(json["consensus_pubkey"]),
         jailed: json["jailed"],
         operatorAddress: json["operator_address"] == null
             ? null
@@ -118,11 +118,7 @@ class StakingValidator extends CosmosMessage {
         commission: Commission.deserialize(decode.getField(10)),
         minSelfDelegation: BigintUtils.parse(decode.getField<String>(11)),
         unbondingOnHoldRefCount: decode.getField(12),
-        unbondingIds: decode
-                .getResult<ProtocolBufferDecoderResult?>(13)
-                ?.to<List<BigInt>, List<int>>(
-                    (e) => e.map((e) => BigintUtils.parse(e)).toList()) ??
-            <BigInt>[]);
+        unbondingIds: decode.getFields<BigInt>(13));
   }
 
   @override

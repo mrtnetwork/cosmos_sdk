@@ -1,16 +1,18 @@
 import 'package:blockchain_utils/blockchain_utils.dart';
+import 'package:cosmos_sdk/src/models/ibc/core/service.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_channel_v1/messages/state.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_channel_v1/messages/upgrade.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_client_v1/messages/height.dart';
 
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 import 'msg_channel_upgrade_confirm_response.dart';
 
 /// MsgChannelUpgradeConfirm defines the request type for the ChannelUpgradeConfirm rpc
-class MsgChannelUpgradeConfirm extends CosmosMessage
-    with ServiceMessage<MsgChannelUpgradeConfirmResponse> {
+class MsgChannelUpgradeConfirm
+    extends IbcService<MsgChannelUpgradeConfirmResponse> {
   final String? portId;
   final String? channelId;
   final IbcChannelState? counterpartyChannelState;
@@ -44,12 +46,22 @@ class MsgChannelUpgradeConfirm extends CosmosMessage
         proofHeight: IbcClientHeight.deserialize(decode.getField(7)),
         signer: decode.getField(8));
   }
-
+  factory MsgChannelUpgradeConfirm.fromJson(Map<String, dynamic> json) {
+    return MsgChannelUpgradeConfirm(
+        portId: json.as("port_id"),
+        channelId: json.as("channel_id"),
+        counterpartyChannelState: json.maybeAs<IbcChannelState, String>(
+            key: "counterparty_channel_state",
+            onValue: IbcChannelState.fromValue),
+        counterpartyUpgrade:
+            IbcChannelUpgrade.fromJson(json.asMap("counterparty_upgrade")),
+        proofChannel: json.asBytes("proof_channel"),
+        proofUpgrade: json.asBytes("proof_upgrade"),
+        proofHeight: IbcClientHeight.fromJson(json.asMap("proof_height")),
+        signer: json.as("signer"));
+  }
   @override
   List<int> get fieldIds => [1, 2, 3, 4, 5, 6, 7, 8];
-
-  @override
-  TypeUrl get service => IbcTypes.channelUpgradeConfirm;
 
   @override
   Map<String, dynamic> toJson() {

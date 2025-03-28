@@ -1,8 +1,10 @@
+import 'package:cosmos_sdk/cosmos_sdk.dart';
+import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_stream_swap_v1/core/service.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_stream_swap_v1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
-class OsmosisStreamSwapMsgSubscribe extends CosmosMessage
-    with ServiceMessage<ProtobufEmpty> {
+class OsmosisStreamSwapMsgSubscribe extends OsmosisStreamSwapV1<ProtobufEmpty> {
   /// sender is an account address adding a deposit
   final String? sender;
 
@@ -20,6 +22,12 @@ class OsmosisStreamSwapMsgSubscribe extends CosmosMessage
         sender: decode.getField(1),
         saleId: decode.getField(2),
         amount: BigInt.parse(decode.getField(3)));
+  }
+  factory OsmosisStreamSwapMsgSubscribe.fromJson(Map<String, dynamic> json) {
+    return OsmosisStreamSwapMsgSubscribe(
+        sender: json.as("sender"),
+        saleId: json.asBigInt("sale_id"),
+        amount: json.asBigInt("amount"));
   }
 
   @override
@@ -44,9 +52,6 @@ class OsmosisStreamSwapMsgSubscribe extends CosmosMessage
   ProtobufEmpty onResponse(List<int> bytes) {
     return const ProtobufEmpty();
   }
-
-  @override
-  TypeUrl get service => OsmosisStreamSwapV1Types.subscribe;
 
   @override
   List<String?> get signers => [sender];

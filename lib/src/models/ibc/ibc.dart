@@ -7,7 +7,9 @@ export 'ibc_applications_interchain_accounts_v1/ibc_applications_interchain_acco
 export 'ibc_applications_transfer_v1/ibc_applications_transfer_v1.dart';
 export 'ibc_applications_transfer_v2/ibc_applications_transfer_v2.dart';
 export 'ibc_core_channel_v1/ibc_core_channel_v1.dart';
+export 'ibc_core_channel_v2/ibc_core_channel_v2.dart';
 export 'ibc_core_client_v1/ibc_core_client_v1.dart';
+export 'ibc_core_client_v2/ibc_core_client_v2.dart';
 export 'ibc_core_commitment_v1/ibc_core_commitment_v1.dart';
 export 'ibc_core_connection_v1/ibc_core_connection_v1.dart';
 export 'ibc_core_types_v1/ibc_core_types_v1.dart';

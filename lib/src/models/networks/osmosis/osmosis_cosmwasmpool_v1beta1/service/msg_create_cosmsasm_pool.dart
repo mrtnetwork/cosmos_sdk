@@ -1,11 +1,13 @@
 import 'package:blockchain_utils/blockchain_utils.dart';
+import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_cosmwasmpool_v1beta1/core/service.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_cosmwasmpool_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 import 'msg_create_cosm_wasm_pool_response.dart';
 
-class OsmosisCosmWasmPoolMsgCreateCosmWasmPool extends CosmosMessage
-    with ServiceMessage<OsmosisCosmWasmPoolMsgCreateCosmWasmPoolResponse> {
+class OsmosisCosmWasmPoolMsgCreateCosmWasmPool extends OsmosisWasmPoolV1Beta1<
+    OsmosisCosmWasmPoolMsgCreateCosmWasmPoolResponse> {
   final BigInt? codeIn;
   final List<int>? instantiateMsg;
   final String? sender;
@@ -20,6 +22,13 @@ class OsmosisCosmWasmPoolMsgCreateCosmWasmPool extends CosmosMessage
         codeIn: decode.getField(1),
         instantiateMsg: decode.getField(2),
         sender: decode.getField(3));
+  }
+  factory OsmosisCosmWasmPoolMsgCreateCosmWasmPool.fromJson(
+      Map<String, dynamic> json) {
+    return OsmosisCosmWasmPoolMsgCreateCosmWasmPool(
+        codeIn: json.asBigInt("code_id"),
+        instantiateMsg: json.asBytes("instantiate_msg"),
+        sender: json.as("sender"));
   }
 
   @override
@@ -44,9 +53,6 @@ class OsmosisCosmWasmPoolMsgCreateCosmWasmPool extends CosmosMessage
   OsmosisCosmWasmPoolMsgCreateCosmWasmPoolResponse onResponse(List<int> bytes) {
     return OsmosisCosmWasmPoolMsgCreateCosmWasmPoolResponse.deserialize(bytes);
   }
-
-  @override
-  TypeUrl get service => OsmosisCosmWasmPoolV1beta1Types.createCosmWasmPool;
 
   @override
   List<String?> get signers => [sender];

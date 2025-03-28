@@ -12,11 +12,11 @@ class OsmosisIncentiveQueryLockableDurationsResponse extends CosmosMessage {
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisIncentiveQueryLockableDurationsResponse(decode
-        .getFields(1)
+        .getFields<List<int>>(1)
         .map((e) => ProtobufDuration.deserialize(e))
         .toList());
   }
-  factory OsmosisIncentiveQueryLockableDurationsResponse.fromRpc(
+  factory OsmosisIncentiveQueryLockableDurationsResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisIncentiveQueryLockableDurationsResponse(
         (json["lockable_durations"] as List?)

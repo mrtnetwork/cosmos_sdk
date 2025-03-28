@@ -12,7 +12,7 @@ class QueryAllowanceRequest extends CosmosMessage
 
   /// grantee is the address of the user being granted an allowance of another user's funds
   final CosmosBaseAddress grantee;
-  factory QueryAllowanceRequest.fromRpc(Map<String, dynamic> json) {
+  factory QueryAllowanceRequest.fromJson(Map<String, dynamic> json) {
     return QueryAllowanceRequest(
       granter: CosmosBaseAddress(json["granter"]),
       grantee: CosmosBaseAddress(json["grantee"]),
@@ -47,7 +47,7 @@ class QueryAllowanceRequest extends CosmosMessage
 
   @override
   QueryAllowanceResponse onJsonResponse(Map<String, dynamic> json) {
-    return QueryAllowanceResponse.fromRpc(json);
+    return QueryAllowanceResponse.fromJson(json);
   }
 
   @override

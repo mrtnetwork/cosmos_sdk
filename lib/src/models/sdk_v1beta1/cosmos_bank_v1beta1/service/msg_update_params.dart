@@ -1,13 +1,15 @@
 import 'package:cosmos_sdk/src/address/address.dart';
+import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_bank_v1beta1/core/service.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_bank_v1beta1/messages/params.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
 
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_bank_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// MsgUpdateParams is the Msg/UpdateParams request type.
-class BankMsgUpdateParams extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class BankMsgUpdateParams
+    extends BankV1Beta1Service<EmptyServiceRequestResponse> {
   /// authority is the address that controls the module (defaults to x/gov unless overwritten)
   final CosmosBaseAddress authority;
 
@@ -22,6 +24,12 @@ class BankMsgUpdateParams extends CosmosMessage
     return BankMsgUpdateParams(
       authority: CosmosBaseAddress(decode.getField(1)),
       params: BankParams.deserialize(decode.getField(2)),
+    );
+  }
+  factory BankMsgUpdateParams.fromJson(Map<String, dynamic> json) {
+    return BankMsgUpdateParams(
+      authority: CosmosBaseAddress(json.as("authority")),
+      params: BankParams.fromJson(json.asMap("params")),
     );
   }
 
@@ -39,8 +47,7 @@ class BankMsgUpdateParams extends CosmosMessage
   @override
   @override
   TypeUrl get typeUrl => BankV1beta1Types.msgUpdateParams;
-  @override
-  TypeUrl get service => BankV1beta1Types.bankUpdateParams;
+
   @override
   List<String?> get signers => [authority.address];
   @override

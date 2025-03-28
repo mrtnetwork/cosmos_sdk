@@ -14,15 +14,15 @@ class OsmosisPoolincentivesQueryIncentivizedPoolsResponse
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolincentivesQueryIncentivizedPoolsResponse(decode
-        .getFields(1)
+        .getFields<List<int>>(1)
         .map((e) => OsmosisPoolincentivesIncentivizedPool.deserialize(e))
         .toList());
   }
-  factory OsmosisPoolincentivesQueryIncentivizedPoolsResponse.fromRpc(
+  factory OsmosisPoolincentivesQueryIncentivizedPoolsResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisPoolincentivesQueryIncentivizedPoolsResponse(
         (json["incentivized_pools"] as List?)
-                ?.map((e) => OsmosisPoolincentivesIncentivizedPool.fromRpc(e))
+                ?.map((e) => OsmosisPoolincentivesIncentivizedPool.fromJson(e))
                 .toList() ??
             <OsmosisPoolincentivesIncentivizedPool>[]);
   }

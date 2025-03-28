@@ -44,10 +44,13 @@ class OsmosisLockupPeriodLock extends CosmosMessage {
       owner: decode.getField(2),
       duration: ProtobufDuration.deserialize(decode.getField(3)),
       endTime: ProtobufTimestamp.deserialize(decode.getField(4)),
-      coins: decode.getFields(5).map((e) => Coin.deserialize(e)).toList(),
+      coins: decode
+          .getFields<List<int>>(5)
+          .map((e) => Coin.deserialize(e))
+          .toList(),
     );
   }
-  factory OsmosisLockupPeriodLock.fromRpc(Map<String, dynamic> json) {
+  factory OsmosisLockupPeriodLock.fromJson(Map<String, dynamic> json) {
     return OsmosisLockupPeriodLock(
       id: BigintUtils.tryParse(json["ID"]),
       owner: json["owner"],

@@ -11,8 +11,8 @@ class QueryAccountResponse extends CosmosMessage {
     final any = Any.deserialize(decode.getField(1));
     return QueryAccountResponse(CosmosBaseAccount.fromAny(any));
   }
-  factory QueryAccountResponse.fromRpc(Map<String, dynamic> json) {
-    return QueryAccountResponse(CosmosBaseAccount.fromRpc(json["account"]));
+  factory QueryAccountResponse.fromJson(Map<String, dynamic> json) {
+    return QueryAccountResponse(CosmosBaseAccount.fromJson(json["account"]));
   }
 
   /// account defines the account of the corresponding address.

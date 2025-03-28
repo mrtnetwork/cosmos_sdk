@@ -42,7 +42,7 @@ class OsmosisConcentratedLiquidityClaimableSpreadRewardsRequest
   @override
   OsmosisConcentratedLiquidityClaimableSpreadRewardsResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisConcentratedLiquidityClaimableSpreadRewardsResponse.fromRpc(
+    return OsmosisConcentratedLiquidityClaimableSpreadRewardsResponse.fromJson(
         json);
   }
 

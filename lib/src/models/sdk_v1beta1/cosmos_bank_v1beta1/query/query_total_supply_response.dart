@@ -8,13 +8,14 @@ class QueryTotalSupplyResponse extends CosmosMessage {
   /// supply is the supply of the coins.
   final List<Coin> supply;
 
-  factory QueryTotalSupplyResponse.fromRpc(Map<String, dynamic> json) {
+  factory QueryTotalSupplyResponse.fromJson(Map<String, dynamic> json) {
     return QueryTotalSupplyResponse(
       supply:
-          (json["supply"] as List?)?.map((e) => Coin.fromRpc(e)).toList() ?? [],
+          (json["supply"] as List?)?.map((e) => Coin.fromJson(e)).toList() ??
+              [],
       pagination: json["pagination"] == null
           ? null
-          : PageResponse.fromRpc(json["pagination"]),
+          : PageResponse.fromJson(json["pagination"]),
     );
   }
 

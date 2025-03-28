@@ -16,13 +16,13 @@ class QueryChannelClientStateResponse extends CosmosMessage {
   /// height at which the proof was retrieved
   final IbcClientHeight proofHeight;
 
-  factory QueryChannelClientStateResponse.fromRpc(Map<String, dynamic> json) {
+  factory QueryChannelClientStateResponse.fromJson(Map<String, dynamic> json) {
     return QueryChannelClientStateResponse(
         proof: CosmosUtils.tryToBytes(json["proof"]),
-        proofHeight: IbcClientHeight.fromRpc(json["proof_height"]),
+        proofHeight: IbcClientHeight.fromJson(json["proof_height"]),
         identifiedClientState: json["identified_client_state"] == null
             ? null
-            : IbcClientIdentifiedClientState.fromRpc(
+            : IbcClientIdentifiedClientState.fromJson(
                 json["identified_client_state"]));
   }
   QueryChannelClientStateResponse(

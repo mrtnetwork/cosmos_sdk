@@ -37,7 +37,7 @@ class OsmosisCosmWasmPoolContractInfoByPoolIdRequest extends CosmosMessage
   @override
   OsmosisCosmWasmContractInfoByPoolIdResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisCosmWasmContractInfoByPoolIdResponse.fromRpc(json);
+    return OsmosisCosmWasmContractInfoByPoolIdResponse.fromJson(json);
   }
 
   @override

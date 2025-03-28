@@ -8,7 +8,7 @@ class OsmosisTxfeesQueryBaseDenomResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisTxfeesQueryBaseDenomResponse(baseDenom: decode.getField(1));
   }
-  factory OsmosisTxfeesQueryBaseDenomResponse.fromRpc(
+  factory OsmosisTxfeesQueryBaseDenomResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisTxfeesQueryBaseDenomResponse(baseDenom: json["base_denom"]);
   }

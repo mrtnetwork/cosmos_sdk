@@ -1,4 +1,5 @@
 import 'package:blockchain_utils/service/service.dart';
+import 'package:blockchain_utils/utils/string/string.dart';
 import 'package:cosmos_sdk/src/exception/exception.dart';
 import 'package:cosmos_sdk/src/utils/utils.dart';
 
@@ -14,6 +15,8 @@ abstract class TendermintRequest<RESULT, RESPONSE>
   abstract final List<String> pathParameters;
 
   Map<String, String?> get parameters;
+
+  Map<String, dynamic> get body => {};
 
   /// Converts the request parameters to [TendermintRequestDetails] with a unique identifier.
   @override
@@ -37,8 +40,14 @@ abstract class TendermintRequest<RESULT, RESPONSE>
           .normalizePath()
           .toString();
     }
-
-    return TendermintRequestDetails(requestID: id, pathParams: params);
+    return TendermintRequestDetails(
+        requestID: id,
+        pathParams: params,
+        type: requestType,
+        jsonBody: requestType.isPostRequest ? body : null,
+        headers: requestType.isPostRequest
+            ? ServiceConst.defaultPostHeaders
+            : const {});
   }
 
   @override
@@ -51,16 +60,19 @@ class TendermintRequestDetails extends BaseServiceRequestParams {
   const TendermintRequestDetails({
     required super.requestID,
     required this.pathParams,
+    this.jsonBody,
+    super.type = RequestServiceType.get,
     super.headers = const {},
-  }) : super(type: RequestServiceType.get);
+  });
 
   /// URL path parameters
   final String pathParams;
+  final Map<String, dynamic>? jsonBody;
 
   /// Request body
   @override
   List<int>? body() {
-    return null;
+    return StringUtils.tryEncode(StringUtils.tryFromJson(jsonBody));
   }
 
   @override

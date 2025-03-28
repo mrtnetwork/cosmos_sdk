@@ -19,14 +19,14 @@ class IbcConnectionQueryConnectionConsensusStateResponse extends CosmosMessage {
 
   /// height at which the proof was retrieved
   final IbcClientHeight proofHeight;
-  factory IbcConnectionQueryConnectionConsensusStateResponse.fromRpc(
+  factory IbcConnectionQueryConnectionConsensusStateResponse.fromJson(
       Map<String, dynamic> json) {
     return IbcConnectionQueryConnectionConsensusStateResponse(
-        proofHeight: IbcClientHeight.fromRpc(json["proof_height"]),
+        proofHeight: IbcClientHeight.fromJson(json["proof_height"]),
         clientId: json["client_id"],
         consensusState: json["consensus_state"] == null
             ? null
-            : AnyMessage.fromRpc(json["consensus_state"]),
+            : AnyMessage.fromJson(json["consensus_state"]),
         proof: CosmosUtils.tryToBytes(json["proof"]));
   }
   IbcConnectionQueryConnectionConsensusStateResponse(

@@ -1,14 +1,15 @@
 import 'package:cosmos_sdk/src/provider/thornode/core/core.dart';
 import 'package:cosmos_sdk/src/provider/thornode/core/thorenode.dart';
+import 'package:cosmos_sdk/src/provider/thornode/models/models/quote_response.dart';
 
 /// Provide a quote estimate for the provided swap.
-class ThorNodeRequestSwapQuote
-    extends ThorNodeRequestParam<Map<String, dynamic>, Map<String, dynamic>> {
+class ThorNodeRequestSwapQuote extends ThorNodeRequestParam<
+    ThoreNodeQouteSwapResponse, Map<String, dynamic>> {
   ThorNodeRequestSwapQuote(
       {this.height,
-      this.fromAsset,
-      this.toAsset,
-      this.amount,
+      required this.fromAsset,
+      required this.toAsset,
+      required this.amount,
       this.destination,
       this.refundAddress,
       this.streamingInterval,
@@ -16,19 +17,20 @@ class ThorNodeRequestSwapQuote
       this.toleranceBps,
       this.affiliateBps,
       this.affiliate,
-      this.fromAddress});
+      this.fromAddress,
+      this.liquidityToleranceBps});
 
   /// optional block height, defaults to current tip
   final BigInt? height;
 
   /// the source asset
-  final String? fromAsset;
+  final String fromAsset;
 
   /// the target asset
-  final String? toAsset;
+  final String toAsset;
 
   /// the source asset amount in 1e8 decimals
-  final BigInt? amount;
+  final BigInt amount;
 
   /// the destination address, required to generate memo
   final String? destination;
@@ -37,13 +39,13 @@ class ThorNodeRequestSwapQuote
   final String? refundAddress;
 
   /// the interval in which streaming swaps are swapped
-  final BigInt? streamingInterval;
+  final int? streamingInterval;
 
   /// the quantity of swaps within a streaming swap
-  final BigInt? streamingQuantity;
+  final int? streamingQuantity;
 
   /// the maximum basis points from the current feeless swap price to set the limit in the generated memo
-  final BigInt? toleranceBps;
+  final int? toleranceBps;
 
   /// the affiliate fee in basis points
   final BigInt? affiliateBps;
@@ -52,6 +54,8 @@ class ThorNodeRequestSwapQuote
   final String? affiliate;
 
   final String? fromAddress;
+
+  final int? liquidityToleranceBps;
 
   @override
   String get method => ThorNodeMethods.quoteSwap.url;
@@ -64,7 +68,7 @@ class ThorNodeRequestSwapQuote
         "height": height?.toString(),
         "from_asset": fromAsset,
         "to_asset": toAsset,
-        "amount": amount?.toString(),
+        "amount": amount.toString(),
         "destination": destination,
         "refund_address": refundAddress,
         "streaming_interval": streamingInterval?.toString(),
@@ -72,6 +76,13 @@ class ThorNodeRequestSwapQuote
         "tolerance_bps": toleranceBps?.toString(),
         "affiliate_bps": affiliateBps?.toString(),
         "affiliate": affiliate,
-        "from_address": fromAddress
-      };
+        "from_address": fromAddress,
+        "liquidity_tolerance_bps": liquidityToleranceBps?.toString()
+      }..removeWhere((k, v) => v == null);
+
+  @override
+  ThoreNodeQouteSwapResponse onResonse(Map<String, dynamic> result) {
+    print("result $result");
+    return ThoreNodeQouteSwapResponse.fromJson(result);
+  }
 }

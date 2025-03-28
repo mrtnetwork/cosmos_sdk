@@ -1,11 +1,11 @@
+import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_concentratedliquidity_poolmodel_concentrated_1beta1/core/service.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_concentratedliquidity_poolmodel_concentrated_1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 class OsmosisConcentratedliquidityPoolmodelConcentratedMsgCreateConcentratedPool
-    extends CosmosMessage
-    with
-        ServiceMessage<
-            OsmosisConcentratedliquidityPoolmodelConcentratedMsgCreateConcentratedPool> {
+    extends OsmosisConcentratedliquidityPoolmodelConcentratedV1Beta1<
+        OsmosisConcentratedliquidityPoolmodelConcentratedMsgCreateConcentratedPool> {
   final String? sender;
   final String? denom0;
   final String? denom1;
@@ -28,6 +28,15 @@ class OsmosisConcentratedliquidityPoolmodelConcentratedMsgCreateConcentratedPool
         tickSpacing: decode.getField(4),
         spreadFactor: decode.getField(5));
   }
+  factory OsmosisConcentratedliquidityPoolmodelConcentratedMsgCreateConcentratedPool.fromJson(
+      Map<String, dynamic> json) {
+    return OsmosisConcentratedliquidityPoolmodelConcentratedMsgCreateConcentratedPool(
+        sender: json.as("sender"),
+        denom0: json.as("denom0"),
+        denom1: json.as("denom1"),
+        tickSpacing: json.asBigInt("tick_spacing"),
+        spreadFactor: json.as("spread_factor"));
+  }
 
   @override
   List<int> get fieldIds => [1, 2, 3, 4, 5];
@@ -38,11 +47,6 @@ class OsmosisConcentratedliquidityPoolmodelConcentratedMsgCreateConcentratedPool
     return OsmosisConcentratedliquidityPoolmodelConcentratedMsgCreateConcentratedPool
         .deserialize(bytes);
   }
-
-  @override
-  TypeUrl get service =>
-      OsmosisConcentratedliquidityPoolmodelConcentratedV1beta1Types
-          .createConcentratedPool;
 
   @override
   List<String?> get signers => [sender];

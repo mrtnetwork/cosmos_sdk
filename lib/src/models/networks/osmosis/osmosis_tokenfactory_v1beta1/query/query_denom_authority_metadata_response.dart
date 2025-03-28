@@ -15,10 +15,10 @@ class OsmosisTokenFactoryQueryDenomAuthorityMetadataResponse
         OsmosisTokenFactoryDenomAuthorityMetadata.deserialize(
             decode.getField(1)));
   }
-  factory OsmosisTokenFactoryQueryDenomAuthorityMetadataResponse.fromRpc(
+  factory OsmosisTokenFactoryQueryDenomAuthorityMetadataResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisTokenFactoryQueryDenomAuthorityMetadataResponse(
-        OsmosisTokenFactoryDenomAuthorityMetadata.fromRpc(
+        OsmosisTokenFactoryDenomAuthorityMetadata.fromJson(
             json["authority_metadata"]));
   }
 

@@ -12,7 +12,7 @@ class OsmosisGammSwapAmountOutRoute extends CosmosMessage {
     return OsmosisGammSwapAmountOutRoute(
         poolId: decode.getField(1), tokenInDenom: decode.getField(2));
   }
-  factory OsmosisGammSwapAmountOutRoute.fromRpc(Map<String, dynamic> json) {
+  factory OsmosisGammSwapAmountOutRoute.fromJson(Map<String, dynamic> json) {
     return OsmosisGammSwapAmountOutRoute(
       poolId: BigintUtils.tryParse(json["pool_id"]),
       tokenInDenom: json["token_in_denom"],

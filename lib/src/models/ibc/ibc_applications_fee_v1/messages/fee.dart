@@ -12,11 +12,11 @@ class IbcFeeFee extends CosmosMessage {
 
   /// the packet timeout fee
   final Coin timeoutFee;
-  factory IbcFeeFee.fromRpc(Map<String, dynamic> json) {
+  factory IbcFeeFee.fromJson(Map<String, dynamic> json) {
     return IbcFeeFee(
-        ackFee: Coin.fromRpc(json["ack_fee"]),
-        recvFee: Coin.fromRpc(json["recv_fee"]),
-        timeoutFee: Coin.fromRpc(json["timeout_fee"]));
+        ackFee: Coin.fromJson(json["ack_fee"]),
+        recvFee: Coin.fromJson(json["recv_fee"]),
+        timeoutFee: Coin.fromJson(json["timeout_fee"]));
   }
   const IbcFeeFee(
       {required this.recvFee, required this.ackFee, required this.timeoutFee});

@@ -1,10 +1,11 @@
 import 'package:cosmos_sdk/src/address/address.dart';
 import 'package:cosmos_sdk/src/models/models.dart';
+import 'package:cosmos_sdk/src/models/networks/thorchain/v1/core/service.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:blockchain_utils/helper/helper.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
-class ThorchainMsgSend extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class ThorchainMsgSend extends ThorchainV1Service<EmptyServiceRequestResponse> {
   final CosmosBaseAddress fromAddress;
   final CosmosBaseAddress toAddress;
   final List<Coin> amount;
@@ -18,7 +19,21 @@ class ThorchainMsgSend extends CosmosMessage
     return ThorchainMsgSend(
       fromAddress: CosmosBaseAddress.fromBytes(decode.getField(1)),
       toAddress: CosmosBaseAddress.fromBytes(decode.getField(2)),
-      amount: decode.getFields(3).map((e) => Coin.deserialize(e)).toList(),
+      amount: decode
+          .getFields<List<int>>(3)
+          .map((e) => Coin.deserialize(e))
+          .toList(),
+    );
+  }
+  factory ThorchainMsgSend.fromJson(Map<String, dynamic> json) {
+    return ThorchainMsgSend(
+      fromAddress: CosmosBaseAddress.fromBytes(
+          json.asBytes("from_address", throwOnNull: true)!),
+      toAddress: CosmosBaseAddress.fromBytes(
+          json.asBytes("to_address", throwOnNull: true)!),
+      amount:
+          json.asListOfMap("amount")?.map((e) => Coin.fromJson(e)).toList() ??
+              [],
     );
   }
 
@@ -44,9 +59,6 @@ class ThorchainMsgSend extends CosmosMessage
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(typeUrl);
   }
-
-  @override
-  TypeUrl get service => ThorchainV1Types.msgSend;
 
   @override
   List<String?> get signers => [fromAddress.address];

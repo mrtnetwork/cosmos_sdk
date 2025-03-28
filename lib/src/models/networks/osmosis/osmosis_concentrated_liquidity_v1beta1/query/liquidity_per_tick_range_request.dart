@@ -42,7 +42,7 @@ class OsmosisConcentratedLiquidityLiquidityPerTickRangeRequest
   @override
   OsmosisConcentratedLiquidityLiquidityPerTickRangeResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisConcentratedLiquidityLiquidityPerTickRangeResponse.fromRpc(
+    return OsmosisConcentratedLiquidityLiquidityPerTickRangeResponse.fromJson(
         json);
   }
 

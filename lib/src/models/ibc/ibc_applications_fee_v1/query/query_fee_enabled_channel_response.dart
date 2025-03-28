@@ -10,7 +10,7 @@ class QueryFeeEnabledChannelResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryFeeEnabledChannelResponse(feeEnabled: decode.getField(1));
   }
-  factory QueryFeeEnabledChannelResponse.fromRpc(Map<String, dynamic> json) {
+  factory QueryFeeEnabledChannelResponse.fromJson(Map<String, dynamic> json) {
     return QueryFeeEnabledChannelResponse(feeEnabled: json["fee_enabled"]);
   }
 

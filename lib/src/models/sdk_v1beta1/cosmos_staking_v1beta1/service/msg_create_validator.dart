@@ -1,17 +1,18 @@
 import 'package:cosmos_sdk/src/address/address.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_v1beta1/messages/coin.dart';
-import 'package:cosmos_sdk/src/crypto/keypair/public_key.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
+import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_staking_v1beta1/core/service.dart';
+import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_staking_v1beta1/messages/commission_rates.dart';
+import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_staking_v1beta1/messages/description.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_staking_v1beta1/types/types.dart';
 import 'package:blockchain_utils/blockchain_utils.dart';
-
-import '../messages/description.dart';
-import '../messages/commission_rates.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// MsgCreateValidator defines a SDK message for creating a new validator.
-class MsgCreateValidator extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class MsgCreateValidator
+    extends StakingV1Beta1Service<EmptyServiceRequestResponse>
+    with AminoMessage<EmptyServiceRequestResponse> {
   final Description description;
   final CommissionRates commission;
   final BigInt minSelfDelegation;
@@ -21,7 +22,7 @@ class MsgCreateValidator extends CosmosMessage
   /// address bytes refer to the same account while creating validator (defer only in bech32 notation).
   final CosmosBaseAddress? delegatorAddress;
   final CosmosBaseAddress? validatorAddress;
-  final CosmosPublicKey? pubkey;
+  final Any? pubkey;
   final Coin value;
 
   const MsgCreateValidator({
@@ -45,21 +46,39 @@ class MsgCreateValidator extends CosmosMessage
         validatorAddress: decode
             .getResult(5)
             ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        pubkey: decode.getResult(6)?.to<CosmosPublicKey, List<int>>(
-            (e) => CosmosPublicKey.fromAnyBytes(e)),
+        pubkey:
+            decode.getResult(6)?.to<Any, List<int>>((e) => Any.deserialize(e)),
         value: Coin.deserialize(decode.getField(7)));
   }
-
+  factory MsgCreateValidator.fromJson(Map<String, dynamic> json) {
+    return MsgCreateValidator(
+        description: Description.fromJson(json.asMap("description")),
+        commission: CommissionRates.fromJson(json.asMap("commission")),
+        minSelfDelegation: json.asBigInt("min_self_delegation"),
+        delegatorAddress: json.asAddress("delegator_address"),
+        validatorAddress: json.asAddress("validator_address"),
+        pubkey: json.maybeAs<Any, Map<String, dynamic>>(
+            key: "pubkey", onValue: (e) => Any.fromJson(e)),
+        value: Coin.fromJson(json.asMap("value")));
+  }
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({bool amino = false}) {
     return {
       'description': description.toJson(),
       'commission': commission.toJson(),
       'min_self_delegation': minSelfDelegation.toString(),
       'delegator_address': delegatorAddress?.address,
       'validator_address': validatorAddress?.address,
-      'pubkey': pubkey?.toJson(),
+      'pubkey': amino ? pubkey?.toAminoJson() : pubkey?.toJson(),
       'value': value.toJson(),
+    };
+  }
+
+  @override
+  Map<String, dynamic> toAminoJson() {
+    return {
+      "type": typeUrl.aminoType!,
+      "value": toJson(amino: true)..removeWhere((k, v) => v == null)
     };
   }
 
@@ -75,12 +94,10 @@ class MsgCreateValidator extends CosmosMessage
         minSelfDelegation.toString(),
         delegatorAddress?.address,
         validatorAddress?.address,
-        pubkey?.toAny(),
+        pubkey,
         value
       ];
 
-  @override
-  TypeUrl get service => StakingV1beta1Types.createValidator;
   @override
   List<String?> get signers => [validatorAddress?.address];
 

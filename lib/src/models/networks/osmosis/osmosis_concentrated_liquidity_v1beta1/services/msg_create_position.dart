@@ -1,12 +1,15 @@
+import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_concentrated_liquidity_v1beta1/core/service.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_concentrated_liquidity_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_v1beta1/messages/coin.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:blockchain_utils/helper/helper.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 import 'msg_create_position_response.dart';
 
-class OsmosisConcentratedLiquidityMsgCreatePosition extends CosmosMessage
-    with ServiceMessage<OsmosisConcentratedLiquidityMsgCreatePositionResponse> {
+class OsmosisConcentratedLiquidityMsgCreatePosition
+    extends OsmosisConcentratedLiquidityV1Beta1<
+        OsmosisConcentratedLiquidityMsgCreatePositionResponse> {
   final BigInt? poolId;
   final String? sender;
   final BigInt? lowerTick;
@@ -36,10 +39,27 @@ class OsmosisConcentratedLiquidityMsgCreatePosition extends CosmosMessage
         sender: decode.getField(2),
         lowerTick: decode.getField(3),
         upperTick: decode.getField(4),
-        tokensProvided:
-            decode.getFields(5).map((e) => Coin.deserialize(e)).toList(),
+        tokensProvided: decode
+            .getFields<List<int>>(5)
+            .map((e) => Coin.deserialize(e))
+            .toList(),
         tokenMinAmount0: BigInt.parse(decode.getField(6)),
         tokenMinAmount1: BigInt.parse(decode.getField(7)));
+  }
+  factory OsmosisConcentratedLiquidityMsgCreatePosition.fromJson(
+      Map<String, dynamic> json) {
+    return OsmosisConcentratedLiquidityMsgCreatePosition(
+        poolId: json.asBigInt("pool_id"),
+        sender: json.as("sender"),
+        lowerTick: json.asBigInt("lower_tick"),
+        upperTick: json.asBigInt("upper_tick"),
+        tokensProvided: json
+                .asListOfMap("tokens_provided")
+                ?.map((e) => Coin.fromJson(e))
+                .toList() ??
+            [],
+        tokenMinAmount0: json.asBigInt("token_min_amount0"),
+        tokenMinAmount1: json.asBigInt("token_min_amount1"));
   }
 
   @override
@@ -79,10 +99,6 @@ class OsmosisConcentratedLiquidityMsgCreatePosition extends CosmosMessage
     return OsmosisConcentratedLiquidityMsgCreatePositionResponse.deserialize(
         bytes);
   }
-
-  @override
-  TypeUrl get service =>
-      OsmosisConcentratedLiquidityV1beta1Types.createPosition;
 
   @override
   List<String?> get signers => [sender];

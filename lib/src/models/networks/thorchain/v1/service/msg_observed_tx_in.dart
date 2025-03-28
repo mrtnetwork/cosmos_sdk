@@ -14,7 +14,7 @@ class ThorchainMsgObservedTxIn extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainMsgObservedTxIn(
         txs: decode
-            .getFields(1)
+            .getFields<List<int>>(1)
             .map((e) => ThorchainObservedTx.deserialize(e))
             .toList(),
         signer: decode.getField(2));

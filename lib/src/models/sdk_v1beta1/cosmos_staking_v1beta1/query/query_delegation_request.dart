@@ -38,7 +38,7 @@ class QueryDelegationRequest extends CosmosMessage
 
   @override
   QueryDelegationResponse onJsonResponse(Map<String, dynamic> json) {
-    return QueryDelegationResponse.fromRpc(json);
+    return QueryDelegationResponse.fromJson(json);
   }
 
   @override

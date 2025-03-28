@@ -1,9 +1,12 @@
+import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_concentrated_liquidity_v1beta1/core/service.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_concentrated_liquidity_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 import 'msg_add_to_position_response.dart';
 
-class OsmosisConcentratedLiquidityMsgAddToPosition extends CosmosMessage
-    with ServiceMessage<OsmosisConcentratedLiquidityMsgAddToPositionResponse> {
+class OsmosisConcentratedLiquidityMsgAddToPosition
+    extends OsmosisConcentratedLiquidityV1Beta1<
+        OsmosisConcentratedLiquidityMsgAddToPositionResponse> {
   final BigInt? positionId;
   final String? sender;
 
@@ -43,6 +46,16 @@ class OsmosisConcentratedLiquidityMsgAddToPosition extends CosmosMessage
         tokenMinAmount0: BigInt.parse(decode.getField(5)),
         tokenMinAmount1: BigInt.parse(decode.getField(6)));
   }
+  factory OsmosisConcentratedLiquidityMsgAddToPosition.fromJson(
+      Map<String, dynamic> json) {
+    return OsmosisConcentratedLiquidityMsgAddToPosition(
+        positionId: json.asBigInt("position_id"),
+        sender: json.as("sender"),
+        amount0: json.asBigInt("amount0"),
+        amount1: json.asBigInt("amount1"),
+        tokenMinAmount0: json.asBigInt("token_min_amount0"),
+        tokenMinAmount1: json.asBigInt("token_min_amount1"));
+  }
 
   @override
   List<int> get fieldIds => [1, 2, 3, 4, 5, 6];
@@ -79,9 +92,6 @@ class OsmosisConcentratedLiquidityMsgAddToPosition extends CosmosMessage
     return OsmosisConcentratedLiquidityMsgAddToPositionResponse.deserialize(
         bytes);
   }
-
-  @override
-  TypeUrl get service => OsmosisConcentratedLiquidityV1beta1Types.addToPosition;
 
   @override
   List<String?> get signers => [sender];

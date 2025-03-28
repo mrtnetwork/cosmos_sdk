@@ -9,7 +9,7 @@ class OsmosisPoolManagerTradingPairTakerFeeResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolManagerTradingPairTakerFeeResponse(decode.getField(1));
   }
-  factory OsmosisPoolManagerTradingPairTakerFeeResponse.fromRpc(
+  factory OsmosisPoolManagerTradingPairTakerFeeResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisPoolManagerTradingPairTakerFeeResponse(json["taker_fee"]);
   }

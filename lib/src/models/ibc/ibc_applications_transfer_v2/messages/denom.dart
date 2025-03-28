@@ -25,11 +25,11 @@ class IbcTransferV2Denom extends CosmosMessage {
           .toList(),
     );
   }
-  factory IbcTransferV2Denom.fromRpc(Map<String, dynamic> json) {
+  factory IbcTransferV2Denom.fromJson(Map<String, dynamic> json) {
     return IbcTransferV2Denom(
         base: json["base"],
         trace: (json["trace"] as List?)
-                ?.map((e) => IbcTransferV1Hop.fromRpc(e))
+                ?.map((e) => IbcTransferV1Hop.fromJson(e))
                 .toList() ??
             []);
   }

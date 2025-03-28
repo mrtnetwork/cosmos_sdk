@@ -1,13 +1,13 @@
 import 'package:cosmos_sdk/src/address/address.dart';
-import 'package:cosmos_sdk/src/crypto/keypair/public_key.dart';
 import 'package:cosmos_sdk/src/models/core/account/account.dart';
+import 'package:cosmos_sdk/src/models/global_messages/unknown_message.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_auth_v1beta1/types/types.dart';
-import 'package:cosmos_sdk/src/utils/utils.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 class BaseAccount extends CosmosBaseAccount {
   final CosmosBaseAddress address;
-  final CosmosPublicKey? pubKey;
+  final AnyMessage? pubKey;
   final BigInt accountNumber;
   final BigInt sequence;
   const BaseAccount(
@@ -20,22 +20,18 @@ class BaseAccount extends CosmosBaseAccount {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return BaseAccount(
         address: CosmosBaseAddress(decode.getField(1)),
-        pubKey: decode.getResult(2)?.to<CosmosPublicKey, List<int>>(
-            (e) => CosmosPublicKey.fromAnyBytes(e)),
+        pubKey: decode
+            .getResult(2)
+            ?.to<AnyMessage, List<int>>(AnyMessage.deserialize),
         accountNumber: decode.getResult(3)?.cast<BigInt>() ?? BigInt.zero,
         sequence: decode.getResult(4)?.cast<BigInt>() ?? BigInt.zero);
   }
-  factory BaseAccount.fromRpc(Map<String, dynamic> json) {
-    CosmosUtils.validateMessageType(AuthV1beta1Types.baseAccount.typeUrl,
-        json["@type"] ?? AuthV1beta1Types.baseAccount.typeUrl);
-
+  factory BaseAccount.fromJson(Map<String, dynamic> json) {
     return BaseAccount(
-        address: CosmosBaseAddress(json["address"]),
-        pubKey: json["pub_key"] == null
-            ? null
-            : CosmosPublicKey.fromRpc(json["pub_key"]),
-        accountNumber: BigInt.parse(json["account_number"]),
-        sequence: BigInt.parse(json["sequence"]));
+        address: CosmosBaseAddress(json.as("address")),
+        pubKey: json.maybeAs(key: "pub_key", onValue: AnyMessage.fromJson),
+        accountNumber: json.asBigInt("account_number"),
+        sequence: json.asBigInt("sequence"));
   }
 
   @override
@@ -57,7 +53,7 @@ class BaseAccount extends CosmosBaseAccount {
   @override
   List get values => [
         address.address,
-        pubKey?.toAny(),
+        pubKey,
         accountNumber,
         sequence == BigInt.zero ? null : sequence
       ];

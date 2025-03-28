@@ -28,6 +28,6 @@ class QueryCurrentPlanRequest extends CosmosMessage
 
   @override
   QueryCurrentPlanResponse onJsonResponse(Map<String, dynamic> json) {
-    return QueryCurrentPlanResponse.fromRpc(json);
+    return QueryCurrentPlanResponse.fromJson(json);
   }
 }

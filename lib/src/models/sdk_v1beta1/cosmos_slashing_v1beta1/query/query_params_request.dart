@@ -29,6 +29,6 @@ class SlashingQueryParamsRequest extends CosmosMessage
 
   @override
   SlashingQueryParamsResponse onJsonResponse(Map<String, dynamic> json) {
-    return SlashingQueryParamsResponse.fromRpc(json);
+    return SlashingQueryParamsResponse.fromJson(json);
   }
 }

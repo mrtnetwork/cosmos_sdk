@@ -37,13 +37,13 @@ class GovProposal extends CosmosMessage {
 
   /// voting_end_time is the end time of voting on a proposal.
   final ProtobufTimestamp votingEndTime;
-  factory GovProposal.fromRpc(Map<String, dynamic> json) {
+  factory GovProposal.fromJson(Map<String, dynamic> json) {
     return GovProposal(
         depositEndTime: ProtobufTimestamp.fromString(json["deposit_end_time"]),
-        finalTallyResult: GovTallyResult.fromRpc(json["final_tally_result"]),
+        finalTallyResult: GovTallyResult.fromJson(json["final_tally_result"]),
         submitTime: ProtobufTimestamp.fromString(json["submit_time"]),
         totalDeposit: (json["total_deposit"] as List?)
-                ?.map((e) => Coin.fromRpc(e))
+                ?.map((e) => Coin.fromJson(e))
                 .toList() ??
             [],
         votingEndTime: ProtobufTimestamp.fromString(json["voting_end_time"]),
@@ -51,7 +51,7 @@ class GovProposal extends CosmosMessage {
             ProtobufTimestamp.fromString(json["voting_start_time"]),
         content: json["content"] == null
             ? null
-            : AnyMessage.fromRpc(json["content"]),
+            : AnyMessage.fromJson(json["content"]),
         proposalId: BigintUtils.tryParse(json["proposal_id"]),
         status: json["status"] == null
             ? null
@@ -81,8 +81,10 @@ class GovProposal extends CosmosMessage {
         finalTallyResult: GovTallyResult.deserialize(decode.getField(4)),
         submitTime: ProtobufTimestamp.deserialize(decode.getField(5)),
         depositEndTime: ProtobufTimestamp.deserialize(decode.getField(6)),
-        totalDeposit:
-            decode.getFields(7).map((e) => Coin.deserialize(e)).toList(),
+        totalDeposit: decode
+            .getFields<List<int>>(7)
+            .map((e) => Coin.deserialize(e))
+            .toList(),
         votingEndTime: ProtobufTimestamp.deserialize(decode.getField(9)),
         votingStartTime: ProtobufTimestamp.deserialize(decode.getField(8)));
   }

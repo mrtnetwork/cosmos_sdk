@@ -31,7 +31,7 @@ class OsmosisProtorevQueryGetProtoRevAllProfitsRequest extends CosmosMessage
   @override
   OsmosisProtorevQueryGetProtoRevAllProfitsResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisProtorevQueryGetProtoRevAllProfitsResponse.fromRpc(json);
+    return OsmosisProtorevQueryGetProtoRevAllProfitsResponse.fromJson(json);
   }
 
   @override

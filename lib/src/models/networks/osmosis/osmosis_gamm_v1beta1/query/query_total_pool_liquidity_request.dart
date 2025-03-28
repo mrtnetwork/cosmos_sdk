@@ -37,7 +37,7 @@ class OsmosisGammQueryTotalPoolLiquidityRequest extends CosmosMessage
   @override
   OsmosisGammQueryTotalPoolLiquidityResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisGammQueryTotalPoolLiquidityResponse.fromRpc(json);
+    return OsmosisGammQueryTotalPoolLiquidityResponse.fromJson(json);
   }
 
   @override

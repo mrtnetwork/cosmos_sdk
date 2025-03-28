@@ -27,7 +27,10 @@ class OsmosisProtorevRouteStatistics extends CosmosMessage {
   factory OsmosisProtorevRouteStatistics.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisProtorevRouteStatistics(
-        profits: decode.getFields(1).map((e) => Coin.deserialize(e)).toList(),
+        profits: decode
+            .getFields<List<int>>(1)
+            .map((e) => Coin.deserialize(e))
+            .toList(),
         numberOfTrades: decode.getField(2),
         route: decode
                 .getResult<ProtocolBufferDecoderResult?>(3)
@@ -35,10 +38,10 @@ class OsmosisProtorevRouteStatistics extends CosmosMessage {
                     (e) => e.map((e) => BigintUtils.parse(e)).toList()) ??
             <BigInt>[]);
   }
-  factory OsmosisProtorevRouteStatistics.fromRpc(Map<String, dynamic> json) {
+  factory OsmosisProtorevRouteStatistics.fromJson(Map<String, dynamic> json) {
     return OsmosisProtorevRouteStatistics(
         profits:
-            (json["profits"] as List?)?.map((e) => Coin.fromRpc(e)).toList() ??
+            (json["profits"] as List?)?.map((e) => Coin.fromJson(e)).toList() ??
                 <Coin>[],
         numberOfTrades: BigintUtils.parse(json["number_of_trades"]),
         route: (json["route"] as List?)

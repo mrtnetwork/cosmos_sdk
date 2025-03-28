@@ -7,9 +7,9 @@ class QueryUnbondingDelegationResponse extends CosmosMessage {
   /// unbond defines the unbonding information of a delegation.
   final UnbondingDelegation unbond;
   const QueryUnbondingDelegationResponse(this.unbond);
-  factory QueryUnbondingDelegationResponse.fromRpc(Map<String, dynamic> json) {
+  factory QueryUnbondingDelegationResponse.fromJson(Map<String, dynamic> json) {
     return QueryUnbondingDelegationResponse(
-        UnbondingDelegation.fromRpc(json["unbond"]));
+        UnbondingDelegation.fromJson(json["unbond"]));
   }
   factory QueryUnbondingDelegationResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

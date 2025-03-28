@@ -15,7 +15,7 @@ class OsmosisValSetprefUserValidatorPreferencesRequest extends CosmosMessage
     return OsmosisValSetprefUserValidatorPreferencesRequest(
         address: decode.getField(1));
   }
-  factory OsmosisValSetprefUserValidatorPreferencesRequest.fromRpc(
+  factory OsmosisValSetprefUserValidatorPreferencesRequest.fromJson(
       Map<String, dynamic> json) {
     return OsmosisValSetprefUserValidatorPreferencesRequest(
         address: json["address"]);
@@ -39,7 +39,7 @@ class OsmosisValSetprefUserValidatorPreferencesRequest extends CosmosMessage
   @override
   OsmosisValSetprefUserValidatorPreferencesResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisValSetprefUserValidatorPreferencesResponse.fromRpc(json);
+    return OsmosisValSetprefUserValidatorPreferencesResponse.fromJson(json);
   }
 
   @override

@@ -45,7 +45,7 @@ class GetValidatorSetByHeightRequest extends CosmosMessage
 
   @override
   GetValidatorSetByHeightResponse onJsonResponse(Map<String, dynamic> json) {
-    return GetValidatorSetByHeightResponse.fromRpc(json);
+    return GetValidatorSetByHeightResponse.fromJson(json);
   }
 
   @override

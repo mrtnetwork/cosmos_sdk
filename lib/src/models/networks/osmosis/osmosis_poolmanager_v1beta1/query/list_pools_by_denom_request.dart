@@ -17,7 +17,7 @@ class OsmosisPoolManagerListPoolsByDenomRequest extends CosmosMessage
   @override
   OsmosisPoolManagerListPoolsByDenomResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisPoolManagerListPoolsByDenomResponse.fromRpc(json);
+    return OsmosisPoolManagerListPoolsByDenomResponse.fromJson(json);
   }
 
   @override

@@ -1,11 +1,12 @@
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
+import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_valsetpref_v1beta1/core/service.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_valsetpref_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_v1beta1/messages/coin.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
 /// DelegateToValidatorSet gets the owner, coins and delegates to a validator-set.
-class OsmosisValSetprefMsgDelegateToValidatorSet extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class OsmosisValSetprefMsgDelegateToValidatorSet
+    extends OsmosisValSetprefV1Beta1<EmptyServiceRequestResponse> {
   /// delegator is the user who is trying to delegate.
   final String? delegator;
 
@@ -22,10 +23,10 @@ class OsmosisValSetprefMsgDelegateToValidatorSet extends CosmosMessage
       coin: Coin.deserialize(decode.getField(2)),
     );
   }
-  factory OsmosisValSetprefMsgDelegateToValidatorSet.fromRpc(
+  factory OsmosisValSetprefMsgDelegateToValidatorSet.fromJson(
       Map<String, dynamic> json) {
     return OsmosisValSetprefMsgDelegateToValidatorSet(
-        delegator: json["delegator"], coin: Coin.fromRpc(json["coin"]));
+        delegator: json["delegator"], coin: Coin.fromJson(json["coin"]));
   }
 
   @override
@@ -48,9 +49,6 @@ class OsmosisValSetprefMsgDelegateToValidatorSet extends CosmosMessage
     return EmptyServiceRequestResponse(
         OsmosisValSetprefV1beta1Types.msgDelegateToValidatorSetResponse);
   }
-
-  @override
-  TypeUrl get service => OsmosisValSetprefV1beta1Types.delegateToValidatorSet;
 
   @override
   List<String?> get signers => [delegator];

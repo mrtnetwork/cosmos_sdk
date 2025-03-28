@@ -1,12 +1,14 @@
 import 'package:blockchain_utils/utils/utils.dart';
+import 'package:cosmos_sdk/src/models/ibc/core/service.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_client_v1/messages/height.dart';
 
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
-class IbcConnectionMsgConnectionOpenConfirm extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class IbcConnectionMsgConnectionOpenConfirm
+    extends IbcService<EmptyServiceRequestResponse> {
   final String? connectionId;
   final List<int>? proofAck;
   final IbcClientHeight proofHeight;
@@ -25,12 +27,17 @@ class IbcConnectionMsgConnectionOpenConfirm extends CosmosMessage
         proofHeight: IbcClientHeight.deserialize(decode.getField(3)),
         signer: decode.getField(4));
   }
+  factory IbcConnectionMsgConnectionOpenConfirm.fromJson(
+      Map<String, dynamic> json) {
+    return IbcConnectionMsgConnectionOpenConfirm(
+        connectionId: json.as("connection_id"),
+        proofAck: json.asBytes("proof_ack"),
+        proofHeight: IbcClientHeight.fromJson(json.asMap("proof_height")),
+        signer: json.as("signer"));
+  }
 
   @override
   List<int> get fieldIds => [1, 2, 3, 4];
-
-  @override
-  TypeUrl get service => IbcTypes.ibcConnectionConnectionOpenConfirm;
 
   @override
   Map<String, dynamic> toJson() {

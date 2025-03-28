@@ -14,10 +14,10 @@ class IbcChannelUpgrade extends CosmosMessage {
   final UpgradeFields fields;
   final IbcChannelTimeout timeout;
   final BigInt? nextSequenceSend;
-  factory IbcChannelUpgrade.fromRpc(Map<String, dynamic> json) {
+  factory IbcChannelUpgrade.fromJson(Map<String, dynamic> json) {
     return IbcChannelUpgrade(
-        fields: UpgradeFields.fromRpc(json["fields"]),
-        timeout: IbcChannelTimeout.fromRpc(json["timeout"]),
+        fields: UpgradeFields.fromJson(json["fields"]),
+        timeout: IbcChannelTimeout.fromJson(json["timeout"]),
         nextSequenceSend: BigintUtils.tryParse(json["next_sequence_send"]));
   }
   const IbcChannelUpgrade(

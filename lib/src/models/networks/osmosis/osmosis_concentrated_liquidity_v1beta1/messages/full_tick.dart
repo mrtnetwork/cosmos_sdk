@@ -23,12 +23,12 @@ class OsmosisConcentratedLiquidityFullTick extends CosmosMessage {
         info: OsmosisConcentratedLiquidityTickInfo.deserialize(
             decode.getField(3)));
   }
-  factory OsmosisConcentratedLiquidityFullTick.fromRpc(
+  factory OsmosisConcentratedLiquidityFullTick.fromJson(
       Map<String, dynamic> json) {
     return OsmosisConcentratedLiquidityFullTick(
         poolId: BigintUtils.tryParse(json["pool_id"]),
         tickIndex: BigintUtils.tryParse(json["tick_index"]),
-        info: OsmosisConcentratedLiquidityTickInfo.fromRpc(json["info"]));
+        info: OsmosisConcentratedLiquidityTickInfo.fromJson(json["info"]));
   }
 
   @override

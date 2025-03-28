@@ -25,11 +25,11 @@ class IbcConnectionGenesisState extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcConnectionGenesisState(
         connections: decode
-            .getFields(1)
+            .getFields<List<int>>(1)
             .map((e) => IbcConnectionIdentifiedConnection.deserialize(e))
             .toList(),
         clientConnectionPaths: decode
-            .getFields(2)
+            .getFields<List<int>>(2)
             .map((e) => IbcConnectConnectionPaths.deserialize(e))
             .toList(),
         nextConnectionSequence: decode.getField(3),

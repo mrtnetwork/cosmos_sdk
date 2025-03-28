@@ -26,9 +26,10 @@ class IbcConnectionIdentifiedConnection extends CosmosMessage {
 
   /// delay period associated with this connection.
   final BigInt? delayPeriod;
-  factory IbcConnectionIdentifiedConnection.fromRpc(Map<String, dynamic> json) {
+  factory IbcConnectionIdentifiedConnection.fromJson(
+      Map<String, dynamic> json) {
     return IbcConnectionIdentifiedConnection(
-        counterparty: IbcConnectionCounterparty.fromRpc(json["counterparty"]),
+        counterparty: IbcConnectionCounterparty.fromJson(json["counterparty"]),
         clientId: json["client_id"],
         delayPeriod: BigintUtils.tryParse(json["delay_period"]),
         id: json["id"],
@@ -36,7 +37,7 @@ class IbcConnectionIdentifiedConnection extends CosmosMessage {
             ? null
             : IbcConnectionState.fromValue(json["state"]),
         versions: (json["versions"] as List?)
-            ?.map((e) => IbcConnectionVersion.fromRpc(e))
+            ?.map((e) => IbcConnectionVersion.fromJson(e))
             .toList());
   }
   IbcConnectionIdentifiedConnection(
@@ -53,7 +54,7 @@ class IbcConnectionIdentifiedConnection extends CosmosMessage {
       id: decode.getField(1),
       clientId: decode.getField(2),
       versions: decode
-          .getFields(3)
+          .getFields<List<int>>(3)
           .map((e) => IbcConnectionVersion.deserialize(e))
           .toList(),
       delayPeriod: decode.getField(6),

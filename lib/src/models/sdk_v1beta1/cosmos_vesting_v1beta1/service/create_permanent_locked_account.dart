@@ -1,16 +1,18 @@
 import 'package:cosmos_sdk/src/address/address/address.dart';
 import 'package:cosmos_sdk/src/address/address.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_v1beta1/messages/coin.dart';
+import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_vesting_v1beta1/core/service.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_vesting_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:blockchain_utils/helper/helper.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// CreatePermanentLockedAccount defines a method that enables creating a permanent locked account.
 ///
 /// Since: cosmos-sdk 0.46
-class MsgCreatePermanentLockedAccount extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class MsgCreatePermanentLockedAccount
+    extends VestingV1Beta1Service<EmptyServiceRequestResponse> {
   final CosmosBaseAddress? fromAddress;
   final CosmosBaseAddress? toAddress;
   final List<Coin> amount;
@@ -31,7 +33,18 @@ class MsgCreatePermanentLockedAccount extends CosmosMessage
         toAddress: decode
             .getResult(2)
             ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        amount: decode.getFields(3).map((e) => Coin.deserialize(e)).toList());
+        amount: decode
+            .getFields<List<int>>(3)
+            .map((e) => Coin.deserialize(e))
+            .toList());
+  }
+  factory MsgCreatePermanentLockedAccount.fromJson(Map<String, dynamic> json) {
+    return MsgCreatePermanentLockedAccount(
+        fromAddress: json.asAddress("from_address"),
+        toAddress: json.asAddress("to_address"),
+        amount:
+            json.asListOfMap("amount")?.map((e) => Coin.fromJson(e)).toList() ??
+                []);
   }
 
   /// Converts this instance of [MsgCreatePermanentLockedAccount] to a JSON object.
@@ -46,9 +59,6 @@ class MsgCreatePermanentLockedAccount extends CosmosMessage
 
   @override
   List<int> get fieldIds => [1, 2, 3];
-
-  @override
-  TypeUrl get service => VestingV1beta1Types.createPermanentLockedAccount;
 
   @override
   TypeUrl get typeUrl => VestingV1beta1Types.msgCreatePermanentLockedAccount;

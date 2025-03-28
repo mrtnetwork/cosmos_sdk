@@ -1,3 +1,4 @@
+import 'package:blockchain_utils/blockchain_utils.dart';
 import 'package:blockchain_utils/utils/string/string.dart';
 import 'package:cosmos_sdk/src/address/address/address.dart';
 import 'package:cosmos_sdk/src/protobuf/types/cosmos_enum.dart';
@@ -48,6 +49,8 @@ class ProtocolBufferEncoder {
       return _encodeBytes(fieldNumber, StringUtils.encode(value));
     } else if (value is CosmosProtocolBuffer) {
       return _encodeBytes(fieldNumber, value.toBuffer());
+    } else if (value is List<BigInt>) {
+      return _encodeListBigInt(fieldNumber, value);
     } else if (value is List) {
       return _encodeList(fieldNumber, value);
     } else if (value is bool) {
@@ -93,20 +96,36 @@ class ProtocolBufferEncoder {
     return result;
   }
 
+  /// Encode a list with the given [fieldNumber] and [value].
+  static List<int> _encodeListBigInt(int fieldNumber, List<dynamic> value) {
+    if (value.isEmpty) return [];
+    final List<int> result = [];
+    for (final i in value) {
+      result.addAll(_encodeBytes(
+          fieldNumber, _encodeBigInt(fieldNumber, i, withFieldNumber: false)));
+    }
+    return result;
+  }
+
   /// Encode a [BigInt] with the given [fieldNumber] and [value].
-  static List<int> _encodeBigInt(int fieldNumber, BigInt value) {
+  static List<int> _encodeBigInt(int fieldNumber, BigInt value,
+      {bool withFieldNumber = true}) {
     _validateBigInt(value);
     final List<int> result = [];
 
     // Combine field number and wire type (0 for varint)
-    final int tag = (fieldNumber << 3) | 0;
+    if (withFieldNumber) {
+      final int tag = (fieldNumber << 3) | 0;
+      result.addAll(_encodeVarint32(tag));
+    }
+
     BigInt mybeZigZag = value;
     if (value.isNegative) {
       mybeZigZag = ((value & _maxInt64) | _minInt64);
     }
 
     // Encode the tag and value into varint format
-    result.addAll(_encodeVarint32(tag));
+
     result.addAll(_encodeVarintBigInt(mybeZigZag));
     return result;
   }

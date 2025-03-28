@@ -1,13 +1,15 @@
 import 'package:cosmos_sdk/src/address/address.dart';
+import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_slashing_v1beta1/core/service.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_slashing_v1beta1/messages/params.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_slashing_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// MsgUpdateParams is the Msg/UpdateParams request type.
 /// Since: cosmos-sdk 0.47
-class SlashingMsgUpdateParams extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class SlashingMsgUpdateParams
+    extends SlashingV1Beta1Service<EmptyServiceRequestResponse> {
   /// authority is the address that controls the module (defaults to x/gov unless overwritten).
   final CosmosBaseAddress? authority;
 
@@ -25,12 +27,15 @@ class SlashingMsgUpdateParams extends CosmosMessage
       params: SlashingParams.deserialize(decode.getField(2)),
     );
   }
+  factory SlashingMsgUpdateParams.fromJson(Map<String, dynamic> json) {
+    return SlashingMsgUpdateParams(
+      authority: json.asAddress("authority"),
+      params: SlashingParams.fromJson(json.asMap("params")),
+    );
+  }
 
   @override
   List<int> get fieldIds => [1, 2];
-
-  @override
-  TypeUrl get service => SlashingV1beta1Types.slashingUpdateParams;
 
   @override
   Map<String, dynamic> toJson() {

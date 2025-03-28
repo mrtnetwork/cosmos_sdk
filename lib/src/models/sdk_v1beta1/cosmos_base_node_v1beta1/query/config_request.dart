@@ -28,6 +28,6 @@ class NodeConfigRequest extends CosmosMessage
 
   @override
   NodeConfigResponse onJsonResponse(Map<String, dynamic> json) {
-    return NodeConfigResponse.fromRpc(json);
+    return NodeConfigResponse.fromJson(json);
   }
 }

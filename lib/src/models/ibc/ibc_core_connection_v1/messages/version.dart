@@ -9,7 +9,7 @@ class IbcConnectionVersion extends CosmosMessage {
 
   /// list of features compatible with the specified identifier
   final List<String>? features;
-  factory IbcConnectionVersion.fromRpc(Map<String, dynamic> json) {
+  factory IbcConnectionVersion.fromJson(Map<String, dynamic> json) {
     return IbcConnectionVersion(
         identifier: json["identifier"],
         features: (json["features"] as List?)?.cast());

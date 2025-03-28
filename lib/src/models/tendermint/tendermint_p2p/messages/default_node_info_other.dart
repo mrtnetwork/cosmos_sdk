@@ -5,7 +5,7 @@ class DefaultNodeInfoOther extends CosmosMessage {
   final String? txIndex;
   final String? rpcAddress;
   const DefaultNodeInfoOther({this.txIndex, this.rpcAddress});
-  factory DefaultNodeInfoOther.fromRpc(Map<String, dynamic> json) {
+  factory DefaultNodeInfoOther.fromJson(Map<String, dynamic> json) {
     return DefaultNodeInfoOther(
         rpcAddress: json["rpc_address"], txIndex: json["tx_index"]);
   }

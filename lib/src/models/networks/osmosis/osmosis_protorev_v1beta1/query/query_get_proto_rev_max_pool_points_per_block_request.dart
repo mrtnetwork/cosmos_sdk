@@ -35,8 +35,8 @@ class OsmosisProtorevQueryGetProtoRevMaxPoolPointsPerBlockRequest
   @override
   OsmosisProtorevQueryGetProtoRevMaxPoolPointsPerBlockResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisProtorevQueryGetProtoRevMaxPoolPointsPerBlockResponse.fromRpc(
-        json);
+    return OsmosisProtorevQueryGetProtoRevMaxPoolPointsPerBlockResponse
+        .fromJson(json);
   }
 
   @override

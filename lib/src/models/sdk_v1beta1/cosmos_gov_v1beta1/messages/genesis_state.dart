@@ -49,21 +49,28 @@ class GovGenesisState extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GovGenesisState(
         startingProposalId: decode.getField(1),
-        deposits:
-            decode.getFields(2).map((e) => GovDeposit.deserialize(e)).toList(),
-        votes: decode.getFields(3).map((e) => GovVote.deserialize(e)).toList(),
-        proposals:
-            decode.getFields(4).map((e) => GovProposal.deserialize(e)).toList(),
+        deposits: decode
+            .getFields<List<int>>(2)
+            .map((e) => GovDeposit.deserialize(e))
+            .toList(),
+        votes: decode
+            .getFields<List<int>>(3)
+            .map((e) => GovVote.deserialize(e))
+            .toList(),
+        proposals: decode
+            .getFields<List<int>>(4)
+            .map((e) => GovProposal.deserialize(e))
+            .toList(),
         depositParams: decode
-            .getFields(5)
+            .getFields<List<int>>(5)
             .map((e) => GovDepositParams.deserialize(e))
             .toList(),
         votingParams: decode
-            .getFields(6)
+            .getFields<List<int>>(6)
             .map((e) => GovVotingParams.deserialize(e))
             .toList(),
         tallyParams: decode
-            .getFields(7)
+            .getFields<List<int>>(7)
             .map((e) => GovTallyParams.deserialize(e))
             .toList());
   }

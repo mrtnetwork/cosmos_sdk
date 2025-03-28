@@ -11,12 +11,12 @@ class IbcClientIdentifiedClientState extends CosmosMessage {
   /// client state
   final AnyMessage? clientState;
 
-  factory IbcClientIdentifiedClientState.fromRpc(Map<String, dynamic> json) {
+  factory IbcClientIdentifiedClientState.fromJson(Map<String, dynamic> json) {
     return IbcClientIdentifiedClientState(
         clientID: json["client_id"],
         clientState: json["client_state"] == null
             ? null
-            : AnyMessage.fromRpc(json["client_state"]));
+            : AnyMessage.fromJson(json["client_state"]));
   }
   const IbcClientIdentifiedClientState({this.clientID, this.clientState});
   factory IbcClientIdentifiedClientState.deserialize(List<int> bytes) {

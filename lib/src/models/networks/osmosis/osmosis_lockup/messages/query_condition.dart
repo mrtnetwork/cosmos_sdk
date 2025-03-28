@@ -37,7 +37,7 @@ class OsmosisLockupQueryCondition extends CosmosMessage {
         timestamp: ProtobufTimestamp.deserialize(decode.getField(4)));
   }
 
-  factory OsmosisLockupQueryCondition.fromRpc(Map<String, dynamic> json) {
+  factory OsmosisLockupQueryCondition.fromJson(Map<String, dynamic> json) {
     return OsmosisLockupQueryCondition(
         duration: ProtobufDuration.fromString(json["duration"]),
         timestamp: ProtobufTimestamp.fromString(json["timestamp"]),

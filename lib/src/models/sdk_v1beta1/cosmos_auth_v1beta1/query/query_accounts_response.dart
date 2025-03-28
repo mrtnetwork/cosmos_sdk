@@ -16,7 +16,7 @@ class QueryAccountsResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryAccountsResponse(
       accounts: decode
-          .getFields(1)
+          .getFields<List<int>>(1)
           .map((e) => Any.deserialize(e))
           .map((e) => CosmosBaseAccount.fromAny(e))
           .toList(),
@@ -25,12 +25,12 @@ class QueryAccountsResponse extends CosmosMessage {
           ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
     );
   }
-  factory QueryAccountsResponse.fromRpc(Map<String, dynamic> json) {
+  factory QueryAccountsResponse.fromJson(Map<String, dynamic> json) {
     return QueryAccountsResponse(
       accounts: (json["accounts"] as List)
-          .map((e) => CosmosBaseAccount.fromRpc(e))
+          .map((e) => CosmosBaseAccount.fromJson(e))
           .toList(),
-      pagination: PageResponse.fromRpc(json["pagination"]),
+      pagination: PageResponse.fromJson(json["pagination"]),
     );
   }
 

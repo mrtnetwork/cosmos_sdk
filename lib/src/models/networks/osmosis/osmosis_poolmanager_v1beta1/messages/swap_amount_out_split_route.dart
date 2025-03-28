@@ -1,5 +1,6 @@
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_poolmanager_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 import 'swap_amount_out_route.dart';
 
@@ -14,10 +15,20 @@ class OsmosisPoolManagerSwapAmountOutSplitRoute extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolManagerSwapAmountOutSplitRoute(
         pools: decode
-            .getFields(1)
+            .getFields<List<int>>(1)
             .map((e) => OsmosisPoolManagerSwapAmountOutRoute.deserialize(e))
             .toList(),
         tokenOutAmount: decode.getField(2));
+  }
+  factory OsmosisPoolManagerSwapAmountOutSplitRoute.fromJson(
+      Map<String, dynamic> json) {
+    return OsmosisPoolManagerSwapAmountOutSplitRoute(
+        pools: json
+                .asListOfMap("pools")
+                ?.map((e) => OsmosisPoolManagerSwapAmountOutRoute.fromJson(e))
+                .toList() ??
+            [],
+        tokenOutAmount: json.as("token_out_amount"));
   }
 
   @override

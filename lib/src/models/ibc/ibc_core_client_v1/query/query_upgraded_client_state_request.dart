@@ -29,6 +29,6 @@ class QueryUpgradedClientStateRequest extends CosmosMessage
 
   @override
   QueryUpgradedClientStateResponse onJsonResponse(Map<String, dynamic> json) {
-    return QueryUpgradedClientStateResponse.fromRpc(json);
+    return QueryUpgradedClientStateResponse.fromJson(json);
   }
 }

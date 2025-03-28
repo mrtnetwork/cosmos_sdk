@@ -20,19 +20,19 @@ class OsmosisConcentratedLiquidityNumNextInitializedTicksResponse
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityNumNextInitializedTicksResponse(
         liquidityDepths: decode
-            .getFields(1)
+            .getFields<List<int>>(1)
             .map((e) =>
                 OsmosisConcentratedLiquidityTickLiquidityNet.deserialize(e))
             .toList(),
         currentTick: decode.getField(2),
         currentLiquidity: decode.getField(3));
   }
-  factory OsmosisConcentratedLiquidityNumNextInitializedTicksResponse.fromRpc(
+  factory OsmosisConcentratedLiquidityNumNextInitializedTicksResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisConcentratedLiquidityNumNextInitializedTicksResponse(
         liquidityDepths: (json["liquidity_depths"] as List?)
                 ?.map((e) =>
-                    OsmosisConcentratedLiquidityTickLiquidityNet.fromRpc(e))
+                    OsmosisConcentratedLiquidityTickLiquidityNet.fromJson(e))
                 .toList() ??
             <OsmosisConcentratedLiquidityTickLiquidityNet>[],
         currentTick: BigintUtils.tryParse(json["current_tick"]),

@@ -43,7 +43,7 @@ class QueryAllowancesRequest extends CosmosMessage
 
   @override
   QueryAllowancesResponse onJsonResponse(Map<String, dynamic> json) {
-    return QueryAllowancesResponse.fromRpc(json);
+    return QueryAllowancesResponse.fromJson(json);
   }
 
   @override

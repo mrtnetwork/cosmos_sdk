@@ -10,7 +10,7 @@ class Bech32PrefixResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Bech32PrefixResponse(decode.getField(1));
   }
-  factory Bech32PrefixResponse.fromRpc(Map<String, dynamic> json) {
+  factory Bech32PrefixResponse.fromJson(Map<String, dynamic> json) {
     return Bech32PrefixResponse(json["bech32_prefix"]);
   }
   @override

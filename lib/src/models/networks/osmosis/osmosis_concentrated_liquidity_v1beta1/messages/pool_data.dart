@@ -37,40 +37,41 @@ class OsmosisConcentratedLiquidityPoolData extends CosmosMessage {
             .getResult(1)
             ?.to<AnyMessage, List<int>>((e) => AnyMessage.deserialize(e)),
         ticks: decode
-            .getFields(2)
+            .getFields<List<int>>(2)
             .map((e) => OsmosisConcentratedLiquidityFullTick.deserialize(e))
             .toList(),
         spreadRewardAccumulator:
             OsmosisConcentratedLiquidityAccumObject.deserialize(
                 decode.getField(3)),
         incentivesAccumulators: decode
-            .getFields(4)
+            .getFields<List<int>>(4)
             .map((e) => OsmosisConcentratedLiquidityAccumObject.deserialize(e))
             .toList(),
         incentiveRecords: decode
-            .getFields(5)
+            .getFields<List<int>>(5)
             .map((e) =>
                 OsmosisConcentratedLiquidityIncentiveRecord.deserialize(e))
             .toList());
   }
-  factory OsmosisConcentratedLiquidityPoolData.fromRpc(
+  factory OsmosisConcentratedLiquidityPoolData.fromJson(
       Map<String, dynamic> json) {
     return OsmosisConcentratedLiquidityPoolData(
-        pool: json["pool"] == null ? null : AnyMessage.fromRpc(json["pool"]),
+        pool: json["pool"] == null ? null : AnyMessage.fromJson(json["pool"]),
         incentiveRecords: (json["incentive_records"] as List?)
                 ?.map((e) =>
-                    OsmosisConcentratedLiquidityIncentiveRecord.fromRpc(e))
+                    OsmosisConcentratedLiquidityIncentiveRecord.fromJson(e))
                 .toList() ??
             <OsmosisConcentratedLiquidityIncentiveRecord>[],
         spreadRewardAccumulator:
-            OsmosisConcentratedLiquidityAccumObject.fromRpc(
+            OsmosisConcentratedLiquidityAccumObject.fromJson(
                 json["incentives_accumulators"]),
         incentivesAccumulators: (json["incentives_accumulators"] as List?)
-                ?.map((e) => OsmosisConcentratedLiquidityAccumObject.fromRpc(e))
+                ?.map(
+                    (e) => OsmosisConcentratedLiquidityAccumObject.fromJson(e))
                 .toList() ??
             <OsmosisConcentratedLiquidityAccumObject>[],
         ticks: (json["ticks"] as List?)
-                ?.map((e) => OsmosisConcentratedLiquidityFullTick.fromRpc(e))
+                ?.map((e) => OsmosisConcentratedLiquidityFullTick.fromJson(e))
                 .toList() ??
             <OsmosisConcentratedLiquidityFullTick>[]);
   }

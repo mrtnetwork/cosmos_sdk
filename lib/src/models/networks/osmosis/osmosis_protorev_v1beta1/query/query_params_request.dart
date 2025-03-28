@@ -27,7 +27,7 @@ class OsmosisProtorevQueryParamsRequest extends CosmosMessage
 
   @override
   OsmosisProtorevQueryParamsResponse onJsonResponse(Map<String, dynamic> json) {
-    return OsmosisProtorevQueryParamsResponse.fromRpc(json);
+    return OsmosisProtorevQueryParamsResponse.fromJson(json);
   }
 
   @override

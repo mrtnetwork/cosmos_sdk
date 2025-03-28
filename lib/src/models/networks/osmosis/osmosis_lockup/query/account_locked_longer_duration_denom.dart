@@ -42,7 +42,7 @@ class OsmosisLockupAccountLockedLongerDurationDenomRequest extends CosmosMessage
   @override
   OsmosisLockupAccountLockedLongerDurationDenomResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisLockupAccountLockedLongerDurationDenomResponse.fromRpc(json);
+    return OsmosisLockupAccountLockedLongerDurationDenomResponse.fromJson(json);
   }
 
   @override

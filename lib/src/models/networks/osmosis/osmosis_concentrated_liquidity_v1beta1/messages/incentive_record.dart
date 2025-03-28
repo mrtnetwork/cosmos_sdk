@@ -36,13 +36,13 @@ class OsmosisConcentratedLiquidityIncentiveRecord extends CosmosMessage {
                 decode.getField(4)),
         minUptime: ProtobufDuration.deserialize(decode.getField(5)));
   }
-  factory OsmosisConcentratedLiquidityIncentiveRecord.fromRpc(
+  factory OsmosisConcentratedLiquidityIncentiveRecord.fromJson(
       Map<String, dynamic> json) {
     return OsmosisConcentratedLiquidityIncentiveRecord(
         incentiveId: BigintUtils.tryParse(json["incentive_id"]),
         poolId: BigintUtils.tryParse(json["pool_id"]),
         incentiveRecordBody:
-            OsmosisConcentratedLiquidityIncentiveRecordBody.fromRpc(
+            OsmosisConcentratedLiquidityIncentiveRecordBody.fromJson(
                 json["incentive_record_body"]),
         minUptime: ProtobufDuration.fromString(json["min_uptime"]));
   }

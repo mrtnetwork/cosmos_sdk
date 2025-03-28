@@ -22,11 +22,11 @@ class QueryAllBalancesResponse extends CosmosMessage {
             .getResult(2)
             ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
   }
-  factory QueryAllBalancesResponse.fromRpc(Map<String, dynamic> json) {
+  factory QueryAllBalancesResponse.fromJson(Map<String, dynamic> json) {
     return QueryAllBalancesResponse(
         balances:
-            (json["balances"] as List).map((e) => Coin.fromRpc(e)).toList(),
-        pagination: PageResponse.fromRpc(json["pagination"]));
+            (json["balances"] as List).map((e) => Coin.fromJson(e)).toList(),
+        pagination: PageResponse.fromJson(json["pagination"]));
   }
   @override
   List<int> get fieldIds => [1, 2];

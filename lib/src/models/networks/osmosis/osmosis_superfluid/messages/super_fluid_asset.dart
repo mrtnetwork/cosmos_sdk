@@ -19,7 +19,7 @@ class OsmosisSuperfluidSuperfluidAsset extends CosmosMessage {
             ?.to<OsmosisSuperfluidSuperfluidAssetType, int>(
                 (e) => OsmosisSuperfluidSuperfluidAssetType.fromValue(e)));
   }
-  factory OsmosisSuperfluidSuperfluidAsset.fromRpc(Map<String, dynamic> json) {
+  factory OsmosisSuperfluidSuperfluidAsset.fromJson(Map<String, dynamic> json) {
     return OsmosisSuperfluidSuperfluidAsset(
         denom: json["denom"],
         assetType: json["asset_type"] == null

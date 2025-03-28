@@ -27,7 +27,7 @@ class GetLatestBlockRequest extends CosmosMessage
 
   @override
   GetLatestBlockResponse onJsonResponse(Map<String, dynamic> json) {
-    return GetLatestBlockResponse.fromRpc(json);
+    return GetLatestBlockResponse.fromJson(json);
   }
 
   @override

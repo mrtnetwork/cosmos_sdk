@@ -8,7 +8,7 @@ class UpgradeFields extends CosmosMessage {
   final IbcChannelOrder? ordering;
   final List<String>? connectionHops;
   final String? version;
-  factory UpgradeFields.fromRpc(Map<String, dynamic> json) {
+  factory UpgradeFields.fromJson(Map<String, dynamic> json) {
     return UpgradeFields(
       ordering: json["ordering"] == null
           ? null

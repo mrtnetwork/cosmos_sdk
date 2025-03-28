@@ -26,37 +26,39 @@ class OsmosisSuperfluidQueryTotalDelegationByDelegatorResponse
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidQueryTotalDelegationByDelegatorResponse(
         superfluidDelegationRecords: decode
-            .getFields(1)
+            .getFields<List<int>>(1)
             .map((e) =>
                 OsmosisSuperfluidSuperfluidDelegationRecord.deserialize(e))
             .toList(),
         delegationResponse: decode
-            .getFields(2)
+            .getFields<List<int>>(2)
             .map((e) => DelegationResponse.deserialize(e))
             .toList(),
-        totalDelegatedCoins:
-            decode.getFields(3).map((e) => Coin.deserialize(e)).toList(),
+        totalDelegatedCoins: decode
+            .getFields<List<int>>(3)
+            .map((e) => Coin.deserialize(e))
+            .toList(),
         totalEquivalentStakedAmount: Coin.deserialize(decode.getField(4)));
   }
-  factory OsmosisSuperfluidQueryTotalDelegationByDelegatorResponse.fromRpc(
+  factory OsmosisSuperfluidQueryTotalDelegationByDelegatorResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisSuperfluidQueryTotalDelegationByDelegatorResponse(
         superfluidDelegationRecords:
             (json["superfluid_delegation_records"] as List?)
                     ?.map((e) =>
-                        OsmosisSuperfluidSuperfluidDelegationRecord.fromRpc(e))
+                        OsmosisSuperfluidSuperfluidDelegationRecord.fromJson(e))
                     .toList() ??
                 <OsmosisSuperfluidSuperfluidDelegationRecord>[],
         delegationResponse: (json["delegation_response"] as List?)
-                ?.map((e) => DelegationResponse.fromRpc(e))
+                ?.map((e) => DelegationResponse.fromJson(e))
                 .toList() ??
             <DelegationResponse>[],
         totalDelegatedCoins: (json["total_delegated_coins"] as List?)
-                ?.map((e) => Coin.fromRpc(e))
+                ?.map((e) => Coin.fromJson(e))
                 .toList() ??
             <Coin>[],
         totalEquivalentStakedAmount:
-            Coin.fromRpc(json["total_equivalent_staked_amount"]));
+            Coin.fromJson(json["total_equivalent_staked_amount"]));
   }
 
   @override

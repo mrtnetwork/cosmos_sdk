@@ -1,11 +1,12 @@
+import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_concentrated_liquidity_v1beta1/core/service.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_concentrated_liquidity_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 import 'msg_withdraw_position_response.dart';
 
-class OsmosisConcentratedLiquidityMsgWithdrawPosition extends CosmosMessage
-    with
-        ServiceMessage<
-            OsmosisConcentratedLiquidityMsgWithdrawPositionResponse> {
+class OsmosisConcentratedLiquidityMsgWithdrawPosition
+    extends OsmosisConcentratedLiquidityV1Beta1<
+        OsmosisConcentratedLiquidityMsgWithdrawPositionResponse> {
   final BigInt? positionId;
   final String? sender;
   final String liquidityAmount;
@@ -20,7 +21,13 @@ class OsmosisConcentratedLiquidityMsgWithdrawPosition extends CosmosMessage
         sender: decode.getField(2),
         liquidityAmount: decode.getField(3));
   }
-
+  factory OsmosisConcentratedLiquidityMsgWithdrawPosition.fromJson(
+      Map<String, dynamic> json) {
+    return OsmosisConcentratedLiquidityMsgWithdrawPosition(
+        positionId: json.asBigInt("position_id"),
+        sender: json.as("sender"),
+        liquidityAmount: json.as("liquidity_amount"));
+  }
   @override
   List<int> get fieldIds => [1, 2, 3];
 
@@ -46,10 +53,6 @@ class OsmosisConcentratedLiquidityMsgWithdrawPosition extends CosmosMessage
     return OsmosisConcentratedLiquidityMsgWithdrawPositionResponse.deserialize(
         bytes);
   }
-
-  @override
-  TypeUrl get service =>
-      OsmosisConcentratedLiquidityV1beta1Types.withdrawPosition;
 
   @override
   List<String?> get signers => [sender];

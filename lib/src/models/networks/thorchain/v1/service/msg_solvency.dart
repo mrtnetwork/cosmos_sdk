@@ -27,7 +27,7 @@ class ThorchainMsgSolvency extends CosmosMessage {
         chain: decode.getField(2),
         pubKey: decode.getField(3),
         coins: decode
-            .getFields(4)
+            .getFields<List<int>>(4)
             .map((e) => ThorchainCoin.deserialize(e))
             .toList(),
         height: decode.getField(5),

@@ -4,11 +4,14 @@ import 'package:cosmos_sdk/src/exception/exception.dart';
 import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 
 enum CosmosKeysAlgs {
-  secp256k1,
-  ethsecp256k1,
-  ed25519,
-  secp256r1,
-  bn254;
+  secp256k1("tendermint/PubKeySecp256k1"),
+  ethsecp256k1("ethermint/PubKeyEthSecp256k1"),
+  ed25519("tendermint/PubKeyEd25519"),
+  secp256r1("secp256r1"),
+  bn254("bn254");
+
+  final String pubKeyType;
+  const CosmosKeysAlgs(this.pubKeyType);
 
   static const List<CosmosKeysAlgs> supportedAlgs = [
     CosmosKeysAlgs.secp256k1,
@@ -56,8 +59,10 @@ enum CosmosKeysAlgs {
 class CosmosCryptoKeysTypes extends TypeUrl {
   // final String typeUrl;
   final String name;
-  const CosmosCryptoKeysTypes._({required String typeUrl, required this.name})
-      : super(typeUrl);
+  const CosmosCryptoKeysTypes._({
+    required String typeUrl,
+    required this.name,
+  }) : super(typeUrl);
 
   static const CosmosCryptoKeysTypes secp256k1Publickey =
       CosmosCryptoKeysTypes._(

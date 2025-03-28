@@ -21,7 +21,7 @@ class OsmosisProtorevTrade extends CosmosMessage {
         tokenIn: decode.getField(2),
         tokenOut: decode.getField(3));
   }
-  factory OsmosisProtorevTrade.fromRpc(Map<String, dynamic> json) {
+  factory OsmosisProtorevTrade.fromJson(Map<String, dynamic> json) {
     return OsmosisProtorevTrade(
         pool: BigintUtils.tryParse(json["pool"]),
         tokenIn: json["token_in"],

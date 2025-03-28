@@ -1,7 +1,9 @@
+import 'package:blockchain_utils/helper/extensions/extensions.dart';
 import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 
 class OsmosisStreamSwapV1Types extends TypeUrl {
   const OsmosisStreamSwapV1Types._(super.typeUrl, {super.query, super.rpc});
+  static const String root = "/osmosis.streamswap.v1";
   static const OsmosisStreamSwapV1Types userPosition =
       OsmosisStreamSwapV1Types._("/osmosis.streamswap.v1.UserPosition");
   static const OsmosisStreamSwapV1Types userPositionKV =
@@ -70,15 +72,14 @@ class OsmosisStreamSwapV1Types extends TypeUrl {
 
   /// query
 
-  /// service
-  static const OsmosisStreamSwapV1Types finalizeSale =
-      OsmosisStreamSwapV1Types._("/osmosis.streamswap.v1.Msg/FinalizeSale");
-  static const OsmosisStreamSwapV1Types exitSale =
-      OsmosisStreamSwapV1Types._("/osmosis.streamswap.v1.Msg/ExitSale");
-  static const OsmosisStreamSwapV1Types withdraw =
-      OsmosisStreamSwapV1Types._("/osmosis.streamswap.v1.Msg/Withdraw");
-  static const OsmosisStreamSwapV1Types subscribe =
-      OsmosisStreamSwapV1Types._("/osmosis.streamswap.v1.Msg/Subscribe");
-  static const OsmosisStreamSwapV1Types createSale =
-      OsmosisStreamSwapV1Types._("/osmosis.streamswap.v1.Msg/CreateSale");
+  static const List<TypeUrl> services = [
+    msgCreateSale,
+    msgExitSale,
+    msgFinalizeSale,
+    msgSubscribe,
+    msgWithdraw
+  ];
+  static TypeUrl? findService(String? typeUrl) {
+    return services.firstWhereNullable((e) => e.typeUrl == typeUrl);
+  }
 }

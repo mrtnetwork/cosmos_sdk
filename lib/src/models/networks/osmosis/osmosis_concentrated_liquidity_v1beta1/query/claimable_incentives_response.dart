@@ -17,20 +17,24 @@ class OsmosisConcentratedLiquidityClaimableIncentivesResponse
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityClaimableIncentivesResponse(
-        claimableIncentives:
-            decode.getFields(1).map((e) => Coin.deserialize(e)).toList(),
-        forfeitedIncentives:
-            decode.getFields(2).map((e) => Coin.deserialize(e)).toList());
+        claimableIncentives: decode
+            .getFields<List<int>>(1)
+            .map((e) => Coin.deserialize(e))
+            .toList(),
+        forfeitedIncentives: decode
+            .getFields<List<int>>(2)
+            .map((e) => Coin.deserialize(e))
+            .toList());
   }
-  factory OsmosisConcentratedLiquidityClaimableIncentivesResponse.fromRpc(
+  factory OsmosisConcentratedLiquidityClaimableIncentivesResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisConcentratedLiquidityClaimableIncentivesResponse(
         claimableIncentives: (json["claimable_incentives"] as List?)
-                ?.map((e) => Coin.fromRpc(e))
+                ?.map((e) => Coin.fromJson(e))
                 .toList() ??
             <Coin>[],
         forfeitedIncentives: (json["forfeited_incentives"] as List?)
-                ?.map((e) => Coin.fromRpc(e))
+                ?.map((e) => Coin.fromJson(e))
                 .toList() ??
             <Coin>[]);
   }

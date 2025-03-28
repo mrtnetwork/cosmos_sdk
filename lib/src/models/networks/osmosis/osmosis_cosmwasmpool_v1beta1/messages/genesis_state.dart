@@ -15,7 +15,10 @@ class OsmosisCosmWasmPoolGenesisState extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisCosmWasmPoolGenesisState(
         params: OsmosisCosmWasmPoolParams.deserialize(decode.getField(1)),
-        pools: decode.getFields(2).map((e) => Any.deserialize(e)).toList());
+        pools: decode
+            .getFields<List<int>>(2)
+            .map((e) => Any.deserialize(e))
+            .toList());
   }
 
   @override

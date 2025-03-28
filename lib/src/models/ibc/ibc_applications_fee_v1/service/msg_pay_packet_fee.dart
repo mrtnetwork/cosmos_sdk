@@ -1,14 +1,15 @@
+import 'package:cosmos_sdk/src/models/ibc/core/service.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_applications_fee_v1/messages/fee.dart';
 
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:blockchain_utils/helper/helper.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// MsgPayPacketFee defines the request type for the PayPacketFee rpc This Msg can be used
 /// to pay for a packet at the next sequence send & should be combined with the Msg that will be paid for
-class MsgPayPacketFee extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class MsgPayPacketFee extends IbcService<EmptyServiceRequestResponse> {
   /// fee encapsulates the recv, ack and timeout fees associated with an IBC packet
   final IbcFeeFee fee;
 
@@ -39,12 +40,17 @@ class MsgPayPacketFee extends CosmosMessage
         signer: decode.getField(4),
         relayers: decode.getFields<String>(5));
   }
+  factory MsgPayPacketFee.fromJson(Map<String, dynamic> json) {
+    return MsgPayPacketFee(
+        fee: IbcFeeFee.fromJson(json.asMap("fee")),
+        sourcePortId: json.as("source_port_id"),
+        sourceChannelId: json.as("source_channel_id"),
+        signer: json.as("signer"),
+        relayers: json.asListOfString("relayers"));
+  }
 
   @override
   List<int> get fieldIds => [1, 2, 3, 4, 5];
-
-  @override
-  TypeUrl get service => IbcTypes.payPacketFee;
 
   @override
   Map<String, dynamic> toJson() {

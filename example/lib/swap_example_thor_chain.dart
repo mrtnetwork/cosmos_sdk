@@ -14,9 +14,9 @@ void main() async {
         fromAsset: "THOR.RUNE",
         toAsset: "AVAX.AVAX",
         amount: BigInt.from(13000000000),
-        streamingInterval: BigInt.from(10),
-        streamingQuantity: BigInt.from(10),
-        toleranceBps: BigInt.from(100),
+        streamingInterval: 10,
+        streamingQuantity: 10,
+        toleranceBps: 100,
         destination: bnbAddr,
         refundAddress: bnbAddr,
         affiliateBps: BigInt.from(100),
@@ -30,7 +30,7 @@ void main() async {
         asset: const ThorchainAsset(
             chain: "THOR", ticker: "RUNE", symbol: "RUNE", synth: false),
         amount: BigInt.from(137000000))
-  ], memo: swapQoute["memo"], signer: addr);
+  ], memo: swapQoute.memo ?? '', signer: addr);
   final latestBlock = await provider.request(
       TendermintRequestAbciQuery(request: const GetLatestBlockRequest()));
   final accountQuery = await provider
@@ -39,7 +39,7 @@ void main() async {
   final txbody = TXBody(messages: [dep]);
   final authInfo = AuthInfo(signerInfos: [
     SignerInfo(
-        publicKey: privateKey.toPublicKey(),
+        publicKey: privateKey.toPublicKey().toAny(),
         modeInfo: const ModeInfo(ModeInfoSignle(SignMode.signModeDirect)),
         sequence: account.sequence)
   ], fee: Fee(amount: [], gasLimit: BigInt.from(600000000)));

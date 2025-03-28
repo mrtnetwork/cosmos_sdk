@@ -1,15 +1,16 @@
 import 'package:blockchain_utils/blockchain_utils.dart';
+import 'package:cosmos_sdk/src/models/ibc/core/service.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_channel_v1/messages/packet.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_client_v1/messages/height.dart';
 
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 import 'msg_acknowledgement_response.dart';
 
 /// MsgAcknowledgement receives incoming IBC acknowledgement
-class MsgAcknowledgement extends CosmosMessage
-    with ServiceMessage<MsgAcknowledgementResponse> {
+class MsgAcknowledgement extends IbcService<MsgAcknowledgementResponse> {
   final IbcChannelPacket packet;
   final List<int>? acknowledgement;
   final List<int>? proofAcked;
@@ -33,12 +34,17 @@ class MsgAcknowledgement extends CosmosMessage
         proofHeight: IbcClientHeight.deserialize(decode.getField(4)),
         signer: decode.getField(5));
   }
+  factory MsgAcknowledgement.fromJson(Map<String, dynamic> json) {
+    return MsgAcknowledgement(
+        packet: IbcChannelPacket.fromJson(json.asMap("packet")),
+        acknowledgement: json.asBytes("acknowledgement"),
+        proofAcked: json.asBytes("proof_acked"),
+        proofHeight: IbcClientHeight.fromJson(json.asMap("proof_height")),
+        signer: json.as("signer"));
+  }
 
   @override
   List<int> get fieldIds => [1, 2, 3, 4, 5];
-
-  @override
-  TypeUrl get service => IbcTypes.acknowledgement;
 
   @override
   Map<String, dynamic> toJson() {

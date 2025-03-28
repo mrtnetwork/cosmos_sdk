@@ -1,6 +1,7 @@
 import 'package:cosmos_sdk/src/models/models.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:blockchain_utils/helper/helper.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 class ThorchainTx extends CosmosMessage {
   final String? id;
@@ -36,6 +37,24 @@ class ThorchainTx extends CosmosMessage {
             .map((e) => ThorchainCoin.deserialize(e))
             .toList(),
         memo: decode.getField(7));
+  }
+  factory ThorchainTx.fromJson(Map<String, dynamic> json) {
+    return ThorchainTx(
+        id: json.as("id"),
+        chain: json.as("chain"),
+        fromAddress: json.as("from_address"),
+        toAddress: json.as("to_address"),
+        coins: json
+                .asListOfMap("coins")
+                ?.map((e) => ThorchainCoin.fromJson(e))
+                .toList() ??
+            [],
+        gas: json
+                .asListOfMap("gas")
+                ?.map((e) => ThorchainCoin.fromJson(e))
+                .toList() ??
+            [],
+        memo: json.as("memo"));
   }
 
   @override

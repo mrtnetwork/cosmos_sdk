@@ -21,11 +21,11 @@ class OsmosisLockupGenesisState extends CosmosMessage {
     return OsmosisLockupGenesisState(
       lastLockId: decode.getField(1),
       locks: decode
-          .getFields(2)
+          .getFields<List<int>>(2)
           .map((e) => OsmosisLockupPeriodLock.deserialize(e))
           .toList(),
       syntheticLocks: decode
-          .getFields(3)
+          .getFields<List<int>>(3)
           .map((e) => OsmosisLockupSyntheticLock.deserialize(e))
           .toList(),
     );

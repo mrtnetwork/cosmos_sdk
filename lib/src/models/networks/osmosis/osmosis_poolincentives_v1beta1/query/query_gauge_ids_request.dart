@@ -25,7 +25,7 @@ class OsmosisPoolincentivesQueryGaugeIdsRequest extends CosmosMessage
   @override
   OsmosisPoolincentivesGaugeIdWithDuration onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisPoolincentivesGaugeIdWithDuration.fromRpc(json);
+    return OsmosisPoolincentivesGaugeIdWithDuration.fromJson(json);
   }
 
   @override

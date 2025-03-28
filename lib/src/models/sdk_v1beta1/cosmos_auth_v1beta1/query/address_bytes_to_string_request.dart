@@ -38,7 +38,7 @@ class AddressBytesToStringRequest extends CosmosMessage
 
   @override
   AddressBytesToStringResponse onJsonResponse(Map<String, dynamic> json) {
-    return AddressBytesToStringResponse.fromRpc(json);
+    return AddressBytesToStringResponse.fromJson(json);
   }
 
   @override

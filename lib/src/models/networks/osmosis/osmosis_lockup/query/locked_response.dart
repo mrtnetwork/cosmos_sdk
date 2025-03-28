@@ -11,11 +11,11 @@ class OsmosisLockupLockedResponse extends CosmosMessage {
         lock: decode.getResult(1)?.to<OsmosisLockupPeriodLock, List<int>>(
             (e) => OsmosisLockupPeriodLock.deserialize(e)));
   }
-  factory OsmosisLockupLockedResponse.fromRpc(Map<String, dynamic> json) {
+  factory OsmosisLockupLockedResponse.fromJson(Map<String, dynamic> json) {
     return OsmosisLockupLockedResponse(
         lock: json["lock"] == null
             ? null
-            : OsmosisLockupPeriodLock.fromRpc(json["lock"]));
+            : OsmosisLockupPeriodLock.fromJson(json["lock"]));
   }
 
   @override

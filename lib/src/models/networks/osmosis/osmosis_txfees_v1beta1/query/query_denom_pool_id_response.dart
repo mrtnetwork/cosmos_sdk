@@ -9,7 +9,7 @@ class OsmosisTxfeesQueryDenomPoolIdResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisTxfeesQueryDenomPoolIdResponse(poolID: decode.getField(1));
   }
-  factory OsmosisTxfeesQueryDenomPoolIdResponse.fromRpc(
+  factory OsmosisTxfeesQueryDenomPoolIdResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisTxfeesQueryDenomPoolIdResponse(
         poolID: BigintUtils.tryParse(json["poolID"]));

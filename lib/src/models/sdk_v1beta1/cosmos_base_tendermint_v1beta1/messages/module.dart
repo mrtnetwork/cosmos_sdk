@@ -12,7 +12,7 @@ class Module extends CosmosMessage {
   /// checksum
   final String? sum;
   const Module({this.path, this.version, this.sum});
-  factory Module.fromRpc(Map<String, dynamic> json) {
+  factory Module.fromJson(Map<String, dynamic> json) {
     return Module(path: json["path"], version: json["path"]);
   }
   factory Module.deserialize(List<int> bytes) {

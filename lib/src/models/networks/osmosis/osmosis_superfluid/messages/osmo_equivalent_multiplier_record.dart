@@ -26,7 +26,7 @@ class OsmosisSuperfluidOsmoEquivalentMultiplierRecord extends CosmosMessage {
       multiplier: decode.getField(3),
     );
   }
-  factory OsmosisSuperfluidOsmoEquivalentMultiplierRecord.fromRpc(
+  factory OsmosisSuperfluidOsmoEquivalentMultiplierRecord.fromJson(
       Map<String, dynamic> json) {
     return OsmosisSuperfluidOsmoEquivalentMultiplierRecord(
         multiplier: json["multiplier"],

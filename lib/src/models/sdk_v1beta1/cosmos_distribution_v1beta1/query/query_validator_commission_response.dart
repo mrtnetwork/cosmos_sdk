@@ -8,10 +8,11 @@ class DistributionQueryValidatorCommissionResponse extends CosmosMessage {
   /// commission defines the commission the validator received.
   final DistributionValidatorAccumulatedCommission commission;
   const DistributionQueryValidatorCommissionResponse(this.commission);
-  factory DistributionQueryValidatorCommissionResponse.fromRpc(
+  factory DistributionQueryValidatorCommissionResponse.fromJson(
       Map<String, dynamic> json) {
     return DistributionQueryValidatorCommissionResponse(
-        DistributionValidatorAccumulatedCommission.fromRpc(json["commission"]));
+        DistributionValidatorAccumulatedCommission.fromJson(
+            json["commission"]));
   }
   factory DistributionQueryValidatorCommissionResponse.deserialize(
       List<int> bytes) {

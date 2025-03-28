@@ -36,7 +36,7 @@ class OsmosisProtorevQueryGetProtoRevAllRouteStatisticsRequest
   @override
   OsmosisProtorevQueryGetProtoRevAllRouteStatisticsResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisProtorevQueryGetProtoRevAllRouteStatisticsResponse.fromRpc(
+    return OsmosisProtorevQueryGetProtoRevAllRouteStatisticsResponse.fromJson(
         json);
   }
 

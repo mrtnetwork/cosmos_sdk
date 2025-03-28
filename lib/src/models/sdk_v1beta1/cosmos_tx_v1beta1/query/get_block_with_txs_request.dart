@@ -43,7 +43,7 @@ class GetBlockWithTxsRequest extends CosmosMessage
 
   @override
   GetBlockWithTxsResponse onJsonResponse(Map<String, dynamic> json) {
-    return GetBlockWithTxsResponse.fromRpc(json);
+    return GetBlockWithTxsResponse.fromJson(json);
   }
 
   @override

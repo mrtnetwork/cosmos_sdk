@@ -30,7 +30,7 @@ class OsmosisTwapParamsRequest extends CosmosMessage
 
   @override
   OsmosisTwapParamsResponse onJsonResponse(Map<String, dynamic> json) {
-    return OsmosisTwapParamsResponse.fromRpc(json);
+    return OsmosisTwapParamsResponse.fromJson(json);
   }
 
   @override

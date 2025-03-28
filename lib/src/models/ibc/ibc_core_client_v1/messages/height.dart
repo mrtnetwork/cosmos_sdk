@@ -15,7 +15,7 @@ class IbcClientHeight extends CosmosMessage {
   /// the height within the given revision
   final BigInt? revisionHeight;
 
-  factory IbcClientHeight.fromRpc(Map<String, dynamic> json) {
+  factory IbcClientHeight.fromJson(Map<String, dynamic> json) {
     return IbcClientHeight(
         revisionHeight: BigintUtils.tryParse(json["revision_height"]),
         revisionNumber: BigintUtils.tryParse(json["revision_number"]));

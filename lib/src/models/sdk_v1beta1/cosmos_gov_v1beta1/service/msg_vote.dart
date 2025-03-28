@@ -1,13 +1,15 @@
 import 'package:cosmos_sdk/src/address/address.dart';
+import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_gov_v1beta1/core/service.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_gov_v1beta1/messages/vote_option.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_gov_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
 
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// MsgVote defines a message to cast a vote.
-class GovMsgVote extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class GovMsgVote extends GovV1Beta1Service<EmptyServiceRequestResponse>
+    with AminoMessage<EmptyServiceRequestResponse> {
   /// proposal_id defines the unique id of the proposal
   final BigInt? proposalId;
 
@@ -28,12 +30,16 @@ class GovMsgVote extends CosmosMessage
             .getResult(3)
             ?.to<GovVoteOption, int>((e) => GovVoteOption.fromValue(e)));
   }
+  factory GovMsgVote.fromJson(Map<String, dynamic> json) {
+    return GovMsgVote(
+        proposalId: json.asBigInt("proposalId"),
+        voter: json.asAddress("voter"),
+        option: json.maybeAs<GovVoteOption, String>(
+            key: "option", onValue: (e) => GovVoteOption.fromName(e)));
+  }
 
   @override
   List<int> get fieldIds => [1, 2, 3];
-
-  @override
-  TypeUrl get service => GovV1beta1types.serviceGovVote;
 
   @override
   Map<String, dynamic> toJson() {

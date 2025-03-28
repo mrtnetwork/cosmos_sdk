@@ -1,7 +1,9 @@
+import 'package:blockchain_utils/helper/helper.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
 class VestingV1beta1Types extends TypeUrl {
-  const VestingV1beta1Types._(super.typeUrl);
+  const VestingV1beta1Types._(super.typeUrl, {super.aminoType});
+  static const String root = "/cosmos.vesting.v1beta1";
   static const VestingV1beta1Types baseVestingAccount =
       VestingV1beta1Types._("/cosmos.vesting.v1beta1.BaseVestingAccount");
   static const VestingV1beta1Types continuousVestingAccount =
@@ -15,7 +17,8 @@ class VestingV1beta1Types extends TypeUrl {
   static const VestingV1beta1Types permanentLockedAccount =
       VestingV1beta1Types._("/cosmos.vesting.v1beta1.PermanentLockedAccount");
   static const VestingV1beta1Types msgCreateVestingAccount =
-      VestingV1beta1Types._("/cosmos.vesting.v1beta1.MsgCreateVestingAccount");
+      VestingV1beta1Types._("/cosmos.vesting.v1beta1.MsgCreateVestingAccount",
+          aminoType: "cosmos-sdk/MsgCreateVestingAccount");
   static const VestingV1beta1Types msgCreateVestingAccountResponse =
       VestingV1beta1Types._(
           "/cosmos.vesting.v1beta1.MsgCreateVestingAccountResponse");
@@ -32,12 +35,12 @@ class VestingV1beta1Types extends TypeUrl {
       VestingV1beta1Types._(
           "/cosmos.vesting.v1beta1.MsgCreatePeriodicVestingAccountResponse");
 
-  static const VestingV1beta1Types createVestingAccount =
-      VestingV1beta1Types._("/cosmos.vesting.v1beta1.Msg/CreateVestingAccount");
-  static const VestingV1beta1Types createPermanentLockedAccount =
-      VestingV1beta1Types._(
-          "/cosmos.vesting.v1beta1.Msg/CreatePermanentLockedAccount");
-  static const VestingV1beta1Types createPeriodicVestingAccount =
-      VestingV1beta1Types._(
-          "/cosmos.vesting.v1beta1.Msg/CreatePeriodicVestingAccount");
+  static const List<TypeUrl> services = [
+    msgCreatePeriodicVestingAccount,
+    msgCreatePermanentLockedAccount,
+    msgCreateVestingAccount,
+  ];
+  static TypeUrl? findService(String? typeUrl) {
+    return services.firstWhereNullable((e) => e.typeUrl == typeUrl);
+  }
 }

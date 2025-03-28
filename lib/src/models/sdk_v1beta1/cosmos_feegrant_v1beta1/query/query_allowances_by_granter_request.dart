@@ -13,7 +13,7 @@ class QueryAllowancesByGranterRequest extends CosmosMessage
 
   /// pagination defines an pagination for the request.
   final PageRequest? pagination;
-  factory QueryAllowancesByGranterRequest.fromRpc(Map<String, dynamic> json) {
+  factory QueryAllowancesByGranterRequest.fromJson(Map<String, dynamic> json) {
     return QueryAllowancesByGranterRequest(
         granter: CosmosBaseAddress(json["granter"]));
   }
@@ -48,7 +48,7 @@ class QueryAllowancesByGranterRequest extends CosmosMessage
 
   @override
   QueryAllowancesByGranterResponse onJsonResponse(Map<String, dynamic> json) {
-    return QueryAllowancesByGranterResponse.fromRpc(json);
+    return QueryAllowancesByGranterResponse.fromJson(json);
   }
 
   @override

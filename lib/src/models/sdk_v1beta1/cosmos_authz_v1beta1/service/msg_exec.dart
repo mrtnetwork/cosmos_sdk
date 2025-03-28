@@ -1,14 +1,15 @@
 import 'package:cosmos_sdk/src/address/address.dart';
+import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_authz_v1beta1/core/service.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_authz_v1beta1/types/types.dart';
 
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:blockchain_utils/helper/helper.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 import 'msg_exec_response.dart';
 
 /// Exec attempts to execute the provided messages using authorizations granted to the grantee.
 /// Each message should have only one signer corresponding to the granter of the authorization.
-class AuthzExec extends CosmosMessage
-    with ServiceMessage<AuthzMsgExecResponse> {
+class AuthzExec extends AuthzV1Beta1Service<AuthzMsgExecResponse> {
   final CosmosBaseAddress? grantee;
 
   /// Execute Msg.
@@ -22,14 +23,23 @@ class AuthzExec extends CosmosMessage
         grantee: decode
             .getResult(1)
             ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        msgs: decode.getFields(2).map((e) => Any.deserialize(e)).toList());
+        msgs: decode
+            .getFields<List<int>>(2)
+            .map((e) => Any.deserialize(e))
+            .toList());
+  }
+  factory AuthzExec.fromJson(Map<String, dynamic> json) {
+    return AuthzExec(
+        grantee: json.maybeAs<CosmosBaseAddress, String>(
+            key: "grantee", onValue: (e) => CosmosBaseAddress(e)),
+        msgs: json
+            .asListOfMap("msgs", throwOnNull: false)!
+            .map((e) => Any.fromJson(e))
+            .toList());
   }
 
   @override
   List<int> get fieldIds => [1, 2];
-
-  @override
-  TypeUrl get service => AuthzV1beta1Types.authzExec;
 
   @override
   Map<String, dynamic> toJson() {

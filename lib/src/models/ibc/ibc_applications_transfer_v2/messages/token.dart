@@ -11,9 +11,9 @@ class IbcTransferV2Token extends CosmosMessage {
   /// the token amount to be transferred
   final String amount;
   const IbcTransferV2Token({required this.denom, required this.amount});
-  factory IbcTransferV2Token.fromRpc(Map<String, dynamic> json) {
+  factory IbcTransferV2Token.fromJson(Map<String, dynamic> json) {
     return IbcTransferV2Token(
-        denom: IbcTransferV2Denom.fromRpc(json["denom"]),
+        denom: IbcTransferV2Denom.fromJson(json["denom"]),
         amount: json["amount"]);
   }
   factory IbcTransferV2Token.deserialize(List<int> bytes) {

@@ -39,7 +39,7 @@ class OsmosisSuperfluidSuperfluidUndelegationsByDelegatorRequest
   @override
   OsmosisSuperfluidSuperfluidUndelegationsByDelegatorResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisSuperfluidSuperfluidUndelegationsByDelegatorResponse.fromRpc(
+    return OsmosisSuperfluidSuperfluidUndelegationsByDelegatorResponse.fromJson(
         json);
   }
 

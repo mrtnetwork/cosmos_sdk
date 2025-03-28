@@ -16,13 +16,13 @@ class OsmosisConcentratedLiquidityAccumObject extends CosmosMessage {
             ?.to<OsmosisAccumAccumulatorContent, List<int>>(
                 (e) => OsmosisAccumAccumulatorContent.deserialize(e)));
   }
-  factory OsmosisConcentratedLiquidityAccumObject.fromRpc(
+  factory OsmosisConcentratedLiquidityAccumObject.fromJson(
       Map<String, dynamic> json) {
     return OsmosisConcentratedLiquidityAccumObject(
         name: json["name"],
         accumContent: json["accum_content"] == null
             ? null
-            : OsmosisAccumAccumulatorContent.fromRpc(json["accum_content"]));
+            : OsmosisAccumAccumulatorContent.fromJson(json["accum_content"]));
   }
 
   @override

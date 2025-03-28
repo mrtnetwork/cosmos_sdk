@@ -1,15 +1,17 @@
 import 'package:cosmos_sdk/src/address/address.dart';
+import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_distribution_v1beta1/core/service.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_distribution_v1beta1/messages/params.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_distribution_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
 
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// MsgUpdateParams is the Msg/UpdateParams request type.
 ///
 /// Since: cosmos-sdk 0.47
-class DistributionMsgUpdateParams extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class DistributionMsgUpdateParams
+    extends DistributionV1Beta1Service<EmptyServiceRequestResponse> {
   /// authority is the address that controls the module (defaults to x/gov unless overwritten).
   final CosmosBaseAddress? authority;
 
@@ -27,12 +29,15 @@ class DistributionMsgUpdateParams extends CosmosMessage
       params: DistributionParams.deserialize(decode.getField(2)),
     );
   }
+  factory DistributionMsgUpdateParams.fromJson(Map<String, dynamic> json) {
+    return DistributionMsgUpdateParams(
+      authority: json.asAddress("authority"),
+      params: DistributionParams.fromJson(json.asMap("params")),
+    );
+  }
 
   @override
   List<int> get fieldIds => [1, 2];
-
-  @override
-  TypeUrl get service => DistributionV1beta1Types.distributionUpdateParams;
 
   @override
   Map<String, dynamic> toJson() {

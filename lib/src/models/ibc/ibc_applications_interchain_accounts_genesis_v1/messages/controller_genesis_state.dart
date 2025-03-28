@@ -23,14 +23,14 @@ class ControllerGenesisState extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ControllerGenesisState(
         activeChannels: decode
-            .getFields(1)
+            .getFields<List<int>>(1)
             .map((e) => ActiveChannel.deserialize(e))
             .toList(),
         interchainAccounts: decode
-            .getFields(2)
+            .getFields<List<int>>(2)
             .map((e) => RegisteredInterchainAccount.deserialize(e))
             .toList(),
-        ports: decode.getFields(3),
+        ports: decode.getFields<String>(3),
         params:
             InterchainAccountsControllerParams.deserialize(decode.getField(4)));
   }

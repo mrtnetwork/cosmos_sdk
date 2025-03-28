@@ -24,16 +24,17 @@ class OsmosisProtorevTokenPairArbRoutes extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisProtorevTokenPairArbRoutes(
         arbRsoutes: decode
-            .getFields(1)
+            .getFields<List<int>>(1)
             .map((e) => OsmosisProtorevRoute.deserialize(e))
             .toList(),
         tokenIn: decode.getField(2),
         tokenOut: decode.getField(3));
   }
-  factory OsmosisProtorevTokenPairArbRoutes.fromRpc(Map<String, dynamic> json) {
+  factory OsmosisProtorevTokenPairArbRoutes.fromJson(
+      Map<String, dynamic> json) {
     return OsmosisProtorevTokenPairArbRoutes(
         arbRsoutes: (json["arb_routes"] as List?)
-                ?.map((e) => OsmosisProtorevRoute.fromRpc(e))
+                ?.map((e) => OsmosisProtorevRoute.fromJson(e))
                 .toList() ??
             <OsmosisProtorevRoute>[],
         tokenIn: json["token_in"],

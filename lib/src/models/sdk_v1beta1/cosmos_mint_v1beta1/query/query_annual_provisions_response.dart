@@ -9,7 +9,7 @@ class QueryAnnualProvisionsResponse extends CosmosMessage {
   QueryAnnualProvisionsResponse({required List<int> annualProvisions})
       : annualProvisions =
             BytesUtils.toBytes(annualProvisions, unmodifiable: true);
-  factory QueryAnnualProvisionsResponse.fromRpc(Map<String, dynamic> json) {
+  factory QueryAnnualProvisionsResponse.fromJson(Map<String, dynamic> json) {
     return QueryAnnualProvisionsResponse(
         annualProvisions: CosmosUtils.toBytes(json["annual_provisions"]));
   }

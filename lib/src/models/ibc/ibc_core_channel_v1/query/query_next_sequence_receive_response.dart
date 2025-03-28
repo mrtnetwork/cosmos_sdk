@@ -17,11 +17,11 @@ class QueryNextSequenceReceiveResponse extends CosmosMessage {
   QueryNextSequenceReceiveResponse(
       {this.nextSequenceReceive, List<int>? proof, required this.proofHeight})
       : proof = BytesUtils.tryToBytes(proof, unmodifiable: true);
-  factory QueryNextSequenceReceiveResponse.fromRpc(Map<String, dynamic> json) {
+  factory QueryNextSequenceReceiveResponse.fromJson(Map<String, dynamic> json) {
     return QueryNextSequenceReceiveResponse(
       nextSequenceReceive: BigintUtils.tryParse(json["next_sequence_receive"]),
       proof: CosmosUtils.tryToBytes(json["proof"]),
-      proofHeight: IbcClientHeight.fromRpc(json["proof_height"]),
+      proofHeight: IbcClientHeight.fromJson(json["proof_height"]),
     );
   }
 

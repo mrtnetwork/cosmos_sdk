@@ -1,15 +1,17 @@
 import 'package:cosmos_sdk/src/address/address.dart';
+import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_gov_v1beta1/core/service.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_gov_v1beta1/messages/weighted_vote_option.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_gov_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
 
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:blockchain_utils/helper/helper.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// VoteWeighted defines a method to add a weighted vote on a specific proposal.
 /// Since: cosmos-sdk 0.43
-class GovMsgVoteWeighted extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class GovMsgVoteWeighted
+    extends GovV1Beta1Service<EmptyServiceRequestResponse> {
   final BigInt propoosalId;
   final CosmosBaseAddress? voter;
   final List<GovWeightedVoteOption> options;
@@ -27,17 +29,24 @@ class GovMsgVoteWeighted extends CosmosMessage
           .getResult(2)
           ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
       options: decode
-          .getFields(3)
+          .getFields<List<int>>(3)
           .map((e) => GovWeightedVoteOption.deserialize(e))
           .toList(),
     );
   }
+  factory GovMsgVoteWeighted.fromJson(Map<String, dynamic> json) {
+    return GovMsgVoteWeighted(
+        propoosalId: json.asBigInt("proposal_id"),
+        voter: json.asAddress("voter"),
+        options: json
+                .asListOfMap("options")
+                ?.map((e) => GovWeightedVoteOption.fromJson(e))
+                .toList() ??
+            []);
+  }
 
   @override
   List<int> get fieldIds => [1, 2, 3];
-
-  @override
-  TypeUrl get service => GovV1beta1types.serviceGovVoteWeighted;
 
   @override
   Map<String, dynamic> toJson() {

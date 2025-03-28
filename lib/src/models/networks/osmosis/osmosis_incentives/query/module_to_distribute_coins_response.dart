@@ -11,13 +11,15 @@ class OsmosisIncentiveModuleToDistributeCoinsResponse extends CosmosMessage {
   factory OsmosisIncentiveModuleToDistributeCoinsResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return OsmosisIncentiveModuleToDistributeCoinsResponse(
-        decode.getFields(1).map((e) => Coin.deserialize(e)).toList());
+    return OsmosisIncentiveModuleToDistributeCoinsResponse(decode
+        .getFields<List<int>>(1)
+        .map((e) => Coin.deserialize(e))
+        .toList());
   }
-  factory OsmosisIncentiveModuleToDistributeCoinsResponse.fromRpc(
+  factory OsmosisIncentiveModuleToDistributeCoinsResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisIncentiveModuleToDistributeCoinsResponse(
-        (json["coins"] as List?)?.map((e) => Coin.fromRpc(e)).toList() ??
+        (json["coins"] as List?)?.map((e) => Coin.fromJson(e)).toList() ??
             <Coin>[]);
   }
 

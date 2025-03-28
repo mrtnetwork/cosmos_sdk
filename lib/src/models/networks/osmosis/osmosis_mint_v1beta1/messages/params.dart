@@ -61,13 +61,13 @@ class OsmosisMintParams extends CosmosMessage {
         distributionProportions:
             OsmosisMintDistributionProportions.deserialize(decode.getField(6)),
         weightedDeveloperRewardsReceivers: decode
-            .getFields(7)
+            .getFields<List<int>>(7)
             .map((e) => OsmosisMintWeightedAddress.deserialize(e))
             .toList(),
         mintingRewardsDistributionStartEpoch: decode.getField(8));
   }
 
-  factory OsmosisMintParams.fromRpc(Map<String, dynamic> json) {
+  factory OsmosisMintParams.fromJson(Map<String, dynamic> json) {
     return OsmosisMintParams(
         mintDenom: json["mint_denom"],
         genesisEpochProvisions: json["genesis_epoch_provisions"],
@@ -75,11 +75,11 @@ class OsmosisMintParams extends CosmosMessage {
         reductionPeriodInEpochs:
             BigintUtils.tryParse(json["reduction_period_in_epochs"]),
         reductionFactor: json["reduction_factor"],
-        distributionProportions: OsmosisMintDistributionProportions.fromRpc(
+        distributionProportions: OsmosisMintDistributionProportions.fromJson(
             json["distribution_proportions"]),
         weightedDeveloperRewardsReceivers:
             (json["weighted_developer_rewards_receivers"] as List?)
-                    ?.map((e) => OsmosisMintWeightedAddress.fromRpc(e))
+                    ?.map((e) => OsmosisMintWeightedAddress.fromJson(e))
                     .toList() ??
                 <OsmosisMintWeightedAddress>[],
         mintingRewardsDistributionStartEpoch: BigintUtils.tryParse(

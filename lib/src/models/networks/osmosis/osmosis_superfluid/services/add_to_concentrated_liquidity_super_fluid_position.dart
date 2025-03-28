@@ -1,13 +1,13 @@
+import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_superfluid/core/service.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_superfluid/types/types.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/sdk_v1beta1.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 import 'add_to_concentrated_liquidity_super_fluid_position_response.dart';
 
 class OsmosisSuperfluidMsgAddToConcentratedLiquiditySuperfluidPosition
-    extends CosmosMessage
-    with
-        ServiceMessage<
-            OsmosisSuperfluidMsgAddToConcentratedLiquiditySuperfluidPositionResponse> {
+    extends OsmosisSuperfluid<
+        OsmosisSuperfluidMsgAddToConcentratedLiquiditySuperfluidPositionResponse> {
   final BigInt? positionId;
   final String? sender;
   final Coin tokenDesired0;
@@ -26,6 +26,14 @@ class OsmosisSuperfluidMsgAddToConcentratedLiquiditySuperfluidPosition
         sender: decode.getField(2),
         tokenDesired0: Coin.deserialize(decode.getField(3)),
         tokenDesired1: Coin.deserialize(decode.getField(4)));
+  }
+  factory OsmosisSuperfluidMsgAddToConcentratedLiquiditySuperfluidPosition.fromJson(
+      Map<String, dynamic> json) {
+    return OsmosisSuperfluidMsgAddToConcentratedLiquiditySuperfluidPosition(
+        positionId: json.asBigInt("position_id"),
+        sender: json.as("sender"),
+        tokenDesired0: Coin.fromJson(json.asMap("token_desired0")),
+        tokenDesired1: Coin.fromJson(json.asMap("token_desired1")));
   }
 
   @override
@@ -47,10 +55,6 @@ class OsmosisSuperfluidMsgAddToConcentratedLiquiditySuperfluidPosition
 
   @override
   List get values => [positionId, sender, tokenDesired0, tokenDesired1];
-
-  @override
-  TypeUrl get service =>
-      OsmosisSuperfluidTypes.adToConcentratedLiquiditySuperfluidPosition;
 
   @override
   List<String?> get signers => [sender];

@@ -15,7 +15,7 @@ class IbcFeeFeeEnabledChannel extends CosmosMessage {
         portId: decode.getField(1), channelId: decode.getField(2));
   }
 
-  factory IbcFeeFeeEnabledChannel.fromRpc(Map<String, dynamic> json) {
+  factory IbcFeeFeeEnabledChannel.fromJson(Map<String, dynamic> json) {
     return IbcFeeFeeEnabledChannel(
         portId: json["port_id"], channelId: json["channel_id"]);
   }

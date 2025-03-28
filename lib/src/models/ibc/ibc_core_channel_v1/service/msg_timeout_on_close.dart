@@ -1,15 +1,16 @@
 import 'package:blockchain_utils/blockchain_utils.dart';
+import 'package:cosmos_sdk/src/models/ibc/core/service.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_channel_v1/messages/packet.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_client_v1/messages/height.dart';
 
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 import 'msg_timeout_on_close_response.dart';
 
 /// MsgTimeoutOnClose timed-out packet upon counterparty channel closure.
-class MsgTimeoutOnClose extends CosmosMessage
-    with ServiceMessage<MsgTimeoutOnCloseResponse> {
+class MsgTimeoutOnClose extends IbcService<MsgTimeoutOnCloseResponse> {
   final IbcChannelPacket packet;
   final List<int>? proofUnreceived;
   final List<int>? proofClose;
@@ -38,12 +39,20 @@ class MsgTimeoutOnClose extends CosmosMessage
         signer: decode.getField(6),
         counterpartyUpgradeSequence: decode.getField(7));
   }
+  factory MsgTimeoutOnClose.fromJson(Map<String, dynamic> json) {
+    return MsgTimeoutOnClose(
+        packet: IbcChannelPacket.fromJson(json.asMap("packet")),
+        proofUnreceived: json.asBytes("proof_unreceived"),
+        proofClose: json.asBytes("proof_close"),
+        proofHeight: IbcClientHeight.deserialize(json.asMap("proof_height")),
+        nextSequenceRecv: json.asBigInt("next_sequence_recv"),
+        signer: json.as("signer"),
+        counterpartyUpgradeSequence:
+            json.asBigInt("counterparty_upgrade_sequence"));
+  }
 
   @override
   List<int> get fieldIds => [1, 2, 3, 4, 5, 6, 7];
-
-  @override
-  TypeUrl get service => IbcTypes.timeoutOnClose;
 
   @override
   Map<String, dynamic> toJson() {
@@ -54,7 +63,7 @@ class MsgTimeoutOnClose extends CosmosMessage
       "proof_height": proofHeight.toJson(),
       "next_sequence_recv": nextSequenceRecv?.toString(),
       "signer": signer,
-      "counterparty_upgrade_sequence": counterpartyUpgradeSequence,
+      "counterparty_upgrade_sequence": counterpartyUpgradeSequence.toString(),
     };
   }
 

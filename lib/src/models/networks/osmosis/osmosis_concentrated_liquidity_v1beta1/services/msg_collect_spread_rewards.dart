@@ -1,14 +1,15 @@
 import 'package:blockchain_utils/utils/utils.dart';
+import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_concentrated_liquidity_v1beta1/core/service.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_concentrated_liquidity_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:blockchain_utils/helper/helper.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 import 'msg_collect_spread_rewards_response.dart';
 
-class OsmosisConcentratedLiquidityMsgCollectSpreadRewards extends CosmosMessage
-    with
-        ServiceMessage<
-            OsmosisConcentratedLiquidityMsgCollectSpreadRewardsResponse> {
+class OsmosisConcentratedLiquidityMsgCollectSpreadRewards
+    extends OsmosisConcentratedLiquidityV1Beta1<
+        OsmosisConcentratedLiquidityMsgCollectSpreadRewardsResponse> {
   final List<BigInt>? positionIds;
   final String? sender;
 
@@ -19,15 +20,17 @@ class OsmosisConcentratedLiquidityMsgCollectSpreadRewards extends CosmosMessage
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityMsgCollectSpreadRewards(
-      positionIds: decode
-              .getResult<ProtocolBufferDecoderResult?>(1)
-              ?.to<List<BigInt>, List<int>>(
-                  (e) => e.map((e) => BigintUtils.parse(e)).toList()) ??
-          <BigInt>[],
-      sender: decode.getField(2),
-    );
+        positionIds: decode.getFields<BigInt>(1), sender: decode.getField(2));
   }
-
+  factory OsmosisConcentratedLiquidityMsgCollectSpreadRewards.fromJson(
+      Map<String, dynamic> json) {
+    return OsmosisConcentratedLiquidityMsgCollectSpreadRewards(
+        positionIds: json
+            .as<List?>("position_ids")
+            ?.map((e) => BigintUtils.parse(e))
+            .toList(),
+        sender: json.as("sender"));
+  }
   @override
   List<int> get fieldIds => [1, 2];
 
@@ -40,10 +43,7 @@ class OsmosisConcentratedLiquidityMsgCollectSpreadRewards extends CosmosMessage
   }
 
   @override
-  List get values => [
-        positionIds,
-        sender,
-      ];
+  List get values => [positionIds, sender];
 
   @override
   TypeUrl get typeUrl =>
@@ -55,10 +55,6 @@ class OsmosisConcentratedLiquidityMsgCollectSpreadRewards extends CosmosMessage
     return OsmosisConcentratedLiquidityMsgCollectSpreadRewardsResponse
         .deserialize(bytes);
   }
-
-  @override
-  TypeUrl get service =>
-      OsmosisConcentratedLiquidityV1beta1Types.collectSpreadRewards;
 
   @override
   List<String?> get signers => [sender];

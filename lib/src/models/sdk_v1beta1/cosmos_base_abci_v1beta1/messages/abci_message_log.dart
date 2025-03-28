@@ -15,12 +15,12 @@ class ABCIMessageLog extends CosmosMessage {
   ABCIMessageLog({this.msgIndex, this.log, required List<StringEvent> events})
       : events = events.immutable;
 
-  factory ABCIMessageLog.fromRpc(Map<String, dynamic> json) {
+  factory ABCIMessageLog.fromJson(Map<String, dynamic> json) {
     return ABCIMessageLog(
         msgIndex: IntUtils.tryParse(json["msg_index"]),
         log: json["log"],
         events: (json["events"] as List?)
-                ?.map((e) => StringEvent.fromRpc(e))
+                ?.map((e) => StringEvent.fromJson(e))
                 .toList() ??
             []);
   }

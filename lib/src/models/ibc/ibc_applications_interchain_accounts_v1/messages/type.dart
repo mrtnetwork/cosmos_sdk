@@ -18,9 +18,9 @@ class InterchainAccountType implements CosmosEnum {
   static const InterchainAccountType executeTx =
       InterchainAccountType._(0, "EXECUTE_TX");
   static const List<InterchainAccountType> values = [unspecified, executeTx];
-  static InterchainAccountType fromValue(int? value) {
+  static InterchainAccountType fromValue(Object? value) {
     return values.firstWhere(
-      (e) => e.value == value,
+      (e) => e.value == value || e.name == value,
       orElse: () => throw DartCosmosSdkPluginException(
           "No InterchainAccountType element found for the given value.",
           details: {"value": value}),

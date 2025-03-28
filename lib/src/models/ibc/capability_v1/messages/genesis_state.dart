@@ -17,7 +17,7 @@ class CapabilityGenesisState extends CosmosMessage {
     return CapabilityGenesisState(
         index: decode.getField(1),
         owners: decode
-            .getFields(2)
+            .getFields<List<int>>(2)
             .map((e) => GenesisOwners.deserialize(e))
             .toList());
   }

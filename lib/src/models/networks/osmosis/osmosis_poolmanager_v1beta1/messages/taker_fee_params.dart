@@ -70,18 +70,18 @@ class OsmosisPoolManagerTakerFeeParams extends CosmosMessage {
         nonOsmoTakerFeeDistribution:
             OsmosisPoolManagerTakerFeeDistributionPercentage.deserialize(
                 decode.getField(3)),
-        adminAddresses: decode.getFields(4),
+        adminAddresses: decode.getFields<String>(4),
         communityPoolDenomToSwapNonWhitelistedAssetsTo: decode.getField(5),
-        reducedFeeWhitelist: decode.getFields(6));
+        reducedFeeWhitelist: decode.getFields<String>(6));
   }
-  factory OsmosisPoolManagerTakerFeeParams.fromRpc(Map<String, dynamic> json) {
+  factory OsmosisPoolManagerTakerFeeParams.fromJson(Map<String, dynamic> json) {
     return OsmosisPoolManagerTakerFeeParams(
         defaultTakerFee: json["default_taker_fee"],
         osmoTakerFeeDistribution:
-            OsmosisPoolManagerTakerFeeDistributionPercentage.fromRpc(
+            OsmosisPoolManagerTakerFeeDistributionPercentage.fromJson(
                 json["osmo_taker_fee_distribution"]),
         nonOsmoTakerFeeDistribution:
-            OsmosisPoolManagerTakerFeeDistributionPercentage.fromRpc(
+            OsmosisPoolManagerTakerFeeDistributionPercentage.fromJson(
                 json["non_osmo_taker_fee_distribution"]),
         adminAddresses: (json["admin_addresses"] as List?)?.cast(),
         communityPoolDenomToSwapNonWhitelistedAssetsTo:

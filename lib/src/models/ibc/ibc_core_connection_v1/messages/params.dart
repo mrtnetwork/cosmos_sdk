@@ -8,7 +8,7 @@ class IbcConnectionParams extends CosmosMessage {
   /// largest amount of time that the chain might reasonably take to produce the next block under normal operating
   /// conditions. A safe choice is 3-5x the expected time per block.
   final BigInt? maxExpectedTimePerBlock;
-  factory IbcConnectionParams.fromRpc(Map<String, dynamic> json) {
+  factory IbcConnectionParams.fromJson(Map<String, dynamic> json) {
     return IbcConnectionParams(
         maxExpectedTimePerBlock:
             BigintUtils.tryParse(json["max_expected_time_per_block"]));

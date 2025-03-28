@@ -44,7 +44,7 @@ class AuthzQueryGranterGrantsRequest extends CosmosMessage
 
   @override
   AuthzQueryGranterGrantsResponse onJsonResponse(Map<String, dynamic> json) {
-    return AuthzQueryGranterGrantsResponse.fromRpc(json);
+    return AuthzQueryGranterGrantsResponse.fromJson(json);
   }
 
   @override

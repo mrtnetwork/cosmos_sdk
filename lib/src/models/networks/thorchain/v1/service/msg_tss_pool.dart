@@ -37,7 +37,7 @@ class ThorchainMsgTssPool extends CosmosMessage {
         poolPubKey: decode.getField(2),
         keygenType: decode.getResult(3)?.to<ThorchainKeygenType, int>(
             (e) => ThorchainKeygenType.fromValue(e)),
-        pubKeys: decode.getFields(4),
+        pubKeys: decode.getFields<String>(4),
         height: decode.getField(5),
         blame: ThorchainBlame.deserialize(decode.getField(6)),
         chains: decode.getField(7),

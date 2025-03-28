@@ -48,7 +48,7 @@ class QueryPacketReceiptRequest extends CosmosMessage
 
   @override
   QueryPacketReceiptResponse onJsonResponse(Map<String, dynamic> json) {
-    return QueryPacketReceiptResponse.fromRpc(json);
+    return QueryPacketReceiptResponse.fromJson(json);
   }
 
   @override

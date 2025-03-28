@@ -24,7 +24,7 @@ class OsmosisPoolincentivesQueryExternalIncentiveGaugesRequest
   @override
   OsmosisPoolincentivesQueryExternalIncentiveGaugesResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisPoolincentivesQueryExternalIncentiveGaugesResponse.fromRpc(
+    return OsmosisPoolincentivesQueryExternalIncentiveGaugesResponse.fromJson(
         json);
   }
 

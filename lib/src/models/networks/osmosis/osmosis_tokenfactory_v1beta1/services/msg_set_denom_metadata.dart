@@ -1,10 +1,12 @@
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
+import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_tokenfactory_v1beta1/core/service.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_tokenfactory_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_bank_v1beta1/messages/metadata.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
-class OsmosisTokenFactoryMsgSetDenomMetadata extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class OsmosisTokenFactoryMsgSetDenomMetadata
+    extends OsmosisTokenFactoryV1Beta1<EmptyServiceRequestResponse> {
   final String? sender;
   final Metadata metadata;
   OsmosisTokenFactoryMsgSetDenomMetadata({this.sender, required this.metadata});
@@ -13,6 +15,12 @@ class OsmosisTokenFactoryMsgSetDenomMetadata extends CosmosMessage
     return OsmosisTokenFactoryMsgSetDenomMetadata(
         sender: decode.getField(1),
         metadata: Metadata.deserialize(decode.getField(2)));
+  }
+  factory OsmosisTokenFactoryMsgSetDenomMetadata.fromJson(
+      Map<String, dynamic> json) {
+    return OsmosisTokenFactoryMsgSetDenomMetadata(
+        sender: json.as("sender"),
+        metadata: Metadata.fromJson(json.asMap("metadata")));
   }
 
   @override
@@ -34,9 +42,6 @@ class OsmosisTokenFactoryMsgSetDenomMetadata extends CosmosMessage
     return EmptyServiceRequestResponse(
         OsmosisTokenFactoryV1beta1Types.msgSetDenomMetadataResponse);
   }
-
-  @override
-  TypeUrl get service => OsmosisTokenFactoryV1beta1Types.setDenomMetadata;
 
   @override
   List<String?> get signers => [sender];

@@ -30,19 +30,19 @@ class OsmosisConcentratedLiquidityPositionData extends CosmosMessage {
         spreadRewardAccumRecord:
             OsmosisAccumRecord.deserialize(decode.getField(3)),
         uptimeAccumRecords: decode
-            .getFields(4)
+            .getFields<List<int>>(4)
             .map((e) => OsmosisAccumRecord.deserialize(e))
             .toList());
   }
-  factory OsmosisConcentratedLiquidityPositionData.fromRpc(
+  factory OsmosisConcentratedLiquidityPositionData.fromJson(
       Map<String, dynamic> json) {
     return OsmosisConcentratedLiquidityPositionData(
         position: json["position"] == null
             ? null
-            : OsmosisConcentratedLiquidityPosition.fromRpc(json["position"]),
+            : OsmosisConcentratedLiquidityPosition.fromJson(json["position"]),
         lockId: BigintUtils.tryParse(json["lock_id"]),
         spreadRewardAccumRecord:
-            OsmosisAccumRecord.fromRpc(json["spread_reward_accum_record"]),
+            OsmosisAccumRecord.fromJson(json["spread_reward_accum_record"]),
         uptimeAccumRecords: (json["uptime_accum_records"] as List?)
                 ?.map((e) => OsmosisAccumRecord.deserialize(e))
                 .toList() ??

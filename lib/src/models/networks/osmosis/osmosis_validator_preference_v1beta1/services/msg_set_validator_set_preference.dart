@@ -1,12 +1,14 @@
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
+import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_validator_preference_v1beta1/core/service.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_validator_preference_v1beta1/messages/validator_preference.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_validator_preference_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:blockchain_utils/helper/helper.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// MsgCreateValidatorSetPreference is a list that holds validator-set.
 class OsmosisValidatorPreferenceMsgSetValidatorSetPreference
-    extends CosmosMessage with ServiceMessage<EmptyServiceRequestResponse> {
+    extends OsmosisValidatorPreferenceV1Beta1<EmptyServiceRequestResponse> {
   /// delegator is the user who is trying to create a validator-set.
   final String? delegator;
 
@@ -28,7 +30,17 @@ class OsmosisValidatorPreferenceMsgSetValidatorSetPreference
                 OsmosisValidatorPreferenceValidatorPreference.deserialize(e))
             .toList());
   }
-
+  factory OsmosisValidatorPreferenceMsgSetValidatorSetPreference.fromJson(
+      Map<String, dynamic> json) {
+    return OsmosisValidatorPreferenceMsgSetValidatorSetPreference(
+        delegator: json.as("delegator"),
+        preferences: json
+                .asListOfMap("preferences")
+                ?.map((e) =>
+                    OsmosisValidatorPreferenceValidatorPreference.fromJson(e))
+                .toList() ??
+            []);
+  }
   @override
   List<int> get fieldIds => [1, 2];
 
@@ -52,10 +64,6 @@ class OsmosisValidatorPreferenceMsgSetValidatorSetPreference
     return EmptyServiceRequestResponse(OsmosisValidatorPreferenceV1beta1Types
         .msgSetValidatorSetPreferenceResponse);
   }
-
-  @override
-  TypeUrl get service =>
-      OsmosisValidatorPreferenceV1beta1Types.setValidatorSetPreference;
 
   @override
   List<String?> get signers => [delegator];

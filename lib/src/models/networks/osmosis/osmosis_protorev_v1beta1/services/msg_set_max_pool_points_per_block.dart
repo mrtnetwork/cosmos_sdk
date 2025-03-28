@@ -1,10 +1,12 @@
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
+import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_protorev_v1beta1/core/service.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_protorev_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// MsgSetMaxPoolPointsPerBlock defines the Msg/SetMaxPoolPointsPerBlock request type
-class OsmosisProtorevMsgSetMsgSetMaxPoolPointsPerBlock extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class OsmosisProtorevMsgSetMsgSetMaxPoolPointsPerBlock
+    extends OsmosisProtorevV1Beta1<EmptyServiceRequestResponse> {
   /// [admin] is the account that is authorized to set the max pool points per
   /// block.
   final String? admin;
@@ -21,6 +23,12 @@ class OsmosisProtorevMsgSetMsgSetMaxPoolPointsPerBlock extends CosmosMessage
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisProtorevMsgSetMsgSetMaxPoolPointsPerBlock(
         admin: decode.getField(1), maxPoolPointsPerBlock: decode.getField(2));
+  }
+  factory OsmosisProtorevMsgSetMsgSetMaxPoolPointsPerBlock.fromJson(
+      Map<String, dynamic> json) {
+    return OsmosisProtorevMsgSetMsgSetMaxPoolPointsPerBlock(
+        admin: json.as("admin"),
+        maxPoolPointsPerBlock: json.asBigInt("max_pool_points_per_block"));
   }
 
   @override
@@ -46,9 +54,6 @@ class OsmosisProtorevMsgSetMsgSetMaxPoolPointsPerBlock extends CosmosMessage
     return EmptyServiceRequestResponse(
         OsmosisProtorevV1beta1Types.msgSetMaxPoolPointsPerBlockResponse);
   }
-
-  @override
-  TypeUrl get service => OsmosisProtorevV1beta1Types.setMaxPoolPointsPerBlock;
 
   @override
   List<String?> get signers => [admin];

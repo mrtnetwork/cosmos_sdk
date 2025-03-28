@@ -21,7 +21,7 @@ class OsmosisConcentratedLiquidityIncentiveRecordsResponse
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityIncentiveRecordsResponse(
         incentiveRecords: decode
-            .getFields(1)
+            .getFields<List<int>>(1)
             .map((e) =>
                 OsmosisConcentratedLiquidityIncentiveRecord.deserialize(e))
             .toList(),
@@ -29,17 +29,17 @@ class OsmosisConcentratedLiquidityIncentiveRecordsResponse
             .getResult(2)
             ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
   }
-  factory OsmosisConcentratedLiquidityIncentiveRecordsResponse.fromRpc(
+  factory OsmosisConcentratedLiquidityIncentiveRecordsResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisConcentratedLiquidityIncentiveRecordsResponse(
         incentiveRecords: (json["incentive_records"] as List?)
                 ?.map((e) =>
-                    OsmosisConcentratedLiquidityIncentiveRecord.fromRpc(e))
+                    OsmosisConcentratedLiquidityIncentiveRecord.fromJson(e))
                 .toList() ??
             <OsmosisConcentratedLiquidityIncentiveRecord>[],
         pagination: json["pagination"] == null
             ? null
-            : PageResponse.fromRpc(json["pagination"]));
+            : PageResponse.fromJson(json["pagination"]));
   }
 
   @override

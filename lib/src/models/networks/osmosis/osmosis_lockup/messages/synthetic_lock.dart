@@ -38,7 +38,7 @@ class OsmosisLockupSyntheticLock extends CosmosMessage {
       duration: ProtobufDuration.deserialize(decode.getField(4)),
     );
   }
-  factory OsmosisLockupSyntheticLock.fromRpc(Map<String, dynamic> json) {
+  factory OsmosisLockupSyntheticLock.fromJson(Map<String, dynamic> json) {
     return OsmosisLockupSyntheticLock(
         endTime: ProtobufTimestamp.fromString(json["end_time"]),
         duration: ProtobufDuration.fromString(json["duration"]),

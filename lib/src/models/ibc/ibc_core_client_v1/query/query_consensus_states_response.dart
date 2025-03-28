@@ -11,15 +11,15 @@ class QueryConsensusStatesResponse extends CosmosMessage {
 
   /// pagination response
   final PageResponse? pagination;
-  factory QueryConsensusStatesResponse.fromRpc(Map<String, dynamic> json) {
+  factory QueryConsensusStatesResponse.fromJson(Map<String, dynamic> json) {
     return QueryConsensusStatesResponse(
       consensusStates: (json[""] as List?)
-              ?.map((e) => ConsensusStateWithHeight.fromRpc(e))
+              ?.map((e) => ConsensusStateWithHeight.fromJson(e))
               .toList() ??
           [],
       pagination: json["pagination"] == null
           ? null
-          : PageResponse.fromRpc(json["pagination"]),
+          : PageResponse.fromJson(json["pagination"]),
     );
   }
   QueryConsensusStatesResponse(
@@ -30,7 +30,7 @@ class QueryConsensusStatesResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryConsensusStatesResponse(
         consensusStates: decode
-            .getFields(1)
+            .getFields<List<int>>(1)
             .map((e) => ConsensusStateWithHeight.deserialize(e))
             .toList(),
         pagination: decode

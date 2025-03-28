@@ -26,7 +26,7 @@ class DistributionParams extends CosmosMessage {
         bonusProposerReward: decode.getField(3),
         withdrawAddrEnabled: decode.getField(4));
   }
-  factory DistributionParams.fromRpc(Map<String, dynamic> json) {
+  factory DistributionParams.fromJson(Map<String, dynamic> json) {
     return DistributionParams(
         communityTax: json["community_tax"],
         baseProposerReward: json["base_proposer_reward"],

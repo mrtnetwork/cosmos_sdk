@@ -12,8 +12,8 @@ class QuerySupplyOfResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QuerySupplyOfResponse(amount: Coin.deserialize(decode.getField(1)));
   }
-  factory QuerySupplyOfResponse.fromRpc(Map<String, dynamic> json) {
-    return QuerySupplyOfResponse(amount: Coin.fromRpc(json["amount"]));
+  factory QuerySupplyOfResponse.fromJson(Map<String, dynamic> json) {
+    return QuerySupplyOfResponse(amount: Coin.fromJson(json["amount"]));
   }
   @override
   List<int> get fieldIds => [1];

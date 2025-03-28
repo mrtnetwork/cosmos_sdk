@@ -19,7 +19,7 @@ class OsmosisSuperfluidUnpoolSuperfluidIntermediaryAccountInfo
         gaugeId: decode.getField(3),
         address: decode.getField(4));
   }
-  factory OsmosisSuperfluidUnpoolSuperfluidIntermediaryAccountInfo.fromRpc(
+  factory OsmosisSuperfluidUnpoolSuperfluidIntermediaryAccountInfo.fromJson(
       Map<String, dynamic> json) {
     return OsmosisSuperfluidUnpoolSuperfluidIntermediaryAccountInfo(
         denom: json["denom"],

@@ -1,8 +1,10 @@
+import 'package:blockchain_utils/helper/extensions/extensions.dart';
 import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 
 class OsmosisTokenFactoryV1beta1Types extends TypeUrl {
   const OsmosisTokenFactoryV1beta1Types._(super.typeUrl,
       {super.query, super.rpc});
+  static const String root = "/osmosis.tokenfactory.v1beta1";
 
   static const OsmosisTokenFactoryV1beta1Types params =
       OsmosisTokenFactoryV1beta1Types._("/osmosis.tokenfactory.v1beta1.Params");
@@ -81,21 +83,14 @@ class OsmosisTokenFactoryV1beta1Types extends TypeUrl {
       OsmosisTokenFactoryV1beta1Types._(
           "/osmosis.tokenfactory.v1beta1.QueryDenomsFromCreatorResponse");
 
-  /// services
-
-  static const OsmosisTokenFactoryV1beta1Types setDenomMetadata =
-      OsmosisTokenFactoryV1beta1Types._(
-          "/osmosis.tokenfactory.v1beta1.Msg/SetDenomMetadata");
-  static const OsmosisTokenFactoryV1beta1Types changeAdmin =
-      OsmosisTokenFactoryV1beta1Types._(
-          "/osmosis.tokenfactory.v1beta1.Msg/ChangeAdmin");
-  static const OsmosisTokenFactoryV1beta1Types burn =
-      OsmosisTokenFactoryV1beta1Types._(
-          "/osmosis.tokenfactory.v1beta1.Msg/Burn");
-  static const OsmosisTokenFactoryV1beta1Types mint =
-      OsmosisTokenFactoryV1beta1Types._(
-          "/osmosis.tokenfactory.v1beta1.Msg/Mint");
-  static const OsmosisTokenFactoryV1beta1Types createDenom =
-      OsmosisTokenFactoryV1beta1Types._(
-          "/osmosis.tokenfactory.v1beta1.Msg/CreateDenom");
+  static const List<TypeUrl> services = [
+    msgCreateDenom,
+    msgBurn,
+    msgChangeAdmin,
+    msgMint,
+    msgSetDenomMetadata
+  ];
+  static TypeUrl? findService(String? typeUrl) {
+    return services.firstWhereNullable((e) => e.typeUrl == typeUrl);
+  }
 }

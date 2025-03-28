@@ -39,7 +39,7 @@ class OsmosisPoolManagerEstimateSwapExactAmountInWithPrimitiveTypesRequest
   @override
   OsmosisPoolManagerEstimateSwapExactAmountInResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisPoolManagerEstimateSwapExactAmountInResponse.fromRpc(json);
+    return OsmosisPoolManagerEstimateSwapExactAmountInResponse.fromJson(json);
   }
 
   @override

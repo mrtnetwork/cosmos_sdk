@@ -1,9 +1,14 @@
+import 'package:blockchain_utils/helper/helper.dart';
 import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 
 class SlashingV1beta1Types extends TypeUrl {
-  const SlashingV1beta1Types._(super.typeUrl, {super.query, super.rpc});
-  static const SlashingV1beta1Types slashingMsgUnjail =
-      SlashingV1beta1Types._("/cosmos.slashing.v1beta1.MsgUnjail");
+  const SlashingV1beta1Types._(super.typeUrl,
+      {super.query, super.rpc, super.aminoType});
+
+  static const String root = "/cosmos.slashing.v1beta1";
+  static const SlashingV1beta1Types slashingMsgUnjail = SlashingV1beta1Types._(
+      "/cosmos.slashing.v1beta1.MsgUnjail",
+      aminoType: "cosmos-sdk/MsgUnjail");
   static const SlashingV1beta1Types slashingMsgUnjailResponse =
       SlashingV1beta1Types._("/cosmos.slashing.v1beta1.MsgUnjailResponse");
   static const SlashingV1beta1Types slashingParams =
@@ -39,9 +44,11 @@ class SlashingV1beta1Types extends TypeUrl {
       SlashingV1beta1Types._(
           "/cosmos.slashing.v1beta1.QuerySigningInfosResponse");
 
-  /// service
-  static const SlashingV1beta1Types slashingUnjail =
-      SlashingV1beta1Types._("/cosmos.slashing.v1beta1.Msg/Unjail");
-  static const SlashingV1beta1Types slashingUpdateParams =
-      SlashingV1beta1Types._("/cosmos.slashing.v1beta1.Msg/UpdateParams");
+  static const List<TypeUrl> services = [
+    slashingMsgUnjail,
+    slashingMsgUpdateParams
+  ];
+  static TypeUrl? findService(String? typeUrl) {
+    return services.firstWhereNullable((e) => e.typeUrl == typeUrl);
+  }
 }

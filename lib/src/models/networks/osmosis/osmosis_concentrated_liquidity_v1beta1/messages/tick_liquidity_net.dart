@@ -13,7 +13,7 @@ class OsmosisConcentratedLiquidityTickLiquidityNet extends CosmosMessage {
     return OsmosisConcentratedLiquidityTickLiquidityNet(
         liquidityNet: decode.getField(1), tickIndex: decode.getField(2));
   }
-  factory OsmosisConcentratedLiquidityTickLiquidityNet.fromRpc(
+  factory OsmosisConcentratedLiquidityTickLiquidityNet.fromJson(
       Map<String, dynamic> json) {
     return OsmosisConcentratedLiquidityTickLiquidityNet(
         liquidityNet: json["liquidity_net"],

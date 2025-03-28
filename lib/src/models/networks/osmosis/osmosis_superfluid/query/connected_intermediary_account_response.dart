@@ -16,12 +16,12 @@ class OsmosisSuperfluidConnectedIntermediaryAccountResponse
             (e) => OsmosisSuperfluidUnpoolSuperfluidIntermediaryAccount
                 .deserialize(e)));
   }
-  factory OsmosisSuperfluidConnectedIntermediaryAccountResponse.fromRpc(
+  factory OsmosisSuperfluidConnectedIntermediaryAccountResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisSuperfluidConnectedIntermediaryAccountResponse(
         account: json["account"] == null
             ? null
-            : OsmosisSuperfluidUnpoolSuperfluidIntermediaryAccount.fromRpc(
+            : OsmosisSuperfluidUnpoolSuperfluidIntermediaryAccount.fromJson(
                 json["account"]));
   }
 

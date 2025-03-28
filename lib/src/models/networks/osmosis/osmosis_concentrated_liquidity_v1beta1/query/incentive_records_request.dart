@@ -41,7 +41,7 @@ class OsmosisConcentratedLiquidityIncentiveRecordsRequest extends CosmosMessage
   @override
   OsmosisConcentratedLiquidityIncentiveRecordsResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisConcentratedLiquidityIncentiveRecordsResponse.fromRpc(json);
+    return OsmosisConcentratedLiquidityIncentiveRecordsResponse.fromJson(json);
   }
 
   @override

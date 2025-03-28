@@ -24,13 +24,13 @@ class OsmosisGammPoolParams extends CosmosMessage {
             ?.to<OsmosisGammSmoothWeightChangeParams, List<int>>(
                 (e) => OsmosisGammSmoothWeightChangeParams.deserialize(e)));
   }
-  factory OsmosisGammPoolParams.fromRpc(Map<String, dynamic> json) {
+  factory OsmosisGammPoolParams.fromJson(Map<String, dynamic> json) {
     return OsmosisGammPoolParams(
         swapFee: json["swap_fee"],
         exitFee: json["exit_fee"],
         smoothWeightChangeParams: json["smooth_weight_change_params"] == null
             ? null
-            : OsmosisGammSmoothWeightChangeParams.fromRpc(
+            : OsmosisGammSmoothWeightChangeParams.fromJson(
                 json["smooth_weight_change_params"]));
   }
 

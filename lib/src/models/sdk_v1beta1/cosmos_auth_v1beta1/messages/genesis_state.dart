@@ -16,7 +16,10 @@ class AuthGenesisState extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return AuthGenesisState(
         params: AuthParams.deserialize(decode.getField(1)),
-        accounts: decode.getFields(2).map((e) => Any.deserialize(e)).toList());
+        accounts: decode
+            .getFields<List<int>>(2)
+            .map((e) => Any.deserialize(e))
+            .toList());
   }
 
   @override

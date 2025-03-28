@@ -10,19 +10,22 @@ class QueryNFTsResponse extends CosmosMessage {
 
   /// pagination defines the pagination in the response.
   final PageResponse? pagination;
-  factory QueryNFTsResponse.fromRpc(Map<String, dynamic> json) {
+  factory QueryNFTsResponse.fromJson(Map<String, dynamic> json) {
     return QueryNFTsResponse(
-      nfts: (json["nfts"] as List?)?.map((e) => NFT.fromRpc(e)).toList() ?? [],
+      nfts: (json["nfts"] as List?)?.map((e) => NFT.fromJson(e)).toList() ?? [],
       pagination: json["pagination"] == null
           ? null
-          : PageResponse.fromRpc(json["pagination"]),
+          : PageResponse.fromJson(json["pagination"]),
     );
   }
   QueryNFTsResponse({required this.nfts, this.pagination});
   factory QueryNFTsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryNFTsResponse(
-        nfts: decode.getFields(1).map((e) => NFT.deserialize(e)).toList(),
+        nfts: decode
+            .getFields<List<int>>(1)
+            .map((e) => NFT.deserialize(e))
+            .toList(),
         pagination: decode
             .getResult(2)
             ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));

@@ -1,13 +1,15 @@
 import 'package:blockchain_utils/blockchain_utils.dart';
+import 'package:cosmos_sdk/src/models/ibc/core/service.dart';
 
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 import 'msg_store_code_response.dart';
 
 /// MsgStoreCode defines the request type for the StoreCode rpc
-class IbcLightClientsWasmMsgStoreCode extends CosmosMessage
-    with ServiceMessage<IbcLightClientsWasmMsgStoreCodeResponse> {
+class IbcLightClientsWasmMsgStoreCode
+    extends IbcService<IbcLightClientsWasmMsgStoreCodeResponse> {
   /// signer address
   final String? signer;
 
@@ -20,12 +22,14 @@ class IbcLightClientsWasmMsgStoreCode extends CosmosMessage
     return IbcLightClientsWasmMsgStoreCode(
         signer: decode.getField(1), wasmByteCode: decode.getField(2));
   }
+  factory IbcLightClientsWasmMsgStoreCode.fromJson(Map<String, dynamic> json) {
+    return IbcLightClientsWasmMsgStoreCode(
+        signer: json.as("signer"),
+        wasmByteCode: json.asBytes("wasm_byte_code"));
+  }
 
   @override
   List<int> get fieldIds => [1, 2];
-
-  @override
-  TypeUrl get service => IbcTypes.ibcLightClientsWasmStoreCode;
 
   @override
   Map<String, dynamic> toJson() {

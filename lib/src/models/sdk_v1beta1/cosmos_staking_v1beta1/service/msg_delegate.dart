@@ -1,21 +1,20 @@
 import 'package:cosmos_sdk/src/address/address.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_v1beta1/messages/coin.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
+import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_staking_v1beta1/core/service.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_staking_v1beta1/types/types.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// MsgDelegate defines a SDK message for performing a delegation of coins from a delegator to a validator.
-class MsgDelegate extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class MsgDelegate extends StakingV1Beta1Service<EmptyServiceRequestResponse>
+    with AminoMessage<EmptyServiceRequestResponse> {
   final CosmosBaseAddress? delegatorAddress;
   final CosmosBaseAddress? validatorAddress;
   final Coin amount;
 
-  const MsgDelegate({
-    this.delegatorAddress,
-    this.validatorAddress,
-    required this.amount,
-  });
+  const MsgDelegate(
+      {this.delegatorAddress, this.validatorAddress, required this.amount});
   factory MsgDelegate.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgDelegate(
@@ -26,6 +25,12 @@ class MsgDelegate extends CosmosMessage
             .getResult(2)
             ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
         amount: Coin.deserialize(decode.getField(3)));
+  }
+  factory MsgDelegate.fromJson(Map<String, dynamic> json) {
+    return MsgDelegate(
+        delegatorAddress: json.asAddress("delegator_address"),
+        validatorAddress: json.asAddress("validator_address"),
+        amount: Coin.fromJson(json.asMap("amount")));
   }
 
   @override
@@ -47,8 +52,6 @@ class MsgDelegate extends CosmosMessage
   List get values =>
       [delegatorAddress?.address, validatorAddress?.address, amount];
 
-  @override
-  TypeUrl get service => StakingV1beta1Types.delegate;
   @override
   List<String?> get signers => [delegatorAddress?.address];
 

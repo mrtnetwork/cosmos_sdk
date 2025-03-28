@@ -33,6 +33,6 @@ class Bech32PrefixRequest extends CosmosMessage
 
   @override
   Bech32PrefixResponse onJsonResponse(Map<String, dynamic> json) {
-    return Bech32PrefixResponse.fromRpc(json);
+    return Bech32PrefixResponse.fromJson(json);
   }
 }

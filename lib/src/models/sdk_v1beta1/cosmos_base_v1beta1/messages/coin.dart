@@ -17,7 +17,7 @@ class Coin extends CosmosMessage {
         denom: decode.getField<String>(1),
         amount: BigintUtils.parse(decode.getField<String>(2)));
   }
-  factory Coin.fromRpc(Map<String, dynamic> json) {
+  factory Coin.fromJson(Map<String, dynamic> json) {
     return Coin(denom: json["denom"], amount: BigInt.parse(json["amount"]));
   }
 
@@ -31,8 +31,8 @@ class Coin extends CosmosMessage {
   @override
   Map<String, dynamic> toJson() {
     return {
-      "denom": denom,
       "amount": amount.toString(),
+      "denom": denom,
     };
   }
 

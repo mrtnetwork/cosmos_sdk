@@ -22,7 +22,7 @@ class OsmosisPoolManagerEstimateSwapExactAmountInRequest extends CosmosMessage
       poolId: decode.getField(2),
       tokenIn: decode.getField(3),
       routes: decode
-          .getFields(4)
+          .getFields<List<int>>(4)
           .map((e) => OsmosisPoolManagerSwapAmountInRoute.deserialize(e))
           .toList(),
     );
@@ -34,7 +34,7 @@ class OsmosisPoolManagerEstimateSwapExactAmountInRequest extends CosmosMessage
   @override
   OsmosisPoolManagerEstimateSwapExactAmountInResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisPoolManagerEstimateSwapExactAmountInResponse.fromRpc(json);
+    return OsmosisPoolManagerEstimateSwapExactAmountInResponse.fromJson(json);
   }
 
   @override

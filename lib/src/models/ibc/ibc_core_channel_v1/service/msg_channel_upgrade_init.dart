@@ -1,14 +1,15 @@
+import 'package:cosmos_sdk/src/models/ibc/core/service.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_channel_v1/messages/upgrade_fields.dart';
 
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 import 'msg_channel_upgrade_init_response.dart';
 
 /// MsgChannelUpgradeInit defines the request type for the ChannelUpgradeInit rpc WARNING: Initializing a channel upgrade in the
 /// same block as opening the channel may result in the counterparty being incapable of opening.
-class MsgChannelUpgradeInit extends CosmosMessage
-    with ServiceMessage<MsgChannelUpgradeInitResponse> {
+class MsgChannelUpgradeInit extends IbcService<MsgChannelUpgradeInitResponse> {
   final String? portId;
   final String? channelId;
   final UpgradeFields fields;
@@ -23,12 +24,16 @@ class MsgChannelUpgradeInit extends CosmosMessage
         fields: UpgradeFields.deserialize(decode.getField(3)),
         signer: decode.getField(4));
   }
+  factory MsgChannelUpgradeInit.fromJson(Map<String, dynamic> json) {
+    return MsgChannelUpgradeInit(
+        portId: json.as("port_id"),
+        channelId: json.as("channel_id"),
+        fields: UpgradeFields.fromJson(json.asMap("fields")),
+        signer: json.as("signer"));
+  }
 
   @override
   List<int> get fieldIds => [1, 2, 3, 4];
-
-  @override
-  TypeUrl get service => IbcTypes.channelUpgradeInit;
 
   @override
   Map<String, dynamic> toJson() {

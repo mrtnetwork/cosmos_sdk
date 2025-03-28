@@ -30,7 +30,7 @@ class OsmosisCosmWasmPoolParamsRequest extends CosmosMessage
 
   @override
   OsmosisCosmWasmPoolParamsResponse onJsonResponse(Map<String, dynamic> json) {
-    return OsmosisCosmWasmPoolParamsResponse.fromRpc(json);
+    return OsmosisCosmWasmPoolParamsResponse.fromJson(json);
   }
 
   @override

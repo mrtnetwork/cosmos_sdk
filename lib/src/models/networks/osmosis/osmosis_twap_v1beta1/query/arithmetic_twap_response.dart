@@ -10,7 +10,8 @@ class OsmosisTwapArithmeticTwapResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisTwapArithmeticTwapResponse(decode.getField(1));
   }
-  factory OsmosisTwapArithmeticTwapResponse.fromRpc(Map<String, dynamic> json) {
+  factory OsmosisTwapArithmeticTwapResponse.fromJson(
+      Map<String, dynamic> json) {
     return OsmosisTwapArithmeticTwapResponse(json["arithmetic_twap"]);
   }
 

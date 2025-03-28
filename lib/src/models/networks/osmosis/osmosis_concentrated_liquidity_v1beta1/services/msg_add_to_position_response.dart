@@ -18,7 +18,7 @@ class OsmosisConcentratedLiquidityMsgAddToPositionResponse
         amount0: BigInt.parse(decode.getField(2)),
         amount1: BigInt.parse(decode.getField(3)));
   }
-  factory OsmosisConcentratedLiquidityMsgAddToPositionResponse.fromRpc(
+  factory OsmosisConcentratedLiquidityMsgAddToPositionResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisConcentratedLiquidityMsgAddToPositionResponse(
         positionId: BigintUtils.tryParse(json["position_id"]),

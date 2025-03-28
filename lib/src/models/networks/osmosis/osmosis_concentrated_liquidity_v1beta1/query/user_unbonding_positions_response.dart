@@ -16,18 +16,18 @@ class OsmosisConcentratedLiquidityUserUnbondingPositionsResponse
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityUserUnbondingPositionsResponse(
         positions: decode
-            .getFields(1)
+            .getFields<List<int>>(1)
             .map((e) =>
                 OsmosisConcentratedLiquidityPositionWithPeriodLock.deserialize(
                     e))
             .toList());
   }
-  factory OsmosisConcentratedLiquidityUserUnbondingPositionsResponse.fromRpc(
+  factory OsmosisConcentratedLiquidityUserUnbondingPositionsResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisConcentratedLiquidityUserUnbondingPositionsResponse(
         positions: (json["positions"] as List?)
                 ?.map((e) =>
-                    OsmosisConcentratedLiquidityPositionWithPeriodLock.fromRpc(
+                    OsmosisConcentratedLiquidityPositionWithPeriodLock.fromJson(
                         e))
                 .toList() ??
             <OsmosisConcentratedLiquidityPositionWithPeriodLock>[]);

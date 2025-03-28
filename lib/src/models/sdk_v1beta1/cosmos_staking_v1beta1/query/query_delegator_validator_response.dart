@@ -12,9 +12,9 @@ class QueryDelegatorValidatorResponse extends CosmosMessage {
     return QueryDelegatorValidatorResponse(
         StakingValidator.deserialize(decode.getField(1)));
   }
-  factory QueryDelegatorValidatorResponse.fromRpc(Map<String, dynamic> json) {
+  factory QueryDelegatorValidatorResponse.fromJson(Map<String, dynamic> json) {
     return QueryDelegatorValidatorResponse(
-        StakingValidator.fromRpc(json["validator"]));
+        StakingValidator.fromJson(json["validator"]));
   }
   @override
   List<int> get fieldIds => [1];

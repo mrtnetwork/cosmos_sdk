@@ -31,6 +31,6 @@ class InterchainAccountsControllerQueryParamsRequest extends CosmosMessage
   @override
   InterchainAccountsControllerQueryParamsResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return InterchainAccountsControllerQueryParamsResponse.fromRpc(json);
+    return InterchainAccountsControllerQueryParamsResponse.fromJson(json);
   }
 }

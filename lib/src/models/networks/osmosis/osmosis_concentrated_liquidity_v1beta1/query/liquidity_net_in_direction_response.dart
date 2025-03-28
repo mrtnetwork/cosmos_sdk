@@ -22,7 +22,7 @@ class OsmosisConcentratedLiquidityLiquidityNetInDirectionResponse
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityLiquidityNetInDirectionResponse(
         liquidityDepths: decode
-            .getFields(1)
+            .getFields<List<int>>(1)
             .map((e) =>
                 OsmosisConcentratedLiquidityTickLiquidityNet.deserialize(e))
             .toList(),
@@ -30,7 +30,7 @@ class OsmosisConcentratedLiquidityLiquidityNetInDirectionResponse
         currentLiquidity: decode.getField(3),
         currentSqrtPrice: decode.getField(4));
   }
-  factory OsmosisConcentratedLiquidityLiquidityNetInDirectionResponse.fromRpc(
+  factory OsmosisConcentratedLiquidityLiquidityNetInDirectionResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisConcentratedLiquidityLiquidityNetInDirectionResponse(
       currentLiquidity: json["current_liquidity"],
@@ -38,7 +38,7 @@ class OsmosisConcentratedLiquidityLiquidityNetInDirectionResponse
       currentTick: BigintUtils.tryParse(json["current_tick"]),
       liquidityDepths: (json["liquidity_depths"] as List?)
               ?.map((e) =>
-                  OsmosisConcentratedLiquidityTickLiquidityNet.fromRpc(e))
+                  OsmosisConcentratedLiquidityTickLiquidityNet.fromJson(e))
               .toList() ??
           <OsmosisConcentratedLiquidityTickLiquidityNet>[],
     );

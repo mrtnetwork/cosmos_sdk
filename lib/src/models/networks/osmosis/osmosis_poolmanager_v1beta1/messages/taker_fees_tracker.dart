@@ -17,22 +17,26 @@ class OsmosisPoolManagerTakerFeesTracker extends CosmosMessage {
   factory OsmosisPoolManagerTakerFeesTracker.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolManagerTakerFeesTracker(
-        takerFeesToStakers:
-            decode.getFields(1).map((e) => Coin.deserialize(e)).toList(),
-        takerFeesToCommunityPool:
-            decode.getFields(2).map((e) => Coin.deserialize(e)).toList(),
+        takerFeesToStakers: decode
+            .getFields<List<int>>(1)
+            .map((e) => Coin.deserialize(e))
+            .toList(),
+        takerFeesToCommunityPool: decode
+            .getFields<List<int>>(2)
+            .map((e) => Coin.deserialize(e))
+            .toList(),
         heightAccountingStartsFrom: decode.getField(3));
   }
-  factory OsmosisPoolManagerTakerFeesTracker.fromRpc(
+  factory OsmosisPoolManagerTakerFeesTracker.fromJson(
       Map<String, dynamic> json) {
     return OsmosisPoolManagerTakerFeesTracker(
         takerFeesToStakers: (json["taker_fees_to_stakers"] as List?)
-                ?.map((e) => Coin.fromRpc(e))
+                ?.map((e) => Coin.fromJson(e))
                 .toList() ??
             <Coin>[],
         takerFeesToCommunityPool:
             (json["taker_fees_to_community_pool"] as List?)
-                    ?.map((e) => Coin.fromRpc(e))
+                    ?.map((e) => Coin.fromJson(e))
                     .toList() ??
                 <Coin>[],
         heightAccountingStartsFrom:

@@ -11,7 +11,7 @@ class QueryNextSequenceReceiveRequest extends CosmosMessage
 
   /// channel unique identifier
   final String channelId;
-  factory QueryNextSequenceReceiveRequest.fromRpc(Map<String, dynamic> json) {
+  factory QueryNextSequenceReceiveRequest.fromJson(Map<String, dynamic> json) {
     return QueryNextSequenceReceiveRequest(
         portId: json["port_id"], channelId: json["channel_id"]);
   }
@@ -44,7 +44,7 @@ class QueryNextSequenceReceiveRequest extends CosmosMessage
 
   @override
   QueryNextSequenceReceiveResponse onJsonResponse(Map<String, dynamic> json) {
-    return QueryNextSequenceReceiveResponse.fromRpc(json);
+    return QueryNextSequenceReceiveResponse.fromJson(json);
   }
 
   @override

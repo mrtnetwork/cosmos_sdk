@@ -1,16 +1,21 @@
+import 'package:blockchain_utils/helper/helper.dart';
 import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 
 class DistributionV1beta1Types extends TypeUrl {
-  const DistributionV1beta1Types._(super.typeUrl, {super.query, super.rpc});
+  const DistributionV1beta1Types._(super.typeUrl,
+      {super.query, super.rpc, super.aminoType});
+  static const String root = "/cosmos.distribution.v1beta1";
   static const DistributionV1beta1Types distributionMsgSetWithdrawAddress =
       DistributionV1beta1Types._(
-          "/cosmos.distribution.v1beta1.MsgSetWithdrawAddress");
+          "/cosmos.distribution.v1beta1.MsgSetWithdrawAddress",
+          aminoType: "cosmos-sdk/MsgModifyWithdrawAddress");
   static const DistributionV1beta1Types
       distributionMsgSetWithdrawAddressResponse = DistributionV1beta1Types._(
           "/cosmos.distribution.v1beta1.MsgSetWithdrawAddressResponse");
   static const DistributionV1beta1Types distributionMsgWithdrawDelegatorReward =
       DistributionV1beta1Types._(
-          "/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward");
+          "/cosmos.distribution.v1beta1.MsgWithdrawDelegatorReward",
+          aminoType: "cosmos-sdk/MsgWithdrawDelegationReward");
   static const DistributionV1beta1Types
       distributionMsgWithdrawDelegatorRewardResponse =
       DistributionV1beta1Types._(
@@ -18,11 +23,19 @@ class DistributionV1beta1Types extends TypeUrl {
 
   static const DistributionV1beta1Types
       distributionMsgWithdrawValidatorCommission = DistributionV1beta1Types._(
-          "/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission");
+          "/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommission",
+          aminoType: "cosmos-sdk/MsgWithdrawValidatorCommission");
   static const DistributionV1beta1Types
       distributionMsgWithdrawValidatorCommissionResponse =
       DistributionV1beta1Types._(
           "/cosmos.distribution.v1beta1.MsgWithdrawValidatorCommissionResponse");
+  static const DistributionV1beta1Types distributionMsgFundCommunityPool =
+      DistributionV1beta1Types._(
+          "/cosmos.distribution.v1beta1.MsgFundCommunityPool",
+          aminoType: "cosmos-sdk/MsgFundCommunityPool");
+  static const DistributionV1beta1Types
+      distributionMsgFundCommunityPoolResponse = DistributionV1beta1Types._(
+          "/cosmos.distribution.v1beta1.MsgFundCommunityPoolResponse");
   static const DistributionV1beta1Types distributionParams =
       DistributionV1beta1Types._("/cosmos.distribution.v1beta1.Params");
   static const DistributionV1beta1Types distributionMsgUpdateParams =
@@ -168,20 +181,14 @@ class DistributionV1beta1Types extends TypeUrl {
       DistributionV1beta1Types._(
           "/cosmos.distribution.v1beta1.QueryDelegatorWithdrawAddressResponse");
 
-  /// service
-  static const DistributionV1beta1Types distributionSetWithdrawAddress =
-      DistributionV1beta1Types._(
-          "/cosmos.distribution.v1beta1.Msg/SetWithdrawAddress");
-  static const DistributionV1beta1Types distributionWithdrawDelegatorReward =
-      DistributionV1beta1Types._(
-          "/cosmos.distribution.v1beta1.Msg/WithdrawDelegatorReward");
-  static const DistributionV1beta1Types
-      distributionWithdrawValidatorCommission = DistributionV1beta1Types._(
-          "/cosmos.distribution.v1beta1.Msg/WithdrawValidatorCommission");
-  static const DistributionV1beta1Types distributionUpdateParams =
-      DistributionV1beta1Types._(
-          "/cosmos.distribution.v1beta1.Msg/UpdateParams");
-  static const DistributionV1beta1Types
-      distributionDepositValidatorRewardsPool = DistributionV1beta1Types._(
-          "/cosmos.distribution.v1beta1.Msg/DepositValidatorRewardsPool");
+  static const List<TypeUrl> services = [
+    distributionMsgDepositValidatorRewardsPool,
+    distributionMsgSetWithdrawAddress,
+    distributionMsgUpdateParams,
+    distributionMsgWithdrawDelegatorReward,
+    distributionMsgWithdrawValidatorCommission
+  ];
+  static TypeUrl? findService(String? typeUrl) {
+    return services.firstWhereNullable((e) => e.typeUrl == typeUrl);
+  }
 }

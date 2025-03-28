@@ -38,7 +38,7 @@ class IbcConnectionQueryClientConnectionsRequest extends CosmosMessage
   @override
   IbcConnectionQueryClientConnectionsResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return IbcConnectionQueryClientConnectionsResponse.fromRpc(json);
+    return IbcConnectionQueryClientConnectionsResponse.fromJson(json);
   }
 
   @override

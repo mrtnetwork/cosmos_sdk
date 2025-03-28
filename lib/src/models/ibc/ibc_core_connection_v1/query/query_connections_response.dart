@@ -9,17 +9,17 @@ class IbcCOnnectionQueryConnectionsResponse extends CosmosMessage {
   final List<IbcConnectionIdentifiedConnection>? connections;
   final PageResponse? pagination;
   final IbcClientHeight height;
-  factory IbcCOnnectionQueryConnectionsResponse.fromRpc(
+  factory IbcCOnnectionQueryConnectionsResponse.fromJson(
       Map<String, dynamic> json) {
     return IbcCOnnectionQueryConnectionsResponse(
       connections: (json["connections"] as List?)
-              ?.map((e) => IbcConnectionIdentifiedConnection.fromRpc(e))
+              ?.map((e) => IbcConnectionIdentifiedConnection.fromJson(e))
               .toList() ??
           [],
-      height: IbcClientHeight.fromRpc(json["height"]),
+      height: IbcClientHeight.fromJson(json["height"]),
       pagination: json["pagination"] == null
           ? null
-          : PageResponse.fromRpc(json["pagination"]),
+          : PageResponse.fromJson(json["pagination"]),
     );
   }
   IbcCOnnectionQueryConnectionsResponse(
@@ -31,7 +31,7 @@ class IbcCOnnectionQueryConnectionsResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcCOnnectionQueryConnectionsResponse(
       connections: decode
-          .getFields(1)
+          .getFields<List<int>>(1)
           .map((e) => IbcConnectionIdentifiedConnection.deserialize(e))
           .toList(),
       pagination: decode

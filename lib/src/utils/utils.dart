@@ -33,14 +33,6 @@ class CosmosUtils {
     return StringUtils.tryDecode(data, type: StringEncoding.base64);
   }
 
-  static void validateMessageType(String? excepted, String? type) {
-    if (excepted == null) return;
-    if (excepted != type) {
-      throw DartCosmosSdkPluginException("Invalid message type",
-          details: {"Excepted": excepted, "Type": type});
-    }
-  }
-
   static final RegExp _pathParamRegex = RegExp(r':\w+');
   static List<String> extractParams(String url) {
     final Iterable<Match> matches = _pathParamRegex.allMatches(url);
@@ -49,5 +41,45 @@ class CosmosUtils {
       params.add(match.group(0)!);
     }
     return List<String>.unmodifiable(params);
+  }
+
+  static String extractServiceRoot(String typeUrl) {
+    final index = typeUrl.lastIndexOf(".");
+    final root = typeUrl.substring(0, index);
+    return root;
+  }
+
+  static String convertToServiceTypeUrl(String typeUrl) {
+    // Ensure the typeUrl starts with a slash
+    if (!typeUrl.startsWith('/')) {
+      throw DartCosmosSdkPluginException('Type URL must start with a slash');
+    }
+
+    // Remove the leading slash and split by dots
+    final parts = typeUrl.substring(1).split('.');
+    // Get the last part which contains the service and method name
+    final lastPart = parts.removeLast();
+    // Find where the method name starts
+    final methodStart = lastPart.indexOf(RegExp(r'[A-Z]'), 3); // After 'Msg'
+    // Separate service name and method name
+    final serviceName = lastPart.substring(0, methodStart);
+    final methodName = lastPart.substring(methodStart);
+    return '/${parts.join('.')}.$serviceName/$methodName';
+  }
+
+  static Object? sortAminoJsonTx(Object? obj) {
+    if (obj is Map) {
+      final keys = obj.keys.cast<String>().toList()
+        ..sort((a, b) => a.compareTo(b));
+      final Map<String, dynamic> result = {};
+      for (final i in keys) {
+        final value = obj[i];
+        result[i] = sortAminoJsonTx(value);
+      }
+      return result;
+    } else if (obj is List) {
+      return obj.map((e) => sortAminoJsonTx(e)).toList();
+    }
+    return obj;
   }
 }

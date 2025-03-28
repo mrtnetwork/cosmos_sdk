@@ -35,7 +35,7 @@ class OsmosisConcentratedLiquidityMsgCreatePositionResponse
         lowerTick: decode.getField(6),
         upperTick: decode.getField(7));
   }
-  factory OsmosisConcentratedLiquidityMsgCreatePositionResponse.fromRpc(
+  factory OsmosisConcentratedLiquidityMsgCreatePositionResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisConcentratedLiquidityMsgCreatePositionResponse(
         positionId: BigintUtils.tryParse(json["position_id"]),

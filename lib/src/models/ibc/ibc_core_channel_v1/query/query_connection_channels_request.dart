@@ -44,7 +44,7 @@ class QueryConnectionChannelsRequest extends CosmosMessage
 
   @override
   QueryConnectionChannelsResponse onJsonResponse(Map<String, dynamic> json) {
-    return QueryConnectionChannelsResponse.fromRpc(json);
+    return QueryConnectionChannelsResponse.fromJson(json);
   }
 
   @override

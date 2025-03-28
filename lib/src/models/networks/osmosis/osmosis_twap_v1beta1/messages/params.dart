@@ -15,7 +15,7 @@ class OsmosisTwapParams extends CosmosMessage {
         recordHistoryKeepPeriod:
             ProtobufDuration.deserialize(decode.getField(2)));
   }
-  factory OsmosisTwapParams.fromRpc(Map<String, dynamic> json) {
+  factory OsmosisTwapParams.fromJson(Map<String, dynamic> json) {
     return OsmosisTwapParams(
         recordHistoryKeepPeriod:
             ProtobufDuration.fromString(json["record_history_keep_period"]),

@@ -13,12 +13,12 @@ class DefaultNodeInfo extends CosmosMessage {
   final List<int>? channels;
   final String? moniker;
   final DefaultNodeInfoOther other;
-  factory DefaultNodeInfo.fromRpc(Map<String, dynamic> json) {
+  factory DefaultNodeInfo.fromJson(Map<String, dynamic> json) {
     return DefaultNodeInfo(
-        protocolVersion: ProtocolVersion.fromRpc(json["protocol_version"]),
+        protocolVersion: ProtocolVersion.fromJson(json["protocol_version"]),
         channels: StringUtils.tryEncode(json["channels"],
             type: StringEncoding.base64),
-        other: DefaultNodeInfoOther.fromRpc(json["other"]),
+        other: DefaultNodeInfoOther.fromJson(json["other"]),
         defaultNodeId: json["default_node_id"],
         listenAddress: json["listen_addr"],
         moniker: json["moniker"],

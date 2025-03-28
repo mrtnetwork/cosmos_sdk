@@ -21,7 +21,7 @@ class RedelegationEntry extends CosmosMessage {
 
   /// Strictly positive if this entry's unbonding has been stopped by external modules
   final BigInt? unbondingOnHoldRefCount;
-  factory RedelegationEntry.fromRpc(Map<String, dynamic> json) {
+  factory RedelegationEntry.fromJson(Map<String, dynamic> json) {
     return RedelegationEntry(
         completionTime: ProtobufTimestamp.fromString(json["completion_time"]),
         initialBalance: BigintUtils.parse(json["initial_balance"]),

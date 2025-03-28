@@ -17,7 +17,7 @@ class OsmosisSuperfluidAllIntermediaryAccountsResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidAllIntermediaryAccountsResponse(
         accounts: decode
-            .getFields(1)
+            .getFields<List<int>>(1)
             .map((e) => OsmosisSuperfluidUnpoolSuperfluidIntermediaryAccountInfo
                 .deserialize(e))
             .toList(),
@@ -25,14 +25,14 @@ class OsmosisSuperfluidAllIntermediaryAccountsResponse extends CosmosMessage {
             .getResult(2)
             ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
   }
-  factory OsmosisSuperfluidAllIntermediaryAccountsResponse.fromRpc(
+  factory OsmosisSuperfluidAllIntermediaryAccountsResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisSuperfluidAllIntermediaryAccountsResponse(
-        pagination: PageResponse.fromRpc(json["pagination"]),
+        pagination: PageResponse.fromJson(json["pagination"]),
         accounts: (json["accounts"] as List?)
                 ?.map((e) =>
                     OsmosisSuperfluidUnpoolSuperfluidIntermediaryAccountInfo
-                        .fromRpc(e))
+                        .fromJson(e))
                 .toList() ??
             <OsmosisSuperfluidUnpoolSuperfluidIntermediaryAccountInfo>[]);
   }

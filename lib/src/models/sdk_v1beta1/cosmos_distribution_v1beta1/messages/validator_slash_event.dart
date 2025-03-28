@@ -8,7 +8,7 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class DistributionValidatorSlashEvent extends CosmosMessage {
   final BigInt? validatorPeriod;
   final String fraction;
-  factory DistributionValidatorSlashEvent.fromRpc(Map<String, dynamic> json) {
+  factory DistributionValidatorSlashEvent.fromJson(Map<String, dynamic> json) {
     return DistributionValidatorSlashEvent(
         fraction: json["fraction"],
         validatorPeriod: BigintUtils.tryParse(json["validator_period"]));

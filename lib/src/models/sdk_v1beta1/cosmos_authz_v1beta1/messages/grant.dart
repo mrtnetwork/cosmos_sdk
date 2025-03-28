@@ -2,6 +2,7 @@ import 'package:cosmos_sdk/src/models/global_messages/unknown_message.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_authz_v1beta1/types/types.dart';
 
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// Grant gives permissions to execute the provide method with expiration time.
 class AuthzGrant extends CosmosMessage {
@@ -12,14 +13,12 @@ class AuthzGrant extends CosmosMessage {
   /// may apply to invalidate the grant)
   final ProtobufTimestamp? expiration;
   const AuthzGrant({this.authorization, required this.expiration});
-  factory AuthzGrant.fromRpc(Map<String, dynamic> json) {
+  factory AuthzGrant.fromJson(Map<String, dynamic> json) {
     return AuthzGrant(
-      authorization: json["authorization"] == null
-          ? null
-          : AnyMessage.fromRpc(json["authorization"]),
-      expiration: json["expiration"] == null
-          ? null
-          : ProtobufTimestamp.fromString(json["expiration"]),
+      authorization: json.maybeAs<AnyMessage, Map<String, dynamic>>(
+          key: "authorization", onValue: (e) => AnyMessage.fromJson(e)),
+      expiration: json.maybeAs<ProtobufTimestamp, String>(
+          key: "expiration", onValue: (e) => ProtobufTimestamp.fromString(e)),
     );
   }
   factory AuthzGrant.deserialize(List<int> bytes) {

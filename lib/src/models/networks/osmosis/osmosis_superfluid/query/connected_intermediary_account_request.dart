@@ -35,7 +35,7 @@ class OsmosisSuperfluidConnectedIntermediaryAccountRequest extends CosmosMessage
   @override
   OsmosisSuperfluidConnectedIntermediaryAccountResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisSuperfluidConnectedIntermediaryAccountResponse.fromRpc(json);
+    return OsmosisSuperfluidConnectedIntermediaryAccountResponse.fromJson(json);
   }
 
   @override

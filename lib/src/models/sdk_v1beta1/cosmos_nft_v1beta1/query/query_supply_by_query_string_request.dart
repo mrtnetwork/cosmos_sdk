@@ -37,7 +37,7 @@ class QueryNFTSupplyByQueryStringRequest extends CosmosMessage
   @override
   QueryNFTSupplyByQueryStringResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return QueryNFTSupplyByQueryStringResponse.fromRpc(json);
+    return QueryNFTSupplyByQueryStringResponse.fromJson(json);
   }
 
   @override

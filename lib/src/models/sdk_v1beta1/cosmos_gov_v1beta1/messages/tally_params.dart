@@ -17,7 +17,7 @@ class GovTallyParams extends CosmosMessage {
   /// vetoed. Default value: 1/3.
   final List<int> vetoThreshold;
 
-  factory GovTallyParams.fromRpc(Map<String, dynamic> json) {
+  factory GovTallyParams.fromJson(Map<String, dynamic> json) {
     return GovTallyParams(
       quorum: CosmosUtils.toBytes(json["quorum"]),
       threshold: CosmosUtils.toBytes(json["threshold"]),

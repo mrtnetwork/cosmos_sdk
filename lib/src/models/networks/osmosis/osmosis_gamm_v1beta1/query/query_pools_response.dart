@@ -22,12 +22,12 @@ class OsmosisGammQueryPoolsResponse extends CosmosMessage {
             .getResult(2)
             ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
   }
-  factory OsmosisGammQueryPoolsResponse.fromRpc(Map<String, dynamic> json) {
+  factory OsmosisGammQueryPoolsResponse.fromJson(Map<String, dynamic> json) {
     return OsmosisGammQueryPoolsResponse(
         pools: (json["pools"] as List?)
-            ?.map((e) => AnyMessage.fromRpc(e))
+            ?.map((e) => AnyMessage.fromJson(e))
             .toList(),
-        pagination: PageResponse.fromRpc(json["pagination"]));
+        pagination: PageResponse.fromJson(json["pagination"]));
   }
 
   @override

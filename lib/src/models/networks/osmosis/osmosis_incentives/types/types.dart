@@ -1,7 +1,9 @@
+import 'package:blockchain_utils/helper/extensions/extensions.dart';
 import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 
 class OsmosisIncentivesTypes extends TypeUrl {
   const OsmosisIncentivesTypes._(super.typeUrl, {super.query, super.rpc});
+  static const String root = "/osmosis.incentives";
   static const OsmosisIncentivesTypes gauge =
       OsmosisIncentivesTypes._("/osmosis.incentives.Gauge");
 
@@ -88,9 +90,8 @@ class OsmosisIncentivesTypes extends TypeUrl {
       OsmosisIncentivesTypes._(
           "/osmosis.incentives.QueryLockableDurationsResponse");
 
-  /// services
-  static const OsmosisIncentivesTypes createGauge =
-      OsmosisIncentivesTypes._("/osmosis.incentives.Msg/CreateGauge");
-  static const OsmosisIncentivesTypes addToGauge =
-      OsmosisIncentivesTypes._("/osmosis.incentives.Msg/AddToGauge");
+  static const List<TypeUrl> services = [msgAddToGauge, msgCreateGauge];
+  static TypeUrl? findService(String? typeUrl) {
+    return services.firstWhereNullable((e) => e.typeUrl == typeUrl);
+  }
 }

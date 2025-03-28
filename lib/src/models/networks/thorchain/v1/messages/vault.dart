@@ -43,7 +43,7 @@ class ThorchainVault extends CosmosMessage {
         blockHeight: decode.getField(1),
         pubKey: decode.getField(2),
         coins: decode
-            .getFields(3)
+            .getFields<List<int>>(3)
             .map((e) => ThorchainCoin.deserialize(e))
             .toList(),
         type: decode.getResult(4)?.to<ThorchainVaultType, int>(
@@ -51,8 +51,8 @@ class ThorchainVault extends CosmosMessage {
         status: decode.getResult(5)?.to<ThorchainVaultStatus, int>(
             (e) => ThorchainVaultStatus.fromValue(e)),
         statusSince: decode.getField(6),
-        membership: decode.getFields(7),
-        chains: decode.getFields(8),
+        membership: decode.getFields<String>(7),
+        chains: decode.getFields<String>(8),
         inboundTxCount: decode.getField(9),
         outboundTxCount: decode.getField(10),
         pendingTxBlockHeights: decode
@@ -61,7 +61,7 @@ class ThorchainVault extends CosmosMessage {
                     (e) => e.map((e) => BigintUtils.parse(e)).toList()) ??
             <BigInt>[],
         routers: decode
-            .getFields(22)
+            .getFields<List<int>>(22)
             .map((e) => ThorchainChainContract.deserialize(e))
             .toList(),
         frozen: decode.getFields<String>(23));

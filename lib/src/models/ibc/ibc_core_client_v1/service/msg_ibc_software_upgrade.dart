@@ -1,12 +1,13 @@
+import 'package:cosmos_sdk/src/models/ibc/core/service.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_upgrade_v1beta1/messages/plan.dart';
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// MsgIBCSoftwareUpgrade defines the message used to
 /// schedule an upgrade of an IBC client using a v1 governance proposal
-class MsgIBCSoftwareUpgrade extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class MsgIBCSoftwareUpgrade extends IbcService<EmptyServiceRequestResponse> {
   final Plan plan;
 
   /// An UpgradedClientState must be provided to perform an IBC breaking upgrade.
@@ -24,11 +25,24 @@ class MsgIBCSoftwareUpgrade extends CosmosMessage
   const MsgIBCSoftwareUpgrade(
       {required this.plan, required this.upgradedClientState, this.signer});
 
-  @override
-  List<int> get fieldIds => [1, 2, 3];
+  factory MsgIBCSoftwareUpgrade.deserialize(List<int> bytes) {
+    final decode = CosmosProtocolBuffer.decode(bytes);
+    return MsgIBCSoftwareUpgrade(
+        plan: Plan.deserialize(decode.getField(1)),
+        upgradedClientState:
+            decode.getResult(2)?.to<Any, List<int>>(Any.deserialize),
+        signer: decode.getField(3));
+  }
+  factory MsgIBCSoftwareUpgrade.fromJson(Map<String, dynamic> json) {
+    return MsgIBCSoftwareUpgrade(
+        plan: Plan.fromJson(json.asMap("plan")),
+        upgradedClientState: json.maybeAs<Any, Map<String, dynamic>>(
+            key: "upgraded_client_state", onValue: Any.fromJson),
+        signer: json.as("signer"));
+  }
 
   @override
-  TypeUrl get service => IbcTypes.iBCSoftwareUpgrade;
+  List<int> get fieldIds => [1, 2, 3];
 
   @override
   Map<String, dynamic> toJson() {

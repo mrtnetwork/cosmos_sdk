@@ -12,15 +12,15 @@ class QueryFeeEnabledChannelsResponse extends CosmosMessage {
   /// pagination defines the pagination in the response.
   final PageResponse? pagination;
 
-  factory QueryFeeEnabledChannelsResponse.fromRpc(Map<String, dynamic> json) {
+  factory QueryFeeEnabledChannelsResponse.fromJson(Map<String, dynamic> json) {
     return QueryFeeEnabledChannelsResponse(
       feeEnabledChannels: (json["fee_enabled_channels"] as List?)
-              ?.map((e) => IbcFeeFeeEnabledChannel.fromRpc(e))
+              ?.map((e) => IbcFeeFeeEnabledChannel.fromJson(e))
               .toList() ??
           [],
       pagination: json["pagination"] == null
           ? null
-          : PageResponse.fromRpc(json["pagination"]),
+          : PageResponse.fromJson(json["pagination"]),
     );
   }
   QueryFeeEnabledChannelsResponse(
@@ -31,7 +31,7 @@ class QueryFeeEnabledChannelsResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryFeeEnabledChannelsResponse(
         feeEnabledChannels: decode
-            .getFields(1)
+            .getFields<List<int>>(1)
             .map((e) => IbcFeeFeeEnabledChannel.deserialize(e))
             .toList(),
         pagination: decode

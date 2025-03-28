@@ -11,7 +11,7 @@ class OsmosisLockupLockedDenomResponse extends CosmosMessage {
     return OsmosisLockupLockedDenomResponse(
         amount: BigInt.tryParse(decode.getField(1)));
   }
-  factory OsmosisLockupLockedDenomResponse.fromRpc(Map<String, dynamic> json) {
+  factory OsmosisLockupLockedDenomResponse.fromJson(Map<String, dynamic> json) {
     return OsmosisLockupLockedDenomResponse(
         amount: BigintUtils.tryParse(json["amount"]));
   }

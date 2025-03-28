@@ -43,7 +43,7 @@ class DistributionQueryValidatorOutstandingRewardsRequest extends CosmosMessage
   @override
   DistributionQueryValidatorOutstandingRewardsResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return DistributionQueryValidatorOutstandingRewardsResponse.fromRpc(json);
+    return DistributionQueryValidatorOutstandingRewardsResponse.fromJson(json);
   }
 
   @override

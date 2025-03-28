@@ -33,7 +33,7 @@ class OsmosisProtorevQueryGetProtoRevDeveloperAccountRequest
   @override
   OsmosisProtorevQueryGetProtoRevDeveloperAccountResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisProtorevQueryGetProtoRevDeveloperAccountResponse.fromRpc(
+    return OsmosisProtorevQueryGetProtoRevDeveloperAccountResponse.fromJson(
         json);
   }
 

@@ -15,13 +15,13 @@ class UnbondingDelegation extends CosmosMessage {
 
   /// entries are the unbonding delegation entries.
   final List<UnbondingDelegationEntry> entries;
-  factory UnbondingDelegation.fromRpc(Map<String, dynamic> json) {
+  factory UnbondingDelegation.fromJson(Map<String, dynamic> json) {
     return UnbondingDelegation(
         delegatorAddress: json["delegator_address"] == null
             ? null
             : CosmosBaseAddress(json["delegator_address"]),
         entries: (json["entries"] as List?)
-                ?.map((e) => UnbondingDelegationEntry.fromRpc(e))
+                ?.map((e) => UnbondingDelegationEntry.fromJson(e))
                 .toList() ??
             [],
         validatorAddress: json["validator_address"] == null

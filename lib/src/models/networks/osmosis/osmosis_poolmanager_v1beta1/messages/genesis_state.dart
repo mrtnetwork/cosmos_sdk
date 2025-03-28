@@ -39,17 +39,17 @@ class OsmosisPoolGenesisState extends CosmosMessage {
       nextPoolId: decode.getField(1),
       params: OsmosisPoolManagerParams.deserialize(decode.getField(2)),
       poolRoutes: decode
-          .getFields(3)
+          .getFields<List<int>>(3)
           .map((e) => OsmosisPoolManagerModuleRoute.deserialize(e))
           .toList(),
       takerFeesTracker:
           OsmosisPoolManagerTakerFeesTracker.deserialize(decode.getField(4)),
       poolVolumes: decode
-          .getFields(5)
+          .getFields<List<int>>(5)
           .map((e) => OsmosisPoolManagerPoolVolume.deserialize(e))
           .toList(),
       denomPairTakerFeeStore: decode
-          .getFields(6)
+          .getFields<List<int>>(6)
           .map((e) => OsmosisPoolManagerDenomPairTakerFee.deserialize(e))
           .toList(),
     );

@@ -41,7 +41,7 @@ class QueryValidatorUnbondingDelegationsRequest extends CosmosMessage
   @override
   QueryValidatorUnbondingDelegationsResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return QueryValidatorUnbondingDelegationsResponse.fromRpc(json);
+    return QueryValidatorUnbondingDelegationsResponse.fromJson(json);
   }
 
   @override

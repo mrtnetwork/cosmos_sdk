@@ -7,7 +7,7 @@ import 'package:blockchain_utils/helper/helper.dart';
 class ParamsSubspace extends CosmosMessage {
   final String? subspace;
   final List<String>? keys;
-  factory ParamsSubspace.fromRpc(Map<String, dynamic> json) {
+  factory ParamsSubspace.fromJson(Map<String, dynamic> json) {
     return ParamsSubspace(
         keys: (json["keys"] as List?)?.cast(), subspace: json["subspace"]);
   }

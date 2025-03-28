@@ -1,13 +1,14 @@
 import 'package:blockchain_utils/utils/utils.dart';
+import 'package:cosmos_sdk/src/models/ibc/core/service.dart';
 
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
 
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// MsgUpgradeClient defines an sdk.Msg to upgrade an IBC client to a new client state
-class MsgUpgradeClient extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class MsgUpgradeClient extends IbcService<EmptyServiceRequestResponse> {
   /// client unique identifier
   final String? clientId;
 
@@ -50,6 +51,18 @@ class MsgUpgradeClient extends CosmosMessage
         proofUpgradeConsensusState: decode.getField(5),
         signer: decode.getField(6));
   }
+  factory MsgUpgradeClient.fromJson(Map<String, dynamic> json) {
+    return MsgUpgradeClient(
+        clientId: json.as("client_id"),
+        clientState: json.maybeAs<Any, Map<String, dynamic>>(
+            key: "client_state", onValue: Any.fromJson),
+        consensusState: json.maybeAs<Any, Map<String, dynamic>>(
+            key: "consensus_state", onValue: Any.fromJson),
+        proofUpgradeClient: json.asBytes("proof_upgrade_client"),
+        proofUpgradeConsensusState:
+            json.asBytes("proof_upgrade_consensus_state"),
+        signer: json.as("signer"));
+  }
 
   @override
   List<int> get fieldIds => [1, 2, 3, 4, 5, 6];
@@ -80,8 +93,6 @@ class MsgUpgradeClient extends CosmosMessage
         signer
       ];
 
-  @override
-  TypeUrl get service => IbcTypes.upgradeClient;
   @override
   List<String?> get signers => [signer];
 

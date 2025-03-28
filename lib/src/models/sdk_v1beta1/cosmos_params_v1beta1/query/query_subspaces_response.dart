@@ -11,9 +11,9 @@ class ParamsQuerySubspacesResponse extends CosmosMessage {
   ParamsQuerySubspacesResponse(List<ParamsSubspace> subspaces)
       : subspaces = subspaces.immutable;
 
-  factory ParamsQuerySubspacesResponse.fromRpc(Map<String, dynamic> json) {
+  factory ParamsQuerySubspacesResponse.fromJson(Map<String, dynamic> json) {
     return ParamsQuerySubspacesResponse((json["subspaces"] as List?)
-            ?.map((e) => ParamsSubspace.fromRpc(e))
+            ?.map((e) => ParamsSubspace.fromJson(e))
             .toList() ??
         []);
   }

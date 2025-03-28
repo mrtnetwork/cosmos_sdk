@@ -83,7 +83,7 @@ class GetTxsEventRequest extends CosmosMessage
 
   @override
   GetTxsEventResponse onJsonResponse(Map<String, dynamic> json) {
-    return GetTxsEventResponse.fromRpc(json);
+    return GetTxsEventResponse.fromJson(json);
   }
 
   @override

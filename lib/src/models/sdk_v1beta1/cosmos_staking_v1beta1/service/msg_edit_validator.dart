@@ -1,13 +1,16 @@
 import 'package:blockchain_utils/blockchain_utils.dart';
 import 'package:cosmos_sdk/src/address/address.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
+import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_staking_v1beta1/core/service.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_staking_v1beta1/types/types.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 import '../messages/description.dart';
 
 /// MsgEditValidator defines a SDK message for editing an existing validator.
-class MsgEditValidator extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class MsgEditValidator
+    extends StakingV1Beta1Service<EmptyServiceRequestResponse>
+    with AminoMessage<EmptyServiceRequestResponse> {
   final Description description;
   final CosmosBaseAddress? validatorAddress;
 
@@ -18,12 +21,11 @@ class MsgEditValidator extends CosmosMessage
   final String? commissionRate;
   final BigInt? minSelfDelegation;
 
-  const MsgEditValidator({
-    required this.description,
-    this.validatorAddress,
-    this.commissionRate,
-    this.minSelfDelegation,
-  });
+  const MsgEditValidator(
+      {required this.description,
+      this.validatorAddress,
+      this.commissionRate,
+      this.minSelfDelegation});
   factory MsgEditValidator.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgEditValidator(
@@ -34,6 +36,13 @@ class MsgEditValidator extends CosmosMessage
       commissionRate: decode.getField(3),
       minSelfDelegation: BigintUtils.tryParse(decode.getField<String?>(4)),
     );
+  }
+  factory MsgEditValidator.fromJson(Map<String, dynamic> json) {
+    return MsgEditValidator(
+        validatorAddress: json.asAddress("validator_address"),
+        description: Description.fromJson(json.asMap("description")),
+        commissionRate: json.as("commission_rate"),
+        minSelfDelegation: json.asBigInt("min_self_delegation"));
   }
 
   @override
@@ -60,8 +69,6 @@ class MsgEditValidator extends CosmosMessage
         minSelfDelegation?.toString()
       ];
 
-  @override
-  TypeUrl get service => StakingV1beta1Types.editValidator;
   @override
   List<String?> get signers => [validatorAddress?.address];
 

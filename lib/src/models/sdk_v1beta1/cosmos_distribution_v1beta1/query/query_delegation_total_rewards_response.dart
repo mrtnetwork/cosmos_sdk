@@ -17,26 +17,30 @@ class DistributionQueryDelegationTotalRewardsResponse extends CosmosMessage {
       required List<DecCoin> total})
       : rewards = rewards.immutable,
         total = total.immutable;
-  factory DistributionQueryDelegationTotalRewardsResponse.fromRpc(
+  factory DistributionQueryDelegationTotalRewardsResponse.fromJson(
       Map<String, dynamic> json) {
     return DistributionQueryDelegationTotalRewardsResponse(
         rewards: (json["rewards"] as List?)
-                ?.map((e) => DistributionDelegationDelegatorReward.fromRpc(e))
+                ?.map((e) => DistributionDelegationDelegatorReward.fromJson(e))
                 .toList() ??
             [],
-        total:
-            (json["total"] as List?)?.map((e) => DecCoin.fromRpc(e)).toList() ??
-                []);
+        total: (json["total"] as List?)
+                ?.map((e) => DecCoin.fromJson(e))
+                .toList() ??
+            []);
   }
   factory DistributionQueryDelegationTotalRewardsResponse.deserialize(
       List<int> bytes) {
     final deocde = CosmosProtocolBuffer.decode(bytes);
     return DistributionQueryDelegationTotalRewardsResponse(
         rewards: deocde
-            .getFields(1)
+            .getFields<List<int>>(1)
             .map((e) => DistributionDelegationDelegatorReward.deserialize(e))
             .toList(),
-        total: deocde.getFields(2).map((e) => DecCoin.deserialize(e)).toList());
+        total: deocde
+            .getFields<List<int>>(2)
+            .map((e) => DecCoin.deserialize(e))
+            .toList());
   }
 
   @override

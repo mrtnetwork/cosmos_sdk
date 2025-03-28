@@ -1,15 +1,16 @@
 import 'package:blockchain_utils/blockchain_utils.dart';
+import 'package:cosmos_sdk/src/models/ibc/core/service.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_channel_v1/messages/packet.dart';
 import 'package:cosmos_sdk/src/models/ibc/ibc_core_client_v1/messages/height.dart';
 
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 import 'msg_recv_packet_response.dart';
 
 /// MsgRecvPacket receives incoming IBC packet
-class MsgRecvPacket extends CosmosMessage
-    with ServiceMessage<MsgRecvPacketResponse> {
+class MsgRecvPacket extends IbcService<MsgRecvPacketResponse> {
   final IbcChannelPacket packet;
   final List<int>? proofCommitment;
   final IbcClientHeight proofHeight;
@@ -29,12 +30,16 @@ class MsgRecvPacket extends CosmosMessage
         proofHeight: IbcClientHeight.deserialize(decode.getField(3)),
         signer: decode.getField(4));
   }
+  factory MsgRecvPacket.fromJson(Map<String, dynamic> json) {
+    return MsgRecvPacket(
+        proofCommitment: json.asBytes("proof_commitment"),
+        packet: IbcChannelPacket.fromJson(json.asMap("packet")),
+        proofHeight: IbcClientHeight.fromJson(json.asMap("proof_height")),
+        signer: json.as("signer"));
+  }
 
   @override
   List<int> get fieldIds => [1, 2, 3, 4];
-
-  @override
-  TypeUrl get service => IbcTypes.recvPacket;
 
   @override
   Map<String, dynamic> toJson() {

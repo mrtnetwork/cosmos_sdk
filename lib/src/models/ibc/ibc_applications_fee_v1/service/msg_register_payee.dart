@@ -1,10 +1,11 @@
+import 'package:cosmos_sdk/src/models/ibc/core/service.dart';
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// MsgRegisterPayee defines the request type for the RegisterPayee rpc
-class MsgRegisterPayee extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class MsgRegisterPayee extends IbcService<EmptyServiceRequestResponse> {
   /// unique port identifier
   final String? portId;
 
@@ -26,12 +27,16 @@ class MsgRegisterPayee extends CosmosMessage
         relayer: decode.getField(3),
         payee: decode.getField(4));
   }
+  factory MsgRegisterPayee.fromJson(Map<String, dynamic> json) {
+    return MsgRegisterPayee(
+        portId: json.as("port_id"),
+        channelId: json.as("channel_id"),
+        relayer: json.as("relayer"),
+        payee: json.as("payee"));
+  }
 
   @override
   List<int> get fieldIds => [1, 2, 3, 4];
-
-  @override
-  TypeUrl get service => IbcTypes.registerPayee;
 
   @override
   Map<String, dynamic> toJson() {

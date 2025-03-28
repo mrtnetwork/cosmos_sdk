@@ -44,7 +44,7 @@ class OsmosisLockupAccountLockedLongerDurationNotUnlockingOnlyRequest
   OsmosisLockupAccountLockedLongerDurationNotUnlockingOnlyResponse
       onJsonResponse(Map<String, dynamic> json) {
     return OsmosisLockupAccountLockedLongerDurationNotUnlockingOnlyResponse
-        .fromRpc(json);
+        .fromJson(json);
   }
 
   @override

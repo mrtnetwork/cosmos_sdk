@@ -32,7 +32,7 @@ class OsmosisMintDistributionProportions extends CosmosMessage {
         developerRewards: decode.getField(3),
         communityPool: decode.getField(4));
   }
-  factory OsmosisMintDistributionProportions.fromRpc(
+  factory OsmosisMintDistributionProportions.fromJson(
       Map<String, dynamic> json) {
     return OsmosisMintDistributionProportions(
         staking: json["staking"],

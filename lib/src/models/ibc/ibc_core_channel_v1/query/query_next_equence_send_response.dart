@@ -15,11 +15,11 @@ class QueryNextSequenceSendResponse extends CosmosMessage {
   /// height at which the proof was retrieved
   final IbcClientHeight proofHeight;
 
-  factory QueryNextSequenceSendResponse.fromRpc(Map<String, dynamic> json) {
+  factory QueryNextSequenceSendResponse.fromJson(Map<String, dynamic> json) {
     return QueryNextSequenceSendResponse(
       nextSequenceReceive: BigintUtils.tryParse(json["next_sequence_receive"]),
       proof: CosmosUtils.tryToBytes(json["proof"]),
-      proofHeight: IbcClientHeight.fromRpc(json["proof_height"]),
+      proofHeight: IbcClientHeight.fromJson(json["proof_height"]),
     );
   }
   QueryNextSequenceSendResponse(

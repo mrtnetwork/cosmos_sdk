@@ -3,11 +3,14 @@ import 'package:cosmos_sdk/src/address/address/address.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
 import 'package:cosmos_sdk/src/models/networks/thorchain/v1/common/asset.dart';
 import 'package:cosmos_sdk/src/models/networks/thorchain/v1/common/tx.dart';
+import 'package:cosmos_sdk/src/models/networks/thorchain/v1/core/service.dart';
 import 'package:cosmos_sdk/src/models/networks/thorchain/v1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
+import 'package:cosmos_sdk/src/utils/utils.dart';
 
-class ThorchainMsgAddLiquidity extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class ThorchainMsgAddLiquidity
+    extends ThorchainV1Service<EmptyServiceRequestResponse> {
   final ThorchainTx tx;
   final ThorchainAsset asset;
   final BigInt assetAmount;
@@ -42,7 +45,23 @@ class ThorchainMsgAddLiquidity extends CosmosMessage
         signer: decode.getResult(9)?.to<CosmosBaseAddress, List<int>>(
             (e) => CosmosBaseAddress.fromBytes(e)));
   }
-
+  factory ThorchainMsgAddLiquidity.fromJson(Map<String, dynamic> json) {
+    return ThorchainMsgAddLiquidity(
+        tx: ThorchainTx.fromJson(json.asMap("tx")),
+        asset: ThorchainAsset.fromJson(json.asMap("asset")),
+        assetAmount: json.asBigInt("asset_amount"),
+        runeAmount: json.asBigInt("rune_amount"),
+        runeAddress: json.as("rune_address"),
+        assetAddress: json.as("asset_address"),
+        affiliateAddress: json.as("affiliate_address"),
+        affiliateBasisPoints: json.as("affiliate_basis_points"),
+        signer: json.maybeAs<CosmosBaseAddress, String>(
+          key: "signer",
+          onValue: (e) {
+            return CosmosBaseAddress.fromBytes(CosmosUtils.toBytes(e));
+          },
+        ));
+  }
   @override
   List<int> get fieldIds => [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
@@ -62,7 +81,7 @@ class ThorchainMsgAddLiquidity extends CosmosMessage
   }
 
   @override
-  TypeUrl get typeUrl => ThorchainV1Types.msgAddLiquidity;
+  ThorchainV1Types get typeUrl => ThorchainV1Types.msgAddLiquidity;
 
   @override
   List get values => [
@@ -81,9 +100,6 @@ class ThorchainMsgAddLiquidity extends CosmosMessage
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(typeUrl);
   }
-
-  @override
-  TypeUrl get service => typeUrl;
 
   @override
   List<String?> get signers => [signer?.address];

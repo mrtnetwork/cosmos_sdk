@@ -16,7 +16,7 @@ class OsmosisValSetprefValidatorSetPreferences extends CosmosMessage {
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisValSetprefValidatorSetPreferences(decode
-        .getFields(1)
+        .getFields<List<int>>(1)
         .map((e) => OsmosisValSetprefValidatorPreference.deserialize(e))
         .toList());
   }

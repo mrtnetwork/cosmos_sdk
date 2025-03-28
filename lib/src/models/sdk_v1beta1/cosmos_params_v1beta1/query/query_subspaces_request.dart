@@ -30,6 +30,6 @@ class ParamsQuerySubspacesRequest extends CosmosMessage
 
   @override
   ParamsQuerySubspacesResponse onJsonResponse(Map<String, dynamic> json) {
-    return ParamsQuerySubspacesResponse.fromRpc(json);
+    return ParamsQuerySubspacesResponse.fromJson(json);
   }
 }

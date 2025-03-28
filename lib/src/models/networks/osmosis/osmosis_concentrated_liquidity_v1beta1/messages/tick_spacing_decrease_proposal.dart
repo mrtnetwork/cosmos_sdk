@@ -25,12 +25,12 @@ class OsmosisConcentratedLiquidityTickSpacingDecreaseProposal
         title: decode.getField(1),
         description: decode.getField(2),
         poolIdToTickSpacingRecords: decode
-            .getFields(3)
+            .getFields<List<int>>(3)
             .map((e) => OsmosisConcentratedLiquidityPoolIdToTickSpacingRecord
                 .deserialize(e))
             .toList());
   }
-  factory OsmosisConcentratedLiquidityTickSpacingDecreaseProposal.fromRpc(
+  factory OsmosisConcentratedLiquidityTickSpacingDecreaseProposal.fromJson(
       Map<String, dynamic> json) {
     return OsmosisConcentratedLiquidityTickSpacingDecreaseProposal(
         title: json["title"],
@@ -39,7 +39,7 @@ class OsmosisConcentratedLiquidityTickSpacingDecreaseProposal
             (json["pool_id_to_tick_spacing_records"] as List?)
                     ?.map((e) =>
                         OsmosisConcentratedLiquidityPoolIdToTickSpacingRecord
-                            .fromRpc(e))
+                            .fromJson(e))
                     .toList() ??
                 <OsmosisConcentratedLiquidityPoolIdToTickSpacingRecord>[]);
   }

@@ -22,9 +22,9 @@ class ModuleAccount extends CosmosBaseAccount {
         name: decode.getField(2),
         permissions: decode.getFields<String>(3));
   }
-  factory ModuleAccount.fromRpc(Map<String, dynamic> json) {
+  factory ModuleAccount.fromJson(Map<String, dynamic> json) {
     return ModuleAccount(
-        baseAccount: BaseAccount.fromRpc(json["base_account"]),
+        baseAccount: BaseAccount.fromJson(json["base_account"]),
         name: json["name"],
         permissions: (json["permissions"] as List).cast());
   }

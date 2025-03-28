@@ -22,7 +22,7 @@ class OsmosisPoolManagerDenomPairTakerFeeProposal extends CosmosMessage {
         title: decode.getField(1),
         description: decode.getField(2),
         denomPairTakerFee: decode
-            .getFields(3)
+            .getFields<List<int>>(3)
             .map((e) => OsmosisPoolManagerDenomPairTakerFee.deserialize(e))
             .toList());
   }

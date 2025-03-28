@@ -1,10 +1,12 @@
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
+import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_tokenfactory_v1beta1/core/service.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_tokenfactory_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// MsgChangeAdmin is the sdk.Msg type for allowing an admin account to reassign adminship of a denom to a new account
-class OsmosisTokenFactoryMsgChangeAdmin extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class OsmosisTokenFactoryMsgChangeAdmin
+    extends OsmosisTokenFactoryV1Beta1<EmptyServiceRequestResponse> {
   final String? sender;
   final String? denom;
   final String? newAdmin;
@@ -16,7 +18,13 @@ class OsmosisTokenFactoryMsgChangeAdmin extends CosmosMessage
         denom: decode.getField(2),
         newAdmin: decode.getField(3));
   }
-
+  factory OsmosisTokenFactoryMsgChangeAdmin.fromJson(
+      Map<String, dynamic> json) {
+    return OsmosisTokenFactoryMsgChangeAdmin(
+        sender: json.as("sender"),
+        denom: json.as("denom"),
+        newAdmin: json.as("new_admin"));
+  }
   @override
   List<int> get fieldIds => [1, 2, 3];
 
@@ -36,9 +44,6 @@ class OsmosisTokenFactoryMsgChangeAdmin extends CosmosMessage
     return EmptyServiceRequestResponse(
         OsmosisTokenFactoryV1beta1Types.msgChangeAdminResponse);
   }
-
-  @override
-  TypeUrl get service => OsmosisTokenFactoryV1beta1Types.changeAdmin;
 
   @override
   List<String?> get signers => [sender];

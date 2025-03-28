@@ -15,12 +15,12 @@ class AuthzQueryGranteeGrantsRequest extends CosmosMessage
   const AuthzQueryGranteeGrantsRequest(
       {required this.grantee, this.pagination});
 
-  factory AuthzQueryGranteeGrantsRequest.fromRpc(Map<String, dynamic> json) {
+  factory AuthzQueryGranteeGrantsRequest.fromJson(Map<String, dynamic> json) {
     return AuthzQueryGranteeGrantsRequest(
       grantee: CosmosBaseAddress(json["grantee"]),
       pagination: json["pagination"] == null
           ? null
-          : PageRequest.fromRpc(json["pagination"]),
+          : PageRequest.fromJson(json["pagination"]),
     );
   }
   factory AuthzQueryGranteeGrantsRequest.deserialize(List<int> bytes) {

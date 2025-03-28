@@ -13,9 +13,9 @@ class OsmosisGammQueryPoolResponse extends CosmosMessage {
             .getResult(1)
             ?.to<AnyMessage, List<int>>((e) => AnyMessage.deserialize(e)));
   }
-  factory OsmosisGammQueryPoolResponse.fromRpc(Map<String, dynamic> json) {
+  factory OsmosisGammQueryPoolResponse.fromJson(Map<String, dynamic> json) {
     return OsmosisGammQueryPoolResponse(
-        pool: json["pool"] == null ? null : AnyMessage.fromRpc(json["pool"]));
+        pool: json["pool"] == null ? null : AnyMessage.fromJson(json["pool"]));
   }
 
   @override

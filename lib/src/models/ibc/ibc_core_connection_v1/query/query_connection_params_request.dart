@@ -30,6 +30,6 @@ class IbcConnectionQueryConnectionParamsRequest extends CosmosMessage
   @override
   IbcConnectionQueryConnectionParamsResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return IbcConnectionQueryConnectionParamsResponse.fromRpc(json);
+    return IbcConnectionQueryConnectionParamsResponse.fromJson(json);
   }
 }

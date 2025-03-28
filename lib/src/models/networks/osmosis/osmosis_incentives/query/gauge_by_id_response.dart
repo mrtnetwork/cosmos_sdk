@@ -11,11 +11,12 @@ class OsmosisIncentiveGaugeByIDResponse extends CosmosMessage {
     return OsmosisIncentiveGaugeByIDResponse(
         gauge: OsmosisIncentivesGauge.deserialize(decode.getField(1)));
   }
-  factory OsmosisIncentiveGaugeByIDResponse.fromRpc(Map<String, dynamic> json) {
+  factory OsmosisIncentiveGaugeByIDResponse.fromJson(
+      Map<String, dynamic> json) {
     return OsmosisIncentiveGaugeByIDResponse(
         gauge: json["gauge"] == null
             ? null
-            : OsmosisIncentivesGauge.fromRpc(json["gauge"]));
+            : OsmosisIncentivesGauge.fromJson(json["gauge"]));
   }
 
   @override

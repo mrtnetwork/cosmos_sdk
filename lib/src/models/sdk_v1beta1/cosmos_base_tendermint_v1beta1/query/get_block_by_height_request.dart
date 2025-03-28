@@ -35,7 +35,7 @@ class GetBlockByHeightRequest extends CosmosMessage
 
   @override
   GetBlockByHeightResponse onJsonResponse(Map<String, dynamic> json) {
-    return GetBlockByHeightResponse.fromRpc(json);
+    return GetBlockByHeightResponse.fromJson(json);
   }
 
   @override

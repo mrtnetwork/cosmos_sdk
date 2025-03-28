@@ -12,7 +12,7 @@ class OsmosisPoolincentivesPoolToGauges extends CosmosMessage {
   factory OsmosisPoolincentivesPoolToGauges.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolincentivesPoolToGauges(decode
-        .getFields(2)
+        .getFields<List<int>>(2)
         .map((e) => OsmosisPoolincentivesPoolToGauge.deserialize(e))
         .toList());
   }

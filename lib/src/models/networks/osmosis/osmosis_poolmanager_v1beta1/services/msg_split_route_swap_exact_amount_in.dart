@@ -1,13 +1,14 @@
+import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_poolmanager_v1beta1/core/service.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_poolmanager_v1beta1/messages/swap_amount_out_split_route.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_poolmanager_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:blockchain_utils/helper/helper.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 import 'msg_split_route_swap_exact_amount_in_response.dart';
 
-class OsmosisPoolManagerMsgSplitRouteSwapExactAmountIn extends CosmosMessage
-    with
-        ServiceMessage<
-            OsmosisPoolManagerMsgSplitRouteSwapExactAmountInResponse> {
+class OsmosisPoolManagerMsgSplitRouteSwapExactAmountIn
+    extends OsmosisPoolManagerV1Beta1<
+        OsmosisPoolManagerMsgSplitRouteSwapExactAmountInResponse> {
   final String? sender;
   final List<OsmosisPoolManagerSwapAmountOutSplitRoute> routes;
   final String? tokenInDenom;
@@ -25,12 +26,25 @@ class OsmosisPoolManagerMsgSplitRouteSwapExactAmountIn extends CosmosMessage
     return OsmosisPoolManagerMsgSplitRouteSwapExactAmountIn(
         sender: decode.getField(1),
         routes: decode
-            .getFields(2)
+            .getFields<List<int>>(2)
             .map(
                 (e) => OsmosisPoolManagerSwapAmountOutSplitRoute.deserialize(e))
             .toList(),
         tokenInDenom: decode.getField(3),
         tokenOutMinAmount: BigInt.parse(decode.getField(4)));
+  }
+  factory OsmosisPoolManagerMsgSplitRouteSwapExactAmountIn.fromJson(
+      Map<String, dynamic> json) {
+    return OsmosisPoolManagerMsgSplitRouteSwapExactAmountIn(
+        sender: json.as("sender"),
+        routes: json
+                .asListOfMap("routes")
+                ?.map((e) =>
+                    OsmosisPoolManagerSwapAmountOutSplitRoute.fromJson(e))
+                .toList() ??
+            [],
+        tokenInDenom: json.as("token_in_denom"),
+        tokenOutMinAmount: json.asBigInt("token_out_min_amount"));
   }
 
   @override
@@ -53,10 +67,6 @@ class OsmosisPoolManagerMsgSplitRouteSwapExactAmountIn extends CosmosMessage
   @override
   List get values =>
       [sender, routes, tokenInDenom, tokenOutMinAmount.toString()];
-
-  @override
-  TypeUrl get service =>
-      OsmosisPoolManagerV1beta1Types.splitRouteSwapExactAmountIn;
 
   @override
   List<String?> get signers => [sender];

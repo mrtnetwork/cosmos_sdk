@@ -15,7 +15,7 @@ class OsmosisProtorevQueryGetProtoRevNumberOfTradesResponse
     return OsmosisProtorevQueryGetProtoRevNumberOfTradesResponse(
         BigInt.parse(decode.getField(1)));
   }
-  factory OsmosisProtorevQueryGetProtoRevNumberOfTradesResponse.fromRpc(
+  factory OsmosisProtorevQueryGetProtoRevNumberOfTradesResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisProtorevQueryGetProtoRevNumberOfTradesResponse(
         BigintUtils.parse(json["number_of_trades"]));

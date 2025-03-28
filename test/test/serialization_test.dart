@@ -30,7 +30,8 @@ void _signerInfo() {
   test("signer info", () {
     final sigInfo = SignerInfo(
         publicKey: CosmosSecp256K1PublicKey.fromHex(
-            "0312b4a708eaf861f52a8e934716d24b3ba3b13cf3acee3145aff924507a6e3f77"),
+                "0312b4a708eaf861f52a8e934716d24b3ba3b13cf3acee3145aff924507a6e3f77")
+            .toAny(),
         modeInfo: const ModeInfo(ModeInfoSignle(SignMode.signModeDirect)),
         sequence: BigInt.zero);
     expect(sigInfo.toHex,
@@ -44,7 +45,8 @@ void _authInfo() {
         signerInfos: [
           SignerInfo(
               publicKey: CosmosSecp256K1PublicKey.fromHex(
-                  "0312b4a708eaf861f52a8e934716d24b3ba3b13cf3acee3145aff924507a6e3f77"),
+                      "0312b4a708eaf861f52a8e934716d24b3ba3b13cf3acee3145aff924507a6e3f77")
+                  .toAny(),
               modeInfo: const ModeInfo(ModeInfoSignle(SignMode.signModeDirect)),
               sequence: BigInt.zero)
         ],
@@ -92,7 +94,8 @@ void _signDoc() {
         signerInfos: [
           SignerInfo(
               publicKey: CosmosSecp256K1PublicKey.fromHex(
-                  "0312b4a708eaf861f52a8e934716d24b3ba3b13cf3acee3145aff924507a6e3f77"),
+                      "0312b4a708eaf861f52a8e934716d24b3ba3b13cf3acee3145aff924507a6e3f77")
+                  .toAny(),
               modeInfo: const ModeInfo(ModeInfoSignle(SignMode.signModeDirect)),
               sequence: BigInt.zero)
         ],
@@ -125,7 +128,8 @@ void _txRaw() {
         signerInfos: [
           SignerInfo(
               publicKey: CosmosSecp256K1PublicKey.fromHex(
-                  "0312b4a708eaf861f52a8e934716d24b3ba3b13cf3acee3145aff924507a6e3f77"),
+                      "0312b4a708eaf861f52a8e934716d24b3ba3b13cf3acee3145aff924507a6e3f77")
+                  .toAny(),
               modeInfo: const ModeInfo(ModeInfoSignle(SignMode.signModeDirect)),
               sequence: BigInt.zero)
         ],

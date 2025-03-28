@@ -27,7 +27,7 @@ class IbcTransferV2QueryDenomRequest extends CosmosMessage
 
   @override
   IbcTransferV2QueryDenomResponse onJsonResponse(Map<String, dynamic> json) {
-    return IbcTransferV2QueryDenomResponse.fromRpc(json);
+    return IbcTransferV2QueryDenomResponse.fromJson(json);
   }
 
   @override

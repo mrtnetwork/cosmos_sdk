@@ -25,7 +25,7 @@ class OsmosisPoolincentivesReplacePoolIncentivesProposal extends CosmosMessage {
         title: decode.getField(1),
         description: decode.getField(2),
         records: decode
-            .getFields(3)
+            .getFields<List<int>>(3)
             .map((e) => OsmosisPoolincentivesDistrRecord.deserialize(e))
             .toList());
   }

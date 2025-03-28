@@ -20,11 +20,11 @@ class OsmosisPoolManagerEstimateTradeBasedOnPriceImpactResponse
         inputCoin: Coin.deserialize(decode.getField(1)),
         outputCoin: Coin.deserialize(decode.getField(2)));
   }
-  factory OsmosisPoolManagerEstimateTradeBasedOnPriceImpactResponse.fromRpc(
+  factory OsmosisPoolManagerEstimateTradeBasedOnPriceImpactResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisPoolManagerEstimateTradeBasedOnPriceImpactResponse(
-        inputCoin: Coin.fromRpc(json["input_coin"]),
-        outputCoin: Coin.fromRpc(json["output_coin"]));
+        inputCoin: Coin.fromJson(json["input_coin"]),
+        outputCoin: Coin.fromJson(json["output_coin"]));
   }
 
   @override

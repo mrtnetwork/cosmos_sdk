@@ -7,8 +7,8 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class GovQueryProposalResponse extends CosmosMessage {
   final GovProposal proposal;
   const GovQueryProposalResponse(this.proposal);
-  factory GovQueryProposalResponse.fromRpc(Map<String, dynamic> json) {
-    return GovQueryProposalResponse(GovProposal.fromRpc(json["proposal"]));
+  factory GovQueryProposalResponse.fromJson(Map<String, dynamic> json) {
+    return GovQueryProposalResponse(GovProposal.fromJson(json["proposal"]));
   }
   factory GovQueryProposalResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

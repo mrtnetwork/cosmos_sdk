@@ -38,7 +38,7 @@ class OsmosisIncentiveActiveGaugesRequest extends CosmosMessage
   @override
   OsmosisIncentiveActiveGaugesResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisIncentiveActiveGaugesResponse.fromRpc(json);
+    return OsmosisIncentiveActiveGaugesResponse.fromJson(json);
   }
 
   @override

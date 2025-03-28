@@ -35,7 +35,7 @@ class OsmosisConcentratedLiquidityPositionByIdRequest extends CosmosMessage
   @override
   OsmosisConcentratedLiquidityPositionByIdResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisConcentratedLiquidityPositionByIdResponse.fromRpc(json);
+    return OsmosisConcentratedLiquidityPositionByIdResponse.fromJson(json);
   }
 
   @override

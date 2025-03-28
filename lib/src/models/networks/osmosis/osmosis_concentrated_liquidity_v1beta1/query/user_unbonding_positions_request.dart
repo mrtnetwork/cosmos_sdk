@@ -41,7 +41,7 @@ class OsmosisConcentratedLiquidityUserUnbondingPositionsRequest
   @override
   OsmosisConcentratedLiquidityUserUnbondingPositionsResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisConcentratedLiquidityUserUnbondingPositionsResponse.fromRpc(
+    return OsmosisConcentratedLiquidityUserUnbondingPositionsResponse.fromJson(
         json);
   }
 

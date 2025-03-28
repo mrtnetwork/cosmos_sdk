@@ -10,13 +10,15 @@ class OsmosisPoolManagerTotalPoolLiquidityResponse extends CosmosMessage {
   factory OsmosisPoolManagerTotalPoolLiquidityResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return OsmosisPoolManagerTotalPoolLiquidityResponse(
-        decode.getFields(1).map((e) => Coin.deserialize(e)).toList());
+    return OsmosisPoolManagerTotalPoolLiquidityResponse(decode
+        .getFields<List<int>>(1)
+        .map((e) => Coin.deserialize(e))
+        .toList());
   }
-  factory OsmosisPoolManagerTotalPoolLiquidityResponse.fromRpc(
+  factory OsmosisPoolManagerTotalPoolLiquidityResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisPoolManagerTotalPoolLiquidityResponse(
-        (json["liquidity"] as List?)?.map((e) => Coin.fromRpc(e)).toList() ??
+        (json["liquidity"] as List?)?.map((e) => Coin.fromJson(e)).toList() ??
             <Coin>[]);
   }
 

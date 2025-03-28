@@ -14,7 +14,7 @@ class OsmosisTxfeesQueryDenomSpotPriceResponse extends CosmosMessage {
     return OsmosisTxfeesQueryDenomSpotPriceResponse(
         poolID: decode.getField(1), spotPrice: decode.getField(2));
   }
-  factory OsmosisTxfeesQueryDenomSpotPriceResponse.fromRpc(
+  factory OsmosisTxfeesQueryDenomSpotPriceResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisTxfeesQueryDenomSpotPriceResponse(
         poolID: BigintUtils.tryParse(json["poolID"]),

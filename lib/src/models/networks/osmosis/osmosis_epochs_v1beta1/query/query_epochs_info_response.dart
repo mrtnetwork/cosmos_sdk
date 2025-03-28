@@ -12,10 +12,10 @@ class OmosisEpochsQueryEpochsInfoResponse extends CosmosMessage {
         .map((e) => OmosisEpochsEpochInfo.deserialize(e))
         .toList());
   }
-  factory OmosisEpochsQueryEpochsInfoResponse.fromRpc(
+  factory OmosisEpochsQueryEpochsInfoResponse.fromJson(
       Map<String, dynamic> json) {
     return OmosisEpochsQueryEpochsInfoResponse((json["epochs"] as List)
-        .map((e) => OmosisEpochsEpochInfo.fromRpc(e))
+        .map((e) => OmosisEpochsEpochInfo.fromJson(e))
         .toList());
   }
 

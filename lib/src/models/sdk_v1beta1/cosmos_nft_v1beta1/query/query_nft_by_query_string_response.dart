@@ -9,9 +9,9 @@ class QueryNFTByQueryStringResponse extends CosmosMessage {
   final NFT? nft;
 
   const QueryNFTByQueryStringResponse({this.nft});
-  factory QueryNFTByQueryStringResponse.fromRpc(Map<String, dynamic> json) {
+  factory QueryNFTByQueryStringResponse.fromJson(Map<String, dynamic> json) {
     return QueryNFTByQueryStringResponse(
-      nft: json["nft"] == null ? null : NFT.fromRpc(json["nft"]),
+      nft: json["nft"] == null ? null : NFT.fromJson(json["nft"]),
     );
   }
   factory QueryNFTByQueryStringResponse.deserialize(List<int> bytes) {

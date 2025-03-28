@@ -12,7 +12,7 @@ class OsmosisDowntimeDetectorRecoveredSinceDowntimeOfLengthResponse
     return OsmosisDowntimeDetectorRecoveredSinceDowntimeOfLengthResponse(
         succesfullyRecovered: decode.getField(1));
   }
-  factory OsmosisDowntimeDetectorRecoveredSinceDowntimeOfLengthResponse.fromRpc(
+  factory OsmosisDowntimeDetectorRecoveredSinceDowntimeOfLengthResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisDowntimeDetectorRecoveredSinceDowntimeOfLengthResponse(
         succesfullyRecovered: json["succesfully_recovered"]);

@@ -17,15 +17,15 @@ class OsmosisProtorevQueryGetProtoRevAllRouteStatisticsResponse
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisProtorevQueryGetProtoRevAllRouteStatisticsResponse(decode
-        .getFields(1)
+        .getFields<List<int>>(1)
         .map((e) => OsmosisProtorevRouteStatistics.deserialize(e))
         .toList());
   }
-  factory OsmosisProtorevQueryGetProtoRevAllRouteStatisticsResponse.fromRpc(
+  factory OsmosisProtorevQueryGetProtoRevAllRouteStatisticsResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisProtorevQueryGetProtoRevAllRouteStatisticsResponse(
         (json["statistics"] as List?)
-                ?.map((e) => OsmosisProtorevRouteStatistics.fromRpc(e))
+                ?.map((e) => OsmosisProtorevRouteStatistics.fromJson(e))
                 .toList() ??
             <OsmosisProtorevRouteStatistics>[]);
   }

@@ -13,11 +13,11 @@ class OsmosisLockupAccountLockedPastTimeNotUnlockingOnlyResponse
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisLockupAccountLockedPastTimeNotUnlockingOnlyResponse(decode
-        .getFields(1)
+        .getFields<List<int>>(1)
         .map((e) => OsmosisLockupPeriodLock.deserialize(e))
         .toList());
   }
-  factory OsmosisLockupAccountLockedPastTimeNotUnlockingOnlyResponse.fromRpc(
+  factory OsmosisLockupAccountLockedPastTimeNotUnlockingOnlyResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisLockupAccountLockedPastTimeNotUnlockingOnlyResponse(
         (json["locks"] as List?)

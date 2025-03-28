@@ -22,7 +22,7 @@ class OsmosisConcentratedLiquidityNumNextInitializedTicksRequest
         tokenInDenom: decode.getField(2),
         numNextInitializedTicks: decode.getField(3));
   }
-  factory OsmosisConcentratedLiquidityNumNextInitializedTicksRequest.fromRpc(
+  factory OsmosisConcentratedLiquidityNumNextInitializedTicksRequest.fromJson(
       Map<String, dynamic> json) {
     return OsmosisConcentratedLiquidityNumNextInitializedTicksRequest(
         poolId: BigintUtils.tryParse(json["pool_id"]),
@@ -60,7 +60,7 @@ class OsmosisConcentratedLiquidityNumNextInitializedTicksRequest
   @override
   OsmosisConcentratedLiquidityNumNextInitializedTicksResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisConcentratedLiquidityNumNextInitializedTicksResponse.fromRpc(
+    return OsmosisConcentratedLiquidityNumNextInitializedTicksResponse.fromJson(
         json);
   }
 

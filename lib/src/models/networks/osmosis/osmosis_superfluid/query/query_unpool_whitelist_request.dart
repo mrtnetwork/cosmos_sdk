@@ -31,7 +31,7 @@ class OsmosisSuperfluidQueryUnpoolWhitelistRequest extends CosmosMessage
   @override
   OsmosisSuperfluidQueryUnpoolWhitelistResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisSuperfluidQueryUnpoolWhitelistResponse.fromRpc(json);
+    return OsmosisSuperfluidQueryUnpoolWhitelistResponse.fromJson(json);
   }
 
   @override

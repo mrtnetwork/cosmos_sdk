@@ -8,7 +8,7 @@ class OsmosisTxfeesQueryBaseDenomRequest extends CosmosMessage
   factory OsmosisTxfeesQueryBaseDenomRequest.deserialize(List<int> bytes) {
     return const OsmosisTxfeesQueryBaseDenomRequest();
   }
-  factory OsmosisTxfeesQueryBaseDenomRequest.fromRpc(
+  factory OsmosisTxfeesQueryBaseDenomRequest.fromJson(
       Map<String, dynamic> json) {
     return const OsmosisTxfeesQueryBaseDenomRequest();
   }
@@ -30,7 +30,7 @@ class OsmosisTxfeesQueryBaseDenomRequest extends CosmosMessage
   @override
   OsmosisTxfeesQueryBaseDenomResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisTxfeesQueryBaseDenomResponse.fromRpc(json);
+    return OsmosisTxfeesQueryBaseDenomResponse.fromJson(json);
   }
 
   @override

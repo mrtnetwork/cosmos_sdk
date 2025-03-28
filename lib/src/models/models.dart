@@ -1,12 +1,17 @@
 export 'global_messages/service_empty_response.dart';
 export 'global_messages/unknown_message.dart';
-
 export 'ibc/ibc.dart';
 export 'ics23/ics23.dart';
 export 'sdk_v1beta1/sdk_v1beta1.dart';
 export 'tendermint/tendermint.dart';
-
 export 'networks/networks.dart';
-export 'chain_registery/chain_registery.dart';
-
-export 'ethermint/ethermint.dart';
+export 'evmos/ethermint/ethermint.dart';
+export 'wasm/wasm.dart';
+export 'amino/amino_tx.dart';
+export 'amino/unknown_amino_service.dart';
+export 'evmos/evmos.dart';
+export 'cctp/cctp_v1.dart';
+export 'opinit/opinit.dart';
+export 'initia/initia.dart';
+export 'stride/stride.dart';
+export 'injective/injective.dart';

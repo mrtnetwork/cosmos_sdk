@@ -11,7 +11,7 @@ class AddressBytesToStringResponse extends CosmosMessage {
     return AddressBytesToStringResponse(decode.getField(1));
   }
 
-  factory AddressBytesToStringResponse.fromRpc(Map<String, dynamic> json) {
+  factory AddressBytesToStringResponse.fromJson(Map<String, dynamic> json) {
     return AddressBytesToStringResponse(json["address_string"]);
   }
 

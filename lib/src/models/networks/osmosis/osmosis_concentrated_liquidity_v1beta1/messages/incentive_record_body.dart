@@ -25,10 +25,10 @@ class OsmosisConcentratedLiquidityIncentiveRecordBody extends CosmosMessage {
         emissionRate: decode.getField(2),
         startTime: ProtobufTimestamp.deserialize(decode.getField(3)));
   }
-  factory OsmosisConcentratedLiquidityIncentiveRecordBody.fromRpc(
+  factory OsmosisConcentratedLiquidityIncentiveRecordBody.fromJson(
       Map<String, dynamic> json) {
     return OsmosisConcentratedLiquidityIncentiveRecordBody(
-        remainingCoin: DecCoin.fromRpc(json["remaining_coin"]),
+        remainingCoin: DecCoin.fromJson(json["remaining_coin"]),
         emissionRate: json["emission_rate"],
         startTime: ProtobufTimestamp.fromString(json["start_time"]));
   }

@@ -14,7 +14,7 @@ class AddressStringToBytesRequest extends CosmosMessage
     return AddressStringToBytesRequest(decode.getField(1));
   }
 
-  factory AddressStringToBytesRequest.fromRpc(Map<String, dynamic> json) {
+  factory AddressStringToBytesRequest.fromJson(Map<String, dynamic> json) {
     return AddressStringToBytesRequest(json["address_string"]);
   }
 
@@ -39,6 +39,6 @@ class AddressStringToBytesRequest extends CosmosMessage
 
   @override
   AddressStringToBytesResponse onJsonResponse(Map<String, dynamic> json) {
-    return AddressStringToBytesResponse.fromRpc(json);
+    return AddressStringToBytesResponse.fromJson(json);
   }
 }

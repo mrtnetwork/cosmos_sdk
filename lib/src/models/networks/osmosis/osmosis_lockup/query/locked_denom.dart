@@ -34,7 +34,7 @@ class OsmosisLockupLockedDenomRequest extends CosmosMessage
 
   @override
   OsmosisLockupLockedDenomResponse onJsonResponse(Map<String, dynamic> json) {
-    return OsmosisLockupLockedDenomResponse.fromRpc(json);
+    return OsmosisLockupLockedDenomResponse.fromJson(json);
   }
 
   @override

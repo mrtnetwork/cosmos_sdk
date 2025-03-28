@@ -29,7 +29,7 @@ class OsmosisSuperfluidAllAssetsRequest extends CosmosMessage
 
   @override
   OsmosisSuperfluidAllAssetsResponse onJsonResponse(Map<String, dynamic> json) {
-    return OsmosisSuperfluidAllAssetsResponse.fromRpc(json);
+    return OsmosisSuperfluidAllAssetsResponse.fromJson(json);
   }
 
   @override

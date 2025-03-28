@@ -36,7 +36,7 @@ class QueryNFTClassByQueryStringRequest extends CosmosMessage
 
   @override
   QueryNFTClassByQueryStringResponse onJsonResponse(Map<String, dynamic> json) {
-    return QueryNFTClassByQueryStringResponse.fromRpc(json);
+    return QueryNFTClassByQueryStringResponse.fromJson(json);
   }
 
   @override

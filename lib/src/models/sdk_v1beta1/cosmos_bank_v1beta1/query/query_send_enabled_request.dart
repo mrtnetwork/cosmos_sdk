@@ -47,7 +47,7 @@ class QuerySendEnabledRequest extends CosmosMessage
 
   @override
   QuerySendEnabledResponse onJsonResponse(Map<String, dynamic> json) {
-    return QuerySendEnabledResponse.fromRpc(json);
+    return QuerySendEnabledResponse.fromJson(json);
   }
 
   @override

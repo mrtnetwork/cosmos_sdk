@@ -44,7 +44,7 @@ class QueryNFTByQueryStringRequest extends CosmosMessage
 
   @override
   QueryNFTByQueryStringResponse onJsonResponse(Map<String, dynamic> json) {
-    return QueryNFTByQueryStringResponse.fromRpc(json);
+    return QueryNFTByQueryStringResponse.fromJson(json);
   }
 
   @override

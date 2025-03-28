@@ -32,6 +32,6 @@ class QueryInflationRequest extends CosmosMessage
 
   @override
   QueryInflationResponse onJsonResponse(Map<String, dynamic> json) {
-    return QueryInflationResponse.fromRpc(json);
+    return QueryInflationResponse.fromJson(json);
   }
 }

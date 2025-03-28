@@ -6,7 +6,7 @@ class QueryPayeeResponse extends CosmosMessage {
   /// the payee address to which packet fees are paid out
   final String? payeeAddress;
   const QueryPayeeResponse({this.payeeAddress});
-  factory QueryPayeeResponse.fromRpc(Map<String, dynamic> json) {
+  factory QueryPayeeResponse.fromJson(Map<String, dynamic> json) {
     return QueryPayeeResponse(payeeAddress: json["payee_address"]);
   }
 

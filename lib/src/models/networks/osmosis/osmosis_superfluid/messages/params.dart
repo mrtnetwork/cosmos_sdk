@@ -14,7 +14,7 @@ class OsmosisSuperfluidParams extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidParams(decode.getField(1));
   }
-  factory OsmosisSuperfluidParams.fromRpc(Map<String, dynamic> json) {
+  factory OsmosisSuperfluidParams.fromJson(Map<String, dynamic> json) {
     return OsmosisSuperfluidParams(json["minimum_risk_factor"]);
   }
 

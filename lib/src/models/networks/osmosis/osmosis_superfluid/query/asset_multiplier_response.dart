@@ -18,7 +18,7 @@ class OsmosisSuperfluidAssetMultiplierResponse extends CosmosMessage {
                     OsmosisSuperfluidOsmoEquivalentMultiplierRecord.deserialize(
                         e)));
   }
-  factory OsmosisSuperfluidAssetMultiplierResponse.fromRpc(
+  factory OsmosisSuperfluidAssetMultiplierResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisSuperfluidAssetMultiplierResponse(
         osmoEquivalentMultiplier: json["osmo_equivalent_multiplier"] == null

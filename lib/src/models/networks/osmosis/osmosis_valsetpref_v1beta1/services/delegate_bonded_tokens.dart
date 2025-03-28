@@ -1,12 +1,13 @@
 import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
+import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_valsetpref_v1beta1/core/service.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_valsetpref_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
 /// MsgDelegateBondedTokens breaks bonded lockup (by ID) of osmo, of length <= 2 weeks and takes all
 /// that osmo and delegates according to delegator's current validator set preference.
-class OsmosisValSetprefMsgDelegateBondedTokens extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class OsmosisValSetprefMsgDelegateBondedTokens
+    extends OsmosisValSetprefV1Beta1<EmptyServiceRequestResponse> {
   /// delegator is the user who is trying to force unbond osmo and delegate
   final String? delegator;
 
@@ -20,7 +21,7 @@ class OsmosisValSetprefMsgDelegateBondedTokens extends CosmosMessage
     return OsmosisValSetprefMsgDelegateBondedTokens(
         delegator: decode.getField(1), lockId: decode.getField(2));
   }
-  factory OsmosisValSetprefMsgDelegateBondedTokens.fromRpc(
+  factory OsmosisValSetprefMsgDelegateBondedTokens.fromJson(
       Map<String, dynamic> json) {
     return OsmosisValSetprefMsgDelegateBondedTokens(
         delegator: json["delegator"],
@@ -46,9 +47,6 @@ class OsmosisValSetprefMsgDelegateBondedTokens extends CosmosMessage
     return EmptyServiceRequestResponse(
         OsmosisValSetprefV1beta1Types.msgDelegateBondedTokensResponse);
   }
-
-  @override
-  TypeUrl get service => OsmosisValSetprefV1beta1Types.delegateBondedTokens;
 
   @override
   List<String?> get signers => [delegator];

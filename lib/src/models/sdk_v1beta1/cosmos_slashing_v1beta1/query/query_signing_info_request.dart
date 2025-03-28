@@ -30,7 +30,7 @@ class SlashingQuerySigningInfoRequest extends CosmosMessage
 
   @override
   SlashingQuerySigningInfoResponse onJsonResponse(Map<String, dynamic> json) {
-    return SlashingQuerySigningInfoResponse.fromRpc(json);
+    return SlashingQuerySigningInfoResponse.fromJson(json);
   }
 
   @override

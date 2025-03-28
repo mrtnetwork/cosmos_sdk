@@ -15,15 +15,15 @@ class QueryConnectionChannelsResponse extends CosmosMessage {
 
   /// query block height
   final IbcClientHeight height;
-  factory QueryConnectionChannelsResponse.fromRpc(Map<String, dynamic> json) {
+  factory QueryConnectionChannelsResponse.fromJson(Map<String, dynamic> json) {
     return QueryConnectionChannelsResponse(
       channels: (json["channels"] as List?)
-          ?.map((e) => IbcChannelIdentifiedChannel.fromRpc(e))
+          ?.map((e) => IbcChannelIdentifiedChannel.fromJson(e))
           .toList(),
-      height: IbcClientHeight.fromRpc(json["height"]),
+      height: IbcClientHeight.fromJson(json["height"]),
       pagination: json["pagination"] == null
           ? null
-          : PageResponse.fromRpc(json["pagination"]),
+          : PageResponse.fromJson(json["pagination"]),
     );
   }
   QueryConnectionChannelsResponse(
@@ -35,7 +35,7 @@ class QueryConnectionChannelsResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryConnectionChannelsResponse(
       channels: decode
-          .getFields(1)
+          .getFields<List<int>>(1)
           .map((e) => IbcChannelIdentifiedChannel.deserialize(e))
           .toList(),
       pagination: decode

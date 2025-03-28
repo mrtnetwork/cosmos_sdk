@@ -9,7 +9,7 @@ class ListImplementationsResponse extends CosmosMessage {
   ListImplementationsResponse(
       {required List<String> implementationMessageNames})
       : implementationMessageNames = implementationMessageNames.immutable;
-  factory ListImplementationsResponse.fromRpc(Map<String, dynamic> json) {
+  factory ListImplementationsResponse.fromJson(Map<String, dynamic> json) {
     return ListImplementationsResponse(
         implementationMessageNames:
             (json["implementation_message_names"] as List?)?.cast() ?? []);

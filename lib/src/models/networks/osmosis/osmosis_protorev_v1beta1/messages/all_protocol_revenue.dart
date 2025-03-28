@@ -24,13 +24,14 @@ class OsmosisProtorevAllProtocolRevenue extends CosmosMessage {
         cyclicArbTracker: OsmosisProtorevRouteCyclicArbTracker.deserialize(
             decode.getField(3)));
   }
-  factory OsmosisProtorevAllProtocolRevenue.fromRpc(Map<String, dynamic> json) {
+  factory OsmosisProtorevAllProtocolRevenue.fromJson(
+      Map<String, dynamic> json) {
     return OsmosisProtorevAllProtocolRevenue(
-        takerFeesTracker: OsmosisPoolManagerTakerFeesTracker.fromRpc(
+        takerFeesTracker: OsmosisPoolManagerTakerFeesTracker.fromJson(
             json["taker_fees_tracker"]),
         txFeesTracker:
-            OsmosisTxfeesTxFeesTracker.fromRpc(json["tx_fees_tracker"]),
-        cyclicArbTracker: OsmosisProtorevRouteCyclicArbTracker.fromRpc(
+            OsmosisTxfeesTxFeesTracker.fromJson(json["tx_fees_tracker"]),
+        cyclicArbTracker: OsmosisProtorevRouteCyclicArbTracker.fromJson(
             json["cyclic_arb_tracker"]));
   }
 

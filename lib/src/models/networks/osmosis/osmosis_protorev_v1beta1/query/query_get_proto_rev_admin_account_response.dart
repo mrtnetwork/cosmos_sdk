@@ -14,7 +14,7 @@ class OsmosisProtorevQueryGetProtoRevAdminAccountResponse
     return OsmosisProtorevQueryGetProtoRevAdminAccountResponse(
         adminAccount: decode.getField(1));
   }
-  factory OsmosisProtorevQueryGetProtoRevAdminAccountResponse.fromRpc(
+  factory OsmosisProtorevQueryGetProtoRevAdminAccountResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisProtorevQueryGetProtoRevAdminAccountResponse(
         adminAccount: json["admin_account"]);

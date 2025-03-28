@@ -1,13 +1,15 @@
 import 'package:cosmos_sdk/src/address/address.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_v1beta1/messages/coin.dart';
+import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_staking_v1beta1/core/service.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_staking_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// MsgCancelUnbondingDelegation defines the SDK message for performing a cancel unbonding delegation for delegator
 /// Since: cosmos-sdk 0.46
-class MsgCancelUnbondingDelegation extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class MsgCancelUnbondingDelegation
+    extends StakingV1Beta1Service<EmptyServiceRequestResponse> {
   final CosmosBaseAddress? delegatorAddress;
   final CosmosBaseAddress? validatorAddress;
   final Coin amount;
@@ -30,6 +32,13 @@ class MsgCancelUnbondingDelegation extends CosmosMessage
             ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
         amount: Coin.deserialize(decode.getField(3)),
         creationHeight: decode.getField(4));
+  }
+  factory MsgCancelUnbondingDelegation.fromJson(Map<String, dynamic> json) {
+    return MsgCancelUnbondingDelegation(
+        delegatorAddress: json.asAddress("delegator_address"),
+        validatorAddress: json.asAddress("validator_address"),
+        amount: Coin.fromJson(json.asMap("amount")),
+        creationHeight: json.asBigInt("creation_height"));
   }
 
   @override
@@ -56,8 +65,6 @@ class MsgCancelUnbondingDelegation extends CosmosMessage
         creationHeight
       ];
 
-  @override
-  TypeUrl get service => StakingV1beta1Types.cancelUnbondingDelegation;
   @override
   List<String?> get signers => [delegatorAddress?.address];
 

@@ -58,7 +58,7 @@ class QueryUnreceivedAcksRequest extends CosmosMessage
 
   @override
   QueryUnreceivedAcksResponse onJsonResponse(Map<String, dynamic> json) {
-    return QueryUnreceivedAcksResponse.fromRpc(json);
+    return QueryUnreceivedAcksResponse.fromJson(json);
   }
 
   @override

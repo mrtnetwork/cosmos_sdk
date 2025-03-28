@@ -24,7 +24,7 @@ class OsmosisMintQueryEpochProvisionsRequest extends CosmosMessage
   @override
   OsmosisMintQueryEpochProvisionsResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisMintQueryEpochProvisionsResponse.fromRpc(json);
+    return OsmosisMintQueryEpochProvisionsResponse.fromJson(json);
   }
 
   @override

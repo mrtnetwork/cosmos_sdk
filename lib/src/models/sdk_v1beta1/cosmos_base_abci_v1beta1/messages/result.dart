@@ -24,15 +24,15 @@ class Result extends CosmosMessage {
   ///
   /// Since: cosmos-sdk 0.46
   final List<AnyMessage> msgResponses;
-  factory Result.fromRpc(Map<String, dynamic> json) {
+  factory Result.fromJson(Map<String, dynamic> json) {
     return Result(
       data: CosmosUtils.toBytes(json["data"]),
       events:
-          (json["events"] as List?)?.map((e) => Event.fromRpc(e)).toList() ??
+          (json["events"] as List?)?.map((e) => Event.fromJson(e)).toList() ??
               [],
       log: json["log"],
       msgResponses: (json["msg_responses"] as List?)
-              ?.map((e) => AnyMessage.fromRpc(e))
+              ?.map((e) => AnyMessage.fromJson(e))
               .toList() ??
           [],
     );

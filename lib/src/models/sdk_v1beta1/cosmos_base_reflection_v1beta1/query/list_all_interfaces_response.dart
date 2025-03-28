@@ -9,13 +9,14 @@ class ListAllInterfacesResponse extends CosmosMessage {
   ListAllInterfacesResponse({required List<String> interfaceNames})
       : interfaceNames = interfaceNames.immutable;
 
-  factory ListAllInterfacesResponse.fromRpc(Map<String, dynamic> json) {
+  factory ListAllInterfacesResponse.fromJson(Map<String, dynamic> json) {
     return ListAllInterfacesResponse(
         interfaceNames: (json["interface_names"] as List?)?.cast() ?? []);
   }
   factory ListAllInterfacesResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return ListAllInterfacesResponse(interfaceNames: decode.getFields(1));
+    return ListAllInterfacesResponse(
+        interfaceNames: decode.getFields<String>(1));
   }
 
   @override

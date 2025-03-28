@@ -34,7 +34,7 @@ class QueryModuleAccountByNameRequest extends CosmosMessage
 
   @override
   QueryModuleAccountByNameResponse onJsonResponse(Map<String, dynamic> json) {
-    return QueryModuleAccountByNameResponse.fromRpc(json);
+    return QueryModuleAccountByNameResponse.fromJson(json);
   }
 
   @override

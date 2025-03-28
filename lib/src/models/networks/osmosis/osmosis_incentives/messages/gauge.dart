@@ -55,26 +55,32 @@ class OsmosisIncentivesGauge extends CosmosMessage {
       id: decode.getField(1),
       isPerpetual: decode.getField(2),
       distributeTo: OsmosisLockupQueryCondition.deserialize(decode.getField(3)),
-      coins: decode.getFields(4).map((e) => Coin.deserialize(e)).toList(),
+      coins: decode
+          .getFields<List<int>>(4)
+          .map((e) => Coin.deserialize(e))
+          .toList(),
       startTime: ProtobufTimestamp.deserialize(decode.getField(5)),
       numEpochsPaidOver: decode.getField(6),
       filledEpochs: decode.getField(7),
-      distributedCoins:
-          decode.getFields(8).map((e) => Coin.deserialize(e)).toList(),
+      distributedCoins: decode
+          .getFields<List<int>>(8)
+          .map((e) => Coin.deserialize(e))
+          .toList(),
     );
   }
 
-  factory OsmosisIncentivesGauge.fromRpc(Map<String, dynamic> json) {
+  factory OsmosisIncentivesGauge.fromJson(Map<String, dynamic> json) {
     return OsmosisIncentivesGauge(
         id: BigintUtils.tryParse(json["id"]),
         isPerpetual: json["is_perpetual"],
         distributeTo:
-            OsmosisLockupQueryCondition.fromRpc(json["distribute_to"]),
-        coins: (json["coins"] as List?)?.map((e) => Coin.fromRpc(e)).toList() ??
-            <Coin>[],
+            OsmosisLockupQueryCondition.fromJson(json["distribute_to"]),
+        coins:
+            (json["coins"] as List?)?.map((e) => Coin.fromJson(e)).toList() ??
+                <Coin>[],
         startTime: ProtobufTimestamp.fromString(json["start_time"]),
         distributedCoins: (json["distributed_coins"] as List?)
-                ?.map((e) => Coin.fromRpc(e))
+                ?.map((e) => Coin.fromJson(e))
                 .toList() ??
             <Coin>[],
         filledEpochs: BigintUtils.tryParse(json["filled_epochs"]),

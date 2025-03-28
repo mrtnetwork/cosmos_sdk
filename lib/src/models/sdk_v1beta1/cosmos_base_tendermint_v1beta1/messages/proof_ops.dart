@@ -8,10 +8,10 @@ import 'package:blockchain_utils/helper/helper.dart';
 class CosmosProofOps extends CosmosMessage {
   final List<CosmosProofOp> ops;
   CosmosProofOps({required List<CosmosProofOp> ops}) : ops = ops.immutable;
-  factory CosmosProofOps.fromRpc(Map<String, dynamic> json) {
+  factory CosmosProofOps.fromJson(Map<String, dynamic> json) {
     return CosmosProofOps(
         ops: (json["ops"] as List?)
-                ?.map((e) => CosmosProofOp.fromRpc(e))
+                ?.map((e) => CosmosProofOp.fromJson(e))
                 .toList() ??
             []);
   }
@@ -19,7 +19,7 @@ class CosmosProofOps extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmosProofOps(
         ops: decode
-            .getFields(1)
+            .getFields<List<int>>(1)
             .map((e) => CosmosProofOp.deserialize(e))
             .toList());
   }

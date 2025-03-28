@@ -14,15 +14,17 @@ class OsmosisAccumAccumulatorContent extends CosmosMessage {
   factory OsmosisAccumAccumulatorContent.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisAccumAccumulatorContent(
-      accumValue:
-          decode.getFields(1).map((e) => DecCoin.deserialize(e)).toList(),
+      accumValue: decode
+          .getFields<List<int>>(1)
+          .map((e) => DecCoin.deserialize(e))
+          .toList(),
       totalShares: decode.getField(2),
     );
   }
-  factory OsmosisAccumAccumulatorContent.fromRpc(Map<String, dynamic> json) {
+  factory OsmosisAccumAccumulatorContent.fromJson(Map<String, dynamic> json) {
     return OsmosisAccumAccumulatorContent(
       accumValue: (json["accum_value"] as List?)
-              ?.map((e) => DecCoin.fromRpc(e))
+              ?.map((e) => DecCoin.fromJson(e))
               .toList() ??
           <DecCoin>[],
       totalShares: json["total_shares"],

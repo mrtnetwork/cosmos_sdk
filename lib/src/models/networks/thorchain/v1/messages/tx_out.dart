@@ -12,7 +12,7 @@ class ThorchainTxOut extends CosmosMessage {
     return ThorchainTxOut(
         height: decode.getField(1),
         txArray: decode
-            .getFields(2)
+            .getFields<List<int>>(2)
             .map((e) => ThorchainTxOutItem.deserialize(e))
             .toList());
   }

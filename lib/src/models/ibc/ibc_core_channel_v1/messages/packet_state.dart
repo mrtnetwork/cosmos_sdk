@@ -18,7 +18,7 @@ class IbcChannelPacketState extends CosmosMessage {
 
   /// embedded data that represents packet state.
   final List<int>? data;
-  factory IbcChannelPacketState.fromRpc(Map<String, dynamic> json) {
+  factory IbcChannelPacketState.fromJson(Map<String, dynamic> json) {
     return IbcChannelPacketState(
         portId: json["port_id"],
         data: CosmosUtils.tryToBytes(json["data"]),

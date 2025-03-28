@@ -58,7 +58,7 @@ class QueryUnreceivedPacketsRequest extends CosmosMessage
 
   @override
   QueryUnreceivedPacketsResponse onJsonResponse(Map<String, dynamic> json) {
-    return QueryUnreceivedPacketsResponse.fromRpc(json);
+    return QueryUnreceivedPacketsResponse.fromJson(json);
   }
 
   @override

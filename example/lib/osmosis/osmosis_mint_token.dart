@@ -36,7 +36,7 @@ void main() async {
   final authInfo = AuthInfo(
       signerInfos: [
         SignerInfo(
-            publicKey: publickey,
+            publicKey: publickey.toAny(),
             modeInfo: const ModeInfo(ModeInfoSignle(SignMode.signModeDirect)),
             sequence: accountInfo.info.sequence)
       ],

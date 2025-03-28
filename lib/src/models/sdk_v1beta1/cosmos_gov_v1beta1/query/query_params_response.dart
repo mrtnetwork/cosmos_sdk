@@ -19,11 +19,11 @@ class GovQueryParamsResponse extends CosmosMessage {
       {required this.votingParams,
       required this.depositParams,
       required this.tallyParams});
-  factory GovQueryParamsResponse.fromRpc(Map<String, dynamic> json) {
+  factory GovQueryParamsResponse.fromJson(Map<String, dynamic> json) {
     return GovQueryParamsResponse(
-      votingParams: GovVotingParams.fromRpc(json["voting_params"]),
-      depositParams: GovDepositParams.fromRpc(json["deposit_params"]),
-      tallyParams: GovTallyParams.fromRpc(json["tally_params"]),
+      votingParams: GovVotingParams.fromJson(json["voting_params"]),
+      depositParams: GovDepositParams.fromJson(json["deposit_params"]),
+      tallyParams: GovTallyParams.fromJson(json["tally_params"]),
     );
   }
   factory GovQueryParamsResponse.deserialize(List<int> bytes) {

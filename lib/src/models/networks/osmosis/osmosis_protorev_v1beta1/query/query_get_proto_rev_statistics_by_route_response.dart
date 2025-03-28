@@ -16,10 +16,10 @@ class OsmosisProtorevQueryGetProtoRevStatisticsByRouteResponse
     return OsmosisProtorevQueryGetProtoRevStatisticsByRouteResponse(
         OsmosisProtorevRouteStatistics.deserialize(decode.getField(1)));
   }
-  factory OsmosisProtorevQueryGetProtoRevStatisticsByRouteResponse.fromRpc(
+  factory OsmosisProtorevQueryGetProtoRevStatisticsByRouteResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisProtorevQueryGetProtoRevStatisticsByRouteResponse(
-        OsmosisProtorevRouteStatistics.fromRpc(json["statistics"]));
+        OsmosisProtorevRouteStatistics.fromJson(json["statistics"]));
   }
 
   @override

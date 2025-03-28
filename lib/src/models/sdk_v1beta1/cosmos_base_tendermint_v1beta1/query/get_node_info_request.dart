@@ -26,6 +26,6 @@ class GetNodeInfoRequest extends CosmosMessage
 
   @override
   GetNodeInfoResponse onJsonResponse(Map<String, dynamic> json) {
-    return GetNodeInfoResponse.fromRpc(json);
+    return GetNodeInfoResponse.fromJson(json);
   }
 }

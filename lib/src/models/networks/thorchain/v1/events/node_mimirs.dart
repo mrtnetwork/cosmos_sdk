@@ -9,7 +9,7 @@ class ThorchainNodeMimirs extends CosmosMessage {
   factory ThorchainNodeMimirs.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainNodeMimirs(decode
-        .getFields(1)
+        .getFields<List<int>>(1)
         .map((e) => ThorchainNodeMimir.deserialize(e))
         .toList());
   }

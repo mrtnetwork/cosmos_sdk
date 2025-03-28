@@ -37,7 +37,7 @@ class OsmosisConcentratedLiquidityPoolAccumulatorRewardsRequest
   @override
   OsmosisConcentratedLiquidityPoolAccumulatorRewardsResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisConcentratedLiquidityPoolAccumulatorRewardsResponse.fromRpc(
+    return OsmosisConcentratedLiquidityPoolAccumulatorRewardsResponse.fromJson(
         json);
   }
 

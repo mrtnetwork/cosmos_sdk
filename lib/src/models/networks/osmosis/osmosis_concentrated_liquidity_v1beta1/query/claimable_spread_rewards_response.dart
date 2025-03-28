@@ -13,14 +13,16 @@ class OsmosisConcentratedLiquidityClaimableSpreadRewardsResponse
   factory OsmosisConcentratedLiquidityClaimableSpreadRewardsResponse.deserialize(
       List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return OsmosisConcentratedLiquidityClaimableSpreadRewardsResponse(
-        decode.getFields(1).map((e) => Coin.deserialize(e)).toList());
+    return OsmosisConcentratedLiquidityClaimableSpreadRewardsResponse(decode
+        .getFields<List<int>>(1)
+        .map((e) => Coin.deserialize(e))
+        .toList());
   }
-  factory OsmosisConcentratedLiquidityClaimableSpreadRewardsResponse.fromRpc(
+  factory OsmosisConcentratedLiquidityClaimableSpreadRewardsResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisConcentratedLiquidityClaimableSpreadRewardsResponse(
       (json["claimable_spread_rewards"] as List?)
-              ?.map((e) => Coin.fromRpc(e))
+              ?.map((e) => Coin.fromJson(e))
               .toList() ??
           <Coin>[],
     );

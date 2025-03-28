@@ -40,6 +40,6 @@ class TxEncodeRequest extends CosmosMessage
 
   @override
   TxEncodeResponse onJsonResponse(Map<String, dynamic> json) {
-    return TxEncodeResponse.fromRpc(json);
+    return TxEncodeResponse.fromJson(json);
   }
 }

@@ -12,15 +12,15 @@ class QueryDenomsMetadataResponse extends CosmosMessage {
   /// pagination defines the pagination in the response.
   final PageResponse? pagination;
   const QueryDenomsMetadataResponse({required this.metadatas, this.pagination});
-  factory QueryDenomsMetadataResponse.fromRpc(Map<String, dynamic> json) {
+  factory QueryDenomsMetadataResponse.fromJson(Map<String, dynamic> json) {
     return QueryDenomsMetadataResponse(
         metadatas: (json["metadatas"] as List?)
-                ?.map((e) => Metadata.fromRpc(e))
+                ?.map((e) => Metadata.fromJson(e))
                 .toList() ??
             [],
         pagination: json["pagination"] == null
             ? null
-            : PageResponse.fromRpc(json["pagination"]));
+            : PageResponse.fromJson(json["pagination"]));
   }
 
   factory QueryDenomsMetadataResponse.deserialize(List<int> bytes) {

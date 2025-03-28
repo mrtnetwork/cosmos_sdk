@@ -13,7 +13,7 @@ class OsmosisProtorevStablePoolInfo extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisProtorevStablePoolInfo(weight: decode.getField(1));
   }
-  factory OsmosisProtorevStablePoolInfo.fromRpc(Map<String, dynamic> json) {
+  factory OsmosisProtorevStablePoolInfo.fromJson(Map<String, dynamic> json) {
     return OsmosisProtorevStablePoolInfo(
         weight: BigintUtils.tryParse(json["weight"]));
   }

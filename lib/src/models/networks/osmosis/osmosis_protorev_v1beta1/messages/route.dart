@@ -22,15 +22,15 @@ class OsmosisProtorevRoute extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisProtorevRoute(
         trades: decode
-            .getFields(1)
+            .getFields<List<int>>(1)
             .map((e) => OsmosisProtorevTrade.deserialize(e))
             .toList(),
         stepSize: decode.getField(2));
   }
-  factory OsmosisProtorevRoute.fromRpc(Map<String, dynamic> json) {
+  factory OsmosisProtorevRoute.fromJson(Map<String, dynamic> json) {
     return OsmosisProtorevRoute(
         trades: (json["trades"] as List?)
-                ?.map((e) => OsmosisProtorevTrade.fromRpc(e))
+                ?.map((e) => OsmosisProtorevTrade.fromJson(e))
                 .toList() ??
             <OsmosisProtorevTrade>[],
         stepSize: json["step_size"]);

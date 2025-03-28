@@ -36,7 +36,7 @@ class OsmosisGammQueryTotalSharesRequest extends CosmosMessage
   @override
   OsmosisGammQueryTotalSharesResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisGammQueryTotalSharesResponse.fromRpc(json);
+    return OsmosisGammQueryTotalSharesResponse.fromJson(json);
   }
 
   @override

@@ -1,7 +1,9 @@
+import 'package:blockchain_utils/helper/helper.dart';
 import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 
 class OsmosisIbchooksTypes extends TypeUrl {
   const OsmosisIbchooksTypes._(super.typeUrl);
+  static const String root = "/osmosis.ibchooks";
   static const OsmosisIbchooksTypes params =
       OsmosisIbchooksTypes._("/osmosis.ibchooks.Params");
   static const OsmosisIbchooksTypes genesisState =
@@ -12,7 +14,8 @@ class OsmosisIbchooksTypes extends TypeUrl {
   static const OsmosisIbchooksTypes msgEmitIBCAckResponse =
       OsmosisIbchooksTypes._("/osmosis.ibchooks.MsgEmitIBCAckResponse");
 
-  /// service
-  static const OsmosisIbchooksTypes emitIBCAck =
-      OsmosisIbchooksTypes._("/osmosis.ibchooks.Msg/EmitIBCAck");
+  static const List<TypeUrl> services = [msgEmitIBCAck];
+  static TypeUrl? findService(String? typeUrl) {
+    return services.firstWhereNullable((e) => e.typeUrl == typeUrl);
+  }
 }

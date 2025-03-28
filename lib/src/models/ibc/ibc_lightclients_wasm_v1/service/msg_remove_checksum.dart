@@ -1,12 +1,14 @@
 import 'package:blockchain_utils/blockchain_utils.dart';
+import 'package:cosmos_sdk/src/models/ibc/core/service.dart';
 
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// MsgRemoveChecksum defines the request type for the MsgRemoveChecksum rpc
-class IbcLightClientsWasmMsgRemoveChecksum extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class IbcLightClientsWasmMsgRemoveChecksum
+    extends IbcService<EmptyServiceRequestResponse> {
   /// signer address
   final String? signer;
 
@@ -21,12 +23,14 @@ class IbcLightClientsWasmMsgRemoveChecksum extends CosmosMessage
       checksum: decode.getField(2),
     );
   }
+  factory IbcLightClientsWasmMsgRemoveChecksum.fromJson(
+      Map<String, dynamic> json) {
+    return IbcLightClientsWasmMsgRemoveChecksum(
+        signer: json.as("signer"), checksum: json.asBytes("checksum"));
+  }
 
   @override
   List<int> get fieldIds => [1, 2];
-
-  @override
-  TypeUrl get service => IbcTypes.ibcLightClientsWasmRemoveChecksum;
 
   @override
   Map<String, dynamic> toJson() {

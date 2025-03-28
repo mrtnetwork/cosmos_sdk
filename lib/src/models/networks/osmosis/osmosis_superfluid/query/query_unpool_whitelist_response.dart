@@ -17,7 +17,7 @@ class OsmosisSuperfluidQueryUnpoolWhitelistResponse extends CosmosMessage {
                     (e) => e.map((e) => BigintUtils.parse(e)).toList()) ??
             <BigInt>[]);
   }
-  factory OsmosisSuperfluidQueryUnpoolWhitelistResponse.fromRpc(
+  factory OsmosisSuperfluidQueryUnpoolWhitelistResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisSuperfluidQueryUnpoolWhitelistResponse(
         poolIds: (json["pool_ids"] as List?)

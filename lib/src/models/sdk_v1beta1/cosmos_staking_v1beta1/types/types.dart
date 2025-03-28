@@ -1,7 +1,10 @@
+import 'package:blockchain_utils/helper/helper.dart';
 import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 
 class StakingV1beta1Types extends TypeUrl {
-  const StakingV1beta1Types._(super.typeUrl, {super.query, super.rpc});
+  const StakingV1beta1Types._(super.typeUrl,
+      {super.query, super.rpc, super.aminoType});
+  static const String root = "/cosmos.staking.v1beta1";
   static const StakingV1beta1Types validator =
       StakingV1beta1Types._("/cosmos.staking.v1beta1.Validator");
   static const StakingV1beta1Types unbondingDelegation =
@@ -24,31 +27,63 @@ class StakingV1beta1Types extends TypeUrl {
       StakingV1beta1Types._("/cosmos.staking.v1beta1.DVVTriplets");
   static const StakingV1beta1Types lastValidatorPower =
       StakingV1beta1Types._("/cosmos.staking.v1beta1.LastValidatorPower");
-  static const StakingV1beta1Types msgBeginRedelegate =
-      StakingV1beta1Types._("/cosmos.staking.v1beta1.MsgBeginRedelegate");
+  static const StakingV1beta1Types msgBeginRedelegate = StakingV1beta1Types._(
+      "/cosmos.staking.v1beta1.MsgBeginRedelegate",
+      aminoType: "cosmos-sdk/MsgBeginRedelegate");
   static const StakingV1beta1Types msgBeginRedelegateResponse =
       StakingV1beta1Types._(
           "/cosmos.staking.v1beta1.MsgBeginRedelegateResponse");
+  static const StakingV1beta1Types msgEnableTokenizeSharesResponse =
+      StakingV1beta1Types._(
+          "/cosmos.staking.v1beta1.MsgEnableTokenizeSharesResponse");
+  static const StakingV1beta1Types msgTokenizeSharesResponse =
+      StakingV1beta1Types._(
+          "/cosmos.staking.v1beta1.MsgTokenizeSharesResponse");
+
+  static const StakingV1beta1Types msgRedeemTokensForSharesResponse =
+      StakingV1beta1Types._(
+          "/cosmos.staking.v1beta1.MsgRedeemTokensForSharesResponse");
+  static const StakingV1beta1Types msgTokenizeShares =
+      StakingV1beta1Types._("/cosmos.staking.v1beta1.MsgTokenizeShares");
+  static const StakingV1beta1Types msgDisableTokenizeShares =
+      StakingV1beta1Types._("/cosmos.staking.v1beta1.MsgDisableTokenizeShares");
+  static const StakingV1beta1Types msgEnableTokenizeShares =
+      StakingV1beta1Types._("/cosmos.staking.v1beta1.MsgEnableTokenizeShares");
+  static const StakingV1beta1Types msgDisableTokenizeSharesResponse =
+      StakingV1beta1Types._(
+          "/cosmos.staking.v1beta1.MsgDisableTokenizeSharesResponse");
+  static const StakingV1beta1Types msgRedeemTokensForShares =
+      StakingV1beta1Types._("/cosmos.staking.v1beta1.MsgRedeemTokensForShares");
+  static const StakingV1beta1Types msgTransferTokenizeShareRecord =
+      StakingV1beta1Types._(
+          "/cosmos.staking.v1beta1.MsgTransferTokenizeShareRecord");
+  static const StakingV1beta1Types msgTransferTokenizeShareRecordResponse =
+      StakingV1beta1Types._(
+          "/cosmos.staking.v1beta1.MsgTransferTokenizeShareRecordResponse");
   static const StakingV1beta1Types msgCancelUnbondingDelegation =
       StakingV1beta1Types._(
           "/cosmos.staking.v1beta1.MsgCancelUnbondingDelegation");
   static const StakingV1beta1Types msgCancelUnbondingDelegationResponse =
       StakingV1beta1Types._(
           "/cosmos.staking.v1beta1.MsgCancelUnbondingDelegationResponse");
-  static const StakingV1beta1Types msgCreateValidator =
-      StakingV1beta1Types._("/cosmos.staking.v1beta1.MsgCreateValidator");
+  static const StakingV1beta1Types msgCreateValidator = StakingV1beta1Types._(
+      "/cosmos.staking.v1beta1.MsgCreateValidator",
+      aminoType: "cosmos-sdk/MsgCreateValidator");
   static const StakingV1beta1Types msgCreateValidatorResponse =
       StakingV1beta1Types._("/cosmos.staking.v1beta1.MsgCreateValidator");
-  static const StakingV1beta1Types msgDelegate =
-      StakingV1beta1Types._("/cosmos.staking.v1beta1.MsgDelegate");
+  static const StakingV1beta1Types msgDelegate = StakingV1beta1Types._(
+      "/cosmos.staking.v1beta1.MsgDelegate",
+      aminoType: "cosmos-sdk/MsgDelegate");
   static const StakingV1beta1Types msgDelegateResponse =
       StakingV1beta1Types._("/cosmos.staking.v1beta1.MsgDelegateResponse");
-  static const StakingV1beta1Types msgEditValidator =
-      StakingV1beta1Types._("/cosmos.staking.v1beta1.MsgEditValidator");
+  static const StakingV1beta1Types msgEditValidator = StakingV1beta1Types._(
+      "/cosmos.staking.v1beta1.MsgEditValidator",
+      aminoType: "cosmos-sdk/MsgEditValidator");
   static const StakingV1beta1Types msgEditValidatorResponse =
       StakingV1beta1Types._("/cosmos.staking.v1beta1.MsgEditValidatorResponse");
-  static const StakingV1beta1Types msgUndelegate =
-      StakingV1beta1Types._("/cosmos.staking.v1beta1.MsgUndelegate");
+  static const StakingV1beta1Types msgUndelegate = StakingV1beta1Types._(
+      "/cosmos.staking.v1beta1.MsgUndelegate",
+      aminoType: "cosmos-sdk/MsgUndelegate");
   static const StakingV1beta1Types msgUndelegateResponse =
       StakingV1beta1Types._("/cosmos.staking.v1beta1.MsgUndelegateResponse");
   static const StakingV1beta1Types pool =
@@ -184,24 +219,22 @@ class StakingV1beta1Types extends TypeUrl {
       StakingV1beta1Types._(
           "/cosmos.staking.v1beta1.Query/UnbondingDelegation");
 
-  /// services
-  static const StakingV1beta1Types createValidator =
-      StakingV1beta1Types._("/cosmos.bank.v1beta1.Msg/CreateValidator");
-  static const StakingV1beta1Types editValidator =
-      StakingV1beta1Types._("/cosmos.bank.v1beta1.Msg/EditValidator");
-  static const StakingV1beta1Types delegate =
-      StakingV1beta1Types._("/cosmos.bank.v1beta1.Msg/Delegate");
-  static const StakingV1beta1Types beginRedelegate =
-      StakingV1beta1Types._("/cosmos.bank.v1beta1.Msg/BeginRedelegate");
-
-  static const StakingV1beta1Types undelegate =
-      StakingV1beta1Types._("/cosmos.bank.v1beta1.Msg/Undelegate");
-  static const StakingV1beta1Types cancelUnbondingDelegation =
-      StakingV1beta1Types._(
-          "/cosmos.bank.v1beta1.Msg/CancelUnbondingDelegation");
-
-  static const StakingV1beta1Types updateParams =
-      StakingV1beta1Types._("/cosmos.bank.v1beta1.Msg/UpdateParams");
-  static const StakingV1beta1Types rotateConsPubKey =
-      StakingV1beta1Types._("/cosmos.bank.v1beta1.Msg/RotateConsPubKey");
+  static const List<TypeUrl> services = [
+    msgBeginRedelegate,
+    msgCancelUnbondingDelegation,
+    msgCreateValidator,
+    msgDelegate,
+    msgEditValidator,
+    msgRotateConsPubKey,
+    msgUndelegate,
+    stakingMsgUpdateParams,
+    msgDisableTokenizeShares,
+    msgEnableTokenizeShares,
+    msgRedeemTokensForShares,
+    msgTokenizeShares,
+    msgTransferTokenizeShareRecord,
+  ];
+  static TypeUrl? findService(String? typeUrl) {
+    return services.firstWhereNullable((e) => e.typeUrl == typeUrl);
+  }
 }

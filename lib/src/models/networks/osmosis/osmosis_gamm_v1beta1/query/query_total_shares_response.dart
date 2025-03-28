@@ -11,10 +11,10 @@ class OsmosisGammQueryTotalSharesResponse extends CosmosMessage {
     return OsmosisGammQueryTotalSharesResponse(
         Coin.deserialize(decode.getField(1)));
   }
-  factory OsmosisGammQueryTotalSharesResponse.fromRpc(
+  factory OsmosisGammQueryTotalSharesResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisGammQueryTotalSharesResponse(
-        Coin.fromRpc(json["total_shares"]));
+        Coin.fromJson(json["total_shares"]));
   }
 
   @override

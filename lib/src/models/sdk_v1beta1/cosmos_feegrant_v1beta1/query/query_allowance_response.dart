@@ -8,11 +8,11 @@ class QueryAllowanceResponse extends CosmosMessage {
   /// allowance is a allowance granted for grantee by granter.
   final FeeGrant? allowance;
   QueryAllowanceResponse({this.allowance});
-  factory QueryAllowanceResponse.fromRpc(Map<String, dynamic> json) {
+  factory QueryAllowanceResponse.fromJson(Map<String, dynamic> json) {
     return QueryAllowanceResponse(
         allowance: json["allowance"] == null
             ? null
-            : FeeGrant.fromRpc(json["allowance"]));
+            : FeeGrant.fromJson(json["allowance"]));
   }
   factory QueryAllowanceResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

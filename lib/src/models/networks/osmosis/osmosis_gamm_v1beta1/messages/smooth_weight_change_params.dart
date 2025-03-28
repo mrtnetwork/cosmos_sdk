@@ -45,26 +45,26 @@ class OsmosisGammSmoothWeightChangeParams extends CosmosMessage {
       startTime: ProtobufTimestamp.deserialize(decode.getField(1)),
       duration: ProtobufDuration.deserialize(decode.getField(2)),
       initialPoolWeights: decode
-          .getFields(3)
+          .getFields<List<int>>(3)
           .map((e) => OsmosisGammPoolAsset.deserialize(e))
           .toList(),
       targetPoolWeights: decode
-          .getFields(4)
+          .getFields<List<int>>(4)
           .map((e) => OsmosisGammPoolAsset.deserialize(e))
           .toList(),
     );
   }
-  factory OsmosisGammSmoothWeightChangeParams.fromRpc(
+  factory OsmosisGammSmoothWeightChangeParams.fromJson(
       Map<String, dynamic> json) {
     return OsmosisGammSmoothWeightChangeParams(
         startTime: ProtobufTimestamp.fromString(json["start_time"]),
         duration: ProtobufDuration.fromString(json["duration"]),
         initialPoolWeights: (json["initial_pool_weights"] as List?)
-                ?.map((e) => OsmosisGammPoolAsset.fromRpc(e))
+                ?.map((e) => OsmosisGammPoolAsset.fromJson(e))
                 .toList() ??
             <OsmosisGammPoolAsset>[],
         targetPoolWeights: (json["target_pool_weights"] as List?)
-                ?.map((e) => OsmosisGammPoolAsset.fromRpc(e))
+                ?.map((e) => OsmosisGammPoolAsset.fromJson(e))
                 .toList() ??
             <OsmosisGammPoolAsset>[]);
   }

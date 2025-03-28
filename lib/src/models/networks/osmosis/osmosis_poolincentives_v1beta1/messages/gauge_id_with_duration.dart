@@ -20,7 +20,7 @@ class OsmosisPoolincentivesGaugeIdWithDuration extends CosmosMessage {
         gaugeIncentivePercentage: decode.getField(3));
   }
 
-  factory OsmosisPoolincentivesGaugeIdWithDuration.fromRpc(
+  factory OsmosisPoolincentivesGaugeIdWithDuration.fromJson(
       Map<String, dynamic> json) {
     return OsmosisPoolincentivesGaugeIdWithDuration(
         gaugeId: BigintUtils.tryParse(json["gauge_id"]),

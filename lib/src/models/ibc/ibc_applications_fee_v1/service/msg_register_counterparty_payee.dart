@@ -1,10 +1,12 @@
+import 'package:cosmos_sdk/src/models/ibc/core/service.dart';
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// MsgRegisterCounterpartyPayee defines the request type for the RegisterCounterpartyPayee rpc
-class MsgRegisterCounterpartyPayee extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class MsgRegisterCounterpartyPayee
+    extends IbcService<EmptyServiceRequestResponse> {
   /// unique port identifier
   final String? portId;
 
@@ -26,6 +28,13 @@ class MsgRegisterCounterpartyPayee extends CosmosMessage
         relayer: decode.getField(3),
         counterpartyPayee: decode.getField(4));
   }
+  factory MsgRegisterCounterpartyPayee.fromJson(Map<String, dynamic> json) {
+    return MsgRegisterCounterpartyPayee(
+        portId: json.as("port_id"),
+        channelId: json.as("channel_id"),
+        relayer: json.as("relayer"),
+        counterpartyPayee: json.as("counterparty_payee"));
+  }
 
   @override
   List<int> get fieldIds => [1, 2, 3, 4];
@@ -45,9 +54,6 @@ class MsgRegisterCounterpartyPayee extends CosmosMessage
 
   @override
   List get values => [portId, channelId, relayer, counterpartyPayee];
-
-  @override
-  TypeUrl get service => IbcTypes.registerCounterpartyPayee;
 
   @override
   List<String?> get signers => [relayer];

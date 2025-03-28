@@ -14,11 +14,11 @@ class QueryUpgradeErrorResponse extends CosmosMessage {
 
   /// height at which the proof was retrieved
   final IbcClientHeight proofHeight;
-  factory QueryUpgradeErrorResponse.fromRpc(Map<String, dynamic> json) {
+  factory QueryUpgradeErrorResponse.fromJson(Map<String, dynamic> json) {
     return QueryUpgradeErrorResponse(
-      errorReceipt: IbcChannelErrorReceipt.fromRpc(json["error_receipt"]),
+      errorReceipt: IbcChannelErrorReceipt.fromJson(json["error_receipt"]),
       proof: CosmosUtils.tryToBytes(json["proof"]),
-      proofHeight: IbcClientHeight.fromRpc(json["proof_height"]),
+      proofHeight: IbcClientHeight.fromJson(json["proof_height"]),
     );
   }
   QueryUpgradeErrorResponse(

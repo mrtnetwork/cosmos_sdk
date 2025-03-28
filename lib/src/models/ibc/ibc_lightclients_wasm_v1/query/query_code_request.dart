@@ -36,7 +36,7 @@ class IbcLightClientsWasmQueryCodeRequest extends CosmosMessage
   @override
   IbcLightClientsWasmQueryCodeResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return IbcLightClientsWasmQueryCodeResponse.fromRpc(json);
+    return IbcLightClientsWasmQueryCodeResponse.fromJson(json);
   }
 
   @override

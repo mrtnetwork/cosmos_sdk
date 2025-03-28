@@ -1,6 +1,7 @@
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_bank_v1beta1/messages/send_enabled.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_bank_v1beta1/types/types.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// Params defines the parameters for the bank module.
 class BankParams extends CosmosMessage {
@@ -13,13 +14,14 @@ class BankParams extends CosmosMessage {
   final bool defaultSendEnabled;
   const BankParams(
       {this.sendEnabled = const [], required this.defaultSendEnabled});
-  factory BankParams.fromRpc(Map<String, dynamic> json) {
+  factory BankParams.fromJson(Map<String, dynamic> json) {
     return BankParams(
-        sendEnabled: (json["send_enabled"] as List?)
-                ?.map((e) => SendEnabled.fromRpc(e))
+        sendEnabled: json
+                .asListOfMap("send_enabled", throwOnNull: true)
+                ?.map((e) => SendEnabled.fromJson(e))
                 .toList() ??
             [],
-        defaultSendEnabled: json["default_send_enabled"]);
+        defaultSendEnabled: json.as("default_send_enabled"));
   }
   factory BankParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

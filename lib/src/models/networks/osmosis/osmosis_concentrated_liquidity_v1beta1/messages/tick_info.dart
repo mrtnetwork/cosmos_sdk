@@ -45,12 +45,14 @@ class OsmosisConcentratedLiquidityTickInfo extends CosmosMessage {
     return OsmosisConcentratedLiquidityTickInfo(
         liquidityGross: decode.getField(1),
         liquidityNet: decode.getField(2),
-        spreadRewardGrowthOsppositeDirectionOfLastTraversal:
-            decode.getFields(3).map((e) => DecCoin.deserialize(e)).toList(),
+        spreadRewardGrowthOsppositeDirectionOfLastTraversal: decode
+            .getFields<List<int>>(3)
+            .map((e) => DecCoin.deserialize(e))
+            .toList(),
         uptimeTrackers: OsmosisConcentratedLiquidityUptimeTrackers.deserialize(
             decode.getField(4)));
   }
-  factory OsmosisConcentratedLiquidityTickInfo.fromRpc(
+  factory OsmosisConcentratedLiquidityTickInfo.fromJson(
       Map<String, dynamic> json) {
     return OsmosisConcentratedLiquidityTickInfo(
         liquidityGross: json["liquidity_gross"],
@@ -58,7 +60,7 @@ class OsmosisConcentratedLiquidityTickInfo extends CosmosMessage {
         spreadRewardGrowthOsppositeDirectionOfLastTraversal:
             (json["spread_reward_growth_opposite_direction_of_last_traversal"]
                         as List?)
-                    ?.map((e) => DecCoin.fromRpc(e))
+                    ?.map((e) => DecCoin.fromJson(e))
                     .toList() ??
                 <DecCoin>[],
         uptimeTrackers: OsmosisConcentratedLiquidityUptimeTrackers.deserialize(

@@ -54,8 +54,10 @@ class OsmosisGammPoolmodelsStableSwapPool extends CosmosMessage {
             decode.getField(3)),
         futurePoolGovernor: decode.getField(4),
         totalShares: Coin.deserialize(decode.getField(5)),
-        poolLiquidity:
-            decode.getFields(6).map((e) => Coin.deserialize(e)).toList(),
+        poolLiquidity: decode
+            .getFields<List<int>>(6)
+            .map((e) => Coin.deserialize(e))
+            .toList(),
         scalingFactor: decode
                 .getResult<ProtocolBufferDecoderResult?>(7)
                 ?.to<List<BigInt>, List<int>>(
@@ -63,15 +65,15 @@ class OsmosisGammPoolmodelsStableSwapPool extends CosmosMessage {
             <BigInt>[],
         scalingFactorController: decode.getField(8));
   }
-  factory OsmosisGammPoolmodelsStableSwapPool.fromRpc(
+  factory OsmosisGammPoolmodelsStableSwapPool.fromJson(
       Map<String, dynamic> json) {
     return OsmosisGammPoolmodelsStableSwapPool(
       address: json["address"],
       id: BigintUtils.tryParse(json["id"]),
-      poolParams: OsmosisGammPoolmodelsStableSwapPoolParams.fromRpc(
+      poolParams: OsmosisGammPoolmodelsStableSwapPoolParams.fromJson(
           json["pool_params"]),
       futurePoolGovernor: json["future_pool_governor"],
-      totalShares: Coin.fromRpc(json["total_shares"]),
+      totalShares: Coin.fromJson(json["total_shares"]),
       poolLiquidity: (json["pool_liquidity"] as List?)
               ?.map((e) => Coin.deserialize(e))
               .toList() ??
@@ -85,9 +87,9 @@ class OsmosisGammPoolmodelsStableSwapPool extends CosmosMessage {
   }
   factory OsmosisGammPoolmodelsStableSwapPool.fromAny(Any any) {
     if (any.typeUrl !=
-        OsmosisGammPoolmodelsStableswaPV1beta1Types.pool.typeUrl) {
+        OsmosisGammPoolmodelsStableSwapV1beta1Types.pool.typeUrl) {
       throw DartCosmosSdkPluginException("Invalid type url.", details: {
-        "excepted": OsmosisGammPoolmodelsStableswaPV1beta1Types.pool.typeUrl,
+        "excepted": OsmosisGammPoolmodelsStableSwapV1beta1Types.pool.typeUrl,
         "type_url": any.typeUrl
       });
     }
@@ -112,7 +114,7 @@ class OsmosisGammPoolmodelsStableSwapPool extends CosmosMessage {
   }
 
   @override
-  TypeUrl get typeUrl => OsmosisGammPoolmodelsStableswaPV1beta1Types.pool;
+  TypeUrl get typeUrl => OsmosisGammPoolmodelsStableSwapV1beta1Types.pool;
 
   @override
   List get values => [

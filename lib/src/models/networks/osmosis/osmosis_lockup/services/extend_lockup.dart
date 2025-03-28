@@ -1,10 +1,12 @@
+import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_lockup/core/service.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_lockup/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 import 'begin_unlocking_all_response.dart';
 
 /// MsgExtendLockup extends the existing lockup's duration. The new duration is longer than the original.
-class OsmosisLockupMsgExtendLockup extends CosmosMessage
-    with ServiceMessage<OsmosisLockupMsgBeginUnlockingAllResponse> {
+class OsmosisLockupMsgExtendLockup
+    extends OsmosisLockup<OsmosisLockupMsgBeginUnlockingAllResponse> {
   final String? owner;
   final BigInt? id;
 
@@ -19,6 +21,12 @@ class OsmosisLockupMsgExtendLockup extends CosmosMessage
         id: decode.getField(2),
         duration: ProtobufDuration.deserialize(decode.getField(3)));
   }
+  factory OsmosisLockupMsgExtendLockup.fromJson(Map<String, dynamic> json) {
+    return OsmosisLockupMsgExtendLockup(
+        owner: json.as("owner"),
+        id: json.asBigInt("id"),
+        duration: ProtobufDuration.fromString(json.as("duration")));
+  }
 
   @override
   List<int> get fieldIds => [1, 2, 3];
@@ -27,9 +35,6 @@ class OsmosisLockupMsgExtendLockup extends CosmosMessage
   OsmosisLockupMsgBeginUnlockingAllResponse onResponse(List<int> bytes) {
     return OsmosisLockupMsgBeginUnlockingAllResponse.deserialize(bytes);
   }
-
-  @override
-  TypeUrl get service => OsmosisLockupTypes.extendLockup;
 
   @override
   List<String?> get signers => [owner];

@@ -1,13 +1,15 @@
 import 'package:cosmos_sdk/src/address/address.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_v1beta1/messages/coin.dart';
+import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_staking_v1beta1/core/service.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_staking_v1beta1/types/types.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 import 'msg_undelegate_response.dart';
 
 /// MsgUndelegate defines a SDK message for performing an undelegation from a delegate and a validator.
-class MsgUndelegate extends CosmosMessage
-    with ServiceMessage<MsgUndelegateResponse> {
+class MsgUndelegate extends StakingV1Beta1Service<MsgUndelegateResponse>
+    with AminoMessage<MsgUndelegateResponse> {
   final CosmosBaseAddress? delegatorAddress;
   final CosmosBaseAddress? validatorAddress;
   final Coin amount;
@@ -28,7 +30,12 @@ class MsgUndelegate extends CosmosMessage
             ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
         amount: Coin.deserialize(decode.getField(3)));
   }
-
+  factory MsgUndelegate.fromJson(Map<String, dynamic> json) {
+    return MsgUndelegate(
+        delegatorAddress: json.asAddress("delegator_address"),
+        validatorAddress: json.asAddress("validator_address"),
+        amount: Coin.fromJson(json.asMap("amount")));
+  }
   @override
   Map<String, dynamic> toJson() {
     return {
@@ -48,8 +55,6 @@ class MsgUndelegate extends CosmosMessage
   List get values =>
       [delegatorAddress?.address, validatorAddress?.address, amount];
 
-  @override
-  TypeUrl get service => StakingV1beta1Types.undelegate;
   @override
   List<String?> get signers => [delegatorAddress?.address];
 

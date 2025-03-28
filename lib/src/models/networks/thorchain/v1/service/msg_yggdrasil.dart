@@ -26,7 +26,7 @@ class ThorchainMsgYggdrasil extends CosmosMessage {
         pubKey: decode.getField(2),
         addFunds: decode.getField(3),
         coins: decode
-            .getFields(4)
+            .getFields<List<int>>(4)
             .map((e) => ThorchainCoin.deserialize(e))
             .toList(),
         blockHeight: decode.getField(5),

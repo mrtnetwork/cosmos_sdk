@@ -8,8 +8,8 @@ class GovQueryVoteResponse extends CosmosMessage {
   /// vote defines the queried vote.
   final GovVote vote;
   const GovQueryVoteResponse(this.vote);
-  factory GovQueryVoteResponse.fromRpc(Map<String, dynamic> json) {
-    return GovQueryVoteResponse(GovVote.fromRpc(json["vote"]));
+  factory GovQueryVoteResponse.fromJson(Map<String, dynamic> json) {
+    return GovQueryVoteResponse(GovVote.fromJson(json["vote"]));
   }
   factory GovQueryVoteResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

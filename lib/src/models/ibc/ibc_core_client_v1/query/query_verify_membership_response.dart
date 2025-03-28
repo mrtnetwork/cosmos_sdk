@@ -6,7 +6,7 @@ class QueryVerifyMembershipResponse extends CosmosMessage {
   /// boolean indicating success or failure of proof verification.
   final bool? success;
   QueryVerifyMembershipResponse({this.success});
-  factory QueryVerifyMembershipResponse.fromRpc(Map<String, dynamic> json) {
+  factory QueryVerifyMembershipResponse.fromJson(Map<String, dynamic> json) {
     return QueryVerifyMembershipResponse(success: json["success"]);
   }
   factory QueryVerifyMembershipResponse.deserialize(List<int> bytes) {

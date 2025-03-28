@@ -35,6 +35,6 @@ class TxDecodeRequest extends CosmosMessage
 
   @override
   TxDecodeResponse onJsonResponse(Map<String, dynamic> json) {
-    return TxDecodeResponse.fromRpc(json);
+    return TxDecodeResponse.fromJson(json);
   }
 }

@@ -1,11 +1,12 @@
+import 'package:cosmos_sdk/src/models/ibc/core/service.dart';
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
 
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// MsgUpdateClient defines an sdk.Msg to update a IBC client state using the given client message.
-class MsgUpdateClient extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class MsgUpdateClient extends IbcService<EmptyServiceRequestResponse> {
   /// client unique identifier
   final String? clientId;
 
@@ -23,12 +24,16 @@ class MsgUpdateClient extends CosmosMessage
             decode.getResult(2)?.to<Any, List<int>>((e) => Any.deserialize(e)),
         signer: decode.getField(3));
   }
+  factory MsgUpdateClient.fromJson(Map<String, dynamic> json) {
+    return MsgUpdateClient(
+        clientId: json.as("client_id"),
+        clientMessage: json.maybeAs<Any, Map<String, dynamic>>(
+            key: "client_message", onValue: Any.fromJson),
+        signer: json.as("signer"));
+  }
 
   @override
   List<int> get fieldIds => [1, 2, 3];
-
-  @override
-  TypeUrl get service => IbcTypes.updateClient;
 
   @override
   Map<String, dynamic> toJson() {

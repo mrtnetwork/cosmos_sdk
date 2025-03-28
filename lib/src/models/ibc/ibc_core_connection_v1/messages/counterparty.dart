@@ -14,11 +14,11 @@ class IbcConnectionCounterparty extends CosmosMessage {
 
   /// commitment merkle prefix of the counterparty chain.
   final IbcCommitmentMerklePrefix prefix;
-  factory IbcConnectionCounterparty.fromRpc(Map<String, dynamic> json) {
+  factory IbcConnectionCounterparty.fromJson(Map<String, dynamic> json) {
     return IbcConnectionCounterparty(
         clientId: json["client_id"],
         connectionId: json["connection_id"],
-        prefix: IbcCommitmentMerklePrefix.fromRpc(json["prefix"]));
+        prefix: IbcCommitmentMerklePrefix.fromJson(json["prefix"]));
   }
   const IbcConnectionCounterparty(
       {this.clientId, this.connectionId, required this.prefix});

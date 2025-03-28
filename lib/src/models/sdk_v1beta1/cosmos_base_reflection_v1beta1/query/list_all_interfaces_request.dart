@@ -28,6 +28,6 @@ class ListAllInterfacesRequest extends CosmosMessage
 
   @override
   ListAllInterfacesResponse onJsonResponse(Map<String, dynamic> json) {
-    return ListAllInterfacesResponse.fromRpc(json);
+    return ListAllInterfacesResponse.fromJson(json);
   }
 }

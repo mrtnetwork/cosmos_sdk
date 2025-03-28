@@ -11,7 +11,7 @@ class CommissionRates extends CosmosMessage {
 
   // maxChangeRate defines the maximum daily increase of the validator commission, as a fraction.
   final String maxChangeRate;
-  factory CommissionRates.fromRpc(Map<String, dynamic> json) {
+  factory CommissionRates.fromJson(Map<String, dynamic> json) {
     return CommissionRates(
         maxChangeRate: json["max_change_rate"],
         maxRate: json["max_rate"],

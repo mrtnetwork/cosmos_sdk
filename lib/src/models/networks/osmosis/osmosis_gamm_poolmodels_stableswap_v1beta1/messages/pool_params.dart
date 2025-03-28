@@ -16,7 +16,7 @@ class OsmosisGammPoolmodelsStableSwapPoolParams extends CosmosMessage {
     return OsmosisGammPoolmodelsStableSwapPoolParams(
         swapFee: decode.getField(1), exitFee: decode.getField(2));
   }
-  factory OsmosisGammPoolmodelsStableSwapPoolParams.fromRpc(
+  factory OsmosisGammPoolmodelsStableSwapPoolParams.fromJson(
       Map<String, dynamic> json) {
     return OsmosisGammPoolmodelsStableSwapPoolParams(
         swapFee: json["swap_fee"], exitFee: json["exit_fee"]);
@@ -31,7 +31,7 @@ class OsmosisGammPoolmodelsStableSwapPoolParams extends CosmosMessage {
   }
 
   @override
-  TypeUrl get typeUrl => OsmosisGammPoolmodelsStableswaPV1beta1Types.poolParams;
+  TypeUrl get typeUrl => OsmosisGammPoolmodelsStableSwapV1beta1Types.poolParams;
 
   @override
   List get values => [swapFee, exitFee];

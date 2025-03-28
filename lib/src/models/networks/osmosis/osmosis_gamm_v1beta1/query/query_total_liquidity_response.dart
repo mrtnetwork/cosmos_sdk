@@ -16,11 +16,11 @@ class OsmosisGammQueryTotalLiquidityResponse extends CosmosMessage {
             .map((e) => Coin.deserialize(e))
             .toList());
   }
-  factory OsmosisGammQueryTotalLiquidityResponse.fromRpc(
+  factory OsmosisGammQueryTotalLiquidityResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisGammQueryTotalLiquidityResponse(
         liquidity: (json["liquidity"] as List?)
-                ?.map((e) => Coin.fromRpc(e))
+                ?.map((e) => Coin.fromJson(e))
                 .toList() ??
             <Coin>[]);
   }

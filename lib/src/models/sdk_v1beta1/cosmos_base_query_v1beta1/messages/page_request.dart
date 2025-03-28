@@ -41,7 +41,7 @@ class PageRequest extends CosmosMessage {
         reverse: decode.getResult(5)?.cast<bool>());
   }
 
-  factory PageRequest.fromRpc(Map<String, dynamic> json) {
+  factory PageRequest.fromJson(Map<String, dynamic> json) {
     return PageRequest(
         key: BytesUtils.tryFromHexString(json["key"]),
         offset: BigintUtils.tryParse(json["offset"]),

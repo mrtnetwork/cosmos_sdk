@@ -61,24 +61,35 @@ class TXBody extends CosmosMessage {
       this.messagesJson});
   factory TXBody.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    final anys = decode
-        .getFields<List<int>>(1)
-        .map((e) => AnyBytesMessage.deserialize(e))
-        .toList();
-    return TXBody(messages: anys);
+    return TXBody(
+        messages: decode
+            .getFields<List<int>>(1)
+            .map((e) => AnyBytesMessage.deserialize(e))
+            .toList(),
+        memo: decode.getField(2),
+        timeoutHeight: decode.getField(3),
+        unordered: decode.getField(4),
+        extensionOptions: decode
+            .getFields<List<int>>(1023)
+            .map((e) => AnyBytesMessage.deserialize(e))
+            .toList(),
+        nonCriticalExtensionOptions: decode
+            .getFields<List<int>>(2047)
+            .map((e) => AnyBytesMessage.deserialize(e))
+            .toList());
   }
-  factory TXBody.fromRpc(Map<String, dynamic> json) {
+  factory TXBody.fromJson(Map<String, dynamic> json) {
     return TXBody(
         messages: [],
         messagesJson: json["messages"],
         extensionOptions: (json["extension_options"] as List?)
-                ?.map((e) => AnyMessage.fromRpc(e))
+                ?.map((e) => AnyMessage.fromJson(e))
                 .toList() ??
             [],
         memo: json["memo"],
         nonCriticalExtensionOptions:
             (json["non_critical_extension_options"] as List?)
-                    ?.map((e) => AnyMessage.fromRpc(e))
+                    ?.map((e) => AnyMessage.fromJson(e))
                     .toList() ??
                 [],
         timeoutHeight: BigintUtils.tryParse(json["timeout_height"]),

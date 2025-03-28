@@ -9,7 +9,7 @@ class IbcTransferV1Hop extends CosmosMessage {
   final String channelId;
 
   const IbcTransferV1Hop({required this.portId, required this.channelId});
-  factory IbcTransferV1Hop.fromRpc(Map<String, dynamic> json) {
+  factory IbcTransferV1Hop.fromJson(Map<String, dynamic> json) {
     return IbcTransferV1Hop(
         portId: json["port_id"], channelId: json["channel_id"]);
   }

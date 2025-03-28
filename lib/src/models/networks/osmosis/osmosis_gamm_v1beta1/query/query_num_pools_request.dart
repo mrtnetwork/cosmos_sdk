@@ -30,7 +30,7 @@ class OsmosisGammQueryNumPoolsRequest extends CosmosMessage
 
   @override
   OsmosisGammQueryNumPoolsResponse onJsonResponse(Map<String, dynamic> json) {
-    return OsmosisGammQueryNumPoolsResponse.fromRpc(json);
+    return OsmosisGammQueryNumPoolsResponse.fromJson(json);
   }
 
   @override

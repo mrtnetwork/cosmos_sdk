@@ -16,7 +16,7 @@ class IbcCommitmentMerkleProof extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcCommitmentMerkleProof(
         proofs: decode
-            .getFields(1)
+            .getFields<List<int>>(1)
             .map((e) => Ics23CommitmentProof.deserialize(e))
             .toList());
   }

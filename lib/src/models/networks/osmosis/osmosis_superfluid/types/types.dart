@@ -1,7 +1,10 @@
+import 'package:blockchain_utils/helper/extensions/extensions.dart';
 import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 
 class OsmosisSuperfluidTypes extends TypeUrl {
   const OsmosisSuperfluidTypes._(super.typeUrl, {super.query, super.rpc});
+  static const String root = "/osmosis.superfluid";
+
   static const OsmosisSuperfluidTypes genesisState =
       OsmosisSuperfluidTypes._("/osmosis.superfluid.GenesisState");
   static const OsmosisSuperfluidTypes lockIdIntermediaryAccountConnection =
@@ -255,31 +258,19 @@ class OsmosisSuperfluidTypes extends TypeUrl {
       OsmosisSuperfluidTypes._(
           "/osmosis.superfluid.UserConcentratedSuperfluidPositionsUndelegatingResponse");
 
-  /// services
-  static const OsmosisSuperfluidTypes unbondConvertAndStake =
-      OsmosisSuperfluidTypes._("/osmosis.superfluid.Msg/UnbondConvertAndStake");
-  static const OsmosisSuperfluidTypes
-      adToConcentratedLiquiditySuperfluidPosition = OsmosisSuperfluidTypes._(
-          "/osmosis.superfluid.Msg/AddToConcentratedLiquiditySuperfluidPosition");
-  static const OsmosisSuperfluidTypes
-      unlockAndMigrateSharesToFullRangeConcentratedPosition =
-      OsmosisSuperfluidTypes._(
-          "/osmosis.superfluid.Msg/UnlockAndMigrateSharesToFullRangeConcentratedPosition");
-  static const OsmosisSuperfluidTypes
-      createFullRangePositionAndSuperfluidDelegate = OsmosisSuperfluidTypes._(
-          "/osmosis.superfluid.Msg/CreateFullRangePositionAndSuperfluidDelegate");
-  static const OsmosisSuperfluidTypes superfluidUndelegateAndUnbondLock =
-      OsmosisSuperfluidTypes._(
-          "/osmosis.superfluid.Msg/SuperfluidUndelegateAndUnbondLock");
-  static const OsmosisSuperfluidTypes unPoolWhitelistedPool =
-      OsmosisSuperfluidTypes._("/osmosis.superfluid.Msg/UnPoolWhitelistedPool");
-  static const OsmosisSuperfluidTypes lockAndSuperfluidDelegate =
-      OsmosisSuperfluidTypes._(
-          "/osmosis.superfluid.Msg/LockAndSuperfluidDelegate");
-  static const OsmosisSuperfluidTypes superfluidUnbondLock =
-      OsmosisSuperfluidTypes._("/osmosis.superfluid.Msg/SuperfluidUnbondLock");
-  static const OsmosisSuperfluidTypes superfluidUndelegate =
-      OsmosisSuperfluidTypes._("/osmosis.superfluid.Msg/SuperfluidUndelegate");
-  static const OsmosisSuperfluidTypes superfluidDelegate =
-      OsmosisSuperfluidTypes._("/osmosis.superfluid.Msg/SuperfluidDelegate");
+  static const List<TypeUrl> services = [
+    msgAddToConcentratedLiquiditySuperfluidPosition,
+    msgCreateFullRangePositionAndSuperfluidDelegate,
+    msgLockAndSuperfluidDelegate,
+    msgSuperfluidDelegate,
+    msgSuperfluidUnbondLock,
+    msgSuperfluidUndelegateAndUnbondLock,
+    msgSuperfluidUndelegate,
+    msgUnPoolWhitelistedPool,
+    msgUnbondConvertAndStake,
+    msgUnlockAndMigrateSharesToFullRangeConcentratedPosition
+  ];
+  static TypeUrl? findService(String? typeUrl) {
+    return services.firstWhereNullable((e) => e.typeUrl == typeUrl);
+  }
 }

@@ -1,6 +1,5 @@
 import 'package:blockchain_utils/utils/numbers/utils/bigint_utils.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_tx_v1beta1/messages/mode_info.dart';
-import 'package:cosmos_sdk/src/crypto/keypair/public_key.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_tx_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
@@ -9,7 +8,7 @@ class SignerInfo extends CosmosMessage {
   /// public_key is the public key of the signer. It is optional for accounts
   /// that already exist in state. If unset, the verifier can use the required
   /// signer address for this position and lookup the public key.
-  final CosmosPublicKey publicKey;
+  final Any publicKey;
 
   /// mode_info describes the signing mode of the signer and is a nested
   /// structure to support nested multisig pubkey's
@@ -23,17 +22,17 @@ class SignerInfo extends CosmosMessage {
       {required this.publicKey,
       required this.modeInfo,
       required this.sequence});
-  factory SignerInfo.fromRpc(Map<String, dynamic> json) {
+  factory SignerInfo.fromJson(Map<String, dynamic> json) {
     return SignerInfo(
-        publicKey: CosmosPublicKey.fromRpc(json["public_key"]),
-        modeInfo: ModeInfo.fromRpc(json["mode_info"]),
+        publicKey: Any.fromJson(json["public_key"]),
+        modeInfo: ModeInfo.fromJson(json["mode_info"]),
         sequence: BigintUtils.parse(json["sequence"]));
   }
 
   factory SignerInfo.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return SignerInfo(
-        publicKey: CosmosPublicKey.fromAnyBytes(decode.getField(1)),
+        publicKey: Any.deserialize(decode.getField(1)),
         modeInfo: ModeInfo.deserialize(decode.getField(2)),
         sequence: decode.getField<BigInt?>(3) ?? BigInt.zero);
   }
@@ -52,12 +51,12 @@ class SignerInfo extends CosmosMessage {
 
   @override
   List get values =>
-      [publicKey.toAny(), modeInfo, sequence == BigInt.zero ? null : sequence];
+      [publicKey, modeInfo, sequence == BigInt.zero ? null : sequence];
   @override
   TypeUrl get typeUrl => TxV1beta1Types.signerInfo;
 
   SignerInfo copyWith({
-    CosmosPublicKey? publicKey,
+    Any? publicKey,
     ModeInfo? modeInfo,
     BigInt? sequence,
   }) {

@@ -17,14 +17,17 @@ class OsmosisProtorevRouteCyclicArbTracker extends CosmosMessage {
   factory OsmosisProtorevRouteCyclicArbTracker.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisProtorevRouteCyclicArbTracker(
-        cyclicArb: decode.getFields(1).map((e) => Coin.deserialize(e)).toList(),
+        cyclicArb: decode
+            .getFields<List<int>>(1)
+            .map((e) => Coin.deserialize(e))
+            .toList(),
         heightAccountingStartsFrom: decode.getField(2));
   }
-  factory OsmosisProtorevRouteCyclicArbTracker.fromRpc(
+  factory OsmosisProtorevRouteCyclicArbTracker.fromJson(
       Map<String, dynamic> json) {
     return OsmosisProtorevRouteCyclicArbTracker(
         cyclicArb: (json["cyclic_arb"] as List?)
-                ?.map((e) => Coin.fromRpc(e))
+                ?.map((e) => Coin.fromJson(e))
                 .toList() ??
             <Coin>[],
         heightAccountingStartsFrom:

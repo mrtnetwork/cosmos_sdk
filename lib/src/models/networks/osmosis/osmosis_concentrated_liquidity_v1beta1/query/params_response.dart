@@ -11,10 +11,10 @@ class OsmosisConcentratedLiquidityParamsResponse extends CosmosMessage {
     return OsmosisConcentratedLiquidityParamsResponse(
         OsmosisConcentratedLiquidityParams.deserialize(decode.getField(1)));
   }
-  factory OsmosisConcentratedLiquidityParamsResponse.fromRpc(
+  factory OsmosisConcentratedLiquidityParamsResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisConcentratedLiquidityParamsResponse(
-        OsmosisConcentratedLiquidityParams.fromRpc(json["params"]));
+        OsmosisConcentratedLiquidityParams.fromJson(json["params"]));
   }
 
   @override

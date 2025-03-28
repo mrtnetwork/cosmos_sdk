@@ -8,10 +8,10 @@ class QueryIncentivizedPacketResponse extends CosmosMessage {
   final IbcFeeIdentifiedPacketFees incentivizedPacket;
   const QueryIncentivizedPacketResponse({required this.incentivizedPacket});
 
-  factory QueryIncentivizedPacketResponse.fromRpc(Map<String, dynamic> json) {
+  factory QueryIncentivizedPacketResponse.fromJson(Map<String, dynamic> json) {
     return QueryIncentivizedPacketResponse(
         incentivizedPacket:
-            IbcFeeIdentifiedPacketFees.fromRpc(json["incentivized_packet"]));
+            IbcFeeIdentifiedPacketFees.fromJson(json["incentivized_packet"]));
   }
   factory QueryIncentivizedPacketResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

@@ -16,13 +16,13 @@ class IbcClientQueryConsensusStateResponse extends CosmosMessage {
 
   /// height at which the proof was retrieved
   final IbcClientHeight proofHeight;
-  factory IbcClientQueryConsensusStateResponse.fromRpc(
+  factory IbcClientQueryConsensusStateResponse.fromJson(
       Map<String, dynamic> json) {
     return IbcClientQueryConsensusStateResponse(
         consensusState: json["consensus_state"] == null
             ? null
-            : AnyMessage.fromRpc(json["consensus_state"]),
-        proofHeight: IbcClientHeight.fromRpc(json["proof_height"]),
+            : AnyMessage.fromJson(json["consensus_state"]),
+        proofHeight: IbcClientHeight.fromJson(json["proof_height"]),
         proof: CosmosUtils.tryToBytes(json["proof"]));
   }
   IbcClientQueryConsensusStateResponse(

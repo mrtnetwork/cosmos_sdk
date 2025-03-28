@@ -26,10 +26,11 @@ class Fee extends CosmosMessage {
   /// chain does not support fee grants, this will fail
   final CosmosBaseAddress? granter;
   const Fee({required this.amount, this.gasLimit, this.payer, this.granter});
-  factory Fee.fromRpc(Map<String, dynamic> json) {
+  factory Fee.fromJson(Map<String, dynamic> json) {
     return Fee(
       amount:
-          (json["amount"] as List?)?.map((e) => Coin.fromRpc(e)).toList() ?? [],
+          (json["amount"] as List?)?.map((e) => Coin.fromJson(e)).toList() ??
+              [],
       gasLimit: BigintUtils.tryParse(json["gas_limit"]),
       granter:
           json["granter"] == null ? null : CosmosBaseAddress(json["granter"]),
@@ -76,6 +77,15 @@ class Fee extends CosmosMessage {
       "payer": payer?.address,
       "granter": granter?.address
     };
+  }
+
+  Map<String, dynamic> toAminoJson() {
+    return {
+      "amount": amount.map((e) => e.toJson()).toList(),
+      "gas": gasLimit?.toString(),
+      "payer": payer?.address,
+      "granter": granter?.address
+    }..removeWhere((k, v) => v == null);
   }
 
   @override

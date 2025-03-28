@@ -31,7 +31,7 @@ class OsmosisProtorevQueryGetProtoRevBaseDenomsRequest extends CosmosMessage
   @override
   OsmosisProtorevQueryGetProtoRevBaseDenomsResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisProtorevQueryGetProtoRevBaseDenomsResponse.fromRpc(json);
+    return OsmosisProtorevQueryGetProtoRevBaseDenomsResponse.fromJson(json);
   }
 
   @override

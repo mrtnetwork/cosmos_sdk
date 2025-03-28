@@ -21,7 +21,7 @@ class OsmosisPoolincentivesQueryDistrInfoRequest extends CosmosMessage
   @override
   OsmosisPoolincentivesQueryDistrInfoResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisPoolincentivesQueryDistrInfoResponse.fromRpc(json);
+    return OsmosisPoolincentivesQueryDistrInfoResponse.fromJson(json);
   }
 
   @override

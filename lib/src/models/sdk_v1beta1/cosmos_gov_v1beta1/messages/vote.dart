@@ -24,10 +24,10 @@ class GovVote extends CosmosMessage {
   ///
   /// Since: cosmos-sdk 0.43
   final List<GovWeightedVoteOption> options;
-  factory GovVote.fromRpc(Map<String, dynamic> json) {
+  factory GovVote.fromJson(Map<String, dynamic> json) {
     return GovVote(
         options: (json["options"] as List?)
-                ?.map((e) => GovWeightedVoteOption.fromRpc(e))
+                ?.map((e) => GovWeightedVoteOption.fromJson(e))
                 .toList() ??
             [],
         proposalId: BigintUtils.parse(json["proposal_id"]),

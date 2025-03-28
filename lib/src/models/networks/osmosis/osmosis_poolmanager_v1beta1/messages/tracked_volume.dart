@@ -9,8 +9,10 @@ class OsmosisPoolManagerTrackedVolume extends CosmosMessage {
       : amount = amount.immutable;
   factory OsmosisPoolManagerTrackedVolume.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return OsmosisPoolManagerTrackedVolume(
-        decode.getFields(1).map((e) => Coin.deserialize(e)).toList());
+    return OsmosisPoolManagerTrackedVolume(decode
+        .getFields<List<int>>(1)
+        .map((e) => Coin.deserialize(e))
+        .toList());
   }
 
   @override

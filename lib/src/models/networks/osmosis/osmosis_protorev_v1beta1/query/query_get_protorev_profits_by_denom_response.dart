@@ -14,10 +14,10 @@ class OsmosisProtorevQueryGetProtoRevProfitsByDenomResponse
     return OsmosisProtorevQueryGetProtoRevProfitsByDenomResponse(
         Coin.deserialize(decode.getField(1)));
   }
-  factory OsmosisProtorevQueryGetProtoRevProfitsByDenomResponse.fromRpc(
+  factory OsmosisProtorevQueryGetProtoRevProfitsByDenomResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisProtorevQueryGetProtoRevProfitsByDenomResponse(
-        Coin.fromRpc(json["profit"]));
+        Coin.fromJson(json["profit"]));
   }
 
   @override

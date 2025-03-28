@@ -22,7 +22,7 @@ class OsmosisConcentratedLiquidityPoolRecord extends CosmosMessage {
         tickSpacing: decode.getField(3),
         spreadFactor: decode.getField(5));
   }
-  factory OsmosisConcentratedLiquidityPoolRecord.fromRpc(
+  factory OsmosisConcentratedLiquidityPoolRecord.fromJson(
       Map<String, dynamic> json) {
     return OsmosisConcentratedLiquidityPoolRecord(
         denom0: json["denom0"],

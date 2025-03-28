@@ -12,10 +12,10 @@ class OsmosisStreamSwapQueryUserPositionResponse extends CosmosMessage {
     return OsmosisStreamSwapQueryUserPositionResponse(
         OsmosisStreamSwapUserPosition.deserialize(decode.getField(1)));
   }
-  factory OsmosisStreamSwapQueryUserPositionResponse.fromRpc(
+  factory OsmosisStreamSwapQueryUserPositionResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisStreamSwapQueryUserPositionResponse(
-        OsmosisStreamSwapUserPosition.fromRpc(json["user_position"]));
+        OsmosisStreamSwapUserPosition.fromJson(json["user_position"]));
   }
 
   @override

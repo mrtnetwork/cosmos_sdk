@@ -11,7 +11,7 @@ class QueryAuthorityResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryAuthorityResponse(address: decode.getField(1));
   }
-  factory QueryAuthorityResponse.fromRpc(Map<String, dynamic> json) {
+  factory QueryAuthorityResponse.fromJson(Map<String, dynamic> json) {
     return QueryAuthorityResponse(address: json["address"]);
   }
 

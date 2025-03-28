@@ -36,11 +36,14 @@ class VersionInfo extends CosmosMessage {
       gitCommit: decode.getField(4),
       buildTags: decode.getField(5),
       goVersion: decode.getField(6),
-      buildDeps: decode.getFields(7).map((e) => Module.deserialize(e)).toList(),
+      buildDeps: decode
+          .getFields<List<int>>(7)
+          .map((e) => Module.deserialize(e))
+          .toList(),
       cosmosSdkVersion: decode.getField(8),
     );
   }
-  factory VersionInfo.fromRpc(Map<String, dynamic> json) {
+  factory VersionInfo.fromJson(Map<String, dynamic> json) {
     return VersionInfo(
       name: json["name"],
       appName: json["app_name"],
@@ -48,8 +51,9 @@ class VersionInfo extends CosmosMessage {
       gitCommit: json["git_commit"],
       buildTags: json["build_tags"],
       goVersion: json["go_version"],
-      buildDeps:
-          (json["build_deps"] as List?)?.map((e) => Module.fromRpc(e)).toList(),
+      buildDeps: (json["build_deps"] as List?)
+          ?.map((e) => Module.fromJson(e))
+          .toList(),
       cosmosSdkVersion: json["cosmos_sdk_version"],
     );
   }

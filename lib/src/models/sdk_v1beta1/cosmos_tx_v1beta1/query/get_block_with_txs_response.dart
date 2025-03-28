@@ -16,15 +16,16 @@ class GetBlockWithTxsResponse extends CosmosMessage {
 
   /// pagination defines a pagination for the response.
   final PageResponse? pagination;
-  factory GetBlockWithTxsResponse.fromRpc(Map<String, dynamic> json) {
+  factory GetBlockWithTxsResponse.fromJson(Map<String, dynamic> json) {
     return GetBlockWithTxsResponse(
         pagination: json["pagination"] == null
             ? null
-            : PageResponse.fromRpc(json["pagination"]),
-        txs: (json["txs"] as List?)?.map((e) => Tx.fromRpc(e)).toList() ?? [],
-        blockID:
-            json["block_id"] == null ? null : BlockID.fromRpc(json["block_id"]),
-        block: json["block"] == null ? null : Block.fromRpc(json["block"]));
+            : PageResponse.fromJson(json["pagination"]),
+        txs: (json["txs"] as List?)?.map((e) => Tx.fromJson(e)).toList() ?? [],
+        blockID: json["block_id"] == null
+            ? null
+            : BlockID.fromJson(json["block_id"]),
+        block: json["block"] == null ? null : Block.fromJson(json["block"]));
   }
   GetBlockWithTxsResponse(
       {required List<Tx> txs, this.block, this.blockID, this.pagination})

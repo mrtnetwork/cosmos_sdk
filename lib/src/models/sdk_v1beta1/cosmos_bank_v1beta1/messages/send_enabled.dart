@@ -10,7 +10,7 @@ class SendEnabled extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return SendEnabled(denom: decode.getField(1), enabled: decode.getField(2));
   }
-  factory SendEnabled.fromRpc(Map<String, dynamic> json) {
+  factory SendEnabled.fromJson(Map<String, dynamic> json) {
     return SendEnabled(denom: json["denom"], enabled: json["enabled"]);
   }
 

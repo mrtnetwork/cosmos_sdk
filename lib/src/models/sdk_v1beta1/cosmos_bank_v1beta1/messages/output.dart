@@ -3,6 +3,7 @@ import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_v1beta1/messages/c
 
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_bank_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// Output models transaction outputs.
 class Output extends CosmosMessage {
@@ -18,6 +19,12 @@ class Output extends CosmosMessage {
             .getFields<List<int>>(2)
             .map((e) => Coin.deserialize(e))
             .toList());
+  }
+  factory Output.fromJson(Map<String, dynamic> json) {
+    return Output(
+        address: CosmosBaseAddress(json.as("address")),
+        coins:
+            json.asListOfMap("coins")!.map((e) => Coin.fromJson(e)).toList());
   }
 
   @override

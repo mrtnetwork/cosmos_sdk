@@ -12,7 +12,7 @@ class QueryNFTBalanceResponse extends CosmosMessage {
     return QueryNFTBalanceResponse(amount: decode.getField(1));
   }
 
-  factory QueryNFTBalanceResponse.fromRpc(Map<String, dynamic> json) {
+  factory QueryNFTBalanceResponse.fromJson(Map<String, dynamic> json) {
     return QueryNFTBalanceResponse(
         amount: BigintUtils.tryParse(json["amount"]));
   }

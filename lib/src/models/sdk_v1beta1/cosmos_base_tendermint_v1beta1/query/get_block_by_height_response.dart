@@ -16,14 +16,15 @@ class GetBlockByHeightResponse extends CosmosMessage {
   final CosmosBlock? sdkBlock;
 
   const GetBlockByHeightResponse({this.blockID, this.block, this.sdkBlock});
-  factory GetBlockByHeightResponse.fromRpc(Map<String, dynamic> json) {
+  factory GetBlockByHeightResponse.fromJson(Map<String, dynamic> json) {
     return GetBlockByHeightResponse(
-        block: json["block"] == null ? null : Block.fromRpc(json["block"]),
-        blockID:
-            json["block_id"] == null ? null : BlockID.fromRpc(json["block_id"]),
+        block: json["block"] == null ? null : Block.fromJson(json["block"]),
+        blockID: json["block_id"] == null
+            ? null
+            : BlockID.fromJson(json["block_id"]),
         sdkBlock: json["sdk_block"] == null
             ? null
-            : CosmosBlock.fromRpc(json["sdk_block"]));
+            : CosmosBlock.fromJson(json["sdk_block"]));
   }
   factory GetBlockByHeightResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

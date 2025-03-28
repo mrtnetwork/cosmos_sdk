@@ -13,7 +13,7 @@ class OsmosisMintQueryEpochProvisionsResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisMintQueryEpochProvisionsResponse(decode.getField(1));
   }
-  factory OsmosisMintQueryEpochProvisionsResponse.fromRpc(
+  factory OsmosisMintQueryEpochProvisionsResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisMintQueryEpochProvisionsResponse(StringUtils.encode(
         json["epoch_provisions"],

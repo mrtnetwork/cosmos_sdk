@@ -20,16 +20,16 @@ class GetTxsEventResponse extends CosmosMessage {
 
   /// total is total number of results available
   final BigInt? total;
-  factory GetTxsEventResponse.fromRpc(Map<String, dynamic> json) {
+  factory GetTxsEventResponse.fromJson(Map<String, dynamic> json) {
     return GetTxsEventResponse(
         txResponses: (json["tx_responses"] as List?)
-                ?.map((e) => TxResponse.fromRpc(e))
+                ?.map((e) => TxResponse.fromJson(e))
                 .toList() ??
             [],
-        txs: (json["txs"] as List?)?.map((e) => Tx.fromRpc(e)).toList() ?? [],
+        txs: (json["txs"] as List?)?.map((e) => Tx.fromJson(e)).toList() ?? [],
         pagination: json["pagination"] == null
             ? null
-            : PageResponse.fromRpc(json["pagination"]),
+            : PageResponse.fromJson(json["pagination"]),
         total: BigintUtils.tryParse(json["total"]));
   }
   GetTxsEventResponse(

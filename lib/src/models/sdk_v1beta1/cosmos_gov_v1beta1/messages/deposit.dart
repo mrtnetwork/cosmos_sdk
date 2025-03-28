@@ -16,14 +16,15 @@ class GovDeposit extends CosmosMessage {
 
   /// amount to be deposited by depositor.
   final List<Coin> amount;
-  factory GovDeposit.fromRpc(Map<String, dynamic> json) {
+  factory GovDeposit.fromJson(Map<String, dynamic> json) {
     return GovDeposit(
       proposalId: BigintUtils.tryParse(json["proposal_id"]),
       depositor: json["depositor"] == null
           ? null
           : CosmosBaseAddress(json["depositor"]),
       amount:
-          (json["amount"] as List?)?.map((e) => Coin.fromRpc(e)).toList() ?? [],
+          (json["amount"] as List?)?.map((e) => Coin.fromJson(e)).toList() ??
+              [],
     );
   }
   GovDeposit({this.proposalId, this.depositor, required List<Coin> amount})
@@ -35,7 +36,10 @@ class GovDeposit extends CosmosMessage {
       depositor: decode
           .getResult(2)
           ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-      amount: decode.getFields(3).map((e) => Coin.deserialize(e)).toList(),
+      amount: decode
+          .getFields<List<int>>(3)
+          .map((e) => Coin.deserialize(e))
+          .toList(),
     );
   }
 

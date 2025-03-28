@@ -10,7 +10,7 @@ class OsmosisTxfeesQueryDenomPoolIdRequest extends CosmosMessage
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisTxfeesQueryDenomPoolIdRequest(denom: decode.getField(1));
   }
-  factory OsmosisTxfeesQueryDenomPoolIdRequest.fromRpc(
+  factory OsmosisTxfeesQueryDenomPoolIdRequest.fromJson(
       Map<String, dynamic> json) {
     return OsmosisTxfeesQueryDenomPoolIdRequest(denom: json["denom"]);
   }
@@ -32,7 +32,7 @@ class OsmosisTxfeesQueryDenomPoolIdRequest extends CosmosMessage
   @override
   OsmosisTxfeesQueryDenomPoolIdResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisTxfeesQueryDenomPoolIdResponse.fromRpc(json);
+    return OsmosisTxfeesQueryDenomPoolIdResponse.fromJson(json);
   }
 
   @override

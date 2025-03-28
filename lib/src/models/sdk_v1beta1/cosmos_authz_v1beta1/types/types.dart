@@ -1,7 +1,9 @@
+import 'package:blockchain_utils/helper/helper.dart';
 import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 
 class AuthzV1beta1Types extends TypeUrl {
   const AuthzV1beta1Types._(super.typeUrl, {super.query, super.rpc});
+  static const String root = "/cosmos.authz.v1beta1";
 
   /// messages
   static const AuthzV1beta1Types authzGrant =
@@ -56,13 +58,13 @@ class AuthzV1beta1Types extends TypeUrl {
   static const AuthzV1beta1Types authzEventPruneExpiredGrants =
       AuthzV1beta1Types._("/cosmos.authz.v1beta1.EventPruneExpiredGrants");
 
-  /// service
-  static const AuthzV1beta1Types authzQueryGrant =
-      AuthzV1beta1Types._("/cosmos.authz.v1beta1.Msg/Grant");
-  static const AuthzV1beta1Types authzExec =
-      AuthzV1beta1Types._("/cosmos.authz.v1beta1.Msg/Exec");
-  static const AuthzV1beta1Types authzRevoke =
-      AuthzV1beta1Types._("/cosmos.authz.v1beta1.Msg/Revoke");
-  static const AuthzV1beta1Types authzPruneExpiredGrants =
-      AuthzV1beta1Types._("/cosmos.authz.v1beta1.Msg/PruneExpiredGrants");
+  static const List<TypeUrl> services = [
+    authzMsgExec,
+    authzMsgGrant,
+    authzMsgPruneExpiredGrants,
+    authzMsgRevoke
+  ];
+  static TypeUrl? findService(String? typeUrl) {
+    return services.firstWhereNullable((e) => e.typeUrl == typeUrl);
+  }
 }

@@ -10,14 +10,18 @@ class EvidenceList extends CosmosMessage {
   factory EvidenceList.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvidenceList(
-        evidence:
-            decode.getFields(1).map((e) => Evidence.deserialize(e)).toList());
+        evidence: decode
+            .getFields<List<int>>(1)
+            .map((e) => Evidence.deserialize(e))
+            .toList());
   }
-  factory EvidenceList.fromRpc(List<int> bytes) {
+  factory EvidenceList.fromJson(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvidenceList(
-        evidence:
-            decode.getFields(1).map((e) => Evidence.deserialize(e)).toList());
+        evidence: decode
+            .getFields<List<int>>(1)
+            .map((e) => Evidence.deserialize(e))
+            .toList());
   }
 
   @override

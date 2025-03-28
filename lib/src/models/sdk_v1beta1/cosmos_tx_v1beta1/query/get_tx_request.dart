@@ -28,7 +28,7 @@ class GetTxRequest extends CosmosMessage with QueryMessage<GetTxResponse> {
 
   @override
   GetTxResponse onJsonResponse(Map<String, dynamic> json) {
-    return GetTxResponse.fromRpc(json);
+    return GetTxResponse.fromJson(json);
   }
 
   @override

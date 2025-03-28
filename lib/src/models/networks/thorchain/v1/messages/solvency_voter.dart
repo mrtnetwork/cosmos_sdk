@@ -32,7 +32,7 @@ class ThorchainSolvencyVoter extends CosmosMessage {
             .toList(),
         height: decode.getField(5),
         consensusBlockHeight: decode.getField(6),
-        signers: decode.getFields(7));
+        signers: decode.getFields<String>(7));
   }
 
   @override

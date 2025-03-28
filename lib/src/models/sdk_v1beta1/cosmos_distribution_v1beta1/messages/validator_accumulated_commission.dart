@@ -10,11 +10,11 @@ class DistributionValidatorAccumulatedCommission extends CosmosMessage {
   final List<DecCoin> commission;
   DistributionValidatorAccumulatedCommission(List<DecCoin> commission)
       : commission = commission.immutable;
-  factory DistributionValidatorAccumulatedCommission.fromRpc(
+  factory DistributionValidatorAccumulatedCommission.fromJson(
       Map<String, dynamic> json) {
     return DistributionValidatorAccumulatedCommission(
         (json["commission"] as List?)
-                ?.map((e) => DecCoin.fromRpc(e))
+                ?.map((e) => DecCoin.fromJson(e))
                 .toList() ??
             []);
   }

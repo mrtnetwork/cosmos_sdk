@@ -11,10 +11,10 @@ class OsmosisStreamSwapQuerySaleResponse extends CosmosMessage {
     return OsmosisStreamSwapQuerySaleResponse(
         sale: OsmosisStreamSwapSale.deserialize(decode.getField(1)));
   }
-  factory OsmosisStreamSwapQuerySaleResponse.fromRpc(
+  factory OsmosisStreamSwapQuerySaleResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisStreamSwapQuerySaleResponse(
-        sale: OsmosisStreamSwapSale.fromRpc(json["sale"]));
+        sale: OsmosisStreamSwapSale.fromJson(json["sale"]));
   }
 
   @override

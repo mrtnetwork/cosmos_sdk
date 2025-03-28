@@ -10,12 +10,14 @@ class OsmosisTokenFactoryParams extends CosmosMessage {
       : denomCreationFee = denomCreationFee.immutable;
   factory OsmosisTokenFactoryParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return OsmosisTokenFactoryParams(
-        decode.getFields(1).map((e) => Coin.deserialize(e)).toList());
+    return OsmosisTokenFactoryParams(decode
+        .getFields<List<int>>(1)
+        .map((e) => Coin.deserialize(e))
+        .toList());
   }
-  factory OsmosisTokenFactoryParams.fromRpc(Map<String, dynamic> json) {
+  factory OsmosisTokenFactoryParams.fromJson(Map<String, dynamic> json) {
     return OsmosisTokenFactoryParams((json["denom_creation_fee"] as List?)
-            ?.map((e) => Coin.fromRpc(e))
+            ?.map((e) => Coin.fromJson(e))
             .toList() ??
         <Coin>[]);
   }

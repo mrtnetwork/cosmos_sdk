@@ -15,23 +15,25 @@ class QueryAllowancesResponse extends CosmosMessage {
   QueryAllowancesResponse({required List<FeeGrant> allowances, this.pagination})
       : allowances = allowances.immutable;
 
-  factory QueryAllowancesResponse.fromRpc(Map<String, dynamic> json) {
+  factory QueryAllowancesResponse.fromJson(Map<String, dynamic> json) {
     return QueryAllowancesResponse(
       allowances: (json["allowances"] as List?)
-              ?.map((e) => FeeGrant.fromRpc(e))
+              ?.map((e) => FeeGrant.fromJson(e))
               .toList() ??
           [],
       pagination: json["pagination"] == null
           ? null
-          : PageResponse.fromRpc(json["pagination"]),
+          : PageResponse.fromJson(json["pagination"]),
     );
   }
 
   factory QueryAllowancesResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryAllowancesResponse(
-        allowances:
-            decode.getFields(1).map((e) => FeeGrant.deserialize(e)).toList(),
+        allowances: decode
+            .getFields<List<int>>(1)
+            .map((e) => FeeGrant.deserialize(e))
+            .toList(),
         pagination: decode
             .getResult(2)
             ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));

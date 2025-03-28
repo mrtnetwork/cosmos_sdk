@@ -44,13 +44,17 @@ class OsmosisAccumRecord extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisAccumRecord(
       numShares: decode.getField(1),
-      accumValuePerShare:
-          decode.getFields(2).map((e) => DecCoin.deserialize(e)).toList(),
-      unclaimedRewardsTotal:
-          decode.getFields(3).map((e) => DecCoin.deserialize(e)).toList(),
+      accumValuePerShare: decode
+          .getFields<List<int>>(2)
+          .map((e) => DecCoin.deserialize(e))
+          .toList(),
+      unclaimedRewardsTotal: decode
+          .getFields<List<int>>(3)
+          .map((e) => DecCoin.deserialize(e))
+          .toList(),
     );
   }
-  factory OsmosisAccumRecord.fromRpc(Map<String, dynamic> json) {
+  factory OsmosisAccumRecord.fromJson(Map<String, dynamic> json) {
     return OsmosisAccumRecord(
         numShares: json["num_shares"],
         accumValuePerShare: (json["accum_value_per_share"] as List?)

@@ -13,7 +13,7 @@ class NodeConfigResponse extends CosmosMessage {
       this.pruningKeepRecent,
       this.pruningInterval,
       this.haltHeight});
-  factory NodeConfigResponse.fromRpc(Map<String, dynamic> json) {
+  factory NodeConfigResponse.fromJson(Map<String, dynamic> json) {
     return NodeConfigResponse(
       minimumGasPrice: json["minimum_gas_price"],
       pruningKeepRecent: json["pruning_keep_recent"],

@@ -1,6 +1,7 @@
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_v1beta1/messages/coin.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_staking_v1beta1/types/types.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// Params defines the parameters for the x/staking module.
 class StakingParams extends CosmosMessage {
@@ -45,6 +46,16 @@ class StakingParams extends CosmosMessage {
         bondDenom: decode.getField(5),
         minCommissionRate: decode.getField(6),
         keyRotationFee: Coin.deserialize(decode.getField(7)));
+  }
+  factory StakingParams.fromJson(Map<String, dynamic> json) {
+    return StakingParams(
+        unbondingTime: ProtobufDuration.fromString(json.as("unbonding_time")),
+        maxValidators: json.asInt("max_validators"),
+        maxEntries: json.asInt("max_entries"),
+        historicalEntries: json.asInt("historical_entries"),
+        bondDenom: json.as("bond_denom"),
+        minCommissionRate: json.as("min_commission_rate"),
+        keyRotationFee: Coin.fromJson(json.asMap("key_rotation_fee")));
   }
 
   @override

@@ -1,8 +1,9 @@
-import 'package:cosmos_sdk/src/exception/exception.dart';
+import 'package:blockchain_utils/helper/extensions/extensions.dart';
 import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 
 class AuthV1beta1Types extends TypeUrl {
   const AuthV1beta1Types._(super.typeUrl, {super.query, super.rpc});
+  static const String root = "/cosmos.auth.v1beta1";
 
   /// messages
   static const AuthV1beta1Types baseAccount =
@@ -81,10 +82,6 @@ class AuthV1beta1Types extends TypeUrl {
   static const AuthV1beta1Types authGenesisState =
       AuthV1beta1Types._("/cosmos.auth.v1beta1.GenesisState");
 
-  /// msg
-  static const AuthV1beta1Types updateParams =
-      AuthV1beta1Types._("/cosmos.auth.v1beta1.Msg/UpdateParams");
-
   static const List<AuthV1beta1Types> values = [
     baseAccount,
     queryAccountRequest,
@@ -113,14 +110,14 @@ class AuthV1beta1Types extends TypeUrl {
     msgUpdateAuthParams,
     msgUpdateParamsResponse,
     authGenesisState,
-    updateParams,
   ];
-  static AuthV1beta1Types fromValue(String? typeUrl) {
-    return values.firstWhere(
-      (e) => e.typeUrl == typeUrl,
-      orElse: () => throw DartCosmosSdkPluginException(
-          "No AuthV1beta1Types element found for the given value.",
-          details: {"@type": typeUrl}),
-    );
+
+  static const List<TypeUrl> services = [msgUpdateAuthParams];
+  static TypeUrl? findService(String? typeUrl) {
+    return services.firstWhereNullable((e) => e.typeUrl == typeUrl);
+  }
+
+  static AuthV1beta1Types? findType(String? typeUrl) {
+    return values.firstWhereNullable((e) => e.typeUrl == typeUrl);
   }
 }

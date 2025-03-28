@@ -11,23 +11,25 @@ class QueryClassesResponse extends CosmosMessage {
   /// pagination defines the pagination in the response.
   final PageResponse? pagination;
   const QueryClassesResponse({required this.classes, this.pagination});
-  factory QueryClassesResponse.fromRpc(Map<String, dynamic> json) {
+  factory QueryClassesResponse.fromJson(Map<String, dynamic> json) {
     return QueryClassesResponse(
       classes: (json["classes"] as List?)
-              ?.map((e) => NFTClass.fromRpc(e))
+              ?.map((e) => NFTClass.fromJson(e))
               .toList() ??
           [],
       pagination: json["pagination"] == null
           ? null
-          : PageResponse.fromRpc(json["pagination"]),
+          : PageResponse.fromJson(json["pagination"]),
     );
   }
 
   factory QueryClassesResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryClassesResponse(
-        classes:
-            decode.getFields(1).map((e) => NFTClass.deserialize(e)).toList(),
+        classes: decode
+            .getFields<List<int>>(1)
+            .map((e) => NFTClass.deserialize(e))
+            .toList(),
         pagination: decode
             .getResult(2)
             ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));

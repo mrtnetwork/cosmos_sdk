@@ -13,8 +13,8 @@ class QueryAccountInfoResponse extends CosmosMessage {
     return QueryAccountInfoResponse(
         BaseAccount.deserialize(decode.getField(1)));
   }
-  factory QueryAccountInfoResponse.fromRpc(Map<String, dynamic> json) {
-    return QueryAccountInfoResponse(BaseAccount.fromRpc(json["info"]));
+  factory QueryAccountInfoResponse.fromJson(Map<String, dynamic> json) {
+    return QueryAccountInfoResponse(BaseAccount.fromJson(json["info"]));
   }
 
   @override

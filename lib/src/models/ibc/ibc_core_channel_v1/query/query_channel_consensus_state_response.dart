@@ -20,15 +20,15 @@ class QueryChannelConsensusStateResponse extends CosmosMessage {
   /// height at which the proof was retrieved
   final IbcClientHeight proofHeight;
 
-  factory QueryChannelConsensusStateResponse.fromRpc(
+  factory QueryChannelConsensusStateResponse.fromJson(
       Map<String, dynamic> json) {
     return QueryChannelConsensusStateResponse(
         proof: CosmosUtils.tryToBytes(json["proof"]),
-        proofHeight: IbcClientHeight.fromRpc(json["proof_height"]),
+        proofHeight: IbcClientHeight.fromJson(json["proof_height"]),
         clientId: json["client_id"],
         consensusState: json["consensus_state"] == null
             ? null
-            : AnyMessage.fromRpc(json["consensus_state"]));
+            : AnyMessage.fromJson(json["consensus_state"]));
   }
   QueryChannelConsensusStateResponse(
       {this.consensusState,

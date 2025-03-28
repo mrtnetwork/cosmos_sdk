@@ -10,7 +10,7 @@ class TxEncodeResponse extends CosmosMessage {
   final List<int> txBytes;
   TxEncodeResponse({required List<int> txBytes})
       : txBytes = BytesUtils.toBytes(txBytes, unmodifiable: true);
-  factory TxEncodeResponse.fromRpc(Map<String, dynamic> json) {
+  factory TxEncodeResponse.fromJson(Map<String, dynamic> json) {
     return TxEncodeResponse(txBytes: CosmosUtils.toBytes(json["tx_bytes"]));
   }
 

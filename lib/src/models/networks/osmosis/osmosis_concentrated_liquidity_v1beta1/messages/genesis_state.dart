@@ -31,27 +31,27 @@ class OsmosisConcentratedLiquidityGenesisState extends CosmosMessage {
         params:
             OsmosisConcentratedLiquidityParams.deserialize(decode.getField(1)),
         poolData: decode
-            .getFields(2)
+            .getFields<List<int>>(2)
             .map((e) => OsmosisConcentratedLiquidityPoolData.deserialize(e))
             .toList(),
         positionData: decode
-            .getFields(3)
+            .getFields<List<int>>(3)
             .map((e) => OsmosisConcentratedLiquidityPositionData.deserialize(e))
             .toList(),
         nextPositionId: decode.getField(4),
         nextIncentiveRecordId: decode.getField(5));
   }
-  factory OsmosisConcentratedLiquidityGenesisState.fromRpc(
+  factory OsmosisConcentratedLiquidityGenesisState.fromJson(
       Map<String, dynamic> json) {
     return OsmosisConcentratedLiquidityGenesisState(
-        params: OsmosisConcentratedLiquidityParams.fromRpc(json["params"]),
+        params: OsmosisConcentratedLiquidityParams.fromJson(json["params"]),
         poolData: (json["pool_data"] as List?)
-                ?.map((e) => OsmosisConcentratedLiquidityPoolData.fromRpc(e))
+                ?.map((e) => OsmosisConcentratedLiquidityPoolData.fromJson(e))
                 .toList() ??
             <OsmosisConcentratedLiquidityPoolData>[],
         positionData: (json["position_data"] as List?)
                 ?.map(
-                    (e) => OsmosisConcentratedLiquidityPositionData.fromRpc(e))
+                    (e) => OsmosisConcentratedLiquidityPositionData.fromJson(e))
                 .toList() ??
             <OsmosisConcentratedLiquidityPositionData>[],
         nextPositionId: BigintUtils.tryParse(json["next_position_id"]),

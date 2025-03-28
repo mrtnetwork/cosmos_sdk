@@ -38,7 +38,7 @@ class QuerySpendableBalancesRequest extends CosmosMessage
 
   @override
   QuerySpendableBalancesResponse onJsonResponse(Map<String, dynamic> json) {
-    return QuerySpendableBalancesResponse.fromRpc(json);
+    return QuerySpendableBalancesResponse.fromJson(json);
   }
 
   @override

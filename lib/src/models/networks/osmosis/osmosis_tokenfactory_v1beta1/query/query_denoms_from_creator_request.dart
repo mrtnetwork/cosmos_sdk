@@ -32,7 +32,7 @@ class OsmosisTokenFactoryQueryDenomsFromCreatorRequest extends CosmosMessage
   @override
   OsmosisTokenFactoryQueryDenomsFromCreatorResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisTokenFactoryQueryDenomsFromCreatorResponse.fromRpc(json);
+    return OsmosisTokenFactoryQueryDenomsFromCreatorResponse.fromJson(json);
   }
 
   @override

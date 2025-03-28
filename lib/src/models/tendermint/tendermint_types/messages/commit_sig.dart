@@ -27,7 +27,7 @@ class CommitSig extends CosmosMessage {
         timestamp: ProtobufTimestamp.deserialize(decode.getField(3)),
         signature: decode.getField(4));
   }
-  factory CommitSig.fromRpc(Map<String, dynamic> json) {
+  factory CommitSig.fromJson(Map<String, dynamic> json) {
     return CommitSig(
         blockIDFlag: BlockIDFlag.fromName(json["block_id_flag"]),
         validatorAddress: StringUtils.tryEncode(json["validator_address"],

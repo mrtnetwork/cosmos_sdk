@@ -1,15 +1,17 @@
 import 'package:cosmos_sdk/src/address/address.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_v1beta1/messages/coin.dart';
+import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_crisis_v1beta1/core/service.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_crisis_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
 
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// MsgUpdateParams is the Msg/UpdateParams request type.
 ///
 /// Since: cosmos-sdk 0.47
-class CrisisMsgUpdateParams extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class CrisisMsgUpdateParams
+    extends CrisisV1Beta1Service<EmptyServiceRequestResponse> {
   /// authority is the address that controls the module (defaults to x/gov unless overwritten).
   final CosmosBaseAddress? authority;
 
@@ -25,12 +27,16 @@ class CrisisMsgUpdateParams extends CosmosMessage
       constantFee: Coin.deserialize(decode.getField(2)),
     );
   }
+  factory CrisisMsgUpdateParams.fromJson(Map<String, dynamic> json) {
+    return CrisisMsgUpdateParams(
+      authority: json.maybeAs<CosmosBaseAddress, String>(
+          key: "authority", onValue: (e) => CosmosBaseAddress(e)),
+      constantFee: Coin.fromJson(json.asMap("authority")),
+    );
+  }
 
   @override
   List<int> get fieldIds => [1, 2];
-
-  @override
-  TypeUrl get service => CrisisV1beta1.crisisUpdateParams;
 
   @override
   Map<String, dynamic> toJson() {

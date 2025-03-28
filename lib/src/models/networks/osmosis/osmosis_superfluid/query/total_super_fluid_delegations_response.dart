@@ -12,7 +12,7 @@ class OsmosisSuperfluidTotalSuperfluidDelegationsResponse
     return OsmosisSuperfluidTotalSuperfluidDelegationsResponse(
         decode.getField(1));
   }
-  factory OsmosisSuperfluidTotalSuperfluidDelegationsResponse.fromRpc(
+  factory OsmosisSuperfluidTotalSuperfluidDelegationsResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisSuperfluidTotalSuperfluidDelegationsResponse(
         json["total_delegations"]);

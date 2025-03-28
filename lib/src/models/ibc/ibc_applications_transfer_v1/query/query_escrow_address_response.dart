@@ -10,7 +10,7 @@ class QueryEscrowAddressResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryEscrowAddressResponse(escrowAddress: decode.getField(1));
   }
-  factory QueryEscrowAddressResponse.fromRpc(Map<String, dynamic> json) {
+  factory QueryEscrowAddressResponse.fromJson(Map<String, dynamic> json) {
     return QueryEscrowAddressResponse(escrowAddress: json["escrow_address"]);
   }
 

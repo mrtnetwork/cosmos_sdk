@@ -58,7 +58,7 @@ class QueryIncentivizedPacketsForChannelRequest extends CosmosMessage
   @override
   QueryIncentivizedPacketsForChannelResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return QueryIncentivizedPacketsForChannelResponse.fromRpc(json);
+    return QueryIncentivizedPacketsForChannelResponse.fromJson(json);
   }
 
   @override

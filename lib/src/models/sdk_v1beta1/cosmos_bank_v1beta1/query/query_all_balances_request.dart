@@ -56,7 +56,7 @@ class QueryAllBalancesRequest extends CosmosMessage
 
   @override
   QueryAllBalancesResponse onJsonResponse(Map<String, dynamic> json) {
-    return QueryAllBalancesResponse.fromRpc(json);
+    return QueryAllBalancesResponse.fromJson(json);
   }
 
   @override

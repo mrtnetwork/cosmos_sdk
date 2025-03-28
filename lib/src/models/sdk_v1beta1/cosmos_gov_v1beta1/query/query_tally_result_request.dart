@@ -30,7 +30,7 @@ class GovQueryTallyResultRequest extends CosmosMessage
 
   @override
   GovQueryTallyResultResponse onJsonResponse(Map<String, dynamic> json) {
-    return GovQueryTallyResultResponse.fromRpc(json);
+    return GovQueryTallyResultResponse.fromJson(json);
   }
 
   @override

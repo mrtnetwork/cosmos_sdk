@@ -12,7 +12,7 @@ class OsmosisProtorevQueryGetProtoRevEnabledResponse extends CosmosMessage {
     return OsmosisProtorevQueryGetProtoRevEnabledResponse(
         enabled: decode.getField(1));
   }
-  factory OsmosisProtorevQueryGetProtoRevEnabledResponse.fromRpc(
+  factory OsmosisProtorevQueryGetProtoRevEnabledResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisProtorevQueryGetProtoRevEnabledResponse(
         enabled: json["enabled"]);

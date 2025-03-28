@@ -27,8 +27,10 @@ class OsmosisStreamSwapParams extends CosmosMessage {
   factory OsmosisStreamSwapParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisStreamSwapParams(
-        saleCreationFee:
-            decode.getFields(1).map((e) => Coin.deserialize(e)).toList(),
+        saleCreationFee: decode
+            .getFields<List<int>>(1)
+            .map((e) => Coin.deserialize(e))
+            .toList(),
         saleCreationFeeRecipient: decode.getField(2),
         minDurationUntilStartTime:
             ProtobufDuration.deserialize(decode.getField(3)),

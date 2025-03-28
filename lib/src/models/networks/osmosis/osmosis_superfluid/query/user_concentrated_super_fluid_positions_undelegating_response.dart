@@ -16,19 +16,18 @@ class OsmosisSuperfluidUserConcentratedSuperfluidPositionsUndelegatingResponse
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidUserConcentratedSuperfluidPositionsUndelegatingResponse(
         decode
-            .getFields(1)
+            .getFields<List<int>>(1)
             .map((e) =>
                 OsmosisSuperfluidConcentratedPoolUserPositionRecord.deserialize(
                     e))
             .toList());
   }
-  factory OsmosisSuperfluidUserConcentratedSuperfluidPositionsUndelegatingResponse.fromRpc(
+  factory OsmosisSuperfluidUserConcentratedSuperfluidPositionsUndelegatingResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisSuperfluidUserConcentratedSuperfluidPositionsUndelegatingResponse(
         (json["cl_pool_user_position_records"] as List?)
-                ?.map((e) =>
-                    OsmosisSuperfluidConcentratedPoolUserPositionRecord.fromRpc(
-                        e))
+                ?.map((e) => OsmosisSuperfluidConcentratedPoolUserPositionRecord
+                    .fromJson(e))
                 .toList() ??
             <OsmosisSuperfluidConcentratedPoolUserPositionRecord>[]);
   }

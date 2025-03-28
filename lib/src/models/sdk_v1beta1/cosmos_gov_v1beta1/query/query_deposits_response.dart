@@ -12,15 +12,15 @@ class GovQueryDepositsResponse extends CosmosMessage {
 
   /// pagination defines the pagination in the response.
   final PageResponse? pagination;
-  factory GovQueryDepositsResponse.fromRpc(Map<String, dynamic> json) {
+  factory GovQueryDepositsResponse.fromJson(Map<String, dynamic> json) {
     return GovQueryDepositsResponse(
       deposits: (json["deposits"] as List?)
-              ?.map((e) => GovDeposit.fromRpc(e))
+              ?.map((e) => GovDeposit.fromJson(e))
               .toList() ??
           [],
       pagination: json["pagination"] == null
           ? null
-          : PageResponse.fromRpc(json["pagination"]),
+          : PageResponse.fromJson(json["pagination"]),
     );
   }
   GovQueryDepositsResponse(
@@ -29,8 +29,10 @@ class GovQueryDepositsResponse extends CosmosMessage {
   factory GovQueryDepositsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GovQueryDepositsResponse(
-        deposits:
-            decode.getFields(1).map((e) => GovDeposit.deserialize(e)).toList(),
+        deposits: decode
+            .getFields<List<int>>(1)
+            .map((e) => GovDeposit.deserialize(e))
+            .toList(),
         pagination: decode
             .getResult(2)
             ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));

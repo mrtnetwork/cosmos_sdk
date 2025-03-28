@@ -21,7 +21,7 @@ class UnbondingDelegationEntry extends CosmosMessage {
 
   /// Strictly positive if this entry's unbonding has been stopped by external modules
   final BigInt? unbondingOnHoldRefCount;
-  factory UnbondingDelegationEntry.fromRpc(Map<String, dynamic> json) {
+  factory UnbondingDelegationEntry.fromJson(Map<String, dynamic> json) {
     return UnbondingDelegationEntry(
         balance: BigintUtils.parse(json["balance"]),
         completionTime: ProtobufTimestamp.fromString(json["completion_time"]),

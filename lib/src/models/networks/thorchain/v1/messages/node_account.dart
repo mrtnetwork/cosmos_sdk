@@ -49,7 +49,7 @@ class ThorchainNodeAccount extends CosmosMessage {
         activeBlockHeight: decode.getField(6),
         bondAddress: decode.getField(7),
         statusSince: decode.getField(8),
-        signerMembership: decode.getFields(9),
+        signerMembership: decode.getFields<String>(9),
         requestedToLeave: decode.getField(10),
         forcedToLeave: decode.getField(11),
         leaveScore: decode.getField(12),

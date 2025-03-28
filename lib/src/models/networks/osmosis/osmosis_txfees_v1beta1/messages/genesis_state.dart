@@ -16,15 +16,15 @@ class OsmosisTxfeesGenesisState extends CosmosMessage {
     return OsmosisTxfeesGenesisState(
         basedenom: decode.getField(1),
         feetokens: decode
-            .getFields(2)
+            .getFields<List<int>>(2)
             .map((e) => OsmosisTxfeesFeeToken.deserialize(e))
             .toList());
   }
-  factory OsmosisTxfeesGenesisState.fromRpc(Map<String, dynamic> json) {
+  factory OsmosisTxfeesGenesisState.fromJson(Map<String, dynamic> json) {
     return OsmosisTxfeesGenesisState(
       basedenom: json["basedenom"],
       feetokens: (json["feetokens"] as List?)
-              ?.map((e) => OsmosisTxfeesFeeToken.fromRpc(e))
+              ?.map((e) => OsmosisTxfeesFeeToken.fromJson(e))
               .toList() ??
           <OsmosisTxfeesFeeToken>[],
     );

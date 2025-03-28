@@ -11,8 +11,8 @@ class QueryTotalEscrowForDenomResponse extends CosmosMessage {
     return QueryTotalEscrowForDenomResponse(
         Coin.deserialize(decode.getField(1)));
   }
-  factory QueryTotalEscrowForDenomResponse.fromRpc(Map<String, dynamic> json) {
-    return QueryTotalEscrowForDenomResponse(Coin.fromRpc(json["amount"]));
+  factory QueryTotalEscrowForDenomResponse.fromJson(Map<String, dynamic> json) {
+    return QueryTotalEscrowForDenomResponse(Coin.fromJson(json["amount"]));
   }
 
   @override

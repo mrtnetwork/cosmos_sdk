@@ -52,7 +52,7 @@ class OsmosisPoolManagerEstimateTradeBasedOnPriceImpactRequest
   @override
   OsmosisPoolManagerEstimateTradeBasedOnPriceImpactResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisPoolManagerEstimateTradeBasedOnPriceImpactResponse.fromRpc(
+    return OsmosisPoolManagerEstimateTradeBasedOnPriceImpactResponse.fromJson(
         json);
   }
 

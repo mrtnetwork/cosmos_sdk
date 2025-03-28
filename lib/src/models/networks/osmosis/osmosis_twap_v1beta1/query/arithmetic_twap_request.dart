@@ -59,7 +59,7 @@ class OsmosisTwapArithmeticTwapRequest extends CosmosMessage
 
   @override
   OsmosisTwapArithmeticTwapResponse onJsonResponse(Map<String, dynamic> json) {
-    return OsmosisTwapArithmeticTwapResponse.fromRpc(json);
+    return OsmosisTwapArithmeticTwapResponse.fromJson(json);
   }
 
   @override

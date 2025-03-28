@@ -1,15 +1,17 @@
 import 'package:cosmos_sdk/src/address/address.dart';
+import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_vesting_v1beta1/core/service.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_vesting_v1beta1/messages/period.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_vesting_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:blockchain_utils/helper/helper.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// MsgCreateVestingAccount defines a message that enables creating a vesting account.
 ///
 /// Since: cosmos-sdk 0.46
-class MsgCreatePeriodicVestingAccount extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class MsgCreatePeriodicVestingAccount
+    extends VestingV1Beta1Service<EmptyServiceRequestResponse> {
   final CosmosBaseAddress? fromAddress;
   final CosmosBaseAddress? toAddress;
 
@@ -25,6 +27,32 @@ class MsgCreatePeriodicVestingAccount extends CosmosMessage
     this.startTime,
     required List<Period> vestingPeriods,
   }) : vestingPeriods = vestingPeriods.immutable;
+  factory MsgCreatePeriodicVestingAccount.fromJson(Map<String, dynamic> json) {
+    return MsgCreatePeriodicVestingAccount(
+        fromAddress: json.asAddress("from_address"),
+        toAddress: json.asAddress("to_address"),
+        startTime: json.asBigInt("start_time"),
+        vestingPeriods: json
+                .asListOfMap("vesting_periods")
+                ?.map((e) => Period.fromJson(e))
+                .toList() ??
+            []);
+  }
+  factory MsgCreatePeriodicVestingAccount.deserialize(List<int> bytes) {
+    final decode = CosmosProtocolBuffer.decode(bytes);
+    return MsgCreatePeriodicVestingAccount(
+        fromAddress: decode
+            .getResult(1)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+        toAddress: decode
+            .getResult(2)
+            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+        startTime: decode.getField(3),
+        vestingPeriods: decode
+            .getFields<List<int>>(4)
+            .map((e) => Period.deserialize(e))
+            .toList());
+  }
 
   /// Converts this instance of [MsgCreatePeriodicVestingAccount] to a JSON object.
   @override
@@ -40,9 +68,6 @@ class MsgCreatePeriodicVestingAccount extends CosmosMessage
 
   @override
   List<int> get fieldIds => [1, 2, 3, 4];
-
-  @override
-  TypeUrl get service => VestingV1beta1Types.createPeriodicVestingAccount;
 
   @override
   TypeUrl get typeUrl => VestingV1beta1Types.msgCreatePeriodicVestingAccount;

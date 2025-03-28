@@ -28,6 +28,7 @@ class ThornodeHTTPProvider implements ThorNodeServiceProvider {
     }
     final response = await client.get(params.toUri(url),
         headers: {...params.headers}).timeout(timeout ?? defaultRequestTimeout);
+
     return params.toResponse(response.bodyBytes, response.statusCode);
   }
 }

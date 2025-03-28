@@ -12,7 +12,7 @@ class OsmosisGammPoolmodelsBalancerMsgCreateBalancerPoolResponse
     return OsmosisGammPoolmodelsBalancerMsgCreateBalancerPoolResponse(
         decode.getField(1));
   }
-  factory OsmosisGammPoolmodelsBalancerMsgCreateBalancerPoolResponse.fromRpc(
+  factory OsmosisGammPoolmodelsBalancerMsgCreateBalancerPoolResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisGammPoolmodelsBalancerMsgCreateBalancerPoolResponse(
         BigintUtils.tryParse(json["pool_id"]));

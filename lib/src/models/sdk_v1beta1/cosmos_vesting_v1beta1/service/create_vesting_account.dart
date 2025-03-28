@@ -1,12 +1,15 @@
 import 'package:cosmos_sdk/src/address/address.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_v1beta1/messages/coin.dart';
+import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_vesting_v1beta1/core/service.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_vesting_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// MsgCreateVestingAccount defines a message that enables creating a vesting account.
-class MsgCreateVestingAccount extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class MsgCreateVestingAccount
+    extends VestingV1Beta1Service<EmptyServiceRequestResponse>
+    with AminoMessage<EmptyServiceRequestResponse> {
   final CosmosBaseAddress? fromAddress;
   final CosmosBaseAddress? toAddress;
   final List<Coin> amount;
@@ -38,30 +41,41 @@ class MsgCreateVestingAccount extends CosmosMessage
         toAddress: decode
             .getResult(2)
             ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        amount: decode.getFields(3).map((e) => Coin.deserialize(e)).toList(),
+        amount: decode
+            .getFields<List<int>>(3)
+            .map((e) => Coin.deserialize(e))
+            .toList(),
         endTime: decode.getField(4),
         delayed: decode.getField(5),
         startTime: decode.getField(6));
   }
+  factory MsgCreateVestingAccount.fromJson(Map<String, dynamic> json) {
+    return MsgCreateVestingAccount(
+        fromAddress: json.asAddress("from_address"),
+        toAddress: json.asAddress("to_address"),
+        amount:
+            json.asListOfMap("amount")?.map((e) => Coin.fromJson(e)).toList() ??
+                [],
+        endTime: json.asBigInt("end_time"),
+        delayed: json.as("delayed"),
+        startTime: json.asBigInt("start_time"));
+  }
 
   /// Converts this instance of [MsgCreateVestingAccount] to a JSON object.
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({bool amino = false}) {
     return {
       'from_address': fromAddress?.address,
       'to_address': toAddress?.address,
       'amount': amount.map((coin) => coin.toJson()).toList(),
       'end_time': endTime?.toString(),
       'delayed': delayed,
-      'start_time': startTime?.toString(),
+      if (!amino) 'start_time': startTime?.toString(),
     };
   }
 
   @override
   List<int> get fieldIds => [1, 2, 3, 4, 5, 6];
-
-  @override
-  TypeUrl get service => VestingV1beta1Types.createVestingAccount;
 
   @override
   TypeUrl get typeUrl => VestingV1beta1Types.msgCreateVestingAccount;

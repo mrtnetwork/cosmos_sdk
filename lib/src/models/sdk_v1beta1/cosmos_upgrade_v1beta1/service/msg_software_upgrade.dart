@@ -1,12 +1,14 @@
 import 'package:cosmos_sdk/src/address/address.dart';
+import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_upgrade_v1beta1/core/service.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_upgrade_v1beta1/messages/plan.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_upgrade_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// MsgSoftwareUpgrade is the Msg/SoftwareUpgrade request type.
-class MsgSoftwareUpgrade extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class MsgSoftwareUpgrade
+    extends UpgradeV1Beta1Service<EmptyServiceRequestResponse> {
   /// authority is the address that controls the module (defaults to x/gov unless overwritten).
   final CosmosBaseAddress? authority;
 
@@ -25,6 +27,11 @@ class MsgSoftwareUpgrade extends CosmosMessage
             .getResult(1)
             ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)));
   }
+  factory MsgSoftwareUpgrade.fromJson(Map<String, dynamic> json) {
+    return MsgSoftwareUpgrade(
+        plan: Plan.fromJson(json.asMap("plan")),
+        authority: json.asAddress("authority"));
+  }
 
   /// Converts the message to a JSON-serializable map.
   @override
@@ -37,9 +44,6 @@ class MsgSoftwareUpgrade extends CosmosMessage
 
   @override
   List<int> get fieldIds => [1, 2];
-
-  @override
-  TypeUrl get service => UpgradeV1beta1Types.softwareUpgrade;
 
   @override
   TypeUrl get typeUrl => UpgradeV1beta1Types.msgSoftwareUpgrade;

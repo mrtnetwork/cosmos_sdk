@@ -34,7 +34,7 @@ class QueryTotalEscrowForDenomRequest extends CosmosMessage
 
   @override
   QueryTotalEscrowForDenomResponse onJsonResponse(Map<String, dynamic> json) {
-    return QueryTotalEscrowForDenomResponse.fromRpc(json);
+    return QueryTotalEscrowForDenomResponse.fromJson(json);
   }
 
   @override

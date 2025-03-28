@@ -16,10 +16,10 @@ class OsmosisProtorevQueryGetProtoRevInfoByPoolTypeResponse
     return OsmosisProtorevQueryGetProtoRevInfoByPoolTypeResponse(
         OsmosisProtorevInfoByPoolType.deserialize(decode.getField(1)));
   }
-  factory OsmosisProtorevQueryGetProtoRevInfoByPoolTypeResponse.fromRpc(
+  factory OsmosisProtorevQueryGetProtoRevInfoByPoolTypeResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisProtorevQueryGetProtoRevInfoByPoolTypeResponse(
-        OsmosisProtorevInfoByPoolType.fromRpc(json["info_by_pool_type"]));
+        OsmosisProtorevInfoByPoolType.fromJson(json["info_by_pool_type"]));
   }
 
   @override

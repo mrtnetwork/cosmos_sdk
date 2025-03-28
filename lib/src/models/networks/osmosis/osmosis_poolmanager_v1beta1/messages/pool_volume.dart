@@ -18,8 +18,10 @@ class OsmosisPoolManagerPoolVolume extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolManagerPoolVolume(
         poolId: decode.getField(1),
-        poolVolume:
-            decode.getFields(2).map((e) => Coin.deserialize(e)).toList());
+        poolVolume: decode
+            .getFields<List<int>>(2)
+            .map((e) => Coin.deserialize(e))
+            .toList());
   }
 
   @override

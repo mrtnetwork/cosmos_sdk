@@ -10,7 +10,10 @@ class OsmosisGammMsgExitPoolResponse extends CosmosMessage {
   factory OsmosisGammMsgExitPoolResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisGammMsgExitPoolResponse(
-        tokenOut: decode.getFields(1).map((e) => Coin.deserialize(e)).toList());
+        tokenOut: decode
+            .getFields<List<int>>(1)
+            .map((e) => Coin.deserialize(e))
+            .toList());
   }
 
   @override

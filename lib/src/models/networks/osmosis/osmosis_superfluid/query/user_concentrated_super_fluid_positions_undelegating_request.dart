@@ -39,7 +39,7 @@ class OsmosisSuperfluidUserConcentratedSuperfluidPositionsUndelegatingRequest
   OsmosisSuperfluidUserConcentratedSuperfluidPositionsUndelegatingResponse
       onJsonResponse(Map<String, dynamic> json) {
     return OsmosisSuperfluidUserConcentratedSuperfluidPositionsUndelegatingResponse
-        .fromRpc(json);
+        .fromJson(json);
   }
 
   @override

@@ -23,29 +23,31 @@ class OsmosisSuperfluidSuperfluidDelegationsByDelegatorResponse
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidSuperfluidDelegationsByDelegatorResponse(
         superfluidDelegationRecords: decode
-            .getFields(1)
+            .getFields<List<int>>(1)
             .map((e) =>
                 OsmosisSuperfluidSuperfluidDelegationRecord.deserialize(e))
             .toList(),
-        totalDelegatedCoins:
-            decode.getFields(2).map((e) => Coin.deserialize(e)).toList(),
+        totalDelegatedCoins: decode
+            .getFields<List<int>>(2)
+            .map((e) => Coin.deserialize(e))
+            .toList(),
         totalEquivalentStakedAmount: Coin.deserialize(decode.getField(3)));
   }
-  factory OsmosisSuperfluidSuperfluidDelegationsByDelegatorResponse.fromRpc(
+  factory OsmosisSuperfluidSuperfluidDelegationsByDelegatorResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisSuperfluidSuperfluidDelegationsByDelegatorResponse(
         superfluidDelegationRecords:
             (json["superfluid_delegation_records"] as List?)
                     ?.map((e) =>
-                        OsmosisSuperfluidSuperfluidDelegationRecord.fromRpc(e))
+                        OsmosisSuperfluidSuperfluidDelegationRecord.fromJson(e))
                     .toList() ??
                 <OsmosisSuperfluidSuperfluidDelegationRecord>[],
         totalDelegatedCoins: (json["total_delegated_coins"] as List?)
-                ?.map((e) => Coin.fromRpc(e))
+                ?.map((e) => Coin.fromJson(e))
                 .toList() ??
             <Coin>[],
         totalEquivalentStakedAmount:
-            Coin.fromRpc(json["total_equivalent_staked_amount"]));
+            Coin.fromJson(json["total_equivalent_staked_amount"]));
   }
 
   @override

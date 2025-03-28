@@ -10,16 +10,16 @@ class QueryValidatorUnbondingDelegationsResponse extends CosmosMessage {
 
   /// pagination defines the pagination in the response.
   final PageResponse? pagination;
-  factory QueryValidatorUnbondingDelegationsResponse.fromRpc(
+  factory QueryValidatorUnbondingDelegationsResponse.fromJson(
       Map<String, dynamic> json) {
     return QueryValidatorUnbondingDelegationsResponse(
       unbondingResponses: (json["unbonding_responses"] as List?)
-              ?.map((e) => UnbondingDelegation.fromRpc(e))
+              ?.map((e) => UnbondingDelegation.fromJson(e))
               .toList() ??
           [],
       pagination: json["pagination"] == null
           ? null
-          : PageResponse.fromRpc(json["pagination"]),
+          : PageResponse.fromJson(json["pagination"]),
     );
   }
   QueryValidatorUnbondingDelegationsResponse(
@@ -30,7 +30,7 @@ class QueryValidatorUnbondingDelegationsResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryValidatorUnbondingDelegationsResponse(
         unbondingResponses: decode
-            .getFields(1)
+            .getFields<List<int>>(1)
             .map((e) => UnbondingDelegation.deserialize(e))
             .toList(),
         pagination: decode

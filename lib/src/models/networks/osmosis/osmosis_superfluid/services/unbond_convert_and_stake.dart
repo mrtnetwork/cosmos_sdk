@@ -1,12 +1,12 @@
+import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_superfluid/core/service.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_superfluid/types/types.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_v1beta1/cosmos_base_v1beta1.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 import 'super_fluid_undelegate_and_unbond_lock_response.dart';
 
-class OsmosisSuperfluidMsgUnbondConvertAndStake extends CosmosMessage
-    with
-        ServiceMessage<
-            OsmosisSuperfluidMsgSuperfluidUndelegateAndUnbondLockResponse> {
+class OsmosisSuperfluidMsgUnbondConvertAndStake extends OsmosisSuperfluid<
+    OsmosisSuperfluidMsgSuperfluidUndelegateAndUnbondLockResponse> {
   /// lock ID to convert and stake.
   /// lock id with 0 should be provided if converting liquid gamm shares to stake
   final BigInt? lockId;
@@ -41,6 +41,15 @@ class OsmosisSuperfluidMsgUnbondConvertAndStake extends CosmosMessage
         minAmtToStake: BigInt.parse(decode.getField(4)),
         sharesToConvert: Coin.deserialize(decode.getField(5)));
   }
+  factory OsmosisSuperfluidMsgUnbondConvertAndStake.fromJson(
+      Map<String, dynamic> json) {
+    return OsmosisSuperfluidMsgUnbondConvertAndStake(
+        lockId: json.asBigInt("lock_id"),
+        sender: json.as("sender"),
+        valAddr: json.as("val_addr"),
+        minAmtToStake: json.asBigInt("min_amt_to_stake"),
+        sharesToConvert: Coin.fromJson(json.asMap("shares_to_convert")));
+  }
 
   @override
   List<int> get fieldIds => [1, 2, 3, 4, 5];
@@ -62,9 +71,6 @@ class OsmosisSuperfluidMsgUnbondConvertAndStake extends CosmosMessage
   @override
   List get values =>
       [lockId, sender, valAddr, minAmtToStake.toString(), sharesToConvert];
-
-  @override
-  TypeUrl get service => OsmosisSuperfluidTypes.unbondConvertAndStake;
 
   @override
   List<String?> get signers => [sender];

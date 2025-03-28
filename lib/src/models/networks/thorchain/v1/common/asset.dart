@@ -1,5 +1,6 @@
 import 'package:cosmos_sdk/src/models/networks/thorchain/v1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 class ThorchainAsset extends CosmosMessage {
   final String? chain;
@@ -17,6 +18,14 @@ class ThorchainAsset extends CosmosMessage {
         ticker: decode.getField(3),
         synth: decode.getField(4),
         trade: decode.getField(5));
+  }
+  factory ThorchainAsset.fromJson(Map<String, dynamic> json) {
+    return ThorchainAsset(
+        chain: json.as("chain"),
+        symbol: json.as("symbol"),
+        ticker: json.as("ticker"),
+        synth: json.as("synth"),
+        trade: json.as("trade"));
   }
 
   @override

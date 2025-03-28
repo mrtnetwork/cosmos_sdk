@@ -26,7 +26,7 @@ class Delegation extends CosmosMessage {
         validatorAddress: CosmosBaseAddress(decode.getField(2)),
         shares: decode.getField(3));
   }
-  factory Delegation.fromRpc(Map<String, dynamic> json) {
+  factory Delegation.fromJson(Map<String, dynamic> json) {
     return Delegation(
         delegatorAddress: CosmosBaseAddress(json["delegator_address"]),
         validatorAddress: CosmosBaseAddress(json["validator_address"]),

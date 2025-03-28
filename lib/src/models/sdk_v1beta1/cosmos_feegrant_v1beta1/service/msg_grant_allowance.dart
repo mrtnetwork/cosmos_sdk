@@ -1,13 +1,15 @@
 import 'package:cosmos_sdk/src/address/address.dart';
+import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_feegrant_v1beta1/core/service.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_feegrant_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
 
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// GrantAllowance grants fee allowance to the grantee on the granter's
 /// account with the provided expiration time.
-class MsgGrantAllowance extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class MsgGrantAllowance
+    extends FeeGrantV1Beta1Service<EmptyServiceRequestResponse> {
   /// granter is the address of the user granting an allowance of their funds.
   final CosmosBaseAddress? granter;
 
@@ -29,12 +31,16 @@ class MsgGrantAllowance extends CosmosMessage
         allowance:
             decode.getResult(3)?.to<Any, List<int>>((e) => Any.deserialize(e)));
   }
+  factory MsgGrantAllowance.fromJson(Map<String, dynamic> json) {
+    return MsgGrantAllowance(
+        granter: json.asAddress("granter"),
+        grantee: json.asAddress("grantee"),
+        allowance: json.maybeAs<Any, Map<String, dynamic>>(
+            key: "allowance", onValue: (e) => Any.fromJson(e)));
+  }
 
   @override
   List<int> get fieldIds => [1, 2, 3];
-
-  @override
-  TypeUrl get service => FeegrantV1beta1Types.grantAllowance;
 
   @override
   Map<String, dynamic> toJson() {

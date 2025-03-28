@@ -9,9 +9,9 @@ class QuerySpendableBalanceByDenomResponse extends CosmosMessage {
   /// balance is the balance of the coin.
   final Coin balance;
   const QuerySpendableBalanceByDenomResponse(this.balance);
-  factory QuerySpendableBalanceByDenomResponse.fromRpc(
+  factory QuerySpendableBalanceByDenomResponse.fromJson(
       Map<String, dynamic> json) {
-    return QuerySpendableBalanceByDenomResponse(Coin.fromRpc(json["balance"]));
+    return QuerySpendableBalanceByDenomResponse(Coin.fromJson(json["balance"]));
   }
   factory QuerySpendableBalanceByDenomResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

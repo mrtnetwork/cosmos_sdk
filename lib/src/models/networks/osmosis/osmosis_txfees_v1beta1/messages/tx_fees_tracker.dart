@@ -13,14 +13,17 @@ class OsmosisTxfeesTxFeesTracker extends CosmosMessage {
   factory OsmosisTxfeesTxFeesTracker.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisTxfeesTxFeesTracker(
-      txFees: decode.getFields(1).map((e) => Coin.deserialize(e)).toList(),
+      txFees: decode
+          .getFields<List<int>>(1)
+          .map((e) => Coin.deserialize(e))
+          .toList(),
       heightAccountingStartsFrom: decode.getField(2),
     );
   }
-  factory OsmosisTxfeesTxFeesTracker.fromRpc(Map<String, dynamic> json) {
+  factory OsmosisTxfeesTxFeesTracker.fromJson(Map<String, dynamic> json) {
     return OsmosisTxfeesTxFeesTracker(
         txFees:
-            (json["tx_fees"] as List?)?.map((e) => Coin.fromRpc(e)).toList() ??
+            (json["tx_fees"] as List?)?.map((e) => Coin.fromJson(e)).toList() ??
                 <Coin>[],
         heightAccountingStartsFrom:
             BigintUtils.tryParse(json["height_accounting_starts_from"]));

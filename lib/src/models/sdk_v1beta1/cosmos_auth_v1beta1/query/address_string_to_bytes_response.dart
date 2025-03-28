@@ -13,7 +13,7 @@ class AddressStringToBytesResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return AddressStringToBytesResponse(decode.getField(1));
   }
-  factory AddressStringToBytesResponse.fromRpc(Map<String, dynamic> json) {
+  factory AddressStringToBytesResponse.fromJson(Map<String, dynamic> json) {
     return AddressStringToBytesResponse(
         CosmosUtils.toBytes(json["address_bytes"]));
   }

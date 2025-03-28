@@ -1,32 +1,38 @@
+import 'package:cosmos_sdk/src/models/ibc/core/service.dart';
+import 'package:cosmos_sdk/src/models/ibc/ibc_applications_interchain_accounts_host_v1/ibc_applications_interchain_accounts_host_v1.dart';
 import 'package:cosmos_sdk/src/models/ibc/types/types.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// MsgUpdateParams defines the payload for Msg/UpdateParams
-class InterchainAccountsHostUpdateParams extends CosmosMessage
-    with ServiceMessage<EmptyServiceRequestResponse> {
+class InterchainAccountsHostUpdateParams
+    extends IbcService<EmptyServiceRequestResponse> {
   /// signer address
   final String? signer;
 
   /// params defines the 27-interchain-accounts/host parameters to update.
   ///
   /// NOTE: All parameters must be supplied.
-  final InterchainAccountsHostUpdateParams params;
+  final InterchainAccountsHostParams params;
   const InterchainAccountsHostUpdateParams({this.signer, required this.params});
   factory InterchainAccountsHostUpdateParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return InterchainAccountsHostUpdateParams(
       signer: decode.getField(1),
-      params:
-          InterchainAccountsHostUpdateParams.deserialize(decode.getField(2)),
+      params: InterchainAccountsHostParams.deserialize(decode.getField(2)),
+    );
+  }
+  factory InterchainAccountsHostUpdateParams.fromJson(
+      Map<String, dynamic> json) {
+    return InterchainAccountsHostUpdateParams(
+      signer: json.as("signer"),
+      params: InterchainAccountsHostParams.fromJson(json.asMap("params")),
     );
   }
 
   @override
   List<int> get fieldIds => [1, 2];
-
-  @override
-  TypeUrl get service => IbcTypes.interchainAccountsHostUpdateParams;
 
   @override
   Map<String, dynamic> toJson() {

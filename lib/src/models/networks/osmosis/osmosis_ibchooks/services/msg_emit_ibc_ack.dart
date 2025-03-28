@@ -1,10 +1,12 @@
+import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_ibchooks/core/service.dart';
 import 'package:cosmos_sdk/src/models/networks/osmosis/osmosis_ibchooks/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
 import 'msg_emit_ibc_ack_response.dart';
 
-class OsmosisIbchooksMsgEmitIBCAck extends CosmosMessage
-    with ServiceMessage<OsmosisIbchooksMsgEmitIBCAckResponse> {
+class OsmosisIbchooksMsgEmitIBCAck
+    extends OsmosisIbchooks<OsmosisIbchooksMsgEmitIBCAckResponse> {
   final String? sender;
   final BigInt? packetSequence;
   final String? channel;
@@ -17,6 +19,12 @@ class OsmosisIbchooksMsgEmitIBCAck extends CosmosMessage
         packetSequence: decode.getField(2),
         channel: decode.getField(3));
   }
+  factory OsmosisIbchooksMsgEmitIBCAck.fromJson(Map<String, dynamic> json) {
+    return OsmosisIbchooksMsgEmitIBCAck(
+        sender: json.as("sender"),
+        packetSequence: json.asBigInt("packet_sequence"),
+        channel: json.as("channel"));
+  }
 
   @override
   List<int> get fieldIds => [1, 2, 3];
@@ -25,9 +33,6 @@ class OsmosisIbchooksMsgEmitIBCAck extends CosmosMessage
   OsmosisIbchooksMsgEmitIBCAckResponse onResponse(List<int> bytes) {
     return OsmosisIbchooksMsgEmitIBCAckResponse.deserialize(bytes);
   }
-
-  @override
-  TypeUrl get service => OsmosisIbchooksTypes.emitIBCAck;
 
   @override
   List<String?> get signers => [sender];

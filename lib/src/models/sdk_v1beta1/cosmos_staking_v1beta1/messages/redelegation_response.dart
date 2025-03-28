@@ -11,11 +11,11 @@ class RedelegationResponse extends CosmosMessage {
   const RedelegationResponse(
       {required this.redelegation, required this.entries});
 
-  factory RedelegationResponse.fromRpc(Map<String, dynamic> json) {
+  factory RedelegationResponse.fromJson(Map<String, dynamic> json) {
     return RedelegationResponse(
-        redelegation: Redelegation.fromRpc(json["redelegation"]),
+        redelegation: Redelegation.fromJson(json["redelegation"]),
         entries: (json["entries"] as List?)
-                ?.map((e) => RedelegationEntryResponse.fromRpc(e))
+                ?.map((e) => RedelegationEntryResponse.fromJson(e))
                 .toList() ??
             []);
   }
@@ -25,7 +25,7 @@ class RedelegationResponse extends CosmosMessage {
     return RedelegationResponse(
         redelegation: Redelegation.deserialize(decode.getField(1)),
         entries: decode
-            .getFields(2)
+            .getFields<List<int>>(2)
             .map((e) => RedelegationEntryResponse.deserialize(e))
             .toList());
   }

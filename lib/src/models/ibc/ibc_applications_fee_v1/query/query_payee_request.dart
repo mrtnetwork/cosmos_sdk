@@ -38,7 +38,7 @@ class QueryPayeeRequest extends CosmosMessage
 
   @override
   QueryPayeeResponse onJsonResponse(Map<String, dynamic> json) {
-    return QueryPayeeResponse.fromRpc(json);
+    return QueryPayeeResponse.fromJson(json);
   }
 
   @override

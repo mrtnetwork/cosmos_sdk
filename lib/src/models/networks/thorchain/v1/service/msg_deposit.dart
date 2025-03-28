@@ -1,11 +1,14 @@
 import 'package:cosmos_sdk/src/address/address.dart';
 import 'package:cosmos_sdk/src/models/global_messages/service_empty_response.dart';
 import 'package:cosmos_sdk/src/models/networks/thorchain/v1/common/coin.dart';
+import 'package:cosmos_sdk/src/models/networks/thorchain/v1/core/service.dart';
 import 'package:cosmos_sdk/src/models/networks/thorchain/v1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:blockchain_utils/helper/helper.dart';
+import 'package:cosmos_sdk/src/utils/quick.dart';
 
-class ThorchainMsgDeposit extends CosmosMessage with ServiceMessage {
+class ThorchainMsgDeposit
+    extends ThorchainV1Service<EmptyServiceRequestResponse> {
   final List<ThorchainCoin> coins;
   final String memo;
   final CosmosBaseAddress signer;
@@ -23,6 +26,17 @@ class ThorchainMsgDeposit extends CosmosMessage with ServiceMessage {
             .toList(),
         memo: decode.getField(2),
         signer: CosmosBaseAddress.fromBytes(decode.getField(3)));
+  }
+  factory ThorchainMsgDeposit.fromJson(Map<String, dynamic> json) {
+    return ThorchainMsgDeposit(
+        coins: json
+                .asListOfMap("coins")
+                ?.map((e) => ThorchainCoin.fromJson(e))
+                .toList() ??
+            [],
+        memo: json.as("memo"),
+        signer: CosmosBaseAddress.fromBytes(
+            json.asBytes("signer", throwOnNull: true)!));
   }
   factory ThorchainMsgDeposit.create(
       {required List<ThorchainCoin> coins,
@@ -50,7 +64,7 @@ class ThorchainMsgDeposit extends CosmosMessage with ServiceMessage {
   }
 
   @override
-  TypeUrl get typeUrl => ThorchainV1Types.msgDeposit;
+  ThorchainV1Types get typeUrl => ThorchainV1Types.msgDeposit;
 
   @override
   List get values => [coins, memo, signer.toBytes()];
@@ -59,9 +73,6 @@ class ThorchainMsgDeposit extends CosmosMessage with ServiceMessage {
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(typeUrl);
   }
-
-  @override
-  TypeUrl get service => typeUrl;
 
   @override
   List<String?> get signers => [signer.address];

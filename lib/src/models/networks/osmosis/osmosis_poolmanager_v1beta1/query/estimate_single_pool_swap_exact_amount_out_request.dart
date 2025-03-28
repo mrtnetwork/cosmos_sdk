@@ -26,7 +26,7 @@ class OsmosisPoolManagerEstimateSinglePoolSwapExactAmountOutRequest
   @override
   OsmosisPoolManagerEstimateSwapExactAmountOutResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisPoolManagerEstimateSwapExactAmountOutResponse.fromRpc(json);
+    return OsmosisPoolManagerEstimateSwapExactAmountOutResponse.fromJson(json);
   }
 
   @override

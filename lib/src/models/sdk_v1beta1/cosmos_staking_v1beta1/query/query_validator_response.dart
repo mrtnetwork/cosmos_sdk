@@ -7,8 +7,8 @@ class QueryValidatorResponse extends CosmosMessage {
   /// validator defines the validator info.
   final StakingValidator validator;
   const QueryValidatorResponse(this.validator);
-  factory QueryValidatorResponse.fromRpc(Map<String, dynamic> json) {
-    return QueryValidatorResponse(StakingValidator.fromRpc(json["validator"]));
+  factory QueryValidatorResponse.fromJson(Map<String, dynamic> json) {
+    return QueryValidatorResponse(StakingValidator.fromJson(json["validator"]));
   }
   factory QueryValidatorResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

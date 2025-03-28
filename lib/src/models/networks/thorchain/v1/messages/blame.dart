@@ -19,7 +19,7 @@ class ThorchainBlame extends CosmosMessage {
         failReason: decode.getField(1),
         isUnicast: decode.getField(2),
         blameNodes: decode
-            .getFields(3)
+            .getFields<List<int>>(3)
             .map((e) => ThorchainNode.deserialize(e))
             .toList(),
         round: decode.getField(4));

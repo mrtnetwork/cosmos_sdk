@@ -26,19 +26,19 @@ class OsmosisGammQuerySwapExactAmountInRequest extends CosmosMessage
       poolId: decode.getField(2),
       tokenIn: decode.getField(3),
       routes: decode
-          .getFields(4)
+          .getFields<List<int>>(4)
           .map((e) => OsmosisGammSwapAmountInRoute.deserialize(e))
           .toList(),
     );
   }
-  factory OsmosisGammQuerySwapExactAmountInRequest.fromRpc(
+  factory OsmosisGammQuerySwapExactAmountInRequest.fromJson(
       Map<String, dynamic> json) {
     return OsmosisGammQuerySwapExactAmountInRequest(
         sender: json["sender"],
         poolId: BigintUtils.parse(json["pool_id"]),
         tokenIn: json["token_in"],
         routes: (json["routes"] as List?)
-                ?.map((e) => OsmosisGammSwapAmountInRoute.fromRpc(e))
+                ?.map((e) => OsmosisGammSwapAmountInRoute.fromJson(e))
                 .toList() ??
             <OsmosisGammSwapAmountInRoute>[]);
   }
@@ -70,7 +70,7 @@ class OsmosisGammQuerySwapExactAmountInRequest extends CosmosMessage
   @override
   OsmosisGammQuerySwapExactAmountInResponse onJsonResponse(
       Map<String, dynamic> json) {
-    return OsmosisGammQuerySwapExactAmountInResponse.fromRpc(json);
+    return OsmosisGammQuerySwapExactAmountInResponse.fromJson(json);
   }
 
   @override

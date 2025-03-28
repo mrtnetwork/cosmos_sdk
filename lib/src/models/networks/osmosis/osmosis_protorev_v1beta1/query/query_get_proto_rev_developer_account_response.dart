@@ -14,7 +14,7 @@ class OsmosisProtorevQueryGetProtoRevDeveloperAccountResponse
     return OsmosisProtorevQueryGetProtoRevDeveloperAccountResponse(
         developerAccount: decode.getField(1));
   }
-  factory OsmosisProtorevQueryGetProtoRevDeveloperAccountResponse.fromRpc(
+  factory OsmosisProtorevQueryGetProtoRevDeveloperAccountResponse.fromJson(
       Map<String, dynamic> json) {
     return OsmosisProtorevQueryGetProtoRevDeveloperAccountResponse(
         developerAccount: json["developer_account"]);

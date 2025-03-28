@@ -10,8 +10,8 @@ class QueryDenomMetadataResponse extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryDenomMetadataResponse(Metadata.deserialize(decode.getField(1)));
   }
-  factory QueryDenomMetadataResponse.fromRpc(Map<String, dynamic> json) {
-    return QueryDenomMetadataResponse(Metadata.fromRpc(json["metadata"]));
+  factory QueryDenomMetadataResponse.fromJson(Map<String, dynamic> json) {
+    return QueryDenomMetadataResponse(Metadata.fromJson(json["metadata"]));
   }
 
   @override

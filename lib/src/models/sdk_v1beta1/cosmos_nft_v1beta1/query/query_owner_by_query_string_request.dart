@@ -44,7 +44,7 @@ class QueryOwnerByQueryStringRequest extends CosmosMessage
 
   @override
   QueryOwnerByQueryStringResponse onJsonResponse(Map<String, dynamic> json) {
-    return QueryOwnerByQueryStringResponse.fromRpc(json);
+    return QueryOwnerByQueryStringResponse.fromJson(json);
   }
 
   @override

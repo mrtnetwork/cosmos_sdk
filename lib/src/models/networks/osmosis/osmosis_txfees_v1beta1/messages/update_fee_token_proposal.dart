@@ -20,12 +20,12 @@ class OsmosisTxfeesUpdateFeeTokenProposal extends CosmosMessage {
         description: decode.getField(2),
         feetoken: OsmosisTxfeesFeeToken.deserialize(decode.getField(3)));
   }
-  factory OsmosisTxfeesUpdateFeeTokenProposal.fromRpc(
+  factory OsmosisTxfeesUpdateFeeTokenProposal.fromJson(
       Map<String, dynamic> json) {
     return OsmosisTxfeesUpdateFeeTokenProposal(
         title: json["title"],
         description: json["description"],
-        feetoken: OsmosisTxfeesFeeToken.fromRpc(json["feetoken"]));
+        feetoken: OsmosisTxfeesFeeToken.fromJson(json["feetoken"]));
   }
 
   @override
