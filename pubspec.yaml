@@ -15,9 +15,9 @@ environment:
   sdk: '>=3.3.0 <4.0.0'
 # Add regular dependencies here.
 dependencies:
-  blockchain_utils: ^4.3.0
+  blockchain_utils: ^4.4.0
   # blockchain_utils:
-  #   path: ../../blockchain_utils
+  #   path: ../blockchain_utils
 
     
 
@@ -25,6 +25,7 @@ dev_dependencies:
   lints: ^5.1.1
   test: ^1.25.9
   flutter_lints: ^5.0.0
+  http: ^1.2.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -33,10 +34,9 @@ dev_dependencies:
 flutter:
 
   # To add assets to your package, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
-  #
+  assets:
+    - assets/chains.json
+  
   # For details regarding assets in packages, see
   # https://flutter.dev/assets-and-images/#from-packages
   #

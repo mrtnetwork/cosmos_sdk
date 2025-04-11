@@ -22,7 +22,6 @@ class ThorNodeRequestPools extends ThorNodeRequestParam<
   @override
   List<AssetPoolInformationResponse> onResonse(
       List<Map<String, dynamic>> result) {
-    print("result $result");
     return result.map((e) => AssetPoolInformationResponse.fromJson(e)).toList();
   }
 }

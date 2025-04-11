@@ -40,7 +40,7 @@ class CCREndpoint {
         'address': address,
         'provider': provider,
         'archive': archive,
-      };
+      }..removeWhere((k, v) => v == null);
 }
 
 class CCRExplorer {
@@ -74,11 +74,12 @@ class CCRExplorer {
   factory CCRExplorer.fromJson(Map<String, dynamic> json) => CCRExplorer(
         kind: json['kind'],
         url: json['url'],
-        txPage: json['tx_page'],
-        accountPage: json['account_page'],
-        validatorPage: json['validator_page'],
-        proposalPage: json['proposal_page'],
-        blockPage: json['block_page'],
+        txPage: (json['tx_page'] as String?)?.replaceAll(r"${txHash}", "#txId"),
+        accountPage: (json['account_page'] as String?)
+            ?.replaceAll(r"${accountAddress}", "#address"),
+        // validatorPage: json['validator_page'],
+        // proposalPage: json['proposal_page'],
+        // blockPage: json['block_page'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -127,7 +128,7 @@ class CCRFeeToken {
         'average_gas_price': averageGasPrice,
         'high_gas_price': highGasPrice,
         'gas_costs': gasCosts?.toJson(),
-      };
+      }..removeWhere((k, v) => v == null);
 }
 
 class CCRGasCosts {
@@ -850,7 +851,7 @@ class CCRChain {
           .toList());
 
   Map<String, dynamic> toJson() => {
-        '\$schema': schema,
+        // '\$schema': schema,
         'chain_name': chainName,
         'chain_type': chainType,
         'chain_id': chainId,
@@ -862,7 +863,7 @@ class CCRChain {
         'bech32_prefix': bech32Prefix,
         'bech32_config': bech32Config?.toJson(),
         'daemon_name': daemonName,
-        'node_home': nodeHome,
+        // 'node_home': nodeHome,
         'key_algos': keyAlgos,
         'slip44': slip44,
         'alternative_slip44s': alternativeSlip44s,
@@ -956,14 +957,14 @@ class CCRApis {
     );
   }
 
-  Map<String, dynamic> toJson() => {
+  Map<String, List<Map<String, dynamic>>> toJson() => {
         'rpc': rpc.map((e) => e.toJson()).toList(),
         'rest': rest.map((e) => e.toJson()).toList(),
         'grpc': grpc.map((e) => e.toJson()).toList(),
         'wss': wss.map((e) => e.toJson()).toList(),
         'grpc-web': grpcWeb.map((e) => e.toJson()).toList(),
         'evm-http-jsonrpc': evmHttpJsonRpc.map((e) => e.toJson()).toList(),
-      };
+      }..removeWhere((k, v) => v.isEmpty);
 }
 
 class CosmosDirectoryAsset {
@@ -1013,7 +1014,6 @@ class CosmosDirectoryAsset {
   // To JSON method
   Map<String, dynamic> toJson() {
     return {
-      'deprecated': deprecated,
       'description': description,
       'denom_units': denomUnits.map((item) => item.toJson()).toList(),
       'base': base.toJson(),

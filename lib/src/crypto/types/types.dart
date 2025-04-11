@@ -54,6 +54,16 @@ enum CosmosKeysAlgs {
             "Unsuported key algorithm.",
             details: {"name": name}));
   }
+
+  TypeUrl get pubKeyTypeUrl => switch (this) {
+        CosmosKeysAlgs.secp256k1 => CosmosCryptoKeysTypes.secp256k1Publickey,
+        CosmosKeysAlgs.secp256r1 => CosmosCryptoKeysTypes.secp256R1Publickey,
+        CosmosKeysAlgs.ed25519 => CosmosCryptoKeysTypes.ed25519Publickey,
+        CosmosKeysAlgs.ethsecp256k1 =>
+          CosmosCryptoKeysTypes.ethSecp256k1Publickey,
+        _ => throw DartCosmosSdkPluginException("Unsuported key algorithm.",
+            details: {"name": name})
+      };
 }
 
 class CosmosCryptoKeysTypes extends TypeUrl {

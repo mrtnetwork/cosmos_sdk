@@ -21,6 +21,18 @@ class CosmosDirectoryChain {
   final List<String>? keywords;
   final CCRApis bestApis;
   final List<CosmosDirectoryAsset> assets;
+  Map<String, dynamic> toJson() {
+    return {
+      "name": name,
+      "chainId": chainId,
+      "bech32Prefix": bech32Prefix,
+      "image": image,
+      "native": {"symbol": symbol, "denom": denom, "decimals": decimals},
+      "bestApis": bestApis.toJson(),
+      "path": path
+    };
+  }
+
   const CosmosDirectoryChain(
       {required this.name,
       required this.path,

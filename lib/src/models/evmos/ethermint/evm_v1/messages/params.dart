@@ -1,5 +1,6 @@
 import 'package:cosmos_sdk/src/models/evmos/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/utils.dart';
 import 'chain_config.dart';
 
 /// Params defines the EVM module parameters
@@ -12,7 +13,7 @@ class EvmosEthermintEVMV1Params extends CosmosMessage {
   // enable_call toggles state transitions that use the vm.Call function
   final bool? enableCall;
   // extra_eips defines the additional EIPs for the vm.Config
-  final List<String>? extraEips;
+  final List<List<int>>? extraEips;
   // chain_config defines the EVM chain configuration parameters
   final EvmosEthermintEVMV1ChainConfig? chainConfig;
   // allow_unprotected_txs defines if replay-protected (i.e non EIP155
@@ -27,7 +28,9 @@ class EvmosEthermintEVMV1Params extends CosmosMessage {
             : EvmosEthermintEVMV1ChainConfig.fromJson(json["chain_config"]),
         enableCreate: json["enable_create"],
         evmDenom: json["evm_denom"],
-        extraEips: (json["extra_eips"] as List?)?.cast());
+        extraEips: (json["extra_eips"] as List?)
+            ?.map((e) => CosmosUtils.toBytes(e))
+            .toList());
   }
   EvmosEthermintEVMV1Params(
       {required this.evmDenom,
@@ -42,7 +45,7 @@ class EvmosEthermintEVMV1Params extends CosmosMessage {
         evmDenom: decode.getField(1),
         enableCreate: decode.getField(2),
         enableCall: decode.getField(3),
-        extraEips: decode.getFields<String>(4),
+        extraEips: decode.getFields<List<int>>(4),
         chainConfig: decode
             .getResult(5)
             ?.to<EvmosEthermintEVMV1ChainConfig, List<int>>(
@@ -59,7 +62,7 @@ class EvmosEthermintEVMV1Params extends CosmosMessage {
       "evm_denom": evmDenom,
       "enable_create": enableCreate,
       "enable_call": enableCall,
-      "extra_eips": extraEips?.map((e) => e.toString()).toList(),
+      "extra_eips": extraEips?.map((e) => CosmosUtils.toBase64(e)).toList(),
       "chain_config": chainConfig?.toJson(),
       "allow_unprotected_txs": allowUnprotectedTxs,
     };

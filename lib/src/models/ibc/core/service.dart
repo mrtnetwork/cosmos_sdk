@@ -141,7 +141,6 @@ abstract class IbcService<T extends CosmosMessage> extends ServiceMessage<T> {
         IbcLightClientsWasmMsgStoreCode.fromJson(json),
       _ => null
     } as ServiceMessage?;
-    print("service ${service.runtimeType}");
     if (service == null) return null;
     if (service is! T) {
       throw DartCosmosSdkPluginException("Invalid IBC Service.", details: {

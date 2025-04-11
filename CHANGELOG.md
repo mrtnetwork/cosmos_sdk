@@ -1,3 +1,8 @@
+## 2.4.0
+
+- Update dependencies.
+- Support for Cosmos Wasm module.
+
 ## 2.3.0
 
 - Update dependencies.

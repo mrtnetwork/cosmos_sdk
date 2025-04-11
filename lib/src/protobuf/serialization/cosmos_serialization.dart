@@ -224,7 +224,6 @@ abstract class ServiceMessage<Response extends CosmosMessage>
   static T? fromJson<T extends ServiceMessage>(
       {required String typeUrl, required Map<String, dynamic> json}) {
     final String root = typeUrl.substring(0, typeUrl.indexOf('.'));
-    print("come $root");
     return switch (root) {
       CosmWasm1Beta1Service.root =>
         CosmWasm1Beta1Service.fromJson(typeUrl: typeUrl, json: json),
