@@ -1,3 +1,6 @@
+## 2.5.0
+- Fix variable types in some API models
+
 ## 2.4.0
 
 - Update dependencies.

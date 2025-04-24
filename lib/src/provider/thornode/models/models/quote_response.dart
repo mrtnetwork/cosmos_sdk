@@ -3,7 +3,7 @@ import 'package:cosmos_sdk/src/utils/quick.dart';
 class ThoreNodeQouteSwapResponse {
   final String inboundAddress;
   final BigInt? inboundConfirmationBlocks;
-  final BigInt? inboundConfirmationSeconds;
+  final int inboundConfirmationSeconds;
   final BigInt? outboundDelayBlocks;
   final BigInt? outboundDelaySeconds;
   final String? router;
@@ -16,10 +16,10 @@ class ThoreNodeQouteSwapResponse {
   final String? gasRateUnits;
   final String? memo;
   final BigInt expectedAmountOut;
-  final BigInt? maxStreamingQuantity;
-  final BigInt? streamingSwapBlocks;
-  final BigInt? streamingSwapSeconds;
-  final int? totalSwapSeconds;
+  final int maxStreamingQuantity;
+  final int streamingSwapBlocks;
+  final int streamingSwapSeconds;
+  final int totalSwapSeconds;
   final ThoreNodeQouteSwapFeeResponse fees;
   ThoreNodeQouteSwapResponse(
       {required this.inboundAddress,
@@ -48,7 +48,7 @@ class ThoreNodeQouteSwapResponse {
         inboundAddress: json.as("inbound_address"),
         inboundConfirmationBlocks: json.asBigInt("inbound_confirmation_blocks"),
         inboundConfirmationSeconds:
-            json.asBigInt("inbound_confirmation_seconds"),
+            json.asInt<int?>("inbound_confirmation_seconds") ?? 0,
         outboundDelayBlocks: json.asBigInt("outbound_delay_blocks"),
         outboundDelaySeconds: json.asBigInt("outbound_delay_seconds"),
         router: json.as("router"),
@@ -61,17 +61,17 @@ class ThoreNodeQouteSwapResponse {
         gasRateUnits: json.as("gas_rate_units"),
         memo: json.as("memo"),
         expectedAmountOut: json.asBigInt("expected_amount_out"),
-        maxStreamingQuantity: json.asBigInt("max_streaming_quantity"),
-        streamingSwapBlocks: json.asBigInt("streaming_swap_blocks"),
-        streamingSwapSeconds: json.asBigInt("streaming_swap_seconds"),
-        totalSwapSeconds: json.asInt("total_swap_seconds"),
+        maxStreamingQuantity: json.asInt<int?>("max_streaming_quantity") ?? 0,
+        streamingSwapBlocks: json.asInt<int?>("streaming_swap_blocks") ?? 0,
+        streamingSwapSeconds: json.asInt<int?>("streaming_swap_seconds") ?? 0,
+        totalSwapSeconds: json.asInt<int?>("total_swap_seconds") ?? 0,
         fees: ThoreNodeQouteSwapFeeResponse.fromJson(json.asMap("fees")));
   }
   Map<String, dynamic> toJson() {
     return {
       "inbound_address": inboundAddress,
       "inbound_confirmation_blocks": inboundConfirmationBlocks?.toString(),
-      "inbound_confirmation_seconds": inboundConfirmationSeconds?.toString(),
+      "inbound_confirmation_seconds": inboundConfirmationSeconds.toString(),
       "outbound_delay_blocks": outboundDelayBlocks?.toString(),
       "outbound_delay_seconds": outboundDelaySeconds?.toString(),
       "router": router,
@@ -84,10 +84,10 @@ class ThoreNodeQouteSwapResponse {
       "gas_rate_units": gasRateUnits,
       "memo": memo,
       "expected_amount_out": expectedAmountOut.toString(),
-      "max_streaming_quantity": maxStreamingQuantity?.toString(),
-      "streaming_swap_blocks": streamingSwapBlocks?.toString(),
-      "streaming_swap_seconds": streamingSwapSeconds?.toString(),
-      "total_swap_seconds": totalSwapSeconds?.toString(),
+      "max_streaming_quantity": maxStreamingQuantity,
+      "streaming_swap_blocks": streamingSwapBlocks,
+      "streaming_swap_seconds": streamingSwapSeconds,
+      "total_swap_seconds": totalSwapSeconds,
       "fees": fees.toJson(),
     };
   }
@@ -99,8 +99,8 @@ class ThoreNodeQouteSwapFeeResponse {
   final String? outbound;
   final String liquidity;
   final String total;
-  final BigInt slippageBps;
-  final BigInt totalBps;
+  final int slippageBps;
+  final int totalBps;
   const ThoreNodeQouteSwapFeeResponse(
       {required this.asset,
       required this.affiliate,
@@ -116,8 +116,8 @@ class ThoreNodeQouteSwapFeeResponse {
         outbound: json.as("outbound"),
         liquidity: json.as("liquidity"),
         total: json.as("total"),
-        slippageBps: json.asBigInt("slippage_bps"),
-        totalBps: json.asBigInt("total_bps"));
+        slippageBps: json.asInt("slippage_bps"),
+        totalBps: json.asInt("total_bps"));
   }
   Map<String, dynamic> toJson() {
     return {
@@ -126,8 +126,8 @@ class ThoreNodeQouteSwapFeeResponse {
       "outbound": outbound,
       "liquidity": liquidity,
       "total": total,
-      "slippage_bps": slippageBps.toString(),
-      "total_bps": totalBps.toString(),
+      "slippage_bps": slippageBps,
+      "total_bps": totalBps,
     };
   }
 }

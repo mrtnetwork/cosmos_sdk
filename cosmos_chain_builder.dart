@@ -51,14 +51,12 @@ void main() async {
         ChainRegistryProvider(ChainRegistryHTTPProvider(url: getUrl(chain)));
     final chains =
         await provider.request(ChainRegistryRequestCosmosDirectoryChains());
-    print("chains done!");
     final List<Map<String, dynamic>> infos = [];
     for (final i in chains) {
       final data = await provider
           .request(ChainRegistryRequestCosmosDirectoryChain(chainName: i.name));
       final natvieAsset = data.assets?.firstWhere((e) => e.denom == i.denom);
       if (natvieAsset == null) {
-        print("native not found ${i.chainId}");
         continue;
       }
       List<String> accountPageUrls = [];
@@ -124,12 +122,10 @@ void main() async {
         fees.add(fee);
       }
       if (fees.isEmpty) {
-        print("noo fee ${data.chainId}");
         continue;
       }
       chainData["fees"] = fees;
       infos.add(chainData);
-      print("done ${data.chainId}");
     }
     chainInfos[chain.name] = infos;
   }

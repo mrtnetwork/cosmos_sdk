@@ -28,10 +28,10 @@ class CosmosSdkAsset {
       required this.imageSvg,
       required this.coingeckoId,
       required this.symbol,
-      required this.averageGasPrice,
-      required this.lowGasPrice,
-      required this.fixedMinGasPrice,
-      required this.highGasPrice});
+      this.averageGasPrice,
+      this.lowGasPrice,
+      this.fixedMinGasPrice,
+      this.highGasPrice});
   factory CosmosSdkAsset.fromJson(Map<String, dynamic> json) {
     return CosmosSdkAsset(
         name: json.as("name"),
