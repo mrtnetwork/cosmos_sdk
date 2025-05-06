@@ -5,11 +5,10 @@ import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart'
 import 'package:cosmos_sdk/src/protobuf/codec/decoder.dart';
 
 class CosmosSecp256K1PublicKey extends CosmosPublicKey {
-  final Secp256k1PublicKeyEcdsa _publicKey;
+  final Secp256k1PublicKey _publicKey;
   const CosmosSecp256K1PublicKey._(this._publicKey);
   factory CosmosSecp256K1PublicKey.fromBytes(List<int> keyBytes) {
-    return CosmosSecp256K1PublicKey._(
-        Secp256k1PublicKeyEcdsa.fromBytes(keyBytes));
+    return CosmosSecp256K1PublicKey._(Secp256k1PublicKey.fromBytes(keyBytes));
   }
   factory CosmosSecp256K1PublicKey.fromHex(String keyHex) {
     return CosmosSecp256K1PublicKey.fromBytes(BytesUtils.fromHexString(keyHex));
@@ -17,7 +16,7 @@ class CosmosSecp256K1PublicKey extends CosmosPublicKey {
   factory CosmosSecp256K1PublicKey.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmosSecp256K1PublicKey._(
-        Secp256k1PublicKeyEcdsa.fromBytes(decode.getField(1)));
+        Secp256k1PublicKey.fromBytes(decode.getField(1)));
   }
   @override
   List<int> toBytes({bool compressed = true}) {

@@ -5,9 +5,9 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 /// PublicKey defines the keys available for use with Validators
 class TendermintPublicKey extends CosmosMessage {
   final Ed25519PublicKey? _ed25519;
-  final Secp256k1PublicKeyEcdsa? _secp256k1;
+  final Secp256k1PublicKey? _secp256k1;
   TendermintPublicKey(
-      {Ed25519PublicKey? ed25519, Secp256k1PublicKeyEcdsa? secp256k1})
+      {Ed25519PublicKey? ed25519, Secp256k1PublicKey? secp256k1})
       : _ed25519 = ed25519,
         _secp256k1 = secp256k1;
   TendermintPublicKey.fromEd25519({List<int>? pubKeyBytes})
@@ -19,7 +19,7 @@ class TendermintPublicKey extends CosmosMessage {
       : _ed25519 = null,
         _secp256k1 = pubKeyBytes == null
             ? null
-            : Secp256k1PublicKeyEcdsa.fromBytes(pubKeyBytes);
+            : Secp256k1PublicKey.fromBytes(pubKeyBytes);
   factory TendermintPublicKey.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     if (decode.hasTag(1)) {

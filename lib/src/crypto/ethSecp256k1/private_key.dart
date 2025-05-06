@@ -7,11 +7,11 @@ import 'package:cosmos_sdk/src/protobuf/codec/decoder.dart';
 import 'public_key.dart';
 
 class CosmosETHSecp256K1PrivateKey extends CosmosPrivateKey {
-  final Secp256k1PrivateKeyEcdsa _privateKey;
+  final Secp256k1PrivateKey _privateKey;
   const CosmosETHSecp256K1PrivateKey._(this._privateKey);
   factory CosmosETHSecp256K1PrivateKey.fromBytes(List<int> keyBytes) {
     return CosmosETHSecp256K1PrivateKey._(
-        Secp256k1PrivateKeyEcdsa.fromBytes(keyBytes));
+        Secp256k1PrivateKey.fromBytes(keyBytes));
   }
   factory CosmosETHSecp256K1PrivateKey.fromHex(String keyHex) {
     return CosmosETHSecp256K1PrivateKey.fromBytes(
@@ -20,7 +20,7 @@ class CosmosETHSecp256K1PrivateKey extends CosmosPrivateKey {
   factory CosmosETHSecp256K1PrivateKey.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmosETHSecp256K1PrivateKey._(
-        Secp256k1PrivateKeyEcdsa.fromBytes(decode.getField(1)));
+        Secp256k1PrivateKey.fromBytes(decode.getField(1)));
   }
   @override
   CosmosETHSecp256K1PublicKey toPublicKey() =>
@@ -29,7 +29,7 @@ class CosmosETHSecp256K1PrivateKey extends CosmosPrivateKey {
   @override
   List<int> sign(List<int> digest) {
     final signer = ETHSigner.fromKeyBytes(toBytes());
-    return signer.sign(digest).toBytes(false);
+    return signer.signConst(digest).toBytes(false);
   }
 
   @override
