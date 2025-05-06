@@ -44,4 +44,3 @@ jobs:
         run: dart test -p chrome
       - name: Run tests web wasm
         run: dart test -p chrome -c dart2wasm
- -
