@@ -82,7 +82,6 @@ class ThorNodeRequestSwapQuote extends ThorNodeRequestParam<
 
   @override
   ThoreNodeQouteSwapResponse onResonse(Map<String, dynamic> result) {
-    print("result $result");
     return ThoreNodeQouteSwapResponse.fromJson(result);
   }
 }

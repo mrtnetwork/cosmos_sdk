@@ -11,7 +11,6 @@ void main() async {
           "this dove indoor skin shed gap east welcome gift buffalo silent high"))
       .generate();
   final bip44 = Bip44.fromSeed(seedBytes, Bip44Coins.osmosis).deriveDefaultPath;
-  // print("addr ${bip44.publicKey.toAddress}");
   final privateKey = CosmosSecp256K1PrivateKey.fromBytes(bip44.privateKey.raw);
 
   final publickey = privateKey.toPublicKey();

@@ -23,7 +23,6 @@ class GetTxRequest extends CosmosMessage with QueryMessage<GetTxResponse> {
 
   @override
   GetTxResponse onResponse(List<int> bytes) {
-    print("got bytes ? $bytes");
     return GetTxResponse.deserialize(bytes);
   }
 
