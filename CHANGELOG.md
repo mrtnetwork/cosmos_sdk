@@ -1,3 +1,8 @@
+## 2.9.0
+
+- Update dependencies.
+- Update chains.json.
+
 ## 2.8.0
 
 - Update dependencies.
