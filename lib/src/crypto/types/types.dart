@@ -83,11 +83,11 @@ class CosmosCryptoKeysTypes extends TypeUrl {
 
   static const CosmosCryptoKeysTypes ethSecp256k1Publickey =
       CosmosCryptoKeysTypes._(
-          typeUrl: "/ethermint.crypto.v1.ethsecp256k1.PubKey",
+          typeUrl: "/cosmos.evm.crypto.v1.ethsecp256k1.PubKey",
           name: "ethsecp256k1");
   static const CosmosCryptoKeysTypes ethSecp256k1Privatekey =
       CosmosCryptoKeysTypes._(
-          typeUrl: "/ethermint.crypto.v1.ethsecp256k1.PrivKey",
+          typeUrl: "/cosmos.evm.crypto.v1.ethsecp256k1.PrivKey",
           name: "ethsecp256k1");
 
   static const CosmosCryptoKeysTypes secp256R1Publickey =
