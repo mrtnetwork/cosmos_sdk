@@ -1,8 +1,8 @@
+import 'package:blockchain_utils/blockchain_utils.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_auth_v1beta1/messages/base_account.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_v1beta1/messages/coin.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_vesting_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:blockchain_utils/helper/helper.dart';
 
 /// BaseVestingAccount implements the VestingAccount interface.
 /// It contains all the necessary fields needed for any vesting account implementation.
@@ -53,15 +53,34 @@ class BaseVestingAccount extends CosmosMessage {
         endTime: decode.getField(5));
   }
 
+  factory BaseVestingAccount.fromJson(Map<String, dynamic> json) {
+    return BaseVestingAccount(
+        baseAccount: json.valueTo<BaseAccount, Map<String, dynamic>>(
+            key: "base_account", parse: (v) => BaseAccount.fromJson(v)),
+        delegatedFree: json
+            .valueEnsureAsList<Map<String, dynamic>>("delegated_free")
+            .map((e) => Coin.fromJson(e))
+            .toList(),
+        delegatedVesting: json
+            .valueEnsureAsList<Map<String, dynamic>>("delegated_vesting")
+            .map((e) => Coin.fromJson(e))
+            .toList(),
+        endTime: json.valueAsBigInt("end_time"),
+        originalVesting: json
+            .valueEnsureAsList<Map<String, dynamic>>("original_vesting")
+            .map((e) => Coin.fromJson(e))
+            .toList());
+  }
+
   /// Converts this instance of [BaseVestingAccount] to a JSON object.
   @override
   Map<String, dynamic> toJson() {
     return {
-      'baseAccount': baseAccount?.toJson(),
-      'originalVesting': originalVesting.map((e) => e.toJson()).toList(),
-      'delegatedFree': delegatedFree.map((e) => e.toJson()).toList(),
-      'delegatedVesting': delegatedVesting.map((e) => e.toJson()).toList(),
-      'endTime': endTime?.toString(),
+      'base_account': baseAccount?.toJson(),
+      'original_vesting': originalVesting.map((e) => e.toJson()).toList(),
+      'delegated_free': delegatedFree.map((e) => e.toJson()).toList(),
+      'delegated_vesting': delegatedVesting.map((e) => e.toJson()).toList(),
+      'end_time': endTime?.toString(),
     };
   }
 

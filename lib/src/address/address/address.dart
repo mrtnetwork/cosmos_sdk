@@ -36,7 +36,9 @@ class CosmosBaseAddress {
         AtomAddressUtils.secp256k1PubKeyToAddress(pubkeyBytes),
       CosmosKeysAlgs.secp256r1 =>
         AtomAddressUtils.secp256r1PubKeyToAddress(pubkeyBytes),
-      CosmosKeysAlgs.ethsecp256k1 =>
+      CosmosKeysAlgs.ethsecp256k1 ||
+      CosmosKeysAlgs.injectiveEthsecp256k1 ||
+      CosmosKeysAlgs.comosEthsecp256k1 =>
         AtomAddressUtils.ethSecp256k1PubKeyToAddress(pubkeyBytes),
       _ => throw DartCosmosSdkPluginException("Unsuported key algorithm.",
           details: {"algorithm": algorithm.name})

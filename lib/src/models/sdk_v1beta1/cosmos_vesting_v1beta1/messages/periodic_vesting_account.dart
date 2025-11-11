@@ -1,15 +1,14 @@
-import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_vesting_v1beta1/types/types.dart';
-import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:blockchain_utils/helper/helper.dart';
-
-import 'base_vesting_account.dart';
-import 'period.dart';
+import 'package:blockchain_utils/utils/utils.dart';
+import 'package:cosmos_sdk/cosmos_sdk.dart';
+import 'package:cosmos_sdk/src/models/core/account/account.dart';
+import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_vesting_v1beta1/types/types.dart';
 
 /// PeriodicVestingAccount implements the VestingAccount interface.
 /// It periodically vests by unlocking coins during each specified period.
-class PeriodicVestingAccount extends CosmosMessage {
+class PeriodicVestingAccount extends CosmosBaseAccount {
   final BaseVestingAccount? baseVestingAccount;
-  final int? startTime;
+  final BigInt? startTime;
   final List<Period> vestingPeriods;
 
   /// Constructs a new instance of [PeriodicVestingAccount].
@@ -32,6 +31,18 @@ class PeriodicVestingAccount extends CosmosMessage {
             .map((e) => Period.deserialize(e))
             .toList());
   }
+  factory PeriodicVestingAccount.fromJson(Map<String, dynamic> json) {
+    return PeriodicVestingAccount(
+        baseVestingAccount:
+            json.valueTo<BaseVestingAccount, Map<String, dynamic>>(
+                key: "base_vesting_account",
+                parse: (e) => BaseVestingAccount.fromJson(e)),
+        startTime: json.valueAsBigInt("start_time"),
+        vestingPeriods: json
+            .valueEnsureAsList("vesting_periods")
+            .map((e) => Period.fromJson(e))
+            .toList());
+  }
 
   /// Converts this instance of [PeriodicVestingAccount] to a JSON object.
   @override
@@ -52,4 +63,13 @@ class PeriodicVestingAccount extends CosmosMessage {
 
   @override
   List get values => [baseVestingAccount, startTime, vestingPeriods];
+
+  @override
+  BaseAccount get baseAccount {
+    final baseAccount = baseVestingAccount?.baseAccount;
+    if (baseAccount == null) {
+      throw DartCosmosSdkPluginException("Missing base account");
+    }
+    return baseAccount;
+  }
 }

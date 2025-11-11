@@ -9,7 +9,7 @@ class EvmosEthermintEVMV1ChainConfig extends CosmosMessage {
   // dao_forkBlock corresponds to TheDAO hard-fork switch block (nil no fork)
   final BigInt? daoForkBlock;
   // dao_fork_support defines whether the nodes supports or opposes the DAO hard-fork
-  final bool daoForkSupport;
+  final bool? daoForkSupport;
   // eip150Block: EIP150 implements the Gas price changes
   // (https://github.com/ethereum/EIPs/issues/150) EIP150 HF block (nil no fork)
   final BigInt? eip150Block;

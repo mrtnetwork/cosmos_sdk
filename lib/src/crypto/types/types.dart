@@ -1,32 +1,46 @@
 import 'package:blockchain_utils/bip/bip/conf/bip44/bip44_coins.dart';
 import 'package:blockchain_utils/bip/bip/conf/core/coin_conf.dart';
+import 'package:blockchain_utils/helper/helper.dart';
 import 'package:cosmos_sdk/src/exception/exception.dart';
 import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 
 enum CosmosKeysAlgs {
-  secp256k1("tendermint/PubKeySecp256k1"),
-  ethsecp256k1("ethermint/PubKeyEthSecp256k1"),
-  ed25519("tendermint/PubKeyEd25519"),
-  secp256r1("secp256r1"),
+  secp256k1("Secp256k1"),
+  ethsecp256k1("Etheremint/ethsecp256k1"),
+  injectiveEthsecp256k1("Injective/ethsecp256k1"),
+  comosEthsecp256k1("Cosmos/ethsecp256k1"),
+  ed25519("Ed25519"),
+  secp256r1("Secp256r1"),
   bn254("bn254");
 
-  final String pubKeyType;
-  const CosmosKeysAlgs(this.pubKeyType);
+  /// /injective.crypto.v1beta1.ethsecp256k1.PubKey
+  final String view;
+  const CosmosKeysAlgs(this.view);
+  String algoName() {
+    switch (this) {
+      case comosEthsecp256k1:
+        return ethsecp256k1.name;
+      default:
+        return name;
+    }
+  }
 
   static const List<CosmosKeysAlgs> supportedAlgs = [
     CosmosKeysAlgs.secp256k1,
     CosmosKeysAlgs.ethsecp256k1,
+    CosmosKeysAlgs.comosEthsecp256k1,
     CosmosKeysAlgs.ed25519,
-    CosmosKeysAlgs.secp256r1
+    CosmosKeysAlgs.secp256r1,
+    CosmosKeysAlgs.injectiveEthsecp256k1
   ];
 
   Bip44Coins coin(ChainType chain) {
     final coins = switch (this) {
       CosmosKeysAlgs.secp256k1 => [Bip44Coins.cosmos, Bip44Coins.cosmosTestnet],
-      CosmosKeysAlgs.ethsecp256k1 => [
-          Bip44Coins.cosmosEthSecp256k1,
-          Bip44Coins.cosmosTestnetEthSecp256k1
-        ],
+      CosmosKeysAlgs.ethsecp256k1 ||
+      CosmosKeysAlgs.comosEthsecp256k1 ||
+      CosmosKeysAlgs.injectiveEthsecp256k1 =>
+        [Bip44Coins.cosmosEthSecp256k1, Bip44Coins.cosmosTestnetEthSecp256k1],
       CosmosKeysAlgs.ed25519 => [
           Bip44Coins.cosmosEd25519,
           Bip44Coins.cosmosTestnetEd25519
@@ -55,12 +69,35 @@ enum CosmosKeysAlgs {
             details: {"name": name}));
   }
 
+  static CosmosKeysAlgs? fromTypeUrl(String typeUrl) {
+    return supportedAlgs.firstWhereNullable(
+        (element) => element.pubKeyTypeUrl.typeUrl == typeUrl);
+  }
+
   TypeUrl get pubKeyTypeUrl => switch (this) {
         CosmosKeysAlgs.secp256k1 => CosmosCryptoKeysTypes.secp256k1Publickey,
         CosmosKeysAlgs.secp256r1 => CosmosCryptoKeysTypes.secp256R1Publickey,
         CosmosKeysAlgs.ed25519 => CosmosCryptoKeysTypes.ed25519Publickey,
+        CosmosKeysAlgs.comosEthsecp256k1 =>
+          CosmosCryptoKeysTypes.cosmosEthSecp256k1Publickey,
+        CosmosKeysAlgs.injectiveEthsecp256k1 =>
+          CosmosCryptoKeysTypes.injectiveSecp256k1Publickey,
         CosmosKeysAlgs.ethsecp256k1 =>
           CosmosCryptoKeysTypes.ethSecp256k1Publickey,
+        _ => throw DartCosmosSdkPluginException("Unsuported key algorithm.",
+            details: {"name": name})
+      };
+
+  TypeUrl get privateKeyTypeUrl => switch (this) {
+        CosmosKeysAlgs.secp256k1 => CosmosCryptoKeysTypes.secp256k1Privatekey,
+        CosmosKeysAlgs.secp256r1 => CosmosCryptoKeysTypes.secp256R1Privatekey,
+        CosmosKeysAlgs.ed25519 => CosmosCryptoKeysTypes.ed25519Privatekey,
+        CosmosKeysAlgs.injectiveEthsecp256k1 =>
+          CosmosCryptoKeysTypes.injectiveSecp256k1Privatekey,
+        CosmosKeysAlgs.comosEthsecp256k1 =>
+          CosmosCryptoKeysTypes.cosmosEthSecp256k1Privatekey,
+        CosmosKeysAlgs.ethsecp256k1 =>
+          CosmosCryptoKeysTypes.ethSecp256k1Privatekey,
         _ => throw DartCosmosSdkPluginException("Unsuported key algorithm.",
             details: {"name": name})
       };
@@ -90,6 +127,23 @@ class CosmosCryptoKeysTypes extends TypeUrl {
           typeUrl: "/ethermint.crypto.v1.ethsecp256k1.PrivKey",
           name: "ethsecp256k1");
 
+  static const CosmosCryptoKeysTypes cosmosEthSecp256k1Publickey =
+      CosmosCryptoKeysTypes._(
+          typeUrl: "/cosmos.evm.crypto.v1.ethsecp256k1.PubKey",
+          name: "ethsecp256k1");
+  static const CosmosCryptoKeysTypes cosmosEthSecp256k1Privatekey =
+      CosmosCryptoKeysTypes._(
+          typeUrl: "/cosmos.evm.crypto.v1.ethsecp256k1.PrivKey",
+          name: "ethsecp256k1");
+  static const CosmosCryptoKeysTypes injectiveSecp256k1Publickey =
+      CosmosCryptoKeysTypes._(
+          typeUrl: "/injective.crypto.v1beta1.ethsecp256k1.PubKey",
+          name: "ethsecp256k1");
+  static const CosmosCryptoKeysTypes injectiveSecp256k1Privatekey =
+      CosmosCryptoKeysTypes._(
+          typeUrl: "/injective.crypto.v1beta1.ethsecp256k1.PrivKey",
+          name: "ethsecp256k1");
+
   static const CosmosCryptoKeysTypes secp256R1Publickey =
       CosmosCryptoKeysTypes._(
           typeUrl: "/cosmos.crypto.secp256r1.PubKey", name: "sr25519");
@@ -101,7 +155,13 @@ class CosmosCryptoKeysTypes extends TypeUrl {
   static const CosmosCryptoKeysTypes ed25519Privatekey =
       CosmosCryptoKeysTypes._(
           typeUrl: "/cosmos.crypto.ed25519.PrivKey", name: "ed25519");
-
+  static const List<CosmosCryptoKeysTypes> pubKeys = [
+    secp256k1Publickey,
+    secp256R1Publickey,
+    ed25519Publickey,
+    ethSecp256k1Publickey,
+    cosmosEthSecp256k1Publickey,
+  ];
   static const List<CosmosCryptoKeysTypes> values = [
     secp256k1Publickey,
     secp256k1Privatekey,
@@ -110,7 +170,9 @@ class CosmosCryptoKeysTypes extends TypeUrl {
     ed25519Publickey,
     ed25519Privatekey,
     ethSecp256k1Publickey,
-    ethSecp256k1Privatekey
+    ethSecp256k1Privatekey,
+    cosmosEthSecp256k1Publickey,
+    cosmosEthSecp256k1Privatekey
   ];
 
   static CosmosCryptoKeysTypes fromType(String type) {
@@ -118,5 +180,10 @@ class CosmosCryptoKeysTypes extends TypeUrl {
         orElse: () => throw DartCosmosSdkPluginException(
             "Unsuported key algorithm.",
             details: {"type": type}));
+  }
+
+  CosmosCryptoKeysTypes? fromPubTypeUrl(String typeUrl) {
+    return CosmosCryptoKeysTypes.values
+        .firstWhereNullable((e) => e.typeUrl == typeUrl);
   }
 }

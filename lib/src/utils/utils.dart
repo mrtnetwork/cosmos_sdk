@@ -1,28 +1,27 @@
+import 'package:blockchain_utils/helper/extensions/extensions.dart';
 import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/src/exception/exception.dart';
 
 class CosmosUtils {
-  static List<int> toBytes(String data) {
+  static List<int> toBytes(Object data) {
     try {
-      if (StringUtils.isHexBytes(data)) {
-        return BytesUtils.fromHexString(data);
+      if (data is List) {
+        return data.cast<int>().asBytes;
       }
-      return StringUtils.encode(data, type: StringEncoding.base64);
-    } catch (e) {
-      throw DartCosmosSdkPluginException("Invalid bytes data.");
-    }
+      if (data is String) {
+        if (data.isEmpty) return [];
+        if (StringUtils.isHexBytes(data)) {
+          return BytesUtils.fromHexString(data);
+        }
+        return StringUtils.encode(data, type: StringEncoding.base64);
+      }
+    } catch (_) {}
+    throw DartCosmosSdkPluginException("Invalid bytes data.");
   }
 
-  static List<int>? tryToBytes(String? data) {
+  static List<int>? tryToBytes(Object? data) {
     if (data == null) return null;
-    try {
-      if (StringUtils.isHexBytes(data)) {
-        return BytesUtils.fromHexString(data);
-      }
-      return StringUtils.encode(data, type: StringEncoding.base64);
-    } catch (e) {
-      throw DartCosmosSdkPluginException("Invalid bytes data.");
-    }
+    return toBytes(data);
   }
 
   static String toBase64(List<int> data) {

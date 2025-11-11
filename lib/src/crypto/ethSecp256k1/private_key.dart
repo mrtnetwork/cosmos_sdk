@@ -1,30 +1,51 @@
 import 'package:blockchain_utils/blockchain_utils.dart';
 import 'package:cosmos_sdk/src/crypto/keypair/private_key.dart';
 import 'package:cosmos_sdk/src/crypto/types/types.dart';
-import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
+import 'package:cosmos_sdk/src/exception/exception.dart';
 import 'package:cosmos_sdk/src/protobuf/codec/decoder.dart';
+import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 
 import 'public_key.dart';
 
 class CosmosETHSecp256K1PrivateKey extends CosmosPrivateKey {
-  final Secp256k1PrivateKey _privateKey;
-  const CosmosETHSecp256K1PrivateKey._(this._privateKey);
-  factory CosmosETHSecp256K1PrivateKey.fromBytes(List<int> keyBytes) {
-    return CosmosETHSecp256K1PrivateKey._(
-        Secp256k1PrivateKey.fromBytes(keyBytes));
+  final Secp256k1PrivateKey privateKey;
+  final CosmosKeysAlgs algorithm;
+  const CosmosETHSecp256K1PrivateKey._(this.privateKey, this.algorithm);
+  factory CosmosETHSecp256K1PrivateKey(
+      {required Secp256k1PrivateKey privateKey,
+      CosmosKeysAlgs algorithm = CosmosKeysAlgs.ethsecp256k1}) {
+    switch (algorithm) {
+      case CosmosKeysAlgs.ethsecp256k1:
+      case CosmosKeysAlgs.comosEthsecp256k1:
+      case CosmosKeysAlgs.injectiveEthsecp256k1:
+        return CosmosETHSecp256K1PrivateKey._(privateKey, algorithm);
+      default:
+        throw DartCosmosSdkPluginException("Invalid ethereum algorithm.");
+    }
   }
-  factory CosmosETHSecp256K1PrivateKey.fromHex(String keyHex) {
+  factory CosmosETHSecp256K1PrivateKey.fromBytes(List<int> keyBytes,
+      {CosmosKeysAlgs algorithm = CosmosKeysAlgs.ethsecp256k1}) {
+    return CosmosETHSecp256K1PrivateKey(
+        privateKey: Secp256k1PrivateKey.fromBytes(keyBytes),
+        algorithm: algorithm);
+  }
+  factory CosmosETHSecp256K1PrivateKey.fromHex(String keyHex,
+      {CosmosKeysAlgs algorithm = CosmosKeysAlgs.ethsecp256k1}) {
     return CosmosETHSecp256K1PrivateKey.fromBytes(
-        BytesUtils.fromHexString(keyHex));
+        BytesUtils.fromHexString(keyHex),
+        algorithm: algorithm);
   }
-  factory CosmosETHSecp256K1PrivateKey.deserialize(List<int> bytes) {
+  factory CosmosETHSecp256K1PrivateKey.deserialize(List<int> bytes,
+      {CosmosKeysAlgs algorithm = CosmosKeysAlgs.ethsecp256k1}) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return CosmosETHSecp256K1PrivateKey._(
-        Secp256k1PrivateKey.fromBytes(decode.getField(1)));
+    return CosmosETHSecp256K1PrivateKey(
+        privateKey: Secp256k1PrivateKey.fromBytes(decode.getField(1)),
+        algorithm: algorithm);
   }
   @override
   CosmosETHSecp256K1PublicKey toPublicKey() =>
-      CosmosETHSecp256K1PublicKey.fromBytes(_privateKey.publicKey.compressed);
+      CosmosETHSecp256K1PublicKey.fromBytes(privateKey.publicKey.compressed,
+          algorithm: algorithm);
 
   @override
   List<int> sign(List<int> digest) {
@@ -34,7 +55,7 @@ class CosmosETHSecp256K1PrivateKey extends CosmosPrivateKey {
 
   @override
   List<int> toBytes() {
-    return _privateKey.raw;
+    return privateKey.raw;
   }
 
   @override
@@ -42,12 +63,12 @@ class CosmosETHSecp256K1PrivateKey extends CosmosPrivateKey {
 
   @override
   Map<String, dynamic> toJson() {
-    return {"key": _privateKey.toHex()};
+    return {"key": privateKey.toHex()};
   }
 
   @override
   List get values => [toBytes()];
 
   @override
-  TypeUrl get typeUrl => CosmosCryptoKeysTypes.ethSecp256k1Privatekey;
+  TypeUrl get typeUrl => algorithm.privateKeyTypeUrl;
 }

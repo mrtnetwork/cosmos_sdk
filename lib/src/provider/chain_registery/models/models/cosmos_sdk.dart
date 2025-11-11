@@ -1,11 +1,8 @@
 import 'package:blockchain_utils/bip/bip/conf/core/coin_conf.dart'
     show ChainType;
 import 'package:blockchain_utils/helper/extensions/extensions.dart';
-import 'package:cosmos_sdk/src/crypto/types/types.dart' show CosmosKeysAlgs;
-import 'package:cosmos_sdk/src/exception/exception.dart';
+import 'package:cosmos_sdk/cosmos_sdk.dart';
 import 'package:cosmos_sdk/src/utils/quick.dart';
-
-import 'chain.dart';
 
 class CosmosSdkAsset {
   final String name;
@@ -71,20 +68,6 @@ class CosmosSdkChain {
   final List<CosmosSdkAsset> fees;
   final List<String>? algo;
   final ChainType type;
-  List<CosmosKeysAlgs> keyAlgo() {
-    final algo = this.algo;
-    if (algo == null) return [CosmosKeysAlgs.secp256k1];
-    List<CosmosKeysAlgs> algos = [];
-    for (final i in algo) {
-      try {
-        final alg = CosmosKeysAlgs.fromName(i);
-        algos.add(alg);
-      } on DartCosmosSdkPluginException {
-        continue;
-      }
-    }
-    return algos;
-  }
 
   CosmosSdkChain(
       {required this.name,
@@ -100,7 +83,7 @@ class CosmosSdkChain {
       required List<CosmosSdkAsset> fees,
       List<String>? algo})
       : fees = fees.immutable,
-        algo = algo?.immutable;
+        algo = algo?.emptyAsNull?.immutable;
 
   factory CosmosSdkChain.fromJson(Map<String, dynamic> json) {
     return CosmosSdkChain(

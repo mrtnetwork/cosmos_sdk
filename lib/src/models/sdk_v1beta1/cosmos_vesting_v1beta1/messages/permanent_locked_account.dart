@@ -1,3 +1,7 @@
+import 'package:blockchain_utils/utils/utils.dart';
+import 'package:cosmos_sdk/src/exception/exception.dart';
+import 'package:cosmos_sdk/src/models/core/account/account.dart';
+import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_auth_v1beta1/cosmos_auth_v1beta1.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_vesting_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
@@ -7,7 +11,7 @@ import 'base_vesting_account.dart';
 /// Coins in this account can still be used for delegating and for governance votes even while locked.
 ///
 // Since: cosmos-sdk 0.43
-class PermanentLockedAccount extends CosmosMessage {
+class PermanentLockedAccount extends CosmosBaseAccount {
   /// The base vesting account.
   final BaseVestingAccount? baseVestingAccount;
 
@@ -22,6 +26,13 @@ class PermanentLockedAccount extends CosmosMessage {
             .getResult(1)
             ?.to<BaseVestingAccount, List<int>>(
                 (e) => BaseVestingAccount.deserialize(e)));
+  }
+  factory PermanentLockedAccount.fromJson(Map<String, dynamic> json) {
+    return PermanentLockedAccount(
+        baseVestingAccount:
+            json.valueTo<BaseVestingAccount, Map<String, dynamic>>(
+                key: "base_vesting_account",
+                parse: (e) => BaseVestingAccount.fromJson(e)));
   }
 
   /// Converts this instance of [PermanentLockedAccount] to a JSON object.
@@ -40,4 +51,12 @@ class PermanentLockedAccount extends CosmosMessage {
 
   @override
   List get values => [baseVestingAccount];
+  @override
+  BaseAccount get baseAccount {
+    final baseAccount = baseVestingAccount?.baseAccount;
+    if (baseAccount == null) {
+      throw DartCosmosSdkPluginException("Missing base account");
+    }
+    return baseAccount;
+  }
 }

@@ -1,3 +1,12 @@
+## 3.0.0
+
+- Added support for new key algorithms:
+    - ```/injective.crypto.v1beta1.ethsecp256k1.PubKey```
+    - ```/cosmos.evm.crypto.v1.ethsecp256k1.PrivKey```
+    - including account parsing.
+- Update dependencies.
+- Update chains.json.
+
 ## 2.9.0
 
 - Update dependencies.

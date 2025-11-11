@@ -2,6 +2,7 @@ import 'package:cosmos_sdk/src/models/core/account/account.dart';
 import 'package:cosmos_sdk/src/models/injective/types/types.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/sdk_v1beta1.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
+import 'package:cosmos_sdk/src/utils/utils.dart';
 
 class InjectiveTypesV1beta1EthAccount extends CosmosBaseAccount {
   @override
@@ -13,7 +14,7 @@ class InjectiveTypesV1beta1EthAccount extends CosmosBaseAccount {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return InjectiveTypesV1beta1EthAccount(
         baseAccount: BaseAccount.deserialize(decode.getField(1)),
-        codeHash: decode.getField(2));
+        codeHash: CosmosUtils.toBase64(decode.getField(2)));
   }
   factory InjectiveTypesV1beta1EthAccount.fromJson(Map<String, dynamic> json) {
     return InjectiveTypesV1beta1EthAccount(

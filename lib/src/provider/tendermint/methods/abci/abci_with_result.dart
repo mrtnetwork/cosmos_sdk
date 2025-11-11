@@ -1,8 +1,8 @@
+import 'package:blockchain_utils/blockchain_utils.dart';
 import 'package:cosmos_sdk/src/protobuf/serialization/cosmos_serialization.dart';
 import 'package:cosmos_sdk/src/provider/tendermint/core/core.dart';
 import 'package:cosmos_sdk/src/provider/tendermint/core/tendermint.dart';
 import 'package:cosmos_sdk/src/provider/tendermint/models/models/abci_response.dart';
-import 'package:blockchain_utils/blockchain_utils.dart';
 
 /// Query the application for some information.
 /// https://docs.tendermint.com/v0.34/rpc/#/ABCI/abci_query

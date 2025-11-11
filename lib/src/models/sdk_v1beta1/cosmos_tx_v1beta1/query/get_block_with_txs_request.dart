@@ -9,7 +9,7 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class GetBlockWithTxsRequest extends CosmosMessage
     with QueryMessage<GetBlockWithTxsResponse> {
   /// height is the height of the block to query.
-  final BigInt height;
+  final BigInt? height;
 
   /// pagination defines a pagination for the request.
   final PageRequest? pagination;

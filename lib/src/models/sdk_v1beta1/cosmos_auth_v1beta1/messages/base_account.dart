@@ -1,8 +1,8 @@
 import 'package:cosmos_sdk/src/address/address.dart';
 import 'package:cosmos_sdk/src/models/core/account/account.dart';
 import 'package:cosmos_sdk/src/models/global_messages/unknown_message.dart';
-import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_auth_v1beta1/types/types.dart';
+import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:cosmos_sdk/src/utils/quick.dart';
 
 class BaseAccount extends CosmosBaseAccount {
@@ -18,11 +18,12 @@ class BaseAccount extends CosmosBaseAccount {
 
   factory BaseAccount.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
+
     return BaseAccount(
-        address: CosmosBaseAddress(decode.getField(1)),
         pubKey: decode
             .getResult(2)
             ?.to<AnyMessage, List<int>>(AnyMessage.deserialize),
+        address: CosmosBaseAddress(decode.getField(1)),
         accountNumber: decode.getResult(3)?.cast<BigInt>() ?? BigInt.zero,
         sequence: decode.getResult(4)?.cast<BigInt>() ?? BigInt.zero);
   }

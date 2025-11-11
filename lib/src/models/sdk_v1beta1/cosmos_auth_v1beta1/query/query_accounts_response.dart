@@ -1,7 +1,7 @@
 import 'package:cosmos_sdk/src/models/core/account/account.dart';
+import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_auth_v1beta1/types/types.dart';
 import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_base_query_v1beta1/messages/page_response.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
-import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_auth_v1beta1/types/types.dart';
 
 /// QueryAccountsResponse is the response type for the Query/Accounts RPC method.
 class QueryAccountsResponse extends CosmosMessage {
@@ -12,23 +12,45 @@ class QueryAccountsResponse extends CosmosMessage {
   final PageResponse? pagination;
 
   const QueryAccountsResponse({required this.accounts, this.pagination});
-  factory QueryAccountsResponse.deserialize(List<int> bytes) {
+  factory QueryAccountsResponse.deserialize(List<int> bytes,
+      {bool skipOnFail = false}) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryAccountsResponse(
       accounts: decode
           .getFields<List<int>>(1)
           .map((e) => Any.deserialize(e))
-          .map((e) => CosmosBaseAccount.fromAny(e))
+          .map((e) {
+            try {
+              return CosmosBaseAccount.fromAny(e);
+            } catch (e) {
+              if (skipOnFail) {
+                return null;
+              }
+              rethrow;
+            }
+          })
+          .whereType<CosmosBaseAccount>()
           .toList(),
       pagination: decode
           .getResult(2)
           ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
     );
   }
-  factory QueryAccountsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryAccountsResponse.fromJson(Map<String, dynamic> json,
+      {bool skipOnFail = false}) {
     return QueryAccountsResponse(
       accounts: (json["accounts"] as List)
-          .map((e) => CosmosBaseAccount.fromJson(e))
+          .map((e) {
+            try {
+              return CosmosBaseAccount.fromJson(e);
+            } catch (_) {
+              if (skipOnFail) {
+                return null;
+              }
+              rethrow;
+            }
+          })
+          .whereType<CosmosBaseAccount>()
           .toList(),
       pagination: PageResponse.fromJson(json["pagination"]),
     );

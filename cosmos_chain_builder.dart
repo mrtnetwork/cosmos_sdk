@@ -100,7 +100,6 @@ void main() async {
         "slip44": i.slip44,
         "path": i.path
       };
-
       if (data.keyAlgos.isNotEmpty) {
         chainData["algs"] = data.keyAlgos;
       }
@@ -124,9 +123,11 @@ void main() async {
       if (fees.isEmpty) {
         continue;
       }
+
       chainData["fees"] = fees;
       infos.add(chainData);
     }
+
     chainInfos[chain.name] = infos;
   }
   final file = File('./assets/chains.json');

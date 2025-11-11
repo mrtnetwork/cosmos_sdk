@@ -14,7 +14,10 @@ abstract class CosmosPrivateKey extends CosmosMessage {
       case CosmosKeysAlgs.secp256k1:
         return CosmosSecp256K1PrivateKey.fromBytes(keyBytes);
       case CosmosKeysAlgs.ethsecp256k1:
-        return CosmosETHSecp256K1PrivateKey.fromBytes(keyBytes);
+      case CosmosKeysAlgs.comosEthsecp256k1:
+      case CosmosKeysAlgs.injectiveEthsecp256k1:
+        return CosmosETHSecp256K1PrivateKey.fromBytes(keyBytes,
+            algorithm: algorithm);
       case CosmosKeysAlgs.ed25519:
         return CosmosED25519PrivateKey.fromBytes(keyBytes);
       case CosmosKeysAlgs.secp256r1:
