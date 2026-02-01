@@ -8,7 +8,9 @@ class ThorchainMinJoinLast extends CosmosMessage {
   factory ThorchainMinJoinLast.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainMinJoinLast(
-        lastChangedHeight: decode.getField(1), version: decode.getField(2));
+      lastChangedHeight: decode.getField(1),
+      version: decode.getField(2),
+    );
   }
 
   @override
@@ -18,7 +20,7 @@ class ThorchainMinJoinLast extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "last_changed_height": lastChangedHeight?.toString(),
-      "version": version
+      "version": version,
     };
   }
 

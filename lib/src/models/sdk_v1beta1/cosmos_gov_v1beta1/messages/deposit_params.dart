@@ -14,24 +14,28 @@ class GovDepositParams extends CosmosMessage {
   final ProtobufDuration maxDepositPeriod;
   factory GovDepositParams.fromJson(Map<String, dynamic> json) {
     return GovDepositParams(
-      minDeposit: (json["min_deposit"] as List?)
+      minDeposit:
+          (json["min_deposit"] as List?)
               ?.map((e) => Coin.fromJson(e))
               .toList() ??
           [],
       maxDepositPeriod: ProtobufDuration.fromString(json["max_deposit_period"]),
     );
   }
-  GovDepositParams(
-      {required List<Coin> minDeposit, required this.maxDepositPeriod})
-      : minDeposit = minDeposit.immutable;
+  GovDepositParams({
+    required List<Coin> minDeposit,
+    required this.maxDepositPeriod,
+  }) : minDeposit = minDeposit.immutable;
   factory GovDepositParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GovDepositParams(
-        minDeposit: decode
-            .getFields<List<int>>(1)
-            .map((e) => Coin.deserialize(e))
-            .toList(),
-        maxDepositPeriod: ProtobufDuration.deserialize(decode.getField(2)));
+      minDeposit:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
+      maxDepositPeriod: ProtobufDuration.deserialize(decode.getField(2)),
+    );
   }
 
   @override
@@ -41,7 +45,7 @@ class GovDepositParams extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "min_deposit": minDeposit.map((e) => e.toJson()).toList(),
-      "max_deposit_period": maxDepositPeriod.toJson()
+      "max_deposit_period": maxDepositPeriod.toJson(),
     };
   }
 

@@ -19,19 +19,24 @@ class Redelegation extends CosmosMessage {
   final List<RedelegationEntry> entries;
   factory Redelegation.fromJson(Map<String, dynamic> json) {
     return Redelegation(
-        delegatorAddress: json["delegator_address"] == null
-            ? null
-            : CosmosBaseAddress("delegator_address"),
-        validatorDstAddress: json["validator_dst_address"] == null
-            ? null
-            : CosmosBaseAddress("validator_dst_address"),
-        validatorSrcAddress: json["validator_src_address"] == null
-            ? null
-            : CosmosBaseAddress("validator_src_address"),
-        entries: (json["entries"] as List?)
-                ?.map((e) => RedelegationEntry.fromJson(e))
-                .toList() ??
-            []);
+      delegatorAddress:
+          json["delegator_address"] == null
+              ? null
+              : CosmosBaseAddress("delegator_address"),
+      validatorDstAddress:
+          json["validator_dst_address"] == null
+              ? null
+              : CosmosBaseAddress("validator_dst_address"),
+      validatorSrcAddress:
+          json["validator_src_address"] == null
+              ? null
+              : CosmosBaseAddress("validator_src_address"),
+      entries:
+          (json["entries"] as List?)
+              ?.map((e) => RedelegationEntry.fromJson(e))
+              .toList() ??
+          [],
+    );
   }
 
   Redelegation({
@@ -44,19 +49,21 @@ class Redelegation extends CosmosMessage {
   factory Redelegation.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Redelegation(
-        delegatorAddress: decode
-            .getResult(1)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        validatorDstAddress: decode
-            .getResult(3)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        validatorSrcAddress: decode
-            .getResult(2)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        entries: decode
-            .getFields<List<int>>(4)
-            .map((e) => RedelegationEntry.deserialize(e))
-            .toList());
+      delegatorAddress: decode
+          .getResult(1)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      validatorDstAddress: decode
+          .getResult(3)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      validatorSrcAddress: decode
+          .getResult(2)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      entries:
+          decode
+              .getFields<List<int>>(4)
+              .map((e) => RedelegationEntry.deserialize(e))
+              .toList(),
+    );
   }
 
   @override
@@ -77,9 +84,9 @@ class Redelegation extends CosmosMessage {
 
   @override
   List get values => [
-        delegatorAddress?.address,
-        validatorSrcAddress?.address,
-        validatorDstAddress?.address,
-        entries
-      ];
+    delegatorAddress?.address,
+    validatorSrcAddress?.address,
+    validatorDstAddress?.address,
+    entries,
+  ];
 }

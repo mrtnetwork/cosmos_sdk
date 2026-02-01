@@ -13,7 +13,8 @@ class QueryValidatorResponse extends CosmosMessage {
   factory QueryValidatorResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryValidatorResponse(
-        StakingValidator.deserialize(decode.getField(1)));
+      StakingValidator.deserialize(decode.getField(1)),
+    );
   }
 
   @override

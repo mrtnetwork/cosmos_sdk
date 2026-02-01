@@ -10,22 +10,23 @@ class ExtendedCommit extends CosmosMessage {
   final int? round;
   final BlockID blockID;
   final List<ExtendedCommitSig> extendedSignatures;
-  ExtendedCommit(
-      {this.height,
-      this.round,
-      required this.blockID,
-      required List<ExtendedCommitSig> extendedSignatures})
-      : extendedSignatures = extendedSignatures.immutable;
+  ExtendedCommit({
+    this.height,
+    this.round,
+    required this.blockID,
+    required List<ExtendedCommitSig> extendedSignatures,
+  }) : extendedSignatures = extendedSignatures.immutable;
   factory ExtendedCommit.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ExtendedCommit(
       height: decode.getField(1),
       round: decode.getField(2),
       blockID: BlockID.deserialize(decode.getField(3)),
-      extendedSignatures: decode
-          .getFields<List<int>>(4)
-          .map((e) => ExtendedCommitSig.deserialize(e))
-          .toList(),
+      extendedSignatures:
+          decode
+              .getFields<List<int>>(4)
+              .map((e) => ExtendedCommitSig.deserialize(e))
+              .toList(),
     );
   }
 
@@ -38,7 +39,7 @@ class ExtendedCommit extends CosmosMessage {
       "height": height?.toString(),
       "round": round,
       "block_id": blockID.toJson(),
-      "extended_signatures": extendedSignatures.map((e) => e.toJson()).toList()
+      "extended_signatures": extendedSignatures.map((e) => e.toJson()).toList(),
     };
   }
 

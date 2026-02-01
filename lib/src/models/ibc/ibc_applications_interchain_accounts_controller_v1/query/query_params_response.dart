@@ -10,18 +10,23 @@ class InterchainAccountsControllerQueryParamsResponse extends CosmosMessage {
   /// This message has no fields.
   const InterchainAccountsControllerQueryParamsResponse({this.params});
   factory InterchainAccountsControllerQueryParamsResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return InterchainAccountsControllerQueryParamsResponse(
-        params: InterchainAccountsControllerParams.fromJson(json["params"]));
+      params: InterchainAccountsControllerParams.fromJson(json["params"]),
+    );
   }
   factory InterchainAccountsControllerQueryParamsResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return InterchainAccountsControllerQueryParamsResponse(
-        params: decode
-            .getResult(1)
-            ?.to<InterchainAccountsControllerParams, List<int>>(
-                (e) => InterchainAccountsControllerParams.deserialize(e)));
+      params: decode
+          .getResult(1)
+          ?.to<InterchainAccountsControllerParams, List<int>>(
+            (e) => InterchainAccountsControllerParams.deserialize(e),
+          ),
+    );
   }
 
   @override

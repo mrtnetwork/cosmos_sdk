@@ -9,13 +9,16 @@ class OsmosisProtorevOsmosisProtorevQueryQueryGetProtoRevProfitsByDenomRequest
   /// [denom] is the denom to query profits by
   final String? denom;
 
-  const OsmosisProtorevOsmosisProtorevQueryQueryGetProtoRevProfitsByDenomRequest(
-      {this.denom});
+  const OsmosisProtorevOsmosisProtorevQueryQueryGetProtoRevProfitsByDenomRequest({
+    this.denom,
+  });
   factory OsmosisProtorevOsmosisProtorevQueryQueryGetProtoRevProfitsByDenomRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisProtorevOsmosisProtorevQueryQueryGetProtoRevProfitsByDenomRequest(
-        denom: decode.getField(1));
+      denom: decode.getField(1),
+    );
   }
 
   @override
@@ -31,14 +34,17 @@ class OsmosisProtorevOsmosisProtorevQueryQueryGetProtoRevProfitsByDenomRequest
 
   @override
   OsmosisProtorevQueryGetProtoRevProfitsByDenomResponse onResponse(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return OsmosisProtorevQueryGetProtoRevProfitsByDenomResponse.deserialize(
-        bytes);
+      bytes,
+    );
   }
 
   @override
   OsmosisProtorevQueryGetProtoRevProfitsByDenomResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisProtorevQueryGetProtoRevProfitsByDenomResponse.fromJson(json);
   }
 

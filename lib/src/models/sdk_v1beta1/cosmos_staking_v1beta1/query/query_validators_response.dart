@@ -13,25 +13,29 @@ class QueryValidatorsResponse extends CosmosMessage {
   const QueryValidatorsResponse({required this.validators, this.pagination});
   factory QueryValidatorsResponse.fromJson(Map<String, dynamic> json) {
     return QueryValidatorsResponse(
-      validators: (json["validators"] as List?)
+      validators:
+          (json["validators"] as List?)
               ?.map((e) => StakingValidator.fromJson(e))
               .toList() ??
           [],
-      pagination: json["pagination"] == null
-          ? null
-          : PageResponse.fromJson(json["pagination"]),
+      pagination:
+          json["pagination"] == null
+              ? null
+              : PageResponse.fromJson(json["pagination"]),
     );
   }
   factory QueryValidatorsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryValidatorsResponse(
-        validators: decode
-            .getFields<List<int>>(1)
-            .map((e) => StakingValidator.deserialize(e))
-            .toList(),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
+      validators:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => StakingValidator.deserialize(e))
+              .toList(),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
+    );
   }
 
   @override
@@ -41,7 +45,7 @@ class QueryValidatorsResponse extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "validators": validators.map((e) => e.toJson()).toList(),
-      "pagination": pagination?.toJson()
+      "pagination": pagination?.toJson(),
     };
   }
 

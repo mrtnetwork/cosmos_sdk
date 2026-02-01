@@ -15,20 +15,27 @@ class OsmosisProtorevMsgSetMsgSetMaxPoolPointsPerBlock
   /// consumed per block.
   final BigInt? maxPoolPointsPerBlock;
 
-  const OsmosisProtorevMsgSetMsgSetMaxPoolPointsPerBlock(
-      {this.admin, this.maxPoolPointsPerBlock});
+  const OsmosisProtorevMsgSetMsgSetMaxPoolPointsPerBlock({
+    this.admin,
+    this.maxPoolPointsPerBlock,
+  });
 
   factory OsmosisProtorevMsgSetMsgSetMaxPoolPointsPerBlock.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisProtorevMsgSetMsgSetMaxPoolPointsPerBlock(
-        admin: decode.getField(1), maxPoolPointsPerBlock: decode.getField(2));
+      admin: decode.getField(1),
+      maxPoolPointsPerBlock: decode.getField(2),
+    );
   }
   factory OsmosisProtorevMsgSetMsgSetMaxPoolPointsPerBlock.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisProtorevMsgSetMsgSetMaxPoolPointsPerBlock(
-        admin: json.as("admin"),
-        maxPoolPointsPerBlock: json.asBigInt("max_pool_points_per_block"));
+      admin: json.as("admin"),
+      maxPoolPointsPerBlock: json.asBigInt("max_pool_points_per_block"),
+    );
   }
 
   @override
@@ -38,7 +45,7 @@ class OsmosisProtorevMsgSetMsgSetMaxPoolPointsPerBlock
   Map<String, dynamic> toJson() {
     return {
       "admin": admin,
-      "max_pool_points_per_block": maxPoolPointsPerBlock?.toString()
+      "max_pool_points_per_block": maxPoolPointsPerBlock?.toString(),
     };
   }
 
@@ -52,7 +59,8 @@ class OsmosisProtorevMsgSetMsgSetMaxPoolPointsPerBlock
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        OsmosisProtorevV1beta1Types.msgSetMaxPoolPointsPerBlockResponse);
+      OsmosisProtorevV1beta1Types.msgSetMaxPoolPointsPerBlockResponse,
+    );
   }
 
   @override

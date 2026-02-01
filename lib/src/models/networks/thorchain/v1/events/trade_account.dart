@@ -8,21 +8,22 @@ class ThorchainTradeAccount extends CosmosMessage {
   final List<int>? owner;
   final BigInt? lastAddHeight;
   final BigInt? lastWithdrawHeight;
-  ThorchainTradeAccount(
-      {required this.asset,
-      required this.units,
-      List<int>? owner,
-      this.lastAddHeight,
-      this.lastWithdrawHeight})
-      : owner = BytesUtils.tryToBytes(owner, unmodifiable: true);
+  ThorchainTradeAccount({
+    required this.asset,
+    required this.units,
+    List<int>? owner,
+    this.lastAddHeight,
+    this.lastWithdrawHeight,
+  }) : owner = BytesUtils.tryToBytes(owner, unmodifiable: true);
   factory ThorchainTradeAccount.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainTradeAccount(
-        asset: ThorchainAsset.deserialize(decode.getField(1)),
-        units: BigInt.parse(decode.getField(2)),
-        owner: decode.getField(3),
-        lastAddHeight: decode.getField(4),
-        lastWithdrawHeight: decode.getField(5));
+      asset: ThorchainAsset.deserialize(decode.getField(1)),
+      units: BigInt.parse(decode.getField(2)),
+      owner: decode.getField(3),
+      lastAddHeight: decode.getField(4),
+      lastWithdrawHeight: decode.getField(5),
+    );
   }
 
   @override
@@ -35,7 +36,7 @@ class ThorchainTradeAccount extends CosmosMessage {
       "units": units.toString(),
       "owner": BytesUtils.tryToHexString(owner),
       "last_add_height": lastAddHeight?.toString(),
-      "last_withdraw_height": lastWithdrawHeight?.toString()
+      "last_withdraw_height": lastWithdrawHeight?.toString(),
     };
   }
 
@@ -43,6 +44,11 @@ class ThorchainTradeAccount extends CosmosMessage {
   TypeUrl get typeUrl => ThorchainV1Types.tradeAccount;
 
   @override
-  List get values =>
-      [asset, units.toString(), owner, lastAddHeight, lastWithdrawHeight];
+  List get values => [
+    asset,
+    units.toString(),
+    owner,
+    lastAddHeight,
+    lastWithdrawHeight,
+  ];
 }

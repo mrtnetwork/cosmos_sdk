@@ -10,26 +10,28 @@ class ThorchainNetwork extends CosmosMessage {
   final BigInt? nodeIncomeSplit;
   final BigInt? outboundGasSpentRune;
   final BigInt? outboundGasWithheldRune;
-  ThorchainNetwork(
-      {required this.bondRewardRune,
-      required this.totalBondUnits,
-      required this.burnedBep2Rune,
-      required this.burnedErc20Rune,
-      this.lpIncomeSplit,
-      this.nodeIncomeSplit,
-      this.outboundGasSpentRune,
-      this.outboundGasWithheldRune});
+  ThorchainNetwork({
+    required this.bondRewardRune,
+    required this.totalBondUnits,
+    required this.burnedBep2Rune,
+    required this.burnedErc20Rune,
+    this.lpIncomeSplit,
+    this.nodeIncomeSplit,
+    this.outboundGasSpentRune,
+    this.outboundGasWithheldRune,
+  });
   factory ThorchainNetwork.deserialized(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainNetwork(
-        bondRewardRune: BigInt.parse(decode.getField(1)),
-        totalBondUnits: BigInt.parse(decode.getField(2)),
-        burnedBep2Rune: BigInt.parse(decode.getField(3)),
-        burnedErc20Rune: BigInt.parse(decode.getField(4)),
-        lpIncomeSplit: decode.getField(5),
-        nodeIncomeSplit: decode.getField(6),
-        outboundGasSpentRune: decode.getField(7),
-        outboundGasWithheldRune: decode.getField(8));
+      bondRewardRune: BigInt.parse(decode.getField(1)),
+      totalBondUnits: BigInt.parse(decode.getField(2)),
+      burnedBep2Rune: BigInt.parse(decode.getField(3)),
+      burnedErc20Rune: BigInt.parse(decode.getField(4)),
+      lpIncomeSplit: decode.getField(5),
+      nodeIncomeSplit: decode.getField(6),
+      outboundGasSpentRune: decode.getField(7),
+      outboundGasWithheldRune: decode.getField(8),
+    );
   }
 
   @override
@@ -45,7 +47,7 @@ class ThorchainNetwork extends CosmosMessage {
       "LPIncomeSplit": lpIncomeSplit?.toString(),
       "NodeIncomeSplit": nodeIncomeSplit?.toString(),
       "outbound_gas_spent_rune": outboundGasSpentRune?.toString(),
-      "outbound_gas_withheld_rune": outboundGasWithheldRune?.toString()
+      "outbound_gas_withheld_rune": outboundGasWithheldRune?.toString(),
     };
   }
 
@@ -54,13 +56,13 @@ class ThorchainNetwork extends CosmosMessage {
 
   @override
   List get values => [
-        bondRewardRune.toString(),
-        totalBondUnits.toString(),
-        burnedBep2Rune.toString(),
-        burnedErc20Rune.toString(),
-        lpIncomeSplit,
-        nodeIncomeSplit,
-        outboundGasSpentRune,
-        outboundGasWithheldRune
-      ];
+    bondRewardRune.toString(),
+    totalBondUnits.toString(),
+    burnedBep2Rune.toString(),
+    burnedErc20Rune.toString(),
+    lpIncomeSplit,
+    nodeIncomeSplit,
+    outboundGasSpentRune,
+    outboundGasWithheldRune,
+  ];
 }

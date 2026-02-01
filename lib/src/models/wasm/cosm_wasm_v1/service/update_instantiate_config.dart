@@ -16,29 +16,35 @@ class CosmWasmV1UpdateInstantiateConfig
 
   /// NewInstantiatePermission is the new access control
   final CosmWasmV1AccessConfig? newInstantiatePermission;
-  CosmWasmV1UpdateInstantiateConfig(
-      {required this.sender,
-      required this.codeId,
-      required this.newInstantiatePermission});
+  CosmWasmV1UpdateInstantiateConfig({
+    required this.sender,
+    required this.codeId,
+    required this.newInstantiatePermission,
+  });
   factory CosmWasmV1UpdateInstantiateConfig.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmWasmV1UpdateInstantiateConfig(
-        sender: decode.getField(1),
-        codeId: decode.getField(2),
-        newInstantiatePermission: decode
-            .getResult(3)
-            ?.to<CosmWasmV1AccessConfig, List<int>>(
-                (e) => CosmWasmV1AccessConfig.deserialize((e))));
+      sender: decode.getField(1),
+      codeId: decode.getField(2),
+      newInstantiatePermission: decode
+          .getResult(3)
+          ?.to<CosmWasmV1AccessConfig, List<int>>(
+            (e) => CosmWasmV1AccessConfig.deserialize((e)),
+          ),
+    );
   }
   factory CosmWasmV1UpdateInstantiateConfig.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return CosmWasmV1UpdateInstantiateConfig(
-        sender: json.as("sender"),
-        codeId: json.asBigInt("code_id"),
-        newInstantiatePermission:
-            json.maybeAs<CosmWasmV1AccessConfig, Map<String, dynamic>>(
-                key: "new_instantiate_permission",
-                onValue: (e) => CosmWasmV1AccessConfig.fromJson(e)));
+      sender: json.as("sender"),
+      codeId: json.asBigInt("code_id"),
+      newInstantiatePermission: json
+          .maybeAs<CosmWasmV1AccessConfig, Map<String, dynamic>>(
+            key: "new_instantiate_permission",
+            onValue: (e) => CosmWasmV1AccessConfig.fromJson(e),
+          ),
+    );
   }
 
   @override
@@ -49,7 +55,7 @@ class CosmWasmV1UpdateInstantiateConfig
     return {
       "sender": sender,
       "code_id": codeId?.toString(),
-      "new_instantiate_permission": newInstantiatePermission?.toJson()
+      "new_instantiate_permission": newInstantiatePermission?.toJson(),
     };
   }
 
@@ -65,6 +71,7 @@ class CosmWasmV1UpdateInstantiateConfig
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        CosmWasmV1Types.msgUpdateInstantiateConfigResponse);
+      CosmWasmV1Types.msgUpdateInstantiateConfigResponse,
+    );
   }
 }

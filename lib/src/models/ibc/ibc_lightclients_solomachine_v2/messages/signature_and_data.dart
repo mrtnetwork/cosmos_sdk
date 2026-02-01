@@ -10,18 +10,25 @@ class IbcSoloMachineV2SignatureAndData extends CosmosMessage {
   final IbcSoloMachineV2DataType? dataType;
   final List<int>? data;
   final BigInt? timestamp;
-  IbcSoloMachineV2SignatureAndData(
-      {List<int>? signature, this.dataType, List<int>? data, this.timestamp})
-      : signature = BytesUtils.tryToBytes(signature, unmodifiable: true),
-        data = BytesUtils.tryToBytes(data, unmodifiable: true);
+  IbcSoloMachineV2SignatureAndData({
+    List<int>? signature,
+    this.dataType,
+    List<int>? data,
+    this.timestamp,
+  }) : signature = BytesUtils.tryToBytes(signature, unmodifiable: true),
+       data = BytesUtils.tryToBytes(data, unmodifiable: true);
   factory IbcSoloMachineV2SignatureAndData.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcSoloMachineV2SignatureAndData(
-        signature: decode.getField(1),
-        dataType: decode.getResult(2)?.to<IbcSoloMachineV2DataType, int>(
-            (e) => IbcSoloMachineV2DataType.fromValue(e)),
-        data: decode.getField(3),
-        timestamp: decode.getField(4));
+      signature: decode.getField(1),
+      dataType: decode
+          .getResult(2)
+          ?.to<IbcSoloMachineV2DataType, int>(
+            (e) => IbcSoloMachineV2DataType.fromValue(e),
+          ),
+      data: decode.getField(3),
+      timestamp: decode.getField(4),
+    );
   }
 
   @override
@@ -33,7 +40,7 @@ class IbcSoloMachineV2SignatureAndData extends CosmosMessage {
       "signature": BytesUtils.tryToHexString(signature),
       "data_type": dataType?.value,
       "data": BytesUtils.tryToHexString(data),
-      "timestamp": timestamp?.toString()
+      "timestamp": timestamp?.toString(),
     };
   }
 

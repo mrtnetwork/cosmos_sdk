@@ -6,14 +6,15 @@ class ThorchainFee extends CosmosMessage {
   final List<ThorchainCoin> coins;
   final String poolDeduct;
   ThorchainFee({required List<ThorchainCoin> coins, required this.poolDeduct})
-      : coins = coins.immutable;
+    : coins = coins.immutable;
   factory ThorchainFee.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainFee(
-      coins: decode
-          .getFields<List<int>>(1)
-          .map((e) => ThorchainCoin.deserialize(e))
-          .toList(),
+      coins:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => ThorchainCoin.deserialize(e))
+              .toList(),
       poolDeduct: decode.getField(2),
     );
   }
@@ -25,7 +26,7 @@ class ThorchainFee extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "coins": coins.map((e) => e.toJson()).toList(),
-      "pool_deduct": poolDeduct
+      "pool_deduct": poolDeduct,
     };
   }
 

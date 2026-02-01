@@ -13,42 +13,46 @@ class ThorchainObservedTxVoter extends CosmosMessage {
   final bool? updatedVault;
   final bool? reverted;
   final BigInt? outboundHeight;
-  ThorchainObservedTxVoter(
-      {this.txId,
-      required this.tx,
-      this.height,
-      required List<ThorchainObservedTx> txs,
-      required List<ThorchainTxOutItem> actions,
-      required List<ThorchainTx> outTxs,
-      this.finalisedHeight,
-      this.updatedVault,
-      this.reverted,
-      this.outboundHeight})
-      : txs = txs.immutable,
-        actions = actions.immutable,
-        outTxs = outTxs.immutable;
+  ThorchainObservedTxVoter({
+    this.txId,
+    required this.tx,
+    this.height,
+    required List<ThorchainObservedTx> txs,
+    required List<ThorchainTxOutItem> actions,
+    required List<ThorchainTx> outTxs,
+    this.finalisedHeight,
+    this.updatedVault,
+    this.reverted,
+    this.outboundHeight,
+  }) : txs = txs.immutable,
+       actions = actions.immutable,
+       outTxs = outTxs.immutable;
   factory ThorchainObservedTxVoter.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainObservedTxVoter(
-        txId: decode.getField(1),
-        tx: ThorchainObservedTx.deserialize(decode.getField(2)),
-        height: decode.getField(3),
-        txs: decode
-            .getFields<List<int>>(4)
-            .map((e) => ThorchainObservedTx.deserialize(e))
-            .toList(),
-        actions: decode
-            .getFields<List<int>>(5)
-            .map((e) => ThorchainTxOutItem.deserialize(e))
-            .toList(),
-        outTxs: decode
-            .getFields<List<int>>(6)
-            .map((e) => ThorchainTx.deserialize(e))
-            .toList(),
-        finalisedHeight: decode.getField(7),
-        updatedVault: decode.getField(8),
-        reverted: decode.getField(9),
-        outboundHeight: decode.getField(10));
+      txId: decode.getField(1),
+      tx: ThorchainObservedTx.deserialize(decode.getField(2)),
+      height: decode.getField(3),
+      txs:
+          decode
+              .getFields<List<int>>(4)
+              .map((e) => ThorchainObservedTx.deserialize(e))
+              .toList(),
+      actions:
+          decode
+              .getFields<List<int>>(5)
+              .map((e) => ThorchainTxOutItem.deserialize(e))
+              .toList(),
+      outTxs:
+          decode
+              .getFields<List<int>>(6)
+              .map((e) => ThorchainTx.deserialize(e))
+              .toList(),
+      finalisedHeight: decode.getField(7),
+      updatedVault: decode.getField(8),
+      reverted: decode.getField(9),
+      outboundHeight: decode.getField(10),
+    );
   }
 
   @override
@@ -66,7 +70,7 @@ class ThorchainObservedTxVoter extends CosmosMessage {
       "finalised_height": finalisedHeight?.toString(),
       "updated_vault": updatedVault,
       "reverted": reverted,
-      "outbound_height": outboundHeight?.toString()
+      "outbound_height": outboundHeight?.toString(),
     };
   }
 
@@ -75,15 +79,15 @@ class ThorchainObservedTxVoter extends CosmosMessage {
 
   @override
   List get values => [
-        txId,
-        tx,
-        height,
-        txs,
-        actions,
-        outTxs,
-        finalisedHeight,
-        updatedVault,
-        reverted,
-        outboundHeight
-      ];
+    txId,
+    tx,
+    height,
+    txs,
+    actions,
+    outTxs,
+    finalisedHeight,
+    updatedVault,
+    reverted,
+    outboundHeight,
+  ];
 }

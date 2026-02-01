@@ -11,12 +11,16 @@ class QueryEscrowAddressRequest extends CosmosMessage
 
   /// unique channel identifier
   final String channelId;
-  const QueryEscrowAddressRequest(
-      {required this.portId, required this.channelId});
+  const QueryEscrowAddressRequest({
+    required this.portId,
+    required this.channelId,
+  });
   factory QueryEscrowAddressRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryEscrowAddressRequest(
-        portId: decode.getField(1), channelId: decode.getField(2));
+      portId: decode.getField(1),
+      channelId: decode.getField(2),
+    );
   }
 
   @override

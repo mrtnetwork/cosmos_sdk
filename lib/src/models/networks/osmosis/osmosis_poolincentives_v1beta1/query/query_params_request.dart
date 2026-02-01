@@ -19,7 +19,8 @@ class OsmosisPoolincentivesQueryParamsRequest extends CosmosMessage
 
   @override
   OsmosisPoolincentivesQueryParamsResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisPoolincentivesQueryParamsResponse.fromJson(json);
   }
 

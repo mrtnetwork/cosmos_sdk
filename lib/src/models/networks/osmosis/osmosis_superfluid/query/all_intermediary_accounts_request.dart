@@ -9,12 +9,14 @@ class OsmosisSuperfluidAllIntermediaryAccountsRequest extends CosmosMessage
   final PageRequest? pagination;
   const OsmosisSuperfluidAllIntermediaryAccountsRequest({this.pagination});
   factory OsmosisSuperfluidAllIntermediaryAccountsRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidAllIntermediaryAccountsRequest(
-        pagination: decode
-            .getResult(1)
-            ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)));
+      pagination: decode
+          .getResult(1)
+          ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)),
+    );
   }
 
   @override
@@ -36,7 +38,8 @@ class OsmosisSuperfluidAllIntermediaryAccountsRequest extends CosmosMessage
 
   @override
   OsmosisSuperfluidAllIntermediaryAccountsResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisSuperfluidAllIntermediaryAccountsResponse.fromJson(json);
   }
 

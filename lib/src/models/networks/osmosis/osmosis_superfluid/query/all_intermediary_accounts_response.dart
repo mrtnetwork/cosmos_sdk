@@ -7,34 +7,47 @@ import 'package:blockchain_utils/helper/helper.dart';
 class OsmosisSuperfluidAllIntermediaryAccountsResponse extends CosmosMessage {
   final List<OsmosisSuperfluidUnpoolSuperfluidIntermediaryAccountInfo> accounts;
   final PageResponse? pagination;
-  OsmosisSuperfluidAllIntermediaryAccountsResponse(
-      {required List<OsmosisSuperfluidUnpoolSuperfluidIntermediaryAccountInfo>
-          accounts,
-      this.pagination})
-      : accounts = accounts.immutable;
+  OsmosisSuperfluidAllIntermediaryAccountsResponse({
+    required List<OsmosisSuperfluidUnpoolSuperfluidIntermediaryAccountInfo>
+    accounts,
+    this.pagination,
+  }) : accounts = accounts.immutable;
   factory OsmosisSuperfluidAllIntermediaryAccountsResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidAllIntermediaryAccountsResponse(
-        accounts: decode
-            .getFields<List<int>>(1)
-            .map((e) => OsmosisSuperfluidUnpoolSuperfluidIntermediaryAccountInfo
-                .deserialize(e))
-            .toList(),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
+      accounts:
+          decode
+              .getFields<List<int>>(1)
+              .map(
+                (e) =>
+                    OsmosisSuperfluidUnpoolSuperfluidIntermediaryAccountInfo.deserialize(
+                      e,
+                    ),
+              )
+              .toList(),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
+    );
   }
   factory OsmosisSuperfluidAllIntermediaryAccountsResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisSuperfluidAllIntermediaryAccountsResponse(
-        pagination: PageResponse.fromJson(json["pagination"]),
-        accounts: (json["accounts"] as List?)
-                ?.map((e) =>
-                    OsmosisSuperfluidUnpoolSuperfluidIntermediaryAccountInfo
-                        .fromJson(e))
-                .toList() ??
-            <OsmosisSuperfluidUnpoolSuperfluidIntermediaryAccountInfo>[]);
+      pagination: PageResponse.fromJson(json["pagination"]),
+      accounts:
+          (json["accounts"] as List?)
+              ?.map(
+                (e) =>
+                    OsmosisSuperfluidUnpoolSuperfluidIntermediaryAccountInfo.fromJson(
+                      e,
+                    ),
+              )
+              .toList() ??
+          <OsmosisSuperfluidUnpoolSuperfluidIntermediaryAccountInfo>[],
+    );
   }
 
   @override
@@ -44,7 +57,7 @@ class OsmosisSuperfluidAllIntermediaryAccountsResponse extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "accounts": accounts.map((e) => e.toJson()).toList(),
-      "pagination": pagination?.toJson()
+      "pagination": pagination?.toJson(),
     };
   }
 

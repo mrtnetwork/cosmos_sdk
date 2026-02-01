@@ -15,33 +15,37 @@ class CCTPV1MsgDepositForBurnWithCaller
   final List<int>? mintRecipient;
   final String? burnToken;
   final List<int>? destinationCaller;
-  const CCTPV1MsgDepositForBurnWithCaller(
-      {this.from,
-      this.amount,
-      this.destinationDomain,
-      this.mintRecipient,
-      this.burnToken,
-      this.destinationCaller});
+  const CCTPV1MsgDepositForBurnWithCaller({
+    this.from,
+    this.amount,
+    this.destinationDomain,
+    this.mintRecipient,
+    this.burnToken,
+    this.destinationCaller,
+  });
 
   factory CCTPV1MsgDepositForBurnWithCaller.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CCTPV1MsgDepositForBurnWithCaller(
-        from: decode.getField(1),
-        amount: decode.getField(2),
-        destinationDomain: decode.getField(3),
-        burnToken: decode.getField(5),
-        mintRecipient: decode.getField(4),
-        destinationCaller: decode.getField(6));
+      from: decode.getField(1),
+      amount: decode.getField(2),
+      destinationDomain: decode.getField(3),
+      burnToken: decode.getField(5),
+      mintRecipient: decode.getField(4),
+      destinationCaller: decode.getField(6),
+    );
   }
   factory CCTPV1MsgDepositForBurnWithCaller.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return CCTPV1MsgDepositForBurnWithCaller(
-        from: json.as("from"),
-        amount: json.as("amount"),
-        destinationDomain: json.as("destination_domain"),
-        burnToken: json.as("burn_token"),
-        mintRecipient: json.asBytes("mint_recipient"),
-        destinationCaller: json.asBytes("destination_caller"));
+      from: json.as("from"),
+      amount: json.as("amount"),
+      destinationDomain: json.as("destination_domain"),
+      burnToken: json.as("burn_token"),
+      mintRecipient: json.asBytes("mint_recipient"),
+      destinationCaller: json.asBytes("destination_caller"),
+    );
   }
 
   @override
@@ -64,13 +68,13 @@ class CCTPV1MsgDepositForBurnWithCaller
 
   @override
   List get values => [
-        from,
-        amount,
-        destinationDomain,
-        mintRecipient,
-        burnToken,
-        destinationCaller
-      ];
+    from,
+    amount,
+    destinationDomain,
+    mintRecipient,
+    burnToken,
+    destinationCaller,
+  ];
   @override
   List<String?> get signers => [from];
 

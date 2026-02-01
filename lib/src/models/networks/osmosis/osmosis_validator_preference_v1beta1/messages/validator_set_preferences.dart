@@ -11,16 +11,20 @@ class OsmosisValidatorPreferenceValidatorSetPreferences extends CosmosMessage {
   final List<OsmosisValidatorPreferenceValidatorPreference> preferences;
 
   OsmosisValidatorPreferenceValidatorSetPreferences(
-      List<OsmosisValidatorPreferenceValidatorPreference> preferences)
-      : preferences = preferences.immutable;
+    List<OsmosisValidatorPreferenceValidatorPreference> preferences,
+  ) : preferences = preferences.immutable;
   factory OsmosisValidatorPreferenceValidatorSetPreferences.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return OsmosisValidatorPreferenceValidatorSetPreferences(decode
-        .getFields<List<int>>(1)
-        .map(
-            (e) => OsmosisValidatorPreferenceValidatorPreference.deserialize(e))
-        .toList());
+    return OsmosisValidatorPreferenceValidatorSetPreferences(
+      decode
+          .getFields<List<int>>(1)
+          .map(
+            (e) => OsmosisValidatorPreferenceValidatorPreference.deserialize(e),
+          )
+          .toList(),
+    );
   }
 
   @override
@@ -28,9 +32,7 @@ class OsmosisValidatorPreferenceValidatorSetPreferences extends CosmosMessage {
 
   @override
   Map<String, dynamic> toJson() {
-    return {
-      "preferences": preferences.map((e) => e.toJson()).toList(),
-    };
+    return {"preferences": preferences.map((e) => e.toJson()).toList()};
   }
 
   @override

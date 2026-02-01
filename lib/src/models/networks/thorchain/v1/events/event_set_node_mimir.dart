@@ -9,9 +9,10 @@ class ThorchainEventSetNodeMimir extends CosmosMessage {
   factory ThorchainEventSetNodeMimir.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainEventSetNodeMimir(
-        key: decode.getField(1),
-        value: decode.getField(2),
-        address: decode.getField(3));
+      key: decode.getField(1),
+      value: decode.getField(2),
+      address: decode.getField(3),
+    );
   }
 
   @override

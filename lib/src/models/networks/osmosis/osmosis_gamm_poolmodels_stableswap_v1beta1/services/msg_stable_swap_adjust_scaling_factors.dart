@@ -8,37 +8,44 @@ import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// Sender must be the pool's scaling_factor_governor in order for the tx to succeed. Adjusts stableswap scaling factors.
 class OsmosisGammPoolmodelsStableSwapMsgStableSwapAdjustScalingFactors
-    extends OsmosisGammPoolmodelsStableSwapV1Beta1<
-        EmptyServiceRequestResponse> {
+    extends
+        OsmosisGammPoolmodelsStableSwapV1Beta1<EmptyServiceRequestResponse> {
   final String? sender;
   final BigInt? poolId;
   final List<BigInt>? scalingFactors;
 
-  OsmosisGammPoolmodelsStableSwapMsgStableSwapAdjustScalingFactors(
-      {this.sender, this.poolId, List<BigInt>? scalingFactors})
-      : scalingFactors = scalingFactors?.emptyAsNull?.immutable;
+  OsmosisGammPoolmodelsStableSwapMsgStableSwapAdjustScalingFactors({
+    this.sender,
+    this.poolId,
+    List<BigInt>? scalingFactors,
+  }) : scalingFactors = scalingFactors?.emptyAsNull?.immutable;
   factory OsmosisGammPoolmodelsStableSwapMsgStableSwapAdjustScalingFactors.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisGammPoolmodelsStableSwapMsgStableSwapAdjustScalingFactors(
       sender: decode.getField(1),
       poolId: decode.getField(2),
-      scalingFactors: decode
+      scalingFactors:
+          decode
               .getResult<ProtocolBufferDecoderResult?>(3)
               ?.to<List<BigInt>, List<int>>(
-                  (e) => e.map((e) => BigintUtils.parse(e)).toList()) ??
+                (e) => e.map((e) => BigintUtils.parse(e)).toList(),
+              ) ??
           <BigInt>[],
     );
   }
   factory OsmosisGammPoolmodelsStableSwapMsgStableSwapAdjustScalingFactors.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisGammPoolmodelsStableSwapMsgStableSwapAdjustScalingFactors(
       sender: json.as("sender"),
       poolId: json.asBigInt("pool_id"),
-      scalingFactors: json
-          .as<List?>("scaling_factors")
-          ?.map((e) => BigintUtils.parse(e))
-          .toList(),
+      scalingFactors:
+          json
+              .as<List?>("scaling_factors")
+              ?.map((e) => BigintUtils.parse(e))
+              .toList(),
     );
   }
 
@@ -48,8 +55,9 @@ class OsmosisGammPoolmodelsStableSwapMsgStableSwapAdjustScalingFactors
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        OsmosisGammPoolmodelsStableSwapV1beta1Types
-            .msgStableSwapAdjustScalingFactorsResponse);
+      OsmosisGammPoolmodelsStableSwapV1beta1Types
+          .msgStableSwapAdjustScalingFactorsResponse,
+    );
   }
 
   @override
@@ -60,13 +68,14 @@ class OsmosisGammPoolmodelsStableSwapMsgStableSwapAdjustScalingFactors
     return {
       "sender": sender,
       "pool_id": poolId?.toString(),
-      "scaling_factors": scalingFactors?.map((e) => e.toString()).toList()
+      "scaling_factors": scalingFactors?.map((e) => e.toString()).toList(),
     };
   }
 
   @override
-  TypeUrl get typeUrl => OsmosisGammPoolmodelsStableSwapV1beta1Types
-      .msgStableSwapAdjustScalingFactors;
+  TypeUrl get typeUrl =>
+      OsmosisGammPoolmodelsStableSwapV1beta1Types
+          .msgStableSwapAdjustScalingFactors;
 
   @override
   List get values => [sender, poolId, scalingFactors];

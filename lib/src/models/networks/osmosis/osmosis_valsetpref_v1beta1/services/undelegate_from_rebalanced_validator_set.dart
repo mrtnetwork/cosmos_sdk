@@ -18,10 +18,13 @@ class OsmosisValSetprefMsgUndelegateFromRebalancedValidatorSet
   /// undelegated from ValB.
   final Coin coin;
 
-  OsmosisValSetprefMsgUndelegateFromRebalancedValidatorSet(
-      {this.delegator, required this.coin});
+  OsmosisValSetprefMsgUndelegateFromRebalancedValidatorSet({
+    this.delegator,
+    required this.coin,
+  });
   factory OsmosisValSetprefMsgUndelegateFromRebalancedValidatorSet.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisValSetprefMsgUndelegateFromRebalancedValidatorSet(
       delegator: decode.getField(1),
@@ -29,9 +32,12 @@ class OsmosisValSetprefMsgUndelegateFromRebalancedValidatorSet
     );
   }
   factory OsmosisValSetprefMsgUndelegateFromRebalancedValidatorSet.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisValSetprefMsgUndelegateFromRebalancedValidatorSet(
-        delegator: json["delegator"], coin: Coin.fromJson(json["coin"]));
+      delegator: json["delegator"],
+      coin: Coin.fromJson(json["coin"]),
+    );
   }
 
   @override
@@ -51,8 +57,10 @@ class OsmosisValSetprefMsgUndelegateFromRebalancedValidatorSet
 
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
-    return EmptyServiceRequestResponse(OsmosisValSetprefV1beta1Types
-        .msgUndelegateFromRebalancedValidatorSetResponse);
+    return EmptyServiceRequestResponse(
+      OsmosisValSetprefV1beta1Types
+          .msgUndelegateFromRebalancedValidatorSetResponse,
+    );
   }
 
   @override

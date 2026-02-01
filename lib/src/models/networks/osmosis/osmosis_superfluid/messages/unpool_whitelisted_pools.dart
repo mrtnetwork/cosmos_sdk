@@ -8,11 +8,14 @@ class OsmosisSuperfluidUnpoolWhitelistedPools extends CosmosMessage {
   factory OsmosisSuperfluidUnpoolWhitelistedPools.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidUnpoolWhitelistedPools(
-        ids: decode
-                .getResult<ProtocolBufferDecoderResult?>(1)
-                ?.to<List<BigInt>, List<int>>(
-                    (e) => e.map((e) => BigintUtils.parse(e)).toList()) ??
-            <BigInt>[]);
+      ids:
+          decode
+              .getResult<ProtocolBufferDecoderResult?>(1)
+              ?.to<List<BigInt>, List<int>>(
+                (e) => e.map((e) => BigintUtils.parse(e)).toList(),
+              ) ??
+          <BigInt>[],
+    );
   }
 
   @override

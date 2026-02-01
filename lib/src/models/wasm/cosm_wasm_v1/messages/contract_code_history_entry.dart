@@ -26,31 +26,37 @@ class CosmWasmV1ContractCodeHistoryEntry extends CosmosMessage {
   factory CosmWasmV1ContractCodeHistoryEntry.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmWasmV1ContractCodeHistoryEntry(
-        codeId: decode.getField(2),
-        operation: decode
-            .getResult(1)
-            ?.to<CosmWasmV1ContractCodeHistoryOperationType, int>(
-                (e) => CosmWasmV1ContractCodeHistoryOperationType.fromValue(e)),
-        updated: decode
-            .getResult(3)
-            ?.to<CosmWasmV1AbsoluteTxPosition, List<int>>(
-                (e) => CosmWasmV1AbsoluteTxPosition.deserialize(e)),
-        msg: decode.getField(4));
+      codeId: decode.getField(2),
+      operation: decode
+          .getResult(1)
+          ?.to<CosmWasmV1ContractCodeHistoryOperationType, int>(
+            (e) => CosmWasmV1ContractCodeHistoryOperationType.fromValue(e),
+          ),
+      updated: decode
+          .getResult(3)
+          ?.to<CosmWasmV1AbsoluteTxPosition, List<int>>(
+            (e) => CosmWasmV1AbsoluteTxPosition.deserialize(e),
+          ),
+      msg: decode.getField(4),
+    );
   }
   factory CosmWasmV1ContractCodeHistoryEntry.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return CosmWasmV1ContractCodeHistoryEntry(
-        codeId: json.asBigInt("code_id"),
-        operation:
-            json.maybeAs<CosmWasmV1ContractCodeHistoryOperationType, String>(
-                key: "operation",
-                onValue: (e) =>
-                    CosmWasmV1ContractCodeHistoryOperationType.fromName(e)),
-        updated:
-            json.maybeAs<CosmWasmV1AbsoluteTxPosition, Map<String, dynamic>>(
-                key: "updated",
-                onValue: (e) => CosmWasmV1AbsoluteTxPosition.fromJson(e)),
-        msg: json.asBytes("msg"));
+      codeId: json.asBigInt("code_id"),
+      operation: json
+          .maybeAs<CosmWasmV1ContractCodeHistoryOperationType, String>(
+            key: "operation",
+            onValue:
+                (e) => CosmWasmV1ContractCodeHistoryOperationType.fromName(e),
+          ),
+      updated: json.maybeAs<CosmWasmV1AbsoluteTxPosition, Map<String, dynamic>>(
+        key: "updated",
+        onValue: (e) => CosmWasmV1AbsoluteTxPosition.fromJson(e),
+      ),
+      msg: json.asBytes("msg"),
+    );
   }
 
   @override
@@ -62,7 +68,7 @@ class CosmWasmV1ContractCodeHistoryEntry extends CosmosMessage {
       "code_id": codeId?.toString(),
       "operation": operation?.name,
       "updated": updated?.toJson(),
-      "msg": CosmosUtils.tryToBase64(msg)
+      "msg": CosmosUtils.tryToBase64(msg),
     };
   }
 

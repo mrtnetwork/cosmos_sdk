@@ -16,20 +16,23 @@ class OsmosisCosmWasmPoolCosmWasmPool extends CosmosMessage {
   final BigInt? poolId;
   final BigInt? codeId;
   final List<int>? instantiateMsg;
-  OsmosisCosmWasmPoolCosmWasmPool(
-      {this.contractAddress,
-      this.poolId,
-      this.codeId,
-      List<int>? instantiateMsg})
-      : instantiateMsg =
-            BytesUtils.tryToBytes(instantiateMsg, unmodifiable: true);
+  OsmosisCosmWasmPoolCosmWasmPool({
+    this.contractAddress,
+    this.poolId,
+    this.codeId,
+    List<int>? instantiateMsg,
+  }) : instantiateMsg = BytesUtils.tryToBytes(
+         instantiateMsg,
+         unmodifiable: true,
+       );
   factory OsmosisCosmWasmPoolCosmWasmPool.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisCosmWasmPoolCosmWasmPool(
-        contractAddress: decode.getField(1),
-        poolId: decode.getField(2),
-        codeId: decode.getField(3),
-        instantiateMsg: decode.getField(4));
+      contractAddress: decode.getField(1),
+      poolId: decode.getField(2),
+      codeId: decode.getField(3),
+      instantiateMsg: decode.getField(4),
+    );
   }
 
   @override
@@ -41,7 +44,7 @@ class OsmosisCosmWasmPoolCosmWasmPool extends CosmosMessage {
       "contract_address": contractAddress,
       "pool_id": poolId?.toString(),
       "code_id": codeId?.toString(),
-      "instantiate_msg": BytesUtils.tryToHexString(instantiateMsg)
+      "instantiate_msg": BytesUtils.tryToHexString(instantiateMsg),
     };
   }
 

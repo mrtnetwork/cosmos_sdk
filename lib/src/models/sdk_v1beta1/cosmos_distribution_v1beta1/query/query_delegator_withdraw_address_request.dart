@@ -9,18 +9,23 @@ class DistributionQueryDelegatorWithdrawAddressRequest extends CosmosMessage
     with QueryMessage<DistributionQueryDelegatorWithdrawAddressResponse> {
   /// delegator_address defines the delegator address to query for.
   final CosmosBaseAddress delegatorAddress;
-  DistributionQueryDelegatorWithdrawAddressRequest(
-      {required this.delegatorAddress});
+  DistributionQueryDelegatorWithdrawAddressRequest({
+    required this.delegatorAddress,
+  });
   factory DistributionQueryDelegatorWithdrawAddressRequest.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return DistributionQueryDelegatorWithdrawAddressRequest(
-        delegatorAddress: CosmosBaseAddress(json["delegator_address"]));
+      delegatorAddress: CosmosBaseAddress(json["delegator_address"]),
+    );
   }
   factory DistributionQueryDelegatorWithdrawAddressRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionQueryDelegatorWithdrawAddressRequest(
-        delegatorAddress: CosmosBaseAddress(decode.getField(1)));
+      delegatorAddress: CosmosBaseAddress(decode.getField(1)),
+    );
   }
 
   @override
@@ -40,13 +45,15 @@ class DistributionQueryDelegatorWithdrawAddressRequest extends CosmosMessage
 
   @override
   DistributionQueryDelegatorWithdrawAddressResponse onResponse(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return DistributionQueryDelegatorWithdrawAddressResponse.deserialize(bytes);
   }
 
   @override
   DistributionQueryDelegatorWithdrawAddressResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return DistributionQueryDelegatorWithdrawAddressResponse.fromJson(json);
   }
 

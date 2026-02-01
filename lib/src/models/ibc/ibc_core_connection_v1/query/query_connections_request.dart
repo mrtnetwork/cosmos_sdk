@@ -11,9 +11,10 @@ class IbcConnectionQueryConnectionsRequest extends CosmosMessage
   factory IbcConnectionQueryConnectionsRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcConnectionQueryConnectionsRequest(
-        pagination: decode
-            .getResult(1)
-            ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)));
+      pagination: decode
+          .getResult(1)
+          ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)),
+    );
   }
 
   @override
@@ -36,7 +37,8 @@ class IbcConnectionQueryConnectionsRequest extends CosmosMessage
 
   @override
   IbcCOnnectionQueryConnectionsResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return IbcCOnnectionQueryConnectionsResponse.fromJson(json);
   }
 

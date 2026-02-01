@@ -3,8 +3,9 @@ import 'package:cosmos_sdk/src/provider/thornode/core/thorenode.dart';
 import 'package:cosmos_sdk/src/provider/thornode/models/models/streaming_swap_state.dart';
 
 /// Returns the state of a streaming swap
-class ThorNodeRequestStreamingSwapState extends ThorNodeRequestParam<
-    StreamingSwapStateResponse, Map<String, dynamic>> {
+class ThorNodeRequestStreamingSwapState
+    extends
+        ThorNodeRequestParam<StreamingSwapStateResponse, Map<String, dynamic>> {
   ThorNodeRequestStreamingSwapState({this.height, required this.hash});
 
   /// optional block height, defaults to current tip

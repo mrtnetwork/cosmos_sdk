@@ -8,18 +8,25 @@ class OsmosisDowntimeDetectorRecoveredSinceDowntimeOfLengthRequest
     extends CosmosMessage
     with
         QueryMessage<
-            OsmosisDowntimeDetectorRecoveredSinceDowntimeOfLengthResponse> {
+          OsmosisDowntimeDetectorRecoveredSinceDowntimeOfLengthResponse
+        > {
   final OsmosisDowntimeDetectorDowntime? downtime;
   final ProtobufDuration recovery;
-  const OsmosisDowntimeDetectorRecoveredSinceDowntimeOfLengthRequest(
-      {this.downtime, required this.recovery});
+  const OsmosisDowntimeDetectorRecoveredSinceDowntimeOfLengthRequest({
+    this.downtime,
+    required this.recovery,
+  });
   factory OsmosisDowntimeDetectorRecoveredSinceDowntimeOfLengthRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisDowntimeDetectorRecoveredSinceDowntimeOfLengthRequest(
       recovery: ProtobufDuration.fromString(decode.getField(2)),
-      downtime: decode.getResult(1)?.to<OsmosisDowntimeDetectorDowntime, int>(
-          (e) => OsmosisDowntimeDetectorDowntime.fromValue(e)),
+      downtime: decode
+          .getResult(1)
+          ?.to<OsmosisDowntimeDetectorDowntime, int>(
+            (e) => OsmosisDowntimeDetectorDowntime.fromValue(e),
+          ),
     );
   }
 
@@ -28,16 +35,20 @@ class OsmosisDowntimeDetectorRecoveredSinceDowntimeOfLengthRequest
 
   @override
   OsmosisDowntimeDetectorRecoveredSinceDowntimeOfLengthResponse onJsonResponse(
-      Map<String, dynamic> json) {
-    return OsmosisDowntimeDetectorRecoveredSinceDowntimeOfLengthResponse
-        .fromJson(json);
+    Map<String, dynamic> json,
+  ) {
+    return OsmosisDowntimeDetectorRecoveredSinceDowntimeOfLengthResponse.fromJson(
+      json,
+    );
   }
 
   @override
   OsmosisDowntimeDetectorRecoveredSinceDowntimeOfLengthResponse onResponse(
-      List<int> bytes) {
-    return OsmosisDowntimeDetectorRecoveredSinceDowntimeOfLengthResponse
-        .deserialize(bytes);
+    List<int> bytes,
+  ) {
+    return OsmosisDowntimeDetectorRecoveredSinceDowntimeOfLengthResponse.deserialize(
+      bytes,
+    );
   }
 
   @override

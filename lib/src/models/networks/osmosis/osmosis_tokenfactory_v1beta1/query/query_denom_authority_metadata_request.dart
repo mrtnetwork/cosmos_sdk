@@ -9,10 +9,12 @@ class OsmosisTokenFactoryQueryDenomAuthorityMetadataRequest
   final String denom;
   OsmosisTokenFactoryQueryDenomAuthorityMetadataRequest({required this.denom});
   factory OsmosisTokenFactoryQueryDenomAuthorityMetadataRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisTokenFactoryQueryDenomAuthorityMetadataRequest(
-        denom: decode.getField(1));
+      denom: decode.getField(1),
+    );
   }
 
   @override
@@ -32,16 +34,20 @@ class OsmosisTokenFactoryQueryDenomAuthorityMetadataRequest
 
   @override
   OsmosisTokenFactoryQueryDenomAuthorityMetadataResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisTokenFactoryQueryDenomAuthorityMetadataResponse.fromJson(
-        json);
+      json,
+    );
   }
 
   @override
   OsmosisTokenFactoryQueryDenomAuthorityMetadataResponse onResponse(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return OsmosisTokenFactoryQueryDenomAuthorityMetadataResponse.deserialize(
-        bytes);
+      bytes,
+    );
   }
 
   @override

@@ -3,8 +3,9 @@ import 'package:cosmos_sdk/src/provider/thornode/core/thorenode.dart';
 import 'package:cosmos_sdk/src/provider/thornode/models/models/constant.dart';
 
 /// Returns constant configuration, can be overridden by mimir.
-class ThorNodeRequestConstants extends ThorNodeRequestParam<
-    ThorNodeNetworkConstants, Map<String, dynamic>> {
+class ThorNodeRequestConstants
+    extends
+        ThorNodeRequestParam<ThorNodeNetworkConstants, Map<String, dynamic>> {
   ThorNodeRequestConstants({this.height});
 
   /// optional block height, defaults to current tip

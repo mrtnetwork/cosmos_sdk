@@ -9,12 +9,15 @@ class OsmosisGammQueryTotalSharesResponse extends CosmosMessage {
   factory OsmosisGammQueryTotalSharesResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisGammQueryTotalSharesResponse(
-        Coin.deserialize(decode.getField(1)));
+      Coin.deserialize(decode.getField(1)),
+    );
   }
   factory OsmosisGammQueryTotalSharesResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisGammQueryTotalSharesResponse(
-        Coin.fromJson(json["total_shares"]));
+      Coin.fromJson(json["total_shares"]),
+    );
   }
 
   @override

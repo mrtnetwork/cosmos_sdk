@@ -14,16 +14,19 @@ class OsmosisTxfeesGenesisState extends CosmosMessage {
   factory OsmosisTxfeesGenesisState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisTxfeesGenesisState(
-        basedenom: decode.getField(1),
-        feetokens: decode
-            .getFields<List<int>>(2)
-            .map((e) => OsmosisTxfeesFeeToken.deserialize(e))
-            .toList());
+      basedenom: decode.getField(1),
+      feetokens:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => OsmosisTxfeesFeeToken.deserialize(e))
+              .toList(),
+    );
   }
   factory OsmosisTxfeesGenesisState.fromJson(Map<String, dynamic> json) {
     return OsmosisTxfeesGenesisState(
       basedenom: json["basedenom"],
-      feetokens: (json["feetokens"] as List?)
+      feetokens:
+          (json["feetokens"] as List?)
               ?.map((e) => OsmosisTxfeesFeeToken.fromJson(e))
               .toList() ??
           <OsmosisTxfeesFeeToken>[],
@@ -37,7 +40,7 @@ class OsmosisTxfeesGenesisState extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "basedenom": basedenom,
-      "feetokens": feetokens.map((e) => e.toJson()).toList()
+      "feetokens": feetokens.map((e) => e.toJson()).toList(),
     };
   }
 

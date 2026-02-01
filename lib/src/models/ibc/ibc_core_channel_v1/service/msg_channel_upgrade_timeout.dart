@@ -16,33 +16,36 @@ class MsgChannelUpgradeTimeout extends IbcService<EmptyServiceRequestResponse> {
   final List<int>? proofChannel;
   final IbcClientHeight proofHeight;
   final String? signer;
-  MsgChannelUpgradeTimeout(
-      {this.portId,
-      this.channelId,
-      required this.counterpartyChannel,
-      List<int>? proofChannel,
-      required this.proofHeight,
-      this.signer})
-      : proofChannel = BytesUtils.tryToBytes(proofChannel, unmodifiable: true);
+  MsgChannelUpgradeTimeout({
+    this.portId,
+    this.channelId,
+    required this.counterpartyChannel,
+    List<int>? proofChannel,
+    required this.proofHeight,
+    this.signer,
+  }) : proofChannel = BytesUtils.tryToBytes(proofChannel, unmodifiable: true);
   factory MsgChannelUpgradeTimeout.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgChannelUpgradeTimeout(
-        portId: decode.getField(1),
-        channelId: decode.getField(2),
-        counterpartyChannel: IbcChannelChannel.deserialize(decode.getField(3)),
-        proofChannel: decode.getField(4),
-        proofHeight: IbcClientHeight.deserialize(decode.getField(5)),
-        signer: decode.getField(6));
+      portId: decode.getField(1),
+      channelId: decode.getField(2),
+      counterpartyChannel: IbcChannelChannel.deserialize(decode.getField(3)),
+      proofChannel: decode.getField(4),
+      proofHeight: IbcClientHeight.deserialize(decode.getField(5)),
+      signer: decode.getField(6),
+    );
   }
   factory MsgChannelUpgradeTimeout.fromJson(Map<String, dynamic> json) {
     return MsgChannelUpgradeTimeout(
-        portId: json.as("port_id"),
-        channelId: json.as("channel_id"),
-        counterpartyChannel:
-            IbcChannelChannel.fromJson(json.asMap("counterparty_channel")),
-        proofChannel: json.asBytes("proof_channel"),
-        proofHeight: IbcClientHeight.fromJson(json.asMap("proof_height")),
-        signer: json.as("signer"));
+      portId: json.as("port_id"),
+      channelId: json.as("channel_id"),
+      counterpartyChannel: IbcChannelChannel.fromJson(
+        json.asMap("counterparty_channel"),
+      ),
+      proofChannel: json.asBytes("proof_channel"),
+      proofHeight: IbcClientHeight.fromJson(json.asMap("proof_height")),
+      signer: json.as("signer"),
+    );
   }
 
   @override
@@ -56,7 +59,7 @@ class MsgChannelUpgradeTimeout extends IbcService<EmptyServiceRequestResponse> {
       "counterparty_channel": counterpartyChannel.toJson(),
       "proof_channel": BytesUtils.tryToHexString(proofChannel),
       "proof_height": proofHeight.toJson(),
-      "signer": signer
+      "signer": signer,
     };
   }
 
@@ -65,13 +68,13 @@ class MsgChannelUpgradeTimeout extends IbcService<EmptyServiceRequestResponse> {
 
   @override
   List get values => [
-        portId,
-        channelId,
-        counterpartyChannel,
-        proofChannel,
-        proofHeight,
-        signer
-      ];
+    portId,
+    channelId,
+    counterpartyChannel,
+    proofChannel,
+    proofHeight,
+    signer,
+  ];
 
   @override
   List<String?> get signers => [signer];
@@ -79,6 +82,7 @@ class MsgChannelUpgradeTimeout extends IbcService<EmptyServiceRequestResponse> {
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        IbcTypes.msgChannelUpgradeTimeoutResponse);
+      IbcTypes.msgChannelUpgradeTimeoutResponse,
+    );
   }
 }

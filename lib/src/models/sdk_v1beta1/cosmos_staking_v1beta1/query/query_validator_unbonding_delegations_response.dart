@@ -11,31 +11,38 @@ class QueryValidatorUnbondingDelegationsResponse extends CosmosMessage {
   /// pagination defines the pagination in the response.
   final PageResponse? pagination;
   factory QueryValidatorUnbondingDelegationsResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return QueryValidatorUnbondingDelegationsResponse(
-      unbondingResponses: (json["unbonding_responses"] as List?)
+      unbondingResponses:
+          (json["unbonding_responses"] as List?)
               ?.map((e) => UnbondingDelegation.fromJson(e))
               .toList() ??
           [],
-      pagination: json["pagination"] == null
-          ? null
-          : PageResponse.fromJson(json["pagination"]),
+      pagination:
+          json["pagination"] == null
+              ? null
+              : PageResponse.fromJson(json["pagination"]),
     );
   }
-  QueryValidatorUnbondingDelegationsResponse(
-      {required List<UnbondingDelegation> unbondingResponses, this.pagination})
-      : unbondingResponses = unbondingResponses.immutable;
+  QueryValidatorUnbondingDelegationsResponse({
+    required List<UnbondingDelegation> unbondingResponses,
+    this.pagination,
+  }) : unbondingResponses = unbondingResponses.immutable;
   factory QueryValidatorUnbondingDelegationsResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryValidatorUnbondingDelegationsResponse(
-        unbondingResponses: decode
-            .getFields<List<int>>(1)
-            .map((e) => UnbondingDelegation.deserialize(e))
-            .toList(),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
+      unbondingResponses:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => UnbondingDelegation.deserialize(e))
+              .toList(),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
+    );
   }
 
   @override
@@ -45,7 +52,7 @@ class QueryValidatorUnbondingDelegationsResponse extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "unbonding_responses": unbondingResponses.map((e) => e.toJson()).toList(),
-      "pagination": pagination?.toJson()
+      "pagination": pagination?.toJson(),
     };
   }
 

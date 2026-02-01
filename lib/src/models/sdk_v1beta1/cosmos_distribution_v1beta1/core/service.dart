@@ -13,60 +13,70 @@ abstract class DistributionV1Beta1Service<T extends CosmosMessage>
     extends CosmosSDKService<T> {
   const DistributionV1Beta1Service();
 
-  static T? fromJson<T extends DistributionV1Beta1Service>(
-      {required String typeUrl, required Map<String, dynamic> json}) {
+  static T? fromJson<T extends DistributionV1Beta1Service>({
+    required String typeUrl,
+    required Map<String, dynamic> json,
+  }) {
     final type = DistributionV1beta1Types.findService(typeUrl);
-    final DistributionV1Beta1Service? service = switch (type) {
-      DistributionV1beta1Types.distributionMsgDepositValidatorRewardsPool =>
-        DistributionMsgDepositValidatorRewardsPool.fromJson(json),
-      DistributionV1beta1Types.distributionMsgSetWithdrawAddress =>
-        DistributionMsgSetWithdrawAddress.fromJson(json),
-      DistributionV1beta1Types.distributionMsgUpdateParams =>
-        DistributionMsgUpdateParams.fromJson(json),
-      DistributionV1beta1Types.distributionMsgWithdrawDelegatorReward =>
-        DistributionMsgWithdrawDelegatorReward.fromJson(json),
-      DistributionV1beta1Types.distributionMsgWithdrawValidatorCommission =>
-        DistributionMsgWithdrawValidatorCommission.fromJson(json),
-      DistributionV1beta1Types.distributionMsgFundCommunityPool =>
-        DistributionMsgFundCommunityPool.fromJson(json),
-      _ => null
-    } as DistributionV1Beta1Service?;
+    final DistributionV1Beta1Service? service =
+        switch (type) {
+              DistributionV1beta1Types
+                  .distributionMsgDepositValidatorRewardsPool =>
+                DistributionMsgDepositValidatorRewardsPool.fromJson(json),
+              DistributionV1beta1Types.distributionMsgSetWithdrawAddress =>
+                DistributionMsgSetWithdrawAddress.fromJson(json),
+              DistributionV1beta1Types.distributionMsgUpdateParams =>
+                DistributionMsgUpdateParams.fromJson(json),
+              DistributionV1beta1Types.distributionMsgWithdrawDelegatorReward =>
+                DistributionMsgWithdrawDelegatorReward.fromJson(json),
+              DistributionV1beta1Types
+                  .distributionMsgWithdrawValidatorCommission =>
+                DistributionMsgWithdrawValidatorCommission.fromJson(json),
+              DistributionV1beta1Types.distributionMsgFundCommunityPool =>
+                DistributionMsgFundCommunityPool.fromJson(json),
+              _ => null,
+            }
+            as DistributionV1Beta1Service?;
     if (service == null) return null;
     if (service is! T) {
-      throw DartCosmosSdkPluginException("Invalid DistributionV1beta1 Service.",
-          details: {
-            "excepted": "$T",
-            "service": service.runtimeType.toString()
-          });
+      throw DartCosmosSdkPluginException(
+        "Invalid DistributionV1beta1 Service.",
+        details: {"excepted": "$T", "service": service.runtimeType.toString()},
+      );
     }
     return service;
   }
 
-  static T? deserialize<T extends DistributionV1Beta1Service>(
-      {required String typeUrl, required List<int> bytes}) {
+  static T? deserialize<T extends DistributionV1Beta1Service>({
+    required String typeUrl,
+    required List<int> bytes,
+  }) {
     final type = DistributionV1beta1Types.findService(typeUrl);
-    final DistributionV1Beta1Service? service = switch (type) {
-      DistributionV1beta1Types.distributionMsgDepositValidatorRewardsPool =>
-        DistributionMsgDepositValidatorRewardsPool.deserialize(bytes),
-      DistributionV1beta1Types.distributionMsgSetWithdrawAddress =>
-        DistributionMsgSetWithdrawAddress.deserialize(bytes),
-      DistributionV1beta1Types.distributionMsgUpdateParams =>
-        DistributionMsgUpdateParams.deserialize(bytes),
-      DistributionV1beta1Types.distributionMsgWithdrawDelegatorReward =>
-        DistributionMsgWithdrawDelegatorReward.deserialize(bytes),
-      DistributionV1beta1Types.distributionMsgWithdrawValidatorCommission =>
-        DistributionMsgWithdrawValidatorCommission.deserialize(bytes),
-      DistributionV1beta1Types.distributionMsgFundCommunityPool =>
-        DistributionMsgFundCommunityPool.deserialize(bytes),
-      _ => null
-    } as DistributionV1Beta1Service?;
+    final DistributionV1Beta1Service? service =
+        switch (type) {
+              DistributionV1beta1Types
+                  .distributionMsgDepositValidatorRewardsPool =>
+                DistributionMsgDepositValidatorRewardsPool.deserialize(bytes),
+              DistributionV1beta1Types.distributionMsgSetWithdrawAddress =>
+                DistributionMsgSetWithdrawAddress.deserialize(bytes),
+              DistributionV1beta1Types.distributionMsgUpdateParams =>
+                DistributionMsgUpdateParams.deserialize(bytes),
+              DistributionV1beta1Types.distributionMsgWithdrawDelegatorReward =>
+                DistributionMsgWithdrawDelegatorReward.deserialize(bytes),
+              DistributionV1beta1Types
+                  .distributionMsgWithdrawValidatorCommission =>
+                DistributionMsgWithdrawValidatorCommission.deserialize(bytes),
+              DistributionV1beta1Types.distributionMsgFundCommunityPool =>
+                DistributionMsgFundCommunityPool.deserialize(bytes),
+              _ => null,
+            }
+            as DistributionV1Beta1Service?;
     if (service == null) return null;
     if (service is! T) {
-      throw DartCosmosSdkPluginException("Invalid DistributionV1beta1 Service.",
-          details: {
-            "excepted": "$T",
-            "service": service.runtimeType.toString()
-          });
+      throw DartCosmosSdkPluginException(
+        "Invalid DistributionV1beta1 Service.",
+        details: {"excepted": "$T", "service": service.runtimeType.toString()},
+      );
     }
     return service;
   }

@@ -21,14 +21,18 @@ class MsgRedeemTokensForShares
   factory MsgRedeemTokensForShares.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgRedeemTokensForShares(
-        delegatorAddress: decode.getField(1),
-        amount: decode.getResult(2)?.to<Coin, List<int>>(Coin.deserialize));
+      delegatorAddress: decode.getField(1),
+      amount: decode.getResult(2)?.to<Coin, List<int>>(Coin.deserialize),
+    );
   }
   factory MsgRedeemTokensForShares.fromJson(Map<String, dynamic> json) {
     return MsgRedeemTokensForShares(
-        delegatorAddress: json.as("delegator_address"),
-        amount: json.maybeAs<Coin, Map<String, dynamic>>(
-            key: "amount", onValue: Coin.fromJson));
+      delegatorAddress: json.as("delegator_address"),
+      amount: json.maybeAs<Coin, Map<String, dynamic>>(
+        key: "amount",
+        onValue: Coin.fromJson,
+      ),
+    );
   }
 
   @override
@@ -36,10 +40,7 @@ class MsgRedeemTokensForShares
 
   @override
   Map<String, dynamic> toJson() {
-    return {
-      "delegator_address": delegatorAddress,
-      "amount": amount?.toJson(),
-    };
+    return {"delegator_address": delegatorAddress, "amount": amount?.toJson()};
   }
 
   @override

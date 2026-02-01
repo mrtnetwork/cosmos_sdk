@@ -30,26 +30,27 @@ class QueryVerifyMembershipRequest extends CosmosMessage
 
   /// optional block delay
   final BigInt? blockDelay;
-  QueryVerifyMembershipRequest(
-      {this.clientId,
-      List<int>? proof,
-      required this.proofHeight,
-      required this.merklePath,
-      List<int>? value,
-      this.timeDelay,
-      this.blockDelay})
-      : proof = BytesUtils.tryToBytes(proof),
-        value = BytesUtils.tryToBytes(value);
+  QueryVerifyMembershipRequest({
+    this.clientId,
+    List<int>? proof,
+    required this.proofHeight,
+    required this.merklePath,
+    List<int>? value,
+    this.timeDelay,
+    this.blockDelay,
+  }) : proof = BytesUtils.tryToBytes(proof),
+       value = BytesUtils.tryToBytes(value);
   factory QueryVerifyMembershipRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryVerifyMembershipRequest(
-        clientId: decode.getField(1),
-        proof: decode.getField(2),
-        proofHeight: IbcClientHeight.deserialize(decode.getField(3)),
-        merklePath: IbcCommitmentMerklePath.deserialize(decode.getField(4)),
-        value: decode.getField(5),
-        timeDelay: decode.getField(6),
-        blockDelay: decode.getField(7));
+      clientId: decode.getField(1),
+      proof: decode.getField(2),
+      proofHeight: IbcClientHeight.deserialize(decode.getField(3)),
+      merklePath: IbcCommitmentMerklePath.deserialize(decode.getField(4)),
+      value: decode.getField(5),
+      timeDelay: decode.getField(6),
+      blockDelay: decode.getField(7),
+    );
   }
 
   @override
@@ -64,7 +65,7 @@ class QueryVerifyMembershipRequest extends CosmosMessage
       "merkle_path": merklePath.toJson(),
       "value": CosmosUtils.tryToBase64(value),
       "time_delay": timeDelay?.toString(),
-      "block_delay": blockDelay?.toString()
+      "block_delay": blockDelay?.toString(),
     };
   }
 
@@ -72,8 +73,15 @@ class QueryVerifyMembershipRequest extends CosmosMessage
   TypeUrl get typeUrl => IbcTypes.queryVerifyMembershipRequest;
 
   @override
-  List get values =>
-      [clientId, proof, proofHeight, merklePath, value, timeDelay, blockDelay];
+  List get values => [
+    clientId,
+    proof,
+    proofHeight,
+    merklePath,
+    value,
+    timeDelay,
+    blockDelay,
+  ];
 
   @override
   QueryVerifyMembershipResponse onResponse(List<int> bytes) {

@@ -11,32 +11,36 @@ class CosmWasmV1CodeInfoResponse extends CosmosMessage {
   final String? creator;
   final List<int>? dataHash;
   final CosmWasmV1AccessConfig? instantiatePermission;
-  CosmWasmV1CodeInfoResponse(
-      {required this.codeId,
-      required this.creator,
-      required List<int>? dataHash,
-      required this.instantiatePermission})
-      : dataHash = dataHash?.asImmutableBytes;
+  CosmWasmV1CodeInfoResponse({
+    required this.codeId,
+    required this.creator,
+    required List<int>? dataHash,
+    required this.instantiatePermission,
+  }) : dataHash = dataHash?.asImmutableBytes;
   factory CosmWasmV1CodeInfoResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmWasmV1CodeInfoResponse(
-        codeId: decode.getField(1),
-        creator: decode.getField(2),
-        dataHash: decode.getField(3),
-        instantiatePermission: decode
-            .getResult(6)
-            ?.to<CosmWasmV1AccessConfig, List<int>>(
-                (e) => CosmWasmV1AccessConfig.deserialize(e)));
+      codeId: decode.getField(1),
+      creator: decode.getField(2),
+      dataHash: decode.getField(3),
+      instantiatePermission: decode
+          .getResult(6)
+          ?.to<CosmWasmV1AccessConfig, List<int>>(
+            (e) => CosmWasmV1AccessConfig.deserialize(e),
+          ),
+    );
   }
   factory CosmWasmV1CodeInfoResponse.fromJson(Map<String, dynamic> json) {
     return CosmWasmV1CodeInfoResponse(
-        codeId: json.asBigInt("code_id"),
-        creator: json.as("creator"),
-        dataHash: json.asBytes("data_hash"),
-        instantiatePermission:
-            json.maybeAs<CosmWasmV1AccessConfig, Map<String, dynamic>>(
-                key: "instantiate_permission",
-                onValue: CosmWasmV1AccessConfig.fromJson));
+      codeId: json.asBigInt("code_id"),
+      creator: json.as("creator"),
+      dataHash: json.asBytes("data_hash"),
+      instantiatePermission: json
+          .maybeAs<CosmWasmV1AccessConfig, Map<String, dynamic>>(
+            key: "instantiate_permission",
+            onValue: CosmWasmV1AccessConfig.fromJson,
+          ),
+    );
   }
 
   @override
@@ -48,7 +52,7 @@ class CosmWasmV1CodeInfoResponse extends CosmosMessage {
       "code_id": codeId.toString(),
       "creator": creator,
       "data_hash": CosmosUtils.tryToBase64(dataHash),
-      "instantiate_permission": instantiatePermission?.toJson()
+      "instantiate_permission": instantiatePermission?.toJson(),
     };
   }
 

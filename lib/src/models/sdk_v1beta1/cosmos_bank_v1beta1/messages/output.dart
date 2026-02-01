@@ -14,17 +14,19 @@ class Output extends CosmosMessage {
   factory Output.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Output(
-        address: CosmosBaseAddress(decode.getField(1)),
-        coins: decode
-            .getFields<List<int>>(2)
-            .map((e) => Coin.deserialize(e))
-            .toList());
+      address: CosmosBaseAddress(decode.getField(1)),
+      coins:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
+    );
   }
   factory Output.fromJson(Map<String, dynamic> json) {
     return Output(
-        address: CosmosBaseAddress(json.as("address")),
-        coins:
-            json.asListOfMap("coins")!.map((e) => Coin.fromJson(e)).toList());
+      address: CosmosBaseAddress(json.as("address")),
+      coins: json.asListOfMap("coins")!.map((e) => Coin.fromJson(e)).toList(),
+    );
   }
 
   @override
@@ -34,7 +36,7 @@ class Output extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "address": address.address,
-      "coins": coins.map((e) => e.toJson()).toList()
+      "coins": coins.map((e) => e.toJson()).toList(),
     };
   }
 

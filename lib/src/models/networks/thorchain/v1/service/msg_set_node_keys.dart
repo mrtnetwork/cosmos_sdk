@@ -6,15 +6,18 @@ class ThorchainMsgSetNodeKeys extends CosmosMessage {
   final ThorchainPubKeySet pubKeySetSet;
   final String? validatorConsPubKey;
   final List<int>? signer;
-  ThorchainMsgSetNodeKeys(
-      {required this.pubKeySetSet, this.validatorConsPubKey, List<int>? signer})
-      : signer = BytesUtils.tryToBytes(signer, unmodifiable: true);
+  ThorchainMsgSetNodeKeys({
+    required this.pubKeySetSet,
+    this.validatorConsPubKey,
+    List<int>? signer,
+  }) : signer = BytesUtils.tryToBytes(signer, unmodifiable: true);
   factory ThorchainMsgSetNodeKeys.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainMsgSetNodeKeys(
-        pubKeySetSet: ThorchainPubKeySet.deserialize(decode.getField(1)),
-        validatorConsPubKey: decode.getField(2),
-        signer: decode.getField(3));
+      pubKeySetSet: ThorchainPubKeySet.deserialize(decode.getField(1)),
+      validatorConsPubKey: decode.getField(2),
+      signer: decode.getField(3),
+    );
   }
 
   @override
@@ -25,7 +28,7 @@ class ThorchainMsgSetNodeKeys extends CosmosMessage {
     return {
       "pub_key_set_set": pubKeySetSet.toJson(),
       "validator_cons_pub_key": validatorConsPubKey,
-      "signer": BytesUtils.tryToHexString(signer)
+      "signer": BytesUtils.tryToHexString(signer),
     };
   }
 

@@ -10,7 +10,9 @@ class IbcTendermintFraction extends CosmosMessage {
   factory IbcTendermintFraction.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcTendermintFraction(
-        numerator: decode.getField(1), denominator: decode.getField(2));
+      numerator: decode.getField(1),
+      denominator: decode.getField(2),
+    );
   }
 
   @override

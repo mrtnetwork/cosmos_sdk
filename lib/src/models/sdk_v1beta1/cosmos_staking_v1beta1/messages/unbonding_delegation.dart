@@ -17,16 +17,20 @@ class UnbondingDelegation extends CosmosMessage {
   final List<UnbondingDelegationEntry> entries;
   factory UnbondingDelegation.fromJson(Map<String, dynamic> json) {
     return UnbondingDelegation(
-        delegatorAddress: json["delegator_address"] == null
-            ? null
-            : CosmosBaseAddress(json["delegator_address"]),
-        entries: (json["entries"] as List?)
-                ?.map((e) => UnbondingDelegationEntry.fromJson(e))
-                .toList() ??
-            [],
-        validatorAddress: json["validator_address"] == null
-            ? null
-            : CosmosBaseAddress(json["validator_address"]));
+      delegatorAddress:
+          json["delegator_address"] == null
+              ? null
+              : CosmosBaseAddress(json["delegator_address"]),
+      entries:
+          (json["entries"] as List?)
+              ?.map((e) => UnbondingDelegationEntry.fromJson(e))
+              .toList() ??
+          [],
+      validatorAddress:
+          json["validator_address"] == null
+              ? null
+              : CosmosBaseAddress(json["validator_address"]),
+    );
   }
 
   UnbondingDelegation({
@@ -37,16 +41,18 @@ class UnbondingDelegation extends CosmosMessage {
   factory UnbondingDelegation.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return UnbondingDelegation(
-        delegatorAddress: decode
-            .getResult(1)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        validatorAddress: decode
-            .getResult(1)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        entries: decode
-            .getFields<List<int>>(3)
-            .map((e) => UnbondingDelegationEntry.deserialize(e))
-            .toList());
+      delegatorAddress: decode
+          .getResult(1)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      validatorAddress: decode
+          .getResult(1)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      entries:
+          decode
+              .getFields<List<int>>(3)
+              .map((e) => UnbondingDelegationEntry.deserialize(e))
+              .toList(),
+    );
   }
 
   @override

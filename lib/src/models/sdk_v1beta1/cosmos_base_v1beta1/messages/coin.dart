@@ -14,8 +14,9 @@ class Coin extends CosmosMessage {
   factory Coin.deserialize(List<int> data) {
     final decode = CosmosProtocolBuffer.decode(data);
     return Coin(
-        denom: decode.getField<String>(1),
-        amount: BigintUtils.parse(decode.getField<String>(2)));
+      denom: decode.getField<String>(1),
+      amount: BigintUtils.parse(decode.getField<String>(2)),
+    );
   }
   factory Coin.fromJson(Map<String, dynamic> json) {
     return Coin(denom: json["denom"], amount: BigInt.parse(json["amount"]));
@@ -30,10 +31,7 @@ class Coin extends CosmosMessage {
 
   @override
   Map<String, dynamic> toJson() {
-    return {
-      "amount": amount.toString(),
-      "denom": denom,
-    };
+    return {"amount": amount.toString(), "denom": denom};
   }
 
   @override

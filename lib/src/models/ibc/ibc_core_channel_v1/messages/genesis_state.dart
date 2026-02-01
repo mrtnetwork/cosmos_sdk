@@ -20,56 +20,64 @@ class IbcChannelGenesisState extends CosmosMessage {
   /// the sequence for the next generated channel identifier
   final BigInt? nextChannelSequence;
   final IbcChannelParams params;
-  IbcChannelGenesisState(
-      {required List<IbcChannelIdentifiedChannel> channels,
-      required List<IbcChannelPacketState> acknowledgements,
-      required List<IbcChannelPacketState> commitments,
-      required List<IbcChannelPacketState> receipts,
-      required List<IbcChannelPacketSequence> sendSequences,
-      required List<IbcChannelPacketSequence> recvSequences,
-      required List<IbcChannelPacketSequence> ackSequences,
-      this.nextChannelSequence,
-      required this.params})
-      : channels = channels.immutable,
-        acknowledgements = acknowledgements.immutable,
-        commitments = commitments.immutable,
-        receipts = receipts.immutable,
-        sendSequences = sendSequences.immutable,
-        recvSequences = recvSequences.immutable,
-        ackSequences = ackSequences.immutable;
+  IbcChannelGenesisState({
+    required List<IbcChannelIdentifiedChannel> channels,
+    required List<IbcChannelPacketState> acknowledgements,
+    required List<IbcChannelPacketState> commitments,
+    required List<IbcChannelPacketState> receipts,
+    required List<IbcChannelPacketSequence> sendSequences,
+    required List<IbcChannelPacketSequence> recvSequences,
+    required List<IbcChannelPacketSequence> ackSequences,
+    this.nextChannelSequence,
+    required this.params,
+  }) : channels = channels.immutable,
+       acknowledgements = acknowledgements.immutable,
+       commitments = commitments.immutable,
+       receipts = receipts.immutable,
+       sendSequences = sendSequences.immutable,
+       recvSequences = recvSequences.immutable,
+       ackSequences = ackSequences.immutable;
   factory IbcChannelGenesisState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcChannelGenesisState(
-        channels: decode
-            .getFields<List<int>>(1)
-            .map((e) => IbcChannelIdentifiedChannel.deserialize(e))
-            .toList(),
-        acknowledgements: decode
-            .getFields<List<int>>(2)
-            .map((e) => IbcChannelPacketState.deserialize(e))
-            .toList(),
-        commitments: decode
-            .getFields<List<int>>(3)
-            .map((e) => IbcChannelPacketState.deserialize(e))
-            .toList(),
-        receipts: decode
-            .getFields<List<int>>(4)
-            .map((e) => IbcChannelPacketState.deserialize(e))
-            .toList(),
-        sendSequences: decode
-            .getFields<List<int>>(5)
-            .map((e) => IbcChannelPacketSequence.deserialize(e))
-            .toList(),
-        recvSequences: decode
-            .getFields<List<int>>(6)
-            .map((e) => IbcChannelPacketSequence.deserialize(e))
-            .toList(),
-        ackSequences: decode
-            .getFields<List<int>>(7)
-            .map((e) => IbcChannelPacketSequence.deserialize(e))
-            .toList(),
-        nextChannelSequence: decode.getField(8),
-        params: IbcChannelParams.deserialize(decode.getField(9)));
+      channels:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => IbcChannelIdentifiedChannel.deserialize(e))
+              .toList(),
+      acknowledgements:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => IbcChannelPacketState.deserialize(e))
+              .toList(),
+      commitments:
+          decode
+              .getFields<List<int>>(3)
+              .map((e) => IbcChannelPacketState.deserialize(e))
+              .toList(),
+      receipts:
+          decode
+              .getFields<List<int>>(4)
+              .map((e) => IbcChannelPacketState.deserialize(e))
+              .toList(),
+      sendSequences:
+          decode
+              .getFields<List<int>>(5)
+              .map((e) => IbcChannelPacketSequence.deserialize(e))
+              .toList(),
+      recvSequences:
+          decode
+              .getFields<List<int>>(6)
+              .map((e) => IbcChannelPacketSequence.deserialize(e))
+              .toList(),
+      ackSequences:
+          decode
+              .getFields<List<int>>(7)
+              .map((e) => IbcChannelPacketSequence.deserialize(e))
+              .toList(),
+      nextChannelSequence: decode.getField(8),
+      params: IbcChannelParams.deserialize(decode.getField(9)),
+    );
   }
 
   @override
@@ -85,7 +93,7 @@ class IbcChannelGenesisState extends CosmosMessage {
       "send_sequences": sendSequences.map((e) => e.toJson()).toList(),
       "recv_sequences": recvSequences.map((e) => e.toJson()).toList(),
       "ack_sequences": ackSequences.map((e) => e.toJson()).toList(),
-      "next_channel_sequence": nextChannelSequence?.toString()
+      "next_channel_sequence": nextChannelSequence?.toString(),
     };
   }
 
@@ -94,14 +102,14 @@ class IbcChannelGenesisState extends CosmosMessage {
 
   @override
   List get values => [
-        channels,
-        acknowledgements,
-        commitments,
-        receipts,
-        sendSequences,
-        recvSequences,
-        ackSequences,
-        nextChannelSequence,
-        params
-      ];
+    channels,
+    acknowledgements,
+    commitments,
+    receipts,
+    sendSequences,
+    recvSequences,
+    ackSequences,
+    nextChannelSequence,
+    params,
+  ];
 }

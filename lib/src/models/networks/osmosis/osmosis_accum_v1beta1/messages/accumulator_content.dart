@@ -8,22 +8,25 @@ import 'package:blockchain_utils/helper/helper.dart';
 class OsmosisAccumAccumulatorContent extends CosmosMessage {
   final List<DecCoin> accumValue;
   final String totalShares;
-  OsmosisAccumAccumulatorContent(
-      {required List<DecCoin> accumValue, required this.totalShares})
-      : accumValue = accumValue.immutable;
+  OsmosisAccumAccumulatorContent({
+    required List<DecCoin> accumValue,
+    required this.totalShares,
+  }) : accumValue = accumValue.immutable;
   factory OsmosisAccumAccumulatorContent.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisAccumAccumulatorContent(
-      accumValue: decode
-          .getFields<List<int>>(1)
-          .map((e) => DecCoin.deserialize(e))
-          .toList(),
+      accumValue:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => DecCoin.deserialize(e))
+              .toList(),
       totalShares: decode.getField(2),
     );
   }
   factory OsmosisAccumAccumulatorContent.fromJson(Map<String, dynamic> json) {
     return OsmosisAccumAccumulatorContent(
-      accumValue: (json["accum_value"] as List?)
+      accumValue:
+          (json["accum_value"] as List?)
               ?.map((e) => DecCoin.fromJson(e))
               .toList() ??
           <DecCoin>[],

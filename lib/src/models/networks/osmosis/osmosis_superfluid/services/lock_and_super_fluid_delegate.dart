@@ -8,34 +8,44 @@ import 'package:cosmos_sdk/src/utils/quick.dart';
 import 'msg_lock_and_super_fluid_delegate_response.dart';
 
 /// Execute superfluid delegation for a lockup
-class OsmosisSuperfluidMsgLockAndSuperfluidDelegate extends OsmosisSuperfluid<
-    OsmosisSuperfluidMsgLockAndSuperfluidDelegateResponse> {
+class OsmosisSuperfluidMsgLockAndSuperfluidDelegate
+    extends
+        OsmosisSuperfluid<
+          OsmosisSuperfluidMsgLockAndSuperfluidDelegateResponse
+        > {
   final String? sender;
   final List<Coin> coins;
   final String? valAddr;
 
-  OsmosisSuperfluidMsgLockAndSuperfluidDelegate(
-      {this.sender, required List<Coin> coins, this.valAddr})
-      : coins = coins.immutable;
+  OsmosisSuperfluidMsgLockAndSuperfluidDelegate({
+    this.sender,
+    required List<Coin> coins,
+    this.valAddr,
+  }) : coins = coins.immutable;
   factory OsmosisSuperfluidMsgLockAndSuperfluidDelegate.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidMsgLockAndSuperfluidDelegate(
-        coins: decode
-            .getFields<List<int>>(2)
-            .map((e) => Coin.deserialize(e))
-            .toList(),
-        sender: decode.getField(1),
-        valAddr: decode.getField(3));
+      coins:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
+      sender: decode.getField(1),
+      valAddr: decode.getField(3),
+    );
   }
   factory OsmosisSuperfluidMsgLockAndSuperfluidDelegate.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisSuperfluidMsgLockAndSuperfluidDelegate(
-        coins:
-            json.asListOfMap("coins")?.map((e) => Coin.fromJson(e)).toList() ??
-                [],
-        sender: json.as("sender"),
-        valAddr: json.as("val_addr"));
+      coins:
+          json.asListOfMap("coins")?.map((e) => Coin.fromJson(e)).toList() ??
+          [],
+      sender: json.as("sender"),
+      valAddr: json.as("val_addr"),
+    );
   }
 
   @override
@@ -60,8 +70,10 @@ class OsmosisSuperfluidMsgLockAndSuperfluidDelegate extends OsmosisSuperfluid<
   List<String?> get signers => [sender];
   @override
   OsmosisSuperfluidMsgLockAndSuperfluidDelegateResponse onResponse(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return OsmosisSuperfluidMsgLockAndSuperfluidDelegateResponse.deserialize(
-        bytes);
+      bytes,
+    );
   }
 }

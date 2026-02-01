@@ -34,33 +34,38 @@ class ThorchainMsgAddLiquidity
   factory ThorchainMsgAddLiquidity.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainMsgAddLiquidity(
-        tx: ThorchainTx.deserialize(decode.getField(1)),
-        asset: ThorchainAsset.deserialize(decode.getField(2)),
-        assetAmount: BigintUtils.parse(decode.getField<String>(3)),
-        runeAmount: BigintUtils.parse(decode.getField<String>(4)),
-        runeAddress: decode.getField(5),
-        assetAddress: decode.getField(6),
-        affiliateAddress: decode.getField(7),
-        affiliateBasisPoints: decode.getField(8),
-        signer: decode.getResult(9)?.to<CosmosBaseAddress, List<int>>(
-            (e) => CosmosBaseAddress.fromBytes(e)));
+      tx: ThorchainTx.deserialize(decode.getField(1)),
+      asset: ThorchainAsset.deserialize(decode.getField(2)),
+      assetAmount: BigintUtils.parse(decode.getField<String>(3)),
+      runeAmount: BigintUtils.parse(decode.getField<String>(4)),
+      runeAddress: decode.getField(5),
+      assetAddress: decode.getField(6),
+      affiliateAddress: decode.getField(7),
+      affiliateBasisPoints: decode.getField(8),
+      signer: decode
+          .getResult(9)
+          ?.to<CosmosBaseAddress, List<int>>(
+            (e) => CosmosBaseAddress.fromBytes(e),
+          ),
+    );
   }
   factory ThorchainMsgAddLiquidity.fromJson(Map<String, dynamic> json) {
     return ThorchainMsgAddLiquidity(
-        tx: ThorchainTx.fromJson(json.asMap("tx")),
-        asset: ThorchainAsset.fromJson(json.asMap("asset")),
-        assetAmount: json.asBigInt("asset_amount"),
-        runeAmount: json.asBigInt("rune_amount"),
-        runeAddress: json.as("rune_address"),
-        assetAddress: json.as("asset_address"),
-        affiliateAddress: json.as("affiliate_address"),
-        affiliateBasisPoints: json.as("affiliate_basis_points"),
-        signer: json.maybeAs<CosmosBaseAddress, String>(
-          key: "signer",
-          onValue: (e) {
-            return CosmosBaseAddress.fromBytes(CosmosUtils.toBytes(e));
-          },
-        ));
+      tx: ThorchainTx.fromJson(json.asMap("tx")),
+      asset: ThorchainAsset.fromJson(json.asMap("asset")),
+      assetAmount: json.asBigInt("asset_amount"),
+      runeAmount: json.asBigInt("rune_amount"),
+      runeAddress: json.as("rune_address"),
+      assetAddress: json.as("asset_address"),
+      affiliateAddress: json.as("affiliate_address"),
+      affiliateBasisPoints: json.as("affiliate_basis_points"),
+      signer: json.maybeAs<CosmosBaseAddress, String>(
+        key: "signer",
+        onValue: (e) {
+          return CosmosBaseAddress.fromBytes(CosmosUtils.toBytes(e));
+        },
+      ),
+    );
   }
   @override
   List<int> get fieldIds => [1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -76,7 +81,7 @@ class ThorchainMsgAddLiquidity
       "asset_address": assetAddress,
       "affiliate_address": affiliateAddress,
       "affiliate_basis_points": affiliateBasisPoints,
-      "signer": signer?.address
+      "signer": signer?.address,
     };
   }
 
@@ -85,16 +90,16 @@ class ThorchainMsgAddLiquidity
 
   @override
   List get values => [
-        tx,
-        asset,
-        assetAmount.toString(),
-        runeAmount.toString(),
-        runeAddress,
-        assetAddress,
-        affiliateAddress,
-        affiliateBasisPoints,
-        signer?.toBytes()
-      ];
+    tx,
+    asset,
+    assetAmount.toString(),
+    runeAmount.toString(),
+    runeAddress,
+    assetAddress,
+    affiliateAddress,
+    affiliateBasisPoints,
+    signer?.toBytes(),
+  ];
 
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {

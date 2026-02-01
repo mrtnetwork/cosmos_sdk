@@ -9,12 +9,15 @@ class OsmosisCosmWasmPoolParamsResponse extends CosmosMessage {
   factory OsmosisCosmWasmPoolParamsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisCosmWasmPoolParamsResponse(
-        OsmosisCosmWasmPoolParams.deserialize(decode.getField(1)));
+      OsmosisCosmWasmPoolParams.deserialize(decode.getField(1)),
+    );
   }
   factory OsmosisCosmWasmPoolParamsResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisCosmWasmPoolParamsResponse(
-        OsmosisCosmWasmPoolParams.fromJson(json["params"]));
+      OsmosisCosmWasmPoolParams.fromJson(json["params"]),
+    );
   }
 
   @override

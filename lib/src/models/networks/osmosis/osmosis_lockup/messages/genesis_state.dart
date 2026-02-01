@@ -13,21 +13,23 @@ class OsmosisLockupGenesisState extends CosmosMessage {
     this.lastLockId,
     required List<OsmosisLockupPeriodLock> locks,
     required List<OsmosisLockupSyntheticLock> syntheticLocks,
-  })  : locks = locks.immutable,
-        syntheticLocks = syntheticLocks.immutable;
+  }) : locks = locks.immutable,
+       syntheticLocks = syntheticLocks.immutable;
 
   factory OsmosisLockupGenesisState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisLockupGenesisState(
       lastLockId: decode.getField(1),
-      locks: decode
-          .getFields<List<int>>(2)
-          .map((e) => OsmosisLockupPeriodLock.deserialize(e))
-          .toList(),
-      syntheticLocks: decode
-          .getFields<List<int>>(3)
-          .map((e) => OsmosisLockupSyntheticLock.deserialize(e))
-          .toList(),
+      locks:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => OsmosisLockupPeriodLock.deserialize(e))
+              .toList(),
+      syntheticLocks:
+          decode
+              .getFields<List<int>>(3)
+              .map((e) => OsmosisLockupSyntheticLock.deserialize(e))
+              .toList(),
     );
   }
 
@@ -39,7 +41,7 @@ class OsmosisLockupGenesisState extends CosmosMessage {
     return {
       "last_lock_id": lastLockId?.toString(),
       "locks": locks.map((e) => e.toJson()).toList(),
-      "synthetic_locks": syntheticLocks.map((e) => e.toJson()).toList()
+      "synthetic_locks": syntheticLocks.map((e) => e.toJson()).toList(),
     };
   }
 

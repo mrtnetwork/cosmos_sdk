@@ -7,14 +7,18 @@ class ThorchainKeygen extends CosmosMessage {
   final ThorchainKeygenType? type;
   final List<String>? members;
   ThorchainKeygen({this.id, this.type, List<String>? members})
-      : members = members?.emptyAsNull?.immutable;
+    : members = members?.emptyAsNull?.immutable;
   factory ThorchainKeygen.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainKeygen(
-        id: decode.getField(1),
-        type: decode.getResult(2)?.to<ThorchainKeygenType, int>(
-            (e) => ThorchainKeygenType.fromValue(e)),
-        members: decode.getFields<String>(3));
+      id: decode.getField(1),
+      type: decode
+          .getResult(2)
+          ?.to<ThorchainKeygenType, int>(
+            (e) => ThorchainKeygenType.fromValue(e),
+          ),
+      members: decode.getFields<String>(3),
+    );
   }
 
   @override

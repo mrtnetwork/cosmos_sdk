@@ -8,18 +8,19 @@ class OsmosisConcentratedLiquidityGetTotalLiquidityResponse
   final List<Coin> totalLiquidity;
 
   OsmosisConcentratedLiquidityGetTotalLiquidityResponse(
-      List<Coin> totalLiquidity)
-      : totalLiquidity = totalLiquidity.immutable;
+    List<Coin> totalLiquidity,
+  ) : totalLiquidity = totalLiquidity.immutable;
   factory OsmosisConcentratedLiquidityGetTotalLiquidityResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return OsmosisConcentratedLiquidityGetTotalLiquidityResponse(decode
-        .getFields<List<int>>(1)
-        .map((e) => Coin.deserialize(e))
-        .toList());
+    return OsmosisConcentratedLiquidityGetTotalLiquidityResponse(
+      decode.getFields<List<int>>(1).map((e) => Coin.deserialize(e)).toList(),
+    );
   }
   factory OsmosisConcentratedLiquidityGetTotalLiquidityResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityGetTotalLiquidityResponse(
       (json["total_liquidity"] as List?)
               ?.map((e) => Coin.fromJson(e))

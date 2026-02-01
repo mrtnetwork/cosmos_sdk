@@ -10,12 +10,13 @@ class LightBlock extends CosmosMessage {
   factory LightBlock.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return LightBlock(
-        signedHeader: decode
-            .getResult(1)
-            ?.to<SignedHeader, List<int>>((e) => SignedHeader.deserialize(e)),
-        validatorSet: decode
-            .getResult(2)
-            ?.to<ValidatorSet, List<int>>((e) => ValidatorSet.deserialize(e)));
+      signedHeader: decode
+          .getResult(1)
+          ?.to<SignedHeader, List<int>>((e) => SignedHeader.deserialize(e)),
+      validatorSet: decode
+          .getResult(2)
+          ?.to<ValidatorSet, List<int>>((e) => ValidatorSet.deserialize(e)),
+    );
   }
 
   @override
@@ -25,7 +26,7 @@ class LightBlock extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "signed_header": signedHeader?.toJson(),
-      "validator_set": validatorSet?.toJson()
+      "validator_set": validatorSet?.toJson(),
     };
   }
 

@@ -20,15 +20,18 @@ class IbcChannelResponseResultType implements CosmosEnum {
     unspecified,
     noop,
     success,
-    failure
+    failure,
   ];
 
   static IbcChannelResponseResultType fromValue(int? value) {
     return values.firstWhere(
       (e) => e.value == value,
-      orElse: () => throw DartCosmosSdkPluginException(
-          "No IbcChannelResponseResultType element found for the given value.",
-          details: {"value": value}),
+      orElse:
+          () =>
+              throw DartCosmosSdkPluginException(
+                "No IbcChannelResponseResultType element found for the given value.",
+                details: {"value": value},
+              ),
     );
   }
 }

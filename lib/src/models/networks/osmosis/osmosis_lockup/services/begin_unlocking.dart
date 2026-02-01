@@ -11,26 +11,31 @@ class OsmosisLockupMsgBeginUnlocking
   final String? owner;
   final BigInt? id;
   final List<Coin> coins;
-  OsmosisLockupMsgBeginUnlocking(
-      {this.owner, this.id, required List<Coin> coins})
-      : coins = coins.immutable;
+  OsmosisLockupMsgBeginUnlocking({
+    this.owner,
+    this.id,
+    required List<Coin> coins,
+  }) : coins = coins.immutable;
   factory OsmosisLockupMsgBeginUnlocking.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisLockupMsgBeginUnlocking(
-        owner: decode.getField(1),
-        id: decode.getField(2),
-        coins: decode
-            .getFields<List<int>>(3)
-            .map((e) => Coin.deserialize(e))
-            .toList());
+      owner: decode.getField(1),
+      id: decode.getField(2),
+      coins:
+          decode
+              .getFields<List<int>>(3)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
+    );
   }
   factory OsmosisLockupMsgBeginUnlocking.fromJson(Map<String, dynamic> json) {
     return OsmosisLockupMsgBeginUnlocking(
-        owner: json.as("owner"),
-        id: json.asBigInt("id"),
-        coins:
-            json.asListOfMap("coins")?.map((e) => Coin.fromJson(e)).toList() ??
-                []);
+      owner: json.as("owner"),
+      id: json.asBigInt("id"),
+      coins:
+          json.asListOfMap("coins")?.map((e) => Coin.fromJson(e)).toList() ??
+          [],
+    );
   }
 
   @override
@@ -49,7 +54,7 @@ class OsmosisLockupMsgBeginUnlocking
     return {
       "owner": owner,
       "id": id,
-      "coins": coins.map((e) => e.toJson()).toList()
+      "coins": coins.map((e) => e.toJson()).toList(),
     };
   }
 

@@ -6,15 +6,18 @@ class ThorchainEventSlashPoint extends CosmosMessage {
   final List<int>? nodeAddress;
   final BigInt? slashPoints;
   final String? reason;
-  ThorchainEventSlashPoint(
-      {List<int>? nodeAddress, this.slashPoints, this.reason})
-      : nodeAddress = BytesUtils.tryToBytes(nodeAddress, unmodifiable: true);
+  ThorchainEventSlashPoint({
+    List<int>? nodeAddress,
+    this.slashPoints,
+    this.reason,
+  }) : nodeAddress = BytesUtils.tryToBytes(nodeAddress, unmodifiable: true);
   factory ThorchainEventSlashPoint.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainEventSlashPoint(
-        nodeAddress: decode.getField(1),
-        slashPoints: decode.getField(2),
-        reason: decode.getField(3));
+      nodeAddress: decode.getField(1),
+      slashPoints: decode.getField(2),
+      reason: decode.getField(3),
+    );
   }
 
   @override
@@ -25,7 +28,7 @@ class ThorchainEventSlashPoint extends CosmosMessage {
     return {
       "node_address": BytesUtils.tryToHexString(nodeAddress),
       "slash_points": slashPoints?.toString(),
-      "reason": reason
+      "reason": reason,
     };
   }
 

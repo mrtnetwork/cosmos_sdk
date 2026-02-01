@@ -7,20 +7,22 @@ class OsmosisProtorevQueryGetProtoRevAllProfitsResponse extends CosmosMessage {
   /// pprofits is a list of all of the profits from the module
   final List<Coin> profits;
   OsmosisProtorevQueryGetProtoRevAllProfitsResponse(List<Coin> profits)
-      : profits = profits.immutable;
+    : profits = profits.immutable;
   factory OsmosisProtorevQueryGetProtoRevAllProfitsResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return OsmosisProtorevQueryGetProtoRevAllProfitsResponse(decode
-        .getFields<List<int>>(1)
-        .map((e) => Coin.deserialize(e))
-        .toList());
+    return OsmosisProtorevQueryGetProtoRevAllProfitsResponse(
+      decode.getFields<List<int>>(1).map((e) => Coin.deserialize(e)).toList(),
+    );
   }
   factory OsmosisProtorevQueryGetProtoRevAllProfitsResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisProtorevQueryGetProtoRevAllProfitsResponse(
-        (json["profits"] as List?)?.map((e) => Coin.fromJson(e)).toList() ??
-            <Coin>[]);
+      (json["profits"] as List?)?.map((e) => Coin.fromJson(e)).toList() ??
+          <Coin>[],
+    );
   }
 
   @override

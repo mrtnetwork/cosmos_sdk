@@ -24,7 +24,8 @@ class InterchainAccountsHostUpdateParams
     );
   }
   factory InterchainAccountsHostUpdateParams.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return InterchainAccountsHostUpdateParams(
       signer: json.as("signer"),
       params: InterchainAccountsHostParams.fromJson(json.asMap("params")),
@@ -50,6 +51,7 @@ class InterchainAccountsHostUpdateParams
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        IbcTypes.interchainAccountsHostMsgUpdateParamsResponse);
+      IbcTypes.interchainAccountsHostMsgUpdateParamsResponse,
+    );
   }
 }

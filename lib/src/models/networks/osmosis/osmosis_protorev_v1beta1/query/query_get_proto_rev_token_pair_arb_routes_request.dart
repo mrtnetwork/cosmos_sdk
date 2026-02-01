@@ -7,10 +7,12 @@ class OsmosisProtorevQueryGetProtoRevTokenPairArbRoutesRequest
     extends CosmosMessage
     with
         QueryMessage<
-            OsmosisProtorevQueryGetProtoRevTokenPairArbRoutesResponse> {
+          OsmosisProtorevQueryGetProtoRevTokenPairArbRoutesResponse
+        > {
   const OsmosisProtorevQueryGetProtoRevTokenPairArbRoutesRequest();
   factory OsmosisProtorevQueryGetProtoRevTokenPairArbRoutesRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return const OsmosisProtorevQueryGetProtoRevTokenPairArbRoutesRequest();
   }
 
@@ -27,16 +29,20 @@ class OsmosisProtorevQueryGetProtoRevTokenPairArbRoutesRequest
 
   @override
   OsmosisProtorevQueryGetProtoRevTokenPairArbRoutesResponse onResponse(
-      List<int> bytes) {
-    return OsmosisProtorevQueryGetProtoRevTokenPairArbRoutesResponse
-        .deserialize(bytes);
+    List<int> bytes,
+  ) {
+    return OsmosisProtorevQueryGetProtoRevTokenPairArbRoutesResponse.deserialize(
+      bytes,
+    );
   }
 
   @override
   OsmosisProtorevQueryGetProtoRevTokenPairArbRoutesResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisProtorevQueryGetProtoRevTokenPairArbRoutesResponse.fromJson(
-        json);
+      json,
+    );
   }
 
   @override

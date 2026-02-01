@@ -53,11 +53,14 @@ abstract class CosmosBaseAccount extends CosmosMessage {
         break;
       default:
         throw DartCosmosSdkPluginException(
-            "Unsupported account type ${account.typeUrl}");
+          "Unsupported account type ${account.typeUrl}",
+        );
     }
     if (acc is! T) {
-      throw DartCosmosSdkPluginException("Invalid account type",
-          details: {"account": acc, "Excepted": "$T"});
+      throw DartCosmosSdkPluginException(
+        "Invalid account type",
+        details: {"account": acc, "Excepted": "$T"},
+      );
     }
     return acc;
   }
@@ -104,12 +107,16 @@ abstract class CosmosBaseAccount extends CosmosMessage {
         acc = InterchainAccount.fromJson(json);
         break;
       default:
-        throw DartCosmosSdkPluginException("Unsupported account type",
-            details: {"type": type});
+        throw DartCosmosSdkPluginException(
+          "Unsupported account type",
+          details: {"type": type},
+        );
     }
     if (acc is! T) {
-      throw DartCosmosSdkPluginException("Invalid account type",
-          details: {"account": acc, "Excepted": "$T"});
+      throw DartCosmosSdkPluginException(
+        "Invalid account type",
+        details: {"account": acc, "Excepted": "$T"},
+      );
     }
     return acc;
   }

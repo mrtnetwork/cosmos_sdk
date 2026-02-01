@@ -7,8 +7,10 @@ import 'package:cosmos_sdk/src/utils/quick.dart';
 import 'msg_split_route_swap_exact_amount_in_response.dart';
 
 class OsmosisPoolManagerMsgSplitRouteSwapExactAmountIn
-    extends OsmosisPoolManagerV1Beta1<
-        OsmosisPoolManagerMsgSplitRouteSwapExactAmountInResponse> {
+    extends
+        OsmosisPoolManagerV1Beta1<
+          OsmosisPoolManagerMsgSplitRouteSwapExactAmountInResponse
+        > {
   final String? sender;
   final List<OsmosisPoolManagerSwapAmountOutSplitRoute> routes;
   final String? tokenInDenom;
@@ -21,30 +23,38 @@ class OsmosisPoolManagerMsgSplitRouteSwapExactAmountIn
     required this.tokenOutMinAmount,
   }) : routes = routes.immutable;
   factory OsmosisPoolManagerMsgSplitRouteSwapExactAmountIn.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolManagerMsgSplitRouteSwapExactAmountIn(
-        sender: decode.getField(1),
-        routes: decode
-            .getFields<List<int>>(2)
-            .map(
-                (e) => OsmosisPoolManagerSwapAmountOutSplitRoute.deserialize(e))
-            .toList(),
-        tokenInDenom: decode.getField(3),
-        tokenOutMinAmount: BigInt.parse(decode.getField(4)));
+      sender: decode.getField(1),
+      routes:
+          decode
+              .getFields<List<int>>(2)
+              .map(
+                (e) => OsmosisPoolManagerSwapAmountOutSplitRoute.deserialize(e),
+              )
+              .toList(),
+      tokenInDenom: decode.getField(3),
+      tokenOutMinAmount: BigInt.parse(decode.getField(4)),
+    );
   }
   factory OsmosisPoolManagerMsgSplitRouteSwapExactAmountIn.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisPoolManagerMsgSplitRouteSwapExactAmountIn(
-        sender: json.as("sender"),
-        routes: json
-                .asListOfMap("routes")
-                ?.map((e) =>
-                    OsmosisPoolManagerSwapAmountOutSplitRoute.fromJson(e))
-                .toList() ??
-            [],
-        tokenInDenom: json.as("token_in_denom"),
-        tokenOutMinAmount: json.asBigInt("token_out_min_amount"));
+      sender: json.as("sender"),
+      routes:
+          json
+              .asListOfMap("routes")
+              ?.map(
+                (e) => OsmosisPoolManagerSwapAmountOutSplitRoute.fromJson(e),
+              )
+              .toList() ??
+          [],
+      tokenInDenom: json.as("token_in_denom"),
+      tokenOutMinAmount: json.asBigInt("token_out_min_amount"),
+    );
   }
 
   @override
@@ -56,7 +66,7 @@ class OsmosisPoolManagerMsgSplitRouteSwapExactAmountIn
       "sender": sender,
       "routes": routes.map((e) => e.toJson()).toList(),
       "token_in_denom": tokenInDenom,
-      "token_out_min_amount": tokenOutMinAmount.toString()
+      "token_out_min_amount": tokenOutMinAmount.toString(),
     };
   }
 
@@ -65,16 +75,22 @@ class OsmosisPoolManagerMsgSplitRouteSwapExactAmountIn
       OsmosisPoolManagerV1beta1Types.msgSplitRouteSwapExactAmountIn;
 
   @override
-  List get values =>
-      [sender, routes, tokenInDenom, tokenOutMinAmount.toString()];
+  List get values => [
+    sender,
+    routes,
+    tokenInDenom,
+    tokenOutMinAmount.toString(),
+  ];
 
   @override
   List<String?> get signers => [sender];
 
   @override
   OsmosisPoolManagerMsgSplitRouteSwapExactAmountInResponse onResponse(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return OsmosisPoolManagerMsgSplitRouteSwapExactAmountInResponse.deserialize(
-        bytes);
+      bytes,
+    );
   }
 }

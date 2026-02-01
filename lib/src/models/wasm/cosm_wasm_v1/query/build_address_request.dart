@@ -19,12 +19,12 @@ class CosmWasmV1QueryBuildAddressRequest extends CosmosMessage
   /// InitArgs are optional json encoded init args to be used in contract address
   /// building if provided
   final List<int>? intArgs;
-  CosmWasmV1QueryBuildAddressRequest(
-      {required this.codeHash,
-      required this.creatorAddress,
-      required this.salt,
-      required List<int>? intArgs})
-      : intArgs = intArgs?.asImmutableBytes;
+  CosmWasmV1QueryBuildAddressRequest({
+    required this.codeHash,
+    required this.creatorAddress,
+    required this.salt,
+    required List<int>? intArgs,
+  }) : intArgs = intArgs?.asImmutableBytes;
   @override
   List<int> get fieldIds => [1, 2, 3, 4];
 
@@ -34,7 +34,7 @@ class CosmWasmV1QueryBuildAddressRequest extends CosmosMessage
       "code_hash": codeHash,
       "creator_address": creatorAddress,
       "salt": salt,
-      "init_args": CosmosUtils.tryToBase64(intArgs)
+      "init_args": CosmosUtils.tryToBase64(intArgs),
     };
   }
 
@@ -51,15 +51,16 @@ class CosmWasmV1QueryBuildAddressRequest extends CosmosMessage
 
   @override
   CosmWasmV1QueryBuildAddressResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return CosmWasmV1QueryBuildAddressResponse.fromJson(json);
   }
 
   @override
   Map<String, String?> get queryParameters => {
-        "code_hash": codeHash,
-        "creator_address": creatorAddress,
-        "salt": salt,
-        "init_args": CosmosUtils.tryToBase64(intArgs)
-      };
+    "code_hash": codeHash,
+    "creator_address": creatorAddress,
+    "salt": salt,
+    "init_args": CosmosUtils.tryToBase64(intArgs),
+  };
 }

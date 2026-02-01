@@ -10,16 +10,20 @@ class OsmosisIncentiveActiveGaugesPerDenomRequest extends CosmosMessage
 
   /// Pagination defines pagination for the request
   final PageRequest? pagination;
-  const OsmosisIncentiveActiveGaugesPerDenomRequest(
-      {this.denom, this.pagination});
+  const OsmosisIncentiveActiveGaugesPerDenomRequest({
+    this.denom,
+    this.pagination,
+  });
   factory OsmosisIncentiveActiveGaugesPerDenomRequest.fromBytes(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisIncentiveActiveGaugesPerDenomRequest(
-        denom: decode.getField(1),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)));
+      denom: decode.getField(1),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)),
+    );
   }
 
   @override
@@ -43,11 +47,14 @@ class OsmosisIncentiveActiveGaugesPerDenomRequest extends CosmosMessage
 
   @override
   OsmosisIncentiveActiveGaugesPerDenomResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisIncentiveActiveGaugesPerDenomResponse.fromJson(json);
   }
 
   @override
-  Map<String, String?> get queryParameters =>
-      {"denom": denom, ...pagination?.queryParameters ?? {}};
+  Map<String, String?> get queryParameters => {
+    "denom": denom,
+    ...pagination?.queryParameters ?? {},
+  };
 }

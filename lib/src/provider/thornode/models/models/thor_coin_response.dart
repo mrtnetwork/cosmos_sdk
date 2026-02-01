@@ -18,10 +18,6 @@ class ThorCoinResponse {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'asset': asset,
-      'amount': amount,
-      'decimals': decimals,
-    };
+    return {'asset': asset, 'amount': amount, 'decimals': decimals};
   }
 }

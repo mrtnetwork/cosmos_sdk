@@ -16,10 +16,11 @@ class ThorchainTssKeysignFailVoter extends CosmosMessage {
   factory ThorchainTssKeysignFailVoter.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainTssKeysignFailVoter(
-        id: decode.getField(1),
-        height: decode.getField(4),
-        signers: decode.getFields<String>(6),
-        round7Count: decode.getField(7));
+      id: decode.getField(1),
+      height: decode.getField(4),
+      signers: decode.getFields<String>(6),
+      round7Count: decode.getField(7),
+    );
   }
 
   @override
@@ -31,7 +32,7 @@ class ThorchainTssKeysignFailVoter extends CosmosMessage {
       "id": id,
       "height": height?.toString(),
       "signers": signers,
-      "round7_count": round7Count?.toString()
+      "round7_count": round7Count?.toString(),
     };
   }
 

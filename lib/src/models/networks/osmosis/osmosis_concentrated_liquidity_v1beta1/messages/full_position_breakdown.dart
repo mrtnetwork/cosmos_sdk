@@ -19,55 +19,65 @@ class FullPositionBreakdown extends CosmosMessage {
   final List<Coin> claimableIncentives;
   final List<Coin> forfeitedIncentives;
 
-  FullPositionBreakdown(
-      {required this.position,
-      required this.asset0,
-      required this.asset1,
-      required List<Coin> claimableSpreadRewards,
-      required List<Coin> claimableIncentives,
-      required List<Coin> forfeitedIncentives})
-      : claimableSpreadRewards = claimableSpreadRewards.immutable,
-        claimableIncentives = claimableIncentives.immutable,
-        forfeitedIncentives = forfeitedIncentives.immutable;
+  FullPositionBreakdown({
+    required this.position,
+    required this.asset0,
+    required this.asset1,
+    required List<Coin> claimableSpreadRewards,
+    required List<Coin> claimableIncentives,
+    required List<Coin> forfeitedIncentives,
+  }) : claimableSpreadRewards = claimableSpreadRewards.immutable,
+       claimableIncentives = claimableIncentives.immutable,
+       forfeitedIncentives = forfeitedIncentives.immutable;
   factory FullPositionBreakdown.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return FullPositionBreakdown(
-        position: OsmosisConcentratedLiquidityPosition.deserialize(
-            decode.getField(1)),
-        asset0: Coin.deserialize(decode.getField(2)),
-        asset1: Coin.deserialize(decode.getField(3)),
-        claimableSpreadRewards: decode
-            .getFields<List<int>>(4)
-            .map((e) => Coin.deserialize(e))
-            .toList(),
-        claimableIncentives: decode
-            .getFields<List<int>>(5)
-            .map((e) => Coin.deserialize(e))
-            .toList(),
-        forfeitedIncentives: decode
-            .getFields<List<int>>(6)
-            .map((e) => Coin.deserialize(e))
-            .toList());
+      position: OsmosisConcentratedLiquidityPosition.deserialize(
+        decode.getField(1),
+      ),
+      asset0: Coin.deserialize(decode.getField(2)),
+      asset1: Coin.deserialize(decode.getField(3)),
+      claimableSpreadRewards:
+          decode
+              .getFields<List<int>>(4)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
+      claimableIncentives:
+          decode
+              .getFields<List<int>>(5)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
+      forfeitedIncentives:
+          decode
+              .getFields<List<int>>(6)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
+    );
   }
 
   factory FullPositionBreakdown.fromJson(Map<String, dynamic> json) {
     return FullPositionBreakdown(
-        position:
-            OsmosisConcentratedLiquidityPosition.deserialize(json["position"]),
-        asset0: Coin.fromJson(json["asset0"]),
-        asset1: Coin.fromJson(json["asset1"]),
-        claimableSpreadRewards: (json["claimable_spread_rewards"] as List?)
-                ?.map((e) => Coin.deserialize(e))
-                .toList() ??
-            <Coin>[],
-        claimableIncentives: (json["claimable_incentives"] as List?)
-                ?.map((e) => Coin.deserialize(e))
-                .toList() ??
-            <Coin>[],
-        forfeitedIncentives: (json["forfeited_incentives"] as List?)
-                ?.map((e) => Coin.deserialize(e))
-                .toList() ??
-            <Coin>[]);
+      position: OsmosisConcentratedLiquidityPosition.deserialize(
+        json["position"],
+      ),
+      asset0: Coin.fromJson(json["asset0"]),
+      asset1: Coin.fromJson(json["asset1"]),
+      claimableSpreadRewards:
+          (json["claimable_spread_rewards"] as List?)
+              ?.map((e) => Coin.deserialize(e))
+              .toList() ??
+          <Coin>[],
+      claimableIncentives:
+          (json["claimable_incentives"] as List?)
+              ?.map((e) => Coin.deserialize(e))
+              .toList() ??
+          <Coin>[],
+      forfeitedIncentives:
+          (json["forfeited_incentives"] as List?)
+              ?.map((e) => Coin.deserialize(e))
+              .toList() ??
+          <Coin>[],
+    );
   }
 
   @override
@@ -84,7 +94,7 @@ class FullPositionBreakdown extends CosmosMessage {
       "claimable_incentives":
           claimableIncentives.map((e) => e.toJson()).toList(),
       "forfeited_incentives":
-          forfeitedIncentives.map((e) => e.toJson()).toList()
+          forfeitedIncentives.map((e) => e.toJson()).toList(),
     };
   }
 
@@ -94,11 +104,11 @@ class FullPositionBreakdown extends CosmosMessage {
 
   @override
   List get values => [
-        position,
-        asset0,
-        asset1,
-        claimableSpreadRewards,
-        claimableIncentives,
-        forfeitedIncentives
-      ];
+    position,
+    asset0,
+    asset1,
+    claimableSpreadRewards,
+    claimableIncentives,
+    forfeitedIncentives,
+  ];
 }

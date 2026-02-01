@@ -9,15 +9,19 @@ class OpInitOpHostV1MsgInitiateTokenDepositResponse extends CosmosMessage {
   OpInitOpHostV1MsgInitiateTokenDepositResponse({this.sequence});
 
   factory OpInitOpHostV1MsgInitiateTokenDepositResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OpInitOpHostV1MsgInitiateTokenDepositResponse(
-        sequence: decode.getField(1));
+      sequence: decode.getField(1),
+    );
   }
   factory OpInitOpHostV1MsgInitiateTokenDepositResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OpInitOpHostV1MsgInitiateTokenDepositResponse(
-        sequence: json.asBigInt("sequence"));
+      sequence: json.asBigInt("sequence"),
+    );
   }
 
   @override

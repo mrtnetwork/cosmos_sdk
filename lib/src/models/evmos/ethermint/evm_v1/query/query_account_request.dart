@@ -35,7 +35,8 @@ class EvmosEthermintEVMV1QueryAccountRequest extends CosmosMessage
 
   @override
   EvmosEthermintEVMV1QueryAccountResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return EvmosEthermintEVMV1QueryAccountResponse.fromJson(json);
   }
 

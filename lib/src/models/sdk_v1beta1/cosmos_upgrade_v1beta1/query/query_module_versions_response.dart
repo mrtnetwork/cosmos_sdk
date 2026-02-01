@@ -10,21 +10,25 @@ class QueryModuleVersionsResponse extends CosmosMessage {
   /// module_versions is a list of module names with their consensus versions.
   final List<ModuleVersion> moduleVersions;
   QueryModuleVersionsResponse({required List<ModuleVersion> moduleVersions})
-      : moduleVersions = moduleVersions.immutable;
+    : moduleVersions = moduleVersions.immutable;
   factory QueryModuleVersionsResponse.fromJson(Map<String, dynamic> json) {
     return QueryModuleVersionsResponse(
-        moduleVersions: (json["module_versions"] as List?)
-                ?.map((e) => ModuleVersion.fromJson(e))
-                .toList() ??
-            []);
+      moduleVersions:
+          (json["module_versions"] as List?)
+              ?.map((e) => ModuleVersion.fromJson(e))
+              .toList() ??
+          [],
+    );
   }
   factory QueryModuleVersionsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryModuleVersionsResponse(
-        moduleVersions: decode
-            .getFields<List<int>>(1)
-            .map((e) => ModuleVersion.deserialize(e))
-            .toList());
+      moduleVersions:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => ModuleVersion.deserialize(e))
+              .toList(),
+    );
   }
 
   @override

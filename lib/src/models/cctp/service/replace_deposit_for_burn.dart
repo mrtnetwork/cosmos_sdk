@@ -6,7 +6,8 @@ import 'package:cosmos_sdk/src/utils/quick.dart';
 import 'package:cosmos_sdk/src/utils/utils.dart';
 
 class CCTPV1MsgReplaceDepositForBurn
-    extends CCTPV1Service<EmptyServiceRequestResponse> with AminoMessage {
+    extends CCTPV1Service<EmptyServiceRequestResponse>
+    with AminoMessage {
   final String? from;
   final List<int>? originalMessage;
   final List<int>? originalAttestation;
@@ -24,19 +25,21 @@ class CCTPV1MsgReplaceDepositForBurn
   factory CCTPV1MsgReplaceDepositForBurn.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CCTPV1MsgReplaceDepositForBurn(
-        from: decode.getField(1),
-        originalMessage: decode.getField(2),
-        originalAttestation: decode.getField(3),
-        newDestinationCaller: decode.getField(4),
-        newMintRecipient: decode.getField(5));
+      from: decode.getField(1),
+      originalMessage: decode.getField(2),
+      originalAttestation: decode.getField(3),
+      newDestinationCaller: decode.getField(4),
+      newMintRecipient: decode.getField(5),
+    );
   }
   factory CCTPV1MsgReplaceDepositForBurn.fromJson(Map<String, dynamic> json) {
     return CCTPV1MsgReplaceDepositForBurn(
-        from: json.as("from"),
-        originalMessage: json.asBytes("original_message"),
-        originalAttestation: json.asBytes("original_attestation"),
-        newDestinationCaller: json.asBytes("new_destination_caller"),
-        newMintRecipient: json.asBytes("new_mint_recipient"));
+      from: json.as("from"),
+      originalMessage: json.asBytes("original_message"),
+      originalAttestation: json.asBytes("original_attestation"),
+      newDestinationCaller: json.asBytes("new_destination_caller"),
+      newMintRecipient: json.asBytes("new_mint_recipient"),
+    );
   }
 
   @override
@@ -58,18 +61,19 @@ class CCTPV1MsgReplaceDepositForBurn
 
   @override
   List get values => [
-        from,
-        originalMessage,
-        originalAttestation,
-        newDestinationCaller,
-        newMintRecipient
-      ];
+    from,
+    originalMessage,
+    originalAttestation,
+    newDestinationCaller,
+    newMintRecipient,
+  ];
   @override
   List<String?> get signers => [from];
 
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        CCTPV1Types.msgReplaceDepositForBurnResponse);
+      CCTPV1Types.msgReplaceDepositForBurnResponse,
+    );
   }
 }

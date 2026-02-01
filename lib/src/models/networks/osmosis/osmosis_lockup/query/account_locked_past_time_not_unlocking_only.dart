@@ -6,27 +6,29 @@ class OsmosisLockupAccountLockedPastTimeNotUnlockingOnlyRequest
     extends CosmosMessage
     with
         QueryMessage<
-            OsmosisLockupAccountLockedPastTimeNotUnlockingOnlyResponse> {
+          OsmosisLockupAccountLockedPastTimeNotUnlockingOnlyResponse
+        > {
   final String owner;
   final ProtobufTimestamp timestamp;
-  const OsmosisLockupAccountLockedPastTimeNotUnlockingOnlyRequest(
-      {required this.owner, required this.timestamp});
+  const OsmosisLockupAccountLockedPastTimeNotUnlockingOnlyRequest({
+    required this.owner,
+    required this.timestamp,
+  });
   factory OsmosisLockupAccountLockedPastTimeNotUnlockingOnlyRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisLockupAccountLockedPastTimeNotUnlockingOnlyRequest(
-        owner: decode.getField(1),
-        timestamp: ProtobufTimestamp.deserialize(decode.getField(2)));
+      owner: decode.getField(1),
+      timestamp: ProtobufTimestamp.deserialize(decode.getField(2)),
+    );
   }
   @override
   List<int> get fieldIds => [1, 2];
 
   @override
   Map<String, dynamic> toJson() {
-    return {
-      "owner": owner,
-      "timestamp": timestamp.toJson(),
-    };
+    return {"owner": owner, "timestamp": timestamp.toJson()};
   }
 
   @override
@@ -38,21 +40,26 @@ class OsmosisLockupAccountLockedPastTimeNotUnlockingOnlyRequest
 
   @override
   OsmosisLockupAccountLockedPastTimeNotUnlockingOnlyResponse onResponse(
-      List<int> bytes) {
-    return OsmosisLockupAccountLockedPastTimeNotUnlockingOnlyResponse
-        .deserialize(bytes);
+    List<int> bytes,
+  ) {
+    return OsmosisLockupAccountLockedPastTimeNotUnlockingOnlyResponse.deserialize(
+      bytes,
+    );
   }
 
   @override
   OsmosisLockupAccountLockedPastTimeNotUnlockingOnlyResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisLockupAccountLockedPastTimeNotUnlockingOnlyResponse.fromJson(
-        json);
+      json,
+    );
   }
 
   @override
-  Map<String, String?> get queryParameters =>
-      {"timestamp": timestamp.toString()};
+  Map<String, String?> get queryParameters => {
+    "timestamp": timestamp.toString(),
+  };
   @override
   List<String> get pathParameters => [owner];
 }

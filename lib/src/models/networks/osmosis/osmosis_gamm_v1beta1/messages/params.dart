@@ -8,7 +8,7 @@ class OsmosisGammParams extends CosmosMessage {
   final List<Coin> poolCreationFee;
 
   OsmosisGammParams(List<Coin> poolCreationFee)
-      : poolCreationFee = poolCreationFee.immutable;
+    : poolCreationFee = poolCreationFee.immutable;
   factory OsmosisGammParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisGammParams(
@@ -16,10 +16,12 @@ class OsmosisGammParams extends CosmosMessage {
     );
   }
   factory OsmosisGammParams.fromJson(Map<String, dynamic> json) {
-    return OsmosisGammParams((json["pool_creation_fee"] as List?)
-            ?.map((e) => Coin.fromJson(e))
-            .toList() ??
-        <Coin>[]);
+    return OsmosisGammParams(
+      (json["pool_creation_fee"] as List?)
+              ?.map((e) => Coin.fromJson(e))
+              .toList() ??
+          <Coin>[],
+    );
   }
 
   @override
@@ -28,7 +30,7 @@ class OsmosisGammParams extends CosmosMessage {
   @override
   Map<String, dynamic> toJson() {
     return {
-      "pool_creation_fee": poolCreationFee.map((e) => e.toJson()).toList()
+      "pool_creation_fee": poolCreationFee.map((e) => e.toJson()).toList(),
     };
   }
 

@@ -15,32 +15,38 @@ class IbcChannelV2MsgRecvPacket
   final List<int>? proofCommitment;
   final IbcClientHeight? proofHeight;
   final String? signer;
-  IbcChannelV2MsgRecvPacket(
-      {required this.packet,
-      List<int>? proofCommitment,
-      required this.proofHeight,
-      this.signer})
-      : proofCommitment = proofCommitment?.asImmutableBytes;
+  IbcChannelV2MsgRecvPacket({
+    required this.packet,
+    List<int>? proofCommitment,
+    required this.proofHeight,
+    this.signer,
+  }) : proofCommitment = proofCommitment?.asImmutableBytes;
   factory IbcChannelV2MsgRecvPacket.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcChannelV2MsgRecvPacket(
-        packet: decode
-            .getResult(1)
-            ?.to<IbcChannelV2Packet, List<int>>(IbcChannelV2Packet.deserialize),
-        proofCommitment: decode.getField(2),
-        proofHeight: decode
-            .getResult(3)
-            ?.to<IbcClientHeight, List<int>>(IbcClientHeight.deserialize),
-        signer: decode.getField(4));
+      packet: decode
+          .getResult(1)
+          ?.to<IbcChannelV2Packet, List<int>>(IbcChannelV2Packet.deserialize),
+      proofCommitment: decode.getField(2),
+      proofHeight: decode
+          .getResult(3)
+          ?.to<IbcClientHeight, List<int>>(IbcClientHeight.deserialize),
+      signer: decode.getField(4),
+    );
   }
   factory IbcChannelV2MsgRecvPacket.fromJson(Map<String, dynamic> json) {
     return IbcChannelV2MsgRecvPacket(
-        packet: json.maybeAs<IbcChannelV2Packet, Map<String, dynamic>>(
-            key: "packet", onValue: IbcChannelV2Packet.fromJson),
-        proofCommitment: json.asBytes("proof_commitment"),
-        proofHeight: json.maybeAs<IbcClientHeight, Map<String, dynamic>>(
-            key: "proof_height", onValue: IbcClientHeight.fromJson),
-        signer: json.as("signer"));
+      packet: json.maybeAs<IbcChannelV2Packet, Map<String, dynamic>>(
+        key: "packet",
+        onValue: IbcChannelV2Packet.fromJson,
+      ),
+      proofCommitment: json.asBytes("proof_commitment"),
+      proofHeight: json.maybeAs<IbcClientHeight, Map<String, dynamic>>(
+        key: "proof_height",
+        onValue: IbcClientHeight.fromJson,
+      ),
+      signer: json.as("signer"),
+    );
   }
   @override
   List<int> get fieldIds => [1, 2, 3, 4];
@@ -51,7 +57,7 @@ class IbcChannelV2MsgRecvPacket
       "packet": packet?.toJson(),
       "proof_commitment": CosmosUtils.tryToBase64(proofCommitment),
       "proof_height": proofHeight?.toJson(),
-      "signer": signer
+      "signer": signer,
     };
   }
 

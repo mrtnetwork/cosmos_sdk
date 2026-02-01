@@ -7,12 +7,16 @@ class DefaultNodeInfoOther extends CosmosMessage {
   const DefaultNodeInfoOther({this.txIndex, this.rpcAddress});
   factory DefaultNodeInfoOther.fromJson(Map<String, dynamic> json) {
     return DefaultNodeInfoOther(
-        rpcAddress: json["rpc_address"], txIndex: json["tx_index"]);
+      rpcAddress: json["rpc_address"],
+      txIndex: json["tx_index"],
+    );
   }
   factory DefaultNodeInfoOther.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DefaultNodeInfoOther(
-        txIndex: decode.getField(1), rpcAddress: decode.getField(2));
+      txIndex: decode.getField(1),
+      rpcAddress: decode.getField(2),
+    );
   }
 
   @override

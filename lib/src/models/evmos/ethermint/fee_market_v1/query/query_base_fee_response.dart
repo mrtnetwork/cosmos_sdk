@@ -9,14 +9,17 @@ class EvmosEthermintFeeMarketV1QueryBaseFeeResponse extends CosmosMessage {
 
   const EvmosEthermintFeeMarketV1QueryBaseFeeResponse(this.baseFee);
   factory EvmosEthermintFeeMarketV1QueryBaseFeeResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosEthermintFeeMarketV1QueryBaseFeeResponse(decode.getField(1));
   }
   factory EvmosEthermintFeeMarketV1QueryBaseFeeResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return EvmosEthermintFeeMarketV1QueryBaseFeeResponse(
-        BigintUtils.parse(json["base_fee"]));
+      BigintUtils.parse(json["base_fee"]),
+    );
   }
 
   @override

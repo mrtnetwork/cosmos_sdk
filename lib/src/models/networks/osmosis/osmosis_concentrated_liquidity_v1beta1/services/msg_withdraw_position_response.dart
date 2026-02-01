@@ -8,20 +8,26 @@ class OsmosisConcentratedLiquidityMsgWithdrawPositionResponse
   final BigInt amount0;
   final BigInt amount1;
 
-  OsmosisConcentratedLiquidityMsgWithdrawPositionResponse(
-      {required this.amount0, required this.amount1});
+  OsmosisConcentratedLiquidityMsgWithdrawPositionResponse({
+    required this.amount0,
+    required this.amount1,
+  });
   factory OsmosisConcentratedLiquidityMsgWithdrawPositionResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityMsgWithdrawPositionResponse(
-        amount0: BigInt.parse(decode.getField(2)),
-        amount1: BigInt.parse(decode.getField(3)));
+      amount0: BigInt.parse(decode.getField(2)),
+      amount1: BigInt.parse(decode.getField(3)),
+    );
   }
   factory OsmosisConcentratedLiquidityMsgWithdrawPositionResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityMsgWithdrawPositionResponse(
-        amount0: BigintUtils.parse(json["amount0"]),
-        amount1: BigintUtils.parse(json["amount1"]));
+      amount0: BigintUtils.parse(json["amount0"]),
+      amount1: BigintUtils.parse(json["amount1"]),
+    );
   }
 
   @override
@@ -33,10 +39,7 @@ class OsmosisConcentratedLiquidityMsgWithdrawPositionResponse
   }
 
   @override
-  List get values => [
-        amount0.toString(),
-        amount1.toString(),
-      ];
+  List get values => [amount0.toString(), amount1.toString()];
 
   @override
   TypeUrl get typeUrl =>

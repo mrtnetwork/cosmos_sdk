@@ -21,11 +21,12 @@ class MsgEditValidator
   final String? commissionRate;
   final BigInt? minSelfDelegation;
 
-  const MsgEditValidator(
-      {required this.description,
-      this.validatorAddress,
-      this.commissionRate,
-      this.minSelfDelegation});
+  const MsgEditValidator({
+    required this.description,
+    this.validatorAddress,
+    this.commissionRate,
+    this.minSelfDelegation,
+  });
   factory MsgEditValidator.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgEditValidator(
@@ -39,10 +40,11 @@ class MsgEditValidator
   }
   factory MsgEditValidator.fromJson(Map<String, dynamic> json) {
     return MsgEditValidator(
-        validatorAddress: json.asAddress("validator_address"),
-        description: Description.fromJson(json.asMap("description")),
-        commissionRate: json.as("commission_rate"),
-        minSelfDelegation: json.asBigInt("min_self_delegation"));
+      validatorAddress: json.asAddress("validator_address"),
+      description: Description.fromJson(json.asMap("description")),
+      commissionRate: json.as("commission_rate"),
+      minSelfDelegation: json.asBigInt("min_self_delegation"),
+    );
   }
 
   @override
@@ -63,11 +65,11 @@ class MsgEditValidator
 
   @override
   List get values => [
-        description,
-        validatorAddress?.address,
-        commissionRate,
-        minSelfDelegation?.toString()
-      ];
+    description,
+    validatorAddress?.address,
+    commissionRate,
+    minSelfDelegation?.toString(),
+  ];
 
   @override
   List<String?> get signers => [validatorAddress?.address];
@@ -75,6 +77,7 @@ class MsgEditValidator
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        StakingV1beta1Types.msgEditValidatorResponse);
+      StakingV1beta1Types.msgEditValidatorResponse,
+    );
   }
 }

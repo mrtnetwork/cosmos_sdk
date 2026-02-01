@@ -10,29 +10,32 @@ class BaseAccount extends CosmosBaseAccount {
   final AnyMessage? pubKey;
   final BigInt accountNumber;
   final BigInt sequence;
-  const BaseAccount(
-      {required this.address,
-      required this.pubKey,
-      required this.accountNumber,
-      required this.sequence});
+  const BaseAccount({
+    required this.address,
+    required this.pubKey,
+    required this.accountNumber,
+    required this.sequence,
+  });
 
   factory BaseAccount.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
 
     return BaseAccount(
-        pubKey: decode
-            .getResult(2)
-            ?.to<AnyMessage, List<int>>(AnyMessage.deserialize),
-        address: CosmosBaseAddress(decode.getField(1)),
-        accountNumber: decode.getResult(3)?.cast<BigInt>() ?? BigInt.zero,
-        sequence: decode.getResult(4)?.cast<BigInt>() ?? BigInt.zero);
+      pubKey: decode
+          .getResult(2)
+          ?.to<AnyMessage, List<int>>(AnyMessage.deserialize),
+      address: CosmosBaseAddress(decode.getField(1)),
+      accountNumber: decode.getResult(3)?.cast<BigInt>() ?? BigInt.zero,
+      sequence: decode.getResult(4)?.cast<BigInt>() ?? BigInt.zero,
+    );
   }
   factory BaseAccount.fromJson(Map<String, dynamic> json) {
     return BaseAccount(
-        address: CosmosBaseAddress(json.as("address")),
-        pubKey: json.maybeAs(key: "pub_key", onValue: AnyMessage.fromJson),
-        accountNumber: json.asBigInt("account_number"),
-        sequence: json.asBigInt("sequence"));
+      address: CosmosBaseAddress(json.as("address")),
+      pubKey: json.maybeAs(key: "pub_key", onValue: AnyMessage.fromJson),
+      accountNumber: json.asBigInt("account_number"),
+      sequence: json.asBigInt("sequence"),
+    );
   }
 
   @override
@@ -44,7 +47,7 @@ class BaseAccount extends CosmosBaseAccount {
       "address": address.address,
       "pub_key": pubKey?.toJson(),
       "account_number": accountNumber.toString(),
-      "sequence": sequence.toString()
+      "sequence": sequence.toString(),
     };
   }
 
@@ -53,11 +56,11 @@ class BaseAccount extends CosmosBaseAccount {
 
   @override
   List get values => [
-        address.address,
-        pubKey,
-        accountNumber,
-        sequence == BigInt.zero ? null : sequence
-      ];
+    address.address,
+    pubKey,
+    accountNumber,
+    sequence == BigInt.zero ? null : sequence,
+  ];
 
   @override
   BaseAccount get baseAccount => this;

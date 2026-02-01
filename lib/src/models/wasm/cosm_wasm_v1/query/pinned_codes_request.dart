@@ -37,6 +37,7 @@ class CosmWasmV1QueryPinnedCodesRequest extends CosmosMessage
   }
 
   @override
-  Map<String, String?> get queryParameters =>
-      {...pagination?.queryParameters ?? {}};
+  Map<String, String?> get queryParameters => {
+    ...pagination?.queryParameters ?? {},
+  };
 }

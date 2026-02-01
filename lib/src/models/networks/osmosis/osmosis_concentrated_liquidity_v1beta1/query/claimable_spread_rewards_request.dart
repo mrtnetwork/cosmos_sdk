@@ -7,16 +7,20 @@ class OsmosisConcentratedLiquidityClaimableSpreadRewardsRequest
     extends CosmosMessage
     with
         QueryMessage<
-            OsmosisConcentratedLiquidityClaimableSpreadRewardsResponse> {
+          OsmosisConcentratedLiquidityClaimableSpreadRewardsResponse
+        > {
   final BigInt? positionId;
 
-  const OsmosisConcentratedLiquidityClaimableSpreadRewardsRequest(
-      {this.positionId});
+  const OsmosisConcentratedLiquidityClaimableSpreadRewardsRequest({
+    this.positionId,
+  });
   factory OsmosisConcentratedLiquidityClaimableSpreadRewardsRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityClaimableSpreadRewardsRequest(
-        positionId: decode.getField(1));
+      positionId: decode.getField(1),
+    );
   }
 
   @override
@@ -24,8 +28,8 @@ class OsmosisConcentratedLiquidityClaimableSpreadRewardsRequest
 
   @override
   Map<String, String?> get queryParameters => {
-        "position_id": positionId?.toString(),
-      };
+    "position_id": positionId?.toString(),
+  };
 
   @override
   Map<String, dynamic> toJson() {
@@ -41,15 +45,19 @@ class OsmosisConcentratedLiquidityClaimableSpreadRewardsRequest
 
   @override
   OsmosisConcentratedLiquidityClaimableSpreadRewardsResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityClaimableSpreadRewardsResponse.fromJson(
-        json);
+      json,
+    );
   }
 
   @override
   OsmosisConcentratedLiquidityClaimableSpreadRewardsResponse onResponse(
-      List<int> bytes) {
-    return OsmosisConcentratedLiquidityClaimableSpreadRewardsResponse
-        .deserialize(bytes);
+    List<int> bytes,
+  ) {
+    return OsmosisConcentratedLiquidityClaimableSpreadRewardsResponse.deserialize(
+      bytes,
+    );
   }
 }

@@ -8,19 +8,20 @@ class OsmosisIncentiveRewardsEstResponse extends CosmosMessage {
   /// from specified locks between current time and end epoch
   final List<Coin> coins;
   OsmosisIncentiveRewardsEstResponse(List<Coin> coins)
-      : coins = coins.immutable;
+    : coins = coins.immutable;
   factory OsmosisIncentiveRewardsEstResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return OsmosisIncentiveRewardsEstResponse(decode
-        .getFields<List<int>>(1)
-        .map((e) => Coin.deserialize(e))
-        .toList());
+    return OsmosisIncentiveRewardsEstResponse(
+      decode.getFields<List<int>>(1).map((e) => Coin.deserialize(e)).toList(),
+    );
   }
   factory OsmosisIncentiveRewardsEstResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisIncentiveRewardsEstResponse(
-        (json["coins"] as List?)?.map((e) => Coin.fromJson(e)).toList() ??
-            <Coin>[]);
+      (json["coins"] as List?)?.map((e) => Coin.fromJson(e)).toList() ??
+          <Coin>[],
+    );
   }
 
   @override

@@ -12,25 +12,29 @@ class OsmosisLockupMsgLockTokens
   final String? owner;
   final ProtobufDuration duration;
   final List<Coin> coins;
-  OsmosisLockupMsgLockTokens(
-      {this.owner, required this.duration, required List<Coin> coins})
-      : coins = coins.immutable;
+  OsmosisLockupMsgLockTokens({
+    this.owner,
+    required this.duration,
+    required List<Coin> coins,
+  }) : coins = coins.immutable;
   factory OsmosisLockupMsgLockTokens.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisLockupMsgLockTokens(
       owner: decode.getField(1),
       duration: ProtobufDuration.deserialize(decode.getField(2)),
-      coins: decode
-          .getFields<List<int>>(3)
-          .map((e) => Coin.deserialize(e))
-          .toList(),
+      coins:
+          decode
+              .getFields<List<int>>(3)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
     );
   }
   factory OsmosisLockupMsgLockTokens.fromJson(Map<String, dynamic> json) {
     return OsmosisLockupMsgLockTokens(
       owner: json.as("owner"),
       duration: ProtobufDuration.fromString(json.as("duration")),
-      coins: json.asListOfMap("coins")?.map((e) => Coin.fromJson(e)).toList() ??
+      coins:
+          json.asListOfMap("coins")?.map((e) => Coin.fromJson(e)).toList() ??
           [],
     );
   }
@@ -51,7 +55,7 @@ class OsmosisLockupMsgLockTokens
     return {
       "owner": owner,
       "duration": duration.toJson(),
-      "coins": coins.map((e) => e.toJson()).toList()
+      "coins": coins.map((e) => e.toJson()).toList(),
     };
   }
 

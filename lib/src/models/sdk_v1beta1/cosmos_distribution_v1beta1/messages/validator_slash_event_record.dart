@@ -17,21 +17,24 @@ class DistributionValidatorSlashEventRecord extends CosmosMessage {
 
   /// validator_slash_event describes the slash event.
   final DistributionValidatorSlashEvent validatorSlashEvent;
-  const DistributionValidatorSlashEventRecord(
-      {this.validatorAddress,
-      this.height,
-      this.period,
-      required this.validatorSlashEvent});
+  const DistributionValidatorSlashEventRecord({
+    this.validatorAddress,
+    this.height,
+    this.period,
+    required this.validatorSlashEvent,
+  });
   factory DistributionValidatorSlashEventRecord.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionValidatorSlashEventRecord(
-        validatorAddress: decode
-            .getResult(1)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        height: decode.getField(2),
-        period: decode.getField(3),
-        validatorSlashEvent:
-            DistributionValidatorSlashEvent.deserialize(decode.getField(4)));
+      validatorAddress: decode
+          .getResult(1)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      height: decode.getField(2),
+      period: decode.getField(3),
+      validatorSlashEvent: DistributionValidatorSlashEvent.deserialize(
+        decode.getField(4),
+      ),
+    );
   }
 
   @override
@@ -43,7 +46,7 @@ class DistributionValidatorSlashEventRecord extends CosmosMessage {
       "validator_address": validatorAddress?.address,
       "height": height?.toString(),
       "period": period?.toString(),
-      "validator_slash_event": validatorSlashEvent.toJson()
+      "validator_slash_event": validatorSlashEvent.toJson(),
     };
   }
 
@@ -52,6 +55,10 @@ class DistributionValidatorSlashEventRecord extends CosmosMessage {
       DistributionV1beta1Types.distributionValidatorSlashEventRecord;
 
   @override
-  List get values =>
-      [validatorAddress?.address, height, period, validatorSlashEvent];
+  List get values => [
+    validatorAddress?.address,
+    height,
+    period,
+    validatorSlashEvent,
+  ];
 }

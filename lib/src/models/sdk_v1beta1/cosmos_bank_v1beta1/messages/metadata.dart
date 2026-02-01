@@ -37,29 +37,32 @@ class Metadata extends CosmosMessage {
   ///
   /// Since: cosmos-sdk 0.46
   final String? uriHash;
-  const Metadata(
-      {required this.description,
-      required this.denomUnits,
-      required this.base,
-      required this.display,
-      required this.name,
-      required this.symbol,
-      this.uri,
-      this.uriHash});
+  const Metadata({
+    required this.description,
+    required this.denomUnits,
+    required this.base,
+    required this.display,
+    required this.name,
+    required this.symbol,
+    this.uri,
+    this.uriHash,
+  });
   factory Metadata.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Metadata(
-        description: decode.getField(1),
-        denomUnits: decode
-            .getFields<List<int>>(2)
-            .map((e) => DenomUnit.deserialize(e))
-            .toList(),
-        base: decode.getField(3),
-        display: decode.getField(4),
-        name: decode.getField(5),
-        symbol: decode.getField(6),
-        uri: decode.getField(7),
-        uriHash: decode.getField(8));
+      description: decode.getField(1),
+      denomUnits:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => DenomUnit.deserialize(e))
+              .toList(),
+      base: decode.getField(3),
+      display: decode.getField(4),
+      name: decode.getField(5),
+      symbol: decode.getField(6),
+      uri: decode.getField(7),
+      uriHash: decode.getField(8),
+    );
   }
 
   @override
@@ -67,16 +70,18 @@ class Metadata extends CosmosMessage {
 
   factory Metadata.fromJson(Map<String, dynamic> json) {
     return Metadata(
-        description: json["description"],
-        denomUnits: (json["denom_units"] as List)
-            .map((e) => DenomUnit.fromJson(e))
-            .toList(),
-        base: json["base"],
-        display: json["display"],
-        name: json["name"],
-        symbol: json["symbol"],
-        uri: json["uri"],
-        uriHash: json["uri_hash"]);
+      description: json["description"],
+      denomUnits:
+          (json["denom_units"] as List)
+              .map((e) => DenomUnit.fromJson(e))
+              .toList(),
+      base: json["base"],
+      display: json["display"],
+      name: json["name"],
+      symbol: json["symbol"],
+      uri: json["uri"],
+      uriHash: json["uri_hash"],
+    );
   }
 
   @override
@@ -89,7 +94,7 @@ class Metadata extends CosmosMessage {
       "name": name,
       "symbol": symbol,
       "uri": uri,
-      "uri_hash": uriHash
+      "uri_hash": uriHash,
     };
   }
 
@@ -97,6 +102,14 @@ class Metadata extends CosmosMessage {
   TypeUrl get typeUrl => BankV1beta1Types.metadata;
 
   @override
-  List get values =>
-      [description, denomUnits, base, display, name, symbol, uri, uriHash];
+  List get values => [
+    description,
+    denomUnits,
+    base,
+    display,
+    name,
+    symbol,
+    uri,
+    uriHash,
+  ];
 }

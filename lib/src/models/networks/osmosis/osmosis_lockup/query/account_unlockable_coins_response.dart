@@ -6,20 +6,22 @@ import 'package:blockchain_utils/helper/helper.dart';
 class OsmosisLockupAccountUnlockableCoinsResponse extends CosmosMessage {
   final List<Coin> coins;
   OsmosisLockupAccountUnlockableCoinsResponse(List<Coin> coins)
-      : coins = coins.immutable;
+    : coins = coins.immutable;
   factory OsmosisLockupAccountUnlockableCoinsResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return OsmosisLockupAccountUnlockableCoinsResponse(decode
-        .getFields<List<int>>(1)
-        .map((e) => Coin.deserialize(e))
-        .toList());
+    return OsmosisLockupAccountUnlockableCoinsResponse(
+      decode.getFields<List<int>>(1).map((e) => Coin.deserialize(e)).toList(),
+    );
   }
   factory OsmosisLockupAccountUnlockableCoinsResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisLockupAccountUnlockableCoinsResponse(
-        (json["coins"] as List?)?.map((e) => Coin.deserialize(e)).toList() ??
-            <Coin>[]);
+      (json["coins"] as List?)?.map((e) => Coin.deserialize(e)).toList() ??
+          <Coin>[],
+    );
   }
 
   @override

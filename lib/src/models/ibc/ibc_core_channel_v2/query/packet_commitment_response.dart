@@ -16,24 +16,29 @@ class IbcChannelV2QueryPacketCommitmentResponse extends CosmosMessage {
   /// height at which the proof was retrieved
   final IbcClientHeight proofHeight;
   factory IbcChannelV2QueryPacketCommitmentResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return IbcChannelV2QueryPacketCommitmentResponse(
       commitment: json.asBytes("commitment"),
       proof: json.asBytes("proof"),
       proofHeight: IbcClientHeight.fromJson(json.asMap("proof_height")),
     );
   }
-  IbcChannelV2QueryPacketCommitmentResponse(
-      {List<int>? commitment, List<int>? proof, required this.proofHeight})
-      : proof = proof?.asImmutableBytes,
-        commitment = commitment?.asImmutableBytes;
+  IbcChannelV2QueryPacketCommitmentResponse({
+    List<int>? commitment,
+    List<int>? proof,
+    required this.proofHeight,
+  }) : proof = proof?.asImmutableBytes,
+       commitment = commitment?.asImmutableBytes;
   factory IbcChannelV2QueryPacketCommitmentResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcChannelV2QueryPacketCommitmentResponse(
-        commitment: decode.getField(1),
-        proof: decode.getField(2),
-        proofHeight: IbcClientHeight.deserialize(decode.getField(3)));
+      commitment: decode.getField(1),
+      proof: decode.getField(2),
+      proofHeight: IbcClientHeight.deserialize(decode.getField(3)),
+    );
   }
 
   @override
@@ -44,7 +49,7 @@ class IbcChannelV2QueryPacketCommitmentResponse extends CosmosMessage {
     return {
       "commitment": CosmosUtils.tryToBase64(commitment),
       "proof": CosmosUtils.tryToBase64(proof),
-      "proof_height": proofHeight.toJson()
+      "proof_height": proofHeight.toJson(),
     };
   }
 

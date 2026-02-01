@@ -5,17 +5,20 @@ import 'package:blockchain_utils/helper/helper.dart';
 class ThorchainEventSlash extends CosmosMessage {
   final ThorchainAsset pool;
   final List<ThorchainPoolAmt> slashAmount;
-  ThorchainEventSlash(
-      {required this.pool, required List<ThorchainPoolAmt> slashAmount})
-      : slashAmount = slashAmount.immutable;
+  ThorchainEventSlash({
+    required this.pool,
+    required List<ThorchainPoolAmt> slashAmount,
+  }) : slashAmount = slashAmount.immutable;
   factory ThorchainEventSlash.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainEventSlash(
-        pool: ThorchainAsset.deserialize(decode.getField(1)),
-        slashAmount: decode
-            .getFields<List<int>>(2)
-            .map((e) => ThorchainPoolAmt.deserialize(e))
-            .toList());
+      pool: ThorchainAsset.deserialize(decode.getField(1)),
+      slashAmount:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => ThorchainPoolAmt.deserialize(e))
+              .toList(),
+    );
   }
 
   @override
@@ -25,7 +28,7 @@ class ThorchainEventSlash extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "pool": pool.toJson(),
-      "slash_amount": slashAmount.map((e) => e.toJson()).toList()
+      "slash_amount": slashAmount.map((e) => e.toJson()).toList(),
     };
   }
 

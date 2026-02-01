@@ -6,24 +6,25 @@ class OsmosisLockupAccountUnlockedBeforeTimeRequest extends CosmosMessage
     with QueryMessage<OsmosisLockupAccountUnlockedBeforeTimeResponse> {
   final String owner;
   final ProtobufTimestamp timestamp;
-  const OsmosisLockupAccountUnlockedBeforeTimeRequest(
-      {required this.owner, required this.timestamp});
+  const OsmosisLockupAccountUnlockedBeforeTimeRequest({
+    required this.owner,
+    required this.timestamp,
+  });
   factory OsmosisLockupAccountUnlockedBeforeTimeRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisLockupAccountUnlockedBeforeTimeRequest(
-        owner: decode.getField(1),
-        timestamp: ProtobufTimestamp.deserialize(decode.getField(2)));
+      owner: decode.getField(1),
+      timestamp: ProtobufTimestamp.deserialize(decode.getField(2)),
+    );
   }
   @override
   List<int> get fieldIds => [1, 2];
 
   @override
   Map<String, dynamic> toJson() {
-    return {
-      "owner": owner,
-      "timestamp": timestamp.toJson(),
-    };
+    return {"owner": owner, "timestamp": timestamp.toJson()};
   }
 
   @override
@@ -39,13 +40,15 @@ class OsmosisLockupAccountUnlockedBeforeTimeRequest extends CosmosMessage
 
   @override
   OsmosisLockupAccountUnlockedBeforeTimeResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisLockupAccountUnlockedBeforeTimeResponse.fromJson(json);
   }
 
   @override
-  Map<String, String?> get queryParameters =>
-      {"timestamp": timestamp.toString()};
+  Map<String, String?> get queryParameters => {
+    "timestamp": timestamp.toString(),
+  };
   @override
   List<String> get pathParameters => [owner];
 }

@@ -8,14 +8,15 @@ class ValueOp extends CosmosMessage {
   final List<int>? key;
   final Proof? proof;
   ValueOp({List<int>? key, this.proof})
-      : key = BytesUtils.tryToBytes(key, unmodifiable: true);
+    : key = BytesUtils.tryToBytes(key, unmodifiable: true);
   factory ValueOp.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ValueOp(
-        key: decode.getField(1),
-        proof: decode
-            .getResult(2)
-            ?.to<Proof, List<int>>((e) => Proof.deserialize(e)));
+      key: decode.getField(1),
+      proof: decode
+          .getResult(2)
+          ?.to<Proof, List<int>>((e) => Proof.deserialize(e)),
+    );
   }
 
   @override

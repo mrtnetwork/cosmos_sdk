@@ -68,8 +68,8 @@ class CosmosUtils {
 
   static Object? sortAminoJsonTx(Object? obj) {
     if (obj is Map) {
-      final keys = obj.keys.cast<String>().toList()
-        ..sort((a, b) => a.compareTo(b));
+      final keys =
+          obj.keys.cast<String>().toList()..sort((a, b) => a.compareTo(b));
       final Map<String, dynamic> result = {};
       for (final i in keys) {
         final value = obj[i];

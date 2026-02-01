@@ -18,23 +18,26 @@ class SignerInfo extends CosmosMessage {
   /// number of committed transactions signed by a given address. It is used to
   /// prevent replay attacks.
   final BigInt sequence;
-  SignerInfo(
-      {required this.publicKey,
-      required this.modeInfo,
-      required this.sequence});
+  SignerInfo({
+    required this.publicKey,
+    required this.modeInfo,
+    required this.sequence,
+  });
   factory SignerInfo.fromJson(Map<String, dynamic> json) {
     return SignerInfo(
-        publicKey: Any.fromJson(json["public_key"]),
-        modeInfo: ModeInfo.fromJson(json["mode_info"]),
-        sequence: BigintUtils.parse(json["sequence"]));
+      publicKey: Any.fromJson(json["public_key"]),
+      modeInfo: ModeInfo.fromJson(json["mode_info"]),
+      sequence: BigintUtils.parse(json["sequence"]),
+    );
   }
 
   factory SignerInfo.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return SignerInfo(
-        publicKey: Any.deserialize(decode.getField(1)),
-        modeInfo: ModeInfo.deserialize(decode.getField(2)),
-        sequence: decode.getField<BigInt?>(3) ?? BigInt.zero);
+      publicKey: Any.deserialize(decode.getField(1)),
+      modeInfo: ModeInfo.deserialize(decode.getField(2)),
+      sequence: decode.getField<BigInt?>(3) ?? BigInt.zero,
+    );
   }
 
   @override
@@ -45,21 +48,20 @@ class SignerInfo extends CosmosMessage {
     return {
       "public_key": publicKey.toJson(),
       "mode_info": modeInfo.toJson(),
-      "sequence": sequence.toString()
+      "sequence": sequence.toString(),
     };
   }
 
   @override
-  List get values =>
-      [publicKey, modeInfo, sequence == BigInt.zero ? null : sequence];
+  List get values => [
+    publicKey,
+    modeInfo,
+    sequence == BigInt.zero ? null : sequence,
+  ];
   @override
   TypeUrl get typeUrl => TxV1beta1Types.signerInfo;
 
-  SignerInfo copyWith({
-    Any? publicKey,
-    ModeInfo? modeInfo,
-    BigInt? sequence,
-  }) {
+  SignerInfo copyWith({Any? publicKey, ModeInfo? modeInfo, BigInt? sequence}) {
     return SignerInfo(
       publicKey: publicKey ?? this.publicKey,
       modeInfo: modeInfo ?? this.modeInfo,

@@ -8,7 +8,7 @@ class GenutilGenesisState extends CosmosMessage {
   /// gen_txs defines the genesis transactions.
   final List<int> genTxs;
   GenutilGenesisState({required List<int> genTxs})
-      : genTxs = BytesUtils.toBytes(genTxs, unmodifiable: true);
+    : genTxs = BytesUtils.toBytes(genTxs, unmodifiable: true);
   factory GenutilGenesisState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GenutilGenesisState(genTxs: decode.getField(1));

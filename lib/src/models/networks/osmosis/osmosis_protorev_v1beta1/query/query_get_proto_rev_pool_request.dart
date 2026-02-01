@@ -11,13 +11,18 @@ class OsmosisProtorevQueryGetProtoRevPoolRequest extends CosmosMessage
 
   /// other_denom is the other denom for the denom pair to pool mapping
   final String? otherDenom;
-  const OsmosisProtorevQueryGetProtoRevPoolRequest(
-      {this.baseDenom, this.otherDenom});
+  const OsmosisProtorevQueryGetProtoRevPoolRequest({
+    this.baseDenom,
+    this.otherDenom,
+  });
   factory OsmosisProtorevQueryGetProtoRevPoolRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisProtorevQueryGetProtoRevPoolRequest(
-        baseDenom: decode.getField(1), otherDenom: decode.getField(2));
+      baseDenom: decode.getField(1),
+      otherDenom: decode.getField(2),
+    );
   }
 
   @override
@@ -38,7 +43,8 @@ class OsmosisProtorevQueryGetProtoRevPoolRequest extends CosmosMessage
 
   @override
   OsmosisProtorevQueryGetProtoRevPoolResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisProtorevQueryGetProtoRevPoolResponse.fromJson(json);
   }
 

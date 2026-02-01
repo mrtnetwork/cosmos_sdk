@@ -13,23 +13,27 @@ class QueryUnreceivedAcksResponse extends CosmosMessage {
   final IbcClientHeight height;
   factory QueryUnreceivedAcksResponse.fromJson(Map<String, dynamic> json) {
     return QueryUnreceivedAcksResponse(
-      sequences: (json["sequences"] as List?)
-          ?.map((e) => BigintUtils.parse(e))
-          .toList(),
+      sequences:
+          (json["sequences"] as List?)
+              ?.map((e) => BigintUtils.parse(e))
+              .toList(),
       height: IbcClientHeight.fromJson(json["height"]),
     );
   }
   QueryUnreceivedAcksResponse({List<BigInt>? sequences, required this.height})
-      : sequences = sequences?.emptyAsNull?.immutable;
+    : sequences = sequences?.emptyAsNull?.immutable;
   factory QueryUnreceivedAcksResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryUnreceivedAcksResponse(
-        sequences: decode
-                .getResult<ProtocolBufferDecoderResult?>(1)
-                ?.to<List<BigInt>, List<int>>(
-                    (e) => e.map((e) => BigintUtils.parse(e)).toList()) ??
-            <BigInt>[],
-        height: IbcClientHeight.deserialize(decode.getField(2)));
+      sequences:
+          decode
+              .getResult<ProtocolBufferDecoderResult?>(1)
+              ?.to<List<BigInt>, List<int>>(
+                (e) => e.map((e) => BigintUtils.parse(e)).toList(),
+              ) ??
+          <BigInt>[],
+      height: IbcClientHeight.deserialize(decode.getField(2)),
+    );
   }
 
   @override
@@ -39,7 +43,7 @@ class QueryUnreceivedAcksResponse extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "sequences": sequences?.map((e) => e.toString()),
-      "height": height.toJson()
+      "height": height.toJson(),
     };
   }
 

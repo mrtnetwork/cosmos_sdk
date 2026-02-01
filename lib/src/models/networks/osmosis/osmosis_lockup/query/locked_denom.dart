@@ -10,8 +10,9 @@ class OsmosisLockupLockedDenomRequest extends CosmosMessage
   factory OsmosisLockupLockedDenomRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisLockupLockedDenomRequest(
-        denom: decode.getField(1),
-        duration: ProtobufDuration.deserialize(decode.getField(2)));
+      denom: decode.getField(1),
+      duration: ProtobufDuration.deserialize(decode.getField(2)),
+    );
   }
   @override
   List<int> get fieldIds => [1, 2];

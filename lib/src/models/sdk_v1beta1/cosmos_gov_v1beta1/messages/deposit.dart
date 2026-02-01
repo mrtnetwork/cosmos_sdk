@@ -19,16 +19,17 @@ class GovDeposit extends CosmosMessage {
   factory GovDeposit.fromJson(Map<String, dynamic> json) {
     return GovDeposit(
       proposalId: BigintUtils.tryParse(json["proposal_id"]),
-      depositor: json["depositor"] == null
-          ? null
-          : CosmosBaseAddress(json["depositor"]),
+      depositor:
+          json["depositor"] == null
+              ? null
+              : CosmosBaseAddress(json["depositor"]),
       amount:
           (json["amount"] as List?)?.map((e) => Coin.fromJson(e)).toList() ??
-              [],
+          [],
     );
   }
   GovDeposit({this.proposalId, this.depositor, required List<Coin> amount})
-      : amount = amount.immutable;
+    : amount = amount.immutable;
   factory GovDeposit.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GovDeposit(
@@ -36,10 +37,11 @@ class GovDeposit extends CosmosMessage {
       depositor: decode
           .getResult(2)
           ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-      amount: decode
-          .getFields<List<int>>(3)
-          .map((e) => Coin.deserialize(e))
-          .toList(),
+      amount:
+          decode
+              .getFields<List<int>>(3)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
     );
   }
 
@@ -51,7 +53,7 @@ class GovDeposit extends CosmosMessage {
     return {
       "proposal_id": proposalId?.toString(),
       "depositor": depositor?.address,
-      "amount": amount.map((e) => e.toJson()).toList()
+      "amount": amount.map((e) => e.toJson()).toList(),
     };
   }
 

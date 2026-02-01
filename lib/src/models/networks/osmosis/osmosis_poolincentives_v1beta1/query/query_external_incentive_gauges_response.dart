@@ -8,23 +8,28 @@ class OsmosisPoolincentivesQueryExternalIncentiveGaugesResponse
   final List<OsmosisIncentivesGauge> data;
 
   OsmosisPoolincentivesQueryExternalIncentiveGaugesResponse(
-      List<OsmosisIncentivesGauge> data)
-      : data = data.immutable;
+    List<OsmosisIncentivesGauge> data,
+  ) : data = data.immutable;
   factory OsmosisPoolincentivesQueryExternalIncentiveGaugesResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return OsmosisPoolincentivesQueryExternalIncentiveGaugesResponse(decode
-        .getFields<List<int>>(1)
-        .map((e) => OsmosisIncentivesGauge.deserialize(e))
-        .toList());
+    return OsmosisPoolincentivesQueryExternalIncentiveGaugesResponse(
+      decode
+          .getFields<List<int>>(1)
+          .map((e) => OsmosisIncentivesGauge.deserialize(e))
+          .toList(),
+    );
   }
   factory OsmosisPoolincentivesQueryExternalIncentiveGaugesResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisPoolincentivesQueryExternalIncentiveGaugesResponse(
-        (json["data"] as List?)
-                ?.map((e) => OsmosisIncentivesGauge.fromJson(e))
-                .toList() ??
-            <OsmosisIncentivesGauge>[]);
+      (json["data"] as List?)
+              ?.map((e) => OsmosisIncentivesGauge.fromJson(e))
+              .toList() ??
+          <OsmosisIncentivesGauge>[],
+    );
   }
 
   @override

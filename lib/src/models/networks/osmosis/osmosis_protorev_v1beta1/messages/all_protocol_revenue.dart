@@ -9,30 +9,38 @@ class OsmosisProtorevAllProtocolRevenue extends CosmosMessage {
   final OsmosisTxfeesTxFeesTracker txFeesTracker;
   final OsmosisProtorevRouteCyclicArbTracker cyclicArbTracker;
 
-  const OsmosisProtorevAllProtocolRevenue(
-      {required this.takerFeesTracker,
-      required this.txFeesTracker,
-      required this.cyclicArbTracker});
+  const OsmosisProtorevAllProtocolRevenue({
+    required this.takerFeesTracker,
+    required this.txFeesTracker,
+    required this.cyclicArbTracker,
+  });
 
   factory OsmosisProtorevAllProtocolRevenue.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisProtorevAllProtocolRevenue(
-        takerFeesTracker:
-            OsmosisPoolManagerTakerFeesTracker.deserialize(decode.getField(1)),
-        txFeesTracker:
-            OsmosisTxfeesTxFeesTracker.deserialize(decode.getField(2)),
-        cyclicArbTracker: OsmosisProtorevRouteCyclicArbTracker.deserialize(
-            decode.getField(3)));
+      takerFeesTracker: OsmosisPoolManagerTakerFeesTracker.deserialize(
+        decode.getField(1),
+      ),
+      txFeesTracker: OsmosisTxfeesTxFeesTracker.deserialize(decode.getField(2)),
+      cyclicArbTracker: OsmosisProtorevRouteCyclicArbTracker.deserialize(
+        decode.getField(3),
+      ),
+    );
   }
   factory OsmosisProtorevAllProtocolRevenue.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisProtorevAllProtocolRevenue(
-        takerFeesTracker: OsmosisPoolManagerTakerFeesTracker.fromJson(
-            json["taker_fees_tracker"]),
-        txFeesTracker:
-            OsmosisTxfeesTxFeesTracker.fromJson(json["tx_fees_tracker"]),
-        cyclicArbTracker: OsmosisProtorevRouteCyclicArbTracker.fromJson(
-            json["cyclic_arb_tracker"]));
+      takerFeesTracker: OsmosisPoolManagerTakerFeesTracker.fromJson(
+        json["taker_fees_tracker"],
+      ),
+      txFeesTracker: OsmosisTxfeesTxFeesTracker.fromJson(
+        json["tx_fees_tracker"],
+      ),
+      cyclicArbTracker: OsmosisProtorevRouteCyclicArbTracker.fromJson(
+        json["cyclic_arb_tracker"],
+      ),
+    );
   }
 
   @override
@@ -43,7 +51,7 @@ class OsmosisProtorevAllProtocolRevenue extends CosmosMessage {
     return {
       "taker_fees_tracker": takerFeesTracker.toJson(),
       "tx_fees_tracker": txFeesTracker.toJson(),
-      "cyclic_arb_tracker": cyclicArbTracker.toJson()
+      "cyclic_arb_tracker": cyclicArbTracker.toJson(),
     };
   }
 

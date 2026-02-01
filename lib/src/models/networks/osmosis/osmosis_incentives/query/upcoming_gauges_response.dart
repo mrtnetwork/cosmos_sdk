@@ -17,22 +17,27 @@ class OsmosisIncentiveUpcomingGaugesResponse extends CosmosMessage {
   factory OsmosisIncentiveUpcomingGaugesResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisIncentiveUpcomingGaugesResponse(
-        data: decode
-            .getFields<List<int>>(1)
-            .map((e) => OsmosisIncentivesGauge.deserialize(e))
-            .toList(),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
+      data:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => OsmosisIncentivesGauge.deserialize(e))
+              .toList(),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
+    );
   }
   factory OsmosisIncentiveUpcomingGaugesResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisIncentiveUpcomingGaugesResponse(
-        data: (json["data"] as List?)
-                ?.map((e) => OsmosisIncentivesGauge.fromJson(e))
-                .toList() ??
-            <OsmosisIncentivesGauge>[],
-        pagination: PageResponse.fromJson(json["pagination"]));
+      data:
+          (json["data"] as List?)
+              ?.map((e) => OsmosisIncentivesGauge.fromJson(e))
+              .toList() ??
+          <OsmosisIncentivesGauge>[],
+      pagination: PageResponse.fromJson(json["pagination"]),
+    );
   }
 
   @override
@@ -42,7 +47,7 @@ class OsmosisIncentiveUpcomingGaugesResponse extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "data": data.map((e) => e.toJson()).toList(),
-      "pagination": pagination?.toJson()
+      "pagination": pagination?.toJson(),
     };
   }
 

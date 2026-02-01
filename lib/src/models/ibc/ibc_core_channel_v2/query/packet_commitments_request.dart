@@ -12,8 +12,10 @@ class IbcChannelV2QueryPacketCommitments extends CosmosMessage
   /// pagination request
   final PageRequest? pagination;
 
-  const IbcChannelV2QueryPacketCommitments(
-      {required this.clientId, this.pagination});
+  const IbcChannelV2QueryPacketCommitments({
+    required this.clientId,
+    this.pagination,
+  });
 
   @override
   List<int> get fieldIds => [1, 2];
@@ -36,7 +38,8 @@ class IbcChannelV2QueryPacketCommitments extends CosmosMessage
 
   @override
   IbcChannelV2QueryPacketCommitmentsResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return IbcChannelV2QueryPacketCommitmentsResponse.fromJson(json);
   }
 
@@ -44,6 +47,7 @@ class IbcChannelV2QueryPacketCommitments extends CosmosMessage
   List<String> get pathParameters => [clientId];
 
   @override
-  Map<String, String?> get queryParameters =>
-      {...pagination?.queryParameters ?? {}};
+  Map<String, String?> get queryParameters => {
+    ...pagination?.queryParameters ?? {},
+  };
 }

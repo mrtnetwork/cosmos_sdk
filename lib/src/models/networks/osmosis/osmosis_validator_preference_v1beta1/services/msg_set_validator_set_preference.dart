@@ -15,31 +15,43 @@ class OsmosisValidatorPreferenceMsgSetValidatorSetPreference
   /// list of {valAddr, weight} to delegate to
   final List<OsmosisValidatorPreferenceValidatorPreference> preferences;
 
-  OsmosisValidatorPreferenceMsgSetValidatorSetPreference(
-      {this.delegator,
-      required List<OsmosisValidatorPreferenceValidatorPreference> preferences})
-      : preferences = preferences.immutable;
+  OsmosisValidatorPreferenceMsgSetValidatorSetPreference({
+    this.delegator,
+    required List<OsmosisValidatorPreferenceValidatorPreference> preferences,
+  }) : preferences = preferences.immutable;
   factory OsmosisValidatorPreferenceMsgSetValidatorSetPreference.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisValidatorPreferenceMsgSetValidatorSetPreference(
-        delegator: decode.getField(1),
-        preferences: decode
-            .getFields<List<int>>(2)
-            .map((e) =>
-                OsmosisValidatorPreferenceValidatorPreference.deserialize(e))
-            .toList());
+      delegator: decode.getField(1),
+      preferences:
+          decode
+              .getFields<List<int>>(2)
+              .map(
+                (e) =>
+                    OsmosisValidatorPreferenceValidatorPreference.deserialize(
+                      e,
+                    ),
+              )
+              .toList(),
+    );
   }
   factory OsmosisValidatorPreferenceMsgSetValidatorSetPreference.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisValidatorPreferenceMsgSetValidatorSetPreference(
-        delegator: json.as("delegator"),
-        preferences: json
-                .asListOfMap("preferences")
-                ?.map((e) =>
-                    OsmosisValidatorPreferenceValidatorPreference.fromJson(e))
-                .toList() ??
-            []);
+      delegator: json.as("delegator"),
+      preferences:
+          json
+              .asListOfMap("preferences")
+              ?.map(
+                (e) =>
+                    OsmosisValidatorPreferenceValidatorPreference.fromJson(e),
+              )
+              .toList() ??
+          [],
+    );
   }
   @override
   List<int> get fieldIds => [1, 2];
@@ -61,8 +73,10 @@ class OsmosisValidatorPreferenceMsgSetValidatorSetPreference
 
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
-    return EmptyServiceRequestResponse(OsmosisValidatorPreferenceV1beta1Types
-        .msgSetValidatorSetPreferenceResponse);
+    return EmptyServiceRequestResponse(
+      OsmosisValidatorPreferenceV1beta1Types
+          .msgSetValidatorSetPreferenceResponse,
+    );
   }
 
   @override

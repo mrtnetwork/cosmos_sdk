@@ -11,18 +11,20 @@ class InterchainAccountsHostParams extends CosmosMessage {
   /// allow_messages defines a list of sdk message typeURLs allowed to be executed on a host chain
   final List<String>? allowMessages;
   InterchainAccountsHostParams({this.hostEnabled, List<String>? allowMessages})
-      : allowMessages = allowMessages?.emptyAsNull?.immutable;
+    : allowMessages = allowMessages?.emptyAsNull?.immutable;
 
   factory InterchainAccountsHostParams.fromJson(Map<String, dynamic> json) {
     return InterchainAccountsHostParams(
-        allowMessages: (json["allow_messages"] as List?)?.cast(),
-        hostEnabled: json["host_enabled"]);
+      allowMessages: (json["allow_messages"] as List?)?.cast(),
+      hostEnabled: json["host_enabled"],
+    );
   }
   factory InterchainAccountsHostParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return InterchainAccountsHostParams(
-        hostEnabled: decode.getField(1),
-        allowMessages: decode.getFields<String>(2));
+      hostEnabled: decode.getField(1),
+      allowMessages: decode.getFields<String>(2),
+    );
   }
 
   @override

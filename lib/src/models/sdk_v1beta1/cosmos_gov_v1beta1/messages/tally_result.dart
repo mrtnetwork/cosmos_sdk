@@ -17,23 +17,26 @@ class GovTallyResult extends CosmosMessage {
   final BigInt noWithVeto;
   factory GovTallyResult.fromJson(Map<String, dynamic> json) {
     return GovTallyResult(
-        abstain: BigintUtils.parse(json["abstain"]),
-        no: BigintUtils.parse(json["no"]),
-        noWithVeto: BigintUtils.parse(json["no_with_veto"]),
-        yes: BigintUtils.parse(json["yes"]));
+      abstain: BigintUtils.parse(json["abstain"]),
+      no: BigintUtils.parse(json["no"]),
+      noWithVeto: BigintUtils.parse(json["no_with_veto"]),
+      yes: BigintUtils.parse(json["yes"]),
+    );
   }
-  const GovTallyResult(
-      {required this.yes,
-      required this.abstain,
-      required this.no,
-      required this.noWithVeto});
+  const GovTallyResult({
+    required this.yes,
+    required this.abstain,
+    required this.no,
+    required this.noWithVeto,
+  });
   factory GovTallyResult.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GovTallyResult(
-        yes: BigintUtils.parse(decode.getField<String>(1)),
-        abstain: BigintUtils.parse(decode.getField<String>(2)),
-        no: BigintUtils.parse(decode.getField<String>(3)),
-        noWithVeto: BigintUtils.parse(decode.getField<String>(4)));
+      yes: BigintUtils.parse(decode.getField<String>(1)),
+      abstain: BigintUtils.parse(decode.getField<String>(2)),
+      no: BigintUtils.parse(decode.getField<String>(3)),
+      noWithVeto: BigintUtils.parse(decode.getField<String>(4)),
+    );
   }
 
   @override
@@ -45,7 +48,7 @@ class GovTallyResult extends CosmosMessage {
       "yes": yes.toString(),
       "abstain": abstain.toString(),
       "no": no.toString(),
-      "no_with_veto": noWithVeto.toString()
+      "no_with_veto": noWithVeto.toString(),
     };
   }
 
@@ -54,9 +57,9 @@ class GovTallyResult extends CosmosMessage {
 
   @override
   List get values => [
-        yes.toString(),
-        abstain.toString(),
-        no.toString(),
-        noWithVeto.toString()
-      ];
+    yes.toString(),
+    abstain.toString(),
+    no.toString(),
+    noWithVeto.toString(),
+  ];
 }

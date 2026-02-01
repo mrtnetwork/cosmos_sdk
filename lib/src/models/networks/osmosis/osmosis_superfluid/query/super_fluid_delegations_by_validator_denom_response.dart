@@ -6,31 +6,39 @@ import 'package:blockchain_utils/helper/helper.dart';
 class OsmosisSuperfluidSuperfluidDelegationsByValidatorDenomResponse
     extends CosmosMessage {
   final List<OsmosisSuperfluidSuperfluidDelegationRecord>
-      superfluidDelegationRecords;
+  superfluidDelegationRecords;
 
-  OsmosisSuperfluidSuperfluidDelegationsByValidatorDenomResponse(
-      {required List<OsmosisSuperfluidSuperfluidDelegationRecord>
-          superfluidDelegationRecords})
-      : superfluidDelegationRecords = superfluidDelegationRecords.immutable;
+  OsmosisSuperfluidSuperfluidDelegationsByValidatorDenomResponse({
+    required List<OsmosisSuperfluidSuperfluidDelegationRecord>
+    superfluidDelegationRecords,
+  }) : superfluidDelegationRecords = superfluidDelegationRecords.immutable;
   factory OsmosisSuperfluidSuperfluidDelegationsByValidatorDenomResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidSuperfluidDelegationsByValidatorDenomResponse(
-        superfluidDelegationRecords: decode
-            .getFields<List<int>>(1)
-            .map((e) =>
-                OsmosisSuperfluidSuperfluidDelegationRecord.deserialize(e))
-            .toList());
+      superfluidDelegationRecords:
+          decode
+              .getFields<List<int>>(1)
+              .map(
+                (e) =>
+                    OsmosisSuperfluidSuperfluidDelegationRecord.deserialize(e),
+              )
+              .toList(),
+    );
   }
   factory OsmosisSuperfluidSuperfluidDelegationsByValidatorDenomResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisSuperfluidSuperfluidDelegationsByValidatorDenomResponse(
-        superfluidDelegationRecords:
-            (json["superfluid_delegation_records"] as List?)
-                    ?.map((e) =>
-                        OsmosisSuperfluidSuperfluidDelegationRecord.fromJson(e))
-                    .toList() ??
-                <OsmosisSuperfluidSuperfluidDelegationRecord>[]);
+      superfluidDelegationRecords:
+          (json["superfluid_delegation_records"] as List?)
+              ?.map(
+                (e) => OsmosisSuperfluidSuperfluidDelegationRecord.fromJson(e),
+              )
+              .toList() ??
+          <OsmosisSuperfluidSuperfluidDelegationRecord>[],
+    );
   }
 
   @override

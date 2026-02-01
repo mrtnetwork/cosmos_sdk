@@ -9,21 +9,28 @@ class InterchainAccountPacketData extends CosmosMessage {
   final List<int>? data;
   final String? memo;
   InterchainAccountPacketData({this.type, List<int>? data, this.memo})
-      : data = BytesUtils.tryToBytes(data);
+    : data = BytesUtils.tryToBytes(data);
   factory InterchainAccountPacketData.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return InterchainAccountPacketData(
-        type: decode.getResult(1)?.to<InterchainAccountType, int>(
-            (e) => InterchainAccountType.fromValue(e)),
-        data: decode.getField(2),
-        memo: decode.getField(3));
+      type: decode
+          .getResult(1)
+          ?.to<InterchainAccountType, int>(
+            (e) => InterchainAccountType.fromValue(e),
+          ),
+      data: decode.getField(2),
+      memo: decode.getField(3),
+    );
   }
   factory InterchainAccountPacketData.fromJson(Map<String, dynamic> json) {
     return InterchainAccountPacketData(
-        type: json.maybeAs<InterchainAccountType, String>(
-            key: "type", onValue: InterchainAccountType.fromValue),
-        data: json.asBytes("data"),
-        memo: json.as("memo"));
+      type: json.maybeAs<InterchainAccountType, String>(
+        key: "type",
+        onValue: InterchainAccountType.fromValue,
+      ),
+      data: json.asBytes("data"),
+      memo: json.as("memo"),
+    );
   }
 
   @override
@@ -34,7 +41,7 @@ class InterchainAccountPacketData extends CosmosMessage {
     return {
       "type": type?.value,
       "data": BytesUtils.tryToHexString(data),
-      "memo": memo
+      "memo": memo,
     };
   }
 

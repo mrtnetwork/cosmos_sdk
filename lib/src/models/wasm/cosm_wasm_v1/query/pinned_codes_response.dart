@@ -12,26 +12,30 @@ class CosmWasmV1QueryPinnedCodesResponse extends CosmosMessage {
 
   /// pagination defines the pagination in the response.
   final PageResponse? pagination;
-  CosmWasmV1QueryPinnedCodesResponse(
-      {required List<BigInt>? codeIds, this.pagination})
-      : codeIds = codeIds?.immutable;
+  CosmWasmV1QueryPinnedCodesResponse({
+    required List<BigInt>? codeIds,
+    this.pagination,
+  }) : codeIds = codeIds?.immutable;
   factory CosmWasmV1QueryPinnedCodesResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmWasmV1QueryPinnedCodesResponse(
-        codeIds: decode.getFields<BigInt>(1),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageResponse, List<int>>(PageResponse.deserialize));
+      codeIds: decode.getFields<BigInt>(1),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageResponse, List<int>>(PageResponse.deserialize),
+    );
   }
   factory CosmWasmV1QueryPinnedCodesResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return CosmWasmV1QueryPinnedCodesResponse(
-        codeIds: json
-            .as<List?>("code_ids")
-            ?.map((e) => BigintUtils.parse(e))
-            .toList(),
-        pagination: json.maybeAs<PageResponse, Map<String, dynamic>>(
-            key: "pagination", onValue: (e) => PageResponse.fromJson(e)));
+      codeIds:
+          json.as<List?>("code_ids")?.map((e) => BigintUtils.parse(e)).toList(),
+      pagination: json.maybeAs<PageResponse, Map<String, dynamic>>(
+        key: "pagination",
+        onValue: (e) => PageResponse.fromJson(e),
+      ),
+    );
   }
 
   @override
@@ -41,7 +45,7 @@ class CosmWasmV1QueryPinnedCodesResponse extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "code_ids": codeIds?.map((e) => e.toString()).toList(),
-      "pagination": pagination?.toJson()
+      "pagination": pagination?.toJson(),
     };
   }
 

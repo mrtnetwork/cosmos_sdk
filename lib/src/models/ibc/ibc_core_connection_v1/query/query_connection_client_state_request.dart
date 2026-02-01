@@ -8,13 +8,16 @@ class IbcConnectionQueryConnectionClientStateRequest extends CosmosMessage
     with QueryMessage<IbcConnectionQueryConnectionClientStateResponse> {
   /// connection unique identifier
   final String connectionId;
-  const IbcConnectionQueryConnectionClientStateRequest(
-      {required this.connectionId});
+  const IbcConnectionQueryConnectionClientStateRequest({
+    required this.connectionId,
+  });
   factory IbcConnectionQueryConnectionClientStateRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcConnectionQueryConnectionClientStateRequest(
-        connectionId: decode.getField(1));
+      connectionId: decode.getField(1),
+    );
   }
 
   @override
@@ -38,7 +41,8 @@ class IbcConnectionQueryConnectionClientStateRequest extends CosmosMessage
 
   @override
   IbcConnectionQueryConnectionClientStateResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return IbcConnectionQueryConnectionClientStateResponse.fromJson(json);
   }
 

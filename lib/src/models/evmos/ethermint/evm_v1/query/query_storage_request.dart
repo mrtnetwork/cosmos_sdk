@@ -10,17 +10,24 @@ class EvmosEthermintEVMV1QueryStorageRequest extends CosmosMessage
 
   /// key defines the key of the storage state
   final String key;
-  const EvmosEthermintEVMV1QueryStorageRequest(
-      {required this.address, required this.key});
+  const EvmosEthermintEVMV1QueryStorageRequest({
+    required this.address,
+    required this.key,
+  });
   factory EvmosEthermintEVMV1QueryStorageRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosEthermintEVMV1QueryStorageRequest(
-        address: decode.getField(1), key: decode.getField(2));
+      address: decode.getField(1),
+      key: decode.getField(2),
+    );
   }
   factory EvmosEthermintEVMV1QueryStorageRequest.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return EvmosEthermintEVMV1QueryStorageRequest(
-        address: json["address"], key: json["key"]);
+      address: json["address"],
+      key: json["key"],
+    );
   }
 
   @override
@@ -44,7 +51,8 @@ class EvmosEthermintEVMV1QueryStorageRequest extends CosmosMessage
 
   @override
   EvmosEthermintEVMV1QueryStorageResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return EvmosEthermintEVMV1QueryStorageResponse.fromJson(json);
   }
 

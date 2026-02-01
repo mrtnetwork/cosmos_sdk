@@ -13,14 +13,16 @@ class IbcTransferV2Token extends CosmosMessage {
   const IbcTransferV2Token({required this.denom, required this.amount});
   factory IbcTransferV2Token.fromJson(Map<String, dynamic> json) {
     return IbcTransferV2Token(
-        denom: IbcTransferV2Denom.fromJson(json["denom"]),
-        amount: json["amount"]);
+      denom: IbcTransferV2Denom.fromJson(json["denom"]),
+      amount: json["amount"],
+    );
   }
   factory IbcTransferV2Token.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcTransferV2Token(
-        denom: IbcTransferV2Denom.deserialize(decode.getField(1)),
-        amount: decode.getField(2));
+      denom: IbcTransferV2Denom.deserialize(decode.getField(1)),
+      amount: decode.getField(2),
+    );
   }
 
   @override
@@ -28,10 +30,7 @@ class IbcTransferV2Token extends CosmosMessage {
 
   @override
   Map<String, dynamic> toJson() {
-    return {
-      "denom": denom.toJson(),
-      "amount": amount,
-    };
+    return {"denom": denom.toJson(), "amount": amount};
   }
 
   @override

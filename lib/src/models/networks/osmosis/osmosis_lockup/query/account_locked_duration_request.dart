@@ -6,14 +6,18 @@ class OsmosisLockupAccountLockedDurationRequest extends CosmosMessage
     with QueryMessage<OsmosisLockupAccountLockedDurationResponse> {
   final String owner;
   final ProtobufDuration duration;
-  const OsmosisLockupAccountLockedDurationRequest(
-      {required this.owner, required this.duration});
+  const OsmosisLockupAccountLockedDurationRequest({
+    required this.owner,
+    required this.duration,
+  });
   factory OsmosisLockupAccountLockedDurationRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisLockupAccountLockedDurationRequest(
-        owner: decode.getField(1),
-        duration: ProtobufDuration.deserialize(decode.getField(2)));
+      owner: decode.getField(1),
+      duration: ProtobufDuration.deserialize(decode.getField(2)),
+    );
   }
   @override
   List<int> get fieldIds => [1, 2];
@@ -36,7 +40,8 @@ class OsmosisLockupAccountLockedDurationRequest extends CosmosMessage
 
   @override
   OsmosisLockupAccountLockedDurationResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisLockupAccountLockedDurationResponse.fromJson(json);
   }
 

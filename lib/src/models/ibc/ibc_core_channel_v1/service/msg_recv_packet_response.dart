@@ -9,8 +9,12 @@ class MsgRecvPacketResponse extends CosmosMessage {
   factory MsgRecvPacketResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgRecvPacketResponse(
-        result: decode.getResult(1)?.to<IbcChannelResponseResultType, int>(
-            (e) => IbcChannelResponseResultType.fromValue(e)));
+      result: decode
+          .getResult(1)
+          ?.to<IbcChannelResponseResultType, int>(
+            (e) => IbcChannelResponseResultType.fromValue(e),
+          ),
+    );
   }
 
   @override

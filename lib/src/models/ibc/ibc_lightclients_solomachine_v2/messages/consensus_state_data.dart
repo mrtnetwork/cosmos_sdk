@@ -8,13 +8,15 @@ class IbcSoloMachineV2ConsensusStateData extends CosmosMessage {
   final List<int>? path;
   final Any? consensusState;
   IbcSoloMachineV2ConsensusStateData({List<int>? path, this.consensusState})
-      : path = BytesUtils.tryToBytes(path, unmodifiable: true);
+    : path = BytesUtils.tryToBytes(path, unmodifiable: true);
   factory IbcSoloMachineV2ConsensusStateData.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcSoloMachineV2ConsensusStateData(
-        path: decode.getField(1),
-        consensusState:
-            decode.getResult(2)?.to<Any, List<int>>((e) => Any.deserialize(e)));
+      path: decode.getField(1),
+      consensusState: decode
+          .getResult(2)
+          ?.to<Any, List<int>>((e) => Any.deserialize(e)),
+    );
   }
 
   @override
@@ -24,7 +26,7 @@ class IbcSoloMachineV2ConsensusStateData extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "path": BytesUtils.tryToHexString(path),
-      "consensus_state": consensusState?.toJson()
+      "consensus_state": consensusState?.toJson(),
     };
   }
 

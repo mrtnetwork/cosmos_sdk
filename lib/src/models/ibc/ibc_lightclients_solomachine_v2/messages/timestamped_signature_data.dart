@@ -7,15 +7,18 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class IbcSoloMachineV2TimestampedSignatureData extends CosmosMessage {
   final List<int>? signatureData;
   final BigInt? timestamp;
-  IbcSoloMachineV2TimestampedSignatureData(
-      {List<int>? signatureData, this.timestamp})
-      : signatureData =
-            BytesUtils.tryToBytes(signatureData, unmodifiable: true);
+  IbcSoloMachineV2TimestampedSignatureData({
+    List<int>? signatureData,
+    this.timestamp,
+  }) : signatureData = BytesUtils.tryToBytes(signatureData, unmodifiable: true);
   factory IbcSoloMachineV2TimestampedSignatureData.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcSoloMachineV2TimestampedSignatureData(
-        signatureData: decode.getField(1), timestamp: decode.getField(2));
+      signatureData: decode.getField(1),
+      timestamp: decode.getField(2),
+    );
   }
 
   @override
@@ -25,7 +28,7 @@ class IbcSoloMachineV2TimestampedSignatureData extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "signature_data": BytesUtils.tryToHexString(signatureData),
-      "timestamp": timestamp?.toString()
+      "timestamp": timestamp?.toString(),
     };
   }
 

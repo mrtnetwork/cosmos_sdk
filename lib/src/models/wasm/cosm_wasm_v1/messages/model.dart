@@ -12,8 +12,8 @@ class CosmWasmV1Model extends CosmosMessage {
   /// base64-encode raw value
   final List<int>? value;
   CosmWasmV1Model({required List<int>? key, required List<int>? value})
-      : key = key?.asImmutableBytes,
-        value = value?.asImmutableBytes;
+    : key = key?.asImmutableBytes,
+      value = value?.asImmutableBytes;
 
   factory CosmWasmV1Model.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -21,7 +21,9 @@ class CosmWasmV1Model extends CosmosMessage {
   }
   factory CosmWasmV1Model.fromJson(Map<String, dynamic> json) {
     return CosmWasmV1Model(
-        key: json.asBytes("key"), value: json.asBytes("value"));
+      key: json.asBytes("key"),
+      value: json.asBytes("value"),
+    );
   }
 
   @override

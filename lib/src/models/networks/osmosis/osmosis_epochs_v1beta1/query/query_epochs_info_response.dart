@@ -7,16 +7,21 @@ class OmosisEpochsQueryEpochsInfoResponse extends CosmosMessage {
   const OmosisEpochsQueryEpochsInfoResponse(this.epochs);
   factory OmosisEpochsQueryEpochsInfoResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return OmosisEpochsQueryEpochsInfoResponse(decode
-        .getFields<List<int>>(1)
-        .map((e) => OmosisEpochsEpochInfo.deserialize(e))
-        .toList());
+    return OmosisEpochsQueryEpochsInfoResponse(
+      decode
+          .getFields<List<int>>(1)
+          .map((e) => OmosisEpochsEpochInfo.deserialize(e))
+          .toList(),
+    );
   }
   factory OmosisEpochsQueryEpochsInfoResponse.fromJson(
-      Map<String, dynamic> json) {
-    return OmosisEpochsQueryEpochsInfoResponse((json["epochs"] as List)
-        .map((e) => OmosisEpochsEpochInfo.fromJson(e))
-        .toList());
+    Map<String, dynamic> json,
+  ) {
+    return OmosisEpochsQueryEpochsInfoResponse(
+      (json["epochs"] as List)
+          .map((e) => OmosisEpochsEpochInfo.fromJson(e))
+          .toList(),
+    );
   }
 
   @override

@@ -12,31 +12,37 @@ class QueryConsensusStateHeightsResponse extends CosmosMessage {
   /// pagination response
   final PageResponse? pagination;
   factory QueryConsensusStateHeightsResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return QueryConsensusStateHeightsResponse(
-      consensusStateHeights: (json["consensus_state_heights"] as List?)
+      consensusStateHeights:
+          (json["consensus_state_heights"] as List?)
               ?.map((e) => IbcClientHeight.fromJson(e))
               .toList() ??
           [],
-      pagination: json["pagination"] == null
-          ? null
-          : PageResponse.fromJson(json["pagination"]),
+      pagination:
+          json["pagination"] == null
+              ? null
+              : PageResponse.fromJson(json["pagination"]),
     );
   }
-  QueryConsensusStateHeightsResponse(
-      {required List<IbcClientHeight> consensusStateHeights, this.pagination})
-      : consensusStateHeights = consensusStateHeights.immutable;
+  QueryConsensusStateHeightsResponse({
+    required List<IbcClientHeight> consensusStateHeights,
+    this.pagination,
+  }) : consensusStateHeights = consensusStateHeights.immutable;
 
   factory QueryConsensusStateHeightsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryConsensusStateHeightsResponse(
-        consensusStateHeights: decode
-            .getFields<List<int>>(1)
-            .map((e) => IbcClientHeight.deserialize(e))
-            .toList(),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
+      consensusStateHeights:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => IbcClientHeight.deserialize(e))
+              .toList(),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
+    );
   }
 
   @override
@@ -47,7 +53,7 @@ class QueryConsensusStateHeightsResponse extends CosmosMessage {
     return {
       "consensus_state_heights":
           consensusStateHeights.map((e) => e.toJson()).toList(),
-      "pagination": pagination?.toJson()
+      "pagination": pagination?.toJson(),
     };
   }
 

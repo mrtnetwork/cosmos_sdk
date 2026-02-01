@@ -5,7 +5,8 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:cosmos_sdk/src/utils/quick.dart';
 
 class CCTPV1MsgUnpauseBurningAndMinting
-    extends CCTPV1Service<EmptyServiceRequestResponse> with AminoMessage {
+    extends CCTPV1Service<EmptyServiceRequestResponse>
+    with AminoMessage {
   final String from;
   const CCTPV1MsgUnpauseBurningAndMinting(this.from);
 
@@ -14,7 +15,8 @@ class CCTPV1MsgUnpauseBurningAndMinting
     return CCTPV1MsgUnpauseBurningAndMinting(decode.getField(1));
   }
   factory CCTPV1MsgUnpauseBurningAndMinting.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return CCTPV1MsgUnpauseBurningAndMinting(json.as("from"));
   }
 
@@ -37,6 +39,7 @@ class CCTPV1MsgUnpauseBurningAndMinting
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        CCTPV1Types.msgUnpauseBurningAndMintingResponse);
+      CCTPV1Types.msgUnpauseBurningAndMintingResponse,
+    );
   }
 }

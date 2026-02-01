@@ -8,13 +8,15 @@ import 'package:blockchain_utils/helper/helper.dart';
 class FeeGrantGenesisState extends CosmosMessage {
   final List<FeeGrant> allowances;
   FeeGrantGenesisState(List<FeeGrant> allowances)
-      : allowances = allowances.immutable;
+    : allowances = allowances.immutable;
   factory FeeGrantGenesisState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return FeeGrantGenesisState(decode
-        .getFields<List<int>>(1)
-        .map((e) => FeeGrant.deserialize(e))
-        .toList());
+    return FeeGrantGenesisState(
+      decode
+          .getFields<List<int>>(1)
+          .map((e) => FeeGrant.deserialize(e))
+          .toList(),
+    );
   }
 
   @override

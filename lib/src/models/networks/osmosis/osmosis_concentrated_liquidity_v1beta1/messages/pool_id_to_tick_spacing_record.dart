@@ -7,19 +7,26 @@ class OsmosisConcentratedLiquidityPoolIdToTickSpacingRecord
     extends CosmosMessage {
   final BigInt? poolId;
   final BigInt? newTickspacing;
-  OsmosisConcentratedLiquidityPoolIdToTickSpacingRecord(
-      {this.poolId, this.newTickspacing});
+  OsmosisConcentratedLiquidityPoolIdToTickSpacingRecord({
+    this.poolId,
+    this.newTickspacing,
+  });
   factory OsmosisConcentratedLiquidityPoolIdToTickSpacingRecord.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityPoolIdToTickSpacingRecord(
-        poolId: decode.getField(1), newTickspacing: decode.getField(2));
+      poolId: decode.getField(1),
+      newTickspacing: decode.getField(2),
+    );
   }
   factory OsmosisConcentratedLiquidityPoolIdToTickSpacingRecord.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityPoolIdToTickSpacingRecord(
-        poolId: BigintUtils.tryParse(json["pool_id"]),
-        newTickspacing: BigintUtils.tryParse(json["new_tick_spacing"]));
+      poolId: BigintUtils.tryParse(json["pool_id"]),
+      newTickspacing: BigintUtils.tryParse(json["new_tick_spacing"]),
+    );
   }
 
   @override
@@ -29,7 +36,7 @@ class OsmosisConcentratedLiquidityPoolIdToTickSpacingRecord
   Map<String, dynamic> toJson() {
     return {
       "pool_id": poolId?.toString(),
-      "new_tick_spacing": newTickspacing?.toString()
+      "new_tick_spacing": newTickspacing?.toString(),
     };
   }
 

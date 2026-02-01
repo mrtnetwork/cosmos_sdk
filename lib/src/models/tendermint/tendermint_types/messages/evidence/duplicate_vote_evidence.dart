@@ -11,19 +11,22 @@ class DuplicateVoteEvidence extends BaseEvidence {
   final BigInt? totalVotingPower;
   final BigInt? validatorPower;
   final ProtobufTimestamp timestamp;
-  const DuplicateVoteEvidence(
-      {this.voteA,
-      this.voteB,
-      this.totalVotingPower,
-      this.validatorPower,
-      required this.timestamp});
+  const DuplicateVoteEvidence({
+    this.voteA,
+    this.voteB,
+    this.totalVotingPower,
+    this.validatorPower,
+    required this.timestamp,
+  });
   factory DuplicateVoteEvidence.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DuplicateVoteEvidence(
-      voteA:
-          decode.getResult(1)?.to<Vote, List<int>>((e) => Vote.deserialize(e)),
-      voteB:
-          decode.getResult(2)?.to<Vote, List<int>>((e) => Vote.deserialize(e)),
+      voteA: decode
+          .getResult(1)
+          ?.to<Vote, List<int>>((e) => Vote.deserialize(e)),
+      voteB: decode
+          .getResult(2)
+          ?.to<Vote, List<int>>((e) => Vote.deserialize(e)),
       totalVotingPower: decode.getField(3),
       validatorPower: decode.getField(4),
       timestamp: ProtobufTimestamp.deserialize(decode.getField(5)),
@@ -40,7 +43,7 @@ class DuplicateVoteEvidence extends BaseEvidence {
       "vote_b": voteB?.toJson(),
       "total_voting_power": totalVotingPower?.toString(),
       "validator_power": validatorPower?.toString(),
-      "timestamp": timestamp.toJson()
+      "timestamp": timestamp.toJson(),
     };
   }
 
@@ -48,8 +51,13 @@ class DuplicateVoteEvidence extends BaseEvidence {
   TypeUrl get typeUrl => TendermintTypes.duplicateVoteEvidence;
 
   @override
-  List get values =>
-      [voteA, voteB, totalVotingPower, validatorPower, timestamp];
+  List get values => [
+    voteA,
+    voteB,
+    totalVotingPower,
+    validatorPower,
+    timestamp,
+  ];
 
   @override
   int get id => 1;

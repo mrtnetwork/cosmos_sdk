@@ -18,45 +18,57 @@ class OsmosisConcentratedLiquidityGenesisState extends CosmosMessage {
   final BigInt? nextPositionId;
   final BigInt? nextIncentiveRecordId;
 
-  OsmosisConcentratedLiquidityGenesisState(
-      {required this.params,
-      required this.poolData,
-      required this.positionData,
-      this.nextPositionId,
-      this.nextIncentiveRecordId});
+  OsmosisConcentratedLiquidityGenesisState({
+    required this.params,
+    required this.poolData,
+    required this.positionData,
+    this.nextPositionId,
+    this.nextIncentiveRecordId,
+  });
   factory OsmosisConcentratedLiquidityGenesisState.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityGenesisState(
-        params:
-            OsmosisConcentratedLiquidityParams.deserialize(decode.getField(1)),
-        poolData: decode
-            .getFields<List<int>>(2)
-            .map((e) => OsmosisConcentratedLiquidityPoolData.deserialize(e))
-            .toList(),
-        positionData: decode
-            .getFields<List<int>>(3)
-            .map((e) => OsmosisConcentratedLiquidityPositionData.deserialize(e))
-            .toList(),
-        nextPositionId: decode.getField(4),
-        nextIncentiveRecordId: decode.getField(5));
+      params: OsmosisConcentratedLiquidityParams.deserialize(
+        decode.getField(1),
+      ),
+      poolData:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => OsmosisConcentratedLiquidityPoolData.deserialize(e))
+              .toList(),
+      positionData:
+          decode
+              .getFields<List<int>>(3)
+              .map(
+                (e) => OsmosisConcentratedLiquidityPositionData.deserialize(e),
+              )
+              .toList(),
+      nextPositionId: decode.getField(4),
+      nextIncentiveRecordId: decode.getField(5),
+    );
   }
   factory OsmosisConcentratedLiquidityGenesisState.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityGenesisState(
-        params: OsmosisConcentratedLiquidityParams.fromJson(json["params"]),
-        poolData: (json["pool_data"] as List?)
-                ?.map((e) => OsmosisConcentratedLiquidityPoolData.fromJson(e))
-                .toList() ??
-            <OsmosisConcentratedLiquidityPoolData>[],
-        positionData: (json["position_data"] as List?)
-                ?.map(
-                    (e) => OsmosisConcentratedLiquidityPositionData.fromJson(e))
-                .toList() ??
-            <OsmosisConcentratedLiquidityPositionData>[],
-        nextPositionId: BigintUtils.tryParse(json["next_position_id"]),
-        nextIncentiveRecordId:
-            BigintUtils.tryParse(json["next_incentive_record_id"]));
+      params: OsmosisConcentratedLiquidityParams.fromJson(json["params"]),
+      poolData:
+          (json["pool_data"] as List?)
+              ?.map((e) => OsmosisConcentratedLiquidityPoolData.fromJson(e))
+              .toList() ??
+          <OsmosisConcentratedLiquidityPoolData>[],
+      positionData:
+          (json["position_data"] as List?)
+              ?.map((e) => OsmosisConcentratedLiquidityPositionData.fromJson(e))
+              .toList() ??
+          <OsmosisConcentratedLiquidityPositionData>[],
+      nextPositionId: BigintUtils.tryParse(json["next_position_id"]),
+      nextIncentiveRecordId: BigintUtils.tryParse(
+        json["next_incentive_record_id"],
+      ),
+    );
   }
 
   @override
@@ -69,13 +81,18 @@ class OsmosisConcentratedLiquidityGenesisState extends CosmosMessage {
       "pool_data": poolData.map((e) => e.toJson()).toList(),
       "position_data": positionData.map((e) => e.toJson()).toList(),
       "next_position_id": nextPositionId?.toString(),
-      "next_incentive_record_id": nextIncentiveRecordId?.toString()
+      "next_incentive_record_id": nextIncentiveRecordId?.toString(),
     };
   }
 
   @override
-  List get values =>
-      [params, poolData, positionData, nextPositionId, nextIncentiveRecordId];
+  List get values => [
+    params,
+    poolData,
+    positionData,
+    nextPositionId,
+    nextIncentiveRecordId,
+  ];
 
   @override
   TypeUrl get typeUrl => OsmosisConcentratedLiquidityV1beta1Types.genesisState;

@@ -13,16 +13,20 @@ class OsmosisProtorevQueryGetProtoRevStatisticsByRouteRequest
   final List<BigInt>? route;
 
   OsmosisProtorevQueryGetProtoRevStatisticsByRouteRequest({List<BigInt>? route})
-      : route = route?.emptyAsNull?.immutable;
+    : route = route?.emptyAsNull?.immutable;
   factory OsmosisProtorevQueryGetProtoRevStatisticsByRouteRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisProtorevQueryGetProtoRevStatisticsByRouteRequest(
-        route: decode
-                .getResult<ProtocolBufferDecoderResult?>(1)
-                ?.to<List<BigInt>, List<int>>(
-                    (e) => e.map((e) => BigintUtils.parse(e)).toList()) ??
-            <BigInt>[]);
+      route:
+          decode
+              .getResult<ProtocolBufferDecoderResult?>(1)
+              ?.to<List<BigInt>, List<int>>(
+                (e) => e.map((e) => BigintUtils.parse(e)).toList(),
+              ) ??
+          <BigInt>[],
+    );
   }
 
   @override
@@ -38,16 +42,20 @@ class OsmosisProtorevQueryGetProtoRevStatisticsByRouteRequest
 
   @override
   OsmosisProtorevQueryGetProtoRevStatisticsByRouteResponse onResponse(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return OsmosisProtorevQueryGetProtoRevStatisticsByRouteResponse.deserialize(
-        bytes);
+      bytes,
+    );
   }
 
   @override
   OsmosisProtorevQueryGetProtoRevStatisticsByRouteResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisProtorevQueryGetProtoRevStatisticsByRouteResponse.fromJson(
-        json);
+      json,
+    );
   }
 
   @override

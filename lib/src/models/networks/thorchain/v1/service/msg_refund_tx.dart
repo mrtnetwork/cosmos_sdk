@@ -10,10 +10,14 @@ class ThorchainMsgRefundTx extends CosmosMessage {
   factory ThorchainMsgRefundTx.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainMsgRefundTx(
-        tx: ThorchainObservedTx.deserialize(decode.getField(1)),
-        inTxId: decode.getField(2),
-        signer: decode.getResult(3)?.to<CosmosBaseAddress, List<int>>(
-            (e) => CosmosBaseAddress.fromBytes(e)));
+      tx: ThorchainObservedTx.deserialize(decode.getField(1)),
+      inTxId: decode.getField(2),
+      signer: decode
+          .getResult(3)
+          ?.to<CosmosBaseAddress, List<int>>(
+            (e) => CosmosBaseAddress.fromBytes(e),
+          ),
+    );
   }
 
   @override

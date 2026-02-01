@@ -13,7 +13,8 @@ class GovQueryProposalResponse extends CosmosMessage {
   factory GovQueryProposalResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GovQueryProposalResponse(
-        GovProposal.deserialize(decode.getField(1)));
+      GovProposal.deserialize(decode.getField(1)),
+    );
   }
   @override
   List<int> get fieldIds => [1];

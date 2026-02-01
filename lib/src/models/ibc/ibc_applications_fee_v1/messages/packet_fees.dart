@@ -9,13 +9,15 @@ class PacketFees extends CosmosMessage {
   /// list of packet fees
   final List<IbcFeePacketFee> packetFees;
   PacketFees(List<IbcFeePacketFee> packetFees)
-      : packetFees = packetFees.immutable;
+    : packetFees = packetFees.immutable;
   factory PacketFees.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return PacketFees(decode
-        .getFields<List<int>>(1)
-        .map((e) => IbcFeePacketFee.deserialize(e))
-        .toList());
+    return PacketFees(
+      decode
+          .getFields<List<int>>(1)
+          .map((e) => IbcFeePacketFee.deserialize(e))
+          .toList(),
+    );
   }
 
   @override

@@ -13,29 +13,33 @@ class QueryClientStatesResponse extends CosmosMessage {
   final PageResponse? pagination;
   factory QueryClientStatesResponse.fromJson(Map<String, dynamic> json) {
     return QueryClientStatesResponse(
-      clinetStates: (json["client_states"] as List?)
+      clinetStates:
+          (json["client_states"] as List?)
               ?.map((e) => IbcClientIdentifiedClientState.fromJson(e))
               .toList() ??
           [],
-      pagination: json["pagination"] == null
-          ? null
-          : PageResponse.fromJson(json["pagination"]),
+      pagination:
+          json["pagination"] == null
+              ? null
+              : PageResponse.fromJson(json["pagination"]),
     );
   }
-  QueryClientStatesResponse(
-      {required List<IbcClientIdentifiedClientState> clinetStates,
-      this.pagination})
-      : clinetStates = clinetStates.immutable;
+  QueryClientStatesResponse({
+    required List<IbcClientIdentifiedClientState> clinetStates,
+    this.pagination,
+  }) : clinetStates = clinetStates.immutable;
   factory QueryClientStatesResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryClientStatesResponse(
-        clinetStates: decode
-            .getFields<List<int>>(1)
-            .map((e) => IbcClientIdentifiedClientState.deserialize(e))
-            .toList(),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
+      clinetStates:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => IbcClientIdentifiedClientState.deserialize(e))
+              .toList(),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
+    );
   }
 
   @override
@@ -45,7 +49,7 @@ class QueryClientStatesResponse extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "client_states": clinetStates.map((e) => e.toJson()).toList(),
-      "pagination": pagination?.toJson()
+      "pagination": pagination?.toJson(),
     };
   }
 

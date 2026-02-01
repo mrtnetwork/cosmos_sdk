@@ -51,6 +51,7 @@ class IbcConnectionMsgUpdateParams
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        IbcTypes.ibcConnectionMsgUpdateParamsResponse);
+      IbcTypes.ibcConnectionMsgUpdateParamsResponse,
+    );
   }
 }

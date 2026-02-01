@@ -11,9 +11,10 @@ class OsmosisIncentiveGaugesRequest extends CosmosMessage
   factory OsmosisIncentiveGaugesRequest.fromBytes(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisIncentiveGaugesRequest(
-        pagination: decode
-            .getResult(1)
-            ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)));
+      pagination: decode
+          .getResult(1)
+          ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)),
+    );
   }
 
   @override

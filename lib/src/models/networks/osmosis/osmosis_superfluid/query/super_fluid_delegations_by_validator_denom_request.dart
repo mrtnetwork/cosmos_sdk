@@ -6,16 +6,22 @@ class OsmosisSuperfluidSuperfluidDelegationsByValidatorDenomRequest
     extends CosmosMessage
     with
         QueryMessage<
-            OsmosisSuperfluidSuperfluidDelegationsByValidatorDenomResponse> {
+          OsmosisSuperfluidSuperfluidDelegationsByValidatorDenomResponse
+        > {
   final String? validatorAddress;
   final String? denom;
-  const OsmosisSuperfluidSuperfluidDelegationsByValidatorDenomRequest(
-      {this.validatorAddress, this.denom});
+  const OsmosisSuperfluidSuperfluidDelegationsByValidatorDenomRequest({
+    this.validatorAddress,
+    this.denom,
+  });
   factory OsmosisSuperfluidSuperfluidDelegationsByValidatorDenomRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidSuperfluidDelegationsByValidatorDenomRequest(
-        validatorAddress: decode.getField(1), denom: decode.getField(2));
+      validatorAddress: decode.getField(1),
+      denom: decode.getField(2),
+    );
   }
 
   @override
@@ -34,20 +40,26 @@ class OsmosisSuperfluidSuperfluidDelegationsByValidatorDenomRequest
   List get values => [validatorAddress, denom];
 
   @override
-  Map<String, String?> get queryParameters =>
-      {"denom": denom, "validator_address": validatorAddress};
+  Map<String, String?> get queryParameters => {
+    "denom": denom,
+    "validator_address": validatorAddress,
+  };
 
   @override
   OsmosisSuperfluidSuperfluidDelegationsByValidatorDenomResponse onJsonResponse(
-      Map<String, dynamic> json) {
-    return OsmosisSuperfluidSuperfluidDelegationsByValidatorDenomResponse
-        .fromJson(json);
+    Map<String, dynamic> json,
+  ) {
+    return OsmosisSuperfluidSuperfluidDelegationsByValidatorDenomResponse.fromJson(
+      json,
+    );
   }
 
   @override
   OsmosisSuperfluidSuperfluidDelegationsByValidatorDenomResponse onResponse(
-      List<int> bytes) {
-    return OsmosisSuperfluidSuperfluidDelegationsByValidatorDenomResponse
-        .deserialize(bytes);
+    List<int> bytes,
+  ) {
+    return OsmosisSuperfluidSuperfluidDelegationsByValidatorDenomResponse.deserialize(
+      bytes,
+    );
   }
 }

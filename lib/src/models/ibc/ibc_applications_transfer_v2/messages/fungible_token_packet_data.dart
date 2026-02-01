@@ -19,16 +19,22 @@ class FungibleTokenPacketData extends CosmosMessage {
 
   /// optional memo
   final String? memo;
-  const FungibleTokenPacketData(
-      {this.denom, this.amount, this.sender, this.receiver, this.memo});
+  const FungibleTokenPacketData({
+    this.denom,
+    this.amount,
+    this.sender,
+    this.receiver,
+    this.memo,
+  });
   factory FungibleTokenPacketData.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return FungibleTokenPacketData(
-        denom: decode.getField(1),
-        amount: decode.getField(2),
-        sender: decode.getField(3),
-        receiver: decode.getField(4),
-        memo: decode.getField(5));
+      denom: decode.getField(1),
+      amount: decode.getField(2),
+      sender: decode.getField(3),
+      receiver: decode.getField(4),
+      memo: decode.getField(5),
+    );
   }
 
   @override
@@ -41,7 +47,7 @@ class FungibleTokenPacketData extends CosmosMessage {
       "amount": amount,
       "sender": sender,
       "receiver": receiver,
-      "memo": memo
+      "memo": memo,
     };
   }
 

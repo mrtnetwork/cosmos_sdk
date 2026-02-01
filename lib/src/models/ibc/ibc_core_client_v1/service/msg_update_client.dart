@@ -19,17 +19,22 @@ class MsgUpdateClient extends IbcService<EmptyServiceRequestResponse> {
   factory MsgUpdateClient.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgUpdateClient(
-        clientId: decode.getField(1),
-        clientMessage:
-            decode.getResult(2)?.to<Any, List<int>>((e) => Any.deserialize(e)),
-        signer: decode.getField(3));
+      clientId: decode.getField(1),
+      clientMessage: decode
+          .getResult(2)
+          ?.to<Any, List<int>>((e) => Any.deserialize(e)),
+      signer: decode.getField(3),
+    );
   }
   factory MsgUpdateClient.fromJson(Map<String, dynamic> json) {
     return MsgUpdateClient(
-        clientId: json.as("client_id"),
-        clientMessage: json.maybeAs<Any, Map<String, dynamic>>(
-            key: "client_message", onValue: Any.fromJson),
-        signer: json.as("signer"));
+      clientId: json.as("client_id"),
+      clientMessage: json.maybeAs<Any, Map<String, dynamic>>(
+        key: "client_message",
+        onValue: Any.fromJson,
+      ),
+      signer: json.as("signer"),
+    );
   }
 
   @override
@@ -40,7 +45,7 @@ class MsgUpdateClient extends IbcService<EmptyServiceRequestResponse> {
     return {
       "client_id": clientId,
       "client_message": clientMessage?.toJson(),
-      "signer": signer
+      "signer": signer,
     };
   }
 

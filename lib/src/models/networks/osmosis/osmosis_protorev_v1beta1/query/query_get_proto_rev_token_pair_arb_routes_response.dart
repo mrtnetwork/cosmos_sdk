@@ -10,23 +10,28 @@ class OsmosisProtorevQueryGetProtoRevTokenPairArbRoutesResponse
   /// arbitraging
   final List<OsmosisProtorevTokenPairArbRoutes> routes;
   OsmosisProtorevQueryGetProtoRevTokenPairArbRoutesResponse(
-      List<OsmosisProtorevTokenPairArbRoutes> routes)
-      : routes = routes.immutable;
+    List<OsmosisProtorevTokenPairArbRoutes> routes,
+  ) : routes = routes.immutable;
   factory OsmosisProtorevQueryGetProtoRevTokenPairArbRoutesResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return OsmosisProtorevQueryGetProtoRevTokenPairArbRoutesResponse(decode
-        .getFields<List<int>>(1)
-        .map((e) => OsmosisProtorevTokenPairArbRoutes.deserialize(e))
-        .toList());
+    return OsmosisProtorevQueryGetProtoRevTokenPairArbRoutesResponse(
+      decode
+          .getFields<List<int>>(1)
+          .map((e) => OsmosisProtorevTokenPairArbRoutes.deserialize(e))
+          .toList(),
+    );
   }
   factory OsmosisProtorevQueryGetProtoRevTokenPairArbRoutesResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisProtorevQueryGetProtoRevTokenPairArbRoutesResponse(
-        (json["routes"] as List?)
-                ?.map((e) => OsmosisProtorevTokenPairArbRoutes.fromJson(e))
-                .toList() ??
-            <OsmosisProtorevTokenPairArbRoutes>[]);
+      (json["routes"] as List?)
+              ?.map((e) => OsmosisProtorevTokenPairArbRoutes.fromJson(e))
+              .toList() ??
+          <OsmosisProtorevTokenPairArbRoutes>[],
+    );
   }
 
   @override

@@ -6,7 +6,8 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:cosmos_sdk/src/utils/quick.dart';
 
 class EvmosRevenueV1MsgRegisterRevenue
-    extends EvmosService<EmptyServiceRequestResponse> with AminoMessage {
+    extends EvmosService<EmptyServiceRequestResponse>
+    with AminoMessage {
   /// contract_address in hex format
   final String? contractAddress;
 
@@ -22,27 +23,29 @@ class EvmosRevenueV1MsgRegisterRevenue
   /// factory contract nonce
   final List<BigInt>? nonces;
 
-  const EvmosRevenueV1MsgRegisterRevenue(
-      {this.contractAddress,
-      this.deployerAddress,
-      this.withdrawerAddress,
-      this.nonces});
+  const EvmosRevenueV1MsgRegisterRevenue({
+    this.contractAddress,
+    this.deployerAddress,
+    this.withdrawerAddress,
+    this.nonces,
+  });
 
   factory EvmosRevenueV1MsgRegisterRevenue.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosRevenueV1MsgRegisterRevenue(
-        contractAddress: decode.getField(1),
-        deployerAddress: decode.getField(2),
-        withdrawerAddress: decode.getField(3),
-        nonces: decode.getFields<BigInt>(4));
+      contractAddress: decode.getField(1),
+      deployerAddress: decode.getField(2),
+      withdrawerAddress: decode.getField(3),
+      nonces: decode.getFields<BigInt>(4),
+    );
   }
   factory EvmosRevenueV1MsgRegisterRevenue.fromJson(Map<String, dynamic> json) {
     return EvmosRevenueV1MsgRegisterRevenue(
-        contractAddress: json.as("contract_address"),
-        deployerAddress: json.as("deployer_address"),
-        withdrawerAddress: json.as("withdrawer_address"),
-        nonces:
-            json.as<List>("nonces").map((e) => BigintUtils.parse(e)).toList());
+      contractAddress: json.as("contract_address"),
+      deployerAddress: json.as("deployer_address"),
+      withdrawerAddress: json.as("withdrawer_address"),
+      nonces: json.as<List>("nonces").map((e) => BigintUtils.parse(e)).toList(),
+    );
   }
 
   @override
@@ -54,7 +57,7 @@ class EvmosRevenueV1MsgRegisterRevenue
       "contract_address": contractAddress,
       "deployer_address": deployerAddress,
       "withdrawer_address": withdrawerAddress,
-      "nonces": nonces?.map((e) => e.toString()).toList()
+      "nonces": nonces?.map((e) => e.toString()).toList(),
     };
   }
 
@@ -62,14 +65,19 @@ class EvmosRevenueV1MsgRegisterRevenue
   TypeUrl get typeUrl => EvmosErc20V1Types.msgRegisterRevenue;
 
   @override
-  List get values =>
-      [contractAddress, deployerAddress, withdrawerAddress, nonces];
+  List get values => [
+    contractAddress,
+    deployerAddress,
+    withdrawerAddress,
+    nonces,
+  ];
   @override
   List<String?> get signers => [deployerAddress];
 
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        EvmosErc20V1Types.msgRegisterRevenueResponse);
+      EvmosErc20V1Types.msgRegisterRevenueResponse,
+    );
   }
 }

@@ -17,27 +17,28 @@ class ContinuousVestingAccount extends CosmosBaseAccount {
   final BigInt? startTime;
 
   /// Constructs a new instance of [ContinuousVestingAccount].
-  const ContinuousVestingAccount({
-    this.baseVestingAccount,
-    this.startTime,
-  });
+  const ContinuousVestingAccount({this.baseVestingAccount, this.startTime});
 
   factory ContinuousVestingAccount.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ContinuousVestingAccount(
-        baseVestingAccount: decode
-            .getResult(1)
-            ?.to<BaseVestingAccount, List<int>>(
-                (e) => BaseVestingAccount.deserialize(e)),
-        startTime: decode.getField(2));
+      baseVestingAccount: decode
+          .getResult(1)
+          ?.to<BaseVestingAccount, List<int>>(
+            (e) => BaseVestingAccount.deserialize(e),
+          ),
+      startTime: decode.getField(2),
+    );
   }
   factory ContinuousVestingAccount.fromJson(Map<String, dynamic> json) {
     return ContinuousVestingAccount(
-        baseVestingAccount:
-            json.valueTo<BaseVestingAccount, Map<String, dynamic>>(
-                key: "base_vesting_account",
-                parse: (e) => BaseVestingAccount.fromJson(e)),
-        startTime: json.valueAsBigInt("start_time"));
+      baseVestingAccount: json
+          .valueTo<BaseVestingAccount, Map<String, dynamic>>(
+            key: "base_vesting_account",
+            parse: (e) => BaseVestingAccount.fromJson(e),
+          ),
+      startTime: json.valueAsBigInt("start_time"),
+    );
   }
   @override
   Map<String, dynamic> toJson() {

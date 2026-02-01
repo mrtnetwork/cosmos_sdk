@@ -16,14 +16,16 @@ class OsmosisConcentratedLiquidityUserPositionsRequest extends CosmosMessage
     this.pagination,
   });
   factory OsmosisConcentratedLiquidityUserPositionsRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityUserPositionsRequest(
-        address: decode.getField(1),
-        poolId: decode.getField(2),
-        pagination: decode
-            .getResult(3)
-            ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)));
+      address: decode.getField(1),
+      poolId: decode.getField(2),
+      pagination: decode
+          .getResult(3)
+          ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)),
+    );
   }
 
   @override
@@ -40,7 +42,7 @@ class OsmosisConcentratedLiquidityUserPositionsRequest extends CosmosMessage
     return {
       "pagination": pagination?.toJson(),
       "pool_id": poolId?.toString(),
-      "address": address
+      "address": address,
     };
   }
 
@@ -53,13 +55,15 @@ class OsmosisConcentratedLiquidityUserPositionsRequest extends CosmosMessage
 
   @override
   OsmosisConcentratedLiquidityUserPositionsResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityUserPositionsResponse.fromJson(json);
   }
 
   @override
   OsmosisConcentratedLiquidityUserPositionsResponse onResponse(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return OsmosisConcentratedLiquidityUserPositionsResponse.deserialize(bytes);
   }
 }

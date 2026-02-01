@@ -22,7 +22,7 @@ class TendermintRequestBlockchain
 
   @override
   Map<String, String?> get parameters => {
-        "minHeight": minHeight?.toString(),
-        "maxHeight": maxHeight?.toString(),
-      };
+    "minHeight": minHeight?.toString(),
+    "maxHeight": maxHeight?.toString(),
+  };
 }

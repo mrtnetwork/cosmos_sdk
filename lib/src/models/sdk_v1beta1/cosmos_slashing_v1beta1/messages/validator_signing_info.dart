@@ -29,34 +29,36 @@ class SlashingValidatorSigningInfo extends CosmosMessage {
 
   factory SlashingValidatorSigningInfo.fromJson(Map<String, dynamic> json) {
     return SlashingValidatorSigningInfo(
-        jailedUntil: ProtobufTimestamp.fromString(json["jailed_until"]),
-        address:
-            json["address"] == null ? null : CosmosBaseAddress(json["address"]),
-        indexOffset: BigintUtils.tryParse(json["index_offset"]),
-        missedBlocksCounter:
-            BigintUtils.tryParse(json["missed_blocks_counter"]),
-        startHeight: BigintUtils.tryParse(json["start_height"]),
-        tombstoned: json["tombstoned"]);
+      jailedUntil: ProtobufTimestamp.fromString(json["jailed_until"]),
+      address:
+          json["address"] == null ? null : CosmosBaseAddress(json["address"]),
+      indexOffset: BigintUtils.tryParse(json["index_offset"]),
+      missedBlocksCounter: BigintUtils.tryParse(json["missed_blocks_counter"]),
+      startHeight: BigintUtils.tryParse(json["start_height"]),
+      tombstoned: json["tombstoned"],
+    );
   }
-  const SlashingValidatorSigningInfo(
-      {this.address,
-      this.startHeight,
-      this.indexOffset,
-      required this.jailedUntil,
-      this.tombstoned,
-      this.missedBlocksCounter});
+  const SlashingValidatorSigningInfo({
+    this.address,
+    this.startHeight,
+    this.indexOffset,
+    required this.jailedUntil,
+    this.tombstoned,
+    this.missedBlocksCounter,
+  });
 
   factory SlashingValidatorSigningInfo.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return SlashingValidatorSigningInfo(
-        address: decode
-            .getResult(1)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        startHeight: decode.getField(2),
-        indexOffset: decode.getField(3),
-        jailedUntil: ProtobufTimestamp.deserialize(decode.getField(4)),
-        tombstoned: decode.getField(5),
-        missedBlocksCounter: decode.getField(6));
+      address: decode
+          .getResult(1)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      startHeight: decode.getField(2),
+      indexOffset: decode.getField(3),
+      jailedUntil: ProtobufTimestamp.deserialize(decode.getField(4)),
+      tombstoned: decode.getField(5),
+      missedBlocksCounter: decode.getField(6),
+    );
   }
 
   @override
@@ -70,7 +72,7 @@ class SlashingValidatorSigningInfo extends CosmosMessage {
       "index_offset": indexOffset?.toString(),
       "jailed_until": jailedUntil.toJson(),
       "tombstoned": tombstoned,
-      "missed_blocks_counter": missedBlocksCounter?.toString()
+      "missed_blocks_counter": missedBlocksCounter?.toString(),
     };
   }
 
@@ -79,11 +81,11 @@ class SlashingValidatorSigningInfo extends CosmosMessage {
 
   @override
   List get values => [
-        address?.address,
-        startHeight,
-        indexOffset,
-        jailedUntil,
-        tombstoned,
-        missedBlocksCounter
-      ];
+    address?.address,
+    startHeight,
+    indexOffset,
+    jailedUntil,
+    tombstoned,
+    missedBlocksCounter,
+  ];
 }

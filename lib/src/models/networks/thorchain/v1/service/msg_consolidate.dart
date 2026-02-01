@@ -6,12 +6,13 @@ class ThorchainMsgConsolidate extends CosmosMessage {
   final ThorchainObservedTx observedTx;
   final List<int>? signer;
   ThorchainMsgConsolidate({required this.observedTx, List<int>? signer})
-      : signer = BytesUtils.tryToBytes(signer, unmodifiable: true);
+    : signer = BytesUtils.tryToBytes(signer, unmodifiable: true);
   factory ThorchainMsgConsolidate.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainMsgConsolidate(
-        observedTx: ThorchainObservedTx.deserialize(decode.getField(1)),
-        signer: decode.getField(2));
+      observedTx: ThorchainObservedTx.deserialize(decode.getField(1)),
+      signer: decode.getField(2),
+    );
   }
 
   @override
@@ -21,7 +22,7 @@ class ThorchainMsgConsolidate extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "observed_tx": observedTx.toJson(),
-      "signer": BytesUtils.tryToHexString(signer)
+      "signer": BytesUtils.tryToHexString(signer),
     };
   }
 

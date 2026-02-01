@@ -27,19 +27,21 @@ class OsmosisStreamSwapUserPosition extends CosmosMessage {
   factory OsmosisStreamSwapUserPosition.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisStreamSwapUserPosition(
-        shares: decode.getField(1),
-        staked: decode.getField(2),
-        outPerShare: decode.getField(3),
-        spent: decode.getField(4),
-        purchased: decode.getField(5));
+      shares: decode.getField(1),
+      staked: decode.getField(2),
+      outPerShare: decode.getField(3),
+      spent: decode.getField(4),
+      purchased: decode.getField(5),
+    );
   }
   factory OsmosisStreamSwapUserPosition.fromJson(Map<String, dynamic> json) {
     return OsmosisStreamSwapUserPosition(
-        shares: json["shares"],
-        staked: json["staked"],
-        outPerShare: json["out_per_share"],
-        spent: json["spent"],
-        purchased: json["purchased"]);
+      shares: json["shares"],
+      staked: json["staked"],
+      outPerShare: json["out_per_share"],
+      spent: json["spent"],
+      purchased: json["purchased"],
+    );
   }
 
   @override
@@ -52,7 +54,7 @@ class OsmosisStreamSwapUserPosition extends CosmosMessage {
       "staked": staked,
       "out_per_share": outPerShare,
       "spent": spent,
-      "purchased": purchased
+      "purchased": purchased,
     };
   }
 

@@ -16,10 +16,11 @@ class QueryConsensusStatesRequest extends CosmosMessage
   factory QueryConsensusStatesRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryConsensusStatesRequest(
-        clientId: decode.getField(1),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)));
+      clientId: decode.getField(1),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)),
+    );
   }
 
   @override

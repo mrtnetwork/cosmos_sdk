@@ -12,9 +12,10 @@ class OsmosisCosmWasmPoolPoolsRequest extends CosmosMessage
   factory OsmosisCosmWasmPoolPoolsRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisCosmWasmPoolPoolsRequest(
-        pagination: decode
-            .getResult(1)
-            ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)));
+      pagination: decode
+          .getResult(1)
+          ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)),
+    );
   }
 
   @override

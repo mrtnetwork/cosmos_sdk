@@ -8,42 +8,48 @@ abstract class OsmosisWasmPoolV1Beta1<T extends CosmosMessage>
     extends OsmosisService<T> {
   const OsmosisWasmPoolV1Beta1();
 
-  static T? fromJson<T extends OsmosisWasmPoolV1Beta1>(
-      {required String typeUrl, required Map<String, dynamic> json}) {
+  static T? fromJson<T extends OsmosisWasmPoolV1Beta1>({
+    required String typeUrl,
+    required Map<String, dynamic> json,
+  }) {
     final type = OsmosisCosmWasmPoolV1beta1Types.findService(typeUrl);
-    final OsmosisWasmPoolV1Beta1? service = switch (type) {
-      OsmosisCosmWasmPoolV1beta1Types.msgCreateCosmWasmPool =>
-        OsmosisCosmWasmPoolMsgCreateCosmWasmPool.fromJson(json),
-      _ => null
-    } as OsmosisWasmPoolV1Beta1?;
+    final OsmosisWasmPoolV1Beta1? service =
+        switch (type) {
+              OsmosisCosmWasmPoolV1beta1Types.msgCreateCosmWasmPool =>
+                OsmosisCosmWasmPoolMsgCreateCosmWasmPool.fromJson(json),
+              _ => null,
+            }
+            as OsmosisWasmPoolV1Beta1?;
 
     if (service == null) return null;
     if (service is! T) {
-      throw DartCosmosSdkPluginException("Invalid WasmPoolV1Beta1 Service.",
-          details: {
-            "excepted": "$T",
-            "service": service.runtimeType.toString()
-          });
+      throw DartCosmosSdkPluginException(
+        "Invalid WasmPoolV1Beta1 Service.",
+        details: {"excepted": "$T", "service": service.runtimeType.toString()},
+      );
     }
     return service;
   }
 
-  static T? deserialize<T extends OsmosisWasmPoolV1Beta1>(
-      {required String typeUrl, required List<int> bytes}) {
+  static T? deserialize<T extends OsmosisWasmPoolV1Beta1>({
+    required String typeUrl,
+    required List<int> bytes,
+  }) {
     final type = OsmosisCosmWasmPoolV1beta1Types.findService(typeUrl);
-    final OsmosisWasmPoolV1Beta1? service = switch (type) {
-      OsmosisCosmWasmPoolV1beta1Types.msgCreateCosmWasmPool =>
-        OsmosisCosmWasmPoolMsgCreateCosmWasmPool.deserialize(bytes),
-      _ => null
-    } as OsmosisWasmPoolV1Beta1?;
+    final OsmosisWasmPoolV1Beta1? service =
+        switch (type) {
+              OsmosisCosmWasmPoolV1beta1Types.msgCreateCosmWasmPool =>
+                OsmosisCosmWasmPoolMsgCreateCosmWasmPool.deserialize(bytes),
+              _ => null,
+            }
+            as OsmosisWasmPoolV1Beta1?;
 
     if (service == null) return null;
     if (service is! T) {
-      throw DartCosmosSdkPluginException("Invalid WasmPoolV1Beta1 Service.",
-          details: {
-            "excepted": "$T",
-            "service": service.runtimeType.toString()
-          });
+      throw DartCosmosSdkPluginException(
+        "Invalid WasmPoolV1Beta1 Service.",
+        details: {"excepted": "$T", "service": service.runtimeType.toString()},
+      );
     }
     return service;
   }

@@ -15,22 +15,26 @@ class ForwardingPacketData extends CosmosMessage {
   final List<IbcTransferV1Hop>? hops;
 
   ForwardingPacketData({this.destinationMemo, List<IbcTransferV1Hop>? hops})
-      : hops = hops?.immutable;
+    : hops = hops?.immutable;
   factory ForwardingPacketData.fromJson(Map<String, dynamic> json) {
     return ForwardingPacketData(
-        destinationMemo: json["destination_memo"],
-        hops: (json["hops"] as List?)
-            ?.map((e) => IbcTransferV1Hop.fromJson(e))
-            .toList());
+      destinationMemo: json["destination_memo"],
+      hops:
+          (json["hops"] as List?)
+              ?.map((e) => IbcTransferV1Hop.fromJson(e))
+              .toList(),
+    );
   }
   factory ForwardingPacketData.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ForwardingPacketData(
-        destinationMemo: decode.getField(1),
-        hops: decode
-            .getFields<List<int>>(2)
-            .map((e) => IbcTransferV1Hop.deserialize(e))
-            .toList());
+      destinationMemo: decode.getField(1),
+      hops:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => IbcTransferV1Hop.deserialize(e))
+              .toList(),
+    );
   }
 
   @override
@@ -40,7 +44,7 @@ class ForwardingPacketData extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "destination_memo": destinationMemo,
-      "hops": hops?.map((e) => e.toJson()).toList()
+      "hops": hops?.map((e) => e.toJson()).toList(),
     };
   }
 

@@ -8,17 +8,21 @@ class OsmosisValidatorPreferenceQueryUserValidatorPreferences
     extends CosmosMessage
     with
         QueryMessage<
-            OsmosisValidatorPreferenceQueryUserValidatorPreferenceResponse> {
+          OsmosisValidatorPreferenceQueryUserValidatorPreferenceResponse
+        > {
   /// user account address
   final String user;
 
-  const OsmosisValidatorPreferenceQueryUserValidatorPreferences(
-      {required this.user});
+  const OsmosisValidatorPreferenceQueryUserValidatorPreferences({
+    required this.user,
+  });
   factory OsmosisValidatorPreferenceQueryUserValidatorPreferences.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisValidatorPreferenceQueryUserValidatorPreferences(
-        user: decode.getField(1));
+      user: decode.getField(1),
+    );
   }
 
   @override
@@ -38,16 +42,20 @@ class OsmosisValidatorPreferenceQueryUserValidatorPreferences
 
   @override
   OsmosisValidatorPreferenceQueryUserValidatorPreferenceResponse onJsonResponse(
-      Map<String, dynamic> json) {
-    return OsmosisValidatorPreferenceQueryUserValidatorPreferenceResponse
-        .fromJson(json);
+    Map<String, dynamic> json,
+  ) {
+    return OsmosisValidatorPreferenceQueryUserValidatorPreferenceResponse.fromJson(
+      json,
+    );
   }
 
   @override
   OsmosisValidatorPreferenceQueryUserValidatorPreferenceResponse onResponse(
-      List<int> bytes) {
-    return OsmosisValidatorPreferenceQueryUserValidatorPreferenceResponse
-        .deserialize(bytes);
+    List<int> bytes,
+  ) {
+    return OsmosisValidatorPreferenceQueryUserValidatorPreferenceResponse.deserialize(
+      bytes,
+    );
   }
 
   @override

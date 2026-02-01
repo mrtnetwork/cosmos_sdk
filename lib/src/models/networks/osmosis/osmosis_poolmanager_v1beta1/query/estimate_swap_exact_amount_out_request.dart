@@ -10,21 +10,24 @@ class OsmosisPoolManagerEstimateSwapExactAmountOutRequest extends CosmosMessage
   final List<OsmosisPoolManagerSwapAmountOutRoute> routes;
   final String? tokenOut;
 
-  OsmosisPoolManagerEstimateSwapExactAmountOutRequest(
-      {required this.poolId,
-      required List<OsmosisPoolManagerSwapAmountOutRoute> routes,
-      this.tokenOut})
-      : routes = routes.immutable;
+  OsmosisPoolManagerEstimateSwapExactAmountOutRequest({
+    required this.poolId,
+    required List<OsmosisPoolManagerSwapAmountOutRoute> routes,
+    this.tokenOut,
+  }) : routes = routes.immutable;
   factory OsmosisPoolManagerEstimateSwapExactAmountOutRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolManagerEstimateSwapExactAmountOutRequest(
-        poolId: decode.getField(2),
-        routes: decode
-            .getFields<List<int>>(3)
-            .map((e) => OsmosisPoolManagerSwapAmountOutRoute.deserialize(e))
-            .toList(),
-        tokenOut: decode.getField(4));
+      poolId: decode.getField(2),
+      routes:
+          decode
+              .getFields<List<int>>(3)
+              .map((e) => OsmosisPoolManagerSwapAmountOutRoute.deserialize(e))
+              .toList(),
+      tokenOut: decode.getField(4),
+    );
   }
 
   @override
@@ -32,28 +35,29 @@ class OsmosisPoolManagerEstimateSwapExactAmountOutRequest extends CosmosMessage
 
   @override
   OsmosisPoolManagerEstimateSwapExactAmountOutResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisPoolManagerEstimateSwapExactAmountOutResponse.fromJson(json);
   }
 
   @override
   OsmosisPoolManagerEstimateSwapExactAmountOutResponse onResponse(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return OsmosisPoolManagerEstimateSwapExactAmountOutResponse.deserialize(
-        bytes);
+      bytes,
+    );
   }
 
   @override
-  Map<String, String?> get queryParameters => {
-        "token_out": tokenOut,
-      };
+  Map<String, String?> get queryParameters => {"token_out": tokenOut};
 
   @override
   Map<String, dynamic> toJson() {
     return {
       "pool_id": poolId.toString(),
       "routes": routes.map((e) => e.toJson()).toList(),
-      "token_out": tokenOut
+      "token_out": tokenOut,
     };
   }
 

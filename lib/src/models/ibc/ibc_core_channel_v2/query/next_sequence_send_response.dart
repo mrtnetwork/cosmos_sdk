@@ -15,25 +15,28 @@ class IbcChannelV2QueryNextSequenceSendResponse extends CosmosMessage {
   /// height at which the proof was retrieved
   final IbcClientHeight proofHeight;
   factory IbcChannelV2QueryNextSequenceSendResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return IbcChannelV2QueryNextSequenceSendResponse(
       nextSequenceSend: json.asBigInt("next_sequence_send"),
       proof: json.asBytes("proof"),
       proofHeight: IbcClientHeight.fromJson(json.asMap("proof_height")),
     );
   }
-  IbcChannelV2QueryNextSequenceSendResponse(
-      {required this.nextSequenceSend,
-      List<int>? proof,
-      required this.proofHeight})
-      : proof = BytesUtils.tryToBytes(proof, unmodifiable: true);
+  IbcChannelV2QueryNextSequenceSendResponse({
+    required this.nextSequenceSend,
+    List<int>? proof,
+    required this.proofHeight,
+  }) : proof = BytesUtils.tryToBytes(proof, unmodifiable: true);
   factory IbcChannelV2QueryNextSequenceSendResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcChannelV2QueryNextSequenceSendResponse(
-        nextSequenceSend: decode.getField(1),
-        proof: decode.getField(2),
-        proofHeight: IbcClientHeight.deserialize(decode.getField(3)));
+      nextSequenceSend: decode.getField(1),
+      proof: decode.getField(2),
+      proofHeight: IbcClientHeight.deserialize(decode.getField(3)),
+    );
   }
 
   @override
@@ -44,7 +47,7 @@ class IbcChannelV2QueryNextSequenceSendResponse extends CosmosMessage {
     return {
       "next_sequence_send": nextSequenceSend.toString(),
       "proof": BytesUtils.tryToHexString(proof),
-      "proof_height": proofHeight.toJson()
+      "proof_height": proofHeight.toJson(),
     };
   }
 

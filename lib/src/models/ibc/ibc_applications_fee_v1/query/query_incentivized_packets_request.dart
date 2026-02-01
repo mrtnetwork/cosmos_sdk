@@ -17,10 +17,11 @@ class QueryIncentivizedPacketsRequest extends CosmosMessage
   factory QueryIncentivizedPacketsRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryIncentivizedPacketsRequest(
-        pagination: decode
-            .getResult(1)
-            ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)),
-        queryHeight: decode.getField(2));
+      pagination: decode
+          .getResult(1)
+          ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)),
+      queryHeight: decode.getField(2),
+    );
   }
 
   @override
@@ -30,7 +31,7 @@ class QueryIncentivizedPacketsRequest extends CosmosMessage
   Map<String, dynamic> toJson() {
     return {
       "pagination": pagination?.toJson(),
-      "query_height": queryHeight?.toString()
+      "query_height": queryHeight?.toString(),
     };
   }
 
@@ -51,7 +52,7 @@ class QueryIncentivizedPacketsRequest extends CosmosMessage
 
   @override
   Map<String, String?> get queryParameters => {
-        "query_height": queryHeight?.toString(),
-        ...pagination?.queryParameters ?? {}
-      };
+    "query_height": queryHeight?.toString(),
+    ...pagination?.queryParameters ?? {},
+  };
 }

@@ -10,7 +10,8 @@ class MsgEnableTokenizeSharesResponse extends CosmosMessage {
   factory MsgEnableTokenizeSharesResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgEnableTokenizeSharesResponse(
-        ProtobufTimestamp.fromDateTime(decode.getField(1)));
+      ProtobufTimestamp.fromDateTime(decode.getField(1)),
+    );
   }
 
   @override

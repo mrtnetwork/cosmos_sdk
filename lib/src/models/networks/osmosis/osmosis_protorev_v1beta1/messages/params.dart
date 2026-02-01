@@ -13,11 +13,15 @@ class OsmosisProtorevParams extends CosmosMessage {
   factory OsmosisProtorevParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisProtorevParams(
-        enabled: decode.getField(1), admin: decode.getField(2));
+      enabled: decode.getField(1),
+      admin: decode.getField(2),
+    );
   }
   factory OsmosisProtorevParams.fromJson(Map<String, dynamic> json) {
     return OsmosisProtorevParams(
-        admin: json["admin"], enabled: json["enabled"]);
+      admin: json["admin"],
+      enabled: json["enabled"],
+    );
   }
 
   @override

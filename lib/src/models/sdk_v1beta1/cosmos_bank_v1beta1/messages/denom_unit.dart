@@ -19,17 +19,19 @@ class DenomUnit extends CosmosMessage {
   const DenomUnit({required this.denom, this.exponent, required this.aliases});
   factory DenomUnit.fromJson(Map<String, dynamic> json) {
     return DenomUnit(
-        denom: json["denom"],
-        aliases: (json["aliases"] as List?)?.cast() ?? [],
-        exponent: IntUtils.tryParse(json["exponent"]));
+      denom: json["denom"],
+      aliases: (json["aliases"] as List?)?.cast() ?? [],
+      exponent: IntUtils.tryParse(json["exponent"]),
+    );
   }
 
   factory DenomUnit.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DenomUnit(
-        denom: decode.getField(1),
-        exponent: decode.getField(2),
-        aliases: decode.getFields<String>(3));
+      denom: decode.getField(1),
+      exponent: decode.getField(2),
+      aliases: decode.getFields<String>(3),
+    );
   }
 
   @override

@@ -18,14 +18,17 @@ class QueryPacketCommitmentResponse extends CosmosMessage {
 
   factory QueryPacketCommitmentResponse.fromJson(Map<String, dynamic> json) {
     return QueryPacketCommitmentResponse(
-        commitment: CosmosUtils.tryToBytes(json["commitment"]),
-        proof: CosmosUtils.tryToBytes(json["proof"]),
-        proofHeight: IbcClientHeight.fromJson(json["proof_height"]));
+      commitment: CosmosUtils.tryToBytes(json["commitment"]),
+      proof: CosmosUtils.tryToBytes(json["proof"]),
+      proofHeight: IbcClientHeight.fromJson(json["proof_height"]),
+    );
   }
-  QueryPacketCommitmentResponse(
-      {List<int>? commitment, List<int>? proof, required this.proofHeight})
-      : commitment = BytesUtils.tryToBytes(commitment, unmodifiable: true),
-        proof = BytesUtils.tryToBytes(proof, unmodifiable: true);
+  QueryPacketCommitmentResponse({
+    List<int>? commitment,
+    List<int>? proof,
+    required this.proofHeight,
+  }) : commitment = BytesUtils.tryToBytes(commitment, unmodifiable: true),
+       proof = BytesUtils.tryToBytes(proof, unmodifiable: true);
 
   factory QueryPacketCommitmentResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -44,7 +47,7 @@ class QueryPacketCommitmentResponse extends CosmosMessage {
     return {
       "commitment": BytesUtils.tryToHexString(commitment),
       "proof": BytesUtils.tryToHexString(proof),
-      "proof_height": proofHeight.toJson()
+      "proof_height": proofHeight.toJson(),
     };
   }
 

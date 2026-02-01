@@ -7,7 +7,7 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class IbcLightClientsWasmClientMessage extends CosmosMessage {
   final List<int>? data;
   IbcLightClientsWasmClientMessage({List<int>? data})
-      : data = BytesUtils.tryToBytes(data);
+    : data = BytesUtils.tryToBytes(data);
   factory IbcLightClientsWasmClientMessage.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcLightClientsWasmClientMessage(data: decode.getField(1));

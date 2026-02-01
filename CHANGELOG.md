@@ -1,3 +1,8 @@
+## 3.1.0
+- Update dependencies.
+- Update chains.json.
+- Minimum required Dart SDK version updated to 3.7.
+
 ## 3.0.0
 
 - Added support for new key algorithms:

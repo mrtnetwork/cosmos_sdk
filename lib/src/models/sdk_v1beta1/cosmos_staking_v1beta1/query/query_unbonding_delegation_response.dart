@@ -9,12 +9,14 @@ class QueryUnbondingDelegationResponse extends CosmosMessage {
   const QueryUnbondingDelegationResponse(this.unbond);
   factory QueryUnbondingDelegationResponse.fromJson(Map<String, dynamic> json) {
     return QueryUnbondingDelegationResponse(
-        UnbondingDelegation.fromJson(json["unbond"]));
+      UnbondingDelegation.fromJson(json["unbond"]),
+    );
   }
   factory QueryUnbondingDelegationResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryUnbondingDelegationResponse(
-        UnbondingDelegation.deserialize(decode.getField(1)));
+      UnbondingDelegation.deserialize(decode.getField(1)),
+    );
   }
   @override
   List<int> get fieldIds => [1];

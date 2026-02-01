@@ -19,10 +19,11 @@ class EventSend extends CosmosMessage {
   factory EventSend.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EventSend(
-        classId: decode.getField(1),
-        id: decode.getField(2),
-        sender: decode.getField(3),
-        receiver: decode.getField(4));
+      classId: decode.getField(1),
+      id: decode.getField(2),
+      sender: decode.getField(3),
+      receiver: decode.getField(4),
+    );
   }
 
   @override
@@ -31,7 +32,7 @@ class EventSend extends CosmosMessage {
       'class_id': classId,
       'id': id,
       'sender': sender,
-      'receiver': receiver
+      'receiver': receiver,
     };
   }
 

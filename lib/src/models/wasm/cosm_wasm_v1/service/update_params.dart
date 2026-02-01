@@ -19,15 +19,22 @@ class CosmWasmV1UpdateParams
   factory CosmWasmV1UpdateParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmWasmV1UpdateParams(
-        authority: decode.getField(1),
-        params: decode.getResult(2)?.to<CosmWasmV1Params, List<int>>(
-            (e) => CosmWasmV1Params.deserialize((e))));
+      authority: decode.getField(1),
+      params: decode
+          .getResult(2)
+          ?.to<CosmWasmV1Params, List<int>>(
+            (e) => CosmWasmV1Params.deserialize((e)),
+          ),
+    );
   }
   factory CosmWasmV1UpdateParams.fromJson(Map<String, dynamic> json) {
     return CosmWasmV1UpdateParams(
-        authority: json.as("authority"),
-        params: json.maybeAs<CosmWasmV1Params, Map<String, dynamic>>(
-            key: "params", onValue: (e) => CosmWasmV1Params.fromJson(e)));
+      authority: json.as("authority"),
+      params: json.maybeAs<CosmWasmV1Params, Map<String, dynamic>>(
+        key: "params",
+        onValue: (e) => CosmWasmV1Params.fromJson(e),
+      ),
+    );
   }
 
   @override

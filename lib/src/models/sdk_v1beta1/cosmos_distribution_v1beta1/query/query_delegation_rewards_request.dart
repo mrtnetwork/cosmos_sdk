@@ -11,22 +11,27 @@ class DistributionQueryDelegationRewardsRequest extends CosmosMessage
 
   /// validator_address defines the validator address to query for.
   final CosmosBaseAddress validatorAddress;
-  const DistributionQueryDelegationRewardsRequest(
-      {required this.delegatorAddress, required this.validatorAddress});
+  const DistributionQueryDelegationRewardsRequest({
+    required this.delegatorAddress,
+    required this.validatorAddress,
+  });
 
   factory DistributionQueryDelegationRewardsRequest.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return DistributionQueryDelegationRewardsRequest(
       delegatorAddress: CosmosBaseAddress(json["delegator_address"]),
       validatorAddress: CosmosBaseAddress(json["validator_address"]),
     );
   }
   factory DistributionQueryDelegationRewardsRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionQueryDelegationRewardsRequest(
-        delegatorAddress: CosmosBaseAddress(decode.getField(1)),
-        validatorAddress: CosmosBaseAddress(decode.getField(2)));
+      delegatorAddress: CosmosBaseAddress(decode.getField(1)),
+      validatorAddress: CosmosBaseAddress(decode.getField(2)),
+    );
   }
 
   @override
@@ -36,7 +41,7 @@ class DistributionQueryDelegationRewardsRequest extends CosmosMessage
   Map<String, dynamic> toJson() {
     return {
       "delegator_address": delegatorAddress.address,
-      "validator_address": validatorAddress.address
+      "validator_address": validatorAddress.address,
     };
   }
 
@@ -54,11 +59,14 @@ class DistributionQueryDelegationRewardsRequest extends CosmosMessage
 
   @override
   DistributionQueryDelegationRewardsResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return DistributionQueryDelegationRewardsResponse.fromJson(json);
   }
 
   @override
-  List<String> get pathParameters =>
-      [delegatorAddress.address, validatorAddress.address];
+  List<String> get pathParameters => [
+    delegatorAddress.address,
+    validatorAddress.address,
+  ];
 }

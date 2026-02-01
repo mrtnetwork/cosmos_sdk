@@ -11,10 +11,12 @@ class ProofOps extends CosmosMessage {
   factory ProofOps.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ProofOps(
-        ops: decode
-            .getFields<List<int>>(1)
-            .map((e) => TendermintCryptoProofOp.deserialize(e))
-            .toList());
+      ops:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => TendermintCryptoProofOp.deserialize(e))
+              .toList(),
+    );
   }
 
   @override

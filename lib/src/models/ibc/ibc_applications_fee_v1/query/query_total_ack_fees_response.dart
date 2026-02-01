@@ -8,23 +8,25 @@ class QueryTotalAckFeesResponse extends CosmosMessage {
   /// the total packet acknowledgement fees
   final List<Coin> recvFees;
   QueryTotalAckFeesResponse({required List<Coin> recvFees})
-      : recvFees = recvFees.immutable;
+    : recvFees = recvFees.immutable;
 
   factory QueryTotalAckFeesResponse.fromJson(Map<String, dynamic> json) {
     return QueryTotalAckFeesResponse(
-        recvFees: (json["recv_fees"] as List?)
-                ?.map((e) => Coin.fromJson(e))
-                .toList() ??
-            []);
+      recvFees:
+          (json["recv_fees"] as List?)?.map((e) => Coin.fromJson(e)).toList() ??
+          [],
+    );
   }
 
   factory QueryTotalAckFeesResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryTotalAckFeesResponse(
-        recvFees: decode
-            .getFields<List<int>>(1)
-            .map((e) => Coin.deserialize(e))
-            .toList());
+      recvFees:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
+    );
   }
 
   @override

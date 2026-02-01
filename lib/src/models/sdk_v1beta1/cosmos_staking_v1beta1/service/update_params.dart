@@ -18,31 +18,27 @@ class StakingMsgUpdateParams
   /// NOTE: All parameters must be supplied.
   final StakingParams params;
 
-  const StakingMsgUpdateParams({
-    required this.authority,
-    required this.params,
-  });
+  const StakingMsgUpdateParams({required this.authority, required this.params});
   factory StakingMsgUpdateParams.fromJson(Map<String, dynamic> json) {
     return StakingMsgUpdateParams(
-        authority: json.asAddress("authority"),
-        params: StakingParams.fromJson(json.asMap("params")));
+      authority: json.asAddress("authority"),
+      params: StakingParams.fromJson(json.asMap("params")),
+    );
   }
 
   factory StakingMsgUpdateParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return StakingMsgUpdateParams(
-        authority: decode
-            .getResult(1)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        params: StakingParams.deserialize(decode.getField(2)));
+      authority: decode
+          .getResult(1)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      params: StakingParams.deserialize(decode.getField(2)),
+    );
   }
 
   @override
   Map<String, dynamic> toJson() {
-    return {
-      'authority': authority?.address,
-      'params': params.toJson(),
-    };
+    return {'authority': authority?.address, 'params': params.toJson()};
   }
 
   @override
@@ -60,6 +56,7 @@ class StakingMsgUpdateParams
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        StakingV1beta1Types.stakingMsgUpdateParamsResponse);
+      StakingV1beta1Types.stakingMsgUpdateParamsResponse,
+    );
   }
 }

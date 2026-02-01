@@ -8,17 +8,21 @@ class DistributionQueryDelegatorValidatorsResponse extends CosmosMessage {
   /// validators defines the validators a delegator is delegating for.
   final List<String> validators;
   DistributionQueryDelegatorValidatorsResponse(List<String> validators)
-      : validators = validators.immutable;
+    : validators = validators.immutable;
   factory DistributionQueryDelegatorValidatorsResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return DistributionQueryDelegatorValidatorsResponse(
-        (json["validators"] as List?)?.cast() ?? []);
+      (json["validators"] as List?)?.cast() ?? [],
+    );
   }
   factory DistributionQueryDelegatorValidatorsResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionQueryDelegatorValidatorsResponse(
-        decode.getFields<String>(1));
+      decode.getFields<String>(1),
+    );
   }
 
   @override

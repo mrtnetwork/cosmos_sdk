@@ -9,7 +9,8 @@ class OsmosisTxfeesQueryBaseDenomRequest extends CosmosMessage
     return const OsmosisTxfeesQueryBaseDenomRequest();
   }
   factory OsmosisTxfeesQueryBaseDenomRequest.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return const OsmosisTxfeesQueryBaseDenomRequest();
   }
 
@@ -29,7 +30,8 @@ class OsmosisTxfeesQueryBaseDenomRequest extends CosmosMessage
 
   @override
   OsmosisTxfeesQueryBaseDenomResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisTxfeesQueryBaseDenomResponse.fromJson(json);
   }
 

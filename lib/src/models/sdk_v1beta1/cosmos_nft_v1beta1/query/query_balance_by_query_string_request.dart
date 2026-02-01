@@ -13,20 +13,21 @@ class QueryNFTBalanceByQueryStringRequest extends CosmosMessage
   /// owner is the owner address of the nft.
   final String owner;
 
-  const QueryNFTBalanceByQueryStringRequest(
-      {required this.classId, required this.owner});
+  const QueryNFTBalanceByQueryStringRequest({
+    required this.classId,
+    required this.owner,
+  });
   factory QueryNFTBalanceByQueryStringRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryNFTBalanceByQueryStringRequest(
-        classId: decode.getField(1), owner: decode.getField(2));
+      classId: decode.getField(1),
+      owner: decode.getField(2),
+    );
   }
 
   @override
   Map<String, dynamic> toJson() {
-    return {
-      'class_id': classId,
-      'owner': owner,
-    };
+    return {'class_id': classId, 'owner': owner};
   }
 
   @override
@@ -44,13 +45,14 @@ class QueryNFTBalanceByQueryStringRequest extends CosmosMessage
 
   @override
   QueryNFTBalanceByQueryStringResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return QueryNFTBalanceByQueryStringResponse.fromJson(json);
   }
 
   @override
   Map<String, String?> get queryParameters => {
-        'class_id': classId,
-        'owner': owner,
-      };
+    'class_id': classId,
+    'owner': owner,
+  };
 }

@@ -19,17 +19,22 @@ class IbcClientQueryClientStateResponse extends CosmosMessage {
   /// height at which the proof was retrieved
   final IbcClientHeight proofHeight;
   factory IbcClientQueryClientStateResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return IbcClientQueryClientStateResponse(
-        clientState: json["client_state"] == null
-            ? null
-            : AnyMessage.fromJson(json["client_state"]),
-        proof: CosmosUtils.tryToBytes(json["proof"]),
-        proofHeight: IbcClientHeight.fromJson(json["proof_height"]));
+      clientState:
+          json["client_state"] == null
+              ? null
+              : AnyMessage.fromJson(json["client_state"]),
+      proof: CosmosUtils.tryToBytes(json["proof"]),
+      proofHeight: IbcClientHeight.fromJson(json["proof_height"]),
+    );
   }
-  IbcClientQueryClientStateResponse(
-      {this.clientState, List<int>? proof, required this.proofHeight})
-      : proof = BytesUtils.tryToBytes(proof, unmodifiable: true);
+  IbcClientQueryClientStateResponse({
+    this.clientState,
+    List<int>? proof,
+    required this.proofHeight,
+  }) : proof = BytesUtils.tryToBytes(proof, unmodifiable: true);
   factory IbcClientQueryClientStateResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcClientQueryClientStateResponse(
@@ -49,7 +54,7 @@ class IbcClientQueryClientStateResponse extends CosmosMessage {
     return {
       "client_state": clientState?.toJson(),
       "proof": BytesUtils.tryToHexString(proof),
-      "proof_height": proofHeight.toJson()
+      "proof_height": proofHeight.toJson(),
     };
   }
 

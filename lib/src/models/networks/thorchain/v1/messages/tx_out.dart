@@ -6,15 +6,17 @@ class ThorchainTxOut extends CosmosMessage {
   final BigInt? height;
   final List<ThorchainTxOutItem> txArray;
   ThorchainTxOut({this.height, required List<ThorchainTxOutItem> txArray})
-      : txArray = txArray.immutable;
+    : txArray = txArray.immutable;
   factory ThorchainTxOut.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainTxOut(
-        height: decode.getField(1),
-        txArray: decode
-            .getFields<List<int>>(2)
-            .map((e) => ThorchainTxOutItem.deserialize(e))
-            .toList());
+      height: decode.getField(1),
+      txArray:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => ThorchainTxOutItem.deserialize(e))
+              .toList(),
+    );
   }
 
   @override
@@ -24,7 +26,7 @@ class ThorchainTxOut extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "height": height?.toString(),
-      "tx_array": txArray.map((e) => e.toJson()).toList()
+      "tx_array": txArray.map((e) => e.toJson()).toList(),
     };
   }
 

@@ -18,28 +18,31 @@ class OsmosisIncentiveMsgAddToGauge
   /// rewards are the coin(s) to add to gauge
   final List<Coin> rewards;
 
-  OsmosisIncentiveMsgAddToGauge(
-      {this.gaugeId, this.owner, required List<Coin> rewards})
-      : rewards = rewards.immutable;
+  OsmosisIncentiveMsgAddToGauge({
+    this.gaugeId,
+    this.owner,
+    required List<Coin> rewards,
+  }) : rewards = rewards.immutable;
   factory OsmosisIncentiveMsgAddToGauge.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisIncentiveMsgAddToGauge(
-        owner: decode.getField(1),
-        gaugeId: decode.getField(2),
-        rewards: decode
-            .getFields<List<int>>(3)
-            .map((e) => Coin.deserialize(e))
-            .toList());
+      owner: decode.getField(1),
+      gaugeId: decode.getField(2),
+      rewards:
+          decode
+              .getFields<List<int>>(3)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
+    );
   }
   factory OsmosisIncentiveMsgAddToGauge.fromJson(Map<String, dynamic> json) {
     return OsmosisIncentiveMsgAddToGauge(
-        owner: json.as("owner"),
-        gaugeId: json.asBigInt("gauge_id"),
-        rewards: json
-                .asListOfMap("rewards")
-                ?.map((e) => Coin.fromJson(e))
-                .toList() ??
-            []);
+      owner: json.as("owner"),
+      gaugeId: json.asBigInt("gauge_id"),
+      rewards:
+          json.asListOfMap("rewards")?.map((e) => Coin.fromJson(e)).toList() ??
+          [],
+    );
   }
 
   @override
@@ -53,7 +56,7 @@ class OsmosisIncentiveMsgAddToGauge
     return {
       "owner": owner,
       "gauge_id": gaugeId?.toString(),
-      "rewards": rewards.map((e) => e.toJson()).toList()
+      "rewards": rewards.map((e) => e.toJson()).toList(),
     };
   }
 
@@ -66,6 +69,7 @@ class OsmosisIncentiveMsgAddToGauge
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        OsmosisIncentivesTypes.msgAddToGaugeResponse);
+      OsmosisIncentivesTypes.msgAddToGaugeResponse,
+    );
   }
 }

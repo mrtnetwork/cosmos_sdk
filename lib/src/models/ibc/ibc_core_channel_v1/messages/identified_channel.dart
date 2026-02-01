@@ -36,49 +36,55 @@ class IbcChannelIdentifiedChannel extends CosmosMessage {
 
   factory IbcChannelIdentifiedChannel.fromJson(Map<String, dynamic> json) {
     return IbcChannelIdentifiedChannel(
-        channelId: json["channel_id"],
-        connectionHops: (json["connection_hops"] as List?)?.cast(),
-        counterparty: json["counterparty"] == null
-            ? null
-            : IbcChannelCounterParty.fromJson(json["counterparty"]),
-        ordering: json["ordering"] == null
-            ? null
-            : IbcChannelOrder.fromValue(json["ordering"]),
-        portId: json["port_id"],
-        state: json["state"] == null
-            ? null
-            : IbcChannelState.fromValue(json["state"]),
-        upgradeSequence: BigintUtils.tryParse(json["upgrade_sequence"]),
-        version: json["version"]);
+      channelId: json["channel_id"],
+      connectionHops: (json["connection_hops"] as List?)?.cast(),
+      counterparty:
+          json["counterparty"] == null
+              ? null
+              : IbcChannelCounterParty.fromJson(json["counterparty"]),
+      ordering:
+          json["ordering"] == null
+              ? null
+              : IbcChannelOrder.fromValue(json["ordering"]),
+      portId: json["port_id"],
+      state:
+          json["state"] == null
+              ? null
+              : IbcChannelState.fromValue(json["state"]),
+      upgradeSequence: BigintUtils.tryParse(json["upgrade_sequence"]),
+      version: json["version"],
+    );
   }
-  IbcChannelIdentifiedChannel(
-      {this.state,
-      this.ordering,
-      this.counterparty,
-      List<String>? connectionHops,
-      this.version,
-      this.portId,
-      this.channelId,
-      this.upgradeSequence})
-      : connectionHops = connectionHops?.immutable;
+  IbcChannelIdentifiedChannel({
+    this.state,
+    this.ordering,
+    this.counterparty,
+    List<String>? connectionHops,
+    this.version,
+    this.portId,
+    this.channelId,
+    this.upgradeSequence,
+  }) : connectionHops = connectionHops?.immutable;
   factory IbcChannelIdentifiedChannel.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcChannelIdentifiedChannel(
-        state: decode
-            .getResult(1)
-            ?.to<IbcChannelState, int>((e) => IbcChannelState.fromValue(e)),
-        ordering: decode
-            .getResult(2)
-            ?.to<IbcChannelOrder, int>((e) => IbcChannelOrder.fromValue(e)),
-        counterparty: decode
-            .getResult(3)
-            ?.to<IbcChannelCounterParty, List<int>>(
-                (e) => IbcChannelCounterParty.deserialize(e)),
-        connectionHops: decode.getFields<String>(4),
-        version: decode.getField(5),
-        portId: decode.getField(6),
-        channelId: decode.getField(7),
-        upgradeSequence: decode.getField(8));
+      state: decode
+          .getResult(1)
+          ?.to<IbcChannelState, int>((e) => IbcChannelState.fromValue(e)),
+      ordering: decode
+          .getResult(2)
+          ?.to<IbcChannelOrder, int>((e) => IbcChannelOrder.fromValue(e)),
+      counterparty: decode
+          .getResult(3)
+          ?.to<IbcChannelCounterParty, List<int>>(
+            (e) => IbcChannelCounterParty.deserialize(e),
+          ),
+      connectionHops: decode.getFields<String>(4),
+      version: decode.getField(5),
+      portId: decode.getField(6),
+      channelId: decode.getField(7),
+      upgradeSequence: decode.getField(8),
+    );
   }
 
   @override
@@ -94,7 +100,7 @@ class IbcChannelIdentifiedChannel extends CosmosMessage {
       "version": version,
       "port_id": portId,
       "channel_id": channelId,
-      "upgrade_sequence": upgradeSequence?.toString()
+      "upgrade_sequence": upgradeSequence?.toString(),
     };
   }
 
@@ -103,13 +109,13 @@ class IbcChannelIdentifiedChannel extends CosmosMessage {
 
   @override
   List get values => [
-        state?.value,
-        ordering?.value,
-        counterparty,
-        connectionHops,
-        version,
-        portId,
-        channelId,
-        upgradeSequence
-      ];
+    state?.value,
+    ordering?.value,
+    counterparty,
+    connectionHops,
+    version,
+    portId,
+    channelId,
+    upgradeSequence,
+  ];
 }

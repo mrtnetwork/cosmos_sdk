@@ -8,15 +8,15 @@ import 'package:cosmos_sdk/src/utils/utils.dart';
 class CosmWasmV1MsgSudoContractResponse extends CosmosMessage {
   /// Data contains bytes to returned from the contract
   final List<int>? data;
-  CosmWasmV1MsgSudoContractResponse({
-    required List<int>? data,
-  }) : data = data?.asImmutableBytes;
+  CosmWasmV1MsgSudoContractResponse({required List<int>? data})
+    : data = data?.asImmutableBytes;
   factory CosmWasmV1MsgSudoContractResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmWasmV1MsgSudoContractResponse(data: decode.getField(1));
   }
   factory CosmWasmV1MsgSudoContractResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return CosmWasmV1MsgSudoContractResponse(data: json.asBytes("data"));
   }
 

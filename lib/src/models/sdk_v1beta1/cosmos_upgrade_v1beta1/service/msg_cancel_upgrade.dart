@@ -15,9 +15,10 @@ class MsgCancelUpgrade
   factory MsgCancelUpgrade.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgCancelUpgrade(
-        authority: decode
-            .getResult(1)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)));
+      authority: decode
+          .getResult(1)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+    );
   }
 
   factory MsgCancelUpgrade.fromJson(Map<String, dynamic> json) {
@@ -44,6 +45,7 @@ class MsgCancelUpgrade
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        UpgradeV1beta1Types.msgCancelUpgradeResponse);
+      UpgradeV1beta1Types.msgCancelUpgradeResponse,
+    );
   }
 }

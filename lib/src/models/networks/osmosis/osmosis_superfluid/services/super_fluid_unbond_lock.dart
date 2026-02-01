@@ -12,15 +12,21 @@ class OsmosisSuperfluidMsgSuperfluidUnbondLock
 
   const OsmosisSuperfluidMsgSuperfluidUnbondLock({this.sender, this.lockId});
   factory OsmosisSuperfluidMsgSuperfluidUnbondLock.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidMsgSuperfluidUnbondLock(
-        sender: decode.getField(1), lockId: decode.getField(2));
+      sender: decode.getField(1),
+      lockId: decode.getField(2),
+    );
   }
   factory OsmosisSuperfluidMsgSuperfluidUnbondLock.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisSuperfluidMsgSuperfluidUnbondLock(
-        sender: json.as("sender"), lockId: json.asBigInt("lock_id"));
+      sender: json.as("sender"),
+      lockId: json.asBigInt("lock_id"),
+    );
   }
 
   @override
@@ -42,6 +48,7 @@ class OsmosisSuperfluidMsgSuperfluidUnbondLock
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        OsmosisSuperfluidTypes.msgSuperfluidUnbondLockResponse);
+      OsmosisSuperfluidTypes.msgSuperfluidUnbondLockResponse,
+    );
   }
 }

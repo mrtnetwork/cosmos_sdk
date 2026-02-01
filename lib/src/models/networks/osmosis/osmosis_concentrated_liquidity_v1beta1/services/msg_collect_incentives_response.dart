@@ -8,32 +8,39 @@ class OsmosisConcentratedLiquidityMsgCollectIncentivesResponse
   final List<Coin> collectedIncentives;
   final List<Coin> forfeitedIncentives;
 
-  OsmosisConcentratedLiquidityMsgCollectIncentivesResponse(
-      {required List<Coin> collectedIncentives,
-      required List<Coin> forfeitedIncentives})
-      : collectedIncentives = collectedIncentives.immutable,
-        forfeitedIncentives = forfeitedIncentives.immutable;
+  OsmosisConcentratedLiquidityMsgCollectIncentivesResponse({
+    required List<Coin> collectedIncentives,
+    required List<Coin> forfeitedIncentives,
+  }) : collectedIncentives = collectedIncentives.immutable,
+       forfeitedIncentives = forfeitedIncentives.immutable;
   factory OsmosisConcentratedLiquidityMsgCollectIncentivesResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityMsgCollectIncentivesResponse(
-        collectedIncentives: decode
-            .getFields<List<int>>(1)
-            .map((e) => Coin.deserialize(e))
-            .toList(),
-        forfeitedIncentives: decode
-            .getFields<List<int>>(2)
-            .map((e) => Coin.deserialize(e))
-            .toList());
+      collectedIncentives:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
+      forfeitedIncentives:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
+    );
   }
   factory OsmosisConcentratedLiquidityMsgCollectIncentivesResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityMsgCollectIncentivesResponse(
-      collectedIncentives: (json["collected_incentives"] as List?)
+      collectedIncentives:
+          (json["collected_incentives"] as List?)
               ?.map((e) => Coin.fromJson(e))
               .toList() ??
           <Coin>[],
-      forfeitedIncentives: (json["forfeited_incentives"] as List?)
+      forfeitedIncentives:
+          (json["forfeited_incentives"] as List?)
               ?.map((e) => Coin.fromJson(e))
               .toList() ??
           <Coin>[],
@@ -49,7 +56,7 @@ class OsmosisConcentratedLiquidityMsgCollectIncentivesResponse
       "collected_incentives":
           collectedIncentives.map((e) => e.toJson()).toList(),
       "forfeited_incentives":
-          forfeitedIncentives.map((e) => e.toJson()).toList()
+          forfeitedIncentives.map((e) => e.toJson()).toList(),
     };
   }
 

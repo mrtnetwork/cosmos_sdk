@@ -46,38 +46,48 @@ class CosmosHeader extends CosmosMessage {
     List<int>? lastResultsHash,
     List<int>? evidenceHash,
     List<int>? proposerAddress,
-  })  : lastCommitHash =
-            BytesUtils.tryToBytes(lastCommitHash, unmodifiable: true),
-        dataHash = BytesUtils.tryToBytes(dataHash, unmodifiable: true),
-        validatorsHash =
-            BytesUtils.tryToBytes(validatorsHash, unmodifiable: true),
-        nextValidatorsHash =
-            BytesUtils.tryToBytes(nextValidatorsHash, unmodifiable: true),
-        consensusHash =
-            BytesUtils.tryToBytes(consensusHash, unmodifiable: true),
-        appHash = BytesUtils.tryToBytes(appHash, unmodifiable: true),
-        lastResultsHash =
-            BytesUtils.tryToBytes(lastResultsHash, unmodifiable: true),
-        evidenceHash = BytesUtils.tryToBytes(evidenceHash, unmodifiable: true),
-        proposerAddress =
-            BytesUtils.tryToBytes(proposerAddress, unmodifiable: true);
+  }) : lastCommitHash = BytesUtils.tryToBytes(
+         lastCommitHash,
+         unmodifiable: true,
+       ),
+       dataHash = BytesUtils.tryToBytes(dataHash, unmodifiable: true),
+       validatorsHash = BytesUtils.tryToBytes(
+         validatorsHash,
+         unmodifiable: true,
+       ),
+       nextValidatorsHash = BytesUtils.tryToBytes(
+         nextValidatorsHash,
+         unmodifiable: true,
+       ),
+       consensusHash = BytesUtils.tryToBytes(consensusHash, unmodifiable: true),
+       appHash = BytesUtils.tryToBytes(appHash, unmodifiable: true),
+       lastResultsHash = BytesUtils.tryToBytes(
+         lastResultsHash,
+         unmodifiable: true,
+       ),
+       evidenceHash = BytesUtils.tryToBytes(evidenceHash, unmodifiable: true),
+       proposerAddress = BytesUtils.tryToBytes(
+         proposerAddress,
+         unmodifiable: true,
+       );
   factory CosmosHeader.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmosHeader(
-        version: Consensus.deserialize(decode.getField(1)),
-        chainId: decode.getField(2),
-        height: decode.getField(3),
-        time: ProtobufTimestamp.deserialize(decode.getField(4)),
-        lastBlockId: BlockID.deserialize(decode.getField(5)),
-        lastCommitHash: decode.getField(6),
-        dataHash: decode.getField(7),
-        validatorsHash: decode.getField(8),
-        nextValidatorsHash: decode.getField(9),
-        consensusHash: decode.getField(10),
-        appHash: decode.getField(11),
-        lastResultsHash: decode.getField(12),
-        evidenceHash: decode.getField(13),
-        proposerAddress: decode.getField(14));
+      version: Consensus.deserialize(decode.getField(1)),
+      chainId: decode.getField(2),
+      height: decode.getField(3),
+      time: ProtobufTimestamp.deserialize(decode.getField(4)),
+      lastBlockId: BlockID.deserialize(decode.getField(5)),
+      lastCommitHash: decode.getField(6),
+      dataHash: decode.getField(7),
+      validatorsHash: decode.getField(8),
+      nextValidatorsHash: decode.getField(9),
+      consensusHash: decode.getField(10),
+      appHash: decode.getField(11),
+      lastResultsHash: decode.getField(12),
+      evidenceHash: decode.getField(13),
+      proposerAddress: decode.getField(14),
+    );
   }
 
   @override
@@ -108,19 +118,19 @@ class CosmosHeader extends CosmosMessage {
 
   @override
   List get values => [
-        version,
-        chainId,
-        height,
-        time,
-        lastBlockId,
-        lastCommitHash,
-        dataHash,
-        validatorsHash,
-        nextValidatorsHash,
-        consensusHash,
-        appHash,
-        lastResultsHash,
-        evidenceHash,
-        proposerAddress
-      ];
+    version,
+    chainId,
+    height,
+    time,
+    lastBlockId,
+    lastCommitHash,
+    dataHash,
+    validatorsHash,
+    nextValidatorsHash,
+    consensusHash,
+    appHash,
+    lastResultsHash,
+    evidenceHash,
+    proposerAddress,
+  ];
 }

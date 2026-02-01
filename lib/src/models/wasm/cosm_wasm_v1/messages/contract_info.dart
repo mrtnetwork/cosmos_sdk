@@ -25,42 +25,49 @@ class CosmWasmV1ContractInfo extends CosmosMessage {
   /// persistence model.
   final Any? extension;
 
-  CosmWasmV1ContractInfo(
-      {required this.codeId,
-      required this.creator,
-      required this.admin,
-      required this.label,
-      required this.created,
-      required this.ibcPortId,
-      required this.extension});
+  CosmWasmV1ContractInfo({
+    required this.codeId,
+    required this.creator,
+    required this.admin,
+    required this.label,
+    required this.created,
+    required this.ibcPortId,
+    required this.extension,
+  });
   factory CosmWasmV1ContractInfo.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmWasmV1ContractInfo(
-        codeId: decode.getField(1),
-        creator: decode.getField(2),
-        admin: decode.getField(3),
-        label: decode.getField(4),
-        created: decode
-            .getResult(5)
-            ?.to<CosmWasmV1AbsoluteTxPosition, List<int>>(
-                (e) => CosmWasmV1AbsoluteTxPosition.deserialize(e)),
-        ibcPortId: decode.getField(6),
-        extension:
-            decode.getResult(7)?.to<Any, List<int>>((e) => Any.deserialize(e)));
+      codeId: decode.getField(1),
+      creator: decode.getField(2),
+      admin: decode.getField(3),
+      label: decode.getField(4),
+      created: decode
+          .getResult(5)
+          ?.to<CosmWasmV1AbsoluteTxPosition, List<int>>(
+            (e) => CosmWasmV1AbsoluteTxPosition.deserialize(e),
+          ),
+      ibcPortId: decode.getField(6),
+      extension: decode
+          .getResult(7)
+          ?.to<Any, List<int>>((e) => Any.deserialize(e)),
+    );
   }
   factory CosmWasmV1ContractInfo.fromJson(Map<String, dynamic> json) {
     return CosmWasmV1ContractInfo(
-        codeId: json.asBigInt("code_id"),
-        creator: json.as("creator"),
-        admin: json.as("admin"),
-        label: json.as("label"),
-        created:
-            json.maybeAs<CosmWasmV1AbsoluteTxPosition, Map<String, dynamic>>(
-                key: "created",
-                onValue: (e) => CosmWasmV1AbsoluteTxPosition.fromJson(e)),
-        ibcPortId: json.as("ibc_port_id"),
-        extension: json.maybeAs<Any, Map<String, dynamic>>(
-            key: "extension", onValue: (e) => Any.fromJson(e)));
+      codeId: json.asBigInt("code_id"),
+      creator: json.as("creator"),
+      admin: json.as("admin"),
+      label: json.as("label"),
+      created: json.maybeAs<CosmWasmV1AbsoluteTxPosition, Map<String, dynamic>>(
+        key: "created",
+        onValue: (e) => CosmWasmV1AbsoluteTxPosition.fromJson(e),
+      ),
+      ibcPortId: json.as("ibc_port_id"),
+      extension: json.maybeAs<Any, Map<String, dynamic>>(
+        key: "extension",
+        onValue: (e) => Any.fromJson(e),
+      ),
+    );
   }
 
   @override
@@ -75,7 +82,7 @@ class CosmWasmV1ContractInfo extends CosmosMessage {
       "label": label,
       "created": created?.toJson(),
       "ibc_port_id": ibcPortId,
-      "extension": extension?.toJson()
+      "extension": extension?.toJson(),
     };
   }
 
@@ -83,6 +90,13 @@ class CosmWasmV1ContractInfo extends CosmosMessage {
   TypeUrl get typeUrl => CosmWasmV1Types.contractInfo;
 
   @override
-  List get values =>
-      [codeId, creator, admin, label, created, ibcPortId, extension];
+  List get values => [
+    codeId,
+    creator,
+    admin,
+    label,
+    created,
+    ibcPortId,
+    extension,
+  ];
 }

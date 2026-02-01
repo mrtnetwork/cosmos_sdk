@@ -13,18 +13,21 @@ class IncentivizedAcknowledgement extends CosmosMessage {
 
   /// success flag of the base application callback
   final bool? underlyingAppSuccess;
-  IncentivizedAcknowledgement(
-      {List<int>? appAcknowledgement,
-      this.forwardRelayerAddress,
-      this.underlyingAppSuccess})
-      : appAcknowledgement =
-            BytesUtils.tryToBytes(appAcknowledgement, unmodifiable: true);
+  IncentivizedAcknowledgement({
+    List<int>? appAcknowledgement,
+    this.forwardRelayerAddress,
+    this.underlyingAppSuccess,
+  }) : appAcknowledgement = BytesUtils.tryToBytes(
+         appAcknowledgement,
+         unmodifiable: true,
+       );
   factory IncentivizedAcknowledgement.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IncentivizedAcknowledgement(
-        appAcknowledgement: decode.getField(1),
-        forwardRelayerAddress: decode.getField(2),
-        underlyingAppSuccess: decode.getField(3));
+      appAcknowledgement: decode.getField(1),
+      forwardRelayerAddress: decode.getField(2),
+      underlyingAppSuccess: decode.getField(3),
+    );
   }
 
   @override
@@ -35,7 +38,7 @@ class IncentivizedAcknowledgement extends CosmosMessage {
     return {
       "app_acknowledgement": BytesUtils.tryToHexString(appAcknowledgement),
       "forward_relayer_address": forwardRelayerAddress,
-      "underlying_app_success": underlyingAppSuccess
+      "underlying_app_success": underlyingAppSuccess,
     };
   }
 
@@ -43,6 +46,9 @@ class IncentivizedAcknowledgement extends CosmosMessage {
   TypeUrl get typeUrl => IbcTypes.incentivizedAcknowledgement;
 
   @override
-  List get values =>
-      [appAcknowledgement, forwardRelayerAddress, underlyingAppSuccess];
+  List get values => [
+    appAcknowledgement,
+    forwardRelayerAddress,
+    underlyingAppSuccess,
+  ];
 }

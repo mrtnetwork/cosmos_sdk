@@ -8,8 +8,9 @@ class ThorchainEventSecurity extends CosmosMessage {
   factory ThorchainEventSecurity.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainEventSecurity(
-        tx: ThorchainTx.deserialize(decode.getField(2)),
-        msg: decode.getField(1));
+      tx: ThorchainTx.deserialize(decode.getField(2)),
+      msg: decode.getField(1),
+    );
   }
 
   @override

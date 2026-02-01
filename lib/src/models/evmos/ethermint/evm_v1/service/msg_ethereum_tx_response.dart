@@ -6,7 +6,7 @@ import 'package:cosmos_sdk/src/utils/utils.dart';
 
 /// EvmosEthermintEVMV1MsgEthereumTxResponse defines the Msg/EthereumTx response type.
 class EvmosEthermintEVMV1MsgEthereumTxResponse extends CosmosMessage {
-// hash of the ethereum transaction in hex format. This hash differs from the
+  // hash of the ethereum transaction in hex format. This hash differs from the
   // Tendermint sha256 hash of the transaction bytes. See
   // https://github.com/tendermint/tendermint/issues/6539 for reference
   final String hash;
@@ -20,36 +20,43 @@ class EvmosEthermintEVMV1MsgEthereumTxResponse extends CosmosMessage {
   final String? vmError;
   // gas_used specifies how much gas was consumed by the transaction
   final BigInt gasUsed;
-  const EvmosEthermintEVMV1MsgEthereumTxResponse(
-      {required this.hash,
-      required this.logs,
-      required this.ret,
-      required this.vmError,
-      required this.gasUsed});
+  const EvmosEthermintEVMV1MsgEthereumTxResponse({
+    required this.hash,
+    required this.logs,
+    required this.ret,
+    required this.vmError,
+    required this.gasUsed,
+  });
   factory EvmosEthermintEVMV1MsgEthereumTxResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return EvmosEthermintEVMV1MsgEthereumTxResponse(
-        hash: json["hash"],
-        logs: (json["logs"] as List?)
-                ?.map((e) => EvmosEthermintEVMV1Log.fromJson(e))
-                .toList() ??
-            [],
-        ret: CosmosUtils.tryToBytes(json["ret"]),
-        vmError: json["vm_error"],
-        gasUsed: BigintUtils.parse(json["gas_used"]));
+      hash: json["hash"],
+      logs:
+          (json["logs"] as List?)
+              ?.map((e) => EvmosEthermintEVMV1Log.fromJson(e))
+              .toList() ??
+          [],
+      ret: CosmosUtils.tryToBytes(json["ret"]),
+      vmError: json["vm_error"],
+      gasUsed: BigintUtils.parse(json["gas_used"]),
+    );
   }
   factory EvmosEthermintEVMV1MsgEthereumTxResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosEthermintEVMV1MsgEthereumTxResponse(
-        hash: decode.getField(1),
-        logs: decode
-            .getFields<List<int>>(2)
-            .map((e) => EvmosEthermintEVMV1Log.deserialize(e))
-            .toList(),
-        ret: decode.getField(3),
-        vmError: decode.getField(4),
-        gasUsed: decode.getField(5));
+      hash: decode.getField(1),
+      logs:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => EvmosEthermintEVMV1Log.deserialize(e))
+              .toList(),
+      ret: decode.getField(3),
+      vmError: decode.getField(4),
+      gasUsed: decode.getField(5),
+    );
   }
 
   @override
@@ -62,7 +69,7 @@ class EvmosEthermintEVMV1MsgEthereumTxResponse extends CosmosMessage {
       "logs": logs.map((e) => e.toJson()).toList(),
       "ret": BytesUtils.tryToHexString(ret),
       "vm_error": vmError,
-      "gas_used": gasUsed
+      "gas_used": gasUsed,
     };
   }
 

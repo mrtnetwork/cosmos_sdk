@@ -24,29 +24,34 @@ class MsgSetSendEnabled
   /// it will be ignored.
   final List<String> useDefaultFor;
 
-  const MsgSetSendEnabled(
-      {required this.authority,
-      required this.sendEnabled,
-      required this.useDefaultFor});
+  const MsgSetSendEnabled({
+    required this.authority,
+    required this.sendEnabled,
+    required this.useDefaultFor,
+  });
   factory MsgSetSendEnabled.fromJson(Map<String, dynamic> json) {
     return MsgSetSendEnabled(
-        authority: CosmosBaseAddress(json.as("authority")),
-        sendEnabled: json
-            .asListOfMap("send_enabled")!
-            .map((e) => SendEnabled.fromJson(e))
-            .toList(),
-        useDefaultFor: json.asListOfString("use_default_for")!);
+      authority: CosmosBaseAddress(json.as("authority")),
+      sendEnabled:
+          json
+              .asListOfMap("send_enabled")!
+              .map((e) => SendEnabled.fromJson(e))
+              .toList(),
+      useDefaultFor: json.asListOfString("use_default_for")!,
+    );
   }
 
   factory MsgSetSendEnabled.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgSetSendEnabled(
-        authority: CosmosBaseAddress(decode.getField(1)),
-        sendEnabled: decode
-            .getFields<List<int>>(2)
-            .map((e) => SendEnabled.deserialize(e))
-            .toList(),
-        useDefaultFor: decode.getFields<String>(3));
+      authority: CosmosBaseAddress(decode.getField(1)),
+      sendEnabled:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => SendEnabled.deserialize(e))
+              .toList(),
+      useDefaultFor: decode.getFields<String>(3),
+    );
   }
 
   @override
@@ -57,7 +62,7 @@ class MsgSetSendEnabled
     return {
       "authority": authority.address,
       "send_enabled": sendEnabled.map((e) => e.toJson()).toList(),
-      "use_default_for": useDefaultFor
+      "use_default_for": useDefaultFor,
     };
   }
 
@@ -73,6 +78,7 @@ class MsgSetSendEnabled
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        BankV1beta1Types.msgSetSendEnabledResponse);
+      BankV1beta1Types.msgSetSendEnabledResponse,
+    );
   }
 }

@@ -11,15 +11,15 @@ class StrideBaseVestingAccount extends CosmosMessage {
   final List<Coin> delegatedVesting;
   final BigInt endTime;
 
-  StrideBaseVestingAccount(
-      {required this.baseAccount,
-      required List<Coin> orginalVesting,
-      required List<Coin> delegatedFree,
-      required List<Coin> delegatedVesting,
-      required this.endTime})
-      : orginalVesting = orginalVesting.immutable,
-        delegatedFree = delegatedFree.immutable,
-        delegatedVesting = delegatedVesting.immutable;
+  StrideBaseVestingAccount({
+    required this.baseAccount,
+    required List<Coin> orginalVesting,
+    required List<Coin> delegatedFree,
+    required List<Coin> delegatedVesting,
+    required this.endTime,
+  }) : orginalVesting = orginalVesting.immutable,
+       delegatedFree = delegatedFree.immutable,
+       delegatedVesting = delegatedVesting.immutable;
   factory StrideBaseVestingAccount.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return StrideBaseVestingAccount(
@@ -35,20 +35,24 @@ class StrideBaseVestingAccount extends CosmosMessage {
   }
   factory StrideBaseVestingAccount.fromJson(Map<String, dynamic> json) {
     return StrideBaseVestingAccount(
-        baseAccount: BaseAccount.fromJson(json["base_account"]),
-        orginalVesting: json
-            .asListOfMap("original_vesting", throwOnNull: true)!
-            .map(Coin.fromJson)
-            .toList(),
-        delegatedFree: json
-            .asListOfMap("delegated_free", throwOnNull: true)!
-            .map(Coin.fromJson)
-            .toList(),
-        delegatedVesting: json
-            .asListOfMap("delegated_vesting", throwOnNull: true)!
-            .map(Coin.fromJson)
-            .toList(),
-        endTime: json.asBigInt("end_time"));
+      baseAccount: BaseAccount.fromJson(json["base_account"]),
+      orginalVesting:
+          json
+              .asListOfMap("original_vesting", throwOnNull: true)!
+              .map(Coin.fromJson)
+              .toList(),
+      delegatedFree:
+          json
+              .asListOfMap("delegated_free", throwOnNull: true)!
+              .map(Coin.fromJson)
+              .toList(),
+      delegatedVesting:
+          json
+              .asListOfMap("delegated_vesting", throwOnNull: true)!
+              .map(Coin.fromJson)
+              .toList(),
+      endTime: json.asBigInt("end_time"),
+    );
   }
 
   @override
@@ -61,7 +65,7 @@ class StrideBaseVestingAccount extends CosmosMessage {
       "original_vesting": orginalVesting.map((e) => e.toJson()).toList(),
       "delegated_free": delegatedFree.map((e) => e.toJson()).toList(),
       "end_time": endTime.toString(),
-      "delegated_vesting": delegatedVesting.map((e) => e.toJson()).toList()
+      "delegated_vesting": delegatedVesting.map((e) => e.toJson()).toList(),
     };
   }
 
@@ -69,6 +73,11 @@ class StrideBaseVestingAccount extends CosmosMessage {
   TypeUrl get typeUrl => StrideTypes.baseVestingAccount;
 
   @override
-  List get values =>
-      [baseAccount, orginalVesting, delegatedFree, delegatedVesting, endTime];
+  List get values => [
+    baseAccount,
+    orginalVesting,
+    delegatedFree,
+    delegatedVesting,
+    endTime,
+  ];
 }

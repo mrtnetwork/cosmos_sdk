@@ -10,24 +10,26 @@ class OsmosisGammQueryPoolsResponse extends CosmosMessage {
   /// pagination defines the pagination in the response.
   final PageResponse? pagination;
   OsmosisGammQueryPoolsResponse({this.pagination, List<AnyMessage>? pools})
-      : pools = pools?.emptyAsNull?.immutable;
+    : pools = pools?.emptyAsNull?.immutable;
   factory OsmosisGammQueryPoolsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisGammQueryPoolsResponse(
-        pools: decode
-            .getFields<List<int>>(1)
-            .map((e) => AnyMessage.deserialize(e))
-            .toList(),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
+      pools:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => AnyMessage.deserialize(e))
+              .toList(),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
+    );
   }
   factory OsmosisGammQueryPoolsResponse.fromJson(Map<String, dynamic> json) {
     return OsmosisGammQueryPoolsResponse(
-        pools: (json["pools"] as List?)
-            ?.map((e) => AnyMessage.fromJson(e))
-            .toList(),
-        pagination: PageResponse.fromJson(json["pagination"]));
+      pools:
+          (json["pools"] as List?)?.map((e) => AnyMessage.fromJson(e)).toList(),
+      pagination: PageResponse.fromJson(json["pagination"]),
+    );
   }
 
   @override

@@ -6,18 +6,23 @@ class OsmosisConcentratedLiquidityCFMMPoolIdLinkFromConcentratedPoolIdResponse
     extends CosmosMessage {
   final BigInt? cfmmPoolId;
 
-  OsmosisConcentratedLiquidityCFMMPoolIdLinkFromConcentratedPoolIdResponse(
-      {this.cfmmPoolId});
+  OsmosisConcentratedLiquidityCFMMPoolIdLinkFromConcentratedPoolIdResponse({
+    this.cfmmPoolId,
+  });
   factory OsmosisConcentratedLiquidityCFMMPoolIdLinkFromConcentratedPoolIdResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityCFMMPoolIdLinkFromConcentratedPoolIdResponse(
-        cfmmPoolId: decode.getField(1));
+      cfmmPoolId: decode.getField(1),
+    );
   }
   factory OsmosisConcentratedLiquidityCFMMPoolIdLinkFromConcentratedPoolIdResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityCFMMPoolIdLinkFromConcentratedPoolIdResponse(
-        cfmmPoolId: BigintUtils.tryParse(json["cfmm_pool_id"]));
+      cfmmPoolId: BigintUtils.tryParse(json["cfmm_pool_id"]),
+    );
   }
 
   @override
@@ -29,8 +34,9 @@ class OsmosisConcentratedLiquidityCFMMPoolIdLinkFromConcentratedPoolIdResponse
   }
 
   @override
-  TypeUrl get typeUrl => OsmosisConcentratedLiquidityV1beta1Types
-      .cFMMPoolIdLinkFromConcentratedPoolIdResponse;
+  TypeUrl get typeUrl =>
+      OsmosisConcentratedLiquidityV1beta1Types
+          .cFMMPoolIdLinkFromConcentratedPoolIdResponse;
 
   @override
   List get values => [cfmmPoolId];

@@ -13,32 +13,34 @@ class ThorchainLiquidityProvider extends CosmosMessage {
   final String? pendingTxId;
   final BigInt? runeDepositValue;
   final BigInt? assetDepositValue;
-  ThorchainLiquidityProvider(
-      {required this.asset,
-      this.runeAddress,
-      this.assetAddress,
-      this.lastAddHeight,
-      this.lastWithdrawHeight,
-      required this.units,
-      required this.pendingRune,
-      required this.pendingAsset,
-      this.pendingTxId,
-      this.runeDepositValue,
-      this.assetDepositValue});
+  ThorchainLiquidityProvider({
+    required this.asset,
+    this.runeAddress,
+    this.assetAddress,
+    this.lastAddHeight,
+    this.lastWithdrawHeight,
+    required this.units,
+    required this.pendingRune,
+    required this.pendingAsset,
+    this.pendingTxId,
+    this.runeDepositValue,
+    this.assetDepositValue,
+  });
   factory ThorchainLiquidityProvider.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainLiquidityProvider(
-        asset: ThorchainAsset.deserialize(decode.getField(1)),
-        runeAddress: decode.getField(2),
-        assetAddress: decode.getField(3),
-        lastAddHeight: decode.getField(4),
-        lastWithdrawHeight: decode.getField(5),
-        units: BigInt.parse(decode.getField(6)),
-        pendingRune: BigInt.parse(decode.getField(7)),
-        pendingAsset: BigInt.parse(decode.getField(8)),
-        pendingTxId: decode.getField(9),
-        runeDepositValue: BigInt.parse(decode.getField(10)),
-        assetDepositValue: BigInt.parse(decode.getField(11)));
+      asset: ThorchainAsset.deserialize(decode.getField(1)),
+      runeAddress: decode.getField(2),
+      assetAddress: decode.getField(3),
+      lastAddHeight: decode.getField(4),
+      lastWithdrawHeight: decode.getField(5),
+      units: BigInt.parse(decode.getField(6)),
+      pendingRune: BigInt.parse(decode.getField(7)),
+      pendingAsset: BigInt.parse(decode.getField(8)),
+      pendingTxId: decode.getField(9),
+      runeDepositValue: BigInt.parse(decode.getField(10)),
+      assetDepositValue: BigInt.parse(decode.getField(11)),
+    );
   }
 
   @override
@@ -57,7 +59,7 @@ class ThorchainLiquidityProvider extends CosmosMessage {
       "pending_asset": pendingAsset.toString(),
       "pending_tx_Id": pendingTxId,
       "rune_deposit_value": runeDepositValue?.toString(),
-      "asset_deposit_value": assetDepositValue?.toString()
+      "asset_deposit_value": assetDepositValue?.toString(),
     };
   }
 
@@ -66,16 +68,16 @@ class ThorchainLiquidityProvider extends CosmosMessage {
 
   @override
   List get values => [
-        asset,
-        runeAddress,
-        assetAddress,
-        lastAddHeight,
-        lastWithdrawHeight,
-        units.toString(),
-        pendingRune.toString(),
-        pendingAsset.toString(),
-        pendingTxId,
-        runeDepositValue?.toString(),
-        assetDepositValue?.toString()
-      ];
+    asset,
+    runeAddress,
+    assetAddress,
+    lastAddHeight,
+    lastWithdrawHeight,
+    units.toString(),
+    pendingRune.toString(),
+    pendingAsset.toString(),
+    pendingTxId,
+    runeDepositValue?.toString(),
+    assetDepositValue?.toString(),
+  ];
 }

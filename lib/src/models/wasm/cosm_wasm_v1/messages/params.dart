@@ -8,30 +8,36 @@ import 'package:cosmos_sdk/src/utils/quick.dart';
 class CosmWasmV1Params extends CosmosMessage {
   final CosmWasmV1AccessConfig? codeUploadAccess;
   final CosmWasmV1AccessType? instantiateDefaultPermission;
-  const CosmWasmV1Params(
-      {required this.codeUploadAccess,
-      required this.instantiateDefaultPermission});
+  const CosmWasmV1Params({
+    required this.codeUploadAccess,
+    required this.instantiateDefaultPermission,
+  });
   factory CosmWasmV1Params.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmWasmV1Params(
-        codeUploadAccess: decode
-            .getResult(1)
-            ?.to<CosmWasmV1AccessConfig, List<int>>(
-                (e) => CosmWasmV1AccessConfig.deserialize(e)),
-        instantiateDefaultPermission: decode
-            .getResult(2)
-            ?.to<CosmWasmV1AccessType, int>(
-                (e) => CosmWasmV1AccessType.fromValue(e)));
+      codeUploadAccess: decode
+          .getResult(1)
+          ?.to<CosmWasmV1AccessConfig, List<int>>(
+            (e) => CosmWasmV1AccessConfig.deserialize(e),
+          ),
+      instantiateDefaultPermission: decode
+          .getResult(2)
+          ?.to<CosmWasmV1AccessType, int>(
+            (e) => CosmWasmV1AccessType.fromValue(e),
+          ),
+    );
   }
   factory CosmWasmV1Params.fromJson(Map<String, dynamic> json) {
     return CosmWasmV1Params(
-        codeUploadAccess: json.maybeAs<CosmWasmV1AccessConfig, String>(
-            key: "code_upload_access",
-            onValue: (e) => CosmWasmV1AccessConfig.fromJson(json.as(e))),
-        instantiateDefaultPermission:
-            json.maybeAs<CosmWasmV1AccessType, String>(
-                key: "instantiate_default_permission",
-                onValue: (e) => CosmWasmV1AccessType.fromName(e)));
+      codeUploadAccess: json.maybeAs<CosmWasmV1AccessConfig, String>(
+        key: "code_upload_access",
+        onValue: (e) => CosmWasmV1AccessConfig.fromJson(json.as(e)),
+      ),
+      instantiateDefaultPermission: json.maybeAs<CosmWasmV1AccessType, String>(
+        key: "instantiate_default_permission",
+        onValue: (e) => CosmWasmV1AccessType.fromName(e),
+      ),
+    );
   }
 
   @override
@@ -41,7 +47,7 @@ class CosmWasmV1Params extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "code_upload_access": codeUploadAccess?.toJson(),
-      "instantiate_default_permission": instantiateDefaultPermission?.name
+      "instantiate_default_permission": instantiateDefaultPermission?.name,
     };
   }
 

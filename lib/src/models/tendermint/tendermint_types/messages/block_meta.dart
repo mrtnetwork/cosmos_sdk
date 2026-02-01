@@ -13,14 +13,15 @@ class BlockMeta extends CosmosMessage {
   factory BlockMeta.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return BlockMeta(
-        blockID: decode
-            .getResult(1)
-            ?.to<BlockID, List<int>>((e) => BlockID.deserialize(e)),
-        blockSize: decode.getField(2),
-        header: decode
-            .getResult(3)
-            ?.to<Header, List<int>>((e) => Header.deserialize(e)),
-        numTxs: decode.getField(4));
+      blockID: decode
+          .getResult(1)
+          ?.to<BlockID, List<int>>((e) => BlockID.deserialize(e)),
+      blockSize: decode.getField(2),
+      header: decode
+          .getResult(3)
+          ?.to<Header, List<int>>((e) => Header.deserialize(e)),
+      numTxs: decode.getField(4),
+    );
   }
 
   @override
@@ -32,7 +33,7 @@ class BlockMeta extends CosmosMessage {
       "block_id": blockID?.toJson(),
       "block_size": blockSize?.toString(),
       "header": header?.toJson(),
-      "num_txs": numTxs?.toString()
+      "num_txs": numTxs?.toString(),
     };
   }
 

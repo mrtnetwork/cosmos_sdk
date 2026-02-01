@@ -10,9 +10,11 @@ class OmosisEpochsQueryCurrentEpochResponse extends CosmosMessage {
     return OmosisEpochsQueryCurrentEpochResponse(decode.getField(1));
   }
   factory OmosisEpochsQueryCurrentEpochResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OmosisEpochsQueryCurrentEpochResponse(
-        BigintUtils.tryParse(json["current_epoch"]));
+      BigintUtils.tryParse(json["current_epoch"]),
+    );
   }
 
   @override

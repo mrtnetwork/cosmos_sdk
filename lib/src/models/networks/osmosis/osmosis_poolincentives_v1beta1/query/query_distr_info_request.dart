@@ -6,7 +6,8 @@ class OsmosisPoolincentivesQueryDistrInfoRequest extends CosmosMessage
     with QueryMessage<OsmosisPoolincentivesQueryDistrInfoResponse> {
   OsmosisPoolincentivesQueryDistrInfoRequest();
   factory OsmosisPoolincentivesQueryDistrInfoRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return OsmosisPoolincentivesQueryDistrInfoRequest();
   }
 
@@ -20,7 +21,8 @@ class OsmosisPoolincentivesQueryDistrInfoRequest extends CosmosMessage
 
   @override
   OsmosisPoolincentivesQueryDistrInfoResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisPoolincentivesQueryDistrInfoResponse.fromJson(json);
   }
 

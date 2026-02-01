@@ -11,22 +11,24 @@ class IbcSoloMachineV2Header extends CosmosMessage {
   final List<int>? signature;
   final Any? newPublicKey;
   final String? newDiversifier;
-  IbcSoloMachineV2Header(
-      {this.sequence,
-      this.timestamp,
-      List<int>? signature,
-      this.newPublicKey,
-      this.newDiversifier})
-      : signature = BytesUtils.tryToBytes(signature);
+  IbcSoloMachineV2Header({
+    this.sequence,
+    this.timestamp,
+    List<int>? signature,
+    this.newPublicKey,
+    this.newDiversifier,
+  }) : signature = BytesUtils.tryToBytes(signature);
   factory IbcSoloMachineV2Header.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcSoloMachineV2Header(
-        sequence: decode.getField(1),
-        timestamp: decode.getField(2),
-        signature: decode.getField(3),
-        newPublicKey:
-            decode.getResult(4)?.to<Any, List<int>>((e) => Any.deserialize(e)),
-        newDiversifier: decode.getField(5));
+      sequence: decode.getField(1),
+      timestamp: decode.getField(2),
+      signature: decode.getField(3),
+      newPublicKey: decode
+          .getResult(4)
+          ?.to<Any, List<int>>((e) => Any.deserialize(e)),
+      newDiversifier: decode.getField(5),
+    );
   }
 
   @override
@@ -39,7 +41,7 @@ class IbcSoloMachineV2Header extends CosmosMessage {
       "timestamp": timestamp?.toString(),
       "signature": BytesUtils.tryToHexString(signature),
       "new_public_key": newPublicKey?.toJson(),
-      "new_diversifier": newDiversifier
+      "new_diversifier": newDiversifier,
     };
   }
 
@@ -47,6 +49,11 @@ class IbcSoloMachineV2Header extends CosmosMessage {
   TypeUrl get typeUrl => IbcTypes.soloMachineV2Header;
 
   @override
-  List get values =>
-      [sequence, timestamp, signature, newPublicKey, newDiversifier];
+  List get values => [
+    sequence,
+    timestamp,
+    signature,
+    newPublicKey,
+    newDiversifier,
+  ];
 }

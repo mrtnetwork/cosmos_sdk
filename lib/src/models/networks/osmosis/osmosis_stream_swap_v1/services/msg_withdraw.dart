@@ -14,20 +14,25 @@ class OsmosisStreamSwapMsgWithdraw extends OsmosisStreamSwapV1<ProtobufEmpty> {
   /// tokens, unless set to null - then all remaining balance will be withdrawn.
   final BigInt amount;
 
-  OsmosisStreamSwapMsgWithdraw(
-      {this.sender, this.saleId, required this.amount});
+  OsmosisStreamSwapMsgWithdraw({
+    this.sender,
+    this.saleId,
+    required this.amount,
+  });
   factory OsmosisStreamSwapMsgWithdraw.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisStreamSwapMsgWithdraw(
-        sender: decode.getField(1),
-        saleId: decode.getField(2),
-        amount: BigInt.parse(decode.getField(3)));
+      sender: decode.getField(1),
+      saleId: decode.getField(2),
+      amount: BigInt.parse(decode.getField(3)),
+    );
   }
   factory OsmosisStreamSwapMsgWithdraw.fromJson(Map<String, dynamic> json) {
     return OsmosisStreamSwapMsgWithdraw(
-        sender: json.as("sender"),
-        saleId: json.asBigInt("sale_id"),
-        amount: json.asBigInt("amount"));
+      sender: json.as("sender"),
+      saleId: json.asBigInt("sale_id"),
+      amount: json.asBigInt("amount"),
+    );
   }
   @override
   List<int> get fieldIds => [1, 2, 3];
@@ -37,7 +42,7 @@ class OsmosisStreamSwapMsgWithdraw extends OsmosisStreamSwapV1<ProtobufEmpty> {
     return {
       "sender": sender,
       "sale_id": saleId?.toString(),
-      "amount": amount.toString()
+      "amount": amount.toString(),
     };
   }
 

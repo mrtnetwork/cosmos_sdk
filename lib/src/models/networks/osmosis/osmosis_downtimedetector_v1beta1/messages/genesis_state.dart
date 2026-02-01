@@ -7,19 +7,23 @@ import 'genesis_downtime_entry.dart';
 class OsmosisDowntimeDetectorGenesisState extends CosmosMessage {
   final List<OsmosisDowntimeDetectorGenesisDowntimeEntry> downtimes;
   final ProtobufTimestamp lastBlockTime;
-  OsmosisDowntimeDetectorGenesisState(
-      {required List<OsmosisDowntimeDetectorGenesisDowntimeEntry> downtimes,
-      required this.lastBlockTime})
-      : downtimes = downtimes.immutable;
+  OsmosisDowntimeDetectorGenesisState({
+    required List<OsmosisDowntimeDetectorGenesisDowntimeEntry> downtimes,
+    required this.lastBlockTime,
+  }) : downtimes = downtimes.immutable;
   factory OsmosisDowntimeDetectorGenesisState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisDowntimeDetectorGenesisState(
-        downtimes: decode
-            .getFields<List<int>>(1)
-            .map((e) =>
-                OsmosisDowntimeDetectorGenesisDowntimeEntry.deserialize(e))
-            .toList(),
-        lastBlockTime: ProtobufTimestamp.deserialize(decode.getField(2)));
+      downtimes:
+          decode
+              .getFields<List<int>>(1)
+              .map(
+                (e) =>
+                    OsmosisDowntimeDetectorGenesisDowntimeEntry.deserialize(e),
+              )
+              .toList(),
+      lastBlockTime: ProtobufTimestamp.deserialize(decode.getField(2)),
+    );
   }
 
   @override
@@ -29,7 +33,7 @@ class OsmosisDowntimeDetectorGenesisState extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "downtimes": downtimes.map((e) => e.toJson()).toList(),
-      "last_block_time": lastBlockTime.toJson()
+      "last_block_time": lastBlockTime.toJson(),
     };
   }
 

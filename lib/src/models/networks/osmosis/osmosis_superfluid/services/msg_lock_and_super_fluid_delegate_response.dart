@@ -8,10 +8,12 @@ class OsmosisSuperfluidMsgLockAndSuperfluidDelegateResponse
 
   OsmosisSuperfluidMsgLockAndSuperfluidDelegateResponse({this.id});
   factory OsmosisSuperfluidMsgLockAndSuperfluidDelegateResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidMsgLockAndSuperfluidDelegateResponse(
-        id: decode.getField(1));
+      id: decode.getField(1),
+    );
   }
 
   @override

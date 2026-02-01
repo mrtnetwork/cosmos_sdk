@@ -12,23 +12,29 @@ class CosmWasmV1QueryContractsByCodeResponse extends CosmosMessage {
 
   /// pagination defines the pagination in the response.
   final PageResponse? pagination;
-  CosmWasmV1QueryContractsByCodeResponse(
-      {required List<String>? contracts, this.pagination})
-      : contracts = contracts?.immutable;
+  CosmWasmV1QueryContractsByCodeResponse({
+    required List<String>? contracts,
+    this.pagination,
+  }) : contracts = contracts?.immutable;
   factory CosmWasmV1QueryContractsByCodeResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmWasmV1QueryContractsByCodeResponse(
-        contracts: decode.getFields<String>(1),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
+      contracts: decode.getFields<String>(1),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
+    );
   }
   factory CosmWasmV1QueryContractsByCodeResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return CosmWasmV1QueryContractsByCodeResponse(
-        contracts: json.asListOfString("contracts"),
-        pagination: json.maybeAs<PageResponse, Map<String, dynamic>>(
-            key: "pagination", onValue: (e) => PageResponse.fromJson(e)));
+      contracts: json.asListOfString("contracts"),
+      pagination: json.maybeAs<PageResponse, Map<String, dynamic>>(
+        key: "pagination",
+        onValue: (e) => PageResponse.fromJson(e),
+      ),
+    );
   }
 
   @override

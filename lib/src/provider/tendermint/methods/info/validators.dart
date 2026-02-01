@@ -27,10 +27,10 @@ class TendermintRequestValidators
 
   @override
   Map<String, String?> get parameters => {
-        "height": height?.toString(),
-        "page": page?.toString(),
-        "per_page": perPage?.toString()
-      };
+    "height": height?.toString(),
+    "page": page?.toString(),
+    "per_page": perPage?.toString(),
+  };
 
   @override
   List<Map<String, dynamic>> onResonse(List<dynamic> result) {

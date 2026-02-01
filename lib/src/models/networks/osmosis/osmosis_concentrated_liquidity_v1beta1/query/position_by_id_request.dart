@@ -7,18 +7,21 @@ class OsmosisConcentratedLiquidityPositionByIdRequest extends CosmosMessage
   final BigInt? positionId;
   OsmosisConcentratedLiquidityPositionByIdRequest({this.positionId});
   factory OsmosisConcentratedLiquidityPositionByIdRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityPositionByIdRequest(
-        positionId: decode.getField(1));
+      positionId: decode.getField(1),
+    );
   }
 
   @override
   List<int> get fieldIds => [1];
 
   @override
-  Map<String, String?> get queryParameters =>
-      {"position_id": positionId?.toString()};
+  Map<String, String?> get queryParameters => {
+    "position_id": positionId?.toString(),
+  };
 
   @override
   Map<String, dynamic> toJson() {
@@ -34,7 +37,8 @@ class OsmosisConcentratedLiquidityPositionByIdRequest extends CosmosMessage
 
   @override
   OsmosisConcentratedLiquidityPositionByIdResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityPositionByIdResponse.fromJson(json);
   }
 

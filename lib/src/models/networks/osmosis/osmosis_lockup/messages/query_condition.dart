@@ -21,30 +21,37 @@ class OsmosisLockupQueryCondition extends CosmosMessage {
   /// Timestamp field must not be nil when the lock query type is `ByLockTime`.
   /// Querying locks with timestamp is currently not implemented.s
   final ProtobufTimestamp timestamp;
-  OsmosisLockupQueryCondition(
-      {this.lockQueryType,
-      this.denom,
-      required this.duration,
-      required this.timestamp});
+  OsmosisLockupQueryCondition({
+    this.lockQueryType,
+    this.denom,
+    required this.duration,
+    required this.timestamp,
+  });
 
   factory OsmosisLockupQueryCondition.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisLockupQueryCondition(
-        lockQueryType: decode.getResult(1)?.to<OsmosisLockupLockQueryType, int>(
-            (e) => OsmosisLockupLockQueryType.fromValue(e)),
-        denom: decode.getField(2),
-        duration: ProtobufDuration.deserialize(decode.getField(3)),
-        timestamp: ProtobufTimestamp.deserialize(decode.getField(4)));
+      lockQueryType: decode
+          .getResult(1)
+          ?.to<OsmosisLockupLockQueryType, int>(
+            (e) => OsmosisLockupLockQueryType.fromValue(e),
+          ),
+      denom: decode.getField(2),
+      duration: ProtobufDuration.deserialize(decode.getField(3)),
+      timestamp: ProtobufTimestamp.deserialize(decode.getField(4)),
+    );
   }
 
   factory OsmosisLockupQueryCondition.fromJson(Map<String, dynamic> json) {
     return OsmosisLockupQueryCondition(
-        duration: ProtobufDuration.fromString(json["duration"]),
-        timestamp: ProtobufTimestamp.fromString(json["timestamp"]),
-        denom: json["denom"],
-        lockQueryType: json["lock_query_type"] == null
-            ? null
-            : OsmosisLockupLockQueryType.fromName(json["lock_query_type"]));
+      duration: ProtobufDuration.fromString(json["duration"]),
+      timestamp: ProtobufTimestamp.fromString(json["timestamp"]),
+      denom: json["denom"],
+      lockQueryType:
+          json["lock_query_type"] == null
+              ? null
+              : OsmosisLockupLockQueryType.fromName(json["lock_query_type"]),
+    );
   }
 
   @override
@@ -56,7 +63,7 @@ class OsmosisLockupQueryCondition extends CosmosMessage {
       "lock_query_type": lockQueryType?.value,
       "denom": denom,
       "duration": duration.toJson(),
-      "timestamp": timestamp.toJson()
+      "timestamp": timestamp.toJson(),
     };
   }
 

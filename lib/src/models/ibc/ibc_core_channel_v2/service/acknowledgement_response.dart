@@ -10,14 +10,22 @@ class IbcChannelV2MsgAcknowledgementResponse extends CosmosMessage {
   factory IbcChannelV2MsgAcknowledgementResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcChannelV2MsgAcknowledgementResponse(
-        result: decode.getResult(1)?.to<IbcChannelV2ResponseResultType, int>(
-            IbcChannelV2ResponseResultType.fromValue));
+      result: decode
+          .getResult(1)
+          ?.to<IbcChannelV2ResponseResultType, int>(
+            IbcChannelV2ResponseResultType.fromValue,
+          ),
+    );
   }
   factory IbcChannelV2MsgAcknowledgementResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return IbcChannelV2MsgAcknowledgementResponse(
-        result: json.maybeAs<IbcChannelV2ResponseResultType, int>(
-            key: "result", onValue: IbcChannelV2ResponseResultType.fromValue));
+      result: json.maybeAs<IbcChannelV2ResponseResultType, int>(
+        key: "result",
+        onValue: IbcChannelV2ResponseResultType.fromValue,
+      ),
+    );
   }
   @override
   List<int> get fieldIds => [1];

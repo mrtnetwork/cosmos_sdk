@@ -13,7 +13,9 @@ class GovTextProposal extends CosmosMessage {
   factory GovTextProposal.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GovTextProposal(
-        title: decode.getField(1), description: decode.getField(2));
+      title: decode.getField(1),
+      description: decode.getField(2),
+    );
   }
 
   @override

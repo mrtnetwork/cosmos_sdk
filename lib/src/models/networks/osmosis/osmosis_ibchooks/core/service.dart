@@ -8,39 +8,47 @@ abstract class OsmosisIbchooks<T extends CosmosMessage>
     extends OsmosisService<T> {
   const OsmosisIbchooks();
 
-  static T? fromJson<T extends OsmosisIbchooks>(
-      {required String typeUrl, required Map<String, dynamic> json}) {
+  static T? fromJson<T extends OsmosisIbchooks>({
+    required String typeUrl,
+    required Map<String, dynamic> json,
+  }) {
     final type = OsmosisIbchooksTypes.findService(typeUrl);
-    final OsmosisIbchooks? service = switch (type) {
-      OsmosisIbchooksTypes.msgEmitIBCAck =>
-        OsmosisIbchooksMsgEmitIBCAck.fromJson(json),
-      _ => null
-    } as OsmosisIbchooks?;
+    final OsmosisIbchooks? service =
+        switch (type) {
+              OsmosisIbchooksTypes.msgEmitIBCAck =>
+                OsmosisIbchooksMsgEmitIBCAck.fromJson(json),
+              _ => null,
+            }
+            as OsmosisIbchooks?;
 
     if (service == null) return null;
     if (service is! T) {
-      throw DartCosmosSdkPluginException("Invalid Ibchooks Service.", details: {
-        "excepted": "$T",
-        "service": service.runtimeType.toString()
-      });
+      throw DartCosmosSdkPluginException(
+        "Invalid Ibchooks Service.",
+        details: {"excepted": "$T", "service": service.runtimeType.toString()},
+      );
     }
     return service;
   }
 
-  static T? deserialize<T extends OsmosisIbchooks>(
-      {required String typeUrl, required List<int> bytes}) {
+  static T? deserialize<T extends OsmosisIbchooks>({
+    required String typeUrl,
+    required List<int> bytes,
+  }) {
     final type = OsmosisIbchooksTypes.findService(typeUrl);
-    final OsmosisIbchooks? service = switch (type) {
-      OsmosisIbchooksTypes.msgEmitIBCAck =>
-        OsmosisIbchooksMsgEmitIBCAck.deserialize(bytes),
-      _ => null
-    } as OsmosisIbchooks?;
+    final OsmosisIbchooks? service =
+        switch (type) {
+              OsmosisIbchooksTypes.msgEmitIBCAck =>
+                OsmosisIbchooksMsgEmitIBCAck.deserialize(bytes),
+              _ => null,
+            }
+            as OsmosisIbchooks?;
     if (service == null) return null;
     if (service is! T) {
-      throw DartCosmosSdkPluginException("Invalid Ibchooks Service.", details: {
-        "excepted": "$T",
-        "service": service.runtimeType.toString()
-      });
+      throw DartCosmosSdkPluginException(
+        "Invalid Ibchooks Service.",
+        details: {"excepted": "$T", "service": service.runtimeType.toString()},
+      );
     }
     return service;
   }

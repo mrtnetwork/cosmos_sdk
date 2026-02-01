@@ -10,27 +10,34 @@ class IbcChannelOrder implements CosmosEnum {
   const IbcChannelOrder(this.name, this.value);
 
   /// zero-value for channel ordering
-  static const IbcChannelOrder noneUnspecified =
-      IbcChannelOrder("ORDER_NONE_UNSPECIFIED", 0);
+  static const IbcChannelOrder noneUnspecified = IbcChannelOrder(
+    "ORDER_NONE_UNSPECIFIED",
+    0,
+  );
 
   /// packets can be delivered in any order, which may differ from the order in
   /// which they were sent.
-  static const IbcChannelOrder unordered =
-      IbcChannelOrder("ORDER_UNORDERED", 1);
+  static const IbcChannelOrder unordered = IbcChannelOrder(
+    "ORDER_UNORDERED",
+    1,
+  );
 
   /// packets are delivered exactly in the order which they were sent
   static const IbcChannelOrder ordered = IbcChannelOrder("ORDER_ORDERED", 2);
   static const List<IbcChannelOrder> values = [
     noneUnspecified,
     unordered,
-    ordered
+    ordered,
   ];
   static IbcChannelOrder fromValue(Object? value) {
     return values.firstWhere(
       (element) => element.value == value || element.name == value,
-      orElse: () => throw DartCosmosSdkPluginException(
-          "No matching element found for the given value.",
-          details: {"value": value}),
+      orElse:
+          () =>
+              throw DartCosmosSdkPluginException(
+                "No matching element found for the given value.",
+                details: {"value": value},
+              ),
     );
   }
 }

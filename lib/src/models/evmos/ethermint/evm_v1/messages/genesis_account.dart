@@ -23,12 +23,14 @@ class EvmosEthermintEVMV1GenesisAccount extends CosmosMessage {
   factory EvmosEthermintEVMV1GenesisAccount.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosEthermintEVMV1GenesisAccount(
-        address: decode.getField(1),
-        code: decode.getField(2),
-        storage: decode
-            .getFields<List<int>>(3)
-            .map((e) => EvmosEthermintEVMV1State.deserialize(e))
-            .toList());
+      address: decode.getField(1),
+      code: decode.getField(2),
+      storage:
+          decode
+              .getFields<List<int>>(3)
+              .map((e) => EvmosEthermintEVMV1State.deserialize(e))
+              .toList(),
+    );
   }
 
   @override
@@ -39,7 +41,7 @@ class EvmosEthermintEVMV1GenesisAccount extends CosmosMessage {
     return {
       "address": address,
       "code": code,
-      "storage": storage.map((e) => e.toJson()).toList()
+      "storage": storage.map((e) => e.toJson()).toList(),
     };
   }
 

@@ -13,17 +13,22 @@ class IbcSoloMachineV3ClientState extends CosmosMessage {
   final bool? isFrozen;
   final IbcSoloMachineV3ConsensusState? consensusState;
 
-  const IbcSoloMachineV3ClientState(
-      {this.sequence, this.isFrozen, this.consensusState});
+  const IbcSoloMachineV3ClientState({
+    this.sequence,
+    this.isFrozen,
+    this.consensusState,
+  });
   factory IbcSoloMachineV3ClientState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcSoloMachineV3ClientState(
-        sequence: decode.getField(1),
-        isFrozen: decode.getField(2),
-        consensusState: decode
-            .getResult(3)
-            ?.to<IbcSoloMachineV3ConsensusState, List<int>>(
-                (e) => IbcSoloMachineV3ConsensusState.deserialize(e)));
+      sequence: decode.getField(1),
+      isFrozen: decode.getField(2),
+      consensusState: decode
+          .getResult(3)
+          ?.to<IbcSoloMachineV3ConsensusState, List<int>>(
+            (e) => IbcSoloMachineV3ConsensusState.deserialize(e),
+          ),
+    );
   }
 
   @override
@@ -34,7 +39,7 @@ class IbcSoloMachineV3ClientState extends CosmosMessage {
     return {
       "sequence": sequence?.toString(),
       "is_frozen": isFrozen,
-      "consensus_state": consensusState?.toJson()
+      "consensus_state": consensusState?.toJson(),
     };
   }
 

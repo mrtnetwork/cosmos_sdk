@@ -9,15 +9,19 @@ class OsmosisProtorevQueryGetProtoRevProfitsByDenomResponse
   final Coin profit;
   const OsmosisProtorevQueryGetProtoRevProfitsByDenomResponse(this.profit);
   factory OsmosisProtorevQueryGetProtoRevProfitsByDenomResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisProtorevQueryGetProtoRevProfitsByDenomResponse(
-        Coin.deserialize(decode.getField(1)));
+      Coin.deserialize(decode.getField(1)),
+    );
   }
   factory OsmosisProtorevQueryGetProtoRevProfitsByDenomResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisProtorevQueryGetProtoRevProfitsByDenomResponse(
-        Coin.fromJson(json["profit"]));
+      Coin.fromJson(json["profit"]),
+    );
   }
 
   @override

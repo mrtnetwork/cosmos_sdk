@@ -17,8 +17,9 @@ class GovQueryVoteRequest extends CosmosMessage
   factory GovQueryVoteRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GovQueryVoteRequest(
-        proposalId: decode.getField(1),
-        voter: CosmosBaseAddress(decode.getField(2)));
+      proposalId: decode.getField(1),
+      voter: CosmosBaseAddress(decode.getField(2)),
+    );
   }
 
   @override

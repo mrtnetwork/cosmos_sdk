@@ -10,10 +10,11 @@ class IbcClientParams extends CosmosMessage {
   final List<String>? allowedClients;
   factory IbcClientParams.fromJson(Map<String, dynamic> json) {
     return IbcClientParams(
-        allowedClients: (json["allowed_clients"] as List?)?.cast());
+      allowedClients: (json["allowed_clients"] as List?)?.cast(),
+    );
   }
   IbcClientParams({List<String>? allowedClients})
-      : allowedClients = allowedClients?.emptyAsNull?.immutable;
+    : allowedClients = allowedClients?.emptyAsNull?.immutable;
   factory IbcClientParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcClientParams(allowedClients: decode.getFields<String>(1));

@@ -12,27 +12,31 @@ class HostGenesisState extends CosmosMessage {
   final List<RegisteredInterchainAccount> interchainAccounts;
   final String? port;
   final InterchainAccountsControllerParams params;
-  HostGenesisState(
-      {required List<ActiveChannel> activeChannels,
-      required List<RegisteredInterchainAccount> interchainAccounts,
-      this.port,
-      required this.params})
-      : activeChannels = activeChannels.immutable,
-        interchainAccounts = interchainAccounts.immutable;
+  HostGenesisState({
+    required List<ActiveChannel> activeChannels,
+    required List<RegisteredInterchainAccount> interchainAccounts,
+    this.port,
+    required this.params,
+  }) : activeChannels = activeChannels.immutable,
+       interchainAccounts = interchainAccounts.immutable;
   factory HostGenesisState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return HostGenesisState(
-        activeChannels: decode
-            .getFields<List<int>>(1)
-            .map((e) => ActiveChannel.deserialize(e))
-            .toList(),
-        interchainAccounts: decode
-            .getFields<List<int>>(2)
-            .map((e) => RegisteredInterchainAccount.deserialize(e))
-            .toList(),
-        port: decode.getField(3),
-        params:
-            InterchainAccountsControllerParams.deserialize(decode.getField(4)));
+      activeChannels:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => ActiveChannel.deserialize(e))
+              .toList(),
+      interchainAccounts:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => RegisteredInterchainAccount.deserialize(e))
+              .toList(),
+      port: decode.getField(3),
+      params: InterchainAccountsControllerParams.deserialize(
+        decode.getField(4),
+      ),
+    );
   }
 
   @override
@@ -44,7 +48,7 @@ class HostGenesisState extends CosmosMessage {
       "active_channels": activeChannels.map((e) => e.toJson()).toList(),
       "interchain_accounts": interchainAccounts.map((e) => e.toJson()).toList(),
       "port": port,
-      "params": params.toJson()
+      "params": params.toJson(),
     };
   }
 

@@ -7,17 +7,20 @@ class OsmosisPoolManagerTotalPoolLiquidityRequest extends CosmosMessage
   final BigInt poolId;
   const OsmosisPoolManagerTotalPoolLiquidityRequest({required this.poolId});
   factory OsmosisPoolManagerTotalPoolLiquidityRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolManagerTotalPoolLiquidityRequest(
-        poolId: decode.getField(1));
+      poolId: decode.getField(1),
+    );
   }
   @override
   List<int> get fieldIds => [1];
 
   @override
   OsmosisPoolManagerTotalPoolLiquidityResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisPoolManagerTotalPoolLiquidityResponse.fromJson(json);
   }
 

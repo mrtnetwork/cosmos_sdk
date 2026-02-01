@@ -11,12 +11,15 @@ class QueryDenomMetadataByQueryStringResponse extends CosmosMessage {
   factory QueryDenomMetadataByQueryStringResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryDenomMetadataByQueryStringResponse(
-        Metadata.deserialize(decode.getField(1)));
+      Metadata.deserialize(decode.getField(1)),
+    );
   }
   factory QueryDenomMetadataByQueryStringResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return QueryDenomMetadataByQueryStringResponse(
-        Metadata.fromJson(json["metadata"]));
+      Metadata.fromJson(json["metadata"]),
+    );
   }
 
   @override

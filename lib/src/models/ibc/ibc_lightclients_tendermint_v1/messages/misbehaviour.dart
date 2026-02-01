@@ -14,10 +14,16 @@ class IbcTendermintMisbehaviour extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcTendermintMisbehaviour(
       clientId: decode.getField(1),
-      header1: decode.getResult(2)?.to<IbcTendermintHeader, List<int>>(
-          (e) => IbcTendermintHeader.deserialize(e)),
-      header2: decode.getResult(3)?.to<IbcTendermintHeader, List<int>>(
-          (e) => IbcTendermintHeader.deserialize(e)),
+      header1: decode
+          .getResult(2)
+          ?.to<IbcTendermintHeader, List<int>>(
+            (e) => IbcTendermintHeader.deserialize(e),
+          ),
+      header2: decode
+          .getResult(3)
+          ?.to<IbcTendermintHeader, List<int>>(
+            (e) => IbcTendermintHeader.deserialize(e),
+          ),
     );
   }
 
@@ -29,7 +35,7 @@ class IbcTendermintMisbehaviour extends CosmosMessage {
     return {
       "client_id": clientId,
       "header_1": header1?.toJson(),
-      "header_2": header2?.toJson()
+      "header_2": header2?.toJson(),
     };
   }
 

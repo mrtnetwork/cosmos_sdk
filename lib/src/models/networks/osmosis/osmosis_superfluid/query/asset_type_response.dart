@@ -8,16 +8,21 @@ class OsmosisSuperfluidAssetTypeResponse extends CosmosMessage {
   factory OsmosisSuperfluidAssetTypeResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidAssetTypeResponse(
-        assetType: decode
-            .getResult(1)
-            ?.to<OsmosisSuperfluidSuperfluidAssetType, int>(
-                (e) => OsmosisSuperfluidSuperfluidAssetType.fromValue(e)));
+      assetType: decode
+          .getResult(1)
+          ?.to<OsmosisSuperfluidSuperfluidAssetType, int>(
+            (e) => OsmosisSuperfluidSuperfluidAssetType.fromValue(e),
+          ),
+    );
   }
   factory OsmosisSuperfluidAssetTypeResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisSuperfluidAssetTypeResponse(
-        assetType:
-            OsmosisSuperfluidSuperfluidAssetType.fromName(json["asset_type"]));
+      assetType: OsmosisSuperfluidSuperfluidAssetType.fromName(
+        json["asset_type"],
+      ),
+    );
   }
 
   @override

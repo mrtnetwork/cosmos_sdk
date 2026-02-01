@@ -17,18 +17,21 @@ class OsmosisConcentratedLiquidityPoolRecord extends CosmosMessage {
   factory OsmosisConcentratedLiquidityPoolRecord.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityPoolRecord(
-        denom0: decode.getField(1),
-        denom1: decode.getField(2),
-        tickSpacing: decode.getField(3),
-        spreadFactor: decode.getField(5));
+      denom0: decode.getField(1),
+      denom1: decode.getField(2),
+      tickSpacing: decode.getField(3),
+      spreadFactor: decode.getField(5),
+    );
   }
   factory OsmosisConcentratedLiquidityPoolRecord.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityPoolRecord(
-        denom0: json["denom0"],
-        denom1: json["denom1"],
-        tickSpacing: BigintUtils.tryParse(json["tick_spacing"]),
-        spreadFactor: json["spread_factor"]);
+      denom0: json["denom0"],
+      denom1: json["denom1"],
+      tickSpacing: BigintUtils.tryParse(json["tick_spacing"]),
+      spreadFactor: json["spread_factor"],
+    );
   }
 
   @override
@@ -40,7 +43,7 @@ class OsmosisConcentratedLiquidityPoolRecord extends CosmosMessage {
       "denom0": denom0,
       "denom1": denom1,
       "tick_spacing": tickSpacing?.toString(),
-      "spread_factor": spreadFactor
+      "spread_factor": spreadFactor,
     };
   }
 

@@ -7,24 +7,30 @@ import 'package:cosmos_sdk/src/models/tendermint/tendermint_types/messages/evide
 class Evidence extends CosmosMessage {
   final BaseEvidence? evidence;
   const Evidence._(this.evidence);
-  factory Evidence.duplicateVoteEvidence(
-      {DuplicateVoteEvidence? duplicateVoteEvidence}) {
+  factory Evidence.duplicateVoteEvidence({
+    DuplicateVoteEvidence? duplicateVoteEvidence,
+  }) {
     return Evidence._(duplicateVoteEvidence);
   }
-  factory Evidence.lightClientAttackEvidence(
-      {LightClientAttackEvidence? lightClientAttackEvidence}) {
+  factory Evidence.lightClientAttackEvidence({
+    LightClientAttackEvidence? lightClientAttackEvidence,
+  }) {
     return Evidence._(lightClientAttackEvidence);
   }
   factory Evidence.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     if (decode.hasTag(1)) {
       return Evidence.duplicateVoteEvidence(
-          duplicateVoteEvidence:
-              DuplicateVoteEvidence.deserialize(decode.getField(1)));
+        duplicateVoteEvidence: DuplicateVoteEvidence.deserialize(
+          decode.getField(1),
+        ),
+      );
     } else if (decode.hasTag(2)) {
       return Evidence.lightClientAttackEvidence(
-          lightClientAttackEvidence:
-              LightClientAttackEvidence.deserialize(decode.getField(2)));
+        lightClientAttackEvidence: LightClientAttackEvidence.deserialize(
+          decode.getField(2),
+        ),
+      );
     }
     return const Evidence._(null);
   }

@@ -15,25 +15,31 @@ class OsmosisIncentiveUpcomingGaugesPerDenomResponse extends CosmosMessage {
     this.pagination,
   }) : upcomingGauges = upcomingGauges.immutable;
   factory OsmosisIncentiveUpcomingGaugesPerDenomResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisIncentiveUpcomingGaugesPerDenomResponse(
-        upcomingGauges: decode
-            .getFields<List<int>>(1)
-            .map((e) => OsmosisIncentivesGauge.deserialize(e))
-            .toList(),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
+      upcomingGauges:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => OsmosisIncentivesGauge.deserialize(e))
+              .toList(),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
+    );
   }
   factory OsmosisIncentiveUpcomingGaugesPerDenomResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisIncentiveUpcomingGaugesPerDenomResponse(
-        upcomingGauges: (json["upcoming_gauges"] as List?)
-                ?.map((e) => OsmosisIncentivesGauge.fromJson(e))
-                .toList() ??
-            <OsmosisIncentivesGauge>[],
-        pagination: PageResponse.fromJson(json["pagination"]));
+      upcomingGauges:
+          (json["upcoming_gauges"] as List?)
+              ?.map((e) => OsmosisIncentivesGauge.fromJson(e))
+              .toList() ??
+          <OsmosisIncentivesGauge>[],
+      pagination: PageResponse.fromJson(json["pagination"]),
+    );
   }
 
   @override
@@ -43,7 +49,7 @@ class OsmosisIncentiveUpcomingGaugesPerDenomResponse extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "upcoming_gauges": upcomingGauges.map((e) => e.toJson()).toList(),
-      "pagination": pagination?.toJson()
+      "pagination": pagination?.toJson(),
     };
   }
 

@@ -9,19 +9,24 @@ class DistributionQueryDelegationTotalRewardsRequest extends CosmosMessage
     with QueryMessage<DistributionQueryDelegationTotalRewardsResponse> {
   /// delegator_address defines the delegator address to query for.
   final CosmosBaseAddress delegatorAddress;
-  DistributionQueryDelegationTotalRewardsRequest(
-      {required this.delegatorAddress});
+  DistributionQueryDelegationTotalRewardsRequest({
+    required this.delegatorAddress,
+  });
 
   factory DistributionQueryDelegationTotalRewardsRequest.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return DistributionQueryDelegationTotalRewardsRequest(
-        delegatorAddress: CosmosBaseAddress(json["delegator_address"]));
+      delegatorAddress: CosmosBaseAddress(json["delegator_address"]),
+    );
   }
   factory DistributionQueryDelegationTotalRewardsRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionQueryDelegationTotalRewardsRequest(
-        delegatorAddress: CosmosBaseAddress(decode.getField(1)));
+      delegatorAddress: CosmosBaseAddress(decode.getField(1)),
+    );
   }
 
   @override
@@ -46,7 +51,8 @@ class DistributionQueryDelegationTotalRewardsRequest extends CosmosMessage
 
   @override
   DistributionQueryDelegationTotalRewardsResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return DistributionQueryDelegationTotalRewardsResponse.fromJson(json);
   }
 

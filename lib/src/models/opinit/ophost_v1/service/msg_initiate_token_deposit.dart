@@ -21,27 +21,34 @@ class OpInitOpHostV1MsgInitiateTokenDeposit
 
   final List<int>? data;
 
-  OpInitOpHostV1MsgInitiateTokenDeposit(
-      {this.sender, this.bridgeId, this.to, this.amount, List<int>? data})
-      : data = data?.asImmutableBytes;
+  OpInitOpHostV1MsgInitiateTokenDeposit({
+    this.sender,
+    this.bridgeId,
+    this.to,
+    this.amount,
+    List<int>? data,
+  }) : data = data?.asImmutableBytes;
 
   factory OpInitOpHostV1MsgInitiateTokenDeposit.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OpInitOpHostV1MsgInitiateTokenDeposit(
-        sender: decode.getField(1),
-        bridgeId: decode.getField(2),
-        to: decode.getField(3),
-        amount: decode.getResult(4)?.to<Coin, List<int>>(Coin.deserialize),
-        data: decode.getField<List<int>>(5));
+      sender: decode.getField(1),
+      bridgeId: decode.getField(2),
+      to: decode.getField(3),
+      amount: decode.getResult(4)?.to<Coin, List<int>>(Coin.deserialize),
+      data: decode.getField<List<int>>(5),
+    );
   }
   factory OpInitOpHostV1MsgInitiateTokenDeposit.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OpInitOpHostV1MsgInitiateTokenDeposit(
-        sender: json.as("sender"),
-        bridgeId: json.asBigInt("bridge_id"),
-        to: json.as("to"),
-        amount: json.maybeAs(key: "amount", onValue: Coin.fromJson),
-        data: json.asBytes("data"));
+      sender: json.as("sender"),
+      bridgeId: json.asBigInt("bridge_id"),
+      to: json.as("to"),
+      amount: json.maybeAs(key: "amount", onValue: Coin.fromJson),
+      data: json.asBytes("data"),
+    );
   }
 
   @override
@@ -54,7 +61,7 @@ class OpInitOpHostV1MsgInitiateTokenDeposit
       "bridge_id": bridgeId?.toString(),
       "to": to,
       "amount": amount?.toJson(),
-      "data": CosmosUtils.tryToBase64(data)
+      "data": CosmosUtils.tryToBase64(data),
     };
   }
 

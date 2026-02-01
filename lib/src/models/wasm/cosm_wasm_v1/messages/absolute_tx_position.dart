@@ -17,12 +17,15 @@ class CosmWasmV1AbsoluteTxPosition extends CosmosMessage {
   factory CosmWasmV1AbsoluteTxPosition.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmWasmV1AbsoluteTxPosition(
-        blockHeigt: decode.getField(1), txIndex: decode.getField(2));
+      blockHeigt: decode.getField(1),
+      txIndex: decode.getField(2),
+    );
   }
   factory CosmWasmV1AbsoluteTxPosition.fromJson(Map<String, dynamic> json) {
     return CosmWasmV1AbsoluteTxPosition(
-        blockHeigt: json.asBigInt("block_height"),
-        txIndex: json.asBigInt("tx_index"));
+      blockHeigt: json.asBigInt("block_height"),
+      txIndex: json.asBigInt("tx_index"),
+    );
   }
 
   @override
@@ -32,7 +35,7 @@ class CosmWasmV1AbsoluteTxPosition extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "block_height": blockHeigt?.toString(),
-      "tx_index": txIndex?.toString()
+      "tx_index": txIndex?.toString(),
     };
   }
 

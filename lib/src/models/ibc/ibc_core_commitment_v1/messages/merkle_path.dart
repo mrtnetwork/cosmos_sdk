@@ -7,7 +7,7 @@ import 'package:blockchain_utils/helper/helper.dart';
 class IbcCommitmentMerklePath extends CosmosMessage {
   final List<String>? keyPath;
   IbcCommitmentMerklePath({List<String>? keyPath})
-      : keyPath = keyPath?.emptyAsNull?.immutable;
+    : keyPath = keyPath?.emptyAsNull?.immutable;
   factory IbcCommitmentMerklePath.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcCommitmentMerklePath(keyPath: decode.getFields<String>(1));

@@ -16,11 +16,11 @@ class GovMsgVoteWeighted
   final CosmosBaseAddress? voter;
   final List<GovWeightedVoteOption> options;
 
-  GovMsgVoteWeighted(
-      {required this.propoosalId,
-      this.voter,
-      required List<GovWeightedVoteOption> options})
-      : options = options.immutable;
+  GovMsgVoteWeighted({
+    required this.propoosalId,
+    this.voter,
+    required List<GovWeightedVoteOption> options,
+  }) : options = options.immutable;
   factory GovMsgVoteWeighted.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GovMsgVoteWeighted(
@@ -28,21 +28,24 @@ class GovMsgVoteWeighted
       voter: decode
           .getResult(2)
           ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-      options: decode
-          .getFields<List<int>>(3)
-          .map((e) => GovWeightedVoteOption.deserialize(e))
-          .toList(),
+      options:
+          decode
+              .getFields<List<int>>(3)
+              .map((e) => GovWeightedVoteOption.deserialize(e))
+              .toList(),
     );
   }
   factory GovMsgVoteWeighted.fromJson(Map<String, dynamic> json) {
     return GovMsgVoteWeighted(
-        propoosalId: json.asBigInt("proposal_id"),
-        voter: json.asAddress("voter"),
-        options: json
-                .asListOfMap("options")
-                ?.map((e) => GovWeightedVoteOption.fromJson(e))
-                .toList() ??
-            []);
+      propoosalId: json.asBigInt("proposal_id"),
+      voter: json.asAddress("voter"),
+      options:
+          json
+              .asListOfMap("options")
+              ?.map((e) => GovWeightedVoteOption.fromJson(e))
+              .toList() ??
+          [],
+    );
   }
 
   @override
@@ -53,7 +56,7 @@ class GovMsgVoteWeighted
     return {
       "proposal_id": propoosalId.toString(),
       "voter": voter?.address,
-      "options": options.map((e) => e.toJson()).toList()
+      "options": options.map((e) => e.toJson()).toList(),
     };
   }
 
@@ -67,6 +70,7 @@ class GovMsgVoteWeighted
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        GovV1beta1types.govMsgVoteWeightedResponse);
+      GovV1beta1types.govMsgVoteWeightedResponse,
+    );
   }
 }

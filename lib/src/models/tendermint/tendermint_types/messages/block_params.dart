@@ -15,7 +15,9 @@ class BlockParams extends CosmosMessage {
   factory BlockParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return BlockParams(
-        maxBytes: decode.getField(1), maxGas: decode.getField(2));
+      maxBytes: decode.getField(1),
+      maxGas: decode.getField(2),
+    );
   }
   @override
   List<int> get fieldIds => [1, 2];

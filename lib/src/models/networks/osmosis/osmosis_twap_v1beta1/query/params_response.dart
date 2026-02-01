@@ -10,11 +10,13 @@ class OsmosisTwapParamsResponse extends CosmosMessage {
   factory OsmosisTwapParamsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisTwapParamsResponse(
-        OsmosisTwapParams.deserialize(decode.getField(1)));
+      OsmosisTwapParams.deserialize(decode.getField(1)),
+    );
   }
   factory OsmosisTwapParamsResponse.fromJson(Map<String, dynamic> json) {
     return OsmosisTwapParamsResponse(
-        OsmosisTwapParams.fromJson(json["params"]));
+      OsmosisTwapParams.fromJson(json["params"]),
+    );
   }
 
   @override
@@ -22,9 +24,7 @@ class OsmosisTwapParamsResponse extends CosmosMessage {
 
   @override
   Map<String, dynamic> toJson() {
-    return {
-      "params": params.toJson(),
-    };
+    return {"params": params.toJson()};
   }
 
   @override

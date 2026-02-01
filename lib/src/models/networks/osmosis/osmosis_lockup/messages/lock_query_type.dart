@@ -4,8 +4,10 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class OsmosisLockupLockQueryType implements CosmosEnum {
   static const OsmosisLockupLockQueryType byDuration =
       OsmosisLockupLockQueryType._(0, "ByDuration");
-  static const OsmosisLockupLockQueryType byTime =
-      OsmosisLockupLockQueryType._(1, "ByTime");
+  static const OsmosisLockupLockQueryType byTime = OsmosisLockupLockQueryType._(
+    1,
+    "ByTime",
+  );
 
   @override
   final int value;
@@ -18,18 +20,24 @@ class OsmosisLockupLockQueryType implements CosmosEnum {
   static OsmosisLockupLockQueryType fromValue(int? value) {
     return values.firstWhere(
       (e) => e.value == value,
-      orElse: () => throw DartCosmosSdkPluginException(
-          "No OsmosisLockupLockQueryType element found for the given value.",
-          details: {"value": value}),
+      orElse:
+          () =>
+              throw DartCosmosSdkPluginException(
+                "No OsmosisLockupLockQueryType element found for the given value.",
+                details: {"value": value},
+              ),
     );
   }
 
   static OsmosisLockupLockQueryType fromName(String? name) {
     return values.firstWhere(
       (e) => e.name == name,
-      orElse: () => throw DartCosmosSdkPluginException(
-          "No OsmosisLockupLockQueryType element found for the given name.",
-          details: {"value": name}),
+      orElse:
+          () =>
+              throw DartCosmosSdkPluginException(
+                "No OsmosisLockupLockQueryType element found for the given name.",
+                details: {"value": name},
+              ),
     );
   }
 }

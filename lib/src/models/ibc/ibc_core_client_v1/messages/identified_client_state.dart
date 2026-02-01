@@ -13,19 +13,22 @@ class IbcClientIdentifiedClientState extends CosmosMessage {
 
   factory IbcClientIdentifiedClientState.fromJson(Map<String, dynamic> json) {
     return IbcClientIdentifiedClientState(
-        clientID: json["client_id"],
-        clientState: json["client_state"] == null
-            ? null
-            : AnyMessage.fromJson(json["client_state"]));
+      clientID: json["client_id"],
+      clientState:
+          json["client_state"] == null
+              ? null
+              : AnyMessage.fromJson(json["client_state"]),
+    );
   }
   const IbcClientIdentifiedClientState({this.clientID, this.clientState});
   factory IbcClientIdentifiedClientState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcClientIdentifiedClientState(
-        clientID: decode.getField(1),
-        clientState: decode
-            .getResult(2)
-            ?.to<AnyMessage, List<int>>((e) => AnyMessage.deserialize(e)));
+      clientID: decode.getField(1),
+      clientState: decode
+          .getResult(2)
+          ?.to<AnyMessage, List<int>>((e) => AnyMessage.deserialize(e)),
+    );
   }
 
   @override

@@ -4,14 +4,18 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class ThorchainEventReserve extends CosmosMessage {
   final ThorchainReserveContributor reserveContributor;
   final ThorchainTx inTx;
-  const ThorchainEventReserve(
-      {required this.reserveContributor, required this.inTx});
+  const ThorchainEventReserve({
+    required this.reserveContributor,
+    required this.inTx,
+  });
   factory ThorchainEventReserve.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainEventReserve(
-        reserveContributor:
-            ThorchainReserveContributor.deserialize(decode.getField(1)),
-        inTx: ThorchainTx.deserialize(decode.getField(2)));
+      reserveContributor: ThorchainReserveContributor.deserialize(
+        decode.getField(1),
+      ),
+      inTx: ThorchainTx.deserialize(decode.getField(2)),
+    );
   }
 
   @override
@@ -21,7 +25,7 @@ class ThorchainEventReserve extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "reserve_contributor": reserveContributor.toJson(),
-      "in_tx": inTx.toJson()
+      "in_tx": inTx.toJson(),
     };
   }
 

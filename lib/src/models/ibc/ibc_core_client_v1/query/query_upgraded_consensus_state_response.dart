@@ -9,18 +9,22 @@ class QueryUpgradedConsensusStateResponse extends CosmosMessage {
   final AnyMessage? upgradedConsensusState;
   const QueryUpgradedConsensusStateResponse({this.upgradedConsensusState});
   factory QueryUpgradedConsensusStateResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return QueryUpgradedConsensusStateResponse(
-        upgradedConsensusState: json["upgraded_consensus_state"] == null
-            ? null
-            : AnyMessage.fromJson(json["upgraded_consensus_state"]));
+      upgradedConsensusState:
+          json["upgraded_consensus_state"] == null
+              ? null
+              : AnyMessage.fromJson(json["upgraded_consensus_state"]),
+    );
   }
   factory QueryUpgradedConsensusStateResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryUpgradedConsensusStateResponse(
-        upgradedConsensusState: decode
-            .getResult(1)
-            ?.to<AnyMessage, List<int>>((e) => AnyMessage.deserialize(e)));
+      upgradedConsensusState: decode
+          .getResult(1)
+          ?.to<AnyMessage, List<int>>((e) => AnyMessage.deserialize(e)),
+    );
   }
 
   @override

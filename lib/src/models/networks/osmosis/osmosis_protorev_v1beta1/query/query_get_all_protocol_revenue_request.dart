@@ -7,7 +7,8 @@ class OsmosisProtorevQueryGetAllProtocolRevenueRequest extends CosmosMessage
     with QueryMessage<OsmosisProtorevQueryGetAllProtocolRevenueResponse> {
   const OsmosisProtorevQueryGetAllProtocolRevenueRequest();
   factory OsmosisProtorevQueryGetAllProtocolRevenueRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return const OsmosisProtorevQueryGetAllProtocolRevenueRequest();
   }
 
@@ -24,13 +25,15 @@ class OsmosisProtorevQueryGetAllProtocolRevenueRequest extends CosmosMessage
 
   @override
   OsmosisProtorevQueryGetAllProtocolRevenueResponse onResponse(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return OsmosisProtorevQueryGetAllProtocolRevenueResponse.deserialize(bytes);
   }
 
   @override
   OsmosisProtorevQueryGetAllProtocolRevenueResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisProtorevQueryGetAllProtocolRevenueResponse.fromJson(json);
   }
 

@@ -13,23 +13,18 @@ class MintGenesisState extends CosmosMessage {
   /// params defines all the parameters of the module.
   final MintParams params;
 
-  const MintGenesisState({
-    required this.minter,
-    required this.params,
-  });
+  const MintGenesisState({required this.minter, required this.params});
   factory MintGenesisState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MintGenesisState(
-        minter: Minter.deserialize(decode.getField(1)),
-        params: MintParams.deserialize(decode.getField(2)));
+      minter: Minter.deserialize(decode.getField(1)),
+      params: MintParams.deserialize(decode.getField(2)),
+    );
   }
 
   @override
   Map<String, dynamic> toJson() {
-    return {
-      'minter': minter.toJson(),
-      'params': params.toJson(),
-    };
+    return {'minter': minter.toJson(), 'params': params.toJson()};
   }
 
   @override

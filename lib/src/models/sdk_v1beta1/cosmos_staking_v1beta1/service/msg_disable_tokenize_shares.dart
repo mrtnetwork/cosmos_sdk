@@ -10,16 +10,15 @@ import 'package:cosmos_sdk/src/utils/quick.dart';
 class MsgDisableTokenizeShares
     extends StakingV1Beta1Service<EmptyServiceRequestResponse> {
   final String? delegatorAddress;
-  const MsgDisableTokenizeShares({
-    required this.delegatorAddress,
-  });
+  const MsgDisableTokenizeShares({required this.delegatorAddress});
   factory MsgDisableTokenizeShares.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgDisableTokenizeShares(delegatorAddress: decode.getField(1));
   }
   factory MsgDisableTokenizeShares.fromJson(Map<String, dynamic> json) {
     return MsgDisableTokenizeShares(
-        delegatorAddress: json.as("delegator_address"));
+      delegatorAddress: json.as("delegator_address"),
+    );
   }
 
   @override
@@ -39,7 +38,8 @@ class MsgDisableTokenizeShares
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        StakingV1beta1Types.msgDisableTokenizeSharesResponse);
+      StakingV1beta1Types.msgDisableTokenizeSharesResponse,
+    );
   }
 
   @override

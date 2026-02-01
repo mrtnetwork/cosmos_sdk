@@ -10,23 +10,25 @@ class UpgradeFields extends CosmosMessage {
   final String? version;
   factory UpgradeFields.fromJson(Map<String, dynamic> json) {
     return UpgradeFields(
-      ordering: json["ordering"] == null
-          ? null
-          : IbcChannelOrder.fromValue(json["ordering"]),
+      ordering:
+          json["ordering"] == null
+              ? null
+              : IbcChannelOrder.fromValue(json["ordering"]),
       connectionHops: (json["connection_hops"] as List?)?.cast(),
       version: json["version"],
     );
   }
   UpgradeFields({this.ordering, List<String>? connectionHops, this.version})
-      : connectionHops = connectionHops?.immutable;
+    : connectionHops = connectionHops?.immutable;
   factory UpgradeFields.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return UpgradeFields(
-        ordering: decode
-            .getResult(1)
-            ?.to<IbcChannelOrder, int>((e) => IbcChannelOrder.fromValue(e)),
-        connectionHops: decode.getFields<String>(2),
-        version: decode.getField(3));
+      ordering: decode
+          .getResult(1)
+          ?.to<IbcChannelOrder, int>((e) => IbcChannelOrder.fromValue(e)),
+      connectionHops: decode.getFields<String>(2),
+      version: decode.getField(3),
+    );
   }
 
   @override
@@ -37,7 +39,7 @@ class UpgradeFields extends CosmosMessage {
     return {
       "ordering": ordering?.value,
       "connection_hops": connectionHops,
-      "version": version
+      "version": version,
     };
   }
 

@@ -11,12 +11,13 @@ class OsmosisGammMsgExitSwapShareAmountIn
   final String? tokenOutDenom;
   final BigInt shareInAmount;
   final BigInt tokenOutMinAmount;
-  OsmosisGammMsgExitSwapShareAmountIn(
-      {this.sender,
-      this.poolId,
-      this.tokenOutDenom,
-      required this.shareInAmount,
-      required this.tokenOutMinAmount});
+  OsmosisGammMsgExitSwapShareAmountIn({
+    this.sender,
+    this.poolId,
+    this.tokenOutDenom,
+    required this.shareInAmount,
+    required this.tokenOutMinAmount,
+  });
   factory OsmosisGammMsgExitSwapShareAmountIn.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisGammMsgExitSwapShareAmountIn(
@@ -28,7 +29,8 @@ class OsmosisGammMsgExitSwapShareAmountIn
     );
   }
   factory OsmosisGammMsgExitSwapShareAmountIn.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisGammMsgExitSwapShareAmountIn(
       sender: json.as("sender"),
       poolId: json.asBigInt("pool_id"),
@@ -56,7 +58,7 @@ class OsmosisGammMsgExitSwapShareAmountIn
       "pool_id": poolId?.toString(),
       "token_out_denom": tokenOutDenom,
       "share_in_amount": shareInAmount.toString(),
-      "token_out_min_amount": tokenOutMinAmount.toString()
+      "token_out_min_amount": tokenOutMinAmount.toString(),
     };
   }
 
@@ -65,10 +67,10 @@ class OsmosisGammMsgExitSwapShareAmountIn
 
   @override
   List get values => [
-        sender,
-        poolId,
-        tokenOutDenom,
-        shareInAmount,
-        tokenOutMinAmount.toString()
-      ];
+    sender,
+    poolId,
+    tokenOutDenom,
+    shareInAmount,
+    tokenOutMinAmount.toString(),
+  ];
 }

@@ -31,21 +31,23 @@ class OsmosisProtorevInfoByPoolType extends CosmosMessage {
   factory OsmosisProtorevInfoByPoolType.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisProtorevInfoByPoolType(
-        stable: OsmosisProtorevStablePoolInfo.deserialize(decode.getField(1)),
-        balancer:
-            OsmosisProtorevBalancerPoolInfo.deserialize(decode.getField(2)),
-        concentrated:
-            OsmosisProtorevConcentratedPoolInfo.deserialize(decode.getField(3)),
-        cosmwasm:
-            OsmosisProtorevCosmwasmPoolInfo.deserialize(decode.getField(4)));
+      stable: OsmosisProtorevStablePoolInfo.deserialize(decode.getField(1)),
+      balancer: OsmosisProtorevBalancerPoolInfo.deserialize(decode.getField(2)),
+      concentrated: OsmosisProtorevConcentratedPoolInfo.deserialize(
+        decode.getField(3),
+      ),
+      cosmwasm: OsmosisProtorevCosmwasmPoolInfo.deserialize(decode.getField(4)),
+    );
   }
   factory OsmosisProtorevInfoByPoolType.fromJson(Map<String, dynamic> json) {
     return OsmosisProtorevInfoByPoolType(
-        stable: OsmosisProtorevStablePoolInfo.fromJson(json["stable"]),
-        balancer: OsmosisProtorevBalancerPoolInfo.fromJson(json["balancer"]),
-        concentrated:
-            OsmosisProtorevConcentratedPoolInfo.fromJson(json["concentrated"]),
-        cosmwasm: OsmosisProtorevCosmwasmPoolInfo.fromJson(json["cosmwasm"]));
+      stable: OsmosisProtorevStablePoolInfo.fromJson(json["stable"]),
+      balancer: OsmosisProtorevBalancerPoolInfo.fromJson(json["balancer"]),
+      concentrated: OsmosisProtorevConcentratedPoolInfo.fromJson(
+        json["concentrated"],
+      ),
+      cosmwasm: OsmosisProtorevCosmwasmPoolInfo.fromJson(json["cosmwasm"]),
+    );
   }
 
   @override
@@ -57,7 +59,7 @@ class OsmosisProtorevInfoByPoolType extends CosmosMessage {
       "stable": stable.toJson(),
       "balancer": balancer.toJson(),
       "concentrated": concentrated.toJson(),
-      "cosmwasm": cosmwasm.toJson()
+      "cosmwasm": cosmwasm.toJson(),
     };
   }
 

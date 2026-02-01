@@ -6,18 +6,23 @@ class OsmosisProtorevQueryGetProtoRevAdminAccountResponse
     extends CosmosMessage {
   /// [adminAccount] is the admin account of the module
   final String? adminAccount;
-  const OsmosisProtorevQueryGetProtoRevAdminAccountResponse(
-      {this.adminAccount});
+  const OsmosisProtorevQueryGetProtoRevAdminAccountResponse({
+    this.adminAccount,
+  });
   factory OsmosisProtorevQueryGetProtoRevAdminAccountResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisProtorevQueryGetProtoRevAdminAccountResponse(
-        adminAccount: decode.getField(1));
+      adminAccount: decode.getField(1),
+    );
   }
   factory OsmosisProtorevQueryGetProtoRevAdminAccountResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisProtorevQueryGetProtoRevAdminAccountResponse(
-        adminAccount: json["admin_account"]);
+      adminAccount: json["admin_account"],
+    );
   }
 
   @override

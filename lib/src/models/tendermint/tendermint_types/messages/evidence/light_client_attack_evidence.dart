@@ -13,26 +13,28 @@ class LightClientAttackEvidence extends BaseEvidence {
   final List<TendermintValidator> byzantineValidators;
   final BigInt? totalVotingPower;
   final ProtobufTimestamp timestamp;
-  LightClientAttackEvidence(
-      {this.conflictingBlock,
-      this.commonHeight,
-      required List<TendermintValidator> byzantineValidators,
-      this.totalVotingPower,
-      required this.timestamp})
-      : byzantineValidators = byzantineValidators.immutable;
+  LightClientAttackEvidence({
+    this.conflictingBlock,
+    this.commonHeight,
+    required List<TendermintValidator> byzantineValidators,
+    this.totalVotingPower,
+    required this.timestamp,
+  }) : byzantineValidators = byzantineValidators.immutable;
   factory LightClientAttackEvidence.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return LightClientAttackEvidence(
-        conflictingBlock: decode
-            .getResult(1)
-            ?.to<LightBlock, List<int>>((e) => LightBlock.deserialize(e)),
-        commonHeight: decode.getField(2),
-        byzantineValidators: decode
-            .getFields<List<int>>(3)
-            .map((e) => TendermintValidator.deserialize(e))
-            .toList(),
-        totalVotingPower: decode.getField(4),
-        timestamp: ProtobufTimestamp.deserialize(decode.getField(5)));
+      conflictingBlock: decode
+          .getResult(1)
+          ?.to<LightBlock, List<int>>((e) => LightBlock.deserialize(e)),
+      commonHeight: decode.getField(2),
+      byzantineValidators:
+          decode
+              .getFields<List<int>>(3)
+              .map((e) => TendermintValidator.deserialize(e))
+              .toList(),
+      totalVotingPower: decode.getField(4),
+      timestamp: ProtobufTimestamp.deserialize(decode.getField(5)),
+    );
   }
   @override
   List<int> get fieldIds => [1, 2, 3, 4, 5];
@@ -45,7 +47,7 @@ class LightClientAttackEvidence extends BaseEvidence {
       "byzantine_validators":
           byzantineValidators.map((e) => e.toJson()).toList(),
       "total_voting_power": totalVotingPower?.toString(),
-      "timestamp": timestamp.toJson()
+      "timestamp": timestamp.toJson(),
     };
   }
 
@@ -54,12 +56,12 @@ class LightClientAttackEvidence extends BaseEvidence {
 
   @override
   List get values => [
-        conflictingBlock,
-        commonHeight,
-        byzantineValidators,
-        totalVotingPower,
-        timestamp
-      ];
+    conflictingBlock,
+    commonHeight,
+    byzantineValidators,
+    totalVotingPower,
+    timestamp,
+  ];
 
   @override
   int get id => 2;

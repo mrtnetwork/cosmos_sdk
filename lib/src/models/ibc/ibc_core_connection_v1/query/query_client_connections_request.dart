@@ -10,10 +10,12 @@ class IbcConnectionQueryClientConnectionsRequest extends CosmosMessage
   final String clientId;
   const IbcConnectionQueryClientConnectionsRequest({required this.clientId});
   factory IbcConnectionQueryClientConnectionsRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcConnectionQueryClientConnectionsRequest(
-        clientId: decode.getField(1));
+      clientId: decode.getField(1),
+    );
   }
 
   @override
@@ -37,7 +39,8 @@ class IbcConnectionQueryClientConnectionsRequest extends CosmosMessage
 
   @override
   IbcConnectionQueryClientConnectionsResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return IbcConnectionQueryClientConnectionsResponse.fromJson(json);
   }
 

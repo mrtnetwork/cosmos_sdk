@@ -7,15 +7,19 @@ class OsmosisProtorevQueryGetProtoRevEnabledResponse extends CosmosMessage {
   final bool? enabled;
   const OsmosisProtorevQueryGetProtoRevEnabledResponse({this.enabled});
   factory OsmosisProtorevQueryGetProtoRevEnabledResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisProtorevQueryGetProtoRevEnabledResponse(
-        enabled: decode.getField(1));
+      enabled: decode.getField(1),
+    );
   }
   factory OsmosisProtorevQueryGetProtoRevEnabledResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisProtorevQueryGetProtoRevEnabledResponse(
-        enabled: json["enabled"]);
+      enabled: json["enabled"],
+    );
   }
 
   @override

@@ -12,32 +12,36 @@ class CosmWasmV1QueryCodeInfoResponse extends CosmosMessage {
   final List<int>? checksum;
   final CosmWasmV1AccessConfig? instantiatePermission;
 
-  CosmWasmV1QueryCodeInfoResponse(
-      {required List<int>? checksum,
-      required this.codeId,
-      required this.creator,
-      required this.instantiatePermission})
-      : checksum = checksum?.asImmutableBytes;
+  CosmWasmV1QueryCodeInfoResponse({
+    required List<int>? checksum,
+    required this.codeId,
+    required this.creator,
+    required this.instantiatePermission,
+  }) : checksum = checksum?.asImmutableBytes;
   factory CosmWasmV1QueryCodeInfoResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmWasmV1QueryCodeInfoResponse(
-        codeId: decode.getField(1),
-        creator: decode.getField(2),
-        checksum: decode.getField(3),
-        instantiatePermission: decode
-            .getResult(4)
-            ?.to<CosmWasmV1AccessConfig, List<int>>(
-                CosmWasmV1AccessConfig.deserialize));
+      codeId: decode.getField(1),
+      creator: decode.getField(2),
+      checksum: decode.getField(3),
+      instantiatePermission: decode
+          .getResult(4)
+          ?.to<CosmWasmV1AccessConfig, List<int>>(
+            CosmWasmV1AccessConfig.deserialize,
+          ),
+    );
   }
   factory CosmWasmV1QueryCodeInfoResponse.fromJson(Map<String, dynamic> json) {
     return CosmWasmV1QueryCodeInfoResponse(
-        codeId: json.asBigInt("code_id"),
-        creator: json.as("creator"),
-        checksum: json.asBytes("checksum"),
-        instantiatePermission:
-            json.maybeAs<CosmWasmV1AccessConfig, Map<String, dynamic>>(
-                key: "instantiate_permission",
-                onValue: CosmWasmV1AccessConfig.fromJson));
+      codeId: json.asBigInt("code_id"),
+      creator: json.as("creator"),
+      checksum: json.asBytes("checksum"),
+      instantiatePermission: json
+          .maybeAs<CosmWasmV1AccessConfig, Map<String, dynamic>>(
+            key: "instantiate_permission",
+            onValue: CosmWasmV1AccessConfig.fromJson,
+          ),
+    );
   }
 
   @override
@@ -49,7 +53,7 @@ class CosmWasmV1QueryCodeInfoResponse extends CosmosMessage {
       "instantiate_permission": instantiatePermission?.toJson(),
       "checksum": CosmosUtils.tryToBase64(checksum),
       "creator": creator,
-      "code_id": codeId?.toString()
+      "code_id": codeId?.toString(),
     };
   }
 

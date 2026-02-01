@@ -19,18 +19,20 @@ class IbcClientQueryConsensusStateRequest extends CosmosMessage
   /// latest_height overrides the height field and queries the latest stored
   /// ConsensusState
   final bool? latestHeight;
-  const IbcClientQueryConsensusStateRequest(
-      {required this.clientId,
-      required this.revisionHeight,
-      required this.revisionNumber,
-      this.latestHeight});
+  const IbcClientQueryConsensusStateRequest({
+    required this.clientId,
+    required this.revisionHeight,
+    required this.revisionNumber,
+    this.latestHeight,
+  });
   factory IbcClientQueryConsensusStateRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcClientQueryConsensusStateRequest(
-        clientId: decode.getField(1),
-        revisionNumber: decode.getField(2),
-        revisionHeight: decode.getField(3),
-        latestHeight: decode.getField(4));
+      clientId: decode.getField(1),
+      revisionNumber: decode.getField(2),
+      revisionHeight: decode.getField(3),
+      latestHeight: decode.getField(4),
+    );
   }
 
   @override
@@ -42,7 +44,7 @@ class IbcClientQueryConsensusStateRequest extends CosmosMessage
       "client_id": clientId,
       "revision_number": revisionNumber.toString(),
       "revision_height": revisionHeight.toString(),
-      "latest_height": latestHeight
+      "latest_height": latestHeight,
     };
   }
 
@@ -59,15 +61,20 @@ class IbcClientQueryConsensusStateRequest extends CosmosMessage
 
   @override
   IbcClientQueryConsensusStateResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return IbcClientQueryConsensusStateResponse.fromJson(json);
   }
 
   @override
-  List<String> get pathParameters =>
-      [clientId, revisionNumber.toString(), revisionHeight.toString()];
+  List<String> get pathParameters => [
+    clientId,
+    revisionNumber.toString(),
+    revisionHeight.toString(),
+  ];
 
   @override
-  Map<String, String?> get queryParameters =>
-      {"latest_height": latestHeight?.toString()};
+  Map<String, String?> get queryParameters => {
+    "latest_height": latestHeight?.toString(),
+  };
 }

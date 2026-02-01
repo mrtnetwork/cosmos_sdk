@@ -32,30 +32,32 @@ class OsmosisTwapTwapRecord extends CosmosMessage {
   /// TWAP, due to an unforeseen underlying error.
   final ProtobufTimestamp lastErrorTime;
 
-  OsmosisTwapTwapRecord(
-      {this.poolId,
-      this.asset0Denom,
-      this.asset1Denom,
-      this.height,
-      required this.time,
-      required this.p0LastSpotPrice,
-      required this.p1LastSpotPrice,
-      required this.p0ArithmeticTwapAccumulator,
-      required this.p1ArithmeticTwapAccumulator,
-      required this.lastErrorTime});
+  OsmosisTwapTwapRecord({
+    this.poolId,
+    this.asset0Denom,
+    this.asset1Denom,
+    this.height,
+    required this.time,
+    required this.p0LastSpotPrice,
+    required this.p1LastSpotPrice,
+    required this.p0ArithmeticTwapAccumulator,
+    required this.p1ArithmeticTwapAccumulator,
+    required this.lastErrorTime,
+  });
   factory OsmosisTwapTwapRecord.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisTwapTwapRecord(
-        poolId: decode.getField(1),
-        asset0Denom: decode.getField(2),
-        asset1Denom: decode.getField(3),
-        height: decode.getField(4),
-        time: ProtobufTimestamp.deserialize(decode.getField(5)),
-        p0LastSpotPrice: decode.getField(6),
-        p1LastSpotPrice: decode.getField(7),
-        p0ArithmeticTwapAccumulator: decode.getField(8),
-        p1ArithmeticTwapAccumulator: decode.getField(9),
-        lastErrorTime: ProtobufTimestamp.deserialize(decode.getField(11)));
+      poolId: decode.getField(1),
+      asset0Denom: decode.getField(2),
+      asset1Denom: decode.getField(3),
+      height: decode.getField(4),
+      time: ProtobufTimestamp.deserialize(decode.getField(5)),
+      p0LastSpotPrice: decode.getField(6),
+      p1LastSpotPrice: decode.getField(7),
+      p0ArithmeticTwapAccumulator: decode.getField(8),
+      p1ArithmeticTwapAccumulator: decode.getField(9),
+      lastErrorTime: ProtobufTimestamp.deserialize(decode.getField(11)),
+    );
   }
 
   @override
@@ -73,7 +75,7 @@ class OsmosisTwapTwapRecord extends CosmosMessage {
       "p1_last_spot_price": p1LastSpotPrice,
       "p0_arithmetic_twap_accumulator": p0ArithmeticTwapAccumulator,
       "p1_arithmetic_twap_accumulator": p1ArithmeticTwapAccumulator,
-      "last_error_time": lastErrorTime.toJson()
+      "last_error_time": lastErrorTime.toJson(),
     };
   }
 
@@ -82,15 +84,15 @@ class OsmosisTwapTwapRecord extends CosmosMessage {
 
   @override
   List get values => [
-        poolId,
-        asset0Denom,
-        asset1Denom,
-        height,
-        time,
-        p0LastSpotPrice,
-        p1LastSpotPrice,
-        p0ArithmeticTwapAccumulator,
-        p1ArithmeticTwapAccumulator,
-        lastErrorTime
-      ];
+    poolId,
+    asset0Denom,
+    asset1Denom,
+    height,
+    time,
+    p0LastSpotPrice,
+    p1LastSpotPrice,
+    p0ArithmeticTwapAccumulator,
+    p1ArithmeticTwapAccumulator,
+    lastErrorTime,
+  ];
 }

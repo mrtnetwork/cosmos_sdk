@@ -13,11 +13,7 @@ class AuthzEventRevoke extends CosmosMessage {
 
   /// Grantee account address
   final CosmosBaseAddress? grantee;
-  const AuthzEventRevoke({
-    this.msgTypeUrl,
-    this.granter,
-    this.grantee,
-  });
+  const AuthzEventRevoke({this.msgTypeUrl, this.granter, this.grantee});
   factory AuthzEventRevoke.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return AuthzEventRevoke(
@@ -39,7 +35,7 @@ class AuthzEventRevoke extends CosmosMessage {
     return {
       "msg_type_url": msgTypeUrl,
       "granter": granter?.address,
-      "grantee": grantee?.address
+      "grantee": grantee?.address,
     };
   }
 

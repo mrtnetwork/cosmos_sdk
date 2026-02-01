@@ -21,36 +21,42 @@ class EvmosEthermintEVMV1Params extends CosmosMessage {
   final bool? allowUnprotectedTxs;
   factory EvmosEthermintEVMV1Params.fromJson(Map<String, dynamic> json) {
     return EvmosEthermintEVMV1Params(
-        enableCall: json["enable_call"],
-        allowUnprotectedTxs: json["allow_unprotected_txs"],
-        chainConfig: json["chain_config"] == null
-            ? null
-            : EvmosEthermintEVMV1ChainConfig.fromJson(json["chain_config"]),
-        enableCreate: json["enable_create"],
-        evmDenom: json["evm_denom"],
-        extraEips: (json["extra_eips"] as List?)
-            ?.map((e) => CosmosUtils.toBytes(e))
-            .toList());
+      enableCall: json["enable_call"],
+      allowUnprotectedTxs: json["allow_unprotected_txs"],
+      chainConfig:
+          json["chain_config"] == null
+              ? null
+              : EvmosEthermintEVMV1ChainConfig.fromJson(json["chain_config"]),
+      enableCreate: json["enable_create"],
+      evmDenom: json["evm_denom"],
+      extraEips:
+          (json["extra_eips"] as List?)
+              ?.map((e) => CosmosUtils.toBytes(e))
+              .toList(),
+    );
   }
-  EvmosEthermintEVMV1Params(
-      {required this.evmDenom,
-      required this.enableCreate,
-      required this.enableCall,
-      required this.extraEips,
-      required this.chainConfig,
-      required this.allowUnprotectedTxs});
+  EvmosEthermintEVMV1Params({
+    required this.evmDenom,
+    required this.enableCreate,
+    required this.enableCall,
+    required this.extraEips,
+    required this.chainConfig,
+    required this.allowUnprotectedTxs,
+  });
   factory EvmosEthermintEVMV1Params.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosEthermintEVMV1Params(
-        evmDenom: decode.getField(1),
-        enableCreate: decode.getField(2),
-        enableCall: decode.getField(3),
-        extraEips: decode.getFields<List<int>>(4),
-        chainConfig: decode
-            .getResult(5)
-            ?.to<EvmosEthermintEVMV1ChainConfig, List<int>>(
-                (e) => EvmosEthermintEVMV1ChainConfig.deserialize(e)),
-        allowUnprotectedTxs: decode.getField(6));
+      evmDenom: decode.getField(1),
+      enableCreate: decode.getField(2),
+      enableCall: decode.getField(3),
+      extraEips: decode.getFields<List<int>>(4),
+      chainConfig: decode
+          .getResult(5)
+          ?.to<EvmosEthermintEVMV1ChainConfig, List<int>>(
+            (e) => EvmosEthermintEVMV1ChainConfig.deserialize(e),
+          ),
+      allowUnprotectedTxs: decode.getField(6),
+    );
   }
 
   @override
@@ -73,11 +79,11 @@ class EvmosEthermintEVMV1Params extends CosmosMessage {
 
   @override
   List get values => [
-        evmDenom,
-        enableCreate,
-        enableCall,
-        extraEips,
-        chainConfig,
-        allowUnprotectedTxs
-      ];
+    evmDenom,
+    enableCreate,
+    enableCall,
+    extraEips,
+    chainConfig,
+    allowUnprotectedTxs,
+  ];
 }

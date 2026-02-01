@@ -7,11 +7,14 @@ import 'package:cosmos_sdk/src/utils/utils.dart';
 class QueryAnnualProvisionsResponse extends CosmosMessage {
   final List<int> annualProvisions;
   QueryAnnualProvisionsResponse({required List<int> annualProvisions})
-      : annualProvisions =
-            BytesUtils.toBytes(annualProvisions, unmodifiable: true);
+    : annualProvisions = BytesUtils.toBytes(
+        annualProvisions,
+        unmodifiable: true,
+      );
   factory QueryAnnualProvisionsResponse.fromJson(Map<String, dynamic> json) {
     return QueryAnnualProvisionsResponse(
-        annualProvisions: CosmosUtils.toBytes(json["annual_provisions"]));
+      annualProvisions: CosmosUtils.toBytes(json["annual_provisions"]),
+    );
   }
   factory QueryAnnualProvisionsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

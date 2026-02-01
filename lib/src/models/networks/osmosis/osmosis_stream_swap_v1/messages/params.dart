@@ -18,23 +18,26 @@ class OsmosisStreamSwapParams extends CosmosMessage {
 
   /// minimum duration for every new sale.
   final ProtobufDuration minSaleDuration;
-  OsmosisStreamSwapParams(
-      {required List<Coin> saleCreationFee,
-      this.saleCreationFeeRecipient,
-      required this.minDurationUntilStartTime,
-      required this.minSaleDuration})
-      : saleCreationFee = saleCreationFee.immutable;
+  OsmosisStreamSwapParams({
+    required List<Coin> saleCreationFee,
+    this.saleCreationFeeRecipient,
+    required this.minDurationUntilStartTime,
+    required this.minSaleDuration,
+  }) : saleCreationFee = saleCreationFee.immutable;
   factory OsmosisStreamSwapParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisStreamSwapParams(
-        saleCreationFee: decode
-            .getFields<List<int>>(1)
-            .map((e) => Coin.deserialize(e))
-            .toList(),
-        saleCreationFeeRecipient: decode.getField(2),
-        minDurationUntilStartTime:
-            ProtobufDuration.deserialize(decode.getField(3)),
-        minSaleDuration: ProtobufDuration.deserialize(decode.getField(4)));
+      saleCreationFee:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
+      saleCreationFeeRecipient: decode.getField(2),
+      minDurationUntilStartTime: ProtobufDuration.deserialize(
+        decode.getField(3),
+      ),
+      minSaleDuration: ProtobufDuration.deserialize(decode.getField(4)),
+    );
   }
 
   @override
@@ -46,7 +49,7 @@ class OsmosisStreamSwapParams extends CosmosMessage {
       "sale_creation_fee": saleCreationFee.map((e) => e.toJson()).toList(),
       "sale_creation_fee_recipient": saleCreationFeeRecipient,
       "min_duration_until_start_time": minDurationUntilStartTime.toJson(),
-      "min_sale_duration": minSaleDuration.toJson()
+      "min_sale_duration": minSaleDuration.toJson(),
     };
   }
 
@@ -55,9 +58,9 @@ class OsmosisStreamSwapParams extends CosmosMessage {
 
   @override
   List get values => [
-        saleCreationFee,
-        saleCreationFeeRecipient,
-        minDurationUntilStartTime,
-        minSaleDuration
-      ];
+    saleCreationFee,
+    saleCreationFeeRecipient,
+    minDurationUntilStartTime,
+    minSaleDuration,
+  ];
 }

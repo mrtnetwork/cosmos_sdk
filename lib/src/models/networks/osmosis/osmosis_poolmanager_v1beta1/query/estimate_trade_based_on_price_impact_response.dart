@@ -11,20 +11,26 @@ class OsmosisPoolManagerEstimateTradeBasedOnPriceImpactResponse
   /// output_coin is the amount of tokens of the ToCoinDenom type
   /// that will be received for the actual InputCoin trade.
   final Coin outputCoin;
-  const OsmosisPoolManagerEstimateTradeBasedOnPriceImpactResponse(
-      {required this.inputCoin, required this.outputCoin});
+  const OsmosisPoolManagerEstimateTradeBasedOnPriceImpactResponse({
+    required this.inputCoin,
+    required this.outputCoin,
+  });
   factory OsmosisPoolManagerEstimateTradeBasedOnPriceImpactResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolManagerEstimateTradeBasedOnPriceImpactResponse(
-        inputCoin: Coin.deserialize(decode.getField(1)),
-        outputCoin: Coin.deserialize(decode.getField(2)));
+      inputCoin: Coin.deserialize(decode.getField(1)),
+      outputCoin: Coin.deserialize(decode.getField(2)),
+    );
   }
   factory OsmosisPoolManagerEstimateTradeBasedOnPriceImpactResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisPoolManagerEstimateTradeBasedOnPriceImpactResponse(
-        inputCoin: Coin.fromJson(json["input_coin"]),
-        outputCoin: Coin.fromJson(json["output_coin"]));
+      inputCoin: Coin.fromJson(json["input_coin"]),
+      outputCoin: Coin.fromJson(json["output_coin"]),
+    );
   }
 
   @override
@@ -34,7 +40,7 @@ class OsmosisPoolManagerEstimateTradeBasedOnPriceImpactResponse
   Map<String, dynamic> toJson() {
     return {
       "input_coin": inputCoin.toJson(),
-      "output_coin": outputCoin.toJson()
+      "output_coin": outputCoin.toJson(),
     };
   }
 

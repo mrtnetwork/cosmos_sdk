@@ -24,23 +24,28 @@ class Ics23ExistenceProof extends Ics23BatchEntryBase {
   final List<int>? value;
   final Ics23LeafOp? leaf;
   final List<Ics23InnerOp>? path;
-  Ics23ExistenceProof(
-      {List<int>? key, List<int>? value, this.leaf, List<Ics23InnerOp>? path})
-      : path = path?.emptyAsNull?.immutable,
-        key = BytesUtils.tryToBytes(key, unmodifiable: true),
-        value = BytesUtils.tryToBytes(value, unmodifiable: true);
+  Ics23ExistenceProof({
+    List<int>? key,
+    List<int>? value,
+    this.leaf,
+    List<Ics23InnerOp>? path,
+  }) : path = path?.emptyAsNull?.immutable,
+       key = BytesUtils.tryToBytes(key, unmodifiable: true),
+       value = BytesUtils.tryToBytes(value, unmodifiable: true);
   factory Ics23ExistenceProof.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Ics23ExistenceProof(
-        key: decode.getField(1),
-        value: decode.getField(2),
-        leaf: decode
-            .getResult(3)
-            ?.to<Ics23LeafOp, List<int>>((e) => Ics23LeafOp.deserialize(e)),
-        path: decode
-            .getFields<List<int>>(4)
-            .map((e) => Ics23InnerOp.deserialize(e))
-            .toList());
+      key: decode.getField(1),
+      value: decode.getField(2),
+      leaf: decode
+          .getResult(3)
+          ?.to<Ics23LeafOp, List<int>>((e) => Ics23LeafOp.deserialize(e)),
+      path:
+          decode
+              .getFields<List<int>>(4)
+              .map((e) => Ics23InnerOp.deserialize(e))
+              .toList(),
+    );
   }
 
   @override
@@ -52,7 +57,7 @@ class Ics23ExistenceProof extends Ics23BatchEntryBase {
       "key": BytesUtils.tryToHexString(key),
       "value": BytesUtils.tryToHexString(value),
       "leaf": leaf?.toJson(),
-      "path": path?.map((e) => e.toJson()).toList()
+      "path": path?.map((e) => e.toJson()).toList(),
     };
   }
 

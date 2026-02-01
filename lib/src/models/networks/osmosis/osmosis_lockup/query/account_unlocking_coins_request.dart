@@ -7,7 +7,8 @@ class OsmosisLockupAccountUnlockingCoinsRequest extends CosmosMessage
   final String owner;
   const OsmosisLockupAccountUnlockingCoinsRequest({required this.owner});
   factory OsmosisLockupAccountUnlockingCoinsRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisLockupAccountUnlockingCoinsRequest(owner: decode.getField(1));
   }
@@ -32,7 +33,8 @@ class OsmosisLockupAccountUnlockingCoinsRequest extends CosmosMessage
 
   @override
   OsmosisLockupAccountUnlockingCoinsResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisLockupAccountUnlockingCoinsResponse.fromJson(json);
   }
 

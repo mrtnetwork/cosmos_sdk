@@ -5,7 +5,8 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:cosmos_sdk/src/utils/quick.dart';
 
 class CCTPV1MsgPauseBurningAndMinting
-    extends CCTPV1Service<EmptyServiceRequestResponse> with AminoMessage {
+    extends CCTPV1Service<EmptyServiceRequestResponse>
+    with AminoMessage {
   final String from;
   const CCTPV1MsgPauseBurningAndMinting(this.from);
 
@@ -36,6 +37,7 @@ class CCTPV1MsgPauseBurningAndMinting
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        CCTPV1Types.msgPauseBurningAndMintingResponse);
+      CCTPV1Types.msgPauseBurningAndMintingResponse,
+    );
   }
 }

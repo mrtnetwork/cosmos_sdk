@@ -7,20 +7,22 @@ class OsmosisIncentiveModuleToDistributeCoinsResponse extends CosmosMessage {
   /// Coins that have yet to be distributed
   final List<Coin> coins;
   OsmosisIncentiveModuleToDistributeCoinsResponse(List<Coin> coins)
-      : coins = coins.immutable;
+    : coins = coins.immutable;
   factory OsmosisIncentiveModuleToDistributeCoinsResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return OsmosisIncentiveModuleToDistributeCoinsResponse(decode
-        .getFields<List<int>>(1)
-        .map((e) => Coin.deserialize(e))
-        .toList());
+    return OsmosisIncentiveModuleToDistributeCoinsResponse(
+      decode.getFields<List<int>>(1).map((e) => Coin.deserialize(e)).toList(),
+    );
   }
   factory OsmosisIncentiveModuleToDistributeCoinsResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisIncentiveModuleToDistributeCoinsResponse(
-        (json["coins"] as List?)?.map((e) => Coin.fromJson(e)).toList() ??
-            <Coin>[]);
+      (json["coins"] as List?)?.map((e) => Coin.fromJson(e)).toList() ??
+          <Coin>[],
+    );
   }
 
   @override

@@ -11,9 +11,11 @@ class IbcChannelV2MsgSendPacketResponse extends CosmosMessage {
     return IbcChannelV2MsgSendPacketResponse(sequence: decode.getField(1));
   }
   factory IbcChannelV2MsgSendPacketResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return IbcChannelV2MsgSendPacketResponse(
-        sequence: json.asBigInt("sequence"));
+      sequence: json.asBigInt("sequence"),
+    );
   }
 
   @override

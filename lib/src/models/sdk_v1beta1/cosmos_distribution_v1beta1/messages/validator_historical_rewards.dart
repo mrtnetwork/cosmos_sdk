@@ -16,17 +16,19 @@ import 'package:blockchain_utils/helper/helper.dart';
 class DistributionValidatorHistoricalRewards extends CosmosMessage {
   final List<DecCoin> cumulativeRewardRatio;
   final int? referenceCount;
-  DistributionValidatorHistoricalRewards(
-      {required List<DecCoin> cumulativeRewardRatio, this.referenceCount})
-      : cumulativeRewardRatio = cumulativeRewardRatio.immutable;
+  DistributionValidatorHistoricalRewards({
+    required List<DecCoin> cumulativeRewardRatio,
+    this.referenceCount,
+  }) : cumulativeRewardRatio = cumulativeRewardRatio.immutable;
   factory DistributionValidatorHistoricalRewards.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionValidatorHistoricalRewards(
       referenceCount: decode.getField(2),
-      cumulativeRewardRatio: decode
-          .getFields<List<int>>(1)
-          .map((e) => DecCoin.deserialize(e))
-          .toList(),
+      cumulativeRewardRatio:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => DecCoin.deserialize(e))
+              .toList(),
     );
   }
 
@@ -38,7 +40,7 @@ class DistributionValidatorHistoricalRewards extends CosmosMessage {
     return {
       "cumulative_reward_ratio":
           cumulativeRewardRatio.map((e) => e.toJson()).toList(),
-      "reference_count": referenceCount
+      "reference_count": referenceCount,
     };
   }
 

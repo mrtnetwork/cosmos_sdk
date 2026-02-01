@@ -8,8 +8,9 @@ import 'package:cosmos_sdk/src/utils/utils.dart';
 import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
 /// MsgStoreAndMigrateContract is the MsgStoreAndMigrateContract request type.
-class CosmWasmV1StoreAndMigrateContract extends CosmWasm1Beta1Service<
-    CosmWasmV1MsgStoreAndMigrateContractResponse> {
+class CosmWasmV1StoreAndMigrateContract
+    extends
+        CosmWasm1Beta1Service<CosmWasmV1MsgStoreAndMigrateContractResponse> {
   /// Authority is the address of the governance account.
   final String? authority;
 
@@ -31,31 +32,36 @@ class CosmWasmV1StoreAndMigrateContract extends CosmWasm1Beta1Service<
     this.instantiatePermission,
     this.contract,
     List<int>? msg,
-  })  : wasmByteCode = wasmByteCode?.immutable,
-        msg = msg?.asImmutableBytes;
+  }) : wasmByteCode = wasmByteCode?.immutable,
+       msg = msg?.asImmutableBytes;
   factory CosmWasmV1StoreAndMigrateContract.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmWasmV1StoreAndMigrateContract(
-        authority: decode.getField(1),
-        wasmByteCode: decode.getField(2),
-        instantiatePermission: decode
-            .getResult(3)
-            ?.to<CosmWasmV1AccessConfig, List<int>>(
-                (e) => CosmWasmV1AccessConfig.deserialize(e)),
-        contract: decode.getField(4),
-        msg: decode.getField(5));
+      authority: decode.getField(1),
+      wasmByteCode: decode.getField(2),
+      instantiatePermission: decode
+          .getResult(3)
+          ?.to<CosmWasmV1AccessConfig, List<int>>(
+            (e) => CosmWasmV1AccessConfig.deserialize(e),
+          ),
+      contract: decode.getField(4),
+      msg: decode.getField(5),
+    );
   }
   factory CosmWasmV1StoreAndMigrateContract.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return CosmWasmV1StoreAndMigrateContract(
-        authority: json.as("authority"),
-        wasmByteCode: json.asBytes("wasm_byte_code"),
-        instantiatePermission:
-            json.maybeAs<CosmWasmV1AccessConfig, Map<String, dynamic>>(
-                key: "instantiate_permission",
-                onValue: (e) => CosmWasmV1AccessConfig.fromJson(e)),
-        contract: json.as("contract"),
-        msg: json.asBytes("msg"));
+      authority: json.as("authority"),
+      wasmByteCode: json.asBytes("wasm_byte_code"),
+      instantiatePermission: json
+          .maybeAs<CosmWasmV1AccessConfig, Map<String, dynamic>>(
+            key: "instantiate_permission",
+            onValue: (e) => CosmWasmV1AccessConfig.fromJson(e),
+          ),
+      contract: json.as("contract"),
+      msg: json.asBytes("msg"),
+    );
   }
 
   @override
@@ -68,13 +74,18 @@ class CosmWasmV1StoreAndMigrateContract extends CosmWasm1Beta1Service<
       "wasm_byte_code": CosmosUtils.tryToBase64(wasmByteCode),
       "instantiate_permission": instantiatePermission?.toJson(),
       "contract": contract,
-      "msg": CosmosUtils.tryToBase64(msg)
+      "msg": CosmosUtils.tryToBase64(msg),
     };
   }
 
   @override
-  List get values =>
-      [authority, wasmByteCode, instantiatePermission, contract, msg];
+  List get values => [
+    authority,
+    wasmByteCode,
+    instantiatePermission,
+    contract,
+    msg,
+  ];
 
   @override
   CosmWasmV1Types get typeUrl => CosmWasmV1Types.msgStoreAndMigrateContract;

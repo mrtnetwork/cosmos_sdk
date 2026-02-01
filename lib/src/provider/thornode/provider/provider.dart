@@ -11,19 +11,21 @@ class ThorNodeProvider implements BaseProvider<ThorNodeRequestDetails> {
   /// Constructs a new [ThorNodeProvider] instance with the specified [rpc] service provider.
   ThorNodeProvider(this.rpc);
 
-  static SERVICERESPONSE _findError<SERVICERESPONSE>(
-      {required BaseServiceRequest request,
-      required BaseServiceResponse<SERVICERESPONSE> response,
-      required ThorNodeRequestDetails params}) {
+  static SERVICERESPONSE _findError<SERVICERESPONSE>({
+    required BaseServiceRequest request,
+    required BaseServiceResponse<SERVICERESPONSE> response,
+    required ThorNodeRequestDetails params,
+  }) {
     final r = response.getResult(params);
     if (r is Map && r.containsKey("error")) {
       final errorCode = IntUtils.tryParse(r["code"]);
       final message = (r["error"] ?? r["message"])?.toString();
       throw RPCError(
-          message: message ?? 'thornode request failed.',
-          request: params.toJson(),
-          errorCode: errorCode,
-          details: {});
+        message: message ?? 'thornode request failed.',
+        request: params.toJson(),
+        errorCode: errorCode,
+        details: {},
+      );
     }
     return r;
   }
@@ -33,9 +35,10 @@ class ThorNodeProvider implements BaseProvider<ThorNodeRequestDetails> {
   /// The [timeout] parameter, if provided, sets the maximum duration for the request.
   @override
   Future<RESULT> request<RESULT, SERVICERESPONSE>(
-      BaseServiceRequest<RESULT, SERVICERESPONSE, ThorNodeRequestDetails>
-          request,
-      {Duration? timeout}) async {
+    BaseServiceRequest<RESULT, SERVICERESPONSE, ThorNodeRequestDetails>
+    request, {
+    Duration? timeout,
+  }) async {
     final r = await requestDynamic(request, timeout: timeout);
     return request.onResonse(r);
   }
@@ -48,12 +51,15 @@ class ThorNodeProvider implements BaseProvider<ThorNodeRequestDetails> {
   /// Whatever is received will be returned
   @override
   Future<SERVICERESPONSE> requestDynamic<RESULT, SERVICERESPONSE>(
-      BaseServiceRequest<RESULT, SERVICERESPONSE, ThorNodeRequestDetails>
-          request,
-      {Duration? timeout}) async {
+    BaseServiceRequest<RESULT, SERVICERESPONSE, ThorNodeRequestDetails>
+    request, {
+    Duration? timeout,
+  }) async {
     final params = request.buildRequest(_id++);
-    final response =
-        await rpc.doRequest<SERVICERESPONSE>(params, timeout: timeout);
+    final response = await rpc.doRequest<SERVICERESPONSE>(
+      params,
+      timeout: timeout,
+    );
     return _findError(params: params, response: response, request: request);
   }
 }

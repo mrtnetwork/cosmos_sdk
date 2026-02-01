@@ -29,47 +29,57 @@ class BaseVestingAccount extends CosmosMessage {
     required List<Coin> delegatedFree,
     required List<Coin> delegatedVesting,
     this.endTime,
-  })  : originalVesting = originalVesting.immutable,
-        delegatedFree = delegatedFree.immutable,
-        delegatedVesting = delegatedVesting.immutable;
+  }) : originalVesting = originalVesting.immutable,
+       delegatedFree = delegatedFree.immutable,
+       delegatedVesting = delegatedVesting.immutable;
   factory BaseVestingAccount.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return BaseVestingAccount(
-        baseAccount: decode
-            .getResult(1)
-            ?.to<BaseAccount, List<int>>((e) => BaseAccount.deserialize(e)),
-        originalVesting: decode
-            .getFields<List<int>>(2)
-            .map((e) => Coin.deserialize(e))
-            .toList(),
-        delegatedFree: decode
-            .getFields<List<int>>(3)
-            .map((e) => Coin.deserialize(e))
-            .toList(),
-        delegatedVesting: decode
-            .getFields<List<int>>(4)
-            .map((e) => Coin.deserialize(e))
-            .toList(),
-        endTime: decode.getField(5));
+      baseAccount: decode
+          .getResult(1)
+          ?.to<BaseAccount, List<int>>((e) => BaseAccount.deserialize(e)),
+      originalVesting:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
+      delegatedFree:
+          decode
+              .getFields<List<int>>(3)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
+      delegatedVesting:
+          decode
+              .getFields<List<int>>(4)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
+      endTime: decode.getField(5),
+    );
   }
 
   factory BaseVestingAccount.fromJson(Map<String, dynamic> json) {
     return BaseVestingAccount(
-        baseAccount: json.valueTo<BaseAccount, Map<String, dynamic>>(
-            key: "base_account", parse: (v) => BaseAccount.fromJson(v)),
-        delegatedFree: json
-            .valueEnsureAsList<Map<String, dynamic>>("delegated_free")
-            .map((e) => Coin.fromJson(e))
-            .toList(),
-        delegatedVesting: json
-            .valueEnsureAsList<Map<String, dynamic>>("delegated_vesting")
-            .map((e) => Coin.fromJson(e))
-            .toList(),
-        endTime: json.valueAsBigInt("end_time"),
-        originalVesting: json
-            .valueEnsureAsList<Map<String, dynamic>>("original_vesting")
-            .map((e) => Coin.fromJson(e))
-            .toList());
+      baseAccount: json.valueTo<BaseAccount, Map<String, dynamic>>(
+        key: "base_account",
+        parse: (v) => BaseAccount.fromJson(v),
+      ),
+      delegatedFree:
+          json
+              .valueEnsureAsList<Map<String, dynamic>>("delegated_free")
+              .map((e) => Coin.fromJson(e))
+              .toList(),
+      delegatedVesting:
+          json
+              .valueEnsureAsList<Map<String, dynamic>>("delegated_vesting")
+              .map((e) => Coin.fromJson(e))
+              .toList(),
+      endTime: json.valueAsBigInt("end_time"),
+      originalVesting:
+          json
+              .valueEnsureAsList<Map<String, dynamic>>("original_vesting")
+              .map((e) => Coin.fromJson(e))
+              .toList(),
+    );
   }
 
   /// Converts this instance of [BaseVestingAccount] to a JSON object.
@@ -91,6 +101,11 @@ class BaseVestingAccount extends CosmosMessage {
   TypeUrl get typeUrl => VestingV1beta1Types.baseVestingAccount;
 
   @override
-  List get values =>
-      [baseAccount, originalVesting, delegatedFree, delegatedVesting, endTime];
+  List get values => [
+    baseAccount,
+    originalVesting,
+    delegatedFree,
+    delegatedVesting,
+    endTime,
+  ];
 }

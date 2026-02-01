@@ -6,10 +6,12 @@ class OsmosisPoolincentivesQueryExternalIncentiveGaugesRequest
     extends CosmosMessage
     with
         QueryMessage<
-            OsmosisPoolincentivesQueryExternalIncentiveGaugesResponse> {
+          OsmosisPoolincentivesQueryExternalIncentiveGaugesResponse
+        > {
   OsmosisPoolincentivesQueryExternalIncentiveGaugesRequest();
   factory OsmosisPoolincentivesQueryExternalIncentiveGaugesRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return OsmosisPoolincentivesQueryExternalIncentiveGaugesRequest();
   }
 
@@ -23,16 +25,20 @@ class OsmosisPoolincentivesQueryExternalIncentiveGaugesRequest
 
   @override
   OsmosisPoolincentivesQueryExternalIncentiveGaugesResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisPoolincentivesQueryExternalIncentiveGaugesResponse.fromJson(
-        json);
+      json,
+    );
   }
 
   @override
   OsmosisPoolincentivesQueryExternalIncentiveGaugesResponse onResponse(
-      List<int> bytes) {
-    return OsmosisPoolincentivesQueryExternalIncentiveGaugesResponse
-        .deserialize(bytes);
+    List<int> bytes,
+  ) {
+    return OsmosisPoolincentivesQueryExternalIncentiveGaugesResponse.deserialize(
+      bytes,
+    );
   }
 
   @override

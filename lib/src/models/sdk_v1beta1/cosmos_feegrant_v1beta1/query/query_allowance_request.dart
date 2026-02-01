@@ -22,8 +22,9 @@ class QueryAllowanceRequest extends CosmosMessage
   factory QueryAllowanceRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryAllowanceRequest(
-        granter: CosmosBaseAddress(decode.getField(1)),
-        grantee: CosmosBaseAddress(decode.getField(2)));
+      granter: CosmosBaseAddress(decode.getField(1)),
+      grantee: CosmosBaseAddress(decode.getField(2)),
+    );
   }
 
   @override

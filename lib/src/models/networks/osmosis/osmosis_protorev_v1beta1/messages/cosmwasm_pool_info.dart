@@ -9,24 +9,28 @@ class OsmosisProtorevCosmwasmPoolInfo extends CosmosMessage {
   /// he weight of a cosmwasm pool (by contract address)
   final List<OsmosisProtorevWeightMap> weightMaps;
 
-  OsmosisProtorevCosmwasmPoolInfo(
-      {required List<OsmosisProtorevWeightMap> weightMaps})
-      : weightMaps = weightMaps.immutable;
+  OsmosisProtorevCosmwasmPoolInfo({
+    required List<OsmosisProtorevWeightMap> weightMaps,
+  }) : weightMaps = weightMaps.immutable;
 
   factory OsmosisProtorevCosmwasmPoolInfo.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisProtorevCosmwasmPoolInfo(
-        weightMaps: decode
-            .getFields<List<int>>(1)
-            .map((e) => OsmosisProtorevWeightMap.deserialize(e))
-            .toList());
+      weightMaps:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => OsmosisProtorevWeightMap.deserialize(e))
+              .toList(),
+    );
   }
   factory OsmosisProtorevCosmwasmPoolInfo.fromJson(Map<String, dynamic> json) {
     return OsmosisProtorevCosmwasmPoolInfo(
-        weightMaps: (json["weight_maps"] as List?)
-                ?.map((e) => OsmosisProtorevWeightMap.fromJson(e))
-                .toList() ??
-            <OsmosisProtorevWeightMap>[]);
+      weightMaps:
+          (json["weight_maps"] as List?)
+              ?.map((e) => OsmosisProtorevWeightMap.fromJson(e))
+              .toList() ??
+          <OsmosisProtorevWeightMap>[],
+    );
   }
 
   @override

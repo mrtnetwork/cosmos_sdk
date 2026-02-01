@@ -15,19 +15,23 @@ class IbcFeePacketFee extends CosmosMessage {
   final List<String>? relayers;
   factory IbcFeePacketFee.fromJson(Map<String, dynamic> json) {
     return IbcFeePacketFee(
-        fee: IbcFeeFee.fromJson(json["fee"]),
-        refundAddress: json["refund_address"],
-        relayers: (json["relayers"] as List?)?.cast());
+      fee: IbcFeeFee.fromJson(json["fee"]),
+      refundAddress: json["refund_address"],
+      relayers: (json["relayers"] as List?)?.cast(),
+    );
   }
-  IbcFeePacketFee(
-      {required this.fee, this.refundAddress, List<String>? relayers})
-      : relayers = relayers?.emptyAsNull?.immutable;
+  IbcFeePacketFee({
+    required this.fee,
+    this.refundAddress,
+    List<String>? relayers,
+  }) : relayers = relayers?.emptyAsNull?.immutable;
   factory IbcFeePacketFee.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcFeePacketFee(
-        fee: IbcFeeFee.deserialize(decode.getField(1)),
-        refundAddress: decode.getField(2),
-        relayers: decode.getFields<String>(3));
+      fee: IbcFeeFee.deserialize(decode.getField(1)),
+      refundAddress: decode.getField(2),
+      relayers: decode.getFields<String>(3),
+    );
   }
 
   @override
@@ -38,7 +42,7 @@ class IbcFeePacketFee extends CosmosMessage {
     return {
       "fee": fee.toJson(),
       "refund_address": refundAddress,
-      "relayers": relayers
+      "relayers": relayers,
     };
   }
 

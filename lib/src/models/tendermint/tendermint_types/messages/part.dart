@@ -9,14 +9,15 @@ class Part extends CosmosMessage {
   final List<int>? bytes;
   final Proof proof;
   Part({this.index, List<int>? bytes, required this.proof})
-      : bytes = BytesUtils.tryToBytes(bytes, unmodifiable: true);
+    : bytes = BytesUtils.tryToBytes(bytes, unmodifiable: true);
 
   factory Part.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Part(
-        index: decode.getField(1),
-        bytes: decode.getField(2),
-        proof: Proof.deserialize(decode.getField(3)));
+      index: decode.getField(1),
+      bytes: decode.getField(2),
+      proof: Proof.deserialize(decode.getField(3)),
+    );
   }
 
   @override
@@ -27,7 +28,7 @@ class Part extends CosmosMessage {
     return {
       "index": index?.toString(),
       "bytes": BytesUtils.tryToHexString(bytes),
-      "proof": proof.toJson()
+      "proof": proof.toJson(),
     };
   }
 

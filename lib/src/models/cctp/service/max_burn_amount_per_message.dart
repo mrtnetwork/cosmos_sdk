@@ -5,22 +5,28 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:cosmos_sdk/src/utils/quick.dart';
 
 class CCTPV1MsgSetMaxBurnAmountPerMessage
-    extends CCTPV1Service<EmptyServiceRequestResponse> with AminoMessage {
+    extends CCTPV1Service<EmptyServiceRequestResponse>
+    with AminoMessage {
   final String from;
   final String localToken;
   final String amount;
-  const CCTPV1MsgSetMaxBurnAmountPerMessage(
-      {required this.from, required this.localToken, required this.amount});
+  const CCTPV1MsgSetMaxBurnAmountPerMessage({
+    required this.from,
+    required this.localToken,
+    required this.amount,
+  });
 
   factory CCTPV1MsgSetMaxBurnAmountPerMessage.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CCTPV1MsgSetMaxBurnAmountPerMessage(
-        from: decode.getField(1),
-        localToken: decode.getField(2),
-        amount: decode.getField(3));
+      from: decode.getField(1),
+      localToken: decode.getField(2),
+      amount: decode.getField(3),
+    );
   }
   factory CCTPV1MsgSetMaxBurnAmountPerMessage.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return CCTPV1MsgSetMaxBurnAmountPerMessage(
       from: json.as("from"),
       localToken: json.as("local_token"),
@@ -47,6 +53,7 @@ class CCTPV1MsgSetMaxBurnAmountPerMessage
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        CCTPV1Types.msgSetMaxBurnAmountPerMessageResponse);
+      CCTPV1Types.msgSetMaxBurnAmountPerMessageResponse,
+    );
   }
 }

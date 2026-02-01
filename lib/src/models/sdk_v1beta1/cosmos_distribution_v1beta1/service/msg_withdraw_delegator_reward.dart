@@ -6,25 +6,32 @@ import 'package:cosmos_sdk/src/utils/quick.dart';
 import 'msg_withdraw_delegator_reward_response.dart';
 
 /// MsgWithdrawDelegatorReward represents delegation withdrawal to a delegator from a single validator.
-class DistributionMsgWithdrawDelegatorReward extends DistributionV1Beta1Service<
-        DistributionMsgWithdrawDelegatorRewardResponse>
+class DistributionMsgWithdrawDelegatorReward
+    extends
+        DistributionV1Beta1Service<
+          DistributionMsgWithdrawDelegatorRewardResponse
+        >
     with AminoMessage<DistributionMsgWithdrawDelegatorRewardResponse> {
   final CosmosBaseAddress? delegatorAddress;
   final CosmosBaseAddress? validatorAddress;
-  const DistributionMsgWithdrawDelegatorReward(
-      {this.delegatorAddress, this.validatorAddress});
+  const DistributionMsgWithdrawDelegatorReward({
+    this.delegatorAddress,
+    this.validatorAddress,
+  });
   factory DistributionMsgWithdrawDelegatorReward.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionMsgWithdrawDelegatorReward(
-        delegatorAddress: decode
-            .getResult(1)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        validatorAddress: decode
-            .getResult(2)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)));
+      delegatorAddress: decode
+          .getResult(1)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      validatorAddress: decode
+          .getResult(2)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+    );
   }
   factory DistributionMsgWithdrawDelegatorReward.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return DistributionMsgWithdrawDelegatorReward(
       delegatorAddress: json.asAddress("delegator_address"),
       validatorAddress: json.asAddress("validator_address"),
@@ -38,7 +45,7 @@ class DistributionMsgWithdrawDelegatorReward extends DistributionV1Beta1Service<
   Map<String, dynamic> toJson() {
     return {
       "delegator_address": delegatorAddress?.address,
-      "validator_address": validatorAddress?.address
+      "validator_address": validatorAddress?.address,
     };
   }
 

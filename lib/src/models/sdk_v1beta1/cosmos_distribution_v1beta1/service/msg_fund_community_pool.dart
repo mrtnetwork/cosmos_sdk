@@ -14,23 +14,26 @@ class DistributionMsgFundCommunityPool
   /// Since: cosmos-sdk 0.46
   final List<Coin>? amount;
   final String? depositor;
-  DistributionMsgFundCommunityPool(
-      {required List<Coin>? amount, this.depositor})
-      : amount = amount?.immutable;
+  DistributionMsgFundCommunityPool({
+    required List<Coin>? amount,
+    this.depositor,
+  }) : amount = amount?.immutable;
   factory DistributionMsgFundCommunityPool.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionMsgFundCommunityPool(
-        amount: decode
-            .getFields<List<int>>(1)
-            .map((e) => Coin.deserialize(e))
-            .toList(),
-        depositor: decode.getField(2));
+      amount:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
+      depositor: decode.getField(2),
+    );
   }
   factory DistributionMsgFundCommunityPool.fromJson(Map<String, dynamic> json) {
     return DistributionMsgFundCommunityPool(
-        amount:
-            json.asListOfMap("amount")?.map((e) => Coin.fromJson(e)).toList(),
-        depositor: json.as("depositor"));
+      amount: json.asListOfMap("amount")?.map((e) => Coin.fromJson(e)).toList(),
+      depositor: json.as("depositor"),
+    );
   }
 
   @override
@@ -40,7 +43,7 @@ class DistributionMsgFundCommunityPool
   Map<String, dynamic> toJson() {
     return {
       "amount": amount?.map((e) => e.toJson()).toList(),
-      "depositor": depositor
+      "depositor": depositor,
     };
   }
 
@@ -56,6 +59,7 @@ class DistributionMsgFundCommunityPool
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        DistributionV1beta1Types.distributionMsgFundCommunityPoolResponse);
+      DistributionV1beta1Types.distributionMsgFundCommunityPoolResponse,
+    );
   }
 }

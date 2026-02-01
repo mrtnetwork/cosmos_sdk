@@ -36,15 +36,17 @@ class SearchTxsResult extends CosmosMessage {
   factory SearchTxsResult.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return SearchTxsResult(
-        totalCount: decode.getField(1),
-        count: decode.getField(2),
-        pageNumber: decode.getField(3),
-        pageTotal: decode.getField(4),
-        limit: decode.getField(5),
-        txs: decode
-            .getFields<List<int>>(6)
-            .map((e) => TxResponse.deserialize(e))
-            .toList());
+      totalCount: decode.getField(1),
+      count: decode.getField(2),
+      pageNumber: decode.getField(3),
+      pageTotal: decode.getField(4),
+      limit: decode.getField(5),
+      txs:
+          decode
+              .getFields<List<int>>(6)
+              .map((e) => TxResponse.deserialize(e))
+              .toList(),
+    );
   }
 
   /// Converts the search result to a JSON-serializable map.

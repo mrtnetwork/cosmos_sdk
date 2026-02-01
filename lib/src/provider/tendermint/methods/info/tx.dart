@@ -23,7 +23,7 @@ class TendermintRequestTx
 
   @override
   Map<String, String?> get parameters => {
-        "hash": hash,
-        "prove": prove?.toString(),
-      };
+    "hash": hash,
+    "prove": prove?.toString(),
+  };
 }

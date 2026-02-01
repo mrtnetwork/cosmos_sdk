@@ -25,24 +25,30 @@ class BondStatus implements CosmosEnum {
     unspecified,
     unbonded,
     unbonding,
-    bonded
+    bonded,
   ];
 
   static BondStatus fromValue(int? value) {
     return values.firstWhere(
       (e) => e.value == value,
-      orElse: () => throw DartCosmosSdkPluginException(
-          "No BondStatus element found for the given value.",
-          details: {"value": value}),
+      orElse:
+          () =>
+              throw DartCosmosSdkPluginException(
+                "No BondStatus element found for the given value.",
+                details: {"value": value},
+              ),
     );
   }
 
   static BondStatus fromName(String? name) {
     return values.firstWhere(
       (e) => e.name == name,
-      orElse: () => throw DartCosmosSdkPluginException(
-          "No BondStatus element found for the given name.",
-          details: {"name": name}),
+      orElse:
+          () =>
+              throw DartCosmosSdkPluginException(
+                "No BondStatus element found for the given name.",
+                details: {"name": name},
+              ),
     );
   }
 }

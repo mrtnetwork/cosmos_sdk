@@ -15,15 +15,17 @@ class IbcChannelTimeout extends CosmosMessage {
 
   factory IbcChannelTimeout.fromJson(Map<String, dynamic> json) {
     return IbcChannelTimeout(
-        height: IbcClientHeight.fromJson(json["height"]),
-        timestamp: BigintUtils.tryParse(json["timestamp"]));
+      height: IbcClientHeight.fromJson(json["height"]),
+      timestamp: BigintUtils.tryParse(json["timestamp"]),
+    );
   }
   const IbcChannelTimeout({required this.height, this.timestamp});
   factory IbcChannelTimeout.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcChannelTimeout(
-        height: IbcClientHeight.deserialize(decode.getField(1)),
-        timestamp: decode.getField(2));
+      height: IbcClientHeight.deserialize(decode.getField(1)),
+      timestamp: decode.getField(2),
+    );
   }
 
   @override

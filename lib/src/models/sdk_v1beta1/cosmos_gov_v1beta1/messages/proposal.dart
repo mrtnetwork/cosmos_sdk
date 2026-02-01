@@ -39,54 +39,58 @@ class GovProposal extends CosmosMessage {
   final ProtobufTimestamp votingEndTime;
   factory GovProposal.fromJson(Map<String, dynamic> json) {
     return GovProposal(
-        depositEndTime: ProtobufTimestamp.fromString(json["deposit_end_time"]),
-        finalTallyResult: GovTallyResult.fromJson(json["final_tally_result"]),
-        submitTime: ProtobufTimestamp.fromString(json["submit_time"]),
-        totalDeposit: (json["total_deposit"] as List?)
-                ?.map((e) => Coin.fromJson(e))
-                .toList() ??
-            [],
-        votingEndTime: ProtobufTimestamp.fromString(json["voting_end_time"]),
-        votingStartTime:
-            ProtobufTimestamp.fromString(json["voting_start_time"]),
-        content: json["content"] == null
-            ? null
-            : AnyMessage.fromJson(json["content"]),
-        proposalId: BigintUtils.tryParse(json["proposal_id"]),
-        status: json["status"] == null
-            ? null
-            : ProposalStatus.fromName(json["status"]));
+      depositEndTime: ProtobufTimestamp.fromString(json["deposit_end_time"]),
+      finalTallyResult: GovTallyResult.fromJson(json["final_tally_result"]),
+      submitTime: ProtobufTimestamp.fromString(json["submit_time"]),
+      totalDeposit:
+          (json["total_deposit"] as List?)
+              ?.map((e) => Coin.fromJson(e))
+              .toList() ??
+          [],
+      votingEndTime: ProtobufTimestamp.fromString(json["voting_end_time"]),
+      votingStartTime: ProtobufTimestamp.fromString(json["voting_start_time"]),
+      content:
+          json["content"] == null ? null : AnyMessage.fromJson(json["content"]),
+      proposalId: BigintUtils.tryParse(json["proposal_id"]),
+      status:
+          json["status"] == null
+              ? null
+              : ProposalStatus.fromName(json["status"]),
+    );
   }
-  GovProposal(
-      {this.proposalId,
-      this.content,
-      this.status,
-      required this.finalTallyResult,
-      required this.submitTime,
-      required this.depositEndTime,
-      required this.totalDeposit,
-      required this.votingEndTime,
-      required this.votingStartTime});
+  GovProposal({
+    this.proposalId,
+    this.content,
+    this.status,
+    required this.finalTallyResult,
+    required this.submitTime,
+    required this.depositEndTime,
+    required this.totalDeposit,
+    required this.votingEndTime,
+    required this.votingStartTime,
+  });
 
   factory GovProposal.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GovProposal(
-        proposalId: decode.getField(1),
-        content: decode
-            .getResult(2)
-            ?.to<AnyMessage, List<int>>((e) => AnyMessage.deserialize(e)),
-        status: decode
-            .getResult(3)
-            ?.to<ProposalStatus, int>((e) => ProposalStatus.fromValue(e)),
-        finalTallyResult: GovTallyResult.deserialize(decode.getField(4)),
-        submitTime: ProtobufTimestamp.deserialize(decode.getField(5)),
-        depositEndTime: ProtobufTimestamp.deserialize(decode.getField(6)),
-        totalDeposit: decode
-            .getFields<List<int>>(7)
-            .map((e) => Coin.deserialize(e))
-            .toList(),
-        votingEndTime: ProtobufTimestamp.deserialize(decode.getField(9)),
-        votingStartTime: ProtobufTimestamp.deserialize(decode.getField(8)));
+      proposalId: decode.getField(1),
+      content: decode
+          .getResult(2)
+          ?.to<AnyMessage, List<int>>((e) => AnyMessage.deserialize(e)),
+      status: decode
+          .getResult(3)
+          ?.to<ProposalStatus, int>((e) => ProposalStatus.fromValue(e)),
+      finalTallyResult: GovTallyResult.deserialize(decode.getField(4)),
+      submitTime: ProtobufTimestamp.deserialize(decode.getField(5)),
+      depositEndTime: ProtobufTimestamp.deserialize(decode.getField(6)),
+      totalDeposit:
+          decode
+              .getFields<List<int>>(7)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
+      votingEndTime: ProtobufTimestamp.deserialize(decode.getField(9)),
+      votingStartTime: ProtobufTimestamp.deserialize(decode.getField(8)),
+    );
   }
 
   @override
@@ -103,7 +107,7 @@ class GovProposal extends CosmosMessage {
       "deposit_end_time": depositEndTime.toJson(),
       "total_deposit": totalDeposit.map((e) => e.toJson()).toList(),
       "voting_start_time": votingStartTime.toJson(),
-      "voting_end_time": votingEndTime.toJson()
+      "voting_end_time": votingEndTime.toJson(),
     };
   }
 
@@ -112,14 +116,14 @@ class GovProposal extends CosmosMessage {
 
   @override
   List get values => [
-        proposalId,
-        content,
-        status?.value,
-        finalTallyResult,
-        submitTime,
-        depositEndTime,
-        totalDeposit,
-        votingStartTime,
-        votingEndTime
-      ];
+    proposalId,
+    content,
+    status?.value,
+    finalTallyResult,
+    submitTime,
+    depositEndTime,
+    totalDeposit,
+    votingStartTime,
+    votingEndTime,
+  ];
 }

@@ -5,7 +5,7 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 /// QueryNFTResponse is the response type for the Query/NFT RPC method
 /// Since: nft v0.1.1
 class QueryNFTByQueryStringResponse extends CosmosMessage {
-//. owner is the owner address of the nft
+  //. owner is the owner address of the nft
   final NFT? nft;
 
   const QueryNFTByQueryStringResponse({this.nft});
@@ -17,15 +17,13 @@ class QueryNFTByQueryStringResponse extends CosmosMessage {
   factory QueryNFTByQueryStringResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryNFTByQueryStringResponse(
-        nft:
-            decode.getResult(1)?.to<NFT, List<int>>((e) => NFT.deserialize(e)));
+      nft: decode.getResult(1)?.to<NFT, List<int>>((e) => NFT.deserialize(e)),
+    );
   }
 
   @override
   Map<String, dynamic> toJson() {
-    return {
-      'nft': nft?.toJson(),
-    };
+    return {'nft': nft?.toJson()};
   }
 
   @override

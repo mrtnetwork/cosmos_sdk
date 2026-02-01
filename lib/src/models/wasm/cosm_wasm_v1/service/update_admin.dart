@@ -23,15 +23,17 @@ class CosmWasmV1UpdateAdmin
   factory CosmWasmV1UpdateAdmin.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmWasmV1UpdateAdmin(
-        sender: decode.getField(1),
-        newAdmin: decode.getField(2),
-        contract: decode.getField(3));
+      sender: decode.getField(1),
+      newAdmin: decode.getField(2),
+      contract: decode.getField(3),
+    );
   }
   factory CosmWasmV1UpdateAdmin.fromJson(Map<String, dynamic> json) {
     return CosmWasmV1UpdateAdmin(
-        sender: json.as("sender"),
-        contract: json.as("contract"),
-        newAdmin: json.as("new_admin"));
+      sender: json.as("sender"),
+      contract: json.as("contract"),
+      newAdmin: json.as("new_admin"),
+    );
   }
 
   @override

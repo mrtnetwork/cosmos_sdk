@@ -19,22 +19,23 @@ class IbcSoloMachineV3SignBytes extends CosmosMessage {
 
   /// the marshaled data bytes
   final List<int>? data;
-  IbcSoloMachineV3SignBytes(
-      {this.sequence,
-      this.timestamp,
-      this.diversifier,
-      List<int>? path,
-      List<int>? data})
-      : data = BytesUtils.tryToBytes(data, unmodifiable: true),
-        path = BytesUtils.tryToBytes(path, unmodifiable: true);
+  IbcSoloMachineV3SignBytes({
+    this.sequence,
+    this.timestamp,
+    this.diversifier,
+    List<int>? path,
+    List<int>? data,
+  }) : data = BytesUtils.tryToBytes(data, unmodifiable: true),
+       path = BytesUtils.tryToBytes(path, unmodifiable: true);
   factory IbcSoloMachineV3SignBytes.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcSoloMachineV3SignBytes(
-        sequence: decode.getField(1),
-        timestamp: decode.getField(2),
-        diversifier: decode.getField(3),
-        path: decode.getField(4),
-        data: decode.getField(5));
+      sequence: decode.getField(1),
+      timestamp: decode.getField(2),
+      diversifier: decode.getField(3),
+      path: decode.getField(4),
+      data: decode.getField(5),
+    );
   }
 
   @override
@@ -47,7 +48,7 @@ class IbcSoloMachineV3SignBytes extends CosmosMessage {
       "timestamp": timestamp?.toString(),
       "diversifier": diversifier?.toString(),
       "path": BytesUtils.tryToHexString(path),
-      "data": BytesUtils.tryToHexString(data)
+      "data": BytesUtils.tryToHexString(data),
     };
   }
 

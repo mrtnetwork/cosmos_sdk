@@ -14,26 +14,30 @@ class MsgSendTx extends IbcService<MsgSendTxResponse> {
   /// Relative timeout timestamp provided will be added to the current block time during transaction execution.
   /// The timeout timestamp must be non-zero.
   final BigInt? relativeTimeout;
-  const MsgSendTx(
-      {this.owner,
-      this.connectionId,
-      required this.packetData,
-      this.relativeTimeout});
+  const MsgSendTx({
+    this.owner,
+    this.connectionId,
+    required this.packetData,
+    this.relativeTimeout,
+  });
   factory MsgSendTx.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgSendTx(
-        owner: decode.getField(1),
-        connectionId: decode.getField(2),
-        packetData: InterchainAccountPacketData.deserialize(decode.getField(3)),
-        relativeTimeout: decode.getField(4));
+      owner: decode.getField(1),
+      connectionId: decode.getField(2),
+      packetData: InterchainAccountPacketData.deserialize(decode.getField(3)),
+      relativeTimeout: decode.getField(4),
+    );
   }
   factory MsgSendTx.fromJson(Map<String, dynamic> json) {
     return MsgSendTx(
-        owner: json.as("owner"),
-        connectionId: json.as("connection_id"),
-        packetData:
-            InterchainAccountPacketData.fromJson(json.asMap("packet_data")),
-        relativeTimeout: json.asBigInt("relative_timeout"));
+      owner: json.as("owner"),
+      connectionId: json.as("connection_id"),
+      packetData: InterchainAccountPacketData.fromJson(
+        json.asMap("packet_data"),
+      ),
+      relativeTimeout: json.asBigInt("relative_timeout"),
+    );
   }
 
   @override
@@ -45,7 +49,7 @@ class MsgSendTx extends IbcService<MsgSendTxResponse> {
       "owner": owner,
       "connection_id": connectionId,
       "packet_data": packetData.toJson(),
-      "relative_timeout": relativeTimeout?.toString()
+      "relative_timeout": relativeTimeout?.toString(),
     };
   }
 

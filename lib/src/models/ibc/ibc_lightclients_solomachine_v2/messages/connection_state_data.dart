@@ -9,15 +9,17 @@ class IbcSoloMachineV2ConnectionStateData extends CosmosMessage {
   final List<int>? path;
   final IbcConnectionConnectionEnd? connection;
   IbcSoloMachineV2ConnectionStateData({List<int>? path, this.connection})
-      : path = BytesUtils.tryToBytes(path, unmodifiable: true);
+    : path = BytesUtils.tryToBytes(path, unmodifiable: true);
   factory IbcSoloMachineV2ConnectionStateData.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcSoloMachineV2ConnectionStateData(
-        path: decode.getField(1),
-        connection: decode
-            .getResult(2)
-            ?.to<IbcConnectionConnectionEnd, List<int>>(
-                (e) => IbcConnectionConnectionEnd.deserialize(e)));
+      path: decode.getField(1),
+      connection: decode
+          .getResult(2)
+          ?.to<IbcConnectionConnectionEnd, List<int>>(
+            (e) => IbcConnectionConnectionEnd.deserialize(e),
+          ),
+    );
   }
 
   @override
@@ -27,7 +29,7 @@ class IbcSoloMachineV2ConnectionStateData extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "path": BytesUtils.tryToHexString(path),
-      "connection": connection?.toJson()
+      "connection": connection?.toJson(),
     };
   }
 

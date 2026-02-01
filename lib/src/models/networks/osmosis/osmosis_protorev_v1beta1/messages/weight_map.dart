@@ -15,13 +15,16 @@ class OsmosisProtorevWeightMap extends CosmosMessage {
   factory OsmosisProtorevWeightMap.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisProtorevWeightMap(
-        weight: decode.getField(1), contractAddress: decode.getField(2));
+      weight: decode.getField(1),
+      contractAddress: decode.getField(2),
+    );
   }
 
   factory OsmosisProtorevWeightMap.fromJson(Map<String, dynamic> json) {
     return OsmosisProtorevWeightMap(
-        weight: BigintUtils.tryParse(json["weight"]),
-        contractAddress: json["contractAddress"]);
+      weight: BigintUtils.tryParse(json["weight"]),
+      contractAddress: json["contractAddress"],
+    );
   }
 
   @override

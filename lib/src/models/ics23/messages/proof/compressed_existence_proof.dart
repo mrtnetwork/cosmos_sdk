@@ -14,20 +14,24 @@ class Ics23CompressedExistenceProof extends Ics23CompressedBatchEntryBase {
 
   /// these are indexes into the lookup_inners table in CompressedBatchProof
   final List<int>? path;
-  Ics23CompressedExistenceProof(
-      {List<int>? key, List<int>? value, this.leaf, List<int>? path})
-      : key = BytesUtils.tryToBytes(key, unmodifiable: true),
-        value = BytesUtils.tryToBytes(value, unmodifiable: true),
-        path = path?.emptyAsNull?.immutable;
+  Ics23CompressedExistenceProof({
+    List<int>? key,
+    List<int>? value,
+    this.leaf,
+    List<int>? path,
+  }) : key = BytesUtils.tryToBytes(key, unmodifiable: true),
+       value = BytesUtils.tryToBytes(value, unmodifiable: true),
+       path = path?.emptyAsNull?.immutable;
   factory Ics23CompressedExistenceProof.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Ics23CompressedExistenceProof(
-        key: decode.getField(1),
-        value: decode.getField(2),
-        leaf: decode
-            .getResult(3)
-            ?.to<Ics23LeafOp, List<int>>((e) => Ics23LeafOp.deserialize(e)),
-        path: decode.getField(4));
+      key: decode.getField(1),
+      value: decode.getField(2),
+      leaf: decode
+          .getResult(3)
+          ?.to<Ics23LeafOp, List<int>>((e) => Ics23LeafOp.deserialize(e)),
+      path: decode.getField(4),
+    );
   }
 
   @override
@@ -39,7 +43,7 @@ class Ics23CompressedExistenceProof extends Ics23CompressedBatchEntryBase {
       "key": BytesUtils.tryToHexString(key),
       "value": BytesUtils.tryToHexString(value),
       "leaf": leaf?.toJson(),
-      "path": path
+      "path": path,
     };
   }
 

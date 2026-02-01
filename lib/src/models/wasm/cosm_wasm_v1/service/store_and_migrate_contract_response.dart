@@ -18,18 +18,21 @@ class CosmWasmV1MsgStoreAndMigrateContractResponse extends CosmosMessage {
     required this.codeId,
     required List<int>? checksum,
     required List<int>? data,
-  })  : data = data?.asImmutableBytes,
-        checksum = checksum?.asImmutableBytes;
+  }) : data = data?.asImmutableBytes,
+       checksum = checksum?.asImmutableBytes;
   factory CosmWasmV1MsgStoreAndMigrateContractResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmWasmV1MsgStoreAndMigrateContractResponse(
-        codeId: decode.getField(1),
-        checksum: decode.getField(2),
-        data: decode.getField(3));
+      codeId: decode.getField(1),
+      checksum: decode.getField(2),
+      data: decode.getField(3),
+    );
   }
   factory CosmWasmV1MsgStoreAndMigrateContractResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return CosmWasmV1MsgStoreAndMigrateContractResponse(
       data: json.asBytes("data"),
       codeId: json.asBigInt("code_id"),

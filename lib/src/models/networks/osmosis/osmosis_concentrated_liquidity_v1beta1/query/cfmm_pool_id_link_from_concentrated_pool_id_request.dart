@@ -6,16 +6,20 @@ class OsmosisConcentratedLiquidityCFMMPoolIdLinkFromConcentratedPoolIdRequest
     extends CosmosMessage
     with
         QueryMessage<
-            OsmosisConcentratedLiquidityCFMMPoolIdLinkFromConcentratedPoolIdResponse> {
+          OsmosisConcentratedLiquidityCFMMPoolIdLinkFromConcentratedPoolIdResponse
+        > {
   final BigInt concentratedPoolId;
 
-  const OsmosisConcentratedLiquidityCFMMPoolIdLinkFromConcentratedPoolIdRequest(
-      {required this.concentratedPoolId});
+  const OsmosisConcentratedLiquidityCFMMPoolIdLinkFromConcentratedPoolIdRequest({
+    required this.concentratedPoolId,
+  });
   factory OsmosisConcentratedLiquidityCFMMPoolIdLinkFromConcentratedPoolIdRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityCFMMPoolIdLinkFromConcentratedPoolIdRequest(
-        concentratedPoolId: decode.getField(1));
+      concentratedPoolId: decode.getField(1),
+    );
   }
 
   @override
@@ -33,23 +37,26 @@ class OsmosisConcentratedLiquidityCFMMPoolIdLinkFromConcentratedPoolIdRequest
   }
 
   @override
-  TypeUrl get typeUrl => OsmosisConcentratedLiquidityV1beta1Types
-      .cFMMPoolIdLinkFromConcentratedPoolIdRequest;
+  TypeUrl get typeUrl =>
+      OsmosisConcentratedLiquidityV1beta1Types
+          .cFMMPoolIdLinkFromConcentratedPoolIdRequest;
 
   @override
   List get values => [concentratedPoolId];
 
   @override
   OsmosisConcentratedLiquidityCFMMPoolIdLinkFromConcentratedPoolIdResponse
-      onJsonResponse(Map<String, dynamic> json) {
-    return OsmosisConcentratedLiquidityCFMMPoolIdLinkFromConcentratedPoolIdResponse
-        .fromJson(json);
+  onJsonResponse(Map<String, dynamic> json) {
+    return OsmosisConcentratedLiquidityCFMMPoolIdLinkFromConcentratedPoolIdResponse.fromJson(
+      json,
+    );
   }
 
   @override
   OsmosisConcentratedLiquidityCFMMPoolIdLinkFromConcentratedPoolIdResponse
-      onResponse(List<int> bytes) {
-    return OsmosisConcentratedLiquidityCFMMPoolIdLinkFromConcentratedPoolIdResponse
-        .deserialize(bytes);
+  onResponse(List<int> bytes) {
+    return OsmosisConcentratedLiquidityCFMMPoolIdLinkFromConcentratedPoolIdResponse.deserialize(
+      bytes,
+    );
   }
 }

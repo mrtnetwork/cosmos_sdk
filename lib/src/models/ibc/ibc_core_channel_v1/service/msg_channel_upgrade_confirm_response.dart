@@ -9,8 +9,12 @@ class MsgChannelUpgradeConfirmResponse extends CosmosMessage {
   factory MsgChannelUpgradeConfirmResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgChannelUpgradeConfirmResponse(
-        result: decode.getResult(1)?.to<IbcChannelResponseResultType, int>(
-            (e) => IbcChannelResponseResultType.fromValue(e)));
+      result: decode
+          .getResult(1)
+          ?.to<IbcChannelResponseResultType, int>(
+            (e) => IbcChannelResponseResultType.fromValue(e),
+          ),
+    );
   }
 
   @override

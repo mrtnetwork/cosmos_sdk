@@ -9,14 +9,14 @@ class ThorchainTHORName extends CosmosMessage {
   final List<int>? owner;
   final ThorchainAsset preferredAsset;
   final List<ThorchainTHORNameAlias> aliases;
-  ThorchainTHORName(
-      {this.name,
-      this.expireBlockHeight,
-      List<int>? owner,
-      required this.preferredAsset,
-      required List<ThorchainTHORNameAlias> aliases})
-      : aliases = aliases.immutable,
-        owner = BytesUtils.tryToBytes(owner, unmodifiable: true);
+  ThorchainTHORName({
+    this.name,
+    this.expireBlockHeight,
+    List<int>? owner,
+    required this.preferredAsset,
+    required List<ThorchainTHORNameAlias> aliases,
+  }) : aliases = aliases.immutable,
+       owner = BytesUtils.tryToBytes(owner, unmodifiable: true);
   factory ThorchainTHORName.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainTHORName(
@@ -24,10 +24,11 @@ class ThorchainTHORName extends CosmosMessage {
       expireBlockHeight: decode.getField(2),
       owner: decode.getField(3),
       preferredAsset: ThorchainAsset.deserialize(decode.getField(4)),
-      aliases: decode
-          .getFields<List<int>>(5)
-          .map((e) => ThorchainTHORNameAlias.deserialize(e))
-          .toList(),
+      aliases:
+          decode
+              .getFields<List<int>>(5)
+              .map((e) => ThorchainTHORNameAlias.deserialize(e))
+              .toList(),
     );
   }
 
@@ -41,7 +42,7 @@ class ThorchainTHORName extends CosmosMessage {
       "expire_block_height": expireBlockHeight?.toString(),
       "owner": BytesUtils.tryToHexString(owner),
       "preferred_asset": preferredAsset.toJson(),
-      "aliases": aliases.map((e) => e.toJson()).toList()
+      "aliases": aliases.map((e) => e.toJson()).toList(),
     };
   }
 

@@ -13,28 +13,33 @@ class QueryDelegatorValidatorsResponse extends CosmosMessage {
   final PageResponse? pagination;
   factory QueryDelegatorValidatorsResponse.fromJson(Map<String, dynamic> json) {
     return QueryDelegatorValidatorsResponse(
-      validators: (json["validators"] as List?)
+      validators:
+          (json["validators"] as List?)
               ?.map((e) => StakingValidator.fromJson(e))
               .toList() ??
           [],
-      pagination: json["pagination"] == null
-          ? null
-          : PageResponse.fromJson(json["pagination"]),
+      pagination:
+          json["pagination"] == null
+              ? null
+              : PageResponse.fromJson(json["pagination"]),
     );
   }
-  QueryDelegatorValidatorsResponse(
-      {required List<StakingValidator> validators, this.pagination})
-      : validators = validators.immutable;
+  QueryDelegatorValidatorsResponse({
+    required List<StakingValidator> validators,
+    this.pagination,
+  }) : validators = validators.immutable;
   factory QueryDelegatorValidatorsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryDelegatorValidatorsResponse(
-        validators: decode
-            .getFields<List<int>>(1)
-            .map((e) => StakingValidator.deserialize(e))
-            .toList(),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
+      validators:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => StakingValidator.deserialize(e))
+              .toList(),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
+    );
   }
 
   @override
@@ -44,7 +49,7 @@ class QueryDelegatorValidatorsResponse extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "validators": validators.map((e) => e.toJson()).toList(),
-      "pagination": pagination?.toJson()
+      "pagination": pagination?.toJson(),
     };
   }
 

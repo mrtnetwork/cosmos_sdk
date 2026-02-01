@@ -15,26 +15,28 @@ class MsgSend extends BankV1Beta1Service<EmptyServiceRequestResponse>
   final List<Coin> amount;
   factory MsgSend.fromJson(Map<String, dynamic> json) {
     return MsgSend(
-        fromAddress: CosmosBaseAddress(json.as("from_address")),
-        toAddress: CosmosBaseAddress(json.as("to_address")),
-        amount:
-            json.asListOfMap("amount")!.map((e) => Coin.fromJson(e)).toList());
+      fromAddress: CosmosBaseAddress(json.as("from_address")),
+      toAddress: CosmosBaseAddress(json.as("to_address")),
+      amount: json.asListOfMap("amount")!.map((e) => Coin.fromJson(e)).toList(),
+    );
   }
 
-  MsgSend(
-      {required this.fromAddress,
-      required this.toAddress,
-      required List<Coin> amount})
-      : amount = amount.immutable;
+  MsgSend({
+    required this.fromAddress,
+    required this.toAddress,
+    required List<Coin> amount,
+  }) : amount = amount.immutable;
   factory MsgSend.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgSend(
-        fromAddress: CosmosBaseAddress(decode.getField(1)),
-        toAddress: CosmosBaseAddress(decode.getField(2)),
-        amount: decode
-            .getFields<List<int>>(3)
-            .map((e) => Coin.deserialize(e))
-            .toList());
+      fromAddress: CosmosBaseAddress(decode.getField(1)),
+      toAddress: CosmosBaseAddress(decode.getField(2)),
+      amount:
+          decode
+              .getFields<List<int>>(3)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
+    );
   }
 
   @override

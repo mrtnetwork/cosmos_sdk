@@ -8,14 +8,17 @@ class EvmosEthermintEVMV1QueryParamsResponse extends CosmosMessage {
   final EvmosEthermintEVMV1Params params;
   const EvmosEthermintEVMV1QueryParamsResponse(this.params);
   factory EvmosEthermintEVMV1QueryParamsResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return EvmosEthermintEVMV1QueryParamsResponse(
-        EvmosEthermintEVMV1Params.fromJson(json["params"]));
+      EvmosEthermintEVMV1Params.fromJson(json["params"]),
+    );
   }
   factory EvmosEthermintEVMV1QueryParamsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosEthermintEVMV1QueryParamsResponse(
-        EvmosEthermintEVMV1Params.deserialize(decode.getField(1)));
+      EvmosEthermintEVMV1Params.deserialize(decode.getField(1)),
+    );
   }
 
   @override

@@ -11,8 +11,10 @@ class IbcChannelV2QueryPacketAcknowledgement extends CosmosMessage
   /// packet sequence
   final BigInt sequence;
 
-  const IbcChannelV2QueryPacketAcknowledgement(
-      {required this.clientId, required this.sequence});
+  const IbcChannelV2QueryPacketAcknowledgement({
+    required this.clientId,
+    required this.sequence,
+  });
 
   @override
   List<int> get fieldIds => [1, 2];
@@ -35,7 +37,8 @@ class IbcChannelV2QueryPacketAcknowledgement extends CosmosMessage
 
   @override
   IbcChannelV2QueryPacketAcknowledgementResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return IbcChannelV2QueryPacketAcknowledgementResponse.fromJson(json);
   }
 

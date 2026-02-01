@@ -10,15 +10,20 @@ class DistributionValidatorSlashEvent extends CosmosMessage {
   final String fraction;
   factory DistributionValidatorSlashEvent.fromJson(Map<String, dynamic> json) {
     return DistributionValidatorSlashEvent(
-        fraction: json["fraction"],
-        validatorPeriod: BigintUtils.tryParse(json["validator_period"]));
+      fraction: json["fraction"],
+      validatorPeriod: BigintUtils.tryParse(json["validator_period"]),
+    );
   }
-  const DistributionValidatorSlashEvent(
-      {this.validatorPeriod, required this.fraction});
+  const DistributionValidatorSlashEvent({
+    this.validatorPeriod,
+    required this.fraction,
+  });
   factory DistributionValidatorSlashEvent.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionValidatorSlashEvent(
-        fraction: decode.getField(2), validatorPeriod: decode.getField(1));
+      fraction: decode.getField(2),
+      validatorPeriod: decode.getField(1),
+    );
   }
 
   @override
@@ -28,7 +33,7 @@ class DistributionValidatorSlashEvent extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "validator_period": validatorPeriod?.toString(),
-      "fraction": fraction
+      "fraction": fraction,
     };
   }
 

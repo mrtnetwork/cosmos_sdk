@@ -21,25 +21,27 @@ class EvmosEthermintEVMV1TxResult extends CosmosMessage {
   final bool reverted;
   // gas_used notes the amount of gas consumed while execution
   final BigInt gasUsed;
-  EvmosEthermintEVMV1TxResult(
-      {required this.contractAddress,
-      required List<int> bloom,
-      required this.txLogs,
-      required List<int> ret,
-      required this.reverted,
-      required this.gasUsed})
-      : bloom = bloom.asImmutableBytes,
-        ret = ret.asImmutableBytes;
+  EvmosEthermintEVMV1TxResult({
+    required this.contractAddress,
+    required List<int> bloom,
+    required this.txLogs,
+    required List<int> ret,
+    required this.reverted,
+    required this.gasUsed,
+  }) : bloom = bloom.asImmutableBytes,
+       ret = ret.asImmutableBytes;
   factory EvmosEthermintEVMV1TxResult.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosEthermintEVMV1TxResult(
-        contractAddress: decode.getField(1),
-        bloom: decode.getField(2),
-        txLogs:
-            EvmosEthermintEVMV1TransactionLogs.deserialize(decode.getField(3)),
-        ret: decode.getField(4),
-        reverted: decode.getField(5),
-        gasUsed: decode.getField(6));
+      contractAddress: decode.getField(1),
+      bloom: decode.getField(2),
+      txLogs: EvmosEthermintEVMV1TransactionLogs.deserialize(
+        decode.getField(3),
+      ),
+      ret: decode.getField(4),
+      reverted: decode.getField(5),
+      gasUsed: decode.getField(6),
+    );
   }
 
   @override
@@ -53,7 +55,7 @@ class EvmosEthermintEVMV1TxResult extends CosmosMessage {
       "tx_logs": txLogs.toJson(),
       "ret": BytesUtils.toHexString(ret),
       "reverted": reverted,
-      "gas_used": gasUsed.toString()
+      "gas_used": gasUsed.toString(),
     };
   }
 

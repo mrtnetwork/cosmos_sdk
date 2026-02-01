@@ -10,10 +10,7 @@ class LastValidatorPower extends CosmosMessage {
   /// power defines the power of the validator.
   final int? power;
 
-  const LastValidatorPower({
-    required this.address,
-    required this.power,
-  });
+  const LastValidatorPower({required this.address, required this.power});
 
   factory LastValidatorPower.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -27,10 +24,7 @@ class LastValidatorPower extends CosmosMessage {
 
   @override
   Map<String, dynamic> toJson() {
-    return {
-      'address': address?.address,
-      'power': power,
-    };
+    return {'address': address?.address, 'power': power};
   }
 
   @override

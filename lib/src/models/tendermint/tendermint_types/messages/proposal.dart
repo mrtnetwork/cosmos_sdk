@@ -13,27 +13,28 @@ class Proposal extends CosmosMessage {
   final BlockID blockID;
   final ProtobufTimestamp timestamp;
   final List<int>? signature;
-  Proposal(
-      {this.type,
-      this.height,
-      this.round,
-      this.poolRound,
-      required this.blockID,
-      required this.timestamp,
-      List<int>? signature})
-      : signature = BytesUtils.tryToBytes(signature, unmodifiable: true);
+  Proposal({
+    this.type,
+    this.height,
+    this.round,
+    this.poolRound,
+    required this.blockID,
+    required this.timestamp,
+    List<int>? signature,
+  }) : signature = BytesUtils.tryToBytes(signature, unmodifiable: true);
   factory Proposal.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Proposal(
-        type: decode
-            .getResult(1)
-            ?.to<SignedMsgType, int>((e) => SignedMsgType.fromValue(e)),
-        height: decode.getField(2),
-        round: decode.getField(3),
-        poolRound: decode.getField(4),
-        blockID: BlockID.deserialize(decode.getField(5)),
-        timestamp: ProtobufTimestamp.deserialize(decode.getField(6)),
-        signature: decode.getField(7));
+      type: decode
+          .getResult(1)
+          ?.to<SignedMsgType, int>((e) => SignedMsgType.fromValue(e)),
+      height: decode.getField(2),
+      round: decode.getField(3),
+      poolRound: decode.getField(4),
+      blockID: BlockID.deserialize(decode.getField(5)),
+      timestamp: ProtobufTimestamp.deserialize(decode.getField(6)),
+      signature: decode.getField(7),
+    );
   }
 
   @override
@@ -48,7 +49,7 @@ class Proposal extends CosmosMessage {
       "pol_round": poolRound,
       "block_id": blockID.toJson(),
       "timestamp": timestamp.toJson(),
-      "signature": BytesUtils.tryToHexString(signature)
+      "signature": BytesUtils.tryToHexString(signature),
     };
   }
 
@@ -56,6 +57,13 @@ class Proposal extends CosmosMessage {
   TypeUrl get typeUrl => TendermintTypes.proposal;
 
   @override
-  List get values =>
-      [type?.value, height, round, poolRound, blockID, timestamp, signature];
+  List get values => [
+    type?.value,
+    height,
+    round,
+    poolRound,
+    blockID,
+    timestamp,
+    signature,
+  ];
 }

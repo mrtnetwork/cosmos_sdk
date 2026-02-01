@@ -12,25 +12,30 @@ class IbcLightClientsWasmQueryChecksumsResponse extends CosmosMessage {
   final PageResponse? pagination;
 
   factory IbcLightClientsWasmQueryChecksumsResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return IbcLightClientsWasmQueryChecksumsResponse(
       checksums: (json["checksums"] as List?)?.cast(),
-      pagination: json["pagination"] == null
-          ? null
-          : PageResponse.fromJson(json["pagination"]),
+      pagination:
+          json["pagination"] == null
+              ? null
+              : PageResponse.fromJson(json["pagination"]),
     );
   }
-  IbcLightClientsWasmQueryChecksumsResponse(
-      {List<String>? checksums, this.pagination})
-      : checksums = checksums?.emptyAsNull?.immutable;
+  IbcLightClientsWasmQueryChecksumsResponse({
+    List<String>? checksums,
+    this.pagination,
+  }) : checksums = checksums?.emptyAsNull?.immutable;
   factory IbcLightClientsWasmQueryChecksumsResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcLightClientsWasmQueryChecksumsResponse(
-        checksums: decode.getFields<String>(1),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
+      checksums: decode.getFields<String>(1),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
+    );
   }
 
   @override

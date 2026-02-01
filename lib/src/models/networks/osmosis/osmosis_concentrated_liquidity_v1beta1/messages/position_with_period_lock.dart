@@ -7,18 +7,24 @@ import 'position.dart';
 class OsmosisConcentratedLiquidityPositionWithPeriodLock extends CosmosMessage {
   final OsmosisConcentratedLiquidityPosition position;
   final OsmosisLockupPeriodLock locks;
-  const OsmosisConcentratedLiquidityPositionWithPeriodLock(
-      {required this.position, required this.locks});
+  const OsmosisConcentratedLiquidityPositionWithPeriodLock({
+    required this.position,
+    required this.locks,
+  });
   factory OsmosisConcentratedLiquidityPositionWithPeriodLock.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityPositionWithPeriodLock(
-        position: OsmosisConcentratedLiquidityPosition.deserialize(
-            decode.getField(1)),
-        locks: OsmosisLockupPeriodLock.deserialize(decode.getField(2)));
+      position: OsmosisConcentratedLiquidityPosition.deserialize(
+        decode.getField(1),
+      ),
+      locks: OsmosisLockupPeriodLock.deserialize(decode.getField(2)),
+    );
   }
   factory OsmosisConcentratedLiquidityPositionWithPeriodLock.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityPositionWithPeriodLock(
       position: OsmosisConcentratedLiquidityPosition.fromJson(json["position"]),
       locks: OsmosisLockupPeriodLock.fromJson(json["locks"]),

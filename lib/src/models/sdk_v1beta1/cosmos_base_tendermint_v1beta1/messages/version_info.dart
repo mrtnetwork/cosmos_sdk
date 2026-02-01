@@ -16,16 +16,16 @@ class VersionInfo extends CosmosMessage {
   /// Since: cosmos-sdk 0.43
   final String? cosmosSdkVersion;
 
-  VersionInfo(
-      {this.name,
-      this.appName,
-      this.version,
-      this.gitCommit,
-      this.buildTags,
-      this.goVersion,
-      List<Module>? buildDeps,
-      this.cosmosSdkVersion})
-      : buildDeps = buildDeps?.immutable;
+  VersionInfo({
+    this.name,
+    this.appName,
+    this.version,
+    this.gitCommit,
+    this.buildTags,
+    this.goVersion,
+    List<Module>? buildDeps,
+    this.cosmosSdkVersion,
+  }) : buildDeps = buildDeps?.immutable;
 
   factory VersionInfo.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -36,10 +36,11 @@ class VersionInfo extends CosmosMessage {
       gitCommit: decode.getField(4),
       buildTags: decode.getField(5),
       goVersion: decode.getField(6),
-      buildDeps: decode
-          .getFields<List<int>>(7)
-          .map((e) => Module.deserialize(e))
-          .toList(),
+      buildDeps:
+          decode
+              .getFields<List<int>>(7)
+              .map((e) => Module.deserialize(e))
+              .toList(),
       cosmosSdkVersion: decode.getField(8),
     );
   }
@@ -51,9 +52,10 @@ class VersionInfo extends CosmosMessage {
       gitCommit: json["git_commit"],
       buildTags: json["build_tags"],
       goVersion: json["go_version"],
-      buildDeps: (json["build_deps"] as List?)
-          ?.map((e) => Module.fromJson(e))
-          .toList(),
+      buildDeps:
+          (json["build_deps"] as List?)
+              ?.map((e) => Module.fromJson(e))
+              .toList(),
       cosmosSdkVersion: json["cosmos_sdk_version"],
     );
   }
@@ -70,7 +72,7 @@ class VersionInfo extends CosmosMessage {
       "build_tags": buildTags,
       "go_version": goVersion,
       "build_deps": buildDeps?.map((e) => e.toJson()).toList(),
-      "cosmos_sdk_version": cosmosSdkVersion
+      "cosmos_sdk_version": cosmosSdkVersion,
     };
   }
 
@@ -79,13 +81,13 @@ class VersionInfo extends CosmosMessage {
 
   @override
   List get values => [
-        name,
-        appName,
-        version,
-        gitCommit,
-        buildTags,
-        goVersion,
-        buildDeps,
-        cosmosSdkVersion
-      ];
+    name,
+    appName,
+    version,
+    gitCommit,
+    buildTags,
+    goVersion,
+    buildDeps,
+    cosmosSdkVersion,
+  ];
 }

@@ -16,26 +16,31 @@ class OsmosisProtorevMsgSetHotRoutes
   /// [hotRoutes] is the list of hot routes to set.
   final List<OsmosisProtorevTokenPairArbRoutes> hotRoutes;
 
-  OsmosisProtorevMsgSetHotRoutes(
-      {this.admin, required List<OsmosisProtorevTokenPairArbRoutes> hotRoutes})
-      : hotRoutes = hotRoutes.immutable;
+  OsmosisProtorevMsgSetHotRoutes({
+    this.admin,
+    required List<OsmosisProtorevTokenPairArbRoutes> hotRoutes,
+  }) : hotRoutes = hotRoutes.immutable;
   factory OsmosisProtorevMsgSetHotRoutes.fromJson(Map<String, dynamic> json) {
     return OsmosisProtorevMsgSetHotRoutes(
-        admin: json.as("admin"),
-        hotRoutes: json
-                .asListOfMap("hot_routes")
-                ?.map((e) => OsmosisProtorevTokenPairArbRoutes.fromJson(e))
-                .toList() ??
-            []);
+      admin: json.as("admin"),
+      hotRoutes:
+          json
+              .asListOfMap("hot_routes")
+              ?.map((e) => OsmosisProtorevTokenPairArbRoutes.fromJson(e))
+              .toList() ??
+          [],
+    );
   }
   factory OsmosisProtorevMsgSetHotRoutes.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisProtorevMsgSetHotRoutes(
-        admin: decode.getField(1),
-        hotRoutes: decode
-            .getFields<List<int>>(2)
-            .map((e) => OsmosisProtorevTokenPairArbRoutes.deserialize(e))
-            .toList());
+      admin: decode.getField(1),
+      hotRoutes:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => OsmosisProtorevTokenPairArbRoutes.deserialize(e))
+              .toList(),
+    );
   }
 
   @override
@@ -45,7 +50,7 @@ class OsmosisProtorevMsgSetHotRoutes
   Map<String, dynamic> toJson() {
     return {
       "admin": admin,
-      "hot_routes": hotRoutes.map((e) => e.toJson()).toList()
+      "hot_routes": hotRoutes.map((e) => e.toJson()).toList(),
     };
   }
 
@@ -58,7 +63,8 @@ class OsmosisProtorevMsgSetHotRoutes
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        OsmosisProtorevV1beta1Types.msgSetHotRoutesResponse);
+      OsmosisProtorevV1beta1Types.msgSetHotRoutesResponse,
+    );
   }
 
   @override

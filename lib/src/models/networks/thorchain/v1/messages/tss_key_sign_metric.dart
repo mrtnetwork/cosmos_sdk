@@ -5,17 +5,20 @@ import 'package:blockchain_utils/helper/helper.dart';
 class ThorchainTssKeysignMetric extends CosmosMessage {
   final String? txId;
   final List<ThorchainNodeTssTime> nodeTssTimes;
-  ThorchainTssKeysignMetric(
-      {this.txId, required List<ThorchainNodeTssTime> nodeTssTimes})
-      : nodeTssTimes = nodeTssTimes.immutable;
+  ThorchainTssKeysignMetric({
+    this.txId,
+    required List<ThorchainNodeTssTime> nodeTssTimes,
+  }) : nodeTssTimes = nodeTssTimes.immutable;
   factory ThorchainTssKeysignMetric.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainTssKeysignMetric(
-        txId: decode.getField(1),
-        nodeTssTimes: decode
-            .getFields<List<int>>(2)
-            .map((e) => ThorchainNodeTssTime.deserialized(e))
-            .toList());
+      txId: decode.getField(1),
+      nodeTssTimes:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => ThorchainNodeTssTime.deserialized(e))
+              .toList(),
+    );
   }
 
   @override
@@ -25,7 +28,7 @@ class ThorchainTssKeysignMetric extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "tx_id": txId,
-      "node_tss_times": nodeTssTimes.map((e) => e.toJson()).toList()
+      "node_tss_times": nodeTssTimes.map((e) => e.toJson()).toList(),
     };
   }
 

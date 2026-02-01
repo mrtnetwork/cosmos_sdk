@@ -13,9 +13,10 @@ class AuthzEventPruneExpiredGrants extends CosmosMessage {
   factory AuthzEventPruneExpiredGrants.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return AuthzEventPruneExpiredGrants(
-        pruner: decode
-            .getResult(2)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)));
+      pruner: decode
+          .getResult(2)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+    );
   }
 
   @override

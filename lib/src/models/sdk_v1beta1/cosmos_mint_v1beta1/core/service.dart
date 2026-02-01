@@ -8,40 +8,46 @@ abstract class MintV1Beta1Service<T extends CosmosMessage>
     extends CosmosSDKService<T> {
   const MintV1Beta1Service();
 
-  static T? fromJson<T extends MintV1Beta1Service>(
-      {required String typeUrl, required Map<String, dynamic> json}) {
+  static T? fromJson<T extends MintV1Beta1Service>({
+    required String typeUrl,
+    required Map<String, dynamic> json,
+  }) {
     final type = MintV1beta1Types.findService(typeUrl);
-    final MintV1Beta1Service? service = switch (type) {
-      MintV1beta1Types.msgUpdateMintParams =>
-        MsgUpdateMintParams.fromJson(json),
-      _ => null
-    } as MintV1Beta1Service?;
+    final MintV1Beta1Service? service =
+        switch (type) {
+              MintV1beta1Types.msgUpdateMintParams =>
+                MsgUpdateMintParams.fromJson(json),
+              _ => null,
+            }
+            as MintV1Beta1Service?;
     if (service == null) return null;
     if (service is! T) {
-      throw DartCosmosSdkPluginException("Invalid MintV1Beta1 Service.",
-          details: {
-            "excepted": "$T",
-            "service": service.runtimeType.toString()
-          });
+      throw DartCosmosSdkPluginException(
+        "Invalid MintV1Beta1 Service.",
+        details: {"excepted": "$T", "service": service.runtimeType.toString()},
+      );
     }
     return service;
   }
 
-  static T? deserialize<T extends MintV1Beta1Service>(
-      {required String typeUrl, required List<int> bytes}) {
+  static T? deserialize<T extends MintV1Beta1Service>({
+    required String typeUrl,
+    required List<int> bytes,
+  }) {
     final type = MintV1beta1Types.findService(typeUrl);
-    final MintV1Beta1Service? service = switch (type) {
-      MintV1beta1Types.msgUpdateMintParams =>
-        MsgUpdateMintParams.deserialize(bytes),
-      _ => null
-    } as MintV1Beta1Service?;
+    final MintV1Beta1Service? service =
+        switch (type) {
+              MintV1beta1Types.msgUpdateMintParams =>
+                MsgUpdateMintParams.deserialize(bytes),
+              _ => null,
+            }
+            as MintV1Beta1Service?;
     if (service == null) return null;
     if (service is! T) {
-      throw DartCosmosSdkPluginException("Invalid MintV1Beta1 Service.",
-          details: {
-            "excepted": "$T",
-            "service": service.runtimeType.toString()
-          });
+      throw DartCosmosSdkPluginException(
+        "Invalid MintV1Beta1 Service.",
+        details: {"excepted": "$T", "service": service.runtimeType.toString()},
+      );
     }
     return service;
   }

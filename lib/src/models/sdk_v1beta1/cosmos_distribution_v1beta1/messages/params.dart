@@ -13,25 +13,28 @@ class DistributionParams extends CosmosMessage {
   /// in the x/distribution module's reward mechanism.
   final String? bonusProposerReward;
   final bool? withdrawAddrEnabled;
-  const DistributionParams(
-      {required this.communityTax,
-      this.baseProposerReward,
-      this.bonusProposerReward,
-      this.withdrawAddrEnabled});
+  const DistributionParams({
+    required this.communityTax,
+    this.baseProposerReward,
+    this.bonusProposerReward,
+    this.withdrawAddrEnabled,
+  });
   factory DistributionParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionParams(
-        communityTax: decode.getField(1),
-        baseProposerReward: decode.getField(2),
-        bonusProposerReward: decode.getField(3),
-        withdrawAddrEnabled: decode.getField(4));
+      communityTax: decode.getField(1),
+      baseProposerReward: decode.getField(2),
+      bonusProposerReward: decode.getField(3),
+      withdrawAddrEnabled: decode.getField(4),
+    );
   }
   factory DistributionParams.fromJson(Map<String, dynamic> json) {
     return DistributionParams(
-        communityTax: json["community_tax"],
-        baseProposerReward: json["base_proposer_reward"],
-        bonusProposerReward: json["bonus_proposer_reward"],
-        withdrawAddrEnabled: json["withdraw_addr_enabled"]);
+      communityTax: json["community_tax"],
+      baseProposerReward: json["base_proposer_reward"],
+      bonusProposerReward: json["bonus_proposer_reward"],
+      withdrawAddrEnabled: json["withdraw_addr_enabled"],
+    );
   }
   @override
   List<int> get fieldIds => [1, 2, 3, 4];
@@ -42,7 +45,7 @@ class DistributionParams extends CosmosMessage {
       "community_tax": communityTax,
       "base_proposer_reward": baseProposerReward,
       "bonus_proposer_reward": bonusProposerReward,
-      "withdraw_addr_enabled": withdrawAddrEnabled
+      "withdraw_addr_enabled": withdrawAddrEnabled,
     };
   }
 
@@ -51,9 +54,9 @@ class DistributionParams extends CosmosMessage {
 
   @override
   List get values => [
-        communityTax,
-        baseProposerReward,
-        bonusProposerReward,
-        withdrawAddrEnabled
-      ];
+    communityTax,
+    baseProposerReward,
+    bonusProposerReward,
+    withdrawAddrEnabled,
+  ];
 }

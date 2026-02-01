@@ -53,6 +53,7 @@ class SlashingMsgUpdateParams
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        SlashingV1beta1Types.slashingMsgUpdateParamsResponse);
+      SlashingV1beta1Types.slashingMsgUpdateParamsResponse,
+    );
   }
 }

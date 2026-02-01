@@ -8,16 +8,20 @@ import 'package:cosmos_sdk/src/utils/quick.dart';
 import 'msg_collect_spread_rewards_response.dart';
 
 class OsmosisConcentratedLiquidityMsgCollectIncentives
-    extends OsmosisConcentratedLiquidityV1Beta1<
-        OsmosisConcentratedLiquidityMsgCollectSpreadRewardsResponse> {
+    extends
+        OsmosisConcentratedLiquidityV1Beta1<
+          OsmosisConcentratedLiquidityMsgCollectSpreadRewardsResponse
+        > {
   final List<BigInt>? positionIds;
   final String? sender;
 
-  OsmosisConcentratedLiquidityMsgCollectIncentives(
-      {List<BigInt>? positionIds, this.sender})
-      : positionIds = positionIds?.emptyAsNull?.immutable;
+  OsmosisConcentratedLiquidityMsgCollectIncentives({
+    List<BigInt>? positionIds,
+    this.sender,
+  }) : positionIds = positionIds?.emptyAsNull?.immutable;
   factory OsmosisConcentratedLiquidityMsgCollectIncentives.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityMsgCollectIncentives(
       positionIds: decode.getFields<BigInt>(1),
@@ -25,12 +29,14 @@ class OsmosisConcentratedLiquidityMsgCollectIncentives
     );
   }
   factory OsmosisConcentratedLiquidityMsgCollectIncentives.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityMsgCollectIncentives(
-      positionIds: json
-          .as<List?>("position_ids")
-          ?.map((e) => BigintUtils.parse(e))
-          .toList(),
+      positionIds:
+          json
+              .as<List?>("position_ids")
+              ?.map((e) => BigintUtils.parse(e))
+              .toList(),
       sender: json.as("sender"),
     );
   }
@@ -55,9 +61,11 @@ class OsmosisConcentratedLiquidityMsgCollectIncentives
 
   @override
   OsmosisConcentratedLiquidityMsgCollectSpreadRewardsResponse onResponse(
-      List<int> bytes) {
-    return OsmosisConcentratedLiquidityMsgCollectSpreadRewardsResponse
-        .deserialize(bytes);
+    List<int> bytes,
+  ) {
+    return OsmosisConcentratedLiquidityMsgCollectSpreadRewardsResponse.deserialize(
+      bytes,
+    );
   }
 
   @override

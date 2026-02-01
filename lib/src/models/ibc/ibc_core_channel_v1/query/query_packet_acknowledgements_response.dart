@@ -15,26 +15,29 @@ class QueryPacketAcknowledgementsResponse extends CosmosMessage {
   /// query block height
   final IbcClientHeight height;
   factory QueryPacketAcknowledgementsResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return QueryPacketAcknowledgementsResponse(
       height: IbcClientHeight.fromJson(json["height"]),
-      pagination: json["pagination"] == null
-          ? null
-          : PageResponse.fromJson(json["pagination"]),
+      pagination:
+          json["pagination"] == null
+              ? null
+              : PageResponse.fromJson(json["pagination"]),
     );
   }
-  QueryPacketAcknowledgementsResponse(
-      {List<IbcChannelPacketState>? acknowledgements,
-      this.pagination,
-      required this.height})
-      : acknowledgements = acknowledgements?.emptyAsNull?.immutable;
+  QueryPacketAcknowledgementsResponse({
+    List<IbcChannelPacketState>? acknowledgements,
+    this.pagination,
+    required this.height,
+  }) : acknowledgements = acknowledgements?.emptyAsNull?.immutable;
   factory QueryPacketAcknowledgementsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryPacketAcknowledgementsResponse(
-      acknowledgements: decode
-          .getFields<List<int>>(1)
-          .map((e) => IbcChannelPacketState.deserialize(e))
-          .toList(),
+      acknowledgements:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => IbcChannelPacketState.deserialize(e))
+              .toList(),
       pagination: decode
           .getResult(2)
           ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
@@ -50,7 +53,7 @@ class QueryPacketAcknowledgementsResponse extends CosmosMessage {
     return {
       "acknowledgements": acknowledgements?.map((e) => e.toJson()).toList(),
       "pagination": pagination?.toJson(),
-      "height": height.toJson()
+      "height": height.toJson(),
     };
   }
 

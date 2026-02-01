@@ -10,15 +10,19 @@ class OsmosisValSetprefMsgWithdrawDelegationRewards
 
   OsmosisValSetprefMsgWithdrawDelegationRewards({this.delegator});
   factory OsmosisValSetprefMsgWithdrawDelegationRewards.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisValSetprefMsgWithdrawDelegationRewards(
-        delegator: decode.getField(1));
+      delegator: decode.getField(1),
+    );
   }
   factory OsmosisValSetprefMsgWithdrawDelegationRewards.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisValSetprefMsgWithdrawDelegationRewards(
-        delegator: json["delegator"]);
+      delegator: json["delegator"],
+    );
   }
 
   @override
@@ -39,7 +43,8 @@ class OsmosisValSetprefMsgWithdrawDelegationRewards
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        OsmosisValSetprefV1beta1Types.msgWithdrawDelegationRewardsResponse);
+      OsmosisValSetprefV1beta1Types.msgWithdrawDelegationRewardsResponse,
+    );
   }
 
   @override

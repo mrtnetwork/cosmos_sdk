@@ -6,7 +6,8 @@ class OsmosisIncentiveQueryLockableDurationsRequest extends CosmosMessage
     with QueryMessage<OsmosisIncentiveQueryLockableDurationsResponse> {
   const OsmosisIncentiveQueryLockableDurationsRequest();
   factory OsmosisIncentiveQueryLockableDurationsRequest.fromBytes(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return const OsmosisIncentiveQueryLockableDurationsRequest();
   }
 
@@ -31,7 +32,8 @@ class OsmosisIncentiveQueryLockableDurationsRequest extends CosmosMessage
 
   @override
   OsmosisIncentiveQueryLockableDurationsResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisIncentiveQueryLockableDurationsResponse.fromJson(json);
   }
 

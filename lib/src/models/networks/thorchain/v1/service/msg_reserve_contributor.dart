@@ -6,16 +6,18 @@ class ThorchainMsgReserveContributor extends CosmosMessage {
   final ThorchainTx tx;
   final ThorchainReserveContributor contributor;
   final List<int>? signer;
-  ThorchainMsgReserveContributor(
-      {required this.tx, required this.contributor, List<int>? signer})
-      : signer = BytesUtils.tryToBytes(signer, unmodifiable: true);
+  ThorchainMsgReserveContributor({
+    required this.tx,
+    required this.contributor,
+    List<int>? signer,
+  }) : signer = BytesUtils.tryToBytes(signer, unmodifiable: true);
   factory ThorchainMsgReserveContributor.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainMsgReserveContributor(
-        tx: ThorchainTx.deserialize(decode.getField(1)),
-        contributor:
-            ThorchainReserveContributor.deserialize(decode.getField(2)),
-        signer: decode.getField(3));
+      tx: ThorchainTx.deserialize(decode.getField(1)),
+      contributor: ThorchainReserveContributor.deserialize(decode.getField(2)),
+      signer: decode.getField(3),
+    );
   }
 
   @override
@@ -26,7 +28,7 @@ class ThorchainMsgReserveContributor extends CosmosMessage {
     return {
       "tx": tx.toJson(),
       "contributor": contributor.toJson(),
-      "signer": BytesUtils.tryToHexString(signer)
+      "signer": BytesUtils.tryToHexString(signer),
     };
   }
 

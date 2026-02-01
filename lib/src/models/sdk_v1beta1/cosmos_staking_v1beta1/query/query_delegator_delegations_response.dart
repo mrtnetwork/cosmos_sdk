@@ -11,30 +11,37 @@ class QueryDelegatorDelegationsResponse extends CosmosMessage {
   /// pagination defines the pagination in the response.
   final PageResponse? pagination;
   factory QueryDelegatorDelegationsResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return QueryDelegatorDelegationsResponse(
-      delegationResponses: (json["delegation_responses"] as List?)
+      delegationResponses:
+          (json["delegation_responses"] as List?)
               ?.map((e) => DelegationResponse.fromJson(e))
               .toList() ??
           [],
-      pagination: json["pagination"] == null
-          ? null
-          : PageResponse.fromJson(json["pagination"]),
+      pagination:
+          json["pagination"] == null
+              ? null
+              : PageResponse.fromJson(json["pagination"]),
     );
   }
 
-  const QueryDelegatorDelegationsResponse(
-      {required this.delegationResponses, this.pagination});
+  const QueryDelegatorDelegationsResponse({
+    required this.delegationResponses,
+    this.pagination,
+  });
   factory QueryDelegatorDelegationsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryDelegatorDelegationsResponse(
-        delegationResponses: decode
-            .getFields<List<int>>(1)
-            .map((e) => DelegationResponse.deserialize(e))
-            .toList(),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
+      delegationResponses:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => DelegationResponse.deserialize(e))
+              .toList(),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
+    );
   }
 
   @override
@@ -45,7 +52,7 @@ class QueryDelegatorDelegationsResponse extends CosmosMessage {
     return {
       "delegation_responses":
           delegationResponses.map((e) => e.toJson()).toList(),
-      "pagination": pagination?.toJson()
+      "pagination": pagination?.toJson(),
     };
   }
 

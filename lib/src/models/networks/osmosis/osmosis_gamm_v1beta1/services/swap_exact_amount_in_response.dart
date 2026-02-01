@@ -7,7 +7,8 @@ class OsmosisGammMsgSwapExactAmountInResponse extends CosmosMessage {
   factory OsmosisGammMsgSwapExactAmountInResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisGammMsgSwapExactAmountInResponse(
-        BigInt.parse(decode.getField(1)));
+      BigInt.parse(decode.getField(1)),
+    );
   }
 
   @override

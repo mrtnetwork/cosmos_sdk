@@ -24,18 +24,22 @@ class MsgTokenizeShares
   factory MsgTokenizeShares.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgTokenizeShares(
-        validatorAddress: decode.getField(2),
-        delegatorAddress: decode.getField(1),
-        amount: decode.getResult(3)?.to<Coin, List<int>>(Coin.deserialize),
-        tokenizedShareOwner: decode.getField(4));
+      validatorAddress: decode.getField(2),
+      delegatorAddress: decode.getField(1),
+      amount: decode.getResult(3)?.to<Coin, List<int>>(Coin.deserialize),
+      tokenizedShareOwner: decode.getField(4),
+    );
   }
   factory MsgTokenizeShares.fromJson(Map<String, dynamic> json) {
     return MsgTokenizeShares(
-        validatorAddress: json.as("validator_address"),
-        delegatorAddress: json.as("delegator_address"),
-        amount: json.maybeAs<Coin, Map<String, dynamic>>(
-            key: "amount", onValue: Coin.fromJson),
-        tokenizedShareOwner: json.as("tokenized_share_owner"));
+      validatorAddress: json.as("validator_address"),
+      delegatorAddress: json.as("delegator_address"),
+      amount: json.maybeAs<Coin, Map<String, dynamic>>(
+        key: "amount",
+        onValue: Coin.fromJson,
+      ),
+      tokenizedShareOwner: json.as("tokenized_share_owner"),
+    );
   }
 
   @override
@@ -47,7 +51,7 @@ class MsgTokenizeShares
       "delegator_address": delegatorAddress,
       "validator_address": validatorAddress,
       "amount": amount?.toJson(),
-      "tokenized_share_owner": tokenizedShareOwner
+      "tokenized_share_owner": tokenizedShareOwner,
     };
   }
 
@@ -55,8 +59,12 @@ class MsgTokenizeShares
   TypeUrl get typeUrl => StakingV1beta1Types.msgTokenizeShares;
 
   @override
-  List get values =>
-      [delegatorAddress, validatorAddress, amount, tokenizedShareOwner];
+  List get values => [
+    delegatorAddress,
+    validatorAddress,
+    amount,
+    tokenizedShareOwner,
+  ];
 
   @override
   MsgTokenizeSharesResponse onResponse(List<int> bytes) {

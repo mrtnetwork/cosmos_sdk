@@ -10,30 +10,32 @@ class DeliverTxResponse {
   final BigInt? gasUsed;
   final List<CheckTxEventResponse>? events;
   final String? codespace;
-  DeliverTxResponse(
-      {required this.code,
-      List<int>? data,
-      this.log,
-      this.info,
-      this.gasWanted,
-      this.gasUsed,
-      List<CheckTxEventResponse>? events,
-      this.codespace})
-      : data = BytesUtils.tryToBytes(data, unmodifiable: true),
-        events = events?.immutable;
+  DeliverTxResponse({
+    required this.code,
+    List<int>? data,
+    this.log,
+    this.info,
+    this.gasWanted,
+    this.gasUsed,
+    List<CheckTxEventResponse>? events,
+    this.codespace,
+  }) : data = BytesUtils.tryToBytes(data, unmodifiable: true),
+       events = events?.immutable;
   factory DeliverTxResponse.fromJson(Map<String, dynamic> json) {
     final String log = json["log"] ?? '';
     return DeliverTxResponse(
-        code: json["code"],
-        data: StringUtils.tryEncode(json["data"], type: StringEncoding.base64),
-        log: log.trim().isEmpty ? null : log,
-        info: json["info"],
-        gasWanted: BigintUtils.tryParse(json["gas_wanted"]),
-        gasUsed: BigintUtils.tryParse(json["gas_used"]),
-        events: (json["events"] as List?)
-            ?.map((e) => CheckTxEventResponse.fromJson(e))
-            .toList(),
-        codespace: json["codespace"]);
+      code: json["code"],
+      data: StringUtils.tryEncode(json["data"], type: StringEncoding.base64),
+      log: log.trim().isEmpty ? null : log,
+      info: json["info"],
+      gasWanted: BigintUtils.tryParse(json["gas_wanted"]),
+      gasUsed: BigintUtils.tryParse(json["gas_used"]),
+      events:
+          (json["events"] as List?)
+              ?.map((e) => CheckTxEventResponse.fromJson(e))
+              .toList(),
+      codespace: json["codespace"],
+    );
   }
 
   Map<String, dynamic> toJson() {

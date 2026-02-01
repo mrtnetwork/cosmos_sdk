@@ -18,15 +18,17 @@ class CCTPV1MsgReceiveMessage
   factory CCTPV1MsgReceiveMessage.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CCTPV1MsgReceiveMessage(
-        from: decode.getField(1),
-        message: decode.getField(2),
-        attestation: decode.getField(3));
+      from: decode.getField(1),
+      message: decode.getField(2),
+      attestation: decode.getField(3),
+    );
   }
   factory CCTPV1MsgReceiveMessage.fromJson(Map<String, dynamic> json) {
     return CCTPV1MsgReceiveMessage(
-        from: json.as("from"),
-        message: json.asBytes("message"),
-        attestation: json.asBytes("attestation"));
+      from: json.as("from"),
+      message: json.asBytes("message"),
+      attestation: json.asBytes("attestation"),
+    );
   }
 
   @override

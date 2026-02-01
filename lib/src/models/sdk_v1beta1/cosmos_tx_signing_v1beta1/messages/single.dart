@@ -12,14 +12,15 @@ class SignatureDescriptorDataSingle extends BaseSignatureDescriptorData {
   ///  signature is the raw signature bytes
   final List<int>? signature;
   SignatureDescriptorDataSingle({this.mode, List<int>? signature})
-      : signature = BytesUtils.tryToBytes(signature, unmodifiable: true);
+    : signature = BytesUtils.tryToBytes(signature, unmodifiable: true);
   factory SignatureDescriptorDataSingle.desrialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return SignatureDescriptorDataSingle(
-        mode: decode
-            .getResult(1)
-            ?.to<SignMode, int>((e) => SignMode.fromValue(e)),
-        signature: decode.getField(2));
+      mode: decode
+          .getResult(1)
+          ?.to<SignMode, int>((e) => SignMode.fromValue(e)),
+      signature: decode.getField(2),
+    );
   }
 
   @override
@@ -32,7 +33,7 @@ class SignatureDescriptorDataSingle extends BaseSignatureDescriptorData {
   Map<String, dynamic> toJson() {
     return {
       "mode": mode?.value,
-      "signature": BytesUtils.tryToHexString(signature)
+      "signature": BytesUtils.tryToHexString(signature),
     };
   }
 

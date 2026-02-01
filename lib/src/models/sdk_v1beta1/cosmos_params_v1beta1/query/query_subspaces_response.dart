@@ -9,20 +9,24 @@ import 'package:blockchain_utils/helper/helper.dart';
 class ParamsQuerySubspacesResponse extends CosmosMessage {
   final List<ParamsSubspace> subspaces;
   ParamsQuerySubspacesResponse(List<ParamsSubspace> subspaces)
-      : subspaces = subspaces.immutable;
+    : subspaces = subspaces.immutable;
 
   factory ParamsQuerySubspacesResponse.fromJson(Map<String, dynamic> json) {
-    return ParamsQuerySubspacesResponse((json["subspaces"] as List?)
-            ?.map((e) => ParamsSubspace.fromJson(e))
-            .toList() ??
-        []);
+    return ParamsQuerySubspacesResponse(
+      (json["subspaces"] as List?)
+              ?.map((e) => ParamsSubspace.fromJson(e))
+              .toList() ??
+          [],
+    );
   }
   factory ParamsQuerySubspacesResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return ParamsQuerySubspacesResponse(decode
-        .getFields<List<int>>(1)
-        .map((e) => ParamsSubspace.deserialize(e))
-        .toList());
+    return ParamsQuerySubspacesResponse(
+      decode
+          .getFields<List<int>>(1)
+          .map((e) => ParamsSubspace.deserialize(e))
+          .toList(),
+    );
   }
 
   @override

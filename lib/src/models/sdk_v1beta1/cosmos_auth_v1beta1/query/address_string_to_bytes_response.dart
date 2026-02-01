@@ -8,14 +8,15 @@ import 'package:cosmos_sdk/src/utils/utils.dart';
 class AddressStringToBytesResponse extends CosmosMessage {
   final List<int> addressBytes;
   AddressStringToBytesResponse(List<int> addressBytes)
-      : addressBytes = BytesUtils.toBytes(addressBytes, unmodifiable: true);
+    : addressBytes = BytesUtils.toBytes(addressBytes, unmodifiable: true);
   factory AddressStringToBytesResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return AddressStringToBytesResponse(decode.getField(1));
   }
   factory AddressStringToBytesResponse.fromJson(Map<String, dynamic> json) {
     return AddressStringToBytesResponse(
-        CosmosUtils.toBytes(json["address_bytes"]));
+      CosmosUtils.toBytes(json["address_bytes"]),
+    );
   }
 
   @override

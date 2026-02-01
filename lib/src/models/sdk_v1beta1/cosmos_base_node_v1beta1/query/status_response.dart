@@ -11,35 +11,43 @@ class NodeStatusResponse extends CosmosMessage {
   final List<int>? validatorHash;
   factory NodeStatusResponse.fromJson(Map<String, dynamic> json) {
     return NodeStatusResponse(
-      timestamp: json["timestamp"] == null
-          ? null
-          : ProtobufTimestamp.fromString(json["timestamp"]),
-      validatorHash: StringUtils.tryEncode(json["validator_hash"],
-          type: StringEncoding.base64),
-      appHash:
-          StringUtils.tryEncode(json["app_hash"], type: StringEncoding.base64),
+      timestamp:
+          json["timestamp"] == null
+              ? null
+              : ProtobufTimestamp.fromString(json["timestamp"]),
+      validatorHash: StringUtils.tryEncode(
+        json["validator_hash"],
+        type: StringEncoding.base64,
+      ),
+      appHash: StringUtils.tryEncode(
+        json["app_hash"],
+        type: StringEncoding.base64,
+      ),
       height: BigintUtils.tryParse(json["height"]),
       earliestStoreHeight: BigintUtils.tryParse(json["earliest_store_height"]),
     );
   }
-  NodeStatusResponse(
-      {this.earliestStoreHeight,
-      this.height,
-      this.timestamp,
-      List<int>? appHash,
-      List<int>? validatorHash})
-      : appHash = BytesUtils.tryToBytes(appHash, unmodifiable: true),
-        validatorHash =
-            BytesUtils.tryToBytes(validatorHash, unmodifiable: true);
+  NodeStatusResponse({
+    this.earliestStoreHeight,
+    this.height,
+    this.timestamp,
+    List<int>? appHash,
+    List<int>? validatorHash,
+  }) : appHash = BytesUtils.tryToBytes(appHash, unmodifiable: true),
+       validatorHash = BytesUtils.tryToBytes(validatorHash, unmodifiable: true);
   factory NodeStatusResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return NodeStatusResponse(
-        earliestStoreHeight: decode.getField(1),
-        height: decode.getField(2),
-        timestamp: decode.getResult(3)?.to<ProtobufTimestamp, List<int>>(
-            (e) => ProtobufTimestamp.deserialize(e)),
-        appHash: decode.getField(4),
-        validatorHash: decode.getField(5));
+      earliestStoreHeight: decode.getField(1),
+      height: decode.getField(2),
+      timestamp: decode
+          .getResult(3)
+          ?.to<ProtobufTimestamp, List<int>>(
+            (e) => ProtobufTimestamp.deserialize(e),
+          ),
+      appHash: decode.getField(4),
+      validatorHash: decode.getField(5),
+    );
   }
 
   @override
@@ -52,8 +60,10 @@ class NodeStatusResponse extends CosmosMessage {
       "height": height?.toString(),
       "timestamp": timestamp?.toJson(),
       "app_hash": StringUtils.tryDecode(appHash, type: StringEncoding.base64),
-      "validator_hash":
-          StringUtils.tryDecode(validatorHash, type: StringEncoding.base64),
+      "validator_hash": StringUtils.tryDecode(
+        validatorHash,
+        type: StringEncoding.base64,
+      ),
     };
   }
 
@@ -61,6 +71,11 @@ class NodeStatusResponse extends CosmosMessage {
   TypeUrl get typeUrl => BaseNodeV1beta1Types.nodeStatusResponse;
 
   @override
-  List get values =>
-      [earliestStoreHeight, height, timestamp, appHash, validatorHash];
+  List get values => [
+    earliestStoreHeight,
+    height,
+    timestamp,
+    appHash,
+    validatorHash,
+  ];
 }

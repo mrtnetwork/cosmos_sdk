@@ -34,44 +34,46 @@ class EvmosEthermintEVMV1LegacyTx extends CosmosMessage {
 
   /// s define the signature value
   final List<int> s;
-  EvmosEthermintEVMV1LegacyTx(
-      {required this.nonce,
-      required this.gasPrice,
-      required this.gas,
-      required this.to,
-      required this.value,
-      required List<int>? data,
-      required List<int> v,
-      required List<int> r,
-      required List<int> s})
-      : data = data?.asImmutableBytes,
-        v = v.asImmutableBytes,
-        r = r.asImmutableBytes,
-        s = s.asImmutableBytes;
+  EvmosEthermintEVMV1LegacyTx({
+    required this.nonce,
+    required this.gasPrice,
+    required this.gas,
+    required this.to,
+    required this.value,
+    required List<int>? data,
+    required List<int> v,
+    required List<int> r,
+    required List<int> s,
+  }) : data = data?.asImmutableBytes,
+       v = v.asImmutableBytes,
+       r = r.asImmutableBytes,
+       s = s.asImmutableBytes;
   factory EvmosEthermintEVMV1LegacyTx.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosEthermintEVMV1LegacyTx(
-        nonce: decode.getField(1),
-        gasPrice: decode.getField(2),
-        gas: decode.getField(3),
-        to: decode.getField(4),
-        value: decode.getField(5),
-        data: decode.getField(6),
-        v: decode.getField(7),
-        r: decode.getField(8),
-        s: decode.getField(9));
+      nonce: decode.getField(1),
+      gasPrice: decode.getField(2),
+      gas: decode.getField(3),
+      to: decode.getField(4),
+      value: decode.getField(5),
+      data: decode.getField(6),
+      v: decode.getField(7),
+      r: decode.getField(8),
+      s: decode.getField(9),
+    );
   }
   factory EvmosEthermintEVMV1LegacyTx.fromJson(Map<String, dynamic> json) {
     return EvmosEthermintEVMV1LegacyTx(
-        nonce: json.asBigInt("nonce"),
-        gasPrice: json.as("gas_price"),
-        gas: json.asBigInt("gas"),
-        to: json.as("to"),
-        value: json.as("value"),
-        data: json.asBytes("data"),
-        v: json.asBytes("v", throwOnNull: true)!,
-        r: json.asBytes("r", throwOnNull: true)!,
-        s: json.asBytes("s", throwOnNull: true)!);
+      nonce: json.asBigInt("nonce"),
+      gasPrice: json.as("gas_price"),
+      gas: json.asBigInt("gas"),
+      to: json.as("to"),
+      value: json.as("value"),
+      data: json.asBytes("data"),
+      v: json.asBytes("v", throwOnNull: true)!,
+      r: json.asBytes("r", throwOnNull: true)!,
+      s: json.asBytes("s", throwOnNull: true)!,
+    );
   }
 
   @override

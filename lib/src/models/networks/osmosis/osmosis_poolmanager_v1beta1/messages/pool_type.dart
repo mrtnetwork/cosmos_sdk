@@ -9,8 +9,10 @@ class OsmosisPoolManagerPoolType implements CosmosEnum {
   const OsmosisPoolManagerPoolType(this.name, this.value);
 
   /// Balancer is the standard xy=k curve. Its pool model is defined in x/gamm.
-  static const OsmosisPoolManagerPoolType balancer =
-      OsmosisPoolManagerPoolType("Balancer", 0);
+  static const OsmosisPoolManagerPoolType balancer = OsmosisPoolManagerPoolType(
+    "Balancer",
+    0,
+  );
 
   /// Stableswap is the Solidly cfmm stable swap curve. Its pool model is defined
   /// in x/gamm.
@@ -24,30 +26,38 @@ class OsmosisPoolManagerPoolType implements CosmosEnum {
 
   /// CosmWasm is the pool model specific to CosmWasm. It is defined in
   /// x/cosmwasmpool.
-  static const OsmosisPoolManagerPoolType cosmWasm =
-      OsmosisPoolManagerPoolType("CosmWasm", 3);
+  static const OsmosisPoolManagerPoolType cosmWasm = OsmosisPoolManagerPoolType(
+    "CosmWasm",
+    3,
+  );
 
   static const List<OsmosisPoolManagerPoolType> values = [
     balancer,
     stableswap,
     concentrated,
-    cosmWasm
+    cosmWasm,
   ];
   static OsmosisPoolManagerPoolType fromValue(int? value) {
     return values.firstWhere(
       (element) => element.value == value,
-      orElse: () => throw DartCosmosSdkPluginException(
-          "No OsmosisPoolManagerPoolType element found for the given value.",
-          details: {"value": value}),
+      orElse:
+          () =>
+              throw DartCosmosSdkPluginException(
+                "No OsmosisPoolManagerPoolType element found for the given value.",
+                details: {"value": value},
+              ),
     );
   }
 
   static OsmosisPoolManagerPoolType fromName(String? name) {
     return values.firstWhere(
       (element) => element.name == name,
-      orElse: () => throw DartCosmosSdkPluginException(
-          "No OsmosisPoolManagerPoolType element found for the given name.",
-          details: {"name": name}),
+      orElse:
+          () =>
+              throw DartCosmosSdkPluginException(
+                "No OsmosisPoolManagerPoolType element found for the given name.",
+                details: {"name": name},
+              ),
     );
   }
 }

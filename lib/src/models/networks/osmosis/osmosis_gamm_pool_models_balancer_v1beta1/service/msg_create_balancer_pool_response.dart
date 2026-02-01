@@ -7,15 +7,19 @@ class OsmosisGammPoolmodelsBalancerMsgCreateBalancerPoolResponse
   final BigInt? poolId;
   OsmosisGammPoolmodelsBalancerMsgCreateBalancerPoolResponse(this.poolId);
   factory OsmosisGammPoolmodelsBalancerMsgCreateBalancerPoolResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisGammPoolmodelsBalancerMsgCreateBalancerPoolResponse(
-        decode.getField(1));
+      decode.getField(1),
+    );
   }
   factory OsmosisGammPoolmodelsBalancerMsgCreateBalancerPoolResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisGammPoolmodelsBalancerMsgCreateBalancerPoolResponse(
-        BigintUtils.tryParse(json["pool_id"]));
+      BigintUtils.tryParse(json["pool_id"]),
+    );
   }
 
   @override

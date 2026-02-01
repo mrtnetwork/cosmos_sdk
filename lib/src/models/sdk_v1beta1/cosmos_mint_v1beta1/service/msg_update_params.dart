@@ -23,25 +23,24 @@ class MsgUpdateMintParams
   const MsgUpdateMintParams({this.authority, required this.params});
   factory MsgUpdateMintParams.fromJson(Map<String, dynamic> json) {
     return MsgUpdateMintParams(
-        authority: json.asAddress("authority"),
-        params: MintParams.fromJson(json.asMap("params")));
+      authority: json.asAddress("authority"),
+      params: MintParams.fromJson(json.asMap("params")),
+    );
   }
   factory MsgUpdateMintParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
 
     return MsgUpdateMintParams(
-        authority: decode
-            .getResult(1)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        params: MintParams.deserialize(decode.getField<List<int>>(2)));
+      authority: decode
+          .getResult(1)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      params: MintParams.deserialize(decode.getField<List<int>>(2)),
+    );
   }
 
   @override
   Map<String, dynamic> toJson() {
-    return {
-      'authority': authority?.address,
-      'params': params.toJson(),
-    };
+    return {'authority': authority?.address, 'params': params.toJson()};
   }
 
   @override
@@ -58,6 +57,7 @@ class MsgUpdateMintParams
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        MintV1beta1Types.msgUpdateMintParamsResponse);
+      MintV1beta1Types.msgUpdateMintParamsResponse,
+    );
   }
 }

@@ -13,29 +13,33 @@ class QueryConsensusStatesResponse extends CosmosMessage {
   final PageResponse? pagination;
   factory QueryConsensusStatesResponse.fromJson(Map<String, dynamic> json) {
     return QueryConsensusStatesResponse(
-      consensusStates: (json[""] as List?)
+      consensusStates:
+          (json[""] as List?)
               ?.map((e) => ConsensusStateWithHeight.fromJson(e))
               .toList() ??
           [],
-      pagination: json["pagination"] == null
-          ? null
-          : PageResponse.fromJson(json["pagination"]),
+      pagination:
+          json["pagination"] == null
+              ? null
+              : PageResponse.fromJson(json["pagination"]),
     );
   }
-  QueryConsensusStatesResponse(
-      {required List<ConsensusStateWithHeight> consensusStates,
-      this.pagination})
-      : consensusStates = consensusStates.immutable;
+  QueryConsensusStatesResponse({
+    required List<ConsensusStateWithHeight> consensusStates,
+    this.pagination,
+  }) : consensusStates = consensusStates.immutable;
   factory QueryConsensusStatesResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryConsensusStatesResponse(
-        consensusStates: decode
-            .getFields<List<int>>(1)
-            .map((e) => ConsensusStateWithHeight.deserialize(e))
-            .toList(),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
+      consensusStates:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => ConsensusStateWithHeight.deserialize(e))
+              .toList(),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
+    );
   }
 
   @override
@@ -45,7 +49,7 @@ class QueryConsensusStatesResponse extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "consensus_states": consensusStates.map((e) => e.toJson()).toList(),
-      "pagination": pagination?.toJson()
+      "pagination": pagination?.toJson(),
     };
   }
 

@@ -9,21 +9,27 @@ class OsmosisPoolManagerDenomPairTakerFee extends CosmosMessage {
   final String? denom1;
   final String takerFee;
 
-  OsmosisPoolManagerDenomPairTakerFee(
-      {this.denom0, this.denom1, required this.takerFee});
+  OsmosisPoolManagerDenomPairTakerFee({
+    this.denom0,
+    this.denom1,
+    required this.takerFee,
+  });
   factory OsmosisPoolManagerDenomPairTakerFee.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolManagerDenomPairTakerFee(
-        denom0: decode.getField(1),
-        denom1: decode.getField(2),
-        takerFee: decode.getField(3));
+      denom0: decode.getField(1),
+      denom1: decode.getField(2),
+      takerFee: decode.getField(3),
+    );
   }
   factory OsmosisPoolManagerDenomPairTakerFee.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisPoolManagerDenomPairTakerFee(
-        denom0: json.as("denom0"),
-        denom1: json.as("denom1"),
-        takerFee: json.as("taker_fee"));
+      denom0: json.as("denom0"),
+      denom1: json.as("denom1"),
+      takerFee: json.as("taker_fee"),
+    );
   }
   @override
   List<int> get fieldIds => [1, 2, 3];

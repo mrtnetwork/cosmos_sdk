@@ -16,10 +16,11 @@ class OsmosisStreamSwapEventCreateSale extends CosmosMessage {
   factory OsmosisStreamSwapEventCreateSale.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisStreamSwapEventCreateSale(
-        id: decode.getField(1),
-        creator: decode.getField(2),
-        tokenIn: decode.getField(3),
-        tokenOut: Coin.deserialize(decode.getField(4)));
+      id: decode.getField(1),
+      creator: decode.getField(2),
+      tokenIn: decode.getField(3),
+      tokenOut: Coin.deserialize(decode.getField(4)),
+    );
   }
 
   @override
@@ -31,7 +32,7 @@ class OsmosisStreamSwapEventCreateSale extends CosmosMessage {
       "id": id?.toString(),
       "creator": creator,
       "token_in": tokenIn,
-      "token_out": tokenOut.toJson()
+      "token_out": tokenOut.toJson(),
     };
   }
 

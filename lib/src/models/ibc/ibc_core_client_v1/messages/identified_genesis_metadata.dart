@@ -8,17 +8,19 @@ import 'package:blockchain_utils/helper/helper.dart';
 class IbcClientIdentifiedGenesisMetadata extends CosmosMessage {
   final String? clientId;
   final List<IbcClientGenesisMetadata> clientMetadata;
-  IbcClientIdentifiedGenesisMetadata(
-      {this.clientId, required List<IbcClientGenesisMetadata> clientMetadata})
-      : clientMetadata = clientMetadata.immutable;
+  IbcClientIdentifiedGenesisMetadata({
+    this.clientId,
+    required List<IbcClientGenesisMetadata> clientMetadata,
+  }) : clientMetadata = clientMetadata.immutable;
   factory IbcClientIdentifiedGenesisMetadata.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcClientIdentifiedGenesisMetadata(
       clientId: decode.getField(1),
-      clientMetadata: decode
-          .getFields<List<int>>(2)
-          .map((e) => IbcClientGenesisMetadata.deserialize(e))
-          .toList(),
+      clientMetadata:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => IbcClientGenesisMetadata.deserialize(e))
+              .toList(),
     );
   }
 
@@ -29,7 +31,7 @@ class IbcClientIdentifiedGenesisMetadata extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "client_id": clientId,
-      "client_metadata": clientMetadata.map((e) => e.toJson()).toList()
+      "client_metadata": clientMetadata.map((e) => e.toJson()).toList(),
     };
   }
 

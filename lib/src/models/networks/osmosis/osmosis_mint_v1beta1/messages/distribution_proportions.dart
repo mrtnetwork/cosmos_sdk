@@ -19,26 +19,30 @@ class OsmosisMintDistributionProportions extends CosmosMessage {
   /// community_pool defines the proportion of the minted mint_denom that is
   /// to be allocated to the community pool.
   final String communityPool;
-  const OsmosisMintDistributionProportions(
-      {required this.staking,
-      required this.poolIncentives,
-      required this.developerRewards,
-      required this.communityPool});
+  const OsmosisMintDistributionProportions({
+    required this.staking,
+    required this.poolIncentives,
+    required this.developerRewards,
+    required this.communityPool,
+  });
   factory OsmosisMintDistributionProportions.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisMintDistributionProportions(
-        staking: decode.getField(1),
-        poolIncentives: decode.getField(2),
-        developerRewards: decode.getField(3),
-        communityPool: decode.getField(4));
+      staking: decode.getField(1),
+      poolIncentives: decode.getField(2),
+      developerRewards: decode.getField(3),
+      communityPool: decode.getField(4),
+    );
   }
   factory OsmosisMintDistributionProportions.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisMintDistributionProportions(
-        staking: json["staking"],
-        poolIncentives: json["pool_incentives"],
-        developerRewards: json["developer_rewards"],
-        communityPool: json["community_pool"]);
+      staking: json["staking"],
+      poolIncentives: json["pool_incentives"],
+      developerRewards: json["developer_rewards"],
+      communityPool: json["community_pool"],
+    );
   }
 
   @override
@@ -50,7 +54,7 @@ class OsmosisMintDistributionProportions extends CosmosMessage {
       "staking": staking,
       "pool_incentives": poolIncentives,
       "developer_rewards": developerRewards,
-      "community_pool": communityPool
+      "community_pool": communityPool,
     };
   }
 

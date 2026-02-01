@@ -8,23 +8,28 @@ import '../messages/validator_preference.dart';
 class OsmosisValSetprefUserValidatorPreferencesResponse extends CosmosMessage {
   final List<OsmosisValSetprefValidatorPreference> preferences;
   OsmosisValSetprefUserValidatorPreferencesResponse(
-      List<OsmosisValSetprefValidatorPreference> preferences)
-      : preferences = preferences.immutable;
+    List<OsmosisValSetprefValidatorPreference> preferences,
+  ) : preferences = preferences.immutable;
   factory OsmosisValSetprefUserValidatorPreferencesResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return OsmosisValSetprefUserValidatorPreferencesResponse(decode
-        .getFields<List<int>>(1)
-        .map((e) => OsmosisValSetprefValidatorPreference.deserialize(e))
-        .toList());
+    return OsmosisValSetprefUserValidatorPreferencesResponse(
+      decode
+          .getFields<List<int>>(1)
+          .map((e) => OsmosisValSetprefValidatorPreference.deserialize(e))
+          .toList(),
+    );
   }
   factory OsmosisValSetprefUserValidatorPreferencesResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisValSetprefUserValidatorPreferencesResponse(
-        (json["preferences"] as List?)
-                ?.map((e) => OsmosisValSetprefValidatorPreference.fromJson(e))
-                .toList() ??
-            <OsmosisValSetprefValidatorPreference>[]);
+      (json["preferences"] as List?)
+              ?.map((e) => OsmosisValSetprefValidatorPreference.fromJson(e))
+              .toList() ??
+          <OsmosisValSetprefValidatorPreference>[],
+    );
   }
 
   @override

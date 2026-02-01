@@ -19,9 +19,10 @@ class MsgPruneAllowances
     final decode = CosmosProtocolBuffer.decode(bytes);
 
     return MsgPruneAllowances(
-        pruner: decode
-            .getResult(1)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)));
+      pruner: decode
+          .getResult(1)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+    );
   }
   @override
   List<int> get fieldIds => [1];
@@ -42,6 +43,7 @@ class MsgPruneAllowances
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        FeegrantV1beta1Types.msgPruneAllowancesResponse);
+      FeegrantV1beta1Types.msgPruneAllowancesResponse,
+    );
   }
 }

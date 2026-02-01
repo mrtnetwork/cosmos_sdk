@@ -11,14 +11,18 @@ class CosmWasmV1QueryParamsResponse extends CosmosMessage {
   factory CosmWasmV1QueryParamsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmWasmV1QueryParamsResponse(
-        params: decode
-            .getResult(1)
-            ?.to<CosmWasmV1Params, List<int>>(CosmWasmV1Params.deserialize));
+      params: decode
+          .getResult(1)
+          ?.to<CosmWasmV1Params, List<int>>(CosmWasmV1Params.deserialize),
+    );
   }
   factory CosmWasmV1QueryParamsResponse.fromJson(Map<String, dynamic> json) {
     return CosmWasmV1QueryParamsResponse(
-        params: json.maybeAs<CosmWasmV1Params, Map<String, dynamic>>(
-            key: "params", onValue: (e) => CosmWasmV1Params.fromJson(e)));
+      params: json.maybeAs<CosmWasmV1Params, Map<String, dynamic>>(
+        key: "params",
+        onValue: (e) => CosmWasmV1Params.fromJson(e),
+      ),
+    );
   }
 
   @override

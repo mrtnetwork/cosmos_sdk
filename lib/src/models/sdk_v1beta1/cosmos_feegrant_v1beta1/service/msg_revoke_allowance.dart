@@ -19,16 +19,19 @@ class MsgRevokeAllowance
   factory MsgRevokeAllowance.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgRevokeAllowance(
-        granter: decode
-            .getResult(1)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        grantee: decode
-            .getResult(2)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)));
+      granter: decode
+          .getResult(1)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      grantee: decode
+          .getResult(2)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+    );
   }
   factory MsgRevokeAllowance.fromJson(Map<String, dynamic> json) {
     return MsgRevokeAllowance(
-        granter: json.asAddress("granter"), grantee: json.asAddress("grantee"));
+      granter: json.asAddress("granter"),
+      grantee: json.asAddress("grantee"),
+    );
   }
 
   @override
@@ -51,6 +54,7 @@ class MsgRevokeAllowance
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        FeegrantV1beta1Types.msgRevokeAllowanceResponse);
+      FeegrantV1beta1Types.msgRevokeAllowanceResponse,
+    );
   }
 }

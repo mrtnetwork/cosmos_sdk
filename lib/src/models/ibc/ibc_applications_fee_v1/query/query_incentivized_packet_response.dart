@@ -10,14 +10,18 @@ class QueryIncentivizedPacketResponse extends CosmosMessage {
 
   factory QueryIncentivizedPacketResponse.fromJson(Map<String, dynamic> json) {
     return QueryIncentivizedPacketResponse(
-        incentivizedPacket:
-            IbcFeeIdentifiedPacketFees.fromJson(json["incentivized_packet"]));
+      incentivizedPacket: IbcFeeIdentifiedPacketFees.fromJson(
+        json["incentivized_packet"],
+      ),
+    );
   }
   factory QueryIncentivizedPacketResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryIncentivizedPacketResponse(
-        incentivizedPacket:
-            IbcFeeIdentifiedPacketFees.deserialize(decode.getField(1)));
+      incentivizedPacket: IbcFeeIdentifiedPacketFees.deserialize(
+        decode.getField(1),
+      ),
+    );
   }
 
   @override

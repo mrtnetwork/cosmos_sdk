@@ -11,12 +11,16 @@ class QueryFeeEnabledChannelRequest extends CosmosMessage
 
   /// unique channel identifier
   final String channelId;
-  const QueryFeeEnabledChannelRequest(
-      {required this.portId, required this.channelId});
+  const QueryFeeEnabledChannelRequest({
+    required this.portId,
+    required this.channelId,
+  });
   factory QueryFeeEnabledChannelRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryFeeEnabledChannelRequest(
-        portId: decode.getField(1), channelId: decode.getField(2));
+      portId: decode.getField(1),
+      channelId: decode.getField(2),
+    );
   }
 
   @override

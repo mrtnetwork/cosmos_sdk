@@ -11,11 +11,13 @@ class IbcConnectConnectionPaths extends CosmosMessage {
   /// list of connection paths
   final List<String>? paths;
   IbcConnectConnectionPaths({this.clientId, List<String>? paths})
-      : paths = paths?.emptyAsNull?.immutable;
+    : paths = paths?.emptyAsNull?.immutable;
   factory IbcConnectConnectionPaths.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcConnectConnectionPaths(
-        clientId: decode.getField(1), paths: decode.getFields<String>(2));
+      clientId: decode.getField(1),
+      paths: decode.getFields<String>(2),
+    );
   }
 
   @override
@@ -23,10 +25,7 @@ class IbcConnectConnectionPaths extends CosmosMessage {
 
   @override
   Map<String, dynamic> toJson() {
-    return {
-      "client_id": clientId,
-      "paths": paths,
-    };
+    return {"client_id": clientId, "paths": paths};
   }
 
   @override

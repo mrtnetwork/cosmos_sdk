@@ -10,26 +10,28 @@ class ThorchainEventAddLiquidity extends CosmosMessage {
   final String? runeTxId;
   final String? assetTxId;
   final String? assetAddress;
-  const ThorchainEventAddLiquidity(
-      {required this.pool,
-      required this.providerUnits,
-      this.runeAddress,
-      required this.runeAmount,
-      required this.assetAmount,
-      this.runeTxId,
-      this.assetTxId,
-      this.assetAddress});
+  const ThorchainEventAddLiquidity({
+    required this.pool,
+    required this.providerUnits,
+    this.runeAddress,
+    required this.runeAmount,
+    required this.assetAmount,
+    this.runeTxId,
+    this.assetTxId,
+    this.assetAddress,
+  });
   factory ThorchainEventAddLiquidity.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainEventAddLiquidity(
-        pool: ThorchainAsset.deserialize(decode.getField(1)),
-        providerUnits: BigInt.parse(decode.getField(2)),
-        runeAddress: decode.getField(3),
-        runeAmount: BigInt.parse(decode.getField(4)),
-        assetAmount: BigInt.parse(decode.getField(5)),
-        runeTxId: decode.getField(6),
-        assetTxId: decode.getField(7),
-        assetAddress: decode.getField(8));
+      pool: ThorchainAsset.deserialize(decode.getField(1)),
+      providerUnits: BigInt.parse(decode.getField(2)),
+      runeAddress: decode.getField(3),
+      runeAmount: BigInt.parse(decode.getField(4)),
+      assetAmount: BigInt.parse(decode.getField(5)),
+      runeTxId: decode.getField(6),
+      assetTxId: decode.getField(7),
+      assetAddress: decode.getField(8),
+    );
   }
 
   @override
@@ -45,7 +47,7 @@ class ThorchainEventAddLiquidity extends CosmosMessage {
       "asset_amount": assetAmount.toString(),
       "rune_tx_id": runeTxId,
       "asset_tx_id": assetTxId,
-      "asset_address": assetAddress
+      "asset_address": assetAddress,
     };
   }
 
@@ -54,13 +56,13 @@ class ThorchainEventAddLiquidity extends CosmosMessage {
 
   @override
   List get values => [
-        pool,
-        providerUnits.toString(),
-        runeAddress,
-        runeAmount.toString(),
-        assetAmount.toString(),
-        runeTxId,
-        assetTxId,
-        assetAddress
-      ];
+    pool,
+    providerUnits.toString(),
+    runeAddress,
+    runeAmount.toString(),
+    assetAmount.toString(),
+    runeTxId,
+    assetTxId,
+    assetAddress,
+  ];
 }

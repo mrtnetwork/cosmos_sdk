@@ -4,15 +4,16 @@ import 'package:cosmos_sdk/src/provider/thornode/core/thorenode.dart';
 /// Provide a quote estimate for the provided loan open.
 class ThorNodeRequestLoanOpenQuote
     extends ThorNodeRequestParam<Map<String, dynamic>, Map<String, dynamic>> {
-  ThorNodeRequestLoanOpenQuote(
-      {this.height,
-      this.fromAsset,
-      this.amount,
-      this.toAsset,
-      this.destination,
-      this.minOut,
-      this.affiliateBPS,
-      this.affiliate});
+  ThorNodeRequestLoanOpenQuote({
+    this.height,
+    this.fromAsset,
+    this.amount,
+    this.toAsset,
+    this.destination,
+    this.minOut,
+    this.affiliateBPS,
+    this.affiliate,
+  });
 
   /// optional block height, defaults to current tip
   final BigInt? height;
@@ -46,13 +47,13 @@ class ThorNodeRequestLoanOpenQuote
 
   @override
   Map<String, String?> get parameters => {
-        "height": height?.toString(),
-        "from_asset": fromAsset,
-        "amount": amount?.toString(),
-        "to_asset": toAsset,
-        "destination": destination,
-        "min_out": minOut,
-        "affiliate_bps": affiliateBPS?.toString(),
-        "affiliate": affiliate
-      };
+    "height": height?.toString(),
+    "from_asset": fromAsset,
+    "amount": amount?.toString(),
+    "to_asset": toAsset,
+    "destination": destination,
+    "min_out": minOut,
+    "affiliate_bps": affiliateBPS?.toString(),
+    "affiliate": affiliate,
+  };
 }

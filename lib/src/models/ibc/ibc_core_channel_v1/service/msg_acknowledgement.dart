@@ -16,31 +16,35 @@ class MsgAcknowledgement extends IbcService<MsgAcknowledgementResponse> {
   final List<int>? proofAcked;
   final IbcClientHeight proofHeight;
   final String? signer;
-  MsgAcknowledgement(
-      {required this.packet,
-      List<int>? acknowledgement,
-      List<int>? proofAcked,
-      required this.proofHeight,
-      this.signer})
-      : acknowledgement =
-            BytesUtils.tryToBytes(acknowledgement, unmodifiable: true),
-        proofAcked = BytesUtils.tryToBytes(proofAcked, unmodifiable: true);
+  MsgAcknowledgement({
+    required this.packet,
+    List<int>? acknowledgement,
+    List<int>? proofAcked,
+    required this.proofHeight,
+    this.signer,
+  }) : acknowledgement = BytesUtils.tryToBytes(
+         acknowledgement,
+         unmodifiable: true,
+       ),
+       proofAcked = BytesUtils.tryToBytes(proofAcked, unmodifiable: true);
   factory MsgAcknowledgement.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgAcknowledgement(
-        packet: IbcChannelPacket.deserialize(decode.getField(1)),
-        acknowledgement: decode.getField(2),
-        proofAcked: decode.getField(3),
-        proofHeight: IbcClientHeight.deserialize(decode.getField(4)),
-        signer: decode.getField(5));
+      packet: IbcChannelPacket.deserialize(decode.getField(1)),
+      acknowledgement: decode.getField(2),
+      proofAcked: decode.getField(3),
+      proofHeight: IbcClientHeight.deserialize(decode.getField(4)),
+      signer: decode.getField(5),
+    );
   }
   factory MsgAcknowledgement.fromJson(Map<String, dynamic> json) {
     return MsgAcknowledgement(
-        packet: IbcChannelPacket.fromJson(json.asMap("packet")),
-        acknowledgement: json.asBytes("acknowledgement"),
-        proofAcked: json.asBytes("proof_acked"),
-        proofHeight: IbcClientHeight.fromJson(json.asMap("proof_height")),
-        signer: json.as("signer"));
+      packet: IbcChannelPacket.fromJson(json.asMap("packet")),
+      acknowledgement: json.asBytes("acknowledgement"),
+      proofAcked: json.asBytes("proof_acked"),
+      proofHeight: IbcClientHeight.fromJson(json.asMap("proof_height")),
+      signer: json.as("signer"),
+    );
   }
 
   @override
@@ -53,7 +57,7 @@ class MsgAcknowledgement extends IbcService<MsgAcknowledgementResponse> {
       "acknowledgement": BytesUtils.tryToHexString(acknowledgement),
       "proof_acked": BytesUtils.tryToHexString(proofAcked),
       "proof_height": proofHeight.toJson(),
-      "signer": signer
+      "signer": signer,
     };
   }
 

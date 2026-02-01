@@ -15,7 +15,9 @@ class QueryUpgradeRequest extends CosmosMessage
   factory QueryUpgradeRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryUpgradeRequest(
-        portId: decode.getField(1), channelId: decode.getField(2));
+      portId: decode.getField(1),
+      channelId: decode.getField(2),
+    );
   }
 
   @override

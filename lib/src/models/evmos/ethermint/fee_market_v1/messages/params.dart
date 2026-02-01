@@ -30,34 +30,38 @@ class EvmosEthermintFeeMarketV1Params extends CosmosMessage {
 
   factory EvmosEthermintFeeMarketV1Params.fromJson(Map<String, dynamic> json) {
     return EvmosEthermintFeeMarketV1Params(
-        baseFee: json["base_fee"],
-        baseFeeChangeDenominator:
-            IntUtils.parse(json["base_fee_change_denominator"]),
-        elasticityMultiplier: IntUtils.parse(json["elasticity_multiplier"]),
-        enableHeight: BigintUtils.parse(json["enable_height"]),
-        minGasMultiplier: json["min_gas_multiplier"],
-        minGasPrice: json["min_gas_price"],
-        noBaseFee: json["no_base_fee"]);
+      baseFee: json["base_fee"],
+      baseFeeChangeDenominator: IntUtils.parse(
+        json["base_fee_change_denominator"],
+      ),
+      elasticityMultiplier: IntUtils.parse(json["elasticity_multiplier"]),
+      enableHeight: BigintUtils.parse(json["enable_height"]),
+      minGasMultiplier: json["min_gas_multiplier"],
+      minGasPrice: json["min_gas_price"],
+      noBaseFee: json["no_base_fee"],
+    );
   }
 
-  EvmosEthermintFeeMarketV1Params(
-      {required this.noBaseFee,
-      required this.baseFeeChangeDenominator,
-      required this.elasticityMultiplier,
-      required this.enableHeight,
-      required this.baseFee,
-      required this.minGasPrice,
-      required this.minGasMultiplier});
+  EvmosEthermintFeeMarketV1Params({
+    required this.noBaseFee,
+    required this.baseFeeChangeDenominator,
+    required this.elasticityMultiplier,
+    required this.enableHeight,
+    required this.baseFee,
+    required this.minGasPrice,
+    required this.minGasMultiplier,
+  });
   factory EvmosEthermintFeeMarketV1Params.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosEthermintFeeMarketV1Params(
-        noBaseFee: decode.getField(1, setDefault: true),
-        baseFeeChangeDenominator: decode.getField(2),
-        elasticityMultiplier: decode.getField(3),
-        enableHeight: decode.getField(5, setDefault: true),
-        baseFee: decode.getField(6),
-        minGasPrice: decode.getField(7),
-        minGasMultiplier: decode.getField(8));
+      noBaseFee: decode.getField(1, setDefault: true),
+      baseFeeChangeDenominator: decode.getField(2),
+      elasticityMultiplier: decode.getField(3),
+      enableHeight: decode.getField(5, setDefault: true),
+      baseFee: decode.getField(6),
+      minGasPrice: decode.getField(7),
+      minGasMultiplier: decode.getField(8),
+    );
   }
 
   @override
@@ -72,7 +76,7 @@ class EvmosEthermintFeeMarketV1Params extends CosmosMessage {
       "enable_height": enableHeight.toString(),
       "base_fee": baseFee,
       "min_gas_price": minGasPrice,
-      "min_gas_multiplier": minGasMultiplier
+      "min_gas_multiplier": minGasMultiplier,
     };
   }
 
@@ -81,12 +85,12 @@ class EvmosEthermintFeeMarketV1Params extends CosmosMessage {
 
   @override
   List get values => [
-        noBaseFee,
-        baseFeeChangeDenominator,
-        elasticityMultiplier,
-        enableHeight,
-        baseFee,
-        minGasPrice,
-        minGasMultiplier
-      ];
+    noBaseFee,
+    baseFeeChangeDenominator,
+    elasticityMultiplier,
+    enableHeight,
+    baseFee,
+    minGasPrice,
+    minGasMultiplier,
+  ];
 }

@@ -9,15 +9,21 @@ class QueryClientParamsResponse extends CosmosMessage {
   const QueryClientParamsResponse({this.params});
   factory QueryClientParamsResponse.fromJson(Map<String, dynamic> json) {
     return QueryClientParamsResponse(
-        params: json["params"] == null
-            ? null
-            : IbcClientParams.fromJson(json["params"]));
+      params:
+          json["params"] == null
+              ? null
+              : IbcClientParams.fromJson(json["params"]),
+    );
   }
   factory QueryClientParamsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryClientParamsResponse(
-        params: decode.getResult(1)?.to<IbcClientParams, List<int>>(
-            (e) => IbcClientParams.deserialize(e)));
+      params: decode
+          .getResult(1)
+          ?.to<IbcClientParams, List<int>>(
+            (e) => IbcClientParams.deserialize(e),
+          ),
+    );
   }
 
   @override

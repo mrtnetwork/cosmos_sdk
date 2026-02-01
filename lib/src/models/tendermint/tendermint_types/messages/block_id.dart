@@ -7,20 +7,20 @@ class BlockID extends CosmosMessage {
   final List<int>? hash;
   final PartSetHeader partSetHeader;
 
-  BlockID({
-    List<int>? hash,
-    required this.partSetHeader,
-  }) : hash = BytesUtils.tryToBytes(hash, unmodifiable: true);
+  BlockID({List<int>? hash, required this.partSetHeader})
+    : hash = BytesUtils.tryToBytes(hash, unmodifiable: true);
   factory BlockID.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return BlockID(
-        partSetHeader: PartSetHeader.deserialize(decode.getField(2)),
-        hash: decode.getField(1));
+      partSetHeader: PartSetHeader.deserialize(decode.getField(2)),
+      hash: decode.getField(1),
+    );
   }
   factory BlockID.fromJson(Map<String, dynamic> json) {
     return BlockID(
-        partSetHeader: PartSetHeader.fromJson(json["part_set_header"]),
-        hash: StringUtils.encode(json["hash"], type: StringEncoding.base64));
+      partSetHeader: PartSetHeader.fromJson(json["part_set_header"]),
+      hash: StringUtils.encode(json["hash"], type: StringEncoding.base64),
+    );
   }
   @override
   Map<String, dynamic> toJson() {

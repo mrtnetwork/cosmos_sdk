@@ -9,8 +9,11 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'store_and_instantiate_contract_response.dart';
 
 /// MsgStoreAndInstantiateContract is the MsgStoreAndInstantiateContract request type.
-class CosmWasmV1StoreAndInstantiateContract extends CosmWasm1Beta1Service<
-    CosmWasmV1MsgStoreAndInstantiateContractResponse> {
+class CosmWasmV1StoreAndInstantiateContract
+    extends
+        CosmWasm1Beta1Service<
+          CosmWasmV1MsgStoreAndInstantiateContractResponse
+        > {
   /// Authority is the address of the governance account.
   final String? authority;
 
@@ -60,49 +63,54 @@ class CosmWasmV1StoreAndInstantiateContract extends CosmWasm1Beta1Service<
     this.source,
     this.builder,
     List<int>? codeHash,
-  })  : wasmByteCode = wasmByteCode?.immutable,
-        msg = msg?.asImmutableBytes,
-        funds = funds?.immutable,
-        codeHash = codeHash?.asImmutableBytes;
+  }) : wasmByteCode = wasmByteCode?.immutable,
+       msg = msg?.asImmutableBytes,
+       funds = funds?.immutable,
+       codeHash = codeHash?.asImmutableBytes;
   factory CosmWasmV1StoreAndInstantiateContract.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmWasmV1StoreAndInstantiateContract(
-        authority: decode.getField(1),
-        wasmByteCode: decode.getField(3),
-        instantiatePermission: decode
-            .getResult(4)
-            ?.to<CosmWasmV1AccessConfig, List<int>>(
-                (e) => CosmWasmV1AccessConfig.deserialize(e)),
-        unpinCode: decode.getField(5),
-        admin: decode.getField(6),
-        label: decode.getField(7),
-        msg: decode.getField(8),
-        funds: decode
-            .getFields<List<int>>(9)
-            .map((e) => Coin.deserialize(e))
-            .toList(),
-        source: decode.getField(10),
-        builder: decode.getField(11),
-        codeHash: decode.getField(12));
+      authority: decode.getField(1),
+      wasmByteCode: decode.getField(3),
+      instantiatePermission: decode
+          .getResult(4)
+          ?.to<CosmWasmV1AccessConfig, List<int>>(
+            (e) => CosmWasmV1AccessConfig.deserialize(e),
+          ),
+      unpinCode: decode.getField(5),
+      admin: decode.getField(6),
+      label: decode.getField(7),
+      msg: decode.getField(8),
+      funds:
+          decode
+              .getFields<List<int>>(9)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
+      source: decode.getField(10),
+      builder: decode.getField(11),
+      codeHash: decode.getField(12),
+    );
   }
   factory CosmWasmV1StoreAndInstantiateContract.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return CosmWasmV1StoreAndInstantiateContract(
-        authority: json.as("authority"),
-        wasmByteCode: json.asBytes("wasm_byte_code"),
-        instantiatePermission:
-            json.maybeAs<CosmWasmV1AccessConfig, Map<String, dynamic>>(
-                key: "instantiate_permission",
-                onValue: (e) => CosmWasmV1AccessConfig.fromJson(e)),
-        admin: json.as("admin"),
-        builder: json.as("builder"),
-        codeHash: json.asBytes("code_hash"),
-        msg: json.asBytes("msg"),
-        label: json.as("label"),
-        source: json.as("source"),
-        unpinCode: json.as("unpin_code"),
-        funds:
-            json.asListOfMap("funds")?.map((e) => Coin.fromJson(e)).toList());
+      authority: json.as("authority"),
+      wasmByteCode: json.asBytes("wasm_byte_code"),
+      instantiatePermission: json
+          .maybeAs<CosmWasmV1AccessConfig, Map<String, dynamic>>(
+            key: "instantiate_permission",
+            onValue: (e) => CosmWasmV1AccessConfig.fromJson(e),
+          ),
+      admin: json.as("admin"),
+      builder: json.as("builder"),
+      codeHash: json.asBytes("code_hash"),
+      msg: json.asBytes("msg"),
+      label: json.as("label"),
+      source: json.as("source"),
+      unpinCode: json.as("unpin_code"),
+      funds: json.asListOfMap("funds")?.map((e) => Coin.fromJson(e)).toList(),
+    );
   }
 
   @override
@@ -121,24 +129,24 @@ class CosmWasmV1StoreAndInstantiateContract extends CosmWasm1Beta1Service<
       "funds": funds?.map((e) => e.toJson()).toList(),
       "source": source,
       "builder": builder,
-      "code_hash": CosmosUtils.tryToBase64(codeHash)
+      "code_hash": CosmosUtils.tryToBase64(codeHash),
     };
   }
 
   @override
   List get values => [
-        authority,
-        wasmByteCode,
-        instantiatePermission,
-        unpinCode,
-        admin,
-        label,
-        msg,
-        funds,
-        source,
-        builder,
-        codeHash
-      ];
+    authority,
+    wasmByteCode,
+    instantiatePermission,
+    unpinCode,
+    admin,
+    label,
+    msg,
+    funds,
+    source,
+    builder,
+    codeHash,
+  ];
 
   @override
   CosmWasmV1Types get typeUrl => CosmWasmV1Types.msgStoreAndInstantiateContract;

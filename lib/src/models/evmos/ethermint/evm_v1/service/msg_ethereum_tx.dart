@@ -24,21 +24,27 @@ class EvmosEthermintEVMV1MsgEthereumTx
   final String from;
   factory EvmosEthermintEVMV1MsgEthereumTx.fromJson(Map<String, dynamic> json) {
     return EvmosEthermintEVMV1MsgEthereumTx(
-        data: AnyMessage.fromJson(json["data"]),
-        size: (json["size"] as num?)?.toDouble(),
-        hash: json["hash"],
-        from: json["from"]);
+      data: AnyMessage.fromJson(json["data"]),
+      size: (json["size"] as num?)?.toDouble(),
+      hash: json["hash"],
+      from: json["from"],
+    );
   }
-  const EvmosEthermintEVMV1MsgEthereumTx(
-      {required this.data, this.size, required this.hash, required this.from});
+  const EvmosEthermintEVMV1MsgEthereumTx({
+    required this.data,
+    this.size,
+    required this.hash,
+    required this.from,
+  });
   factory EvmosEthermintEVMV1MsgEthereumTx.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosEthermintEVMV1MsgEthereumTx(
-        data: decode
-            .getResult(1)!
-            .to<AnyMessage, List<int>>((e) => AnyMessage.deserialize(e)),
-        hash: decode.getField(3),
-        from: decode.getField(4));
+      data: decode
+          .getResult(1)!
+          .to<AnyMessage, List<int>>((e) => AnyMessage.deserialize(e)),
+      hash: decode.getField(3),
+      from: decode.getField(4),
+    );
   }
 
   @override

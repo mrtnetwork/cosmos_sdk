@@ -14,22 +14,23 @@ class OsmosisGammMsgJoinPool
   final BigInt? poolId;
   final String shareOutAmount;
   final List<Coin> tokenInMaxs;
-  OsmosisGammMsgJoinPool(
-      {this.sender,
-      this.poolId,
-      required this.shareOutAmount,
-      required List<Coin> tokenInMaxs})
-      : tokenInMaxs = tokenInMaxs.immutable;
+  OsmosisGammMsgJoinPool({
+    this.sender,
+    this.poolId,
+    required this.shareOutAmount,
+    required List<Coin> tokenInMaxs,
+  }) : tokenInMaxs = tokenInMaxs.immutable;
   factory OsmosisGammMsgJoinPool.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisGammMsgJoinPool(
       sender: decode.getField(1),
       poolId: decode.getField(2),
       shareOutAmount: decode.getField(3),
-      tokenInMaxs: decode
-          .getFields<List<int>>(4)
-          .map((e) => Coin.deserialize(e))
-          .toList(),
+      tokenInMaxs:
+          decode
+              .getFields<List<int>>(4)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
     );
   }
   factory OsmosisGammMsgJoinPool.fromJson(Map<String, dynamic> json) {
@@ -37,7 +38,8 @@ class OsmosisGammMsgJoinPool
       sender: json.as("sender"),
       poolId: json.asBigInt("pool_id"),
       shareOutAmount: json.as("share_out_amount"),
-      tokenInMaxs: json
+      tokenInMaxs:
+          json
               .asListOfMap("token_in_maxs")
               ?.map((e) => Coin.fromJson(e))
               .toList() ??
@@ -54,7 +56,7 @@ class OsmosisGammMsgJoinPool
       "sender": sender,
       "pool_id": poolId?.toString(),
       "share_out_amount": shareOutAmount,
-      "token_in_maxs": tokenInMaxs.map((e) => e.toJson()).toList()
+      "token_in_maxs": tokenInMaxs.map((e) => e.toJson()).toList(),
     };
   }
 

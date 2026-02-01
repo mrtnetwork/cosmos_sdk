@@ -14,9 +14,11 @@ class QueryNextSequenceReceiveResponse extends CosmosMessage {
 
   /// height at which the proof was retrieved
   final IbcClientHeight proofHeight;
-  QueryNextSequenceReceiveResponse(
-      {this.nextSequenceReceive, List<int>? proof, required this.proofHeight})
-      : proof = BytesUtils.tryToBytes(proof, unmodifiable: true);
+  QueryNextSequenceReceiveResponse({
+    this.nextSequenceReceive,
+    List<int>? proof,
+    required this.proofHeight,
+  }) : proof = BytesUtils.tryToBytes(proof, unmodifiable: true);
   factory QueryNextSequenceReceiveResponse.fromJson(Map<String, dynamic> json) {
     return QueryNextSequenceReceiveResponse(
       nextSequenceReceive: BigintUtils.tryParse(json["next_sequence_receive"]),
@@ -42,7 +44,7 @@ class QueryNextSequenceReceiveResponse extends CosmosMessage {
     return {
       "next_sequence_receive": nextSequenceReceive?.toString(),
       "proof": BytesUtils.tryToHexString(proof),
-      "proof_height": proofHeight.toJson()
+      "proof_height": proofHeight.toJson(),
     };
   }
 

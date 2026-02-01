@@ -7,7 +7,8 @@ class ThorchainEventScheduledOutbound extends CosmosMessage {
   factory ThorchainEventScheduledOutbound.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainEventScheduledOutbound(
-        ThorchainTxOutItem.deserialize(decode.getField(1)));
+      ThorchainTxOutItem.deserialize(decode.getField(1)),
+    );
   }
 
   @override

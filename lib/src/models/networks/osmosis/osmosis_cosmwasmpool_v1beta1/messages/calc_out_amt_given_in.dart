@@ -12,14 +12,18 @@ class OsmosisCosmWasmPoolCalcOutAmtGivenIn extends CosmosMessage {
   /// [swapFee] is the swap fee for this swap estimate.
   final String swapFee;
 
-  OsmosisCosmWasmPoolCalcOutAmtGivenIn(
-      {required this.tokenIn, this.tokenOutDenom, required this.swapFee});
+  OsmosisCosmWasmPoolCalcOutAmtGivenIn({
+    required this.tokenIn,
+    this.tokenOutDenom,
+    required this.swapFee,
+  });
   factory OsmosisCosmWasmPoolCalcOutAmtGivenIn.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisCosmWasmPoolCalcOutAmtGivenIn(
-        tokenIn: Coin.deserialize(decode.getField(1)),
-        tokenOutDenom: decode.getField(2),
-        swapFee: decode.getField(3));
+      tokenIn: Coin.deserialize(decode.getField(1)),
+      tokenOutDenom: decode.getField(2),
+      swapFee: decode.getField(3),
+    );
   }
 
   @override
@@ -30,7 +34,7 @@ class OsmosisCosmWasmPoolCalcOutAmtGivenIn extends CosmosMessage {
     return {
       "token_in": tokenIn.toJson(),
       "token_out_denom": tokenOutDenom,
-      "swap_fee": swapFee
+      "swap_fee": swapFee,
     };
   }
 

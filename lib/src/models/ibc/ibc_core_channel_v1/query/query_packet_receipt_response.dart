@@ -23,9 +23,11 @@ class QueryPacketReceiptResponse extends CosmosMessage {
       proofHeight: IbcClientHeight.fromJson(json["proof_height"]),
     );
   }
-  QueryPacketReceiptResponse(
-      {this.received, List<int>? proof, required this.proofHeight})
-      : proof = BytesUtils.tryToBytes(proof, unmodifiable: true);
+  QueryPacketReceiptResponse({
+    this.received,
+    List<int>? proof,
+    required this.proofHeight,
+  }) : proof = BytesUtils.tryToBytes(proof, unmodifiable: true);
   factory QueryPacketReceiptResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryPacketReceiptResponse(
@@ -43,7 +45,7 @@ class QueryPacketReceiptResponse extends CosmosMessage {
     return {
       "received": received,
       "proof": BytesUtils.tryToHexString(proof),
-      "proof_height": proofHeight.toJson()
+      "proof_height": proofHeight.toJson(),
     };
   }
 

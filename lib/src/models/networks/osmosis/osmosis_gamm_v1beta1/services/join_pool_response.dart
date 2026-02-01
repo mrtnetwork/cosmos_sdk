@@ -6,17 +6,20 @@ import 'package:blockchain_utils/helper/helper.dart';
 class OsmosisGammMsgJoinPoolResponse extends CosmosMessage {
   final String shareOutAmount;
   final List<Coin> tokenInMaxs;
-  OsmosisGammMsgJoinPoolResponse(
-      {required this.shareOutAmount, required List<Coin> tokenInMaxs})
-      : tokenInMaxs = tokenInMaxs.immutable;
+  OsmosisGammMsgJoinPoolResponse({
+    required this.shareOutAmount,
+    required List<Coin> tokenInMaxs,
+  }) : tokenInMaxs = tokenInMaxs.immutable;
   factory OsmosisGammMsgJoinPoolResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisGammMsgJoinPoolResponse(
-        shareOutAmount: decode.getField(1),
-        tokenInMaxs: decode
-            .getFields<List<int>>(2)
-            .map((e) => Coin.deserialize(e))
-            .toList());
+      shareOutAmount: decode.getField(1),
+      tokenInMaxs:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
+    );
   }
 
   @override
@@ -26,7 +29,7 @@ class OsmosisGammMsgJoinPoolResponse extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "share_out_amount": shareOutAmount,
-      "token_in": tokenInMaxs.map((e) => e.toJson()).toList()
+      "token_in": tokenInMaxs.map((e) => e.toJson()).toList(),
     };
   }
 

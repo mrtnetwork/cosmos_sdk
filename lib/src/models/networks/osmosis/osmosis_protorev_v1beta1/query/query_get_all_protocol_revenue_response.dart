@@ -5,18 +5,22 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class OsmosisProtorevQueryGetAllProtocolRevenueResponse extends CosmosMessage {
   final OsmosisProtorevAllProtocolRevenue allProtocolRevenue;
   const OsmosisProtorevQueryGetAllProtocolRevenueResponse(
-      this.allProtocolRevenue);
+    this.allProtocolRevenue,
+  );
   factory OsmosisProtorevQueryGetAllProtocolRevenueResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisProtorevQueryGetAllProtocolRevenueResponse(
-        OsmosisProtorevAllProtocolRevenue.deserialize(decode.getField(1)));
+      OsmosisProtorevAllProtocolRevenue.deserialize(decode.getField(1)),
+    );
   }
   factory OsmosisProtorevQueryGetAllProtocolRevenueResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisProtorevQueryGetAllProtocolRevenueResponse(
-        OsmosisProtorevAllProtocolRevenue.fromJson(
-            json["all_protocol_revenue"]));
+      OsmosisProtorevAllProtocolRevenue.fromJson(json["all_protocol_revenue"]),
+    );
   }
 
   @override

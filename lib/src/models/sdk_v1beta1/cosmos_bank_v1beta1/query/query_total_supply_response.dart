@@ -12,10 +12,11 @@ class QueryTotalSupplyResponse extends CosmosMessage {
     return QueryTotalSupplyResponse(
       supply:
           (json["supply"] as List?)?.map((e) => Coin.fromJson(e)).toList() ??
-              [],
-      pagination: json["pagination"] == null
-          ? null
-          : PageResponse.fromJson(json["pagination"]),
+          [],
+      pagination:
+          json["pagination"] == null
+              ? null
+              : PageResponse.fromJson(json["pagination"]),
     );
   }
 
@@ -27,13 +28,15 @@ class QueryTotalSupplyResponse extends CosmosMessage {
   factory QueryTotalSupplyResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryTotalSupplyResponse(
-        supply: decode
-            .getFields<List<int>>(1)
-            .map((e) => Coin.deserialize(e))
-            .toList(),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
+      supply:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
+    );
   }
   @override
   List<int> get fieldIds => [1, 2];
@@ -42,7 +45,7 @@ class QueryTotalSupplyResponse extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "supply": supply.map((e) => e.toJson()).toList(),
-      "pagination": pagination?.toJson()
+      "pagination": pagination?.toJson(),
     };
   }
 

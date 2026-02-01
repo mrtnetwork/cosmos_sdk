@@ -11,17 +11,21 @@ class DistributionValidatorAccumulatedCommissionRecord extends CosmosMessage {
 
   /// accumulated is the accumulated commission of a validator.
   final DistributionValidatorAccumulatedCommission accumulated;
-  const DistributionValidatorAccumulatedCommissionRecord(
-      {this.validatorAddress, required this.accumulated});
+  const DistributionValidatorAccumulatedCommissionRecord({
+    this.validatorAddress,
+    required this.accumulated,
+  });
   factory DistributionValidatorAccumulatedCommissionRecord.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionValidatorAccumulatedCommissionRecord(
       validatorAddress: decode
           .getResult(1)
           ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
       accumulated: DistributionValidatorAccumulatedCommission.deserialize(
-          decode.getField(2)),
+        decode.getField(2),
+      ),
     );
   }
 
@@ -32,7 +36,7 @@ class DistributionValidatorAccumulatedCommissionRecord extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "validator_address": validatorAddress?.address,
-      "accumulated": accumulated.toJson()
+      "accumulated": accumulated.toJson(),
     };
   }
 

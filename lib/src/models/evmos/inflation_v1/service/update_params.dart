@@ -7,7 +7,8 @@ import 'package:cosmos_sdk/src/models/evmos/core/service.dart';
 
 // MsgUpdateParams defines a Msg for updating the x/inflation module parameters.
 class EvmosInflationV1MsgUpdateParams
-    extends EvmosService<EmptyServiceRequestResponse> with AminoMessage {
+    extends EvmosService<EmptyServiceRequestResponse>
+    with AminoMessage {
   /// authority is the address of the governance account
   final String? authority;
 
@@ -15,21 +16,30 @@ class EvmosInflationV1MsgUpdateParams
   /// NOTE: All parameters must be supplied.
   final EvmosInflationV1Params? params;
 
-  const EvmosInflationV1MsgUpdateParams(
-      {required this.authority, required this.params});
+  const EvmosInflationV1MsgUpdateParams({
+    required this.authority,
+    required this.params,
+  });
 
   factory EvmosInflationV1MsgUpdateParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosInflationV1MsgUpdateParams(
-        authority: decode.getField(1),
-        params: decode.getResult(2)?.to<EvmosInflationV1Params, List<int>>(
-            EvmosInflationV1Params.deserialize));
+      authority: decode.getField(1),
+      params: decode
+          .getResult(2)
+          ?.to<EvmosInflationV1Params, List<int>>(
+            EvmosInflationV1Params.deserialize,
+          ),
+    );
   }
   factory EvmosInflationV1MsgUpdateParams.fromJson(Map<String, dynamic> json) {
     return EvmosInflationV1MsgUpdateParams(
-        authority: json.as("authority"),
-        params: json.maybeAs(
-            key: "params", onValue: EvmosInflationV1Params.fromJson));
+      authority: json.as("authority"),
+      params: json.maybeAs(
+        key: "params",
+        onValue: EvmosInflationV1Params.fromJson,
+      ),
+    );
   }
 
   @override
@@ -51,6 +61,7 @@ class EvmosInflationV1MsgUpdateParams
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        EvmosErc20V1Types.inflationMsgUpdateParamsResponse);
+      EvmosErc20V1Types.inflationMsgUpdateParamsResponse,
+    );
   }
 }

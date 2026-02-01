@@ -47,48 +47,49 @@ class OsmosisStreamSwapMsgCreateSale
   /// valid agains Go url.ParseRequestURI. Required.
   final String? url;
 
-  OsmosisStreamSwapMsgCreateSale(
-      {this.creator,
-      this.tokenIn,
-      required this.tokenOut,
-      required List<Coin> maxFee,
-      required this.startTime,
-      required this.duration,
-      this.recipient,
-      this.name,
-      this.url})
-      : maxFee = maxFee.immutable;
+  OsmosisStreamSwapMsgCreateSale({
+    this.creator,
+    this.tokenIn,
+    required this.tokenOut,
+    required List<Coin> maxFee,
+    required this.startTime,
+    required this.duration,
+    this.recipient,
+    this.name,
+    this.url,
+  }) : maxFee = maxFee.immutable;
   factory OsmosisStreamSwapMsgCreateSale.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisStreamSwapMsgCreateSale(
-        creator: decode.getField(1),
-        tokenIn: decode.getField(2),
-        tokenOut: Coin.deserialize(decode.getField(3)),
-        maxFee: decode
-            .getFields<List<int>>(4)
-            .map((e) => Coin.deserialize(e))
-            .toList(),
-        startTime: ProtobufTimestamp.deserialize(decode.getField(5)),
-        duration: ProtobufDuration.deserialize(decode.getField(6)),
-        recipient: decode.getField(7),
-        name: decode.getField(8),
-        url: decode.getField(9));
+      creator: decode.getField(1),
+      tokenIn: decode.getField(2),
+      tokenOut: Coin.deserialize(decode.getField(3)),
+      maxFee:
+          decode
+              .getFields<List<int>>(4)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
+      startTime: ProtobufTimestamp.deserialize(decode.getField(5)),
+      duration: ProtobufDuration.deserialize(decode.getField(6)),
+      recipient: decode.getField(7),
+      name: decode.getField(8),
+      url: decode.getField(9),
+    );
   }
   factory OsmosisStreamSwapMsgCreateSale.fromJson(Map<String, dynamic> json) {
     return OsmosisStreamSwapMsgCreateSale(
-        creator: json.as("creator"),
-        tokenIn: json.as("token_in"),
-        tokenOut: Coin.fromJson(json.asMap("token_out")),
-        maxFee: json
-                .asListOfMap("max_fee")
-                ?.map((e) => Coin.fromJson(e))
-                .toList() ??
-            [],
-        startTime: ProtobufTimestamp.fromString(json.as("start_time")),
-        duration: ProtobufDuration.fromString(json.as("duration")),
-        recipient: json.as("recipient"),
-        name: json.as("name"),
-        url: json.as("url"));
+      creator: json.as("creator"),
+      tokenIn: json.as("token_in"),
+      tokenOut: Coin.fromJson(json.asMap("token_out")),
+      maxFee:
+          json.asListOfMap("max_fee")?.map((e) => Coin.fromJson(e)).toList() ??
+          [],
+      startTime: ProtobufTimestamp.fromString(json.as("start_time")),
+      duration: ProtobufDuration.fromString(json.as("duration")),
+      recipient: json.as("recipient"),
+      name: json.as("name"),
+      url: json.as("url"),
+    );
   }
   @override
   List<int> get fieldIds => [1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -104,7 +105,7 @@ class OsmosisStreamSwapMsgCreateSale
       "duration": duration.toJson(),
       "recipient": recipient,
       "name": name,
-      "url": url
+      "url": url,
     };
   }
 
@@ -113,16 +114,16 @@ class OsmosisStreamSwapMsgCreateSale
 
   @override
   List get values => [
-        creator,
-        tokenIn,
-        tokenOut,
-        maxFee,
-        startTime,
-        duration,
-        recipient,
-        name,
-        url
-      ];
+    creator,
+    tokenIn,
+    tokenOut,
+    maxFee,
+    startTime,
+    duration,
+    recipient,
+    name,
+    url,
+  ];
 
   @override
   OsmosisStreamSwapMsgCreateSaleResponse onResponse(List<int> bytes) {

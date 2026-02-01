@@ -7,7 +7,8 @@ class OsmosisProtorevQueryGetProtoRevInfoByPoolTypeRequest extends CosmosMessage
     with QueryMessage<OsmosisProtorevQueryGetProtoRevInfoByPoolTypeResponse> {
   const OsmosisProtorevQueryGetProtoRevInfoByPoolTypeRequest();
   factory OsmosisProtorevQueryGetProtoRevInfoByPoolTypeRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return const OsmosisProtorevQueryGetProtoRevInfoByPoolTypeRequest();
   }
 
@@ -24,14 +25,17 @@ class OsmosisProtorevQueryGetProtoRevInfoByPoolTypeRequest extends CosmosMessage
 
   @override
   OsmosisProtorevQueryGetProtoRevInfoByPoolTypeResponse onResponse(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return OsmosisProtorevQueryGetProtoRevInfoByPoolTypeResponse.deserialize(
-        bytes);
+      bytes,
+    );
   }
 
   @override
   OsmosisProtorevQueryGetProtoRevInfoByPoolTypeResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisProtorevQueryGetProtoRevInfoByPoolTypeResponse.fromJson(json);
   }
 

@@ -7,23 +7,29 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class DistributionQueryDelegatorWithdrawAddressResponse extends CosmosMessage {
   /// withdraw_address defines the delegator address to query for.
   final CosmosBaseAddress? withdrawAddress;
-  const DistributionQueryDelegatorWithdrawAddressResponse(
-      {this.withdrawAddress});
+  const DistributionQueryDelegatorWithdrawAddressResponse({
+    this.withdrawAddress,
+  });
 
   factory DistributionQueryDelegatorWithdrawAddressResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return DistributionQueryDelegatorWithdrawAddressResponse(
-        withdrawAddress: json["withdraw_address"] == null
-            ? null
-            : CosmosBaseAddress(json["withdraw_address"]));
+      withdrawAddress:
+          json["withdraw_address"] == null
+              ? null
+              : CosmosBaseAddress(json["withdraw_address"]),
+    );
   }
   factory DistributionQueryDelegatorWithdrawAddressResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionQueryDelegatorWithdrawAddressResponse(
-        withdrawAddress: decode
-            .getResult(1)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)));
+      withdrawAddress: decode
+          .getResult(1)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+    );
   }
 
   @override
@@ -35,8 +41,9 @@ class DistributionQueryDelegatorWithdrawAddressResponse extends CosmosMessage {
   }
 
   @override
-  TypeUrl get typeUrl => DistributionV1beta1Types
-      .distributionQueryDelegatorWithdrawAddressResponse;
+  TypeUrl get typeUrl =>
+      DistributionV1beta1Types
+          .distributionQueryDelegatorWithdrawAddressResponse;
 
   @override
   List get values => [withdrawAddress?.address];

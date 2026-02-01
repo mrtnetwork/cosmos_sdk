@@ -15,10 +15,14 @@ class OsmosisSuperfluidOsmoEquivalentMultiplierRecord extends CosmosMessage {
   final String? denom;
   final String multiplier;
 
-  const OsmosisSuperfluidOsmoEquivalentMultiplierRecord(
-      {this.epochNumber, this.denom, required this.multiplier});
+  const OsmosisSuperfluidOsmoEquivalentMultiplierRecord({
+    this.epochNumber,
+    this.denom,
+    required this.multiplier,
+  });
   factory OsmosisSuperfluidOsmoEquivalentMultiplierRecord.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidOsmoEquivalentMultiplierRecord(
       epochNumber: decode.getField(1),
@@ -27,11 +31,13 @@ class OsmosisSuperfluidOsmoEquivalentMultiplierRecord extends CosmosMessage {
     );
   }
   factory OsmosisSuperfluidOsmoEquivalentMultiplierRecord.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisSuperfluidOsmoEquivalentMultiplierRecord(
-        multiplier: json["multiplier"],
-        denom: json["denom"],
-        epochNumber: BigintUtils.tryParse(json["epoch_number"]));
+      multiplier: json["multiplier"],
+      denom: json["denom"],
+      epochNumber: BigintUtils.tryParse(json["epoch_number"]),
+    );
   }
 
   @override
@@ -42,7 +48,7 @@ class OsmosisSuperfluidOsmoEquivalentMultiplierRecord extends CosmosMessage {
     return {
       "epoch_number": epochNumber?.toString(),
       "denom": denom,
-      "multiplier": multiplier
+      "multiplier": multiplier,
     };
   }
 

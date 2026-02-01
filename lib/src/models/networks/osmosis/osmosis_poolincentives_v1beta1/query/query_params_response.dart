@@ -6,15 +6,19 @@ class OsmosisPoolincentivesQueryParamsResponse extends CosmosMessage {
   final OsmosisPoolincentivesParams params;
   OsmosisPoolincentivesQueryParamsResponse(this.params);
   factory OsmosisPoolincentivesQueryParamsResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolincentivesQueryParamsResponse(
-        OsmosisPoolincentivesParams.deserialize(decode.getField(1)));
+      OsmosisPoolincentivesParams.deserialize(decode.getField(1)),
+    );
   }
   factory OsmosisPoolincentivesQueryParamsResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisPoolincentivesQueryParamsResponse(
-        OsmosisPoolincentivesParams.fromJson(json["params"]));
+      OsmosisPoolincentivesParams.fromJson(json["params"]),
+    );
   }
 
   @override

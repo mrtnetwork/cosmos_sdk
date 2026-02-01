@@ -27,18 +27,23 @@ class ConsPubKeyRotationHistory extends CosmosMessage {
     this.newConsPubkey,
     this.height,
     required this.fee,
-  }) : operatorAddress =
-            BytesUtils.tryToBytes(operatorAddress, unmodifiable: true);
+  }) : operatorAddress = BytesUtils.tryToBytes(
+         operatorAddress,
+         unmodifiable: true,
+       );
   factory ConsPubKeyRotationHistory.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ConsPubKeyRotationHistory(
-        operatorAddress: decode.getField(1),
-        oldConsPubkey:
-            decode.getResult(2)?.to<Any, List<int>>((e) => Any.deserialize(e)),
-        newConsPubkey:
-            decode.getResult(3)?.to<Any, List<int>>((e) => Any.deserialize(e)),
-        height: decode.getField(4),
-        fee: Coin.deserialize(decode.getField(5)));
+      operatorAddress: decode.getField(1),
+      oldConsPubkey: decode
+          .getResult(2)
+          ?.to<Any, List<int>>((e) => Any.deserialize(e)),
+      newConsPubkey: decode
+          .getResult(3)
+          ?.to<Any, List<int>>((e) => Any.deserialize(e)),
+      height: decode.getField(4),
+      fee: Coin.deserialize(decode.getField(5)),
+    );
   }
 
   @override
@@ -59,6 +64,11 @@ class ConsPubKeyRotationHistory extends CosmosMessage {
   TypeUrl get typeUrl => StakingV1beta1Types.consPubKeyRotationHistory;
 
   @override
-  List get values =>
-      [operatorAddress, oldConsPubkey, newConsPubkey, height, fee];
+  List get values => [
+    operatorAddress,
+    oldConsPubkey,
+    newConsPubkey,
+    height,
+    fee,
+  ];
 }

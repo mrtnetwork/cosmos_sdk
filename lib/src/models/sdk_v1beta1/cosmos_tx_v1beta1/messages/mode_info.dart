@@ -83,14 +83,16 @@ class ModeInfoMulti extends ModeInfoMode {
   /// which could include nested multisig public keys
   final List<ModeInfo> modeInfos;
   ModeInfoMulti({required this.bitarray, required List<ModeInfo> modeInfos})
-      : modeInfos = List<ModeInfo>.unmodifiable(modeInfos);
+    : modeInfos = List<ModeInfo>.unmodifiable(modeInfos);
   factory ModeInfoMulti.fromValue(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ModeInfoMulti(
-        bitarray: CompactBitArray.deserialize(decode.getField(1)),
-        modeInfos: (decode.getField(2) as List)
-            .map((e) => ModeInfo.deserialize(e))
-            .toList());
+      bitarray: CompactBitArray.deserialize(decode.getField(1)),
+      modeInfos:
+          (decode.getField(2) as List)
+              .map((e) => ModeInfo.deserialize(e))
+              .toList(),
+    );
   }
 
   @override
@@ -100,7 +102,7 @@ class ModeInfoMulti extends ModeInfoMode {
   Map<String, dynamic> toJson() {
     return {
       "bitarray": bitarray.toJson(),
-      "mode_infos": modeInfos.map((e) => e.toJson()).toList()
+      "mode_infos": modeInfos.map((e) => e.toJson()).toList(),
     };
   }
 

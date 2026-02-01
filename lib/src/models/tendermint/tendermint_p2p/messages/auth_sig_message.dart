@@ -8,12 +8,13 @@ class AuthSigMessage extends CosmosMessage {
   final TendermintPublicKey pubKey;
   final List<int>? sig;
   AuthSigMessage({required this.pubKey, List<int>? sig})
-      : sig = BytesUtils.tryToBytes(sig, unmodifiable: true);
+    : sig = BytesUtils.tryToBytes(sig, unmodifiable: true);
   factory AuthSigMessage.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return AuthSigMessage(
-        pubKey: TendermintPublicKey.deserialize(decode.getField(1)),
-        sig: decode.getField(2));
+      pubKey: TendermintPublicKey.deserialize(decode.getField(1)),
+      sig: decode.getField(2),
+    );
   }
 
   @override

@@ -7,7 +7,8 @@ import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// MsgConvertCoin defines a Msg to convert a native Cosmos coin to a ERC20 token
 class EvmosErc20V1MsgConvertCoin
-    extends EvmosService<EmptyServiceRequestResponse> with AminoMessage {
+    extends EvmosService<EmptyServiceRequestResponse>
+    with AminoMessage {
   /// coin is a Cosmos coin whose denomination is registered in a token pair. The coin
   /// amount defines the amount of coins to convert.
   final Coin? coin;
@@ -18,21 +19,26 @@ class EvmosErc20V1MsgConvertCoin
   /// sender is the cosmos bech32 address from the owner of the given Cosmos coins
   final String? sender;
 
-  const EvmosErc20V1MsgConvertCoin(
-      {required this.coin, required this.receiver, required this.sender});
+  const EvmosErc20V1MsgConvertCoin({
+    required this.coin,
+    required this.receiver,
+    required this.sender,
+  });
 
   factory EvmosErc20V1MsgConvertCoin.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosErc20V1MsgConvertCoin(
-        coin: decode.getResult(1)?.to<Coin, List<int>>(Coin.deserialize),
-        receiver: decode.getField(2),
-        sender: decode.getField(3));
+      coin: decode.getResult(1)?.to<Coin, List<int>>(Coin.deserialize),
+      receiver: decode.getField(2),
+      sender: decode.getField(3),
+    );
   }
   factory EvmosErc20V1MsgConvertCoin.fromJson(Map<String, dynamic> json) {
     return EvmosErc20V1MsgConvertCoin(
-        coin: json.maybeAs(key: "coin", onValue: Coin.fromJson),
-        receiver: json.as("receiver"),
-        sender: json.as("sender"));
+      coin: json.maybeAs(key: "coin", onValue: Coin.fromJson),
+      receiver: json.as("receiver"),
+      sender: json.as("sender"),
+    );
   }
 
   @override
@@ -54,6 +60,7 @@ class EvmosErc20V1MsgConvertCoin
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        EvmosErc20V1Types.msgConvertCoinResponse);
+      EvmosErc20V1Types.msgConvertCoinResponse,
+    );
   }
 }

@@ -7,7 +7,8 @@ class EvmosEthermintFeeMarketV1QueryParamsRequest extends CosmosMessage
     with QueryMessage<EvmosEthermintFeeMarketV1QueryParamsResponse> {
   const EvmosEthermintFeeMarketV1QueryParamsRequest();
   factory EvmosEthermintFeeMarketV1QueryParamsRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return EvmosEthermintFeeMarketV1QueryParamsRequest();
   }
 
@@ -32,7 +33,8 @@ class EvmosEthermintFeeMarketV1QueryParamsRequest extends CosmosMessage
 
   @override
   EvmosEthermintFeeMarketV1QueryParamsResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     throw UnimplementedError();
   }
 

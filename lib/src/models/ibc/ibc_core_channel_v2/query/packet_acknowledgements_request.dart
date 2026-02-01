@@ -17,11 +17,11 @@ class IbcChannelV2QueryPacketAcknowledgements extends CosmosMessage
   /// list of packet sequences
   final List<BigInt>? packetCommitmentSequences;
 
-  IbcChannelV2QueryPacketAcknowledgements(
-      {required this.clientId,
-      this.pagination,
-      List<BigInt>? packetCommitmentSequences})
-      : packetCommitmentSequences = packetCommitmentSequences?.immutable;
+  IbcChannelV2QueryPacketAcknowledgements({
+    required this.clientId,
+    this.pagination,
+    List<BigInt>? packetCommitmentSequences,
+  }) : packetCommitmentSequences = packetCommitmentSequences?.immutable;
 
   @override
   List<int> get fieldIds => [1, 2, 3];
@@ -32,7 +32,7 @@ class IbcChannelV2QueryPacketAcknowledgements extends CosmosMessage
       "client_id": clientId,
       "pagination": pagination?.toJson(),
       "packet_commitment_sequences":
-          packetCommitmentSequences?.map((e) => e.toString()).toList()
+          packetCommitmentSequences?.map((e) => e.toString()).toList(),
     };
   }
 
@@ -49,7 +49,8 @@ class IbcChannelV2QueryPacketAcknowledgements extends CosmosMessage
 
   @override
   IbcChannelV2QueryPacketAcknowledgementsResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return IbcChannelV2QueryPacketAcknowledgementsResponse.fromJson(json);
   }
 
@@ -58,7 +59,7 @@ class IbcChannelV2QueryPacketAcknowledgements extends CosmosMessage
 
   @override
   Map<String, String?> get queryParameters => {
-        ...pagination?.queryParameters ?? {},
-        "packet_commitment_sequences": packetCommitmentSequences?.join(",")
-      };
+    ...pagination?.queryParameters ?? {},
+    "packet_commitment_sequences": packetCommitmentSequences?.join(","),
+  };
 }

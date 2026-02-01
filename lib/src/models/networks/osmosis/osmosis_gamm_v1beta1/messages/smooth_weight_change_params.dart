@@ -32,41 +32,47 @@ class OsmosisGammSmoothWeightChangeParams extends CosmosMessage {
   /// refactorings should just have a type with the denom & weight here.
   final List<OsmosisGammPoolAsset> targetPoolWeights;
 
-  OsmosisGammSmoothWeightChangeParams(
-      {required this.startTime,
-      required this.duration,
-      required List<OsmosisGammPoolAsset> initialPoolWeights,
-      required List<OsmosisGammPoolAsset> targetPoolWeights})
-      : initialPoolWeights = initialPoolWeights.immutable,
-        targetPoolWeights = targetPoolWeights.immutable;
+  OsmosisGammSmoothWeightChangeParams({
+    required this.startTime,
+    required this.duration,
+    required List<OsmosisGammPoolAsset> initialPoolWeights,
+    required List<OsmosisGammPoolAsset> targetPoolWeights,
+  }) : initialPoolWeights = initialPoolWeights.immutable,
+       targetPoolWeights = targetPoolWeights.immutable;
   factory OsmosisGammSmoothWeightChangeParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisGammSmoothWeightChangeParams(
       startTime: ProtobufTimestamp.deserialize(decode.getField(1)),
       duration: ProtobufDuration.deserialize(decode.getField(2)),
-      initialPoolWeights: decode
-          .getFields<List<int>>(3)
-          .map((e) => OsmosisGammPoolAsset.deserialize(e))
-          .toList(),
-      targetPoolWeights: decode
-          .getFields<List<int>>(4)
-          .map((e) => OsmosisGammPoolAsset.deserialize(e))
-          .toList(),
+      initialPoolWeights:
+          decode
+              .getFields<List<int>>(3)
+              .map((e) => OsmosisGammPoolAsset.deserialize(e))
+              .toList(),
+      targetPoolWeights:
+          decode
+              .getFields<List<int>>(4)
+              .map((e) => OsmosisGammPoolAsset.deserialize(e))
+              .toList(),
     );
   }
   factory OsmosisGammSmoothWeightChangeParams.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisGammSmoothWeightChangeParams(
-        startTime: ProtobufTimestamp.fromString(json["start_time"]),
-        duration: ProtobufDuration.fromString(json["duration"]),
-        initialPoolWeights: (json["initial_pool_weights"] as List?)
-                ?.map((e) => OsmosisGammPoolAsset.fromJson(e))
-                .toList() ??
-            <OsmosisGammPoolAsset>[],
-        targetPoolWeights: (json["target_pool_weights"] as List?)
-                ?.map((e) => OsmosisGammPoolAsset.fromJson(e))
-                .toList() ??
-            <OsmosisGammPoolAsset>[]);
+      startTime: ProtobufTimestamp.fromString(json["start_time"]),
+      duration: ProtobufDuration.fromString(json["duration"]),
+      initialPoolWeights:
+          (json["initial_pool_weights"] as List?)
+              ?.map((e) => OsmosisGammPoolAsset.fromJson(e))
+              .toList() ??
+          <OsmosisGammPoolAsset>[],
+      targetPoolWeights:
+          (json["target_pool_weights"] as List?)
+              ?.map((e) => OsmosisGammPoolAsset.fromJson(e))
+              .toList() ??
+          <OsmosisGammPoolAsset>[],
+    );
   }
 
   @override
@@ -79,7 +85,7 @@ class OsmosisGammSmoothWeightChangeParams extends CosmosMessage {
       "duration": duration.toJson(),
       "initial_pool_weights":
           initialPoolWeights.map((e) => e.toJson()).toList(),
-      "target_pool_weights": targetPoolWeights.map((e) => e.toJson()).toList()
+      "target_pool_weights": targetPoolWeights.map((e) => e.toJson()).toList(),
     };
   }
 
@@ -87,6 +93,10 @@ class OsmosisGammSmoothWeightChangeParams extends CosmosMessage {
   TypeUrl get typeUrl => OsmosisGammV1beta1Types.smoothWeightChangeParams;
 
   @override
-  List get values =>
-      [startTime, duration, initialPoolWeights, targetPoolWeights];
+  List get values => [
+    startTime,
+    duration,
+    initialPoolWeights,
+    targetPoolWeights,
+  ];
 }

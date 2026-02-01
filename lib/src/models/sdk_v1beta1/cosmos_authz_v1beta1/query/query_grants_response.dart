@@ -13,27 +13,32 @@ class AuthzQueryGrantsResponse extends CosmosMessage {
   /// pagination defines an pagination for the response.
   final PageResponse? pagination;
   AuthzQueryGrantsResponse({required List<AuthzGrant> grants, this.pagination})
-      : grants = grants.immutable;
+    : grants = grants.immutable;
   factory AuthzQueryGrantsResponse.fromJson(Map<String, dynamic> json) {
     return AuthzQueryGrantsResponse(
-        grants: (json["grants"] as List?)
-                ?.map((e) => AuthzGrant.fromJson(e))
-                .toList() ??
-            [],
-        pagination: json["pagination"] == null
-            ? null
-            : PageResponse.fromJson(json["pagination"]));
+      grants:
+          (json["grants"] as List?)
+              ?.map((e) => AuthzGrant.fromJson(e))
+              .toList() ??
+          [],
+      pagination:
+          json["pagination"] == null
+              ? null
+              : PageResponse.fromJson(json["pagination"]),
+    );
   }
   factory AuthzQueryGrantsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return AuthzQueryGrantsResponse(
-        grants: decode
-            .getFields<List<int>>(1)
-            .map((e) => AuthzGrant.deserialize(e))
-            .toList(),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
+      grants:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => AuthzGrant.deserialize(e))
+              .toList(),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
+    );
   }
 
   @override
@@ -43,7 +48,7 @@ class AuthzQueryGrantsResponse extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "grants": grants.map((e) => e.toJson()).toList(),
-      "pagination": pagination?.toJson()
+      "pagination": pagination?.toJson(),
     };
   }
 

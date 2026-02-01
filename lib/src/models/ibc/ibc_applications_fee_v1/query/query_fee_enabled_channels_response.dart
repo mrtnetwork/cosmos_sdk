@@ -14,29 +14,33 @@ class QueryFeeEnabledChannelsResponse extends CosmosMessage {
 
   factory QueryFeeEnabledChannelsResponse.fromJson(Map<String, dynamic> json) {
     return QueryFeeEnabledChannelsResponse(
-      feeEnabledChannels: (json["fee_enabled_channels"] as List?)
+      feeEnabledChannels:
+          (json["fee_enabled_channels"] as List?)
               ?.map((e) => IbcFeeFeeEnabledChannel.fromJson(e))
               .toList() ??
           [],
-      pagination: json["pagination"] == null
-          ? null
-          : PageResponse.fromJson(json["pagination"]),
+      pagination:
+          json["pagination"] == null
+              ? null
+              : PageResponse.fromJson(json["pagination"]),
     );
   }
-  QueryFeeEnabledChannelsResponse(
-      {required List<IbcFeeFeeEnabledChannel> feeEnabledChannels,
-      this.pagination})
-      : feeEnabledChannels = feeEnabledChannels.immutable;
+  QueryFeeEnabledChannelsResponse({
+    required List<IbcFeeFeeEnabledChannel> feeEnabledChannels,
+    this.pagination,
+  }) : feeEnabledChannels = feeEnabledChannels.immutable;
   factory QueryFeeEnabledChannelsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryFeeEnabledChannelsResponse(
-        feeEnabledChannels: decode
-            .getFields<List<int>>(1)
-            .map((e) => IbcFeeFeeEnabledChannel.deserialize(e))
-            .toList(),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
+      feeEnabledChannels:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => IbcFeeFeeEnabledChannel.deserialize(e))
+              .toList(),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
+    );
   }
 
   @override
@@ -47,7 +51,7 @@ class QueryFeeEnabledChannelsResponse extends CosmosMessage {
     return {
       "fee_enabled_channels":
           feeEnabledChannels.map((e) => e.toJson()).toList(),
-      "pagination": pagination?.toJson()
+      "pagination": pagination?.toJson(),
     };
   }
 

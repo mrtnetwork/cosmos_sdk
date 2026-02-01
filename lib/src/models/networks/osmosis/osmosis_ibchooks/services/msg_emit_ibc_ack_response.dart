@@ -8,7 +8,9 @@ class OsmosisIbchooksMsgEmitIBCAckResponse extends CosmosMessage {
   factory OsmosisIbchooksMsgEmitIBCAckResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisIbchooksMsgEmitIBCAckResponse(
-        contractResult: decode.getField(1), ibcAck: decode.getField(2));
+      contractResult: decode.getField(1),
+      ibcAck: decode.getField(2),
+    );
   }
 
   @override

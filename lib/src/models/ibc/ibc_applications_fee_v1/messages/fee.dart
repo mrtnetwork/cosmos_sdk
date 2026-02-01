@@ -14,18 +14,23 @@ class IbcFeeFee extends CosmosMessage {
   final Coin timeoutFee;
   factory IbcFeeFee.fromJson(Map<String, dynamic> json) {
     return IbcFeeFee(
-        ackFee: Coin.fromJson(json["ack_fee"]),
-        recvFee: Coin.fromJson(json["recv_fee"]),
-        timeoutFee: Coin.fromJson(json["timeout_fee"]));
+      ackFee: Coin.fromJson(json["ack_fee"]),
+      recvFee: Coin.fromJson(json["recv_fee"]),
+      timeoutFee: Coin.fromJson(json["timeout_fee"]),
+    );
   }
-  const IbcFeeFee(
-      {required this.recvFee, required this.ackFee, required this.timeoutFee});
+  const IbcFeeFee({
+    required this.recvFee,
+    required this.ackFee,
+    required this.timeoutFee,
+  });
   factory IbcFeeFee.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcFeeFee(
-        recvFee: Coin.deserialize(decode.getField(1)),
-        ackFee: Coin.deserialize(decode.getField(2)),
-        timeoutFee: Coin.deserialize(decode.getField(3)));
+      recvFee: Coin.deserialize(decode.getField(1)),
+      ackFee: Coin.deserialize(decode.getField(2)),
+      timeoutFee: Coin.deserialize(decode.getField(3)),
+    );
   }
 
   @override
@@ -36,7 +41,7 @@ class IbcFeeFee extends CosmosMessage {
     return {
       "recv_fee": recvFee.toJson(),
       "ack_fee": ackFee.toJson(),
-      "timeout_fee": timeoutFee.toJson()
+      "timeout_fee": timeoutFee.toJson(),
     };
   }
 

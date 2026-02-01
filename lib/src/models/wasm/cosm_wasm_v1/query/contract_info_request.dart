@@ -30,7 +30,8 @@ class CosmWasmV1QueryContractInfoRequest extends CosmosMessage
 
   @override
   CosmWasmV1QueryContractInfoResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return CosmWasmV1QueryContractInfoResponse.fromJson(json);
   }
 

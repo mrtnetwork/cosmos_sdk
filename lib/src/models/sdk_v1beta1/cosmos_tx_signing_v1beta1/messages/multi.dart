@@ -11,18 +11,24 @@ class SignatureDescriptorDataMulti extends BaseSignatureDescriptorData {
 
   ///  signatures is the signatures of the multi-signature
   final List<BaseSignatureDescriptorData>? signatures;
-  SignatureDescriptorDataMulti(
-      {this.bitarray, List<BaseSignatureDescriptorData>? signatures})
-      : signatures = signatures?.emptyAsNull?.immutable;
+  SignatureDescriptorDataMulti({
+    this.bitarray,
+    List<BaseSignatureDescriptorData>? signatures,
+  }) : signatures = signatures?.emptyAsNull?.immutable;
   factory SignatureDescriptorDataMulti.desrialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return SignatureDescriptorDataMulti(
-        bitarray: decode.getResult(1)?.to<CompactBitArray, List<int>>(
-            (e) => CompactBitArray.deserialize(e)),
-        signatures: decode
-            .getFields<List<int>>(2)
-            .map((e) => BaseSignatureDescriptorData.deserialize(e))
-            .toList());
+      bitarray: decode
+          .getResult(1)
+          ?.to<CompactBitArray, List<int>>(
+            (e) => CompactBitArray.deserialize(e),
+          ),
+      signatures:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => BaseSignatureDescriptorData.deserialize(e))
+              .toList(),
+    );
   }
 
   @override
@@ -35,7 +41,7 @@ class SignatureDescriptorDataMulti extends BaseSignatureDescriptorData {
   Map<String, dynamic> toJson() {
     return {
       "bitarray": bitarray?.toJson(),
-      "signature": signatures?.map((e) => e.toJson()).toList()
+      "signature": signatures?.map((e) => e.toJson()).toList(),
     };
   }
 

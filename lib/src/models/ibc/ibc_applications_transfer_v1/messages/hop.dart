@@ -11,7 +11,9 @@ class IbcTransferV1Hop extends CosmosMessage {
   const IbcTransferV1Hop({required this.portId, required this.channelId});
   factory IbcTransferV1Hop.fromJson(Map<String, dynamic> json) {
     return IbcTransferV1Hop(
-        portId: json["port_id"], channelId: json["channel_id"]);
+      portId: json["port_id"],
+      channelId: json["channel_id"],
+    );
   }
   factory IbcTransferV1Hop.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -26,10 +28,7 @@ class IbcTransferV1Hop extends CosmosMessage {
 
   @override
   Map<String, dynamic> toJson() {
-    return {
-      "port_id": portId,
-      "channel_id": channelId,
-    };
+    return {"port_id": portId, "channel_id": channelId};
   }
 
   @override

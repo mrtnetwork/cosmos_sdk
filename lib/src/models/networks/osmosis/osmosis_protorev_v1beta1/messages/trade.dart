@@ -17,15 +17,17 @@ class OsmosisProtorevTrade extends CosmosMessage {
   factory OsmosisProtorevTrade.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisProtorevTrade(
-        pool: decode.getField(1),
-        tokenIn: decode.getField(2),
-        tokenOut: decode.getField(3));
+      pool: decode.getField(1),
+      tokenIn: decode.getField(2),
+      tokenOut: decode.getField(3),
+    );
   }
   factory OsmosisProtorevTrade.fromJson(Map<String, dynamic> json) {
     return OsmosisProtorevTrade(
-        pool: BigintUtils.tryParse(json["pool"]),
-        tokenIn: json["token_in"],
-        tokenOut: json["token_out"]);
+      pool: BigintUtils.tryParse(json["pool"]),
+      tokenIn: json["token_in"],
+      tokenOut: json["token_out"],
+    );
   }
 
   @override
@@ -36,7 +38,7 @@ class OsmosisProtorevTrade extends CosmosMessage {
     return {
       "pool": pool?.toString(),
       "token_in": tokenIn,
-      "token_out": tokenOut
+      "token_out": tokenOut,
     };
   }
 

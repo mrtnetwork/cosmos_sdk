@@ -8,18 +8,23 @@ class OsmosisProtorevQueryGetProtoRevMaxPoolPointsPerTxResponse
   /// [maxPoolPointsPerTx] is the maximum number of pool points that can be
   /// consumed per transaction
   final BigInt? maxPoolPointsPerTx;
-  const OsmosisProtorevQueryGetProtoRevMaxPoolPointsPerTxResponse(
-      {this.maxPoolPointsPerTx});
+  const OsmosisProtorevQueryGetProtoRevMaxPoolPointsPerTxResponse({
+    this.maxPoolPointsPerTx,
+  });
   factory OsmosisProtorevQueryGetProtoRevMaxPoolPointsPerTxResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisProtorevQueryGetProtoRevMaxPoolPointsPerTxResponse(
-        maxPoolPointsPerTx: BigInt.parse(decode.getField(1)));
+      maxPoolPointsPerTx: BigInt.parse(decode.getField(1)),
+    );
   }
   factory OsmosisProtorevQueryGetProtoRevMaxPoolPointsPerTxResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisProtorevQueryGetProtoRevMaxPoolPointsPerTxResponse(
-        maxPoolPointsPerTx: BigintUtils.parse(json["max_pool_points_per_tx"]));
+      maxPoolPointsPerTx: BigintUtils.parse(json["max_pool_points_per_tx"]),
+    );
   }
 
   @override

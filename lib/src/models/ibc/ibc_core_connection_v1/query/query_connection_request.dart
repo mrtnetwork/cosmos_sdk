@@ -12,7 +12,8 @@ class IbcConnectionQueryConnectionRequest extends CosmosMessage
   factory IbcConnectionQueryConnectionRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcConnectionQueryConnectionRequest(
-        connectionId: decode.getField(1));
+      connectionId: decode.getField(1),
+    );
   }
 
   @override
@@ -36,7 +37,8 @@ class IbcConnectionQueryConnectionRequest extends CosmosMessage
 
   @override
   IbcConnectionQueryConnectionResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return IbcConnectionQueryConnectionResponse.fromJson(json);
   }
 

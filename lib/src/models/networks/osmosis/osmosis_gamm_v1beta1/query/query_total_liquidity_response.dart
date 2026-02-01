@@ -7,22 +7,25 @@ class OsmosisGammQueryTotalLiquidityResponse extends CosmosMessage {
   final List<Coin> liquidity;
 
   OsmosisGammQueryTotalLiquidityResponse({required List<Coin> liquidity})
-      : liquidity = liquidity.immutable;
+    : liquidity = liquidity.immutable;
   factory OsmosisGammQueryTotalLiquidityResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisGammQueryTotalLiquidityResponse(
-        liquidity: decode
-            .getFields<List<int>>(1)
-            .map((e) => Coin.deserialize(e))
-            .toList());
+      liquidity:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
+    );
   }
   factory OsmosisGammQueryTotalLiquidityResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisGammQueryTotalLiquidityResponse(
-        liquidity: (json["liquidity"] as List?)
-                ?.map((e) => Coin.fromJson(e))
-                .toList() ??
-            <Coin>[]);
+      liquidity:
+          (json["liquidity"] as List?)?.map((e) => Coin.fromJson(e)).toList() ??
+          <Coin>[],
+    );
   }
 
   @override

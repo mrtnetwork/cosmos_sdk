@@ -23,21 +23,27 @@ class EvmosInflationV1InflationDistribution extends CosmosMessage {
   /// be allocated to the community pool
   final String? communityPool;
 
-  EvmosInflationV1InflationDistribution(
-      {this.stakingRewards, this.usageIncentives, this.communityPool});
+  EvmosInflationV1InflationDistribution({
+    this.stakingRewards,
+    this.usageIncentives,
+    this.communityPool,
+  });
   factory EvmosInflationV1InflationDistribution.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosInflationV1InflationDistribution(
-        stakingRewards: decode.getField(1),
-        usageIncentives: decode.getField(2),
-        communityPool: decode.getField(3));
+      stakingRewards: decode.getField(1),
+      usageIncentives: decode.getField(2),
+      communityPool: decode.getField(3),
+    );
   }
   factory EvmosInflationV1InflationDistribution.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return EvmosInflationV1InflationDistribution(
-        stakingRewards: json.as("staking_rewards"),
-        usageIncentives: json.as("usage_incentives"),
-        communityPool: json.as("community_pool"));
+      stakingRewards: json.as("staking_rewards"),
+      usageIncentives: json.as("usage_incentives"),
+      communityPool: json.as("community_pool"),
+    );
   }
   @override
   List get values => [stakingRewards, usageIncentives, communityPool];
@@ -52,7 +58,7 @@ class EvmosInflationV1InflationDistribution extends CosmosMessage {
     return {
       "staking_rewards": stakingRewards,
       "usage_incentives": usageIncentives,
-      "community_pool": communityPool
+      "community_pool": communityPool,
     };
   }
 }

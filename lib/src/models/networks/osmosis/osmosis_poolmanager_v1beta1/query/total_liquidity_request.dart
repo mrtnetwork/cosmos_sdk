@@ -13,7 +13,8 @@ class OsmosisPoolManagerTotalLiquidityRequest extends CosmosMessage
 
   @override
   OsmosisPoolManagerTotalLiquidityResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisPoolManagerTotalLiquidityResponse.fromJson(json);
   }
 

@@ -5,14 +5,18 @@ class ThorchainEventLimitOrder extends CosmosMessage {
   final ThorchainCoin source;
   final ThorchainCoin target;
   final String? txId;
-  const ThorchainEventLimitOrder(
-      {required this.source, required this.target, this.txId});
+  const ThorchainEventLimitOrder({
+    required this.source,
+    required this.target,
+    this.txId,
+  });
   factory ThorchainEventLimitOrder.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainEventLimitOrder(
-        source: ThorchainCoin.deserialize(decode.getField(1)),
-        target: ThorchainCoin.deserialize(decode.getField(2)),
-        txId: decode.getField(3));
+      source: ThorchainCoin.deserialize(decode.getField(1)),
+      target: ThorchainCoin.deserialize(decode.getField(2)),
+      txId: decode.getField(3),
+    );
   }
 
   @override
@@ -23,7 +27,7 @@ class ThorchainEventLimitOrder extends CosmosMessage {
     return {
       "source": source.toJson(),
       "target": target.toJson(),
-      "tx_id": txId
+      "tx_id": txId,
     };
   }
 

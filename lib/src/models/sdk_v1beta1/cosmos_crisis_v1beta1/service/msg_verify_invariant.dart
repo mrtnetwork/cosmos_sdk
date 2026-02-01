@@ -18,24 +18,31 @@ class MsgVerifyInvariant
 
   /// invariant_route is the msg's invariant route
   final String? invariantRoute;
-  const MsgVerifyInvariant(
-      {this.sender, this.invariantModuleName, this.invariantRoute});
+  const MsgVerifyInvariant({
+    this.sender,
+    this.invariantModuleName,
+    this.invariantRoute,
+  });
   factory MsgVerifyInvariant.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgVerifyInvariant(
-        sender: decode
-            .getResult(1)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        invariantModuleName: decode.getField(2),
-        invariantRoute: decode.getField(3));
+      sender: decode
+          .getResult(1)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      invariantModuleName: decode.getField(2),
+      invariantRoute: decode.getField(3),
+    );
   }
 
   factory MsgVerifyInvariant.fromJson(Map<String, dynamic> json) {
     return MsgVerifyInvariant(
-        sender: json.maybeAs<CosmosBaseAddress, String>(
-            key: "sender", onValue: (e) => CosmosBaseAddress(e)),
-        invariantModuleName: json.as("invariant_module_name"),
-        invariantRoute: json.as("invariant_route"));
+      sender: json.maybeAs<CosmosBaseAddress, String>(
+        key: "sender",
+        onValue: (e) => CosmosBaseAddress(e),
+      ),
+      invariantModuleName: json.as("invariant_module_name"),
+      invariantRoute: json.as("invariant_route"),
+    );
   }
 
   @override
@@ -46,7 +53,7 @@ class MsgVerifyInvariant
     return {
       "sender": sender?.address,
       "invariant_module_name": invariantModuleName,
-      "invariant_route": invariantRoute
+      "invariant_route": invariantRoute,
     };
   }
 
@@ -61,6 +68,7 @@ class MsgVerifyInvariant
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        CrisisV1beta1.msgVerifyInvariantResponse);
+      CrisisV1beta1.msgVerifyInvariantResponse,
+    );
   }
 }

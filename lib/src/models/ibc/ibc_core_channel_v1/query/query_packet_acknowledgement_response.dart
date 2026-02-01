@@ -17,17 +17,23 @@ class QueryPacketAcknowledgementResponse extends CosmosMessage {
   final IbcClientHeight proofHeight;
 
   factory QueryPacketAcknowledgementResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return QueryPacketAcknowledgementResponse(
-        acknowledgement: CosmosUtils.tryToBytes(json["acknowledgement"]),
-        proof: CosmosUtils.tryToBytes(json["proof"]),
-        proofHeight: IbcClientHeight.fromJson(json["proof_height"]));
+      acknowledgement: CosmosUtils.tryToBytes(json["acknowledgement"]),
+      proof: CosmosUtils.tryToBytes(json["proof"]),
+      proofHeight: IbcClientHeight.fromJson(json["proof_height"]),
+    );
   }
-  QueryPacketAcknowledgementResponse(
-      {List<int>? acknowledgement, List<int>? proof, required this.proofHeight})
-      : acknowledgement =
-            BytesUtils.tryToBytes(acknowledgement, unmodifiable: true),
-        proof = BytesUtils.tryToBytes(proof, unmodifiable: true);
+  QueryPacketAcknowledgementResponse({
+    List<int>? acknowledgement,
+    List<int>? proof,
+    required this.proofHeight,
+  }) : acknowledgement = BytesUtils.tryToBytes(
+         acknowledgement,
+         unmodifiable: true,
+       ),
+       proof = BytesUtils.tryToBytes(proof, unmodifiable: true);
 
   factory QueryPacketAcknowledgementResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -46,7 +52,7 @@ class QueryPacketAcknowledgementResponse extends CosmosMessage {
     return {
       "acknowledgement": BytesUtils.tryToHexString(acknowledgement),
       "proof": BytesUtils.tryToHexString(proof),
-      "proof_height": proofHeight.toJson()
+      "proof_height": proofHeight.toJson(),
     };
   }
 

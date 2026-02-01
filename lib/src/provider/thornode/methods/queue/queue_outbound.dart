@@ -2,8 +2,12 @@ import 'package:cosmos_sdk/src/provider/thornode/core/core.dart';
 import 'package:cosmos_sdk/src/provider/thornode/core/thorenode.dart';
 
 ///
-class ThorNodeRequestQueueOutbound extends ThorNodeRequestParam<
-    List<Map<String, dynamic>>, List<Map<String, dynamic>>> {
+class ThorNodeRequestQueueOutbound
+    extends
+        ThorNodeRequestParam<
+          List<Map<String, dynamic>>,
+          List<Map<String, dynamic>>
+        > {
   ThorNodeRequestQueueOutbound({this.height});
 
   /// optional block height, defaults to current tip

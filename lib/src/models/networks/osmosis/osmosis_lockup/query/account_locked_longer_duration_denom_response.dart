@@ -7,23 +7,28 @@ class OsmosisLockupAccountLockedLongerDurationDenomResponse
     extends CosmosMessage {
   final List<OsmosisLockupPeriodLock> locks;
   OsmosisLockupAccountLockedLongerDurationDenomResponse(
-      List<OsmosisLockupPeriodLock> locks)
-      : locks = locks.immutable;
+    List<OsmosisLockupPeriodLock> locks,
+  ) : locks = locks.immutable;
   factory OsmosisLockupAccountLockedLongerDurationDenomResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return OsmosisLockupAccountLockedLongerDurationDenomResponse(decode
-        .getFields<List<int>>(1)
-        .map((e) => OsmosisLockupPeriodLock.deserialize(e))
-        .toList());
+    return OsmosisLockupAccountLockedLongerDurationDenomResponse(
+      decode
+          .getFields<List<int>>(1)
+          .map((e) => OsmosisLockupPeriodLock.deserialize(e))
+          .toList(),
+    );
   }
   factory OsmosisLockupAccountLockedLongerDurationDenomResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisLockupAccountLockedLongerDurationDenomResponse(
-        (json["locks"] as List?)
-                ?.map((e) => OsmosisLockupPeriodLock.deserialize(e))
-                .toList() ??
-            <OsmosisLockupPeriodLock>[]);
+      (json["locks"] as List?)
+              ?.map((e) => OsmosisLockupPeriodLock.deserialize(e))
+              .toList() ??
+          <OsmosisLockupPeriodLock>[],
+    );
   }
   @override
   List<int> get fieldIds => [1];

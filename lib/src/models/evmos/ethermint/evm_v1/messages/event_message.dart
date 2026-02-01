@@ -17,9 +17,10 @@ class EvmosEthermintEVMV1EventMessage extends CosmosMessage {
   factory EvmosEthermintEVMV1EventMessage.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosEthermintEVMV1EventMessage(
-        module: decode.getField(1),
-        sender: decode.getField(2),
-        txType: decode.getField(3));
+      module: decode.getField(1),
+      sender: decode.getField(2),
+      txType: decode.getField(3),
+    );
   }
 
   @override
@@ -27,11 +28,7 @@ class EvmosEthermintEVMV1EventMessage extends CosmosMessage {
 
   @override
   Map<String, dynamic> toJson() {
-    return {
-      "module": module,
-      "sender": sender,
-      "tx_type": txType,
-    };
+    return {"module": module, "sender": sender, "tx_type": txType};
   }
 
   @override

@@ -13,29 +13,37 @@ class CosmWasmV1QueryAllContractStateResponse extends CosmosMessage {
 
   /// pagination defines the pagination in the response.
   final PageResponse? pagination;
-  CosmWasmV1QueryAllContractStateResponse(
-      {required List<CosmWasmV1Model>? models, this.pagination})
-      : models = models?.immutable;
+  CosmWasmV1QueryAllContractStateResponse({
+    required List<CosmWasmV1Model>? models,
+    this.pagination,
+  }) : models = models?.immutable;
   factory CosmWasmV1QueryAllContractStateResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmWasmV1QueryAllContractStateResponse(
-        models: decode
-            .getFields<List<int>>(1)
-            .map((e) => CosmWasmV1Model.deserialize(e))
-            .toList(),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
+      models:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => CosmWasmV1Model.deserialize(e))
+              .toList(),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
+    );
   }
   factory CosmWasmV1QueryAllContractStateResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return CosmWasmV1QueryAllContractStateResponse(
-        models: json
-            .asListOfMap("models")
-            ?.map((e) => CosmWasmV1Model.fromJson(e))
-            .toList(),
-        pagination: json.maybeAs<PageResponse, Map<String, dynamic>>(
-            key: "pagination", onValue: (e) => PageResponse.fromJson(e)));
+      models:
+          json
+              .asListOfMap("models")
+              ?.map((e) => CosmWasmV1Model.fromJson(e))
+              .toList(),
+      pagination: json.maybeAs<PageResponse, Map<String, dynamic>>(
+        key: "pagination",
+        onValue: (e) => PageResponse.fromJson(e),
+      ),
+    );
   }
 
   @override
@@ -45,7 +53,7 @@ class CosmWasmV1QueryAllContractStateResponse extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "models": models?.map((e) => e.toJson()).toList(),
-      "pagination": pagination?.toJson()
+      "pagination": pagination?.toJson(),
     };
   }
 

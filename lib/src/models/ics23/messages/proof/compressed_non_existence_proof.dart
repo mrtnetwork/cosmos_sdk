@@ -11,15 +11,21 @@ class Ics23CompressedNonExistenceProof extends Ics23CompressedBatchEntryBase {
   final Ics23CompressedExistenceProof? left;
   final Ics23CompressedExistenceProof? right;
   Ics23CompressedNonExistenceProof({List<int>? key, this.left, this.right})
-      : key = BytesUtils.tryToBytes(key, unmodifiable: true);
+    : key = BytesUtils.tryToBytes(key, unmodifiable: true);
   factory Ics23CompressedNonExistenceProof.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Ics23CompressedNonExistenceProof(
       key: decode.getField(1),
-      left: decode.getResult(2)?.to<Ics23CompressedExistenceProof, List<int>>(
-          (e) => Ics23CompressedExistenceProof.deserialize(e)),
-      right: decode.getResult(3)?.to<Ics23CompressedExistenceProof, List<int>>(
-          (e) => Ics23CompressedExistenceProof.deserialize(e)),
+      left: decode
+          .getResult(2)
+          ?.to<Ics23CompressedExistenceProof, List<int>>(
+            (e) => Ics23CompressedExistenceProof.deserialize(e),
+          ),
+      right: decode
+          .getResult(3)
+          ?.to<Ics23CompressedExistenceProof, List<int>>(
+            (e) => Ics23CompressedExistenceProof.deserialize(e),
+          ),
     );
   }
 
@@ -31,7 +37,7 @@ class Ics23CompressedNonExistenceProof extends Ics23CompressedBatchEntryBase {
     return {
       "key": BytesUtils.tryToHexString(key),
       "left": left?.toJson(),
-      "right": right?.toJson()
+      "right": right?.toJson(),
     };
   }
 

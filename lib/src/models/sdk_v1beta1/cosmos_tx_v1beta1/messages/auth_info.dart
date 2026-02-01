@@ -27,34 +27,33 @@ class AuthInfo extends CosmosMessage {
   final Tip? tip;
   factory AuthInfo.fromJson(Map<String, dynamic> json) {
     return AuthInfo(
-        signerInfos: (json["signer_infos"] as List?)
-                ?.map((e) => SignerInfo.fromJson(e))
-                .toList() ??
-            [],
-        fee: Fee.fromJson(json["fee"]),
-        tip: json["tip"] == null ? null : Tip.fromJson(json["tip"]));
+      signerInfos:
+          (json["signer_infos"] as List?)
+              ?.map((e) => SignerInfo.fromJson(e))
+              .toList() ??
+          [],
+      fee: Fee.fromJson(json["fee"]),
+      tip: json["tip"] == null ? null : Tip.fromJson(json["tip"]),
+    );
   }
   AuthInfo({required List<SignerInfo> signerInfos, required this.fee, this.tip})
-      : signerInfos = List<SignerInfo>.unmodifiable(signerInfos);
+    : signerInfos = List<SignerInfo>.unmodifiable(signerInfos);
 
   factory AuthInfo.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
 
     return AuthInfo(
-        signerInfos: decode
-            .getFields<List<int>>(1)
-            .map((e) => SignerInfo.deserialize(e))
-            .toList(),
-        fee: Fee.deserialize(decode.getField(2)),
-        tip:
-            decode.getResult(3)?.to<Tip, List<int>>((e) => Tip.deserialize(e)));
+      signerInfos:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => SignerInfo.deserialize(e))
+              .toList(),
+      fee: Fee.deserialize(decode.getField(2)),
+      tip: decode.getResult(3)?.to<Tip, List<int>>((e) => Tip.deserialize(e)),
+    );
   }
 
-  AuthInfo copyWith({
-    List<SignerInfo>? signerInfos,
-    Fee? fee,
-    Tip? tip,
-  }) {
+  AuthInfo copyWith({List<SignerInfo>? signerInfos, Fee? fee, Tip? tip}) {
     return AuthInfo(
       signerInfos: signerInfos ?? this.signerInfos,
       fee: fee ?? this.fee,
@@ -70,7 +69,7 @@ class AuthInfo extends CosmosMessage {
     return {
       "signer_infos": signerInfos.map((e) => e.toJson()).toList(),
       "fee": fee.toJson(),
-      "tip": tip?.toJson()
+      "tip": tip?.toJson(),
     };
   }
 

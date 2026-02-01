@@ -24,15 +24,18 @@ class SignedMsgType implements CosmosEnum {
     unknown,
     prevote,
     precommit,
-    proposal
+    proposal,
   ];
 
   static SignedMsgType fromValue(int? value) {
     return values.firstWhere(
       (e) => e.value == value,
-      orElse: () => throw DartCosmosSdkPluginException(
-          "No SignedMsgType element found for the given value.",
-          details: {"value": value}),
+      orElse:
+          () =>
+              throw DartCosmosSdkPluginException(
+                "No SignedMsgType element found for the given value.",
+                details: {"value": value},
+              ),
     );
   }
 }

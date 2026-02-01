@@ -9,10 +9,7 @@ class App extends CosmosMessage {
   const App({this.protocol, this.software});
   factory App.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return App(
-      protocol: decode.getField(1),
-      software: decode.getField(2),
-    );
+    return App(protocol: decode.getField(1), software: decode.getField(2));
   }
 
   @override

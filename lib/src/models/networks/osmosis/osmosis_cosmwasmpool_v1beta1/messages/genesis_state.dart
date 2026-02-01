@@ -10,15 +10,17 @@ class OsmosisCosmWasmPoolGenesisState extends CosmosMessage {
   final List<Any>? pools;
 
   OsmosisCosmWasmPoolGenesisState({required this.params, List<Any>? pools})
-      : pools = pools?.emptyAsNull?.immutable;
+    : pools = pools?.emptyAsNull?.immutable;
   factory OsmosisCosmWasmPoolGenesisState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisCosmWasmPoolGenesisState(
-        params: OsmosisCosmWasmPoolParams.deserialize(decode.getField(1)),
-        pools: decode
-            .getFields<List<int>>(2)
-            .map((e) => Any.deserialize(e))
-            .toList());
+      params: OsmosisCosmWasmPoolParams.deserialize(decode.getField(1)),
+      pools:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => Any.deserialize(e))
+              .toList(),
+    );
   }
 
   @override
@@ -28,7 +30,7 @@ class OsmosisCosmWasmPoolGenesisState extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "params": params.toJson(),
-      "pools": pools?.map((e) => e.toJson()).toList()
+      "pools": pools?.map((e) => e.toJson()).toList(),
     };
   }
 

@@ -16,21 +16,24 @@ class QueryUnreceivedPacketsRequest extends CosmosMessage
 
   /// packet sequence
   final List<BigInt> packetCommitmentSequences;
-  QueryUnreceivedPacketsRequest(
-      {required this.portId,
-      required this.channelId,
-      required List<BigInt> packetCommitmentSequences})
-      : packetCommitmentSequences = packetCommitmentSequences.immutable;
+  QueryUnreceivedPacketsRequest({
+    required this.portId,
+    required this.channelId,
+    required List<BigInt> packetCommitmentSequences,
+  }) : packetCommitmentSequences = packetCommitmentSequences.immutable;
   factory QueryUnreceivedPacketsRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryUnreceivedPacketsRequest(
-        portId: decode.getField(1),
-        channelId: decode.getField(2),
-        packetCommitmentSequences: decode
-                .getResult<ProtocolBufferDecoderResult?>(3)
-                ?.to<List<BigInt>, List<int>>(
-                    (e) => e.map((e) => BigintUtils.parse(e)).toList()) ??
-            <BigInt>[]);
+      portId: decode.getField(1),
+      channelId: decode.getField(2),
+      packetCommitmentSequences:
+          decode
+              .getResult<ProtocolBufferDecoderResult?>(3)
+              ?.to<List<BigInt>, List<int>>(
+                (e) => e.map((e) => BigintUtils.parse(e)).toList(),
+              ) ??
+          <BigInt>[],
+    );
   }
 
   @override
@@ -42,7 +45,7 @@ class QueryUnreceivedPacketsRequest extends CosmosMessage
       "port_id": portId,
       "channel_id": channelId,
       "packet_commitment_sequences":
-          packetCommitmentSequences.map((e) => e.toString()).toList()
+          packetCommitmentSequences.map((e) => e.toString()).toList(),
     };
   }
 
@@ -62,6 +65,9 @@ class QueryUnreceivedPacketsRequest extends CosmosMessage
   }
 
   @override
-  List<String> get pathParameters =>
-      [channelId, portId, packetCommitmentSequences.join(",")];
+  List<String> get pathParameters => [
+    channelId,
+    portId,
+    packetCommitmentSequences.join(","),
+  ];
 }

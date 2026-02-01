@@ -5,10 +5,12 @@ class OsmosisTokenFactoryMsgCreateDenomResponse extends CosmosMessage {
   final String? newTokenDenom;
   OsmosisTokenFactoryMsgCreateDenomResponse({this.newTokenDenom});
   factory OsmosisTokenFactoryMsgCreateDenomResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisTokenFactoryMsgCreateDenomResponse(
-        newTokenDenom: decode.getField(1));
+      newTokenDenom: decode.getField(1),
+    );
   }
 
   @override

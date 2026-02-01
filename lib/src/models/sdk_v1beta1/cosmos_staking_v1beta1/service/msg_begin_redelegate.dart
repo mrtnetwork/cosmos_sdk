@@ -26,23 +26,25 @@ class MsgBeginRedelegate
   factory MsgBeginRedelegate.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgBeginRedelegate(
-        delegatorAddress: decode
-            .getResult(1)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        validatorSrcAddress: decode
-            .getResult(2)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        validatorDstAddress: decode
-            .getResult(3)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        amount: Coin.deserialize(decode.getField(4)));
+      delegatorAddress: decode
+          .getResult(1)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      validatorSrcAddress: decode
+          .getResult(2)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      validatorDstAddress: decode
+          .getResult(3)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      amount: Coin.deserialize(decode.getField(4)),
+    );
   }
   factory MsgBeginRedelegate.fromJson(Map<String, dynamic> json) {
     return MsgBeginRedelegate(
-        delegatorAddress: json.asAddress("delegator_address"),
-        validatorSrcAddress: json.asAddress("validator_src_address"),
-        validatorDstAddress: json.asAddress("validator_dst_address"),
-        amount: Coin.fromJson(json.asMap("amount")));
+      delegatorAddress: json.asAddress("delegator_address"),
+      validatorSrcAddress: json.asAddress("validator_src_address"),
+      validatorDstAddress: json.asAddress("validator_dst_address"),
+      amount: Coin.fromJson(json.asMap("amount")),
+    );
   }
 
   @override
@@ -63,11 +65,11 @@ class MsgBeginRedelegate
 
   @override
   List get values => [
-        delegatorAddress?.address,
-        validatorSrcAddress?.address,
-        validatorDstAddress?.address,
-        amount
-      ];
+    delegatorAddress?.address,
+    validatorSrcAddress?.address,
+    validatorDstAddress?.address,
+    amount,
+  ];
 
   @override
   List<String?> get signers => [delegatorAddress?.address];

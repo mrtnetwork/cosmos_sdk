@@ -34,12 +34,12 @@ class Plan extends CosmosMessage {
 
   factory Plan.fromJson(Map<String, dynamic> json) {
     return Plan(
-        time: ProtobufTimestamp.fromString(json["time"]),
-        height: BigintUtils.tryParse(json["height"]),
-        info: json["info"],
-        name: json["name"],
-        upgradedClientState:
-            AnyMessage.fromJson(json["upgraded_client_state"]));
+      time: ProtobufTimestamp.fromString(json["time"]),
+      height: BigintUtils.tryParse(json["height"]),
+      info: json["info"],
+      name: json["name"],
+      upgradedClientState: AnyMessage.fromJson(json["upgraded_client_state"]),
+    );
   }
 
   Plan({
@@ -53,13 +53,14 @@ class Plan extends CosmosMessage {
   factory Plan.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Plan(
-        name: decode.getField(1),
-        time: ProtobufTimestamp.deserialize(decode.getField(2)),
-        height: decode.getField(3),
-        info: decode.getField(4),
-        upgradedClientState: decode
-            .getResult(5)
-            ?.to<AnyMessage, List<int>>((e) => AnyMessage.deserialize(e)));
+      name: decode.getField(1),
+      time: ProtobufTimestamp.deserialize(decode.getField(2)),
+      height: decode.getField(3),
+      info: decode.getField(4),
+      upgradedClientState: decode
+          .getResult(5)
+          ?.to<AnyMessage, List<int>>((e) => AnyMessage.deserialize(e)),
+    );
   }
 
   /// Converts the plan to a JSON-serializable map.
@@ -70,7 +71,7 @@ class Plan extends CosmosMessage {
       'time': time.toJson(),
       'height': height?.toString(),
       'info': info,
-      "upgraded_client_state": upgradedClientState?.toJson()
+      "upgraded_client_state": upgradedClientState?.toJson(),
     };
   }
 

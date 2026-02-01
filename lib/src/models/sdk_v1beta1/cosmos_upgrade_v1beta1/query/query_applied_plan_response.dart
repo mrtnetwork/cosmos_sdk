@@ -13,7 +13,8 @@ class QueryAppliedPlanResponse extends CosmosMessage {
   }
   factory QueryAppliedPlanResponse.fromJson(Map<String, dynamic> json) {
     return QueryAppliedPlanResponse(
-        height: BigintUtils.tryParse(json["height"]));
+      height: BigintUtils.tryParse(json["height"]),
+    );
   }
 
   @override

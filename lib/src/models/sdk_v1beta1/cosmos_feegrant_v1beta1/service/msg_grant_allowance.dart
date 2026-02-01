@@ -22,21 +22,26 @@ class MsgGrantAllowance
   factory MsgGrantAllowance.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgGrantAllowance(
-        granter: decode
-            .getResult(1)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        grantee: decode
-            .getResult(2)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        allowance:
-            decode.getResult(3)?.to<Any, List<int>>((e) => Any.deserialize(e)));
+      granter: decode
+          .getResult(1)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      grantee: decode
+          .getResult(2)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      allowance: decode
+          .getResult(3)
+          ?.to<Any, List<int>>((e) => Any.deserialize(e)),
+    );
   }
   factory MsgGrantAllowance.fromJson(Map<String, dynamic> json) {
     return MsgGrantAllowance(
-        granter: json.asAddress("granter"),
-        grantee: json.asAddress("grantee"),
-        allowance: json.maybeAs<Any, Map<String, dynamic>>(
-            key: "allowance", onValue: (e) => Any.fromJson(e)));
+      granter: json.asAddress("granter"),
+      grantee: json.asAddress("grantee"),
+      allowance: json.maybeAs<Any, Map<String, dynamic>>(
+        key: "allowance",
+        onValue: (e) => Any.fromJson(e),
+      ),
+    );
   }
 
   @override
@@ -47,7 +52,7 @@ class MsgGrantAllowance
     return {
       "granter": granter?.address,
       "grantee": grantee?.address,
-      "allowance": allowance?.toJson()
+      "allowance": allowance?.toJson(),
     };
   }
 
@@ -62,6 +67,7 @@ class MsgGrantAllowance
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        FeegrantV1beta1Types.msgGrantAllowanceResponse);
+      FeegrantV1beta1Types.msgGrantAllowanceResponse,
+    );
   }
 }

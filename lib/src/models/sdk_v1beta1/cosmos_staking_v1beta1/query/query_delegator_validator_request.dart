@@ -11,8 +11,10 @@ class QueryDelegatorValidatorRequest extends CosmosMessage
 
   /// validator_addr defines the validator address to query for.
   final CosmosBaseAddress validatorAddr;
-  const QueryDelegatorValidatorRequest(
-      {required this.delegatorAddr, required this.validatorAddr});
+  const QueryDelegatorValidatorRequest({
+    required this.delegatorAddr,
+    required this.validatorAddr,
+  });
 
   @override
   List<int> get fieldIds => [1, 2];
@@ -41,6 +43,8 @@ class QueryDelegatorValidatorRequest extends CosmosMessage
   }
 
   @override
-  List<String> get pathParameters =>
-      [delegatorAddr.address, validatorAddr.address];
+  List<String> get pathParameters => [
+    delegatorAddr.address,
+    validatorAddr.address,
+  ];
 }

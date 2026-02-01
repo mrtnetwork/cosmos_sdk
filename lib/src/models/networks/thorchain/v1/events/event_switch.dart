@@ -7,16 +7,20 @@ class ThorchainEventSwitch extends CosmosMessage {
   final String? fromAddress;
   final ThorchainCoin burn;
   final String? txId;
-  ThorchainEventSwitch(
-      {List<int>? toAddress, this.fromAddress, required this.burn, this.txId})
-      : toAddress = BytesUtils.tryToBytes(toAddress, unmodifiable: true);
+  ThorchainEventSwitch({
+    List<int>? toAddress,
+    this.fromAddress,
+    required this.burn,
+    this.txId,
+  }) : toAddress = BytesUtils.tryToBytes(toAddress, unmodifiable: true);
   factory ThorchainEventSwitch.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainEventSwitch(
-        toAddress: decode.getField(1),
-        fromAddress: decode.getField(2),
-        burn: ThorchainCoin.deserialize(decode.getField(3)),
-        txId: decode.getField(4));
+      toAddress: decode.getField(1),
+      fromAddress: decode.getField(2),
+      burn: ThorchainCoin.deserialize(decode.getField(3)),
+      txId: decode.getField(4),
+    );
   }
 
   @override
@@ -28,7 +32,7 @@ class ThorchainEventSwitch extends CosmosMessage {
       "to_address": BytesUtils.tryToHexString(toAddress),
       "from_address": fromAddress,
       "burn": burn.toJson(),
-      "tx_id": txId
+      "tx_id": txId,
     };
   }
 

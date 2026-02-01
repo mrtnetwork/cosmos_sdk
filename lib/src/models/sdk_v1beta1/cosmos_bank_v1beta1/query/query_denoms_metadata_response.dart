@@ -14,25 +14,30 @@ class QueryDenomsMetadataResponse extends CosmosMessage {
   const QueryDenomsMetadataResponse({required this.metadatas, this.pagination});
   factory QueryDenomsMetadataResponse.fromJson(Map<String, dynamic> json) {
     return QueryDenomsMetadataResponse(
-        metadatas: (json["metadatas"] as List?)
-                ?.map((e) => Metadata.fromJson(e))
-                .toList() ??
-            [],
-        pagination: json["pagination"] == null
-            ? null
-            : PageResponse.fromJson(json["pagination"]));
+      metadatas:
+          (json["metadatas"] as List?)
+              ?.map((e) => Metadata.fromJson(e))
+              .toList() ??
+          [],
+      pagination:
+          json["pagination"] == null
+              ? null
+              : PageResponse.fromJson(json["pagination"]),
+    );
   }
 
   factory QueryDenomsMetadataResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryDenomsMetadataResponse(
-        metadatas: decode
-            .getFields<List<int>>(1)
-            .map((e) => Metadata.deserialize(e))
-            .toList(),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
+      metadatas:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => Metadata.deserialize(e))
+              .toList(),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
+    );
   }
 
   @override
@@ -42,7 +47,7 @@ class QueryDenomsMetadataResponse extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "metadatas": metadatas.map((e) => e.toJson()).toList(),
-      "pagination": pagination?.toJson()
+      "pagination": pagination?.toJson(),
     };
   }
 

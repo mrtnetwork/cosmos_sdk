@@ -14,9 +14,10 @@ class CosmWasmV1QuerySmartContractStateRequest extends CosmosMessage
   /// QueryData contains the query data passed to the contract
   final List<int> queryData;
 
-  CosmWasmV1QuerySmartContractStateRequest(
-      {required this.address, required List<int> queryData})
-      : queryData = queryData.asImmutableBytes;
+  CosmWasmV1QuerySmartContractStateRequest({
+    required this.address,
+    required List<int> queryData,
+  }) : queryData = queryData.asImmutableBytes;
 
   @override
   List<int> get fieldIds => [1, 2];
@@ -39,7 +40,8 @@ class CosmWasmV1QuerySmartContractStateRequest extends CosmosMessage
 
   @override
   CosmWasmV1QuerySmartContractStateResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return CosmWasmV1QuerySmartContractStateResponse.fromJson(json);
   }
 

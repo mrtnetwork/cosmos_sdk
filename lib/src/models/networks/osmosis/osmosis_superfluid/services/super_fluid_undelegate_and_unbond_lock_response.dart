@@ -10,10 +10,12 @@ class OsmosisSuperfluidMsgSuperfluidUndelegateAndUnbondLockResponse
 
   OsmosisSuperfluidMsgSuperfluidUndelegateAndUnbondLockResponse({this.lockId});
   factory OsmosisSuperfluidMsgSuperfluidUndelegateAndUnbondLockResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidMsgSuperfluidUndelegateAndUnbondLockResponse(
-        lockId: decode.getField(1));
+      lockId: decode.getField(1),
+    );
   }
 
   @override

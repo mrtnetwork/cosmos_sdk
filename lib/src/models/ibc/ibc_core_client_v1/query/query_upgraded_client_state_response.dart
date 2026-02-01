@@ -10,16 +10,19 @@ class QueryUpgradedClientStateResponse extends CosmosMessage {
   const QueryUpgradedClientStateResponse({this.upgradedClientState});
   factory QueryUpgradedClientStateResponse.fromJson(Map<String, dynamic> json) {
     return QueryUpgradedClientStateResponse(
-        upgradedClientState: json["upgraded_client_state"] == null
-            ? null
-            : AnyMessage.fromJson(json["upgraded_client_state"]));
+      upgradedClientState:
+          json["upgraded_client_state"] == null
+              ? null
+              : AnyMessage.fromJson(json["upgraded_client_state"]),
+    );
   }
   factory QueryUpgradedClientStateResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryUpgradedClientStateResponse(
-        upgradedClientState: decode
-            .getResult(1)
-            ?.to<AnyMessage, List<int>>((e) => AnyMessage.deserialize(e)));
+      upgradedClientState: decode
+          .getResult(1)
+          ?.to<AnyMessage, List<int>>((e) => AnyMessage.deserialize(e)),
+    );
   }
 
   @override

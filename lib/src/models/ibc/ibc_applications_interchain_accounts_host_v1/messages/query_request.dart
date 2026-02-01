@@ -14,16 +14,21 @@ class InterchainAccountsHostQueryRequest extends CosmosMessage {
   /// https://github.com/cosmos/cosmos-sdk/blob/main/docs/architecture/adr-021-protobuf-query-encoding.md#custom-query-registration-and-routing
   final List<int>? data;
   InterchainAccountsHostQueryRequest({this.path, List<int>? data})
-      : data = data?.asImmutableBytes;
+    : data = data?.asImmutableBytes;
   factory InterchainAccountsHostQueryRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return InterchainAccountsHostQueryRequest(
-        path: decode.getField(1), data: decode.getField(2));
+      path: decode.getField(1),
+      data: decode.getField(2),
+    );
   }
   factory InterchainAccountsHostQueryRequest.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return InterchainAccountsHostQueryRequest(
-        path: json.as("path"), data: json.asBytes("data"));
+      path: json.as("path"),
+      data: json.asBytes("data"),
+    );
   }
 
   @override

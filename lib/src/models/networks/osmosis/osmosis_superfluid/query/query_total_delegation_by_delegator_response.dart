@@ -8,57 +8,70 @@ import 'package:blockchain_utils/helper/helper.dart';
 class OsmosisSuperfluidQueryTotalDelegationByDelegatorResponse
     extends CosmosMessage {
   final List<OsmosisSuperfluidSuperfluidDelegationRecord>
-      superfluidDelegationRecords;
+  superfluidDelegationRecords;
   final List<DelegationResponse> delegationResponse;
   final List<Coin> totalDelegatedCoins;
   final Coin totalEquivalentStakedAmount;
-  OsmosisSuperfluidQueryTotalDelegationByDelegatorResponse(
-      {required List<OsmosisSuperfluidSuperfluidDelegationRecord>
-          superfluidDelegationRecords,
-      required List<DelegationResponse> delegationResponse,
-      required List<Coin> totalDelegatedCoins,
-      required this.totalEquivalentStakedAmount})
-      : superfluidDelegationRecords = superfluidDelegationRecords.immutable,
-        delegationResponse = delegationResponse.immutable,
-        totalDelegatedCoins = totalDelegatedCoins.immutable;
+  OsmosisSuperfluidQueryTotalDelegationByDelegatorResponse({
+    required List<OsmosisSuperfluidSuperfluidDelegationRecord>
+    superfluidDelegationRecords,
+    required List<DelegationResponse> delegationResponse,
+    required List<Coin> totalDelegatedCoins,
+    required this.totalEquivalentStakedAmount,
+  }) : superfluidDelegationRecords = superfluidDelegationRecords.immutable,
+       delegationResponse = delegationResponse.immutable,
+       totalDelegatedCoins = totalDelegatedCoins.immutable;
   factory OsmosisSuperfluidQueryTotalDelegationByDelegatorResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidQueryTotalDelegationByDelegatorResponse(
-        superfluidDelegationRecords: decode
-            .getFields<List<int>>(1)
-            .map((e) =>
-                OsmosisSuperfluidSuperfluidDelegationRecord.deserialize(e))
-            .toList(),
-        delegationResponse: decode
-            .getFields<List<int>>(2)
-            .map((e) => DelegationResponse.deserialize(e))
-            .toList(),
-        totalDelegatedCoins: decode
-            .getFields<List<int>>(3)
-            .map((e) => Coin.deserialize(e))
-            .toList(),
-        totalEquivalentStakedAmount: Coin.deserialize(decode.getField(4)));
+      superfluidDelegationRecords:
+          decode
+              .getFields<List<int>>(1)
+              .map(
+                (e) =>
+                    OsmosisSuperfluidSuperfluidDelegationRecord.deserialize(e),
+              )
+              .toList(),
+      delegationResponse:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => DelegationResponse.deserialize(e))
+              .toList(),
+      totalDelegatedCoins:
+          decode
+              .getFields<List<int>>(3)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
+      totalEquivalentStakedAmount: Coin.deserialize(decode.getField(4)),
+    );
   }
   factory OsmosisSuperfluidQueryTotalDelegationByDelegatorResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisSuperfluidQueryTotalDelegationByDelegatorResponse(
-        superfluidDelegationRecords:
-            (json["superfluid_delegation_records"] as List?)
-                    ?.map((e) =>
-                        OsmosisSuperfluidSuperfluidDelegationRecord.fromJson(e))
-                    .toList() ??
-                <OsmosisSuperfluidSuperfluidDelegationRecord>[],
-        delegationResponse: (json["delegation_response"] as List?)
-                ?.map((e) => DelegationResponse.fromJson(e))
-                .toList() ??
-            <DelegationResponse>[],
-        totalDelegatedCoins: (json["total_delegated_coins"] as List?)
-                ?.map((e) => Coin.fromJson(e))
-                .toList() ??
-            <Coin>[],
-        totalEquivalentStakedAmount:
-            Coin.fromJson(json["total_equivalent_staked_amount"]));
+      superfluidDelegationRecords:
+          (json["superfluid_delegation_records"] as List?)
+              ?.map(
+                (e) => OsmosisSuperfluidSuperfluidDelegationRecord.fromJson(e),
+              )
+              .toList() ??
+          <OsmosisSuperfluidSuperfluidDelegationRecord>[],
+      delegationResponse:
+          (json["delegation_response"] as List?)
+              ?.map((e) => DelegationResponse.fromJson(e))
+              .toList() ??
+          <DelegationResponse>[],
+      totalDelegatedCoins:
+          (json["total_delegated_coins"] as List?)
+              ?.map((e) => Coin.fromJson(e))
+              .toList() ??
+          <Coin>[],
+      totalEquivalentStakedAmount: Coin.fromJson(
+        json["total_equivalent_staked_amount"],
+      ),
+    );
   }
 
   @override
@@ -72,7 +85,7 @@ class OsmosisSuperfluidQueryTotalDelegationByDelegatorResponse
       "delegation_response": delegationResponse.map((e) => e.toJson()).toList(),
       "total_delegated_coins":
           totalDelegatedCoins.map((e) => e.toJson()).toList(),
-      "total_equivalent_staked_amount": totalEquivalentStakedAmount.toJson()
+      "total_equivalent_staked_amount": totalEquivalentStakedAmount.toJson(),
     };
   }
 
@@ -82,9 +95,9 @@ class OsmosisSuperfluidQueryTotalDelegationByDelegatorResponse
 
   @override
   List get values => [
-        superfluidDelegationRecords,
-        delegationResponse,
-        totalDelegatedCoins,
-        totalEquivalentStakedAmount
-      ];
+    superfluidDelegationRecords,
+    delegationResponse,
+    totalDelegatedCoins,
+    totalEquivalentStakedAmount,
+  ];
 }

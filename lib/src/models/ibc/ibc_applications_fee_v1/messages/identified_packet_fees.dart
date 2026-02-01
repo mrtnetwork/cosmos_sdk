@@ -14,23 +14,28 @@ class IbcFeeIdentifiedPacketFees extends CosmosMessage {
 
   factory IbcFeeIdentifiedPacketFees.fromJson(Map<String, dynamic> json) {
     return IbcFeeIdentifiedPacketFees(
-        packetId: IbcChannelPacketId.fromJson(json["packet_id"]),
-        packetFees: (json["packet_fees"] as List?)
-                ?.map((e) => IbcFeePacketFee.fromJson(e))
-                .toList() ??
-            []);
+      packetId: IbcChannelPacketId.fromJson(json["packet_id"]),
+      packetFees:
+          (json["packet_fees"] as List?)
+              ?.map((e) => IbcFeePacketFee.fromJson(e))
+              .toList() ??
+          [],
+    );
   }
-  IbcFeeIdentifiedPacketFees(
-      {required this.packetId, required List<IbcFeePacketFee> packetFees})
-      : packetFees = packetFees.immutable;
+  IbcFeeIdentifiedPacketFees({
+    required this.packetId,
+    required List<IbcFeePacketFee> packetFees,
+  }) : packetFees = packetFees.immutable;
   factory IbcFeeIdentifiedPacketFees.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcFeeIdentifiedPacketFees(
-        packetId: IbcChannelPacketId.deserialize(decode.getField(1)),
-        packetFees: decode
-            .getFields<List<int>>(2)
-            .map((e) => IbcFeePacketFee.deserialize(e))
-            .toList());
+      packetId: IbcChannelPacketId.deserialize(decode.getField(1)),
+      packetFees:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => IbcFeePacketFee.deserialize(e))
+              .toList(),
+    );
   }
 
   @override
@@ -40,7 +45,7 @@ class IbcFeeIdentifiedPacketFees extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "packet_id": packetId.toJson(),
-      "packet_fees": packetFees.map((e) => e.toJson()).toList()
+      "packet_fees": packetFees.map((e) => e.toJson()).toList(),
     };
   }
 

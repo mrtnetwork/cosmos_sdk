@@ -12,25 +12,34 @@ class CosmWasmV1QueryContractsByCreatorResponse extends CosmosMessage {
 
   /// pagination defines the pagination in the response.
   final PageResponse? pagination;
-  CosmWasmV1QueryContractsByCreatorResponse(
-      {required List<String>? contractAddresses, this.pagination})
-      : contractAddresses = contractAddresses?.immutable;
+  CosmWasmV1QueryContractsByCreatorResponse({
+    required List<String>? contractAddresses,
+    this.pagination,
+  }) : contractAddresses = contractAddresses?.immutable;
   factory CosmWasmV1QueryContractsByCreatorResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmWasmV1QueryContractsByCreatorResponse(
-        contractAddresses: decode.getFields<String>(1),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageResponse, List<int>>(PageResponse.deserialize));
+      contractAddresses: decode.getFields<String>(1),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageResponse, List<int>>(PageResponse.deserialize),
+    );
   }
   factory CosmWasmV1QueryContractsByCreatorResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return CosmWasmV1QueryContractsByCreatorResponse(
-        contractAddresses:
-            json.asListOfString("contract_addresses", throwOnNull: false),
-        pagination: json.maybeAs<PageResponse, Map<String, dynamic>>(
-            key: "pagination", onValue: (e) => PageResponse.fromJson(e)));
+      contractAddresses: json.asListOfString(
+        "contract_addresses",
+        throwOnNull: false,
+      ),
+      pagination: json.maybeAs<PageResponse, Map<String, dynamic>>(
+        key: "pagination",
+        onValue: (e) => PageResponse.fromJson(e),
+      ),
+    );
   }
 
   @override
@@ -40,7 +49,7 @@ class CosmWasmV1QueryContractsByCreatorResponse extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "contract_addresses": contractAddresses,
-      "pagination": pagination?.toJson()
+      "pagination": pagination?.toJson(),
     };
   }
 

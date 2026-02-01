@@ -18,10 +18,6 @@ class AssetTradeInfoResponse {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'asset': asset,
-      'units': units,
-      'depth': depth,
-    };
+    return {'asset': asset, 'units': units, 'depth': depth};
   }
 }

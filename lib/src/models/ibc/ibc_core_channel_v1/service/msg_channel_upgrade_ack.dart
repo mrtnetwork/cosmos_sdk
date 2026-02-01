@@ -18,37 +18,40 @@ class MsgChannelUpgradeAck extends IbcService<MsgChannelUpgradeAckResponse> {
   final List<int>? proofUpgrade;
   final IbcClientHeight proofHeight;
   final String? signer;
-  MsgChannelUpgradeAck(
-      {this.portId,
-      this.channelId,
-      required this.counterpartyUpgrade,
-      List<int>? proofChannel,
-      List<int>? proofUpgrade,
-      required this.proofHeight,
-      this.signer})
-      : proofChannel = BytesUtils.tryToBytes(proofChannel, unmodifiable: true),
-        proofUpgrade = BytesUtils.tryToBytes(proofUpgrade, unmodifiable: true);
+  MsgChannelUpgradeAck({
+    this.portId,
+    this.channelId,
+    required this.counterpartyUpgrade,
+    List<int>? proofChannel,
+    List<int>? proofUpgrade,
+    required this.proofHeight,
+    this.signer,
+  }) : proofChannel = BytesUtils.tryToBytes(proofChannel, unmodifiable: true),
+       proofUpgrade = BytesUtils.tryToBytes(proofUpgrade, unmodifiable: true);
   factory MsgChannelUpgradeAck.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgChannelUpgradeAck(
-        portId: decode.getField(1),
-        channelId: decode.getField(2),
-        counterpartyUpgrade: IbcChannelUpgrade.deserialize(decode.getField(3)),
-        proofChannel: decode.getField(4),
-        proofUpgrade: decode.getField(5),
-        proofHeight: IbcClientHeight.deserialize(decode.getField(6)),
-        signer: decode.getField(7));
+      portId: decode.getField(1),
+      channelId: decode.getField(2),
+      counterpartyUpgrade: IbcChannelUpgrade.deserialize(decode.getField(3)),
+      proofChannel: decode.getField(4),
+      proofUpgrade: decode.getField(5),
+      proofHeight: IbcClientHeight.deserialize(decode.getField(6)),
+      signer: decode.getField(7),
+    );
   }
   factory MsgChannelUpgradeAck.fromJson(Map<String, dynamic> json) {
     return MsgChannelUpgradeAck(
-        portId: json.as("port_id"),
-        channelId: json.as("channel_id"),
-        counterpartyUpgrade:
-            IbcChannelUpgrade.fromJson(json.asMap("counterparty_upgrade")),
-        proofChannel: json.asBytes("proof_channel"),
-        proofUpgrade: json.asBytes("proof_upgrade"),
-        proofHeight: IbcClientHeight.fromJson(json.asMap("proof_height")),
-        signer: json.as("signer"));
+      portId: json.as("port_id"),
+      channelId: json.as("channel_id"),
+      counterpartyUpgrade: IbcChannelUpgrade.fromJson(
+        json.asMap("counterparty_upgrade"),
+      ),
+      proofChannel: json.asBytes("proof_channel"),
+      proofUpgrade: json.asBytes("proof_upgrade"),
+      proofHeight: IbcClientHeight.fromJson(json.asMap("proof_height")),
+      signer: json.as("signer"),
+    );
   }
 
   @override
@@ -63,7 +66,7 @@ class MsgChannelUpgradeAck extends IbcService<MsgChannelUpgradeAckResponse> {
       "proof_channel": BytesUtils.tryToHexString(proofChannel),
       "proof_upgrade": BytesUtils.tryToHexString(proofUpgrade),
       "proof_height": proofHeight.toJson(),
-      "signer": signer
+      "signer": signer,
     };
   }
 
@@ -72,14 +75,14 @@ class MsgChannelUpgradeAck extends IbcService<MsgChannelUpgradeAckResponse> {
 
   @override
   List get values => [
-        portId,
-        channelId,
-        counterpartyUpgrade,
-        proofChannel,
-        proofUpgrade,
-        proofHeight,
-        signer
-      ];
+    portId,
+    channelId,
+    counterpartyUpgrade,
+    proofChannel,
+    proofUpgrade,
+    proofHeight,
+    signer,
+  ];
 
   @override
   List<String?> get signers => [signer];

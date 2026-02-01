@@ -6,16 +6,21 @@ class OsmosisProtorevSetProtoRevEnabledProposal extends CosmosMessage {
   final String? title;
   final String? description;
   final bool? enabled;
-  OsmosisProtorevSetProtoRevEnabledProposal(
-      {this.title, this.description, this.enabled});
+  OsmosisProtorevSetProtoRevEnabledProposal({
+    this.title,
+    this.description,
+    this.enabled,
+  });
 
   factory OsmosisProtorevSetProtoRevEnabledProposal.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisProtorevSetProtoRevEnabledProposal(
-        title: decode.getField(1),
-        description: decode.getField(2),
-        enabled: decode.getField(3));
+      title: decode.getField(1),
+      description: decode.getField(2),
+      enabled: decode.getField(3),
+    );
   }
 
   @override

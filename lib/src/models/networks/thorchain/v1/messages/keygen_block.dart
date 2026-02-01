@@ -6,15 +6,16 @@ class ThorchainKeygenBlock extends CosmosMessage {
   final BigInt? height;
   final List<ThorchainKeygen> keygens;
   ThorchainKeygenBlock({this.height, required List<ThorchainKeygen> keygens})
-      : keygens = keygens.immutable;
+    : keygens = keygens.immutable;
   factory ThorchainKeygenBlock.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainKeygenBlock(
       height: decode.getField(1),
-      keygens: decode
-          .getFields<List<int>>(4)
-          .map((e) => ThorchainKeygen.deserialize(e))
-          .toList(),
+      keygens:
+          decode
+              .getFields<List<int>>(4)
+              .map((e) => ThorchainKeygen.deserialize(e))
+              .toList(),
     );
   }
 
@@ -25,7 +26,7 @@ class ThorchainKeygenBlock extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "height": height?.toString(),
-      "keygens": keygens.map((e) => e.toJson()).toList()
+      "keygens": keygens.map((e) => e.toJson()).toList(),
     };
   }
 

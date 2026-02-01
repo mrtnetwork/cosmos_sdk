@@ -8,13 +8,17 @@ class ProposalStatus implements CosmosEnum {
 
   /// PROPOSAL_STATUS_DEPOSIT_PERIOD defines a proposal status during the deposit
   /// period.
-  static const ProposalStatus depositPeriod =
-      ProposalStatus._(1, "depositPeriod");
+  static const ProposalStatus depositPeriod = ProposalStatus._(
+    1,
+    "depositPeriod",
+  );
 
   /// PROPOSAL_STATUS_VOTING_PERIOD defines a proposal status during the voting
   /// period..
-  static const ProposalStatus votingPeriod =
-      ProposalStatus._(2, "votingPeriod");
+  static const ProposalStatus votingPeriod = ProposalStatus._(
+    2,
+    "votingPeriod",
+  );
 
   /// PROPOSAL_STATUS_PASSED defines a proposal status of a proposal that has
   /// passed.
@@ -39,24 +43,30 @@ class ProposalStatus implements CosmosEnum {
     votingPeriod,
     passed,
     rejected,
-    failed
+    failed,
   ];
 
   static ProposalStatus fromValue(int? value) {
     return values.firstWhere(
       (e) => e.value == value,
-      orElse: () => throw DartCosmosSdkPluginException(
-          "No ProposalStatus element found for the given value.",
-          details: {"value": value}),
+      orElse:
+          () =>
+              throw DartCosmosSdkPluginException(
+                "No ProposalStatus element found for the given value.",
+                details: {"value": value},
+              ),
     );
   }
 
   static ProposalStatus fromName(String? name) {
     return values.firstWhere(
       (e) => e.name == name,
-      orElse: () => throw DartCosmosSdkPluginException(
-          "No ProposalStatus element found for the given name.",
-          details: {"name": name}),
+      orElse:
+          () =>
+              throw DartCosmosSdkPluginException(
+                "No ProposalStatus element found for the given name.",
+                details: {"name": name},
+              ),
     );
   }
 }

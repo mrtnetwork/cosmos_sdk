@@ -29,13 +29,13 @@ class OsmosisLockupPeriodLock extends CosmosMessage {
 
   /// Coins are the tokens locked within the lock, kept in the module account.
   final List<Coin> coins;
-  OsmosisLockupPeriodLock(
-      {this.id,
-      this.owner,
-      required this.duration,
-      required this.endTime,
-      required List<Coin> coins})
-      : coins = coins.immutable;
+  OsmosisLockupPeriodLock({
+    this.id,
+    this.owner,
+    required this.duration,
+    required this.endTime,
+    required List<Coin> coins,
+  }) : coins = coins.immutable;
 
   factory OsmosisLockupPeriodLock.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -44,10 +44,11 @@ class OsmosisLockupPeriodLock extends CosmosMessage {
       owner: decode.getField(2),
       duration: ProtobufDuration.deserialize(decode.getField(3)),
       endTime: ProtobufTimestamp.deserialize(decode.getField(4)),
-      coins: decode
-          .getFields<List<int>>(5)
-          .map((e) => Coin.deserialize(e))
-          .toList(),
+      coins:
+          decode
+              .getFields<List<int>>(5)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
     );
   }
   factory OsmosisLockupPeriodLock.fromJson(Map<String, dynamic> json) {
@@ -58,7 +59,7 @@ class OsmosisLockupPeriodLock extends CosmosMessage {
       endTime: ProtobufTimestamp.fromString(json["end_time"]),
       coins:
           (json["coins"] as List?)?.map((e) => Coin.deserialize(e)).toList() ??
-              <Coin>[],
+          <Coin>[],
     );
   }
 
@@ -72,7 +73,7 @@ class OsmosisLockupPeriodLock extends CosmosMessage {
       "owner": owner,
       "duration": duration.toJson(),
       "end_time": endTime.toJson(),
-      "coins": coins.map((e) => e.toJson()).toList()
+      "coins": coins.map((e) => e.toJson()).toList(),
     };
   }
 

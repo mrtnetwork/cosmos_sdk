@@ -9,14 +9,17 @@ class EvmosEthermintFeeMarketV1QueryBlockGasResponse extends CosmosMessage {
 
   const EvmosEthermintFeeMarketV1QueryBlockGasResponse(this.gas);
   factory EvmosEthermintFeeMarketV1QueryBlockGasResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosEthermintFeeMarketV1QueryBlockGasResponse(decode.getField(1));
   }
   factory EvmosEthermintFeeMarketV1QueryBlockGasResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return EvmosEthermintFeeMarketV1QueryBlockGasResponse(
-        BigintUtils.parse(json["gas"]));
+      BigintUtils.parse(json["gas"]),
+    );
   }
 
   @override

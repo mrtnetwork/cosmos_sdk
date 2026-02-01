@@ -3,10 +3,16 @@ import 'package:cosmos_sdk/src/provider/thornode/core/thorenode.dart';
 import 'package:cosmos_sdk/src/provider/thornode/models/models/derived_asset_information.dart';
 
 /// Returns the pool information for the provided derived asset.
-class ThorNodeRequestDerivedAssetPoolInformation extends ThorNodeRequestParam<
-    DerivedAssetPoolInformationResponse, Map<String, dynamic>> {
-  ThorNodeRequestDerivedAssetPoolInformation(
-      {required this.asset, this.height});
+class ThorNodeRequestDerivedAssetPoolInformation
+    extends
+        ThorNodeRequestParam<
+          DerivedAssetPoolInformationResponse,
+          Map<String, dynamic>
+        > {
+  ThorNodeRequestDerivedAssetPoolInformation({
+    required this.asset,
+    this.height,
+  });
 
   /// optional block height, defaults to current tip
   final BigInt? height;

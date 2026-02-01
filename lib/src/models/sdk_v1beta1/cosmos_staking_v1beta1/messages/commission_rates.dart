@@ -13,9 +13,10 @@ class CommissionRates extends CosmosMessage {
   final String maxChangeRate;
   factory CommissionRates.fromJson(Map<String, dynamic> json) {
     return CommissionRates(
-        maxChangeRate: json["max_change_rate"],
-        maxRate: json["max_rate"],
-        rate: json["rate"]);
+      maxChangeRate: json["max_change_rate"],
+      maxRate: json["max_rate"],
+      rate: json["rate"],
+    );
   }
   const CommissionRates({
     required this.rate,
@@ -25,9 +26,10 @@ class CommissionRates extends CosmosMessage {
   factory CommissionRates.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CommissionRates(
-        rate: decode.getField(1),
-        maxRate: decode.getField(2),
-        maxChangeRate: decode.getField(3));
+      rate: decode.getField(1),
+      maxRate: decode.getField(2),
+      maxChangeRate: decode.getField(3),
+    );
   }
 
   @override
@@ -38,7 +40,7 @@ class CommissionRates extends CosmosMessage {
     return {
       "rate": rate,
       "max_rate": maxRate,
-      "max_change_rate": maxChangeRate
+      "max_change_rate": maxChangeRate,
     };
   }
 

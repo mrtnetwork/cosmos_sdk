@@ -11,12 +11,14 @@ class IbcLightClientsWasmQueryChecksumsRequest extends CosmosMessage
   final PageRequest? pagination;
   const IbcLightClientsWasmQueryChecksumsRequest({this.pagination});
   factory IbcLightClientsWasmQueryChecksumsRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcLightClientsWasmQueryChecksumsRequest(
-        pagination: decode
-            .getResult(1)
-            ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)));
+      pagination: decode
+          .getResult(1)
+          ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)),
+    );
   }
 
   @override
@@ -39,7 +41,8 @@ class IbcLightClientsWasmQueryChecksumsRequest extends CosmosMessage
 
   @override
   IbcLightClientsWasmQueryChecksumsResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return IbcLightClientsWasmQueryChecksumsResponse.fromJson(json);
   }
 

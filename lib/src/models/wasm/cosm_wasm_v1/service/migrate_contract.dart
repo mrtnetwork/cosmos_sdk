@@ -38,10 +38,11 @@ class CosmWasmV1MigrateContract
   }
   factory CosmWasmV1MigrateContract.fromJson(Map<String, dynamic> json) {
     return CosmWasmV1MigrateContract(
-        sender: json.as("sender"),
-        contract: json.as("contract"),
-        codeId: json.asBigInt("code_id"),
-        msg: json.asBytes("msg"));
+      sender: json.as("sender"),
+      contract: json.as("contract"),
+      codeId: json.asBigInt("code_id"),
+      msg: json.asBytes("msg"),
+    );
   }
 
   @override
@@ -53,7 +54,7 @@ class CosmWasmV1MigrateContract
       "sender": sender,
       "contract": contract,
       "msg": CosmosUtils.tryToBase64(msg),
-      "code_id": codeId?.toString()
+      "code_id": codeId?.toString(),
     };
   }
 

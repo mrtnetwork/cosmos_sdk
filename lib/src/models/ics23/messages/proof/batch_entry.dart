@@ -11,10 +11,12 @@ class Ics23BatchEntry extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     if (decode.hasTag(1)) {
       return Ics23BatchEntry(
-          proof: Ics23ExistenceProof.deserialize(decode.getField(1)));
+        proof: Ics23ExistenceProof.deserialize(decode.getField(1)),
+      );
     } else if (decode.hasTag(2)) {
       return Ics23BatchEntry(
-          proof: Ics23NonExistenceProof.deserialize(decode.getField(1)));
+        proof: Ics23NonExistenceProof.deserialize(decode.getField(1)),
+      );
     }
     throw const Ics23BatchEntry();
   }

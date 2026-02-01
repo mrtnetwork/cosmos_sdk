@@ -19,18 +19,24 @@ class BlockIDFlag implements CosmosEnum {
   static BlockIDFlag fromValue(int? value) {
     return values.firstWhere(
       (e) => e.value == value,
-      orElse: () => throw DartCosmosSdkPluginException(
-          "No BlockIDFlag element found for the given value.",
-          details: {"value": value}),
+      orElse:
+          () =>
+              throw DartCosmosSdkPluginException(
+                "No BlockIDFlag element found for the given value.",
+                details: {"value": value},
+              ),
     );
   }
 
   static BlockIDFlag fromName(String? name) {
     return values.firstWhere(
       (e) => e.name == name,
-      orElse: () => throw DartCosmosSdkPluginException(
-          "No BlockIDFlag element found for the given name.",
-          details: {"value": name}),
+      orElse:
+          () =>
+              throw DartCosmosSdkPluginException(
+                "No BlockIDFlag element found for the given name.",
+                details: {"value": name},
+              ),
     );
   }
 }

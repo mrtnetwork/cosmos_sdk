@@ -8,7 +8,8 @@ class IbcChannelParams extends CosmosMessage {
   final IbcChannelTimeout upgradeTimeout;
   factory IbcChannelParams.fromJson(Map<String, dynamic> json) {
     return IbcChannelParams(
-        IbcChannelTimeout.fromJson(json["upgrade_timeout"]));
+      IbcChannelTimeout.fromJson(json["upgrade_timeout"]),
+    );
   }
   const IbcChannelParams(this.upgradeTimeout);
   factory IbcChannelParams.deserialize(List<int> bytes) {

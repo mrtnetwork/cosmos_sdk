@@ -16,9 +16,10 @@ class IbcChannelPacketSequence extends CosmosMessage {
   factory IbcChannelPacketSequence.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcChannelPacketSequence(
-        portId: decode.getField(1),
-        channelId: decode.getField(2),
-        sequence: decode.getField(3));
+      portId: decode.getField(1),
+      channelId: decode.getField(2),
+      sequence: decode.getField(3),
+    );
   }
 
   @override
@@ -29,7 +30,7 @@ class IbcChannelPacketSequence extends CosmosMessage {
     return {
       "port_id": portId,
       "channel_id": channelId,
-      "sequence": sequence?.toString()
+      "sequence": sequence?.toString(),
     };
   }
 

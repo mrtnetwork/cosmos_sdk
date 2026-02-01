@@ -11,7 +11,8 @@ class IbcLightClientsClientState extends CosmosMessage {
   factory IbcLightClientsClientState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcLightClientsClientState(
-        IbcClientHeight.deserialize(decode.getField(1)));
+      IbcClientHeight.deserialize(decode.getField(1)),
+    );
   }
 
   @override

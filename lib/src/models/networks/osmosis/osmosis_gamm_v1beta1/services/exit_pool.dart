@@ -12,22 +12,23 @@ class OsmosisGammMsgExitPool
   final BigInt? poolId;
   final String shareInAmount;
   final List<Coin> tokenOutMins;
-  OsmosisGammMsgExitPool(
-      {this.sender,
-      this.poolId,
-      required this.shareInAmount,
-      required List<Coin> tokenOutMins})
-      : tokenOutMins = tokenOutMins.immutable;
+  OsmosisGammMsgExitPool({
+    this.sender,
+    this.poolId,
+    required this.shareInAmount,
+    required List<Coin> tokenOutMins,
+  }) : tokenOutMins = tokenOutMins.immutable;
   factory OsmosisGammMsgExitPool.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisGammMsgExitPool(
       sender: decode.getField(1),
       poolId: decode.getField(2),
       shareInAmount: decode.getField(3),
-      tokenOutMins: decode
-          .getFields<List<int>>(4)
-          .map((e) => Coin.deserialize(e))
-          .toList(),
+      tokenOutMins:
+          decode
+              .getFields<List<int>>(4)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
     );
   }
   factory OsmosisGammMsgExitPool.fromJson(Map<String, dynamic> json) {
@@ -35,7 +36,8 @@ class OsmosisGammMsgExitPool
       sender: json.asMap("sender"),
       poolId: json.asBigInt("pool_id"),
       shareInAmount: json.as("share_in_amount"),
-      tokenOutMins: json
+      tokenOutMins:
+          json
               .asListOfMap("token_out_mins")
               ?.map((e) => Coin.fromJson(e))
               .toList() ??
@@ -52,7 +54,7 @@ class OsmosisGammMsgExitPool
       "sender": sender,
       "pool_id": poolId?.toString(),
       "share_in_amount": shareInAmount,
-      "token_out_mins": tokenOutMins.map((e) => e.toJson()).toList()
+      "token_out_mins": tokenOutMins.map((e) => e.toJson()).toList(),
     };
   }
 

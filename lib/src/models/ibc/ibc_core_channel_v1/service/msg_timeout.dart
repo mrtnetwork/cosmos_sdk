@@ -16,30 +16,34 @@ class MsgTimeout extends IbcService<MsgTimeoutResponse> {
   final IbcClientHeight proofHeight;
   final BigInt? nextSequenceRecv;
   final String? signer;
-  MsgTimeout(
-      {required this.packet,
-      List<int>? proofUnreceived,
-      required this.proofHeight,
-      this.nextSequenceRecv,
-      this.signer})
-      : proofUnreceived =
-            BytesUtils.tryToBytes(proofUnreceived, unmodifiable: true);
+  MsgTimeout({
+    required this.packet,
+    List<int>? proofUnreceived,
+    required this.proofHeight,
+    this.nextSequenceRecv,
+    this.signer,
+  }) : proofUnreceived = BytesUtils.tryToBytes(
+         proofUnreceived,
+         unmodifiable: true,
+       );
   factory MsgTimeout.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgTimeout(
-        packet: IbcChannelPacket.deserialize(decode.getField(1)),
-        proofUnreceived: decode.getField(2),
-        proofHeight: IbcClientHeight.deserialize(decode.getField(3)),
-        nextSequenceRecv: decode.getField(4),
-        signer: decode.getField(5));
+      packet: IbcChannelPacket.deserialize(decode.getField(1)),
+      proofUnreceived: decode.getField(2),
+      proofHeight: IbcClientHeight.deserialize(decode.getField(3)),
+      nextSequenceRecv: decode.getField(4),
+      signer: decode.getField(5),
+    );
   }
   factory MsgTimeout.fromJson(Map<String, dynamic> json) {
     return MsgTimeout(
-        packet: IbcChannelPacket.fromJson(json.asMap("packet")),
-        proofUnreceived: json.asBytes("proof_unreceived"),
-        proofHeight: IbcClientHeight.fromJson(json.asMap("proof_unreceived")),
-        nextSequenceRecv: json.asBigInt("next_sequence_recv"),
-        signer: json.as("signer"));
+      packet: IbcChannelPacket.fromJson(json.asMap("packet")),
+      proofUnreceived: json.asBytes("proof_unreceived"),
+      proofHeight: IbcClientHeight.fromJson(json.asMap("proof_unreceived")),
+      nextSequenceRecv: json.asBigInt("next_sequence_recv"),
+      signer: json.as("signer"),
+    );
   }
   @override
   List<int> get fieldIds => [1, 2, 3, 4, 5];
@@ -51,7 +55,7 @@ class MsgTimeout extends IbcService<MsgTimeoutResponse> {
       "proof_unreceived": BytesUtils.tryToHexString(proofUnreceived),
       "proof_height": proofHeight.toJson(),
       "next_sequence_recv": nextSequenceRecv?.toString(),
-      "signer": signer
+      "signer": signer,
     };
   }
 
@@ -59,8 +63,13 @@ class MsgTimeout extends IbcService<MsgTimeoutResponse> {
   TypeUrl get typeUrl => IbcTypes.msgTimeout;
 
   @override
-  List get values =>
-      [packet, proofUnreceived, proofHeight, nextSequenceRecv, signer];
+  List get values => [
+    packet,
+    proofUnreceived,
+    proofHeight,
+    nextSequenceRecv,
+    signer,
+  ];
   @override
   List<String?> get signers => [signer];
 

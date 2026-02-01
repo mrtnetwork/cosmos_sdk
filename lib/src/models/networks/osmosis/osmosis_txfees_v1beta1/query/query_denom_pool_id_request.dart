@@ -11,7 +11,8 @@ class OsmosisTxfeesQueryDenomPoolIdRequest extends CosmosMessage
     return OsmosisTxfeesQueryDenomPoolIdRequest(denom: decode.getField(1));
   }
   factory OsmosisTxfeesQueryDenomPoolIdRequest.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisTxfeesQueryDenomPoolIdRequest(denom: json["denom"]);
   }
 
@@ -31,7 +32,8 @@ class OsmosisTxfeesQueryDenomPoolIdRequest extends CosmosMessage
 
   @override
   OsmosisTxfeesQueryDenomPoolIdResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisTxfeesQueryDenomPoolIdResponse.fromJson(json);
   }
 

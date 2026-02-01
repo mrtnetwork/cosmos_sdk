@@ -25,7 +25,7 @@ class ABCIParams extends CosmosMessage {
   @override
   Map<String, dynamic> toJson() {
     return {
-      "vote_extensions_enable_height": voteExtensionsEnableHeight?.toString()
+      "vote_extensions_enable_height": voteExtensionsEnableHeight?.toString(),
     };
   }
 

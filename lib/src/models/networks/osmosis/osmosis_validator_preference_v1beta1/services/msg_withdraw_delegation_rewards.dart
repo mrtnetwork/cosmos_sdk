@@ -10,18 +10,23 @@ class OsmosisValidatorPreferenceMsgWithdrawDelegationRewards
   /// delegator is the user who is trying to claim staking rewards.
   final String? delegator;
 
-  const OsmosisValidatorPreferenceMsgWithdrawDelegationRewards(
-      {this.delegator});
+  const OsmosisValidatorPreferenceMsgWithdrawDelegationRewards({
+    this.delegator,
+  });
   factory OsmosisValidatorPreferenceMsgWithdrawDelegationRewards.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisValidatorPreferenceMsgWithdrawDelegationRewards(
-        delegator: decode.getField(1));
+      delegator: decode.getField(1),
+    );
   }
   factory OsmosisValidatorPreferenceMsgWithdrawDelegationRewards.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisValidatorPreferenceMsgWithdrawDelegationRewards(
-        delegator: json.as("delegator"));
+      delegator: json.as("delegator"),
+    );
   }
 
   @override
@@ -41,8 +46,10 @@ class OsmosisValidatorPreferenceMsgWithdrawDelegationRewards
 
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
-    return EmptyServiceRequestResponse(OsmosisValidatorPreferenceV1beta1Types
-        .msgWithdrawDelegationRewardsResponse);
+    return EmptyServiceRequestResponse(
+      OsmosisValidatorPreferenceV1beta1Types
+          .msgWithdrawDelegationRewardsResponse,
+    );
   }
 
   @override

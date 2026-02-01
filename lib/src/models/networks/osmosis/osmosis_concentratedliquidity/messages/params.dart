@@ -42,61 +42,69 @@ class OsmosisConcentratedLiquidityParams extends CosmosMessage {
   /// double creation of pools, etc.
   final List<String>? unrestrictedPoolCreatorWhitelist;
   final BigInt? hookGasLimit;
-  OsmosisConcentratedLiquidityParams(
-      {List<BigInt>? authorizedTickSpacing,
-      required List<String> authorizedSpreadFactors,
-      required this.balancerSharesRewardDiscount,
-      List<String>? authorizedQuoteDenoms,
-      required List<ProtobufDuration> authorizedUptimes,
-      this.isPermissionlessPoolCreationEnabled,
-      List<String>? unrestrictedPoolCreatorWhitelist,
-      this.hookGasLimit})
-      : authorizedTickSpacing = authorizedTickSpacing?.emptyAsNull?.immutable,
-        authorizedSpreadFactors = authorizedSpreadFactors.immutable,
-        authorizedQuoteDenoms = authorizedQuoteDenoms?.emptyAsNull?.immutable,
-        authorizedUptimes = authorizedUptimes.immutable,
-        unrestrictedPoolCreatorWhitelist =
-            unrestrictedPoolCreatorWhitelist?.emptyAsNull?.immutable;
+  OsmosisConcentratedLiquidityParams({
+    List<BigInt>? authorizedTickSpacing,
+    required List<String> authorizedSpreadFactors,
+    required this.balancerSharesRewardDiscount,
+    List<String>? authorizedQuoteDenoms,
+    required List<ProtobufDuration> authorizedUptimes,
+    this.isPermissionlessPoolCreationEnabled,
+    List<String>? unrestrictedPoolCreatorWhitelist,
+    this.hookGasLimit,
+  }) : authorizedTickSpacing = authorizedTickSpacing?.emptyAsNull?.immutable,
+       authorizedSpreadFactors = authorizedSpreadFactors.immutable,
+       authorizedQuoteDenoms = authorizedQuoteDenoms?.emptyAsNull?.immutable,
+       authorizedUptimes = authorizedUptimes.immutable,
+       unrestrictedPoolCreatorWhitelist =
+           unrestrictedPoolCreatorWhitelist?.emptyAsNull?.immutable;
   factory OsmosisConcentratedLiquidityParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityParams(
-        authorizedTickSpacing: decode
-                .getResult<ProtocolBufferDecoderResult?>(1)
-                ?.to<List<BigInt>, List<int>>(
-                    (e) => e.map((e) => BigintUtils.parse(e)).toList()) ??
-            <BigInt>[],
-        authorizedSpreadFactors: decode.getFields<String>(2),
-        balancerSharesRewardDiscount: decode.getField(3),
-        authorizedQuoteDenoms: decode.getFields<String>(4),
-        authorizedUptimes: decode
-            .getFields<List<int>>(5)
-            .map((e) => ProtobufDuration.deserialize(e))
-            .toList(),
-        isPermissionlessPoolCreationEnabled: decode.getField(6),
-        unrestrictedPoolCreatorWhitelist: decode.getFields<String>(7),
-        hookGasLimit: decode.getField(8));
+      authorizedTickSpacing:
+          decode
+              .getResult<ProtocolBufferDecoderResult?>(1)
+              ?.to<List<BigInt>, List<int>>(
+                (e) => e.map((e) => BigintUtils.parse(e)).toList(),
+              ) ??
+          <BigInt>[],
+      authorizedSpreadFactors: decode.getFields<String>(2),
+      balancerSharesRewardDiscount: decode.getField(3),
+      authorizedQuoteDenoms: decode.getFields<String>(4),
+      authorizedUptimes:
+          decode
+              .getFields<List<int>>(5)
+              .map((e) => ProtobufDuration.deserialize(e))
+              .toList(),
+      isPermissionlessPoolCreationEnabled: decode.getField(6),
+      unrestrictedPoolCreatorWhitelist: decode.getFields<String>(7),
+      hookGasLimit: decode.getField(8),
+    );
   }
   factory OsmosisConcentratedLiquidityParams.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityParams(
-        authorizedTickSpacing: (json["authorized_tick_spacing"] as List?)
-            ?.map((e) => BigintUtils.parse(e))
-            .toList(),
-        authorizedSpreadFactors:
-            (json["authorized_spread_factors"] as List?)?.cast() ?? <String>[],
-        balancerSharesRewardDiscount: json["balancer_shares_reward_discount"],
-        authorizedQuoteDenoms:
-            (json["authorized_quote_denoms"] as List?)?.cast() ?? <String>[],
-        authorizedUptimes: (json["authorized_uptimes"] as List?)
-                ?.map((e) => ProtobufDuration.fromString(e))
-                .toList() ??
-            <ProtobufDuration>[],
-        hookGasLimit: BigintUtils.tryParse(json["hook_gas_limit"]),
-        isPermissionlessPoolCreationEnabled:
-            json["is_permissionless_pool_creation_enabled"],
-        unrestrictedPoolCreatorWhitelist:
-            (json["unrestricted_pool_creator_whitelist"] as List?)?.cast() ??
-                <String>[]);
+      authorizedTickSpacing:
+          (json["authorized_tick_spacing"] as List?)
+              ?.map((e) => BigintUtils.parse(e))
+              .toList(),
+      authorizedSpreadFactors:
+          (json["authorized_spread_factors"] as List?)?.cast() ?? <String>[],
+      balancerSharesRewardDiscount: json["balancer_shares_reward_discount"],
+      authorizedQuoteDenoms:
+          (json["authorized_quote_denoms"] as List?)?.cast() ?? <String>[],
+      authorizedUptimes:
+          (json["authorized_uptimes"] as List?)
+              ?.map((e) => ProtobufDuration.fromString(e))
+              .toList() ??
+          <ProtobufDuration>[],
+      hookGasLimit: BigintUtils.tryParse(json["hook_gas_limit"]),
+      isPermissionlessPoolCreationEnabled:
+          json["is_permissionless_pool_creation_enabled"],
+      unrestrictedPoolCreatorWhitelist:
+          (json["unrestricted_pool_creator_whitelist"] as List?)?.cast() ??
+          <String>[],
+    );
   }
 
   @override
@@ -114,7 +122,7 @@ class OsmosisConcentratedLiquidityParams extends CosmosMessage {
       "is_permissionless_pool_creation_enabled":
           isPermissionlessPoolCreationEnabled,
       "unrestricted_pool_creator_whitelist": unrestrictedPoolCreatorWhitelist,
-      "hook_gas_limit": hookGasLimit?.toString()
+      "hook_gas_limit": hookGasLimit?.toString(),
     };
   }
 
@@ -123,13 +131,13 @@ class OsmosisConcentratedLiquidityParams extends CosmosMessage {
 
   @override
   List get values => [
-        authorizedTickSpacing,
-        authorizedSpreadFactors,
-        balancerSharesRewardDiscount,
-        authorizedQuoteDenoms,
-        authorizedUptimes,
-        isPermissionlessPoolCreationEnabled,
-        unrestrictedPoolCreatorWhitelist,
-        hookGasLimit
-      ];
+    authorizedTickSpacing,
+    authorizedSpreadFactors,
+    balancerSharesRewardDiscount,
+    authorizedQuoteDenoms,
+    authorizedUptimes,
+    isPermissionlessPoolCreationEnabled,
+    unrestrictedPoolCreatorWhitelist,
+    hookGasLimit,
+  ];
 }

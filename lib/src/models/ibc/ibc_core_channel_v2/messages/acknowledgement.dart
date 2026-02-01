@@ -14,14 +14,15 @@ class IbcChannelV2Acknowledgement extends CosmosMessage {
   final List<int>? appAcknowledgements;
 
   IbcChannelV2Acknowledgement({List<int>? appAcknowledgements})
-      : appAcknowledgements = appAcknowledgements?.asImmutableBytes;
+    : appAcknowledgements = appAcknowledgements?.asImmutableBytes;
   factory IbcChannelV2Acknowledgement.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcChannelV2Acknowledgement(appAcknowledgements: decode.getField(1));
   }
   factory IbcChannelV2Acknowledgement.fromJson(Map<String, dynamic> json) {
     return IbcChannelV2Acknowledgement(
-        appAcknowledgements: json.asBytes("app_acknowledgements"));
+      appAcknowledgements: json.asBytes("app_acknowledgements"),
+    );
   }
 
   @override
@@ -30,7 +31,7 @@ class IbcChannelV2Acknowledgement extends CosmosMessage {
   @override
   Map<String, dynamic> toJson() {
     return {
-      "app_acknowledgements": CosmosUtils.tryToBase64(appAcknowledgements)
+      "app_acknowledgements": CosmosUtils.tryToBase64(appAcknowledgements),
     };
   }
 

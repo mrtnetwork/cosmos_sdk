@@ -12,10 +12,7 @@ class DVPair extends CosmosMessage {
   // validatorAddress is the bech32-encoded address of the validator.
   final CosmosBaseAddress? validatorAddress;
 
-  const DVPair({
-    this.delegatorAddress,
-    this.validatorAddress,
-  });
+  const DVPair({this.delegatorAddress, this.validatorAddress});
   factory DVPair.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DVPair(

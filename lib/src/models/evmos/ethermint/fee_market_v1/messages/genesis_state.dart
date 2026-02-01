@@ -12,8 +12,10 @@ class EvmosEthermintFeeMarketV1GenesisState extends CosmosMessage {
   /// Zero by default.
   final BigInt blockGas;
 
-  EvmosEthermintFeeMarketV1GenesisState(
-      {required this.params, required this.blockGas});
+  EvmosEthermintFeeMarketV1GenesisState({
+    required this.params,
+    required this.blockGas,
+  });
   factory EvmosEthermintFeeMarketV1GenesisState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosEthermintFeeMarketV1GenesisState(
@@ -27,10 +29,7 @@ class EvmosEthermintFeeMarketV1GenesisState extends CosmosMessage {
 
   @override
   Map<String, dynamic> toJson() {
-    return {
-      "params": params.toJson(),
-      "block_gas": blockGas.toString(),
-    };
+    return {"params": params.toJson(), "block_gas": blockGas.toString()};
   }
 
   @override

@@ -29,31 +29,35 @@ class EvmosEthermintEVMV1QueryTraceBlockRequest extends CosmosMessage
 
   /// chain_id is the eip155 chain id parsed from the requested block header
   final BigInt chainId;
-  EvmosEthermintEVMV1QueryTraceBlockRequest(
-      {required List<EvmosEthermintEVMV1MsgEthereumTx> txs,
-      required this.traceConfig,
-      required this.blockNumber,
-      required this.blockHash,
-      required this.blockTime,
-      required List<int> proposerAddress,
-      required this.chainId})
-      : txs = txs.immutable,
-        proposerAddress = proposerAddress.asImmutableBytes;
+  EvmosEthermintEVMV1QueryTraceBlockRequest({
+    required List<EvmosEthermintEVMV1MsgEthereumTx> txs,
+    required this.traceConfig,
+    required this.blockNumber,
+    required this.blockHash,
+    required this.blockTime,
+    required List<int> proposerAddress,
+    required this.chainId,
+  }) : txs = txs.immutable,
+       proposerAddress = proposerAddress.asImmutableBytes;
   factory EvmosEthermintEVMV1QueryTraceBlockRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosEthermintEVMV1QueryTraceBlockRequest(
-        txs: decode
-            .getFields<List<int>>(1)
-            .map((e) => EvmosEthermintEVMV1MsgEthereumTx.deserialize(e))
-            .toList(),
-        traceConfig:
-            EvmosEthermintEVMV1TraceConfig.deserialize(decode.getField(3)),
-        blockNumber: decode.getField(5),
-        blockHash: decode.getField(6),
-        blockTime: ProtobufTimestamp.deserialize(decode.getField(7)),
-        proposerAddress: decode.getField(8),
-        chainId: decode.getField(9));
+      txs:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => EvmosEthermintEVMV1MsgEthereumTx.deserialize(e))
+              .toList(),
+      traceConfig: EvmosEthermintEVMV1TraceConfig.deserialize(
+        decode.getField(3),
+      ),
+      blockNumber: decode.getField(5),
+      blockHash: decode.getField(6),
+      blockTime: ProtobufTimestamp.deserialize(decode.getField(7)),
+      proposerAddress: decode.getField(8),
+      chainId: decode.getField(9),
+    );
   }
 
   @override
@@ -68,7 +72,7 @@ class EvmosEthermintEVMV1QueryTraceBlockRequest extends CosmosMessage
       "block_hash": blockHash,
       "block_time": blockTime.toJson(),
       "proposer_address": BytesUtils.toHexString(proposerAddress),
-      "chain_id": chainId.toString()
+      "chain_id": chainId.toString(),
     };
   }
 
@@ -77,14 +81,14 @@ class EvmosEthermintEVMV1QueryTraceBlockRequest extends CosmosMessage
 
   @override
   List get values => [
-        txs,
-        traceConfig,
-        blockNumber,
-        blockHash,
-        blockTime,
-        proposerAddress,
-        chainId
-      ];
+    txs,
+    traceConfig,
+    blockNumber,
+    blockHash,
+    blockTime,
+    proposerAddress,
+    chainId,
+  ];
 
   @override
   EvmosEthermintEVMV1QueryTraceBlockResponse onResponse(List<int> bytes) {
@@ -94,12 +98,15 @@ class EvmosEthermintEVMV1QueryTraceBlockRequest extends CosmosMessage
   @override
   Map<String, String?> get queryParameters =>
       throw DartCosmosSdkPluginException(
-          "Unsuported method. use grpc method instead rpc.");
+        "Unsuported method. use grpc method instead rpc.",
+      );
 
   @override
   EvmosEthermintEVMV1QueryTraceBlockResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     throw DartCosmosSdkPluginException(
-        "Unsuported method. use grpc method instead rpc.");
+      "Unsuported method. use grpc method instead rpc.",
+    );
   }
 }

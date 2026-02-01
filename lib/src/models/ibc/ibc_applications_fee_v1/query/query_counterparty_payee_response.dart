@@ -9,11 +9,13 @@ class QueryCounterpartyPayeeResponse extends CosmosMessage {
   factory QueryCounterpartyPayeeResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryCounterpartyPayeeResponse(
-        counterpartyPayee: decode.getField(1));
+      counterpartyPayee: decode.getField(1),
+    );
   }
   factory QueryCounterpartyPayeeResponse.fromJson(Map<String, dynamic> json) {
     return QueryCounterpartyPayeeResponse(
-        counterpartyPayee: json["counterparty_payee"]);
+      counterpartyPayee: json["counterparty_payee"],
+    );
   }
 
   @override

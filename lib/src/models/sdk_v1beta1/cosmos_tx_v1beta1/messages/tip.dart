@@ -14,24 +14,26 @@ class Tip extends CosmosMessage {
   final CosmosBaseAddress? tipper;
   factory Tip.fromJson(Map<String, dynamic> json) {
     return Tip(
-        amount:
-            (json["amount"] as List?)?.map((e) => Coin.fromJson(e)).toList() ??
-                [],
-        tipper:
-            json["tipper"] == null ? null : CosmosBaseAddress(json["tipper"]));
+      amount:
+          (json["amount"] as List?)?.map((e) => Coin.fromJson(e)).toList() ??
+          [],
+      tipper: json["tipper"] == null ? null : CosmosBaseAddress(json["tipper"]),
+    );
   }
 
   const Tip({required this.amount, required this.tipper});
   factory Tip.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Tip(
-        amount: decode
-            .getFields<List<int>>(1)
-            .map((e) => Coin.deserialize(e))
-            .toList(),
-        tipper: decode
-            .getResult(2)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)));
+      amount:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
+      tipper: decode
+          .getResult(2)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+    );
   }
 
   @override
@@ -41,7 +43,7 @@ class Tip extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "amount": amount.map((e) => e.toJson()).toList(),
-      "tipper": tipper?.address
+      "tipper": tipper?.address,
     };
   }
 

@@ -23,10 +23,11 @@ class CCTPV1MsgSendMessage extends CCTPV1Service<CCTPV1MsgSendMessageResponse>
   factory CCTPV1MsgSendMessage.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CCTPV1MsgSendMessage(
-        from: decode.getField(1),
-        destinationDomain: decode.getField(2),
-        recipient: decode.getField(3),
-        messageBody: decode.getField(4));
+      from: decode.getField(1),
+      destinationDomain: decode.getField(2),
+      recipient: decode.getField(3),
+      messageBody: decode.getField(4),
+    );
   }
   factory CCTPV1MsgSendMessage.fromJson(Map<String, dynamic> json) {
     return CCTPV1MsgSendMessage(
@@ -46,7 +47,7 @@ class CCTPV1MsgSendMessage extends CCTPV1Service<CCTPV1MsgSendMessageResponse>
       "from": from,
       "message_body": CosmosUtils.tryToBase64(messageBody),
       "destination_domain": destinationDomain,
-      "recipient": CosmosUtils.tryToBase64(recipient)
+      "recipient": CosmosUtils.tryToBase64(recipient),
     };
   }
 

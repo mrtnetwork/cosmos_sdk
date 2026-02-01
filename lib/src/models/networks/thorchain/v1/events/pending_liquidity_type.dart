@@ -15,9 +15,12 @@ class ThorchainPendingLiquidityType implements CosmosEnum {
   static ThorchainPendingLiquidityType fromValue(int? value) {
     return values.firstWhere(
       (e) => e.value == value,
-      orElse: () => throw DartCosmosSdkPluginException(
-          "No ThorchainPendingLiquidityType element found for the given value.",
-          details: {"value": value}),
+      orElse:
+          () =>
+              throw DartCosmosSdkPluginException(
+                "No ThorchainPendingLiquidityType element found for the given value.",
+                details: {"value": value},
+              ),
     );
   }
 }

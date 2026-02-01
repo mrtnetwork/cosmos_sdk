@@ -7,18 +7,22 @@ import 'package:blockchain_utils/helper/helper.dart';
 class OsmosisSuperfluidMsgUnPoolWhitelistedPoolResponse extends CosmosMessage {
   final List<BigInt>? exitedLockIds;
 
-  OsmosisSuperfluidMsgUnPoolWhitelistedPoolResponse(
-      {List<BigInt>? exitedLockIds})
-      : exitedLockIds = exitedLockIds?.emptyAsNull?.immutable;
+  OsmosisSuperfluidMsgUnPoolWhitelistedPoolResponse({
+    List<BigInt>? exitedLockIds,
+  }) : exitedLockIds = exitedLockIds?.emptyAsNull?.immutable;
   factory OsmosisSuperfluidMsgUnPoolWhitelistedPoolResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidMsgUnPoolWhitelistedPoolResponse(
-        exitedLockIds: decode
-                .getResult<ProtocolBufferDecoderResult?>(1)
-                ?.to<List<BigInt>, List<int>>(
-                    (e) => e.map((e) => BigintUtils.parse(e)).toList()) ??
-            <BigInt>[]);
+      exitedLockIds:
+          decode
+              .getResult<ProtocolBufferDecoderResult?>(1)
+              ?.to<List<BigInt>, List<int>>(
+                (e) => e.map((e) => BigintUtils.parse(e)).toList(),
+              ) ??
+          <BigInt>[],
+    );
   }
 
   @override
@@ -27,7 +31,7 @@ class OsmosisSuperfluidMsgUnPoolWhitelistedPoolResponse extends CosmosMessage {
   @override
   Map<String, dynamic> toJson() {
     return {
-      "exited_lock_ids": exitedLockIds?.map((e) => e.toString()).toList()
+      "exited_lock_ids": exitedLockIds?.map((e) => e.toString()).toList(),
     };
   }
 

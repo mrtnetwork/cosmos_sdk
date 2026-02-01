@@ -9,7 +9,9 @@ class MsgChannelOpenTryResponse extends CosmosMessage {
   factory MsgChannelOpenTryResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgChannelOpenTryResponse(
-        version: decode.getField(1), channelId: decode.getField(2));
+      version: decode.getField(1),
+      channelId: decode.getField(2),
+    );
   }
 
   @override

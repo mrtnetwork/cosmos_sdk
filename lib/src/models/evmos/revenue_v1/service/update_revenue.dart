@@ -7,7 +7,8 @@ import 'package:cosmos_sdk/src/utils/quick.dart';
 /// MsgUpdateRevenue defines a message that updates the withdrawer address for a
 /// registered Revenue
 class EvmosRevenueV1MsgUpdateRevenue
-    extends EvmosService<EmptyServiceRequestResponse> with AminoMessage {
+    extends EvmosService<EmptyServiceRequestResponse>
+    with AminoMessage {
   /// contract_address in hex format
   final String? contractAddress;
 
@@ -18,21 +19,26 @@ class EvmosRevenueV1MsgUpdateRevenue
   /// withdrawerAddress is the bech32 address of account receiving the transaction fees
   final String? withdrawerAddress;
 
-  const EvmosRevenueV1MsgUpdateRevenue(
-      {this.contractAddress, this.deployerAddress, this.withdrawerAddress});
+  const EvmosRevenueV1MsgUpdateRevenue({
+    this.contractAddress,
+    this.deployerAddress,
+    this.withdrawerAddress,
+  });
 
   factory EvmosRevenueV1MsgUpdateRevenue.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosRevenueV1MsgUpdateRevenue(
-        contractAddress: decode.getField(1),
-        deployerAddress: decode.getField(2),
-        withdrawerAddress: decode.getField(3));
+      contractAddress: decode.getField(1),
+      deployerAddress: decode.getField(2),
+      withdrawerAddress: decode.getField(3),
+    );
   }
   factory EvmosRevenueV1MsgUpdateRevenue.fromJson(Map<String, dynamic> json) {
     return EvmosRevenueV1MsgUpdateRevenue(
-        contractAddress: json.as("contract_address"),
-        deployerAddress: json.as("deployer_address"),
-        withdrawerAddress: json.as("withdrawer_address"));
+      contractAddress: json.as("contract_address"),
+      deployerAddress: json.as("deployer_address"),
+      withdrawerAddress: json.as("withdrawer_address"),
+    );
   }
 
   @override
@@ -58,6 +64,7 @@ class EvmosRevenueV1MsgUpdateRevenue
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        EvmosErc20V1Types.msgUpdateRevenueResponse);
+      EvmosErc20V1Types.msgUpdateRevenueResponse,
+    );
   }
 }

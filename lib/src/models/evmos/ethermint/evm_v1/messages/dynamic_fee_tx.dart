@@ -43,42 +43,44 @@ class EvmosEthermintEVMV1DynamicFeeTx extends CosmosMessage {
 
   /// s define the signature value
   final List<int> s;
-  EvmosEthermintEVMV1DynamicFeeTx(
-      {required this.chainId,
-      required this.nonce,
-      required this.gasTipCap,
-      required this.gasFeeCap,
-      required this.gas,
-      required this.to,
-      required this.value,
-      required List<int>? data,
-      required List<EvmosEthermintEVMV1AccessTuple>? accesses,
-      required List<int> v,
-      required List<int> r,
-      required List<int> s})
-      : data = data?.asImmutableBytes,
-        v = v.asImmutableBytes,
-        r = r.asImmutableBytes,
-        s = s.asImmutableBytes,
-        accesses = accesses?.immutable;
+  EvmosEthermintEVMV1DynamicFeeTx({
+    required this.chainId,
+    required this.nonce,
+    required this.gasTipCap,
+    required this.gasFeeCap,
+    required this.gas,
+    required this.to,
+    required this.value,
+    required List<int>? data,
+    required List<EvmosEthermintEVMV1AccessTuple>? accesses,
+    required List<int> v,
+    required List<int> r,
+    required List<int> s,
+  }) : data = data?.asImmutableBytes,
+       v = v.asImmutableBytes,
+       r = r.asImmutableBytes,
+       s = s.asImmutableBytes,
+       accesses = accesses?.immutable;
   factory EvmosEthermintEVMV1DynamicFeeTx.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosEthermintEVMV1DynamicFeeTx(
-        chainId: decode.getField(1),
-        nonce: decode.getField(2),
-        gasTipCap: decode.getField(3),
-        gasFeeCap: decode.getField(4),
-        gas: decode.getField(5),
-        to: decode.getField(6),
-        value: decode.getField(7),
-        data: decode.getField(8),
-        accesses: decode
-            .getFields<List<int>>(9)
-            .map((e) => EvmosEthermintEVMV1AccessTuple.deserialize(e))
-            .toList(),
-        v: decode.getField(10),
-        r: decode.getField(11),
-        s: decode.getField(12));
+      chainId: decode.getField(1),
+      nonce: decode.getField(2),
+      gasTipCap: decode.getField(3),
+      gasFeeCap: decode.getField(4),
+      gas: decode.getField(5),
+      to: decode.getField(6),
+      value: decode.getField(7),
+      data: decode.getField(8),
+      accesses:
+          decode
+              .getFields<List<int>>(9)
+              .map((e) => EvmosEthermintEVMV1AccessTuple.deserialize(e))
+              .toList(),
+      v: decode.getField(10),
+      r: decode.getField(11),
+      s: decode.getField(12),
+    );
   }
   factory EvmosEthermintEVMV1DynamicFeeTx.fromJson(Map<String, dynamic> json) {
     return EvmosEthermintEVMV1DynamicFeeTx(
@@ -90,10 +92,11 @@ class EvmosEthermintEVMV1DynamicFeeTx extends CosmosMessage {
       to: json.as("to"),
       value: json.as("value"),
       data: json.asBytes("data"),
-      accesses: json
-          .asListOfMap("accesses")
-          ?.map(EvmosEthermintEVMV1AccessTuple.fromJson)
-          .toList(),
+      accesses:
+          json
+              .asListOfMap("accesses")
+              ?.map(EvmosEthermintEVMV1AccessTuple.fromJson)
+              .toList(),
       v: json.asBytes("v", throwOnNull: true)!,
       r: json.asBytes("r", throwOnNull: true)!,
       s: json.asBytes("s", throwOnNull: true)!,
@@ -125,17 +128,17 @@ class EvmosEthermintEVMV1DynamicFeeTx extends CosmosMessage {
 
   @override
   List get values => [
-        chainId,
-        nonce,
-        gasTipCap,
-        gasFeeCap,
-        gas,
-        to,
-        value,
-        data,
-        accesses?.emptyAsNull,
-        v,
-        r,
-        s
-      ];
+    chainId,
+    nonce,
+    gasTipCap,
+    gasFeeCap,
+    gas,
+    to,
+    value,
+    data,
+    accesses?.emptyAsNull,
+    v,
+    r,
+    s,
+  ];
 }

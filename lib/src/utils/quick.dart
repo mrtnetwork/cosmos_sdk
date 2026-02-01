@@ -18,8 +18,10 @@ extension QuickMap on Map<String, dynamic> {
       if (onError != null) {
         throw onError(true);
       }
-      throw DartCosmosSdkPluginException('Key not found.',
-          details: {'key': key, 'data': this});
+      throw DartCosmosSdkPluginException(
+        'Key not found.',
+        details: {'key': key, 'data': this},
+      );
     }
     try {
       return value as T;
@@ -27,12 +29,15 @@ extension QuickMap on Map<String, dynamic> {
       if (onError != null) {
         throw onError(false);
       }
-      throw DartCosmosSdkPluginException('Incorrect value.', details: {
-        'key': key,
-        'expected': '$T',
-        'value': value.runtimeType,
-        'data': this
-      });
+      throw DartCosmosSdkPluginException(
+        'Incorrect value.',
+        details: {
+          'key': key,
+          'expected': '$T',
+          'value': value.runtimeType,
+          'data': this,
+        },
+      );
     }
   }
 
@@ -45,8 +50,10 @@ extension QuickMap on Map<String, dynamic> {
       if (onError != null) {
         throw onError(true);
       }
-      throw DartCosmosSdkPluginException('Key not found.',
-          details: {'key': key, 'data': this});
+      throw DartCosmosSdkPluginException(
+        'Key not found.',
+        details: {'key': key, 'data': this},
+      );
     }
     try {
       final v = BigintUtils.parse(value);
@@ -54,25 +61,30 @@ extension QuickMap on Map<String, dynamic> {
         if (onError != null) {
           throw onError(false);
         }
-        throw DartCosmosSdkPluginException('Incorrect Unsigned value.',
-            details: {
-              'key': key,
-              'expected': '$T',
-              'value': v.runtimeType,
-              'data': this
-            });
+        throw DartCosmosSdkPluginException(
+          'Incorrect Unsigned value.',
+          details: {
+            'key': key,
+            'expected': '$T',
+            'value': v.runtimeType,
+            'data': this,
+          },
+        );
       }
       return v as T;
     } catch (_) {
       if (onError != null) {
         throw onError(false);
       }
-      throw DartCosmosSdkPluginException('Incorrect value.', details: {
-        'key': key,
-        'expected': '$T',
-        'value': value.runtimeType,
-        'data': this
-      });
+      throw DartCosmosSdkPluginException(
+        'Incorrect value.',
+        details: {
+          'key': key,
+          'expected': '$T',
+          'value': value.runtimeType,
+          'data': this,
+        },
+      );
     }
   }
 
@@ -82,25 +94,31 @@ extension QuickMap on Map<String, dynamic> {
       if (null is T) {
         return null as T;
       }
-      throw DartCosmosSdkPluginException('Key not found.',
-          details: {'key': key, 'data': this});
+      throw DartCosmosSdkPluginException(
+        'Key not found.',
+        details: {'key': key, 'data': this},
+      );
     }
     try {
       return IntUtils.parse(value) as T;
     } on TypeError {
-      throw DartCosmosSdkPluginException('Incorrect value.', details: {
-        'key': key,
-        'expected': '$T',
-        'value': value.runtimeType,
-        'data': this
-      });
+      throw DartCosmosSdkPluginException(
+        'Incorrect value.',
+        details: {
+          'key': key,
+          'expected': '$T',
+          'value': value.runtimeType,
+          'data': this,
+        },
+      );
     }
   }
 
   E asMap<E>(String key, {ONQUICKMAPFAILED? onError}) {
     if (_map is! E) {
       throw const DartCosmosSdkPluginException(
-          'Invalid map casting. only use `asMap` method for casting Map<String,dynamic>.');
+        'Invalid map casting. only use `asMap` method for casting Map<String,dynamic>.',
+      );
     }
     final Map? value = as(key);
     if (value == null) {
@@ -110,8 +128,10 @@ extension QuickMap on Map<String, dynamic> {
       if (onError != null) {
         throw onError(true);
       }
-      throw DartCosmosSdkPluginException('Key not found.',
-          details: {'key': key, 'data': this});
+      throw DartCosmosSdkPluginException(
+        'Key not found.',
+        details: {'key': key, 'data': this},
+      );
     }
     try {
       return value.cast<String, dynamic>() as E;
@@ -119,12 +139,15 @@ extension QuickMap on Map<String, dynamic> {
       if (onError != null) {
         throw onError(false);
       }
-      throw DartCosmosSdkPluginException('Incorrect value.', details: {
-        'key': key,
-        'expected': '$E',
-        'value': value.runtimeType,
-        'data': this
-      });
+      throw DartCosmosSdkPluginException(
+        'Incorrect value.',
+        details: {
+          'key': key,
+          'expected': '$E',
+          'value': value.runtimeType,
+          'data': this,
+        },
+      );
     }
   }
 
@@ -132,21 +155,28 @@ extension QuickMap on Map<String, dynamic> {
     final value = as<String?>(key);
     if (value == null) {
       if (throwOnNull) {
-        throw DartCosmosSdkPluginException('Key not found.',
-            details: {'key': key, 'data': this});
+        throw DartCosmosSdkPluginException(
+          'Key not found.',
+          details: {'key': key, 'data': this},
+        );
       }
       return null;
     }
     try {
       return CosmosUtils.toBytes(value);
     } on TypeError {
-      throw DartCosmosSdkPluginException('Incorrect value .',
-          details: {'key': key, 'data': this});
+      throw DartCosmosSdkPluginException(
+        'Incorrect value .',
+        details: {'key': key, 'data': this},
+      );
     }
   }
 
-  List<Map<String, dynamic>>? asListOfMap(String key,
-      {ONQUICKMAPFAILED? onError, bool throwOnNull = false}) {
+  List<Map<String, dynamic>>? asListOfMap(
+    String key, {
+    ONQUICKMAPFAILED? onError,
+    bool throwOnNull = false,
+  }) {
     final List? value = as(key);
     if (value == null) {
       if (!throwOnNull) {
@@ -155,8 +185,10 @@ extension QuickMap on Map<String, dynamic> {
       if (onError != null) {
         onError(true);
       }
-      throw DartCosmosSdkPluginException('Key not found.',
-          details: {'key': key, 'data': this});
+      throw DartCosmosSdkPluginException(
+        'Key not found.',
+        details: {'key': key, 'data': this},
+      );
     }
     try {
       return value.map((e) => (e as Map).cast<String, dynamic>()).toList();
@@ -164,13 +196,16 @@ extension QuickMap on Map<String, dynamic> {
       if (onError != null) {
         onError(false);
       }
-      throw DartCosmosSdkPluginException('Incorrect value.', details: {
-        'key': key,
-        'value': value.runtimeType,
-        'data': this,
-        'error': e.toString(),
-        'stack': s.toString()
-      });
+      throw DartCosmosSdkPluginException(
+        'Incorrect value.',
+        details: {
+          'key': key,
+          'value': value.runtimeType,
+          'data': this,
+          'error': e.toString(),
+          'stack': s.toString(),
+        },
+      );
     }
   }
 
@@ -180,19 +215,24 @@ extension QuickMap on Map<String, dynamic> {
       if (!throwOnNull) {
         return null;
       }
-      throw DartCosmosSdkPluginException('Key not found.',
-          details: {'key': key, 'data': this});
+      throw DartCosmosSdkPluginException(
+        'Key not found.',
+        details: {'key': key, 'data': this},
+      );
     }
     try {
       return value.cast<String>();
     } catch (e, s) {
-      throw DartCosmosSdkPluginException('Incorrect value.', details: {
-        'key': key,
-        'value': value.runtimeType,
-        'data': this,
-        'error': e.toString(),
-        'stack': s.toString()
-      });
+      throw DartCosmosSdkPluginException(
+        'Incorrect value.',
+        details: {
+          'key': key,
+          'value': value.runtimeType,
+          'data': this,
+          'error': e.toString(),
+          'stack': s.toString(),
+        },
+      );
     }
   }
 
@@ -202,34 +242,42 @@ extension QuickMap on Map<String, dynamic> {
       if (!throwOnNull) {
         return null;
       }
-      throw DartCosmosSdkPluginException('Key not found.',
-          details: {'key': key, 'data': this});
+      throw DartCosmosSdkPluginException(
+        'Key not found.',
+        details: {'key': key, 'data': this},
+      );
     }
     try {
       return value.map((e) => (e as List).cast<int>()).toList();
     } catch (e, s) {
-      throw DartCosmosSdkPluginException('Incorrect value.', details: {
-        'key': key,
-        'value': value.runtimeType,
-        'data': this,
-        'error': e.toString(),
-        'stack': s.toString()
-      });
+      throw DartCosmosSdkPluginException(
+        'Incorrect value.',
+        details: {
+          'key': key,
+          'value': value.runtimeType,
+          'data': this,
+          'error': e.toString(),
+          'stack': s.toString(),
+        },
+      );
     }
   }
 
   E _valueAsList<T, E>(String key) {
     if (_list is! E) {
       throw const DartCosmosSdkPluginException(
-          'Invalid list casting. only use `valueAsList` method for list casting.');
+        'Invalid list casting. only use `valueAsList` method for list casting.',
+      );
     }
     final List? value = as(key);
     if (value == null) {
       if (null is E) {
         return null as E;
       }
-      throw DartCosmosSdkPluginException('Key not found.',
-          details: {'key': key, 'data': this});
+      throw DartCosmosSdkPluginException(
+        'Key not found.',
+        details: {'key': key, 'data': this},
+      );
     }
     try {
       if (_map is T) {
@@ -238,12 +286,15 @@ extension QuickMap on Map<String, dynamic> {
       }
       return value.cast<T>() as E;
     } on TypeError {
-      throw DartCosmosSdkPluginException('Incorrect value.', details: {
-        'key': key,
-        'expected': '$T',
-        'value': value.runtimeType,
-        'data': this
-      });
+      throw DartCosmosSdkPluginException(
+        'Incorrect value.',
+        details: {
+          'key': key,
+          'expected': '$T',
+          'value': value.runtimeType,
+          'data': this,
+        },
+      );
     }
   }
 
@@ -267,14 +318,18 @@ extension QuickMap on Map<String, dynamic> {
       if (null is A) {
         return null as A;
       }
-      throw DartCosmosSdkPluginException('Key not found.',
-          details: {'key': key, 'data': this});
+      throw DartCosmosSdkPluginException(
+        'Key not found.',
+        details: {'key': key, 'data': this},
+      );
     }
     try {
       return CosmosBaseAddress(value) as A;
     } catch (_) {
-      throw DartCosmosSdkPluginException("Invalid cosmos address.",
-          details: {"key": key, "value": value.toString()});
+      throw DartCosmosSdkPluginException(
+        "Invalid cosmos address.",
+        details: {"key": key, "value": value.toString()},
+      );
     }
   }
 }

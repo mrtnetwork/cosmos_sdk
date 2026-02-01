@@ -6,22 +6,30 @@ import 'uptime_trackers.dart';
 class OsmosisConcentratedLiquidityUptimeTrackers extends CosmosMessage {
   final List<OsmosisConcentratedLiquidityUptimeTracker> list;
   OsmosisConcentratedLiquidityUptimeTrackers(
-      List<OsmosisConcentratedLiquidityUptimeTracker> list)
-      : list = list.immutable;
+    List<OsmosisConcentratedLiquidityUptimeTracker> list,
+  ) : list = list.immutable;
   factory OsmosisConcentratedLiquidityUptimeTrackers.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return OsmosisConcentratedLiquidityUptimeTrackers(decode
-        .getFields<List<int>>(1)
-        .map((e) => OsmosisConcentratedLiquidityUptimeTracker.deserialize(e))
-        .toList());
+    return OsmosisConcentratedLiquidityUptimeTrackers(
+      decode
+          .getFields<List<int>>(1)
+          .map((e) => OsmosisConcentratedLiquidityUptimeTracker.deserialize(e))
+          .toList(),
+    );
   }
   factory OsmosisConcentratedLiquidityUptimeTrackers.fromJson(
-      Map<String, dynamic> json) {
-    return OsmosisConcentratedLiquidityUptimeTrackers((json["list"] as List?)
-            ?.map((e) => OsmosisConcentratedLiquidityUptimeTracker.fromJson(e))
-            .toList() ??
-        <OsmosisConcentratedLiquidityUptimeTracker>[]);
+    Map<String, dynamic> json,
+  ) {
+    return OsmosisConcentratedLiquidityUptimeTrackers(
+      (json["list"] as List?)
+              ?.map(
+                (e) => OsmosisConcentratedLiquidityUptimeTracker.fromJson(e),
+              )
+              .toList() ??
+          <OsmosisConcentratedLiquidityUptimeTracker>[],
+    );
   }
 
   @override

@@ -12,13 +12,16 @@ class GovQueryDepositRequest extends CosmosMessage
 
   /// depositor defines the deposit addresses from the proposals.
   final CosmosBaseAddress depositor;
-  const GovQueryDepositRequest(
-      {required this.proposalId, required this.depositor});
+  const GovQueryDepositRequest({
+    required this.proposalId,
+    required this.depositor,
+  });
   factory GovQueryDepositRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GovQueryDepositRequest(
-        proposalId: decode.getField(1),
-        depositor: CosmosBaseAddress(decode.getField(2)));
+      proposalId: decode.getField(1),
+      depositor: CosmosBaseAddress(decode.getField(2)),
+    );
   }
 
   @override
@@ -28,7 +31,7 @@ class GovQueryDepositRequest extends CosmosMessage
   Map<String, dynamic> toJson() {
     return {
       "proposal_id": proposalId.toString(),
-      "depositor": depositor.address
+      "depositor": depositor.address,
     };
   }
 

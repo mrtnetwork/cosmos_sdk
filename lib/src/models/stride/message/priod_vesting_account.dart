@@ -20,20 +20,23 @@ class StridePeriodicVestingAccount extends CosmosBaseAccount {
   factory StridePeriodicVestingAccount.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return StridePeriodicVestingAccount(
-      baseVestingAccount:
-          StrideBaseVestingAccount.deserialize(decode.getField(1)),
+      baseVestingAccount: StrideBaseVestingAccount.deserialize(
+        decode.getField(1),
+      ),
       vestingPeriods:
           decode.getFields<List<int>>(3).map(StridePeriod.deserialize).toList(),
     );
   }
   factory StridePeriodicVestingAccount.fromJson(Map<String, dynamic> json) {
     return StridePeriodicVestingAccount(
-      baseVestingAccount:
-          StrideBaseVestingAccount.fromJson(json["base_vesting_account"]),
-      vestingPeriods: json
-          .asListOfMap("vesting_periods", throwOnNull: true)!
-          .map(StridePeriod.fromJson)
-          .toList(),
+      baseVestingAccount: StrideBaseVestingAccount.fromJson(
+        json["base_vesting_account"],
+      ),
+      vestingPeriods:
+          json
+              .asListOfMap("vesting_periods", throwOnNull: true)!
+              .map(StridePeriod.fromJson)
+              .toList(),
     );
   }
 
@@ -44,7 +47,7 @@ class StridePeriodicVestingAccount extends CosmosBaseAccount {
   Map<String, dynamic> toJson() {
     return {
       "base_vesting_account": baseVestingAccount.toJson(),
-      "vesting_periods": vestingPeriods.map((e) => e.toJson()).toList()
+      "vesting_periods": vestingPeriods.map((e) => e.toJson()).toList(),
     };
   }
 

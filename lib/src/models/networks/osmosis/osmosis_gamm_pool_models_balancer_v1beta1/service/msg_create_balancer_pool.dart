@@ -8,8 +8,10 @@ import 'package:cosmos_sdk/src/utils/quick.dart';
 import 'msg_create_balancer_pool_response.dart';
 
 class OsmosisGammPoolmodelsBalancerMsgCreateBalancerPool
-    extends OsmosisGammPoolmodelsBalancerV1Beta1<
-        OsmosisGammPoolmodelsBalancerMsgCreateBalancerPoolResponse> {
+    extends
+        OsmosisGammPoolmodelsBalancerV1Beta1<
+          OsmosisGammPoolmodelsBalancerMsgCreateBalancerPoolResponse
+        > {
   final String? sender;
   final OsmosisGammPoolParams? poolParams;
   final List<OsmosisGammPoolAsset> poolAssets;
@@ -21,31 +23,41 @@ class OsmosisGammPoolmodelsBalancerMsgCreateBalancerPool
     this.futurePoolGovernor,
   }) : poolAssets = poolAssets.immutable;
   factory OsmosisGammPoolmodelsBalancerMsgCreateBalancerPool.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisGammPoolmodelsBalancerMsgCreateBalancerPool(
-        sender: decode.getField(1),
-        poolParams: decode.getResult(2)?.to<OsmosisGammPoolParams, List<int>>(
-            (e) => OsmosisGammPoolParams.deserialize(e)),
-        poolAssets: decode
-            .getFields<List<int>>(3)
-            .map((e) => OsmosisGammPoolAsset.deserialize(e))
-            .toList(),
-        futurePoolGovernor: decode.getField(4));
+      sender: decode.getField(1),
+      poolParams: decode
+          .getResult(2)
+          ?.to<OsmosisGammPoolParams, List<int>>(
+            (e) => OsmosisGammPoolParams.deserialize(e),
+          ),
+      poolAssets:
+          decode
+              .getFields<List<int>>(3)
+              .map((e) => OsmosisGammPoolAsset.deserialize(e))
+              .toList(),
+      futurePoolGovernor: decode.getField(4),
+    );
   }
   factory OsmosisGammPoolmodelsBalancerMsgCreateBalancerPool.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisGammPoolmodelsBalancerMsgCreateBalancerPool(
-        sender: json.as("sender"),
-        poolParams: json.maybeAs<OsmosisGammPoolParams, Map<String, dynamic>>(
-            key: "pool_params",
-            onValue: (e) => OsmosisGammPoolParams.fromJson(e)),
-        poolAssets: json
-                .asListOfMap("pool_assets")
-                ?.map((e) => OsmosisGammPoolAsset.fromJson(e))
-                .toList() ??
-            [],
-        futurePoolGovernor: json.as("future_pool_governor"));
+      sender: json.as("sender"),
+      poolParams: json.maybeAs<OsmosisGammPoolParams, Map<String, dynamic>>(
+        key: "pool_params",
+        onValue: (e) => OsmosisGammPoolParams.fromJson(e),
+      ),
+      poolAssets:
+          json
+              .asListOfMap("pool_assets")
+              ?.map((e) => OsmosisGammPoolAsset.fromJson(e))
+              .toList() ??
+          [],
+      futurePoolGovernor: json.as("future_pool_governor"),
+    );
   }
   @override
   List<int> get fieldIds => [1, 2, 3, 4];
@@ -56,7 +68,7 @@ class OsmosisGammPoolmodelsBalancerMsgCreateBalancerPool
       "sender": sender,
       "pool_params": poolParams?.toJson(),
       "pool_assets": poolAssets.map((e) => e.toJson()).toList(),
-      "future_pool_governor": futurePoolGovernor
+      "future_pool_governor": futurePoolGovernor,
     };
   }
 
@@ -72,8 +84,10 @@ class OsmosisGammPoolmodelsBalancerMsgCreateBalancerPool
 
   @override
   OsmosisGammPoolmodelsBalancerMsgCreateBalancerPoolResponse onResponse(
-      List<int> bytes) {
-    return OsmosisGammPoolmodelsBalancerMsgCreateBalancerPoolResponse
-        .deserialize(bytes);
+    List<int> bytes,
+  ) {
+    return OsmosisGammPoolmodelsBalancerMsgCreateBalancerPoolResponse.deserialize(
+      bytes,
+    );
   }
 }

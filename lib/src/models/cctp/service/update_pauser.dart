@@ -13,11 +13,15 @@ class CCTPV1MsgUpdatePauser extends CCTPV1Service<EmptyServiceRequestResponse>
   factory CCTPV1MsgUpdatePauser.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CCTPV1MsgUpdatePauser(
-        from: decode.getField(1), newPauser: decode.getField(2));
+      from: decode.getField(1),
+      newPauser: decode.getField(2),
+    );
   }
   factory CCTPV1MsgUpdatePauser.fromJson(Map<String, dynamic> json) {
     return CCTPV1MsgUpdatePauser(
-        from: json.as("from"), newPauser: json.as("new_pauser"));
+      from: json.as("from"),
+      newPauser: json.as("new_pauser"),
+    );
   }
 
   @override

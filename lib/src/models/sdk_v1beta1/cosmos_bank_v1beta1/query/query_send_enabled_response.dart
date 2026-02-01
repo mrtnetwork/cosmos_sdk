@@ -14,10 +14,12 @@ class QuerySendEnabledResponse extends CosmosMessage {
   final PageResponse? pagination;
   factory QuerySendEnabledResponse.fromJson(Map<String, dynamic> json) {
     return QuerySendEnabledResponse(
-      pagination: json["pagination"] == null
-          ? null
-          : PageResponse.fromJson(json["pagination"]),
-      sendEnabled: (json["send_enabled"] as List?)
+      pagination:
+          json["pagination"] == null
+              ? null
+              : PageResponse.fromJson(json["pagination"]),
+      sendEnabled:
+          (json["send_enabled"] as List?)
               ?.map((e) => SendEnabled.fromJson(e))
               .toList() ??
           [],
@@ -27,13 +29,15 @@ class QuerySendEnabledResponse extends CosmosMessage {
   factory QuerySendEnabledResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QuerySendEnabledResponse(
-        sendEnabled: decode
-            .getFields<List<int>>(1)
-            .map((e) => SendEnabled.deserialize(e))
-            .toList(),
-        pagination: decode
-            .getResult(99)
-            ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
+      sendEnabled:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => SendEnabled.deserialize(e))
+              .toList(),
+      pagination: decode
+          .getResult(99)
+          ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
+    );
   }
   @override
   List<int> get fieldIds => [1, 99];
@@ -42,7 +46,7 @@ class QuerySendEnabledResponse extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "send_enabled": sendEnabled.map((e) => e.toJson()).toList(),
-      "pagination": pagination?.toJson()
+      "pagination": pagination?.toJson(),
     };
   }
 

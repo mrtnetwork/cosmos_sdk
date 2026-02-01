@@ -13,7 +13,8 @@ class OsmosisLockupMsgBeginUnlockingAll
     return OsmosisLockupMsgBeginUnlockingAll(owner: decode.getField(1));
   }
   factory OsmosisLockupMsgBeginUnlockingAll.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisLockupMsgBeginUnlockingAll(owner: json.as("owner"));
   }
 

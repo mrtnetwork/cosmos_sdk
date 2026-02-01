@@ -11,51 +11,59 @@ abstract class OsmosisLockup<T extends CosmosMessage>
     extends OsmosisService<T> {
   const OsmosisLockup();
 
-  static T? fromJson<T extends OsmosisLockup>(
-      {required String typeUrl, required Map<String, dynamic> json}) {
+  static T? fromJson<T extends OsmosisLockup>({
+    required String typeUrl,
+    required Map<String, dynamic> json,
+  }) {
     final type = OsmosisLockupTypes.findService(typeUrl);
-    final OsmosisLockup? service = switch (type) {
-      OsmosisLockupTypes.msgBeginUnlockingAll =>
-        OsmosisLockupMsgBeginUnlockingAll.fromJson(json),
-      OsmosisLockupTypes.msgBeginUnlocking =>
-        OsmosisLockupMsgBeginUnlocking.fromJson(json),
-      OsmosisLockupTypes.msgExtendLockup =>
-        OsmosisLockupMsgExtendLockup.fromJson(json),
-      OsmosisLockupTypes.msgLockTokens =>
-        OsmosisLockupMsgLockTokens.fromJson(json),
-      _ => null
-    } as OsmosisLockup?;
+    final OsmosisLockup? service =
+        switch (type) {
+              OsmosisLockupTypes.msgBeginUnlockingAll =>
+                OsmosisLockupMsgBeginUnlockingAll.fromJson(json),
+              OsmosisLockupTypes.msgBeginUnlocking =>
+                OsmosisLockupMsgBeginUnlocking.fromJson(json),
+              OsmosisLockupTypes.msgExtendLockup =>
+                OsmosisLockupMsgExtendLockup.fromJson(json),
+              OsmosisLockupTypes.msgLockTokens =>
+                OsmosisLockupMsgLockTokens.fromJson(json),
+              _ => null,
+            }
+            as OsmosisLockup?;
 
     if (service == null) return null;
     if (service is! T) {
-      throw DartCosmosSdkPluginException("Invalid Lockup Service.", details: {
-        "excepted": "$T",
-        "service": service.runtimeType.toString()
-      });
+      throw DartCosmosSdkPluginException(
+        "Invalid Lockup Service.",
+        details: {"excepted": "$T", "service": service.runtimeType.toString()},
+      );
     }
     return service;
   }
 
-  static T? deserialize<T extends OsmosisLockup>(
-      {required String typeUrl, required List<int> bytes}) {
+  static T? deserialize<T extends OsmosisLockup>({
+    required String typeUrl,
+    required List<int> bytes,
+  }) {
     final type = OsmosisLockupTypes.findService(typeUrl);
-    final OsmosisLockup? service = switch (type) {
-      OsmosisLockupTypes.msgBeginUnlockingAll =>
-        OsmosisLockupMsgBeginUnlockingAll.deserialize(bytes),
-      OsmosisLockupTypes.msgBeginUnlocking =>
-        OsmosisLockupMsgBeginUnlocking.deserialize(bytes),
-      OsmosisLockupTypes.msgExtendLockup =>
-        OsmosisLockupMsgExtendLockup.deserialize(bytes),
-      OsmosisLockupTypes.msgLockTokens =>
-        OsmosisLockupMsgLockTokens.deserialize(bytes),
-      _ => null
-    } as OsmosisLockup?;
+    final OsmosisLockup? service =
+        switch (type) {
+              OsmosisLockupTypes.msgBeginUnlockingAll =>
+                OsmosisLockupMsgBeginUnlockingAll.deserialize(bytes),
+              OsmosisLockupTypes.msgBeginUnlocking =>
+                OsmosisLockupMsgBeginUnlocking.deserialize(bytes),
+              OsmosisLockupTypes.msgExtendLockup =>
+                OsmosisLockupMsgExtendLockup.deserialize(bytes),
+              OsmosisLockupTypes.msgLockTokens =>
+                OsmosisLockupMsgLockTokens.deserialize(bytes),
+              _ => null,
+            }
+            as OsmosisLockup?;
     if (service == null) return null;
     if (service is! T) {
-      throw DartCosmosSdkPluginException("Invalid Lockup Service.", details: {
-        "excepted": "$T",
-        "service": service.runtimeType.toString()
-      });
+      throw DartCosmosSdkPluginException(
+        "Invalid Lockup Service.",
+        details: {"excepted": "$T", "service": service.runtimeType.toString()},
+      );
     }
     return service;
   }

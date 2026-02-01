@@ -10,12 +10,14 @@ class OsmosisConcentratedLiquidityPoolsRequest extends CosmosMessage
   final PageRequest? pagination;
   OsmosisConcentratedLiquidityPoolsRequest({this.pagination});
   factory OsmosisConcentratedLiquidityPoolsRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityPoolsRequest(
-        pagination: decode
-            .getResult(2)
-            ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)));
+      pagination: decode
+          .getResult(2)
+          ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)),
+    );
   }
 
   @override
@@ -37,7 +39,8 @@ class OsmosisConcentratedLiquidityPoolsRequest extends CosmosMessage
 
   @override
   OsmosisConcentratedLiquidityPoolsResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityPoolsResponse.fromJson(json);
   }
 

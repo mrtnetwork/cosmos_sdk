@@ -17,9 +17,10 @@ class ProtocolVersion extends CosmosMessage {
   factory ProtocolVersion.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ProtocolVersion(
-        p2p: decode.getField(1),
-        block: decode.getField(2),
-        app: decode.getField(3));
+      p2p: decode.getField(1),
+      block: decode.getField(2),
+      app: decode.getField(3),
+    );
   }
 
   @override
@@ -30,7 +31,7 @@ class ProtocolVersion extends CosmosMessage {
     return {
       "p2p": p2p?.toString(),
       "block": block?.toString(),
-      "app": app?.toString()
+      "app": app?.toString(),
     };
   }
 

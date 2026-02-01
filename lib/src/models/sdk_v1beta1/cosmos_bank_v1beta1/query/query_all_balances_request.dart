@@ -18,17 +18,21 @@ class QueryAllBalancesRequest extends CosmosMessage
   ///
   /// Since: cosmos-sdk 0.50
   final bool? resolveDenom;
-  const QueryAllBalancesRequest(
-      {required this.address, this.pagination, this.resolveDenom});
+  const QueryAllBalancesRequest({
+    required this.address,
+    this.pagination,
+    this.resolveDenom,
+  });
 
   factory QueryAllBalancesRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryAllBalancesRequest(
-        address: CosmosBaseAddress(decode.getField(1)),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)),
-        resolveDenom: decode.getResult(3));
+      address: CosmosBaseAddress(decode.getField(1)),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)),
+      resolveDenom: decode.getResult(3),
+    );
   }
 
   @override
@@ -39,7 +43,7 @@ class QueryAllBalancesRequest extends CosmosMessage
     return {
       "address": address.address,
       "pagination": pagination?.toJson(),
-      "resolve_denom": resolveDenom
+      "resolve_denom": resolveDenom,
     };
   }
 
@@ -61,9 +65,9 @@ class QueryAllBalancesRequest extends CosmosMessage
 
   @override
   Map<String, String?> get queryParameters => {
-        "resolve_denom": resolveDenom?.toString(),
-        ...pagination?.queryParameters ?? {}
-      };
+    "resolve_denom": resolveDenom?.toString(),
+    ...pagination?.queryParameters ?? {},
+  };
 
   @override
   List<String> get pathParameters => [address.address];

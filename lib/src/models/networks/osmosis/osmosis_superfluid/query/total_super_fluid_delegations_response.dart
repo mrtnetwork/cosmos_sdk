@@ -5,17 +5,22 @@ class OsmosisSuperfluidTotalSuperfluidDelegationsResponse
     extends CosmosMessage {
   final String totalDelegations;
   const OsmosisSuperfluidTotalSuperfluidDelegationsResponse(
-      this.totalDelegations);
+    this.totalDelegations,
+  );
   factory OsmosisSuperfluidTotalSuperfluidDelegationsResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidTotalSuperfluidDelegationsResponse(
-        decode.getField(1));
+      decode.getField(1),
+    );
   }
   factory OsmosisSuperfluidTotalSuperfluidDelegationsResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisSuperfluidTotalSuperfluidDelegationsResponse(
-        json["total_delegations"]);
+      json["total_delegations"],
+    );
   }
 
   @override

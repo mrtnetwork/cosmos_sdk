@@ -7,30 +7,37 @@ import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_staking_v1beta1/types/t
 class QueryValidatorDelegationsResponse extends CosmosMessage {
   final List<DelegationResponse> delegationResponse;
   final PageResponse? pagination;
-  const QueryValidatorDelegationsResponse(
-      {required this.delegationResponse, this.pagination});
+  const QueryValidatorDelegationsResponse({
+    required this.delegationResponse,
+    this.pagination,
+  });
   factory QueryValidatorDelegationsResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return QueryValidatorDelegationsResponse(
-      delegationResponse: (json["delegation_responses"] as List?)
+      delegationResponse:
+          (json["delegation_responses"] as List?)
               ?.map((e) => DelegationResponse.fromJson(e))
               .toList() ??
           [],
-      pagination: json["pagination"] == null
-          ? null
-          : PageResponse.fromJson(json["pagination"]),
+      pagination:
+          json["pagination"] == null
+              ? null
+              : PageResponse.fromJson(json["pagination"]),
     );
   }
   factory QueryValidatorDelegationsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryValidatorDelegationsResponse(
-        delegationResponse: decode
-            .getFields<List<int>>(1)
-            .map((e) => DelegationResponse.deserialize(e))
-            .toList(),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
+      delegationResponse:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => DelegationResponse.deserialize(e))
+              .toList(),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
+    );
   }
 
   @override
@@ -41,7 +48,7 @@ class QueryValidatorDelegationsResponse extends CosmosMessage {
     return {
       "delegation_responses":
           delegationResponse.map((e) => e.toJson()).toList(),
-      "pagination": pagination?.toJson()
+      "pagination": pagination?.toJson(),
     };
   }
 

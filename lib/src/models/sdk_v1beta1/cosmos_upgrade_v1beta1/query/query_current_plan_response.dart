@@ -13,9 +13,10 @@ class QueryCurrentPlanResponse extends CosmosMessage {
   factory QueryCurrentPlanResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryCurrentPlanResponse(
-        plan: decode
-            .getResult(1)
-            ?.to<Plan, List<int>>((e) => Plan.deserialize(e)));
+      plan: decode
+          .getResult(1)
+          ?.to<Plan, List<int>>((e) => Plan.deserialize(e)),
+    );
   }
 
   @override

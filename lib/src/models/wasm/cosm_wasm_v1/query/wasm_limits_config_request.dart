@@ -27,7 +27,8 @@ class CosmWasmV1QueryWasmLimitsConfigRequest extends CosmosMessage
 
   @override
   CosmWasmV1QueryWasmLimitsConfigResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return CosmWasmV1QueryWasmLimitsConfigResponse.fromJson(json);
   }
 

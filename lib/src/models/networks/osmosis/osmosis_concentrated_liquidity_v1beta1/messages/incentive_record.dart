@@ -20,31 +20,38 @@ class OsmosisConcentratedLiquidityIncentiveRecord extends CosmosMessage {
   /// types.SupportedUptimes
   final ProtobufDuration minUptime;
 
-  OsmosisConcentratedLiquidityIncentiveRecord(
-      {this.incentiveId,
-      this.poolId,
-      required this.incentiveRecordBody,
-      required this.minUptime});
+  OsmosisConcentratedLiquidityIncentiveRecord({
+    this.incentiveId,
+    this.poolId,
+    required this.incentiveRecordBody,
+    required this.minUptime,
+  });
   factory OsmosisConcentratedLiquidityIncentiveRecord.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityIncentiveRecord(
-        incentiveId: decode.getField(1),
-        poolId: decode.getField(2),
-        incentiveRecordBody:
-            OsmosisConcentratedLiquidityIncentiveRecordBody.deserialize(
-                decode.getField(4)),
-        minUptime: ProtobufDuration.deserialize(decode.getField(5)));
+      incentiveId: decode.getField(1),
+      poolId: decode.getField(2),
+      incentiveRecordBody:
+          OsmosisConcentratedLiquidityIncentiveRecordBody.deserialize(
+            decode.getField(4),
+          ),
+      minUptime: ProtobufDuration.deserialize(decode.getField(5)),
+    );
   }
   factory OsmosisConcentratedLiquidityIncentiveRecord.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityIncentiveRecord(
-        incentiveId: BigintUtils.tryParse(json["incentive_id"]),
-        poolId: BigintUtils.tryParse(json["pool_id"]),
-        incentiveRecordBody:
-            OsmosisConcentratedLiquidityIncentiveRecordBody.fromJson(
-                json["incentive_record_body"]),
-        minUptime: ProtobufDuration.fromString(json["min_uptime"]));
+      incentiveId: BigintUtils.tryParse(json["incentive_id"]),
+      poolId: BigintUtils.tryParse(json["pool_id"]),
+      incentiveRecordBody:
+          OsmosisConcentratedLiquidityIncentiveRecordBody.fromJson(
+            json["incentive_record_body"],
+          ),
+      minUptime: ProtobufDuration.fromString(json["min_uptime"]),
+    );
   }
 
   @override
@@ -56,7 +63,7 @@ class OsmosisConcentratedLiquidityIncentiveRecord extends CosmosMessage {
       "incentive_id": incentiveId?.toString(),
       "pool_id": poolId?.toString(),
       "incentive_record_body": incentiveRecordBody.toJson(),
-      "min_uptime": minUptime.toJson()
+      "min_uptime": minUptime.toJson(),
     };
   }
 

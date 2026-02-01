@@ -9,28 +9,24 @@ class DelegationResponse extends CosmosMessage {
   final Delegation delegation;
   final Coin balance;
 
-  const DelegationResponse({
-    required this.delegation,
-    required this.balance,
-  });
+  const DelegationResponse({required this.delegation, required this.balance});
   factory DelegationResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DelegationResponse(
-        delegation: Delegation.deserialize(decode.getField(1)),
-        balance: Coin.deserialize(decode.getField(2)));
+      delegation: Delegation.deserialize(decode.getField(1)),
+      balance: Coin.deserialize(decode.getField(2)),
+    );
   }
   factory DelegationResponse.fromJson(Map<String, dynamic> json) {
     return DelegationResponse(
-        delegation: Delegation.fromJson(json["delegation"]),
-        balance: Coin.fromJson(json["balance"]));
+      delegation: Delegation.fromJson(json["delegation"]),
+      balance: Coin.fromJson(json["balance"]),
+    );
   }
 
   @override
   Map<String, dynamic> toJson() {
-    return {
-      'delegation': delegation.toJson(),
-      'balance': balance.toJson(),
-    };
+    return {'delegation': delegation.toJson(), 'balance': balance.toJson()};
   }
 
   @override

@@ -8,7 +8,8 @@ class EvmosEthermintFeeMarketV1QueryBaseFeeRequest extends CosmosMessage
     with QueryMessage<EvmosEthermintFeeMarketV1QueryBaseFeeResponse> {
   const EvmosEthermintFeeMarketV1QueryBaseFeeRequest();
   factory EvmosEthermintFeeMarketV1QueryBaseFeeRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return EvmosEthermintFeeMarketV1QueryBaseFeeRequest();
   }
 
@@ -33,7 +34,8 @@ class EvmosEthermintFeeMarketV1QueryBaseFeeRequest extends CosmosMessage
 
   @override
   EvmosEthermintFeeMarketV1QueryBaseFeeResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return EvmosEthermintFeeMarketV1QueryBaseFeeResponse.fromJson(json);
   }
 }

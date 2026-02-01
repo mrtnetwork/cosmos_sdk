@@ -10,11 +10,13 @@ class OsmosisMintQueryParamsResponse extends CosmosMessage {
   factory OsmosisMintQueryParamsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisMintQueryParamsResponse(
-        OsmosisMintParams.deserialize(decode.getField(1)));
+      OsmosisMintParams.deserialize(decode.getField(1)),
+    );
   }
   factory OsmosisMintQueryParamsResponse.fromJson(Map<String, dynamic> json) {
     return OsmosisMintQueryParamsResponse(
-        OsmosisMintParams.fromJson(json["params"]));
+      OsmosisMintParams.fromJson(json["params"]),
+    );
   }
   @override
   List<int> get fieldIds => [1];

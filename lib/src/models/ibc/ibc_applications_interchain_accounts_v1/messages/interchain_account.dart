@@ -22,9 +22,12 @@ class InterchainAccount extends CosmosBaseAccount {
 
   factory InterchainAccount.fromJson(Map<String, dynamic> json) {
     return InterchainAccount(
-        account: json.valueTo<BaseAccount, Map<String, dynamic>>(
-            key: "base_account", parse: (e) => BaseAccount.fromJson(e)),
-        accountOwner: json.valueAs("account_owner"));
+      account: json.valueTo<BaseAccount, Map<String, dynamic>>(
+        key: "base_account",
+        parse: (e) => BaseAccount.fromJson(e),
+      ),
+      accountOwner: json.valueAs("account_owner"),
+    );
   }
 
   @override

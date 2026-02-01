@@ -11,17 +11,18 @@ class ThorchainBondProviders extends CosmosMessage {
     List<int>? nodeAddress,
     required this.nodeOperatorFee,
     required List<ThorchainBondProvider> providers,
-  })  : nodeAddress = BytesUtils.tryToBytes(nodeAddress, unmodifiable: true),
-        providers = providers.immutable;
+  }) : nodeAddress = BytesUtils.tryToBytes(nodeAddress, unmodifiable: true),
+       providers = providers.immutable;
   factory ThorchainBondProviders.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainBondProviders(
       nodeAddress: decode.getField(1),
       nodeOperatorFee: BigInt.parse(decode.getField(2)),
-      providers: decode
-          .getFields<List<int>>(3)
-          .map((e) => ThorchainBondProvider.deserialize(e))
-          .toList(),
+      providers:
+          decode
+              .getFields<List<int>>(3)
+              .map((e) => ThorchainBondProvider.deserialize(e))
+              .toList(),
     );
   }
 
@@ -33,7 +34,7 @@ class ThorchainBondProviders extends CosmosMessage {
     return {
       "nodeAddress": BytesUtils.tryToHexString(nodeAddress),
       "nodeOperatorFee": nodeOperatorFee.toString(),
-      "providers": providers.map((e) => e.toJson()).toList()
+      "providers": providers.map((e) => e.toJson()).toList(),
     };
   }
 

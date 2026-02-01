@@ -14,7 +14,8 @@ class QueryNFTBalanceResponse extends CosmosMessage {
 
   factory QueryNFTBalanceResponse.fromJson(Map<String, dynamic> json) {
     return QueryNFTBalanceResponse(
-        amount: BigintUtils.tryParse(json["amount"]));
+      amount: BigintUtils.tryParse(json["amount"]),
+    );
   }
 
   @override

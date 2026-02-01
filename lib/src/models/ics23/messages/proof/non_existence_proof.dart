@@ -13,15 +13,22 @@ class Ics23NonExistenceProof extends Ics23BatchEntryBase {
   final Ics23ExistenceProof? left;
   final Ics23ExistenceProof? right;
   Ics23NonExistenceProof({List<int>? key, this.left, this.right})
-      : key = BytesUtils.tryToBytes(key, unmodifiable: true);
+    : key = BytesUtils.tryToBytes(key, unmodifiable: true);
   factory Ics23NonExistenceProof.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Ics23NonExistenceProof(
-        key: decode.getField(1),
-        left: decode.getResult(2)?.to<Ics23ExistenceProof, List<int>>(
-            (e) => Ics23ExistenceProof.deserialize(e)),
-        right: decode.getResult(3)?.to<Ics23ExistenceProof, List<int>>(
-            (e) => Ics23ExistenceProof.deserialize(e)));
+      key: decode.getField(1),
+      left: decode
+          .getResult(2)
+          ?.to<Ics23ExistenceProof, List<int>>(
+            (e) => Ics23ExistenceProof.deserialize(e),
+          ),
+      right: decode
+          .getResult(3)
+          ?.to<Ics23ExistenceProof, List<int>>(
+            (e) => Ics23ExistenceProof.deserialize(e),
+          ),
+    );
   }
 
   @override
@@ -32,7 +39,7 @@ class Ics23NonExistenceProof extends Ics23BatchEntryBase {
     return {
       "key": BytesUtils.tryToHexString(key),
       "left": left?.toJson(),
-      "right": right?.toJson()
+      "right": right?.toJson(),
     };
   }
 

@@ -24,9 +24,12 @@ class OrderBy implements CosmosEnum {
   static OrderBy fromValue(int? value) {
     return values.firstWhere(
       (e) => e.value == value,
-      orElse: () => throw DartCosmosSdkPluginException(
-          "No OrderBy element found for the given value.",
-          details: {"value": value}),
+      orElse:
+          () =>
+              throw DartCosmosSdkPluginException(
+                "No OrderBy element found for the given value.",
+                details: {"value": value},
+              ),
     );
   }
 }

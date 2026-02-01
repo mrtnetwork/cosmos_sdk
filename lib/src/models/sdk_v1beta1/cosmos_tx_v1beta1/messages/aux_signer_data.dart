@@ -27,7 +27,7 @@ class AuxSignerData extends CosmosMessage {
   /// sig is the signature of the sign doc.
   final List<int>? sig;
   AuxSignerData({this.address, this.signDoc, this.mode, List<int>? sig})
-      : sig = BytesUtils.tryToBytes(sig, unmodifiable: true);
+    : sig = BytesUtils.tryToBytes(sig, unmodifiable: true);
 
   factory AuxSignerData.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -36,10 +36,14 @@ class AuxSignerData extends CosmosMessage {
           .getResult(1)
           ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
       sig: decode.getField(4),
-      signDoc: decode.getResult(2)?.to<SignDocDirectAux, List<int>>(
-          (e) => SignDocDirectAux.deserialize(e)),
-      mode:
-          decode.getResult(3)?.to<SignMode, int>((e) => SignMode.fromValue(e)),
+      signDoc: decode
+          .getResult(2)
+          ?.to<SignDocDirectAux, List<int>>(
+            (e) => SignDocDirectAux.deserialize(e),
+          ),
+      mode: decode
+          .getResult(3)
+          ?.to<SignMode, int>((e) => SignMode.fromValue(e)),
     );
   }
 
@@ -52,7 +56,7 @@ class AuxSignerData extends CosmosMessage {
       "address": address?.address,
       "sign_doc": signDoc?.toJson(),
       "mode": mode?.value,
-      "sig": BytesUtils.tryToHexString(sig)
+      "sig": BytesUtils.tryToHexString(sig),
     };
   }
 

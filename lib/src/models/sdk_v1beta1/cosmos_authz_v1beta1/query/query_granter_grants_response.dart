@@ -12,29 +12,35 @@ class AuthzQueryGranterGrantsResponse extends CosmosMessage {
 
   /// pagination defines an pagination for the response.
   final PageResponse? pagination;
-  AuthzQueryGranterGrantsResponse(
-      {required List<AuthzGrantAuthorization> grants, this.pagination})
-      : grants = grants.immutable;
+  AuthzQueryGranterGrantsResponse({
+    required List<AuthzGrantAuthorization> grants,
+    this.pagination,
+  }) : grants = grants.immutable;
   factory AuthzQueryGranterGrantsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return AuthzQueryGranterGrantsResponse(
-        grants: decode
-            .getFields<List<int>>(1)
-            .map((e) => AuthzGrantAuthorization.deserialize(e))
-            .toList(),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
+      grants:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => AuthzGrantAuthorization.deserialize(e))
+              .toList(),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
+    );
   }
   factory AuthzQueryGranterGrantsResponse.fromJson(Map<String, dynamic> json) {
     return AuthzQueryGranterGrantsResponse(
-        grants: (json["grants"] as List?)
-                ?.map((e) => AuthzGrantAuthorization.fromJson(e))
-                .toList() ??
-            [],
-        pagination: json["pagination"] == null
-            ? null
-            : PageResponse.fromJson(json["pagination"]));
+      grants:
+          (json["grants"] as List?)
+              ?.map((e) => AuthzGrantAuthorization.fromJson(e))
+              .toList() ??
+          [],
+      pagination:
+          json["pagination"] == null
+              ? null
+              : PageResponse.fromJson(json["pagination"]),
+    );
   }
   @override
   List<int> get fieldIds => [1, 2];
@@ -43,7 +49,7 @@ class AuthzQueryGranterGrantsResponse extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "grants": grants.map((e) => e.toJson()).toList(),
-      "pagination": pagination?.toJson()
+      "pagination": pagination?.toJson(),
     };
   }
 

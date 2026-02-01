@@ -35,7 +35,8 @@ class CosmWasmV1QueryAllContractState extends CosmosMessage
 
   @override
   CosmWasmV1QueryAllContractStateResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return CosmWasmV1QueryAllContractStateResponse.fromJson(json);
   }
 
@@ -44,6 +45,6 @@ class CosmWasmV1QueryAllContractState extends CosmosMessage
 
   @override
   Map<String, String?> get queryParameters => {
-        ...pagination?.queryParameters ?? {},
-      };
+    ...pagination?.queryParameters ?? {},
+  };
 }

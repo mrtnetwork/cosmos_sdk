@@ -22,20 +22,24 @@ class GovMsgVote extends GovV1Beta1Service<EmptyServiceRequestResponse>
   factory GovMsgVote.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GovMsgVote(
-        proposalId: decode.getField(1),
-        voter: decode
-            .getResult(2)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        option: decode
-            .getResult(3)
-            ?.to<GovVoteOption, int>((e) => GovVoteOption.fromValue(e)));
+      proposalId: decode.getField(1),
+      voter: decode
+          .getResult(2)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      option: decode
+          .getResult(3)
+          ?.to<GovVoteOption, int>((e) => GovVoteOption.fromValue(e)),
+    );
   }
   factory GovMsgVote.fromJson(Map<String, dynamic> json) {
     return GovMsgVote(
-        proposalId: json.asBigInt("proposalId"),
-        voter: json.asAddress("voter"),
-        option: json.maybeAs<GovVoteOption, String>(
-            key: "option", onValue: (e) => GovVoteOption.fromName(e)));
+      proposalId: json.asBigInt("proposalId"),
+      voter: json.asAddress("voter"),
+      option: json.maybeAs<GovVoteOption, String>(
+        key: "option",
+        onValue: (e) => GovVoteOption.fromName(e),
+      ),
+    );
   }
 
   @override
@@ -46,7 +50,7 @@ class GovMsgVote extends GovV1Beta1Service<EmptyServiceRequestResponse>
     return {
       "proposal_id": proposalId?.toString(),
       "voter": voter?.address,
-      "option": option?.value
+      "option": option?.value,
     };
   }
 

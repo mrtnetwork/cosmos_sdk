@@ -30,37 +30,40 @@ class InitiaMoveV1MsgExecute
   /// - string: base64 bytes
   final List<List<int>>? args;
 
-  InitiaMoveV1MsgExecute(
-      {this.sender,
-      this.moduleAddress,
-      this.moduleName,
-      this.functionName,
-      List<String>? typeArgs,
-      List<List<int>>? args})
-      : typeArgs = typeArgs?.immutable,
-        args = args?.map((e) => e.asImmutableBytes).toImutableList;
+  InitiaMoveV1MsgExecute({
+    this.sender,
+    this.moduleAddress,
+    this.moduleName,
+    this.functionName,
+    List<String>? typeArgs,
+    List<List<int>>? args,
+  }) : typeArgs = typeArgs?.immutable,
+       args = args?.map((e) => e.asImmutableBytes).toImutableList;
 
   factory InitiaMoveV1MsgExecute.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return InitiaMoveV1MsgExecute(
-        sender: decode.getField(1),
-        moduleAddress: decode.getField(2),
-        moduleName: decode.getField(3),
-        functionName: decode.getField(4),
-        typeArgs: decode.getFields<String>(5),
-        args: decode.getFields<List<int>>(6));
+      sender: decode.getField(1),
+      moduleAddress: decode.getField(2),
+      moduleName: decode.getField(3),
+      functionName: decode.getField(4),
+      typeArgs: decode.getFields<String>(5),
+      args: decode.getFields<List<int>>(6),
+    );
   }
   factory InitiaMoveV1MsgExecute.fromJson(Map<String, dynamic> json) {
     return InitiaMoveV1MsgExecute(
-        sender: json.as("sender"),
-        moduleAddress: json.as("module_address"),
-        moduleName: json.as("module_name"),
-        functionName: json.as("function_name"),
-        typeArgs: json.asListOfString("type_args", throwOnNull: false),
-        args: json
-            .asListOfString("args", throwOnNull: false)!
-            .map((e) => CosmosUtils.toBytes(e))
-            .toList());
+      sender: json.as("sender"),
+      moduleAddress: json.as("module_address"),
+      moduleName: json.as("module_name"),
+      functionName: json.as("function_name"),
+      typeArgs: json.asListOfString("type_args", throwOnNull: false),
+      args:
+          json
+              .asListOfString("args", throwOnNull: false)!
+              .map((e) => CosmosUtils.toBytes(e))
+              .toList(),
+    );
   }
 
   @override
@@ -74,7 +77,7 @@ class InitiaMoveV1MsgExecute
       "module_address": moduleAddress,
       "function_name": functionName,
       "type_args": typeArgs?.emptyAsNull ?? [],
-      "args": args?.emptyAsNull?.map(CosmosUtils.toBase64).toList()
+      "args": args?.emptyAsNull?.map(CosmosUtils.toBase64).toList(),
     };
   }
 
@@ -82,8 +85,14 @@ class InitiaMoveV1MsgExecute
   TypeUrl get typeUrl => InitiaMoveV1Types.msgExecute;
 
   @override
-  List get values =>
-      [sender, moduleAddress, moduleName, functionName, typeArgs, args];
+  List get values => [
+    sender,
+    moduleAddress,
+    moduleName,
+    functionName,
+    typeArgs,
+    args,
+  ];
   @override
   List<String?> get signers => [sender];
 

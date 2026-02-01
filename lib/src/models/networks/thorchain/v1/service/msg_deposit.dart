@@ -12,40 +12,46 @@ class ThorchainMsgDeposit
   final List<ThorchainCoin> coins;
   final String memo;
   final CosmosBaseAddress signer;
-  ThorchainMsgDeposit(
-      {required List<ThorchainCoin> coins,
-      required this.memo,
-      required this.signer})
-      : coins = coins.immutable;
+  ThorchainMsgDeposit({
+    required List<ThorchainCoin> coins,
+    required this.memo,
+    required this.signer,
+  }) : coins = coins.immutable;
   factory ThorchainMsgDeposit.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainMsgDeposit(
-        coins: decode
-            .getFields<List<int>>(1)
-            .map((e) => ThorchainCoin.deserialize(e))
-            .toList(),
-        memo: decode.getField(2),
-        signer: CosmosBaseAddress.fromBytes(decode.getField(3)));
+      coins:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => ThorchainCoin.deserialize(e))
+              .toList(),
+      memo: decode.getField(2),
+      signer: CosmosBaseAddress.fromBytes(decode.getField(3)),
+    );
   }
   factory ThorchainMsgDeposit.fromJson(Map<String, dynamic> json) {
     return ThorchainMsgDeposit(
-        coins: json
-                .asListOfMap("coins")
-                ?.map((e) => ThorchainCoin.fromJson(e))
-                .toList() ??
-            [],
-        memo: json.as("memo"),
-        signer: CosmosBaseAddress.fromBytes(
-            json.asBytes("signer", throwOnNull: true)!));
+      coins:
+          json
+              .asListOfMap("coins")
+              ?.map((e) => ThorchainCoin.fromJson(e))
+              .toList() ??
+          [],
+      memo: json.as("memo"),
+      signer: CosmosBaseAddress.fromBytes(
+        json.asBytes("signer", throwOnNull: true)!,
+      ),
+    );
   }
-  factory ThorchainMsgDeposit.create(
-      {required List<ThorchainCoin> coins,
-      required CosmosBaseAddress signer,
-      required CosmosBaseAddress ownerAddress,
-      required String chainName,
-      required String chainAddress,
-      required String chainAsset,
-      required String name}) {
+  factory ThorchainMsgDeposit.create({
+    required List<ThorchainCoin> coins,
+    required CosmosBaseAddress signer,
+    required CosmosBaseAddress ownerAddress,
+    required String chainName,
+    required String chainAddress,
+    required String chainAsset,
+    required String name,
+  }) {
     final String memo =
         "~:$name:$chainName:$chainAddress:${ownerAddress.address}:$chainAsset";
     return ThorchainMsgDeposit(coins: coins, signer: signer, memo: memo);
@@ -59,7 +65,7 @@ class ThorchainMsgDeposit
     return {
       "coins": coins.map((e) => e.toJson()).toList(),
       "memo": memo,
-      "signer": signer.address
+      "signer": signer.address,
     };
   }
 

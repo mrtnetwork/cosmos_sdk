@@ -53,27 +53,30 @@ class TxResponse extends CosmosMessage {
 
   factory TxResponse.fromJson(Map<String, dynamic> json) {
     return TxResponse(
-        height: json.asBigInt("height"),
-        data: json.as("data"),
-        gasUsed: json.asBigInt("gas_wanted"),
-        events: json
-                .asListOfMap("events", throwOnNull: false)
-                ?.map((e) => Event.fromJson(e))
-                .toList() ??
-            [],
-        gasWanted: json.asBigInt("gas_wanted"),
-        logs: json
-                .asListOfMap("logs", throwOnNull: false)
-                ?.map((e) => ABCIMessageLog.fromJson(e))
-                .toList() ??
-            [],
-        rawLog: json.as("raw_log"),
-        timestamp: json.as("timestamp"),
-        tx: AnyMessage.fromJson(json.asMap("tx")),
-        txHash: json.as("txhash"),
-        code: json.asInt("code"),
-        codespace: json.as("codespace"),
-        info: json.as("info"));
+      height: json.asBigInt("height"),
+      data: json.as("data"),
+      gasUsed: json.asBigInt("gas_wanted"),
+      events:
+          json
+              .asListOfMap("events", throwOnNull: false)
+              ?.map((e) => Event.fromJson(e))
+              .toList() ??
+          [],
+      gasWanted: json.asBigInt("gas_wanted"),
+      logs:
+          json
+              .asListOfMap("logs", throwOnNull: false)
+              ?.map((e) => ABCIMessageLog.fromJson(e))
+              .toList() ??
+          [],
+      rawLog: json.as("raw_log"),
+      timestamp: json.as("timestamp"),
+      tx: AnyMessage.fromJson(json.asMap("tx")),
+      txHash: json.as("txhash"),
+      code: json.asInt("code"),
+      codespace: json.as("codespace"),
+      info: json.as("info"),
+    );
   }
 
   TxResponse({
@@ -90,31 +93,34 @@ class TxResponse extends CosmosMessage {
     required this.tx,
     required this.timestamp,
     required List<Event> events,
-  })  : logs = logs.immutable,
-        events = events.immutable;
+  }) : logs = logs.immutable,
+       events = events.immutable;
 
   factory TxResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return TxResponse(
-        height: decode.getField(1),
-        txHash: decode.getField(2),
-        codespace: decode.getField(3),
-        code: decode.getField(4),
-        data: decode.getField(5),
-        rawLog: decode.getField(6),
-        logs: decode
-            .getFields<List<int>>(7)
-            .map((e) => ABCIMessageLog.deserialize(e))
-            .toList(),
-        info: decode.getField(8),
-        gasWanted: decode.getField(9),
-        gasUsed: decode.getField(10),
-        tx: AnyMessage.deserialize(decode.getField(11)),
-        timestamp: decode.getField(12),
-        events: decode
-            .getFields<List<int>>(13)
-            .map((e) => Event.deserialize(e))
-            .toList());
+      height: decode.getField(1),
+      txHash: decode.getField(2),
+      codespace: decode.getField(3),
+      code: decode.getField(4),
+      data: decode.getField(5),
+      rawLog: decode.getField(6),
+      logs:
+          decode
+              .getFields<List<int>>(7)
+              .map((e) => ABCIMessageLog.deserialize(e))
+              .toList(),
+      info: decode.getField(8),
+      gasWanted: decode.getField(9),
+      gasUsed: decode.getField(10),
+      tx: AnyMessage.deserialize(decode.getField(11)),
+      timestamp: decode.getField(12),
+      events:
+          decode
+              .getFields<List<int>>(13)
+              .map((e) => Event.deserialize(e))
+              .toList(),
+    );
   }
 
   /// Converts the transaction response to a JSON-serializable map.
@@ -145,18 +151,18 @@ class TxResponse extends CosmosMessage {
 
   @override
   List get values => [
-        height,
-        txHash,
-        codespace,
-        code,
-        data,
-        rawLog,
-        logs,
-        info,
-        gasWanted,
-        gasUsed,
-        tx,
-        timestamp,
-        events
-      ];
+    height,
+    txHash,
+    codespace,
+    code,
+    data,
+    rawLog,
+    logs,
+    info,
+    gasWanted,
+    gasUsed,
+    tx,
+    timestamp,
+    events,
+  ];
 }

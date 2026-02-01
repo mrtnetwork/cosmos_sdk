@@ -21,15 +21,16 @@ class CosmWasmV1UnPinCodes
   factory CosmWasmV1UnPinCodes.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmWasmV1UnPinCodes(
-        authority: decode.getField(1), codeIds: decode.getFields<BigInt>(2));
+      authority: decode.getField(1),
+      codeIds: decode.getFields<BigInt>(2),
+    );
   }
   factory CosmWasmV1UnPinCodes.fromJson(Map<String, dynamic> json) {
     return CosmWasmV1UnPinCodes(
-        authority: json.as("authority"),
-        codeIds: json
-            .as<List?>("code_ids")
-            ?.map((e) => BigintUtils.parse(e))
-            .toList());
+      authority: json.as("authority"),
+      codeIds:
+          json.as<List?>("code_ids")?.map((e) => BigintUtils.parse(e)).toList(),
+    );
   }
 
   @override
@@ -39,7 +40,7 @@ class CosmWasmV1UnPinCodes
   Map<String, dynamic> toJson() {
     return {
       "authority": authority,
-      "code_ids": codeIds?.map((e) => e.toString()).toList()
+      "code_ids": codeIds?.map((e) => e.toString()).toList(),
     };
   }
 

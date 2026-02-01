@@ -51,38 +51,42 @@ class OmosisEpochsEpochInfo extends CosmosMessage {
   /// started. (The block height at which the timer last ticked)
   final BigInt? currentEpochStartHeight;
 
-  OmosisEpochsEpochInfo(
-      {this.identifier,
-      required this.startTime,
-      required this.duration,
-      required this.currentEpoch,
-      required this.currentEpochStartTime,
-      this.epochCountingStarted,
-      this.currentEpochStartHeight});
+  OmosisEpochsEpochInfo({
+    this.identifier,
+    required this.startTime,
+    required this.duration,
+    required this.currentEpoch,
+    required this.currentEpochStartTime,
+    this.epochCountingStarted,
+    this.currentEpochStartHeight,
+  });
   factory OmosisEpochsEpochInfo.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OmosisEpochsEpochInfo(
-        identifier: decode.getField(1),
-        startTime: ProtobufTimestamp.deserialize(decode.getField(2)),
-        duration: ProtobufDuration.deserialize(decode.getField(3)),
-        currentEpoch: decode.getField(4),
-        currentEpochStartTime:
-            ProtobufTimestamp.deserialize(decode.getField(5)),
-        epochCountingStarted: decode.getField(6),
-        currentEpochStartHeight: decode.getField(8));
+      identifier: decode.getField(1),
+      startTime: ProtobufTimestamp.deserialize(decode.getField(2)),
+      duration: ProtobufDuration.deserialize(decode.getField(3)),
+      currentEpoch: decode.getField(4),
+      currentEpochStartTime: ProtobufTimestamp.deserialize(decode.getField(5)),
+      epochCountingStarted: decode.getField(6),
+      currentEpochStartHeight: decode.getField(8),
+    );
   }
 
   factory OmosisEpochsEpochInfo.fromJson(Map<String, dynamic> json) {
     return OmosisEpochsEpochInfo(
-        identifier: json["identifier"],
-        startTime: ProtobufTimestamp.fromString(json["start_time"]),
-        duration: ProtobufDuration.deserialize(json["duration"]),
-        currentEpoch: BigintUtils.tryParse(json["current_epoch"]),
-        currentEpochStartTime:
-            ProtobufTimestamp.fromString(json["current_epoch_start_time"]),
-        epochCountingStarted: json["epoch_counting_started"],
-        currentEpochStartHeight:
-            BigintUtils.tryParse(json["current_epoch_start_height"]));
+      identifier: json["identifier"],
+      startTime: ProtobufTimestamp.fromString(json["start_time"]),
+      duration: ProtobufDuration.deserialize(json["duration"]),
+      currentEpoch: BigintUtils.tryParse(json["current_epoch"]),
+      currentEpochStartTime: ProtobufTimestamp.fromString(
+        json["current_epoch_start_time"],
+      ),
+      epochCountingStarted: json["epoch_counting_started"],
+      currentEpochStartHeight: BigintUtils.tryParse(
+        json["current_epoch_start_height"],
+      ),
+    );
   }
 
   @override
@@ -97,20 +101,20 @@ class OmosisEpochsEpochInfo extends CosmosMessage {
       "current_epoch": currentEpoch?.toString(),
       "current_epoch_start_time": currentEpochStartTime.toJson(),
       "epoch_counting_started": epochCountingStarted,
-      "current_epoch_start_height": currentEpochStartHeight?.toString()
+      "current_epoch_start_height": currentEpochStartHeight?.toString(),
     };
   }
 
   @override
   List get values => [
-        identifier,
-        startTime,
-        duration,
-        currentEpoch,
-        currentEpochStartTime,
-        epochCountingStarted,
-        currentEpochStartHeight
-      ];
+    identifier,
+    startTime,
+    duration,
+    currentEpoch,
+    currentEpochStartTime,
+    epochCountingStarted,
+    currentEpochStartHeight,
+  ];
 
   @override
   @override

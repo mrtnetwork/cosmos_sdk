@@ -12,8 +12,10 @@ class CosmWasmV1QueryContractsByCreatorRequest extends CosmosMessage
 
   /// Pagination defines an optional pagination for the request.
   final PageRequest? pagination;
-  const CosmWasmV1QueryContractsByCreatorRequest(
-      {required this.creatorAddress, this.pagination});
+  const CosmWasmV1QueryContractsByCreatorRequest({
+    required this.creatorAddress,
+    this.pagination,
+  });
   @override
   List<int> get fieldIds => [1, 2];
 
@@ -21,7 +23,7 @@ class CosmWasmV1QueryContractsByCreatorRequest extends CosmosMessage
   Map<String, dynamic> toJson() {
     return {
       "creator_address": creatorAddress,
-      "pagination": pagination?.toJson()
+      "pagination": pagination?.toJson(),
     };
   }
 
@@ -38,7 +40,8 @@ class CosmWasmV1QueryContractsByCreatorRequest extends CosmosMessage
 
   @override
   CosmWasmV1QueryContractsByCreatorResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return CosmWasmV1QueryContractsByCreatorResponse.fromJson(json);
   }
 
@@ -46,6 +49,7 @@ class CosmWasmV1QueryContractsByCreatorRequest extends CosmosMessage
   List<String> get pathParameters => [creatorAddress];
 
   @override
-  Map<String, String?> get queryParameters =>
-      {...pagination?.queryParameters ?? {}};
+  Map<String, String?> get queryParameters => {
+    ...pagination?.queryParameters ?? {},
+  };
 }

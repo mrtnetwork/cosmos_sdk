@@ -29,29 +29,33 @@ class MsgCreatePeriodicVestingAccount
   }) : vestingPeriods = vestingPeriods.immutable;
   factory MsgCreatePeriodicVestingAccount.fromJson(Map<String, dynamic> json) {
     return MsgCreatePeriodicVestingAccount(
-        fromAddress: json.asAddress("from_address"),
-        toAddress: json.asAddress("to_address"),
-        startTime: json.asBigInt("start_time"),
-        vestingPeriods: json
-                .asListOfMap("vesting_periods")
-                ?.map((e) => Period.fromJson(e))
-                .toList() ??
-            []);
+      fromAddress: json.asAddress("from_address"),
+      toAddress: json.asAddress("to_address"),
+      startTime: json.asBigInt("start_time"),
+      vestingPeriods:
+          json
+              .asListOfMap("vesting_periods")
+              ?.map((e) => Period.fromJson(e))
+              .toList() ??
+          [],
+    );
   }
   factory MsgCreatePeriodicVestingAccount.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgCreatePeriodicVestingAccount(
-        fromAddress: decode
-            .getResult(1)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        toAddress: decode
-            .getResult(2)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        startTime: decode.getField(3),
-        vestingPeriods: decode
-            .getFields<List<int>>(4)
-            .map((e) => Period.deserialize(e))
-            .toList());
+      fromAddress: decode
+          .getResult(1)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      toAddress: decode
+          .getResult(2)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      startTime: decode.getField(3),
+      vestingPeriods:
+          decode
+              .getFields<List<int>>(4)
+              .map((e) => Period.deserialize(e))
+              .toList(),
+    );
   }
 
   /// Converts this instance of [MsgCreatePeriodicVestingAccount] to a JSON object.
@@ -73,8 +77,12 @@ class MsgCreatePeriodicVestingAccount
   TypeUrl get typeUrl => VestingV1beta1Types.msgCreatePeriodicVestingAccount;
 
   @override
-  List get values =>
-      [fromAddress?.address, toAddress?.address, startTime, vestingPeriods];
+  List get values => [
+    fromAddress?.address,
+    toAddress?.address,
+    startTime,
+    vestingPeriods,
+  ];
 
   @override
   List<String?> get signers => [fromAddress?.address];
@@ -82,6 +90,7 @@ class MsgCreatePeriodicVestingAccount
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        VestingV1beta1Types.msgCreatePeriodicVestingAccountResponse);
+      VestingV1beta1Types.msgCreatePeriodicVestingAccountResponse,
+    );
   }
 }

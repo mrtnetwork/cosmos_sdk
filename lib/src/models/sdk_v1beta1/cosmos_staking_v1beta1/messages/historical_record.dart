@@ -14,15 +14,19 @@ class HistoricalRecord extends CosmosMessage {
     required List<int>? apphash,
     required this.time,
     required List<int>? validatorsHash,
-  })  : apphash = BytesUtils.tryToBytes(apphash),
-        validatorsHash = BytesUtils.tryToBytes(validatorsHash);
+  }) : apphash = BytesUtils.tryToBytes(apphash),
+       validatorsHash = BytesUtils.tryToBytes(validatorsHash);
   factory HistoricalRecord.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return HistoricalRecord(
-        apphash: decode.getField(1),
-        time: decode.getResult(2)?.to<ProtobufTimestamp, List<int>>(
-            (e) => ProtobufTimestamp.deserialize(e)),
-        validatorsHash: decode.getField(3));
+      apphash: decode.getField(1),
+      time: decode
+          .getResult(2)
+          ?.to<ProtobufTimestamp, List<int>>(
+            (e) => ProtobufTimestamp.deserialize(e),
+          ),
+      validatorsHash: decode.getField(3),
+    );
   }
 
   @override

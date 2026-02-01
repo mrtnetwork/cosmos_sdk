@@ -16,18 +16,23 @@ class IbcChannelUpgrade extends CosmosMessage {
   final BigInt? nextSequenceSend;
   factory IbcChannelUpgrade.fromJson(Map<String, dynamic> json) {
     return IbcChannelUpgrade(
-        fields: UpgradeFields.fromJson(json["fields"]),
-        timeout: IbcChannelTimeout.fromJson(json["timeout"]),
-        nextSequenceSend: BigintUtils.tryParse(json["next_sequence_send"]));
+      fields: UpgradeFields.fromJson(json["fields"]),
+      timeout: IbcChannelTimeout.fromJson(json["timeout"]),
+      nextSequenceSend: BigintUtils.tryParse(json["next_sequence_send"]),
+    );
   }
-  const IbcChannelUpgrade(
-      {required this.fields, required this.timeout, this.nextSequenceSend});
+  const IbcChannelUpgrade({
+    required this.fields,
+    required this.timeout,
+    this.nextSequenceSend,
+  });
   factory IbcChannelUpgrade.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcChannelUpgrade(
-        fields: UpgradeFields.deserialize(decode.getField(1)),
-        timeout: IbcChannelTimeout.deserialize(decode.getField(2)),
-        nextSequenceSend: decode.getField(3));
+      fields: UpgradeFields.deserialize(decode.getField(1)),
+      timeout: IbcChannelTimeout.deserialize(decode.getField(2)),
+      nextSequenceSend: decode.getField(3),
+    );
   }
   @override
   List<int> get fieldIds => [1, 2, 3];

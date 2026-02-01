@@ -21,23 +21,31 @@ class Ics23LengthOp implements CosmosEnum {
   static const Ics23LengthOp fixed32Big = Ics23LengthOp._("FIXED32_BIG", 3);
 
   /// FIXED32_LITTLE uses little-endian encoding of the length as a 32 bit integer
-  static const Ics23LengthOp fixed32Little =
-      Ics23LengthOp._("FIXED32_LITTLE", 4);
+  static const Ics23LengthOp fixed32Little = Ics23LengthOp._(
+    "FIXED32_LITTLE",
+    4,
+  );
 
   /// FIXED64_BIG uses big-endian encoding of the length as a 64 bit integer
   static const Ics23LengthOp fixed64Big = Ics23LengthOp._("FIXED64_BIG", 5);
 
   /// FIXED64_LITTLE uses little-endian encoding of the length as a 64 bit integer
-  static const Ics23LengthOp fixed64Little =
-      Ics23LengthOp._("FIXED64_LITTLE", 6);
+  static const Ics23LengthOp fixed64Little = Ics23LengthOp._(
+    "FIXED64_LITTLE",
+    6,
+  );
 
   /// REQUIRE_32_BYTES is like NONE, but will fail if the input is not exactly 32 bytes (sha256 output)
-  static const Ics23LengthOp require32Bytes =
-      Ics23LengthOp._("REQUIRE_32_BYTES", 7);
+  static const Ics23LengthOp require32Bytes = Ics23LengthOp._(
+    "REQUIRE_32_BYTES",
+    7,
+  );
 
   /// REQUIRE_64_BYTES is like NONE, but will fail if the input is not exactly 64 bytes (sha512 output)
-  static const Ics23LengthOp require64Bytes =
-      Ics23LengthOp._("REQUIRE_64_BYTES", 8);
+  static const Ics23LengthOp require64Bytes = Ics23LengthOp._(
+    "REQUIRE_64_BYTES",
+    8,
+  );
   static const List<Ics23LengthOp> values = [
     noPrefix,
     varProto,
@@ -47,14 +55,17 @@ class Ics23LengthOp implements CosmosEnum {
     fixed64Big,
     fixed64Little,
     require32Bytes,
-    require64Bytes
+    require64Bytes,
   ];
   static Ics23LengthOp fromValue(int? value) {
     return values.firstWhere(
       (element) => element.value == value,
-      orElse: () => throw DartCosmosSdkPluginException(
-          "No matching element found for the given value.",
-          details: {"value": value}),
+      orElse:
+          () =>
+              throw DartCosmosSdkPluginException(
+                "No matching element found for the given value.",
+                details: {"value": value},
+              ),
     );
   }
 }

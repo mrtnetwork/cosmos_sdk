@@ -1,8 +1,12 @@
 import 'package:blockchain_utils/service/service.dart';
 
 abstract class ChainRegistryRequest<RESULT, RESPONSE>
-    extends BaseServiceRequest<RESULT, RESPONSE,
-        ChainRegistryRequestRequestDetails> {
+    extends
+        BaseServiceRequest<
+          RESULT,
+          RESPONSE,
+          ChainRegistryRequestRequestDetails
+        > {
   ChainRegistryRequest();
 
   List<String?> get pathParameters => [];
@@ -11,15 +15,19 @@ abstract class ChainRegistryRequest<RESULT, RESPONSE>
 
   @override
   ChainRegistryRequestRequestDetails buildRequest(int requestID) {
-    Uri params =
-        Uri(pathSegments: pathParameters.where((e) => e != null).cast());
+    Uri params = Uri(
+      pathSegments: pathParameters.where((e) => e != null).cast(),
+    );
     final queryParameters = Map<String, String>.from(
-        parameters..removeWhere((key, value) => value == null));
+      parameters..removeWhere((key, value) => value == null),
+    );
     if (queryParameters.isNotEmpty) {
       params = params.replace(queryParameters: queryParameters);
     }
     return ChainRegistryRequestRequestDetails(
-        requestID: requestID, pathParams: params.normalizePath().toString());
+      requestID: requestID,
+      pathParams: params.normalizePath().toString(),
+    );
   }
 
   @override

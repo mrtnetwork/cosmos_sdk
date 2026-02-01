@@ -7,16 +7,22 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class IbcSoloMachineV2PacketAcknowledgementData extends CosmosMessage {
   final List<int>? path;
   final List<int>? acknowledgement;
-  IbcSoloMachineV2PacketAcknowledgementData(
-      {List<int>? path, List<int>? acknowledgement})
-      : path = BytesUtils.tryToBytes(path, unmodifiable: true),
-        acknowledgement =
-            BytesUtils.tryToBytes(acknowledgement, unmodifiable: true);
+  IbcSoloMachineV2PacketAcknowledgementData({
+    List<int>? path,
+    List<int>? acknowledgement,
+  }) : path = BytesUtils.tryToBytes(path, unmodifiable: true),
+       acknowledgement = BytesUtils.tryToBytes(
+         acknowledgement,
+         unmodifiable: true,
+       );
   factory IbcSoloMachineV2PacketAcknowledgementData.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcSoloMachineV2PacketAcknowledgementData(
-        path: decode.getField(1), acknowledgement: decode.getField(2));
+      path: decode.getField(1),
+      acknowledgement: decode.getField(2),
+    );
   }
 
   @override

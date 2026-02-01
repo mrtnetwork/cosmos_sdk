@@ -5,13 +5,16 @@ import 'connected_intermediary_account_response.dart';
 class OsmosisSuperfluidConnectedIntermediaryAccountRequest extends CosmosMessage
     with QueryMessage<OsmosisSuperfluidConnectedIntermediaryAccountResponse> {
   final BigInt lockId;
-  const OsmosisSuperfluidConnectedIntermediaryAccountRequest(
-      {required this.lockId});
+  const OsmosisSuperfluidConnectedIntermediaryAccountRequest({
+    required this.lockId,
+  });
   factory OsmosisSuperfluidConnectedIntermediaryAccountRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidConnectedIntermediaryAccountRequest(
-        lockId: decode.getField(1));
+      lockId: decode.getField(1),
+    );
   }
 
   @override
@@ -34,15 +37,18 @@ class OsmosisSuperfluidConnectedIntermediaryAccountRequest extends CosmosMessage
 
   @override
   OsmosisSuperfluidConnectedIntermediaryAccountResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisSuperfluidConnectedIntermediaryAccountResponse.fromJson(json);
   }
 
   @override
   OsmosisSuperfluidConnectedIntermediaryAccountResponse onResponse(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return OsmosisSuperfluidConnectedIntermediaryAccountResponse.deserialize(
-        bytes);
+      bytes,
+    );
   }
 
   @override

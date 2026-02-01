@@ -10,38 +10,50 @@ class OsmosisConcentratedLiquidityTickSpacingDecreaseProposal
   final String? title;
   final String? description;
   final List<OsmosisConcentratedLiquidityPoolIdToTickSpacingRecord>
-      poolIdToTickSpacingRecords;
+  poolIdToTickSpacingRecords;
 
   OsmosisConcentratedLiquidityTickSpacingDecreaseProposal({
     this.title,
     this.description,
     required List<OsmosisConcentratedLiquidityPoolIdToTickSpacingRecord>
-        poolIdToTickSpacingRecords,
+    poolIdToTickSpacingRecords,
   }) : poolIdToTickSpacingRecords = poolIdToTickSpacingRecords.immutable;
   factory OsmosisConcentratedLiquidityTickSpacingDecreaseProposal.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityTickSpacingDecreaseProposal(
-        title: decode.getField(1),
-        description: decode.getField(2),
-        poolIdToTickSpacingRecords: decode
-            .getFields<List<int>>(3)
-            .map((e) => OsmosisConcentratedLiquidityPoolIdToTickSpacingRecord
-                .deserialize(e))
-            .toList());
+      title: decode.getField(1),
+      description: decode.getField(2),
+      poolIdToTickSpacingRecords:
+          decode
+              .getFields<List<int>>(3)
+              .map(
+                (e) =>
+                    OsmosisConcentratedLiquidityPoolIdToTickSpacingRecord.deserialize(
+                      e,
+                    ),
+              )
+              .toList(),
+    );
   }
   factory OsmosisConcentratedLiquidityTickSpacingDecreaseProposal.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityTickSpacingDecreaseProposal(
-        title: json["title"],
-        description: json["description"],
-        poolIdToTickSpacingRecords:
-            (json["pool_id_to_tick_spacing_records"] as List?)
-                    ?.map((e) =>
-                        OsmosisConcentratedLiquidityPoolIdToTickSpacingRecord
-                            .fromJson(e))
-                    .toList() ??
-                <OsmosisConcentratedLiquidityPoolIdToTickSpacingRecord>[]);
+      title: json["title"],
+      description: json["description"],
+      poolIdToTickSpacingRecords:
+          (json["pool_id_to_tick_spacing_records"] as List?)
+              ?.map(
+                (e) =>
+                    OsmosisConcentratedLiquidityPoolIdToTickSpacingRecord.fromJson(
+                      e,
+                    ),
+              )
+              .toList() ??
+          <OsmosisConcentratedLiquidityPoolIdToTickSpacingRecord>[],
+    );
   }
 
   @override
@@ -53,7 +65,7 @@ class OsmosisConcentratedLiquidityTickSpacingDecreaseProposal
       "title": title,
       "description": description,
       "pool_id_to_tick_spacing_records":
-          poolIdToTickSpacingRecords.map((e) => e.toJson()).toList()
+          poolIdToTickSpacingRecords.map((e) => e.toJson()).toList(),
     };
   }
 

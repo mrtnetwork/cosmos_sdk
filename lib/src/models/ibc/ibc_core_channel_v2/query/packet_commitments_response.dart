@@ -17,34 +17,41 @@ class IbcChannelV2QueryPacketCommitmentsResponse extends CosmosMessage {
   /// query block height.
   final IbcClientHeight height;
   factory IbcChannelV2QueryPacketCommitmentsResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return IbcChannelV2QueryPacketCommitmentsResponse(
-      commitments: json
-          .asListOfMap("commitments")
-          ?.map((e) => IbcChannelV2PacketState.fromJson(e))
-          .toList(),
+      commitments:
+          json
+              .asListOfMap("commitments")
+              ?.map((e) => IbcChannelV2PacketState.fromJson(e))
+              .toList(),
       pagination: json.maybeAs<PageResponse, Map<String, dynamic>>(
-          key: "pagination", onValue: PageResponse.fromJson),
+        key: "pagination",
+        onValue: PageResponse.fromJson,
+      ),
       height: IbcClientHeight.fromJson(json.asMap("height")),
     );
   }
-  IbcChannelV2QueryPacketCommitmentsResponse(
-      {List<IbcChannelV2PacketState>? commitments,
-      this.pagination,
-      required this.height})
-      : commitments = commitments?.immutable;
+  IbcChannelV2QueryPacketCommitmentsResponse({
+    List<IbcChannelV2PacketState>? commitments,
+    this.pagination,
+    required this.height,
+  }) : commitments = commitments?.immutable;
   factory IbcChannelV2QueryPacketCommitmentsResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcChannelV2QueryPacketCommitmentsResponse(
-        commitments: decode
-            .getFields<List<int>>(1)
-            .map((e) => IbcChannelV2PacketState.deserialize(e))
-            .toList(),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageResponse, List<int>>(PageResponse.deserialize),
-        height: IbcClientHeight.deserialize(decode.getField(3)));
+      commitments:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => IbcChannelV2PacketState.deserialize(e))
+              .toList(),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageResponse, List<int>>(PageResponse.deserialize),
+      height: IbcClientHeight.deserialize(decode.getField(3)),
+    );
   }
 
   @override
@@ -55,7 +62,7 @@ class IbcChannelV2QueryPacketCommitmentsResponse extends CosmosMessage {
     return {
       "commitments": commitments?.map((e) => e.toJson()).toList(),
       "pagination": pagination?.toJson(),
-      "height": height.toJson()
+      "height": height.toJson(),
     };
   }
 

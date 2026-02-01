@@ -31,14 +31,18 @@ class PingPubChain {
   final String name;
   final RegisteryPingPubItemType type;
   final String mtime;
-  const PingPubChain(
-      {required this.name, required this.type, required this.mtime});
+  const PingPubChain({
+    required this.name,
+    required this.type,
+    required this.mtime,
+  });
 
   factory PingPubChain.fromJson(Map<String, dynamic> json) {
     return PingPubChain(
-        name: json["name"],
-        type: RegisteryPingPubItemType.fromName(json["type"]),
-        mtime: json["mtime"]);
+      name: json["name"],
+      type: RegisteryPingPubItemType.fromName(json["type"]),
+      mtime: json["mtime"],
+    );
   }
   Map<String, dynamic> toJson() {
     return {"name": name, "type": type.name, "mtime": mtime};
@@ -54,6 +58,9 @@ class CCRChainData {
   final CCRChain chain;
   final CCRAssetList assetList;
   final CCRVersionInfo? version;
-  const CCRChainData(
-      {required this.chain, required this.assetList, this.version});
+  const CCRChainData({
+    required this.chain,
+    required this.assetList,
+    this.version,
+  });
 }

@@ -14,18 +14,24 @@ class DistributionValidatorHistoricalRewardsRecord extends CosmosMessage {
 
   /// rewards defines the historical rewards of a validator.
   final DistributionValidatorHistoricalRewards rewards;
-  const DistributionValidatorHistoricalRewardsRecord(
-      {this.validatorAddress, this.period, required this.rewards});
+  const DistributionValidatorHistoricalRewardsRecord({
+    this.validatorAddress,
+    this.period,
+    required this.rewards,
+  });
   factory DistributionValidatorHistoricalRewardsRecord.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionValidatorHistoricalRewardsRecord(
-        validatorAddress: decode
-            .getResult(1)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        period: decode.getField(2),
-        rewards: DistributionValidatorHistoricalRewards.deserialize(
-            decode.getField(3)));
+      validatorAddress: decode
+          .getResult(1)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      period: decode.getField(2),
+      rewards: DistributionValidatorHistoricalRewards.deserialize(
+        decode.getField(3),
+      ),
+    );
   }
 
   @override
@@ -36,7 +42,7 @@ class DistributionValidatorHistoricalRewardsRecord extends CosmosMessage {
     return {
       "validator_address": validatorAddress?.address,
       "period": period?.toString(),
-      "rewards": rewards.toJson()
+      "rewards": rewards.toJson(),
     };
   }
 

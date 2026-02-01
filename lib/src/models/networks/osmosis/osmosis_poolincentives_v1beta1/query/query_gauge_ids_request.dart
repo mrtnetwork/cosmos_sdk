@@ -8,10 +8,12 @@ class OsmosisPoolincentivesQueryGaugeIdsRequest extends CosmosMessage
 
   OsmosisPoolincentivesQueryGaugeIdsRequest({required this.poolId});
   factory OsmosisPoolincentivesQueryGaugeIdsRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolincentivesQueryGaugeIdsRequest(
-        poolId: decode.getField(1));
+      poolId: decode.getField(1),
+    );
   }
 
   @override
@@ -24,7 +26,8 @@ class OsmosisPoolincentivesQueryGaugeIdsRequest extends CosmosMessage
 
   @override
   OsmosisPoolincentivesGaugeIdWithDuration onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisPoolincentivesGaugeIdWithDuration.fromJson(json);
   }
 

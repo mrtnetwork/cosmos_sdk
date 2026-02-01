@@ -8,23 +8,28 @@ class OsmosisProtorevQueryGetProtoRevBaseDenomsResponse extends CosmosMessage {
   /// [baseDenoms] is a list of all of the base denoms and step sizes
   final List<OsmosisProtorevBaseDenom> baseDenoms;
   OsmosisProtorevQueryGetProtoRevBaseDenomsResponse(
-      List<OsmosisProtorevBaseDenom> baseDenoms)
-      : baseDenoms = baseDenoms.immutable;
+    List<OsmosisProtorevBaseDenom> baseDenoms,
+  ) : baseDenoms = baseDenoms.immutable;
   factory OsmosisProtorevQueryGetProtoRevBaseDenomsResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return OsmosisProtorevQueryGetProtoRevBaseDenomsResponse(decode
-        .getFields<List<int>>(1)
-        .map((e) => OsmosisProtorevBaseDenom.deserialize(e))
-        .toList());
+    return OsmosisProtorevQueryGetProtoRevBaseDenomsResponse(
+      decode
+          .getFields<List<int>>(1)
+          .map((e) => OsmosisProtorevBaseDenom.deserialize(e))
+          .toList(),
+    );
   }
   factory OsmosisProtorevQueryGetProtoRevBaseDenomsResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisProtorevQueryGetProtoRevBaseDenomsResponse(
-        (json["base_denoms"] as List?)
-                ?.map((e) => OsmosisProtorevBaseDenom.fromJson(e))
-                .toList() ??
-            <OsmosisProtorevBaseDenom>[]);
+      (json["base_denoms"] as List?)
+              ?.map((e) => OsmosisProtorevBaseDenom.fromJson(e))
+              .toList() ??
+          <OsmosisProtorevBaseDenom>[],
+    );
   }
 
   @override

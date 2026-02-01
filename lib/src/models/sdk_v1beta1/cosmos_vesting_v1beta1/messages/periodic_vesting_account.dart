@@ -21,27 +21,33 @@ class PeriodicVestingAccount extends CosmosBaseAccount {
   factory PeriodicVestingAccount.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return PeriodicVestingAccount(
-        baseVestingAccount: decode
-            .getResult(1)
-            ?.to<BaseVestingAccount, List<int>>(
-                (e) => BaseVestingAccount.deserialize(e)),
-        startTime: decode.getField(2),
-        vestingPeriods: decode
-            .getFields<List<int>>(3)
-            .map((e) => Period.deserialize(e))
-            .toList());
+      baseVestingAccount: decode
+          .getResult(1)
+          ?.to<BaseVestingAccount, List<int>>(
+            (e) => BaseVestingAccount.deserialize(e),
+          ),
+      startTime: decode.getField(2),
+      vestingPeriods:
+          decode
+              .getFields<List<int>>(3)
+              .map((e) => Period.deserialize(e))
+              .toList(),
+    );
   }
   factory PeriodicVestingAccount.fromJson(Map<String, dynamic> json) {
     return PeriodicVestingAccount(
-        baseVestingAccount:
-            json.valueTo<BaseVestingAccount, Map<String, dynamic>>(
-                key: "base_vesting_account",
-                parse: (e) => BaseVestingAccount.fromJson(e)),
-        startTime: json.valueAsBigInt("start_time"),
-        vestingPeriods: json
-            .valueEnsureAsList("vesting_periods")
-            .map((e) => Period.fromJson(e))
-            .toList());
+      baseVestingAccount: json
+          .valueTo<BaseVestingAccount, Map<String, dynamic>>(
+            key: "base_vesting_account",
+            parse: (e) => BaseVestingAccount.fromJson(e),
+          ),
+      startTime: json.valueAsBigInt("start_time"),
+      vestingPeriods:
+          json
+              .valueEnsureAsList("vesting_periods")
+              .map((e) => Period.fromJson(e))
+              .toList(),
+    );
   }
 
   /// Converts this instance of [PeriodicVestingAccount] to a JSON object.

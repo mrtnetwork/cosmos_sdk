@@ -16,12 +16,16 @@ class IbcConnectionCounterparty extends CosmosMessage {
   final IbcCommitmentMerklePrefix prefix;
   factory IbcConnectionCounterparty.fromJson(Map<String, dynamic> json) {
     return IbcConnectionCounterparty(
-        clientId: json["client_id"],
-        connectionId: json["connection_id"],
-        prefix: IbcCommitmentMerklePrefix.fromJson(json["prefix"]));
+      clientId: json["client_id"],
+      connectionId: json["connection_id"],
+      prefix: IbcCommitmentMerklePrefix.fromJson(json["prefix"]),
+    );
   }
-  const IbcConnectionCounterparty(
-      {this.clientId, this.connectionId, required this.prefix});
+  const IbcConnectionCounterparty({
+    this.clientId,
+    this.connectionId,
+    required this.prefix,
+  });
   factory IbcConnectionCounterparty.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcConnectionCounterparty(
@@ -39,7 +43,7 @@ class IbcConnectionCounterparty extends CosmosMessage {
     return {
       "client_id": clientId,
       "connection_id": connectionId,
-      "prefix": prefix.toJson()
+      "prefix": prefix.toJson(),
     };
   }
 

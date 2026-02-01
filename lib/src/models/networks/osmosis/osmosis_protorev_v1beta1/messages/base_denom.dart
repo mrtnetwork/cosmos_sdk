@@ -17,11 +17,15 @@ class OsmosisProtorevBaseDenom extends CosmosMessage {
   factory OsmosisProtorevBaseDenom.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisProtorevBaseDenom(
-        denom: decode.getField(1), stepSize: decode.getField(2));
+      denom: decode.getField(1),
+      stepSize: decode.getField(2),
+    );
   }
   factory OsmosisProtorevBaseDenom.fromJson(Map<String, dynamic> json) {
     return OsmosisProtorevBaseDenom(
-        denom: json["denom"], stepSize: json["step_size"]);
+      denom: json["denom"],
+      stepSize: json["step_size"],
+    );
   }
 
   @override

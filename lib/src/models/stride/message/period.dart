@@ -9,22 +9,28 @@ class StridePeriod extends CosmosMessage {
   final Coin amount;
   final int? actionType;
 
-  const StridePeriod(
-      {this.startTime, this.length, required this.amount, this.actionType});
+  const StridePeriod({
+    this.startTime,
+    this.length,
+    required this.amount,
+    this.actionType,
+  });
   factory StridePeriod.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return StridePeriod(
-        startTime: decode.getField(1),
-        length: decode.getField(2),
-        amount: Coin.deserialize(decode.getField(3)),
-        actionType: decode.getField(4));
+      startTime: decode.getField(1),
+      length: decode.getField(2),
+      amount: Coin.deserialize(decode.getField(3)),
+      actionType: decode.getField(4),
+    );
   }
   factory StridePeriod.fromJson(Map<String, dynamic> json) {
     return StridePeriod(
-        startTime: json.asBigInt("start_time"),
-        length: json.asBigInt("length"),
-        amount: Coin.fromJson(json.asMap("amount")),
-        actionType: json.asInt("action_type"));
+      startTime: json.asBigInt("start_time"),
+      length: json.asBigInt("length"),
+      amount: Coin.fromJson(json.asMap("amount")),
+      actionType: json.asInt("action_type"),
+    );
   }
 
   @override
@@ -36,7 +42,7 @@ class StridePeriod extends CosmosMessage {
       "start_time": startTime?.toString(),
       "length": length?.toString(),
       "amount": amount.toJson(),
-      "action_type": actionType
+      "action_type": actionType,
     };
   }
 

@@ -16,29 +16,34 @@ class QueryAllowancesByGranterResponse extends CosmosMessage {
 
   factory QueryAllowancesByGranterResponse.fromJson(Map<String, dynamic> json) {
     return QueryAllowancesByGranterResponse(
-      allowances: (json["allowances"] as List?)
+      allowances:
+          (json["allowances"] as List?)
               ?.map((e) => FeeGrant.fromJson(e))
               .toList() ??
           [],
-      pagination: json["pagination"] == null
-          ? null
-          : PageResponse.fromJson(json["pagination"]),
+      pagination:
+          json["pagination"] == null
+              ? null
+              : PageResponse.fromJson(json["pagination"]),
     );
   }
-  QueryAllowancesByGranterResponse(
-      {required List<FeeGrant> allowances, this.pagination})
-      : allowances = allowances.immutable;
+  QueryAllowancesByGranterResponse({
+    required List<FeeGrant> allowances,
+    this.pagination,
+  }) : allowances = allowances.immutable;
 
   factory QueryAllowancesByGranterResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryAllowancesByGranterResponse(
-        allowances: decode
-            .getFields<List<int>>(1)
-            .map((e) => FeeGrant.deserialize(e))
-            .toList(),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
+      allowances:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => FeeGrant.deserialize(e))
+              .toList(),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
+    );
   }
 
   @override
@@ -48,7 +53,7 @@ class QueryAllowancesByGranterResponse extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "allowances": allowances.map((e) => e.toJson()).toList(),
-      "pagination": pagination?.toJson()
+      "pagination": pagination?.toJson(),
     };
   }
 

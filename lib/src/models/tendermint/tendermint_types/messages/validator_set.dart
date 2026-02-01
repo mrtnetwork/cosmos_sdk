@@ -7,21 +7,26 @@ class ValidatorSet extends CosmosMessage {
   final List<TendermintValidator> validators;
   final TendermintValidator? proposer;
   final BigInt? totalVotingPower;
-  ValidatorSet(
-      {required List<TendermintValidator> validators,
-      this.proposer,
-      this.totalVotingPower})
-      : validators = validators.immutable;
+  ValidatorSet({
+    required List<TendermintValidator> validators,
+    this.proposer,
+    this.totalVotingPower,
+  }) : validators = validators.immutable;
   factory ValidatorSet.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ValidatorSet(
-        validators: decode
-            .getFields<List<int>>(1)
-            .map((e) => TendermintValidator.deserialize(e))
-            .toList(),
-        proposer: decode.getResult(2)?.to<TendermintValidator, List<int>>(
-            (e) => TendermintValidator.deserialize(e)),
-        totalVotingPower: decode.getField(3));
+      validators:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => TendermintValidator.deserialize(e))
+              .toList(),
+      proposer: decode
+          .getResult(2)
+          ?.to<TendermintValidator, List<int>>(
+            (e) => TendermintValidator.deserialize(e),
+          ),
+      totalVotingPower: decode.getField(3),
+    );
   }
 
   @override
@@ -32,7 +37,7 @@ class ValidatorSet extends CosmosMessage {
     return {
       "validators": validators.map((e) => e.toJson()).toList(),
       "proposer": proposer?.toJson(),
-      "total_voting_power": totalVotingPower?.toString()
+      "total_voting_power": totalVotingPower?.toString(),
     };
   }
 

@@ -11,19 +11,21 @@ class CosmosProofOp extends CosmosMessage {
   final List<int>? data;
   factory CosmosProofOp.fromJson(Map<String, dynamic> json) {
     return CosmosProofOp(
-        type: json["type"],
-        key: CosmosUtils.tryToBytes(json["key"]),
-        data: CosmosUtils.tryToBytes(json["data"]));
+      type: json["type"],
+      key: CosmosUtils.tryToBytes(json["key"]),
+      data: CosmosUtils.tryToBytes(json["data"]),
+    );
   }
   CosmosProofOp({this.type, List<int>? key, List<int>? data})
-      : key = BytesUtils.tryToBytes(key, unmodifiable: true),
-        data = BytesUtils.tryToBytes(data, unmodifiable: true);
+    : key = BytesUtils.tryToBytes(key, unmodifiable: true),
+      data = BytesUtils.tryToBytes(data, unmodifiable: true);
   factory CosmosProofOp.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmosProofOp(
-        type: decode.getField(1),
-        key: decode.getField(2),
-        data: decode.getField(3));
+      type: decode.getField(1),
+      key: decode.getField(2),
+      data: decode.getField(3),
+    );
   }
 
   @override
@@ -34,7 +36,7 @@ class CosmosProofOp extends CosmosMessage {
     return {
       "type": type,
       "key": CosmosUtils.tryToBase64(key),
-      "data": CosmosUtils.tryToBase64(data)
+      "data": CosmosUtils.tryToBase64(data),
     };
   }
 

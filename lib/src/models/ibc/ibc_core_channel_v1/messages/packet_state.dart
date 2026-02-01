@@ -20,21 +20,26 @@ class IbcChannelPacketState extends CosmosMessage {
   final List<int>? data;
   factory IbcChannelPacketState.fromJson(Map<String, dynamic> json) {
     return IbcChannelPacketState(
-        portId: json["port_id"],
-        data: CosmosUtils.tryToBytes(json["data"]),
-        sequence: json["sequence"],
-        channelId: json["channel_id"]);
+      portId: json["port_id"],
+      data: CosmosUtils.tryToBytes(json["data"]),
+      sequence: json["sequence"],
+      channelId: json["channel_id"],
+    );
   }
-  IbcChannelPacketState(
-      {this.portId, this.channelId, this.sequence, List<int>? data})
-      : data = BytesUtils.tryToBytes(data, unmodifiable: true);
+  IbcChannelPacketState({
+    this.portId,
+    this.channelId,
+    this.sequence,
+    List<int>? data,
+  }) : data = BytesUtils.tryToBytes(data, unmodifiable: true);
   factory IbcChannelPacketState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcChannelPacketState(
-        portId: decode.getField(1),
-        channelId: decode.getField(2),
-        data: decode.getField(4),
-        sequence: decode.getField(3));
+      portId: decode.getField(1),
+      channelId: decode.getField(2),
+      data: decode.getField(4),
+      sequence: decode.getField(3),
+    );
   }
 
   @override
@@ -46,7 +51,7 @@ class IbcChannelPacketState extends CosmosMessage {
       "port_id": portId,
       "channel_id": channelId,
       "sequence": sequence?.toString(),
-      "data": BytesUtils.tryToHexString(data)
+      "data": BytesUtils.tryToHexString(data),
     };
   }
 

@@ -8,10 +8,11 @@ class QueryInflationResponse extends CosmosMessage {
   /// inflation is the current minting inflation value.
   final List<int> inflation;
   QueryInflationResponse({required List<int> inflation})
-      : inflation = BytesUtils.toBytes(inflation, unmodifiable: true);
+    : inflation = BytesUtils.toBytes(inflation, unmodifiable: true);
   factory QueryInflationResponse.fromJson(Map<String, dynamic> json) {
     return QueryInflationResponse(
-        inflation: CosmosUtils.toBytes(json["inflation"]));
+      inflation: CosmosUtils.toBytes(json["inflation"]),
+    );
   }
   factory QueryInflationResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

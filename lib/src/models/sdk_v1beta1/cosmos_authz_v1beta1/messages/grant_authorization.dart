@@ -11,35 +11,46 @@ class AuthzGrantAuthorization extends CosmosMessage {
   final CosmosBaseAddress? grantee;
   final AnyMessage? authorization;
   final ProtobufTimestamp? expiration;
-  const AuthzGrantAuthorization(
-      {this.granter, this.grantee, this.authorization, this.expiration});
+  const AuthzGrantAuthorization({
+    this.granter,
+    this.grantee,
+    this.authorization,
+    this.expiration,
+  });
   factory AuthzGrantAuthorization.fromJson(Map<String, dynamic> json) {
     return AuthzGrantAuthorization(
-        grantee:
-            json["grantee"] == null ? null : CosmosBaseAddress(json["grantee"]),
-        granter:
-            json["granter"] == null ? null : CosmosBaseAddress(json["granter"]),
-        authorization: json["authorization"] == null
-            ? null
-            : AnyMessage.fromJson(json["authorization"]),
-        expiration: json["expiration"] == null
-            ? null
-            : ProtobufTimestamp.fromString(json["expiration"]));
+      grantee:
+          json["grantee"] == null ? null : CosmosBaseAddress(json["grantee"]),
+      granter:
+          json["granter"] == null ? null : CosmosBaseAddress(json["granter"]),
+      authorization:
+          json["authorization"] == null
+              ? null
+              : AnyMessage.fromJson(json["authorization"]),
+      expiration:
+          json["expiration"] == null
+              ? null
+              : ProtobufTimestamp.fromString(json["expiration"]),
+    );
   }
   factory AuthzGrantAuthorization.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return AuthzGrantAuthorization(
-        granter: decode
-            .getResult(1)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        grantee: decode
-            .getResult(2)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        authorization: decode
-            .getResult(3)
-            ?.to<AnyMessage, List<int>>((e) => AnyMessage.deserialize(e)),
-        expiration: decode.getResult(4)?.to<ProtobufTimestamp, List<int>>(
-            (e) => ProtobufTimestamp.deserialize(e)));
+      granter: decode
+          .getResult(1)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      grantee: decode
+          .getResult(2)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      authorization: decode
+          .getResult(3)
+          ?.to<AnyMessage, List<int>>((e) => AnyMessage.deserialize(e)),
+      expiration: decode
+          .getResult(4)
+          ?.to<ProtobufTimestamp, List<int>>(
+            (e) => ProtobufTimestamp.deserialize(e),
+          ),
+    );
   }
 
   @override
@@ -51,7 +62,7 @@ class AuthzGrantAuthorization extends CosmosMessage {
       "granter": granter?.address,
       "grantee": grantee?.address,
       "authorization": authorization?.toJson(),
-      "expiration": expiration?.toJson()
+      "expiration": expiration?.toJson(),
     };
   }
 
@@ -59,6 +70,10 @@ class AuthzGrantAuthorization extends CosmosMessage {
   TypeUrl get typeUrl => AuthzV1beta1Types.authzGrantAuthorization;
 
   @override
-  List get values =>
-      [granter?.address, grantee?.address, authorization, expiration];
+  List get values => [
+    granter?.address,
+    grantee?.address,
+    authorization,
+    expiration,
+  ];
 }

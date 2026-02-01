@@ -15,13 +15,15 @@ class CosmWasmV1AccessConfig extends CosmosMessage {
   factory CosmWasmV1AccessConfig.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmWasmV1AccessConfig(
-        permission: CosmWasmV1AccessType.fromValue(decode.getField(1)),
-        addresses: decode.getFields<String>(3));
+      permission: CosmWasmV1AccessType.fromValue(decode.getField(1)),
+      addresses: decode.getFields<String>(3),
+    );
   }
   factory CosmWasmV1AccessConfig.fromJson(Map<String, dynamic> json) {
     return CosmWasmV1AccessConfig(
-        addresses: json.asListOfString("addresses")!,
-        permission: CosmWasmV1AccessType.fromName(json.as("permission")));
+      addresses: json.asListOfString("addresses")!,
+      permission: CosmWasmV1AccessType.fromName(json.as("permission")),
+    );
   }
 
   @override

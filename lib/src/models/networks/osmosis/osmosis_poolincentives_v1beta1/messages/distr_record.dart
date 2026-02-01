@@ -9,13 +9,16 @@ class OsmosisPoolincentivesDistrRecord extends CosmosMessage {
   factory OsmosisPoolincentivesDistrRecord.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolincentivesDistrRecord(
-        gaugeId: decode.getField(1), weight: decode.getField(2));
+      gaugeId: decode.getField(1),
+      weight: decode.getField(2),
+    );
   }
 
   factory OsmosisPoolincentivesDistrRecord.fromJson(Map<String, dynamic> json) {
     return OsmosisPoolincentivesDistrRecord(
-        weight: json["weight"],
-        gaugeId: BigintUtils.tryParse(json["gauge_id"]));
+      weight: json["weight"],
+      gaugeId: BigintUtils.tryParse(json["gauge_id"]),
+    );
   }
 
   @override

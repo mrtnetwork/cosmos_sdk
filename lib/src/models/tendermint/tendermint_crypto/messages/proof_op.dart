@@ -10,15 +10,16 @@ class TendermintCryptoProofOp extends CosmosMessage {
   final List<int>? key;
   final List<int>? data;
   TendermintCryptoProofOp({this.type, List<int>? key, List<int>? data})
-      : key = BytesUtils.tryToBytes(key, unmodifiable: true),
-        data = BytesUtils.tryToBytes(data, unmodifiable: true);
+    : key = BytesUtils.tryToBytes(key, unmodifiable: true),
+      data = BytesUtils.tryToBytes(data, unmodifiable: true);
 
   factory TendermintCryptoProofOp.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return TendermintCryptoProofOp(
-        type: decode.getField(1),
-        key: decode.getField(2),
-        data: decode.getField(3));
+      type: decode.getField(1),
+      key: decode.getField(2),
+      data: decode.getField(3),
+    );
   }
 
   @override
@@ -29,7 +30,7 @@ class TendermintCryptoProofOp extends CosmosMessage {
     return {
       "type": type,
       "key": BytesUtils.tryToHexString(key),
-      "data": BytesUtils.tryToHexString(data)
+      "data": BytesUtils.tryToHexString(data),
     };
   }
 

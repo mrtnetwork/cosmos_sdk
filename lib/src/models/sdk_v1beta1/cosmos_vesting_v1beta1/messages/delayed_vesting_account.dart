@@ -14,24 +14,26 @@ class DelayedVestingAccount extends CosmosBaseAccount {
   final BaseVestingAccount? baseVestingAccount;
 
   /// Constructs a new instance of [DelayedVestingAccount].
-  const DelayedVestingAccount({
-    this.baseVestingAccount,
-  });
+  const DelayedVestingAccount({this.baseVestingAccount});
 
   factory DelayedVestingAccount.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DelayedVestingAccount(
-        baseVestingAccount: decode
-            .getResult(1)
-            ?.to<BaseVestingAccount, List<int>>(
-                (e) => BaseVestingAccount.deserialize(e)));
+      baseVestingAccount: decode
+          .getResult(1)
+          ?.to<BaseVestingAccount, List<int>>(
+            (e) => BaseVestingAccount.deserialize(e),
+          ),
+    );
   }
   factory DelayedVestingAccount.fromJson(Map<String, dynamic> json) {
     return DelayedVestingAccount(
-        baseVestingAccount:
-            json.valueTo<BaseVestingAccount, Map<String, dynamic>>(
-                key: "base_vesting_account",
-                parse: (e) => BaseVestingAccount.fromJson(e)));
+      baseVestingAccount: json
+          .valueTo<BaseVestingAccount, Map<String, dynamic>>(
+            key: "base_vesting_account",
+            parse: (e) => BaseVestingAccount.fromJson(e),
+          ),
+    );
   }
 
   @override

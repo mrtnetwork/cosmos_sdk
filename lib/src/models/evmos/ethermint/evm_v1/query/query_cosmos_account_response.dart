@@ -10,25 +10,30 @@ class EvmosEthermintEVMV1QueryCosmosAccountResponse extends CosmosMessage {
   final BigInt sequence;
   // account_number is the account number
   final BigInt accountNumber;
-  const EvmosEthermintEVMV1QueryCosmosAccountResponse(
-      {required this.cosmosAddress,
-      required this.sequence,
-      required this.accountNumber});
+  const EvmosEthermintEVMV1QueryCosmosAccountResponse({
+    required this.cosmosAddress,
+    required this.sequence,
+    required this.accountNumber,
+  });
   factory EvmosEthermintEVMV1QueryCosmosAccountResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return EvmosEthermintEVMV1QueryCosmosAccountResponse(
-        accountNumber: BigintUtils.parse(json["account_number"]),
-        cosmosAddress: json["cosmos_address"],
-        sequence: BigintUtils.parse(json["sequence"]));
+      accountNumber: BigintUtils.parse(json["account_number"]),
+      cosmosAddress: json["cosmos_address"],
+      sequence: BigintUtils.parse(json["sequence"]),
+    );
   }
 
   factory EvmosEthermintEVMV1QueryCosmosAccountResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosEthermintEVMV1QueryCosmosAccountResponse(
-        cosmosAddress: decode.getField(1),
-        sequence: decode.getField(2),
-        accountNumber: decode.getField(3));
+      cosmosAddress: decode.getField(1),
+      sequence: decode.getField(2),
+      accountNumber: decode.getField(3),
+    );
   }
 
   @override
@@ -39,7 +44,7 @@ class EvmosEthermintEVMV1QueryCosmosAccountResponse extends CosmosMessage {
     return {
       "cosmos_address": cosmosAddress,
       "sequence": sequence,
-      "account_number": accountNumber
+      "account_number": accountNumber,
     };
   }
 

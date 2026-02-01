@@ -12,16 +12,18 @@ class SimulateResponse extends CosmosMessage {
   final Result result;
   factory SimulateResponse.fromJson(Map<String, dynamic> json) {
     return SimulateResponse(
-        gasInfo: GasInfo.fromJson(json["gas_info"]),
-        result: Result.fromJson(json["result"]));
+      gasInfo: GasInfo.fromJson(json["gas_info"]),
+      result: Result.fromJson(json["result"]),
+    );
   }
   const SimulateResponse({required this.gasInfo, required this.result});
 
   factory SimulateResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return SimulateResponse(
-        gasInfo: GasInfo.deserialize(decode.getField(1)),
-        result: Result.deserialize(decode.getField(2)));
+      gasInfo: GasInfo.deserialize(decode.getField(1)),
+      result: Result.deserialize(decode.getField(2)),
+    );
   }
 
   @override

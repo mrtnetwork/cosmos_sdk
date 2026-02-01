@@ -22,36 +22,39 @@ class OsmosisPoolGenesisState extends CosmosMessage {
   final OsmosisPoolManagerTakerFeesTracker takerFeesTracker;
   final List<OsmosisPoolManagerPoolVolume> poolVolumes;
   final List<OsmosisPoolManagerDenomPairTakerFee> denomPairTakerFeeStore;
-  OsmosisPoolGenesisState(
-      {this.nextPoolId,
-      required this.params,
-      required List<OsmosisPoolManagerModuleRoute> poolRoutes,
-      required this.takerFeesTracker,
-      required List<OsmosisPoolManagerPoolVolume> poolVolumes,
-      required List<OsmosisPoolManagerDenomPairTakerFee>
-          denomPairTakerFeeStore})
-      : poolRoutes = poolRoutes.immutable,
-        poolVolumes = poolVolumes.immutable,
-        denomPairTakerFeeStore = denomPairTakerFeeStore.immutable;
+  OsmosisPoolGenesisState({
+    this.nextPoolId,
+    required this.params,
+    required List<OsmosisPoolManagerModuleRoute> poolRoutes,
+    required this.takerFeesTracker,
+    required List<OsmosisPoolManagerPoolVolume> poolVolumes,
+    required List<OsmosisPoolManagerDenomPairTakerFee> denomPairTakerFeeStore,
+  }) : poolRoutes = poolRoutes.immutable,
+       poolVolumes = poolVolumes.immutable,
+       denomPairTakerFeeStore = denomPairTakerFeeStore.immutable;
   factory OsmosisPoolGenesisState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolGenesisState(
       nextPoolId: decode.getField(1),
       params: OsmosisPoolManagerParams.deserialize(decode.getField(2)),
-      poolRoutes: decode
-          .getFields<List<int>>(3)
-          .map((e) => OsmosisPoolManagerModuleRoute.deserialize(e))
-          .toList(),
-      takerFeesTracker:
-          OsmosisPoolManagerTakerFeesTracker.deserialize(decode.getField(4)),
-      poolVolumes: decode
-          .getFields<List<int>>(5)
-          .map((e) => OsmosisPoolManagerPoolVolume.deserialize(e))
-          .toList(),
-      denomPairTakerFeeStore: decode
-          .getFields<List<int>>(6)
-          .map((e) => OsmosisPoolManagerDenomPairTakerFee.deserialize(e))
-          .toList(),
+      poolRoutes:
+          decode
+              .getFields<List<int>>(3)
+              .map((e) => OsmosisPoolManagerModuleRoute.deserialize(e))
+              .toList(),
+      takerFeesTracker: OsmosisPoolManagerTakerFeesTracker.deserialize(
+        decode.getField(4),
+      ),
+      poolVolumes:
+          decode
+              .getFields<List<int>>(5)
+              .map((e) => OsmosisPoolManagerPoolVolume.deserialize(e))
+              .toList(),
+      denomPairTakerFeeStore:
+          decode
+              .getFields<List<int>>(6)
+              .map((e) => OsmosisPoolManagerDenomPairTakerFee.deserialize(e))
+              .toList(),
     );
   }
 
@@ -67,7 +70,7 @@ class OsmosisPoolGenesisState extends CosmosMessage {
       "taker_fees_tracker": takerFeesTracker.toJson(),
       "pool_volumes": poolVolumes.map((e) => e.toJson()).toList(),
       "denom_pair_taker_fee_store":
-          denomPairTakerFeeStore.map((e) => e.toJson()).toList()
+          denomPairTakerFeeStore.map((e) => e.toJson()).toList(),
     };
   }
 
@@ -76,11 +79,11 @@ class OsmosisPoolGenesisState extends CosmosMessage {
 
   @override
   List get values => [
-        nextPoolId,
-        params,
-        poolRoutes,
-        takerFeesTracker,
-        poolVolumes,
-        denomPairTakerFeeStore
-      ];
+    nextPoolId,
+    params,
+    poolRoutes,
+    takerFeesTracker,
+    poolVolumes,
+    denomPairTakerFeeStore,
+  ];
 }

@@ -11,9 +11,10 @@ class OsmosisStreamSwapEventExit extends CosmosMessage {
   factory OsmosisStreamSwapEventExit.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisStreamSwapEventExit(
-        sender: decode.getField(1),
-        saleId: decode.getField(2),
-        purchased: decode.getField(3));
+      sender: decode.getField(1),
+      saleId: decode.getField(2),
+      purchased: decode.getField(3),
+    );
   }
 
   @override

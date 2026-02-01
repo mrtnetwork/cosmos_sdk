@@ -13,14 +13,17 @@ class OsmosisTokenFactoryMsgSetDenomMetadata
   factory OsmosisTokenFactoryMsgSetDenomMetadata.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisTokenFactoryMsgSetDenomMetadata(
-        sender: decode.getField(1),
-        metadata: Metadata.deserialize(decode.getField(2)));
+      sender: decode.getField(1),
+      metadata: Metadata.deserialize(decode.getField(2)),
+    );
   }
   factory OsmosisTokenFactoryMsgSetDenomMetadata.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisTokenFactoryMsgSetDenomMetadata(
-        sender: json.as("sender"),
-        metadata: Metadata.fromJson(json.asMap("metadata")));
+      sender: json.as("sender"),
+      metadata: Metadata.fromJson(json.asMap("metadata")),
+    );
   }
 
   @override
@@ -40,7 +43,8 @@ class OsmosisTokenFactoryMsgSetDenomMetadata
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        OsmosisTokenFactoryV1beta1Types.msgSetDenomMetadataResponse);
+      OsmosisTokenFactoryV1beta1Types.msgSetDenomMetadataResponse,
+    );
   }
 
   @override

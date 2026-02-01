@@ -7,16 +7,18 @@ import 'genesis_counterparty_info.dart';
 class IbcClientV2GenesisState extends CosmosMessage {
   /// counterparty info for each client
   final List<IbcClientV2GenesisCounterpartyInfo>? counterpartyInfos;
-  IbcClientV2GenesisState(
-      {required List<IbcClientV2GenesisCounterpartyInfo>? counterpartyInfos})
-      : counterpartyInfos = counterpartyInfos?.immutable;
+  IbcClientV2GenesisState({
+    required List<IbcClientV2GenesisCounterpartyInfo>? counterpartyInfos,
+  }) : counterpartyInfos = counterpartyInfos?.immutable;
   factory IbcClientV2GenesisState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcClientV2GenesisState(
-        counterpartyInfos: decode
-            .getFields<List<int>>(1)
-            .map((e) => IbcClientV2GenesisCounterpartyInfo.deserialize(e))
-            .toList());
+      counterpartyInfos:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => IbcClientV2GenesisCounterpartyInfo.deserialize(e))
+              .toList(),
+    );
   }
 
   @override

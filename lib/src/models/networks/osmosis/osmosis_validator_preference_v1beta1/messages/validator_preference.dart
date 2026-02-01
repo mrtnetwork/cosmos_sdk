@@ -12,18 +12,26 @@ class OsmosisValidatorPreferenceValidatorPreference extends CosmosMessage {
   /// weight is decimal between 0 and 1, and they all sum to 1.
   final String weight;
 
-  const OsmosisValidatorPreferenceValidatorPreference(
-      {this.valOperAddress, required this.weight});
+  const OsmosisValidatorPreferenceValidatorPreference({
+    this.valOperAddress,
+    required this.weight,
+  });
   factory OsmosisValidatorPreferenceValidatorPreference.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisValidatorPreferenceValidatorPreference(
-        weight: decode.getField(2), valOperAddress: decode.getField(1));
+      weight: decode.getField(2),
+      valOperAddress: decode.getField(1),
+    );
   }
   factory OsmosisValidatorPreferenceValidatorPreference.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisValidatorPreferenceValidatorPreference(
-        weight: json["weight"], valOperAddress: json["val_oper_address"]);
+      weight: json["weight"],
+      valOperAddress: json["val_oper_address"],
+    );
   }
 
   @override

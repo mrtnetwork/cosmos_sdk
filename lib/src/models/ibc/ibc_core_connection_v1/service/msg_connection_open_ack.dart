@@ -45,46 +45,60 @@ class IbcConnectionMsgConnectionOpenAck
     required this.consensusHeight,
     this.signer,
     List<int>? hostConsensusStateProof,
-  })  : proofTry = BytesUtils.tryToBytes(proofTry, unmodifiable: true),
-        proofClient = BytesUtils.tryToBytes(proofClient, unmodifiable: true),
-        proofConsensus =
-            BytesUtils.tryToBytes(proofConsensus, unmodifiable: true),
-        hostConsensusStateProof =
-            BytesUtils.tryToBytes(hostConsensusStateProof, unmodifiable: true);
+  }) : proofTry = BytesUtils.tryToBytes(proofTry, unmodifiable: true),
+       proofClient = BytesUtils.tryToBytes(proofClient, unmodifiable: true),
+       proofConsensus = BytesUtils.tryToBytes(
+         proofConsensus,
+         unmodifiable: true,
+       ),
+       hostConsensusStateProof = BytesUtils.tryToBytes(
+         hostConsensusStateProof,
+         unmodifiable: true,
+       );
   factory IbcConnectionMsgConnectionOpenAck.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcConnectionMsgConnectionOpenAck(
-        connectionId: decode.getField(1),
-        counterpartyConnectionId: decode.getField(2),
-        version: decode.getResult(3)?.to<IbcConnectionVersion, List<int>>(
-            (e) => IbcConnectionVersion.deserialize(e)),
-        clientState:
-            decode.getResult(4)?.to<Any, List<int>>((e) => Any.deserialize(e)),
-        proofHeight: IbcClientHeight.deserialize(decode.getField(5)),
-        proofTry: decode.getField(6),
-        proofClient: decode.getField(7),
-        proofConsensus: decode.getField(8),
-        consensusHeight: IbcClientHeight.deserialize(decode.getField(9)),
-        signer: decode.getField(10),
-        hostConsensusStateProof: decode.getField(11));
+      connectionId: decode.getField(1),
+      counterpartyConnectionId: decode.getField(2),
+      version: decode
+          .getResult(3)
+          ?.to<IbcConnectionVersion, List<int>>(
+            (e) => IbcConnectionVersion.deserialize(e),
+          ),
+      clientState: decode
+          .getResult(4)
+          ?.to<Any, List<int>>((e) => Any.deserialize(e)),
+      proofHeight: IbcClientHeight.deserialize(decode.getField(5)),
+      proofTry: decode.getField(6),
+      proofClient: decode.getField(7),
+      proofConsensus: decode.getField(8),
+      consensusHeight: IbcClientHeight.deserialize(decode.getField(9)),
+      signer: decode.getField(10),
+      hostConsensusStateProof: decode.getField(11),
+    );
   }
   factory IbcConnectionMsgConnectionOpenAck.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return IbcConnectionMsgConnectionOpenAck(
-        connectionId: json.as("connection_id"),
-        counterpartyConnectionId: json.as("counterparty_connection_id"),
-        version: json.maybeAs<IbcConnectionVersion, Map<String, dynamic>>(
-            key: "version", onValue: IbcConnectionVersion.fromJson),
-        clientState: json.maybeAs<Any, Map<String, dynamic>>(
-            key: "client_state", onValue: Any.fromJson),
-        proofHeight: IbcClientHeight.fromJson(json.asMap("proof_height")),
-        proofTry: json.asBytes("proof_try"),
-        proofClient: json.asBytes("proof_client"),
-        proofConsensus: json.asBytes("proof_consensus"),
-        consensusHeight:
-            IbcClientHeight.fromJson(json.asMap("consensus_height")),
-        signer: json.as("signer"),
-        hostConsensusStateProof: json.asBytes("host_consensus_state_proof"));
+      connectionId: json.as("connection_id"),
+      counterpartyConnectionId: json.as("counterparty_connection_id"),
+      version: json.maybeAs<IbcConnectionVersion, Map<String, dynamic>>(
+        key: "version",
+        onValue: IbcConnectionVersion.fromJson,
+      ),
+      clientState: json.maybeAs<Any, Map<String, dynamic>>(
+        key: "client_state",
+        onValue: Any.fromJson,
+      ),
+      proofHeight: IbcClientHeight.fromJson(json.asMap("proof_height")),
+      proofTry: json.asBytes("proof_try"),
+      proofClient: json.asBytes("proof_client"),
+      proofConsensus: json.asBytes("proof_consensus"),
+      consensusHeight: IbcClientHeight.fromJson(json.asMap("consensus_height")),
+      signer: json.as("signer"),
+      hostConsensusStateProof: json.asBytes("host_consensus_state_proof"),
+    );
   }
 
   @override
@@ -103,8 +117,9 @@ class IbcConnectionMsgConnectionOpenAck
       "proof_consensus": BytesUtils.tryToHexString(proofConsensus),
       "consensus_height": consensusHeight.toJson(),
       "signer": signer,
-      "host_consensus_state_proof":
-          BytesUtils.tryToHexString(hostConsensusStateProof)
+      "host_consensus_state_proof": BytesUtils.tryToHexString(
+        hostConsensusStateProof,
+      ),
     };
   }
 
@@ -113,18 +128,18 @@ class IbcConnectionMsgConnectionOpenAck
 
   @override
   List get values => [
-        connectionId,
-        counterpartyConnectionId,
-        version,
-        clientState,
-        proofHeight,
-        proofTry,
-        proofClient,
-        proofConsensus,
-        consensusHeight,
-        signer,
-        hostConsensusStateProof
-      ];
+    connectionId,
+    counterpartyConnectionId,
+    version,
+    clientState,
+    proofHeight,
+    proofTry,
+    proofClient,
+    proofConsensus,
+    consensusHeight,
+    signer,
+    hostConsensusStateProof,
+  ];
   @override
   List<String?> get signers => [signer];
 

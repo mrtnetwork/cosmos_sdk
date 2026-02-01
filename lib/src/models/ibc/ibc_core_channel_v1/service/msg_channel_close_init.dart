@@ -14,15 +14,17 @@ class MsgChannelCloseInit extends IbcService<EmptyServiceRequestResponse> {
   factory MsgChannelCloseInit.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgChannelCloseInit(
-        portId: decode.getField(1),
-        channelId: decode.getField(2),
-        signer: decode.getField(3));
+      portId: decode.getField(1),
+      channelId: decode.getField(2),
+      signer: decode.getField(3),
+    );
   }
   factory MsgChannelCloseInit.fromJson(Map<String, dynamic> json) {
     return MsgChannelCloseInit(
-        portId: json.as("port_id"),
-        channelId: json.as("channel_id"),
-        signer: json.as("signer"));
+      portId: json.as("port_id"),
+      channelId: json.as("channel_id"),
+      signer: json.as("signer"),
+    );
   }
 
   @override

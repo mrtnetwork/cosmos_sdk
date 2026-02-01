@@ -14,18 +14,24 @@ class OsmosisProtorevMsgSetDeveloperAccount
   /// from the protorev module.
   final String? developerAccount;
 
-  const OsmosisProtorevMsgSetDeveloperAccount(
-      {this.admin, this.developerAccount});
+  const OsmosisProtorevMsgSetDeveloperAccount({
+    this.admin,
+    this.developerAccount,
+  });
   factory OsmosisProtorevMsgSetDeveloperAccount.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisProtorevMsgSetDeveloperAccount(
-        admin: json.as("admin"),
-        developerAccount: json.as("developer_account"));
+      admin: json.as("admin"),
+      developerAccount: json.as("developer_account"),
+    );
   }
   factory OsmosisProtorevMsgSetDeveloperAccount.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisProtorevMsgSetDeveloperAccount(
-        admin: decode.getField(1), developerAccount: decode.getField(2));
+      admin: decode.getField(1),
+      developerAccount: decode.getField(2),
+    );
   }
 
   @override
@@ -45,7 +51,8 @@ class OsmosisProtorevMsgSetDeveloperAccount
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        OsmosisProtorevV1beta1Types.msgSetDeveloperAccountResponse);
+      OsmosisProtorevV1beta1Types.msgSetDeveloperAccountResponse,
+    );
   }
 
   @override

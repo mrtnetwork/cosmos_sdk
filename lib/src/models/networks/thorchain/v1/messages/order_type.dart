@@ -13,9 +13,12 @@ class ThorchainOrderType implements CosmosEnum {
   static ThorchainOrderType fromValue(Object? value) {
     return values.firstWhere(
       (e) => e.value == value || e.name == value,
-      orElse: () => throw DartCosmosSdkPluginException(
-          "No ThorchainOrderType element found for the given value.",
-          details: {"value": value}),
+      orElse:
+          () =>
+              throw DartCosmosSdkPluginException(
+                "No ThorchainOrderType element found for the given value.",
+                details: {"value": value},
+              ),
     );
   }
 }

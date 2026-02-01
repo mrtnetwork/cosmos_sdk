@@ -5,10 +5,12 @@ class OsmosisCosmWasmPoolMsgCreateCosmWasmPoolResponse extends CosmosMessage {
   final BigInt? poolId;
   OsmosisCosmWasmPoolMsgCreateCosmWasmPoolResponse({this.poolId});
   factory OsmosisCosmWasmPoolMsgCreateCosmWasmPoolResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisCosmWasmPoolMsgCreateCosmWasmPoolResponse(
-        poolId: decode.getField(1));
+      poolId: decode.getField(1),
+    );
   }
 
   @override

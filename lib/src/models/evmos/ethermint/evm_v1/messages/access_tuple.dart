@@ -17,12 +17,15 @@ class EvmosEthermintEVMV1AccessTuple extends CosmosMessage {
   factory EvmosEthermintEVMV1AccessTuple.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosEthermintEVMV1AccessTuple(
-        address: decode.getField(1), storageKeys: decode.getFields<String>(2));
+      address: decode.getField(1),
+      storageKeys: decode.getFields<String>(2),
+    );
   }
   factory EvmosEthermintEVMV1AccessTuple.fromJson(Map<String, dynamic> json) {
     return EvmosEthermintEVMV1AccessTuple(
-        address: json.as("address"),
-        storageKeys: json.asListOfString("storage_keys")!);
+      address: json.as("address"),
+      storageKeys: json.asListOfString("storage_keys")!,
+    );
   }
 
   @override
@@ -30,10 +33,7 @@ class EvmosEthermintEVMV1AccessTuple extends CosmosMessage {
 
   @override
   Map<String, dynamic> toJson() {
-    return {
-      "address": address,
-      "storage_keys": storageKeys,
-    };
+    return {"address": address, "storage_keys": storageKeys};
   }
 
   @override

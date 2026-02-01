@@ -13,24 +13,29 @@ class MsgDelegate extends StakingV1Beta1Service<EmptyServiceRequestResponse>
   final CosmosBaseAddress? validatorAddress;
   final Coin amount;
 
-  const MsgDelegate(
-      {this.delegatorAddress, this.validatorAddress, required this.amount});
+  const MsgDelegate({
+    this.delegatorAddress,
+    this.validatorAddress,
+    required this.amount,
+  });
   factory MsgDelegate.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgDelegate(
-        delegatorAddress: decode
-            .getResult(1)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        validatorAddress: decode
-            .getResult(2)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        amount: Coin.deserialize(decode.getField(3)));
+      delegatorAddress: decode
+          .getResult(1)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      validatorAddress: decode
+          .getResult(2)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      amount: Coin.deserialize(decode.getField(3)),
+    );
   }
   factory MsgDelegate.fromJson(Map<String, dynamic> json) {
     return MsgDelegate(
-        delegatorAddress: json.asAddress("delegator_address"),
-        validatorAddress: json.asAddress("validator_address"),
-        amount: Coin.fromJson(json.asMap("amount")));
+      delegatorAddress: json.asAddress("delegator_address"),
+      validatorAddress: json.asAddress("validator_address"),
+      amount: Coin.fromJson(json.asMap("amount")),
+    );
   }
 
   @override
@@ -49,8 +54,11 @@ class MsgDelegate extends StakingV1Beta1Service<EmptyServiceRequestResponse>
   TypeUrl get typeUrl => StakingV1beta1Types.msgDelegate;
 
   @override
-  List get values =>
-      [delegatorAddress?.address, validatorAddress?.address, amount];
+  List get values => [
+    delegatorAddress?.address,
+    validatorAddress?.address,
+    amount,
+  ];
 
   @override
   List<String?> get signers => [delegatorAddress?.address];

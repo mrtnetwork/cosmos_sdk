@@ -12,29 +12,34 @@ class AuthzQueryGranteeGrantsResponse extends CosmosMessage {
 
   /// pagination defines an pagination for the response.
   final PageResponse? pagination;
-  AuthzQueryGranteeGrantsResponse(
-      {required List<AuthzGrantAuthorization> grants, this.pagination})
-      : grants = grants.immutable;
+  AuthzQueryGranteeGrantsResponse({
+    required List<AuthzGrantAuthorization> grants,
+    this.pagination,
+  }) : grants = grants.immutable;
   factory AuthzQueryGranteeGrantsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return AuthzQueryGranteeGrantsResponse(
-        grants: decode
-            .getFields<List<int>>(1)
-            .map((e) => AuthzGrantAuthorization.deserialize(e))
-            .toList(),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
+      grants:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => AuthzGrantAuthorization.deserialize(e))
+              .toList(),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
+    );
   }
   factory AuthzQueryGranteeGrantsResponse.fromRPC(Map<String, dynamic> json) {
     return AuthzQueryGranteeGrantsResponse(
-      grants: (json["grants"] as List?)
+      grants:
+          (json["grants"] as List?)
               ?.map((e) => AuthzGrantAuthorization.fromJson(e))
               .toList() ??
           [],
-      pagination: json["pagination"] == null
-          ? null
-          : PageResponse.fromJson(json["pagination"]),
+      pagination:
+          json["pagination"] == null
+              ? null
+              : PageResponse.fromJson(json["pagination"]),
     );
   }
 
@@ -45,7 +50,7 @@ class AuthzQueryGranteeGrantsResponse extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "grants": grants.map((e) => e.toJson()).toList(),
-      "pagination": pagination?.toJson()
+      "pagination": pagination?.toJson(),
     };
   }
 

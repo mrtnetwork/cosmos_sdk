@@ -8,12 +8,14 @@ class OsmosisTokenFactoryDenomAuthorityMetadata extends CosmosMessage {
   final String? admin;
   OsmosisTokenFactoryDenomAuthorityMetadata({this.admin});
   factory OsmosisTokenFactoryDenomAuthorityMetadata.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisTokenFactoryDenomAuthorityMetadata(admin: decode.getField(1));
   }
   factory OsmosisTokenFactoryDenomAuthorityMetadata.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisTokenFactoryDenomAuthorityMetadata(admin: json["admin"]);
   }
 

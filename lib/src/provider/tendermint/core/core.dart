@@ -23,31 +23,38 @@ abstract class TendermintRequest<RESULT, RESPONSE>
   TendermintRequestDetails buildRequest(int id) {
     final pathParams = CosmosUtils.extractParams(method);
     if (pathParams.length != pathParameters.length) {
-      throw DartCosmosSdkPluginException("Invalid Path Parameters.", details: {
-        "pathParams": pathParameters,
-        "ExceptedPathParametersLength": pathParams.length
-      });
+      throw DartCosmosSdkPluginException(
+        "Invalid Path Parameters.",
+        details: {
+          "pathParams": pathParameters,
+          "ExceptedPathParametersLength": pathParams.length,
+        },
+      );
     }
     String params = method;
     for (int i = 0; i < pathParams.length; i++) {
       params = params.replaceFirst(pathParams[i], pathParameters[i]);
     }
     final queryParameters = Map<String, String>.from(
-        parameters..removeWhere((key, value) => value == null));
+      parameters..removeWhere((key, value) => value == null),
+    );
     if (queryParameters.isNotEmpty) {
-      params = Uri.parse(params)
-          .replace(queryParameters: queryParameters)
-          .normalizePath()
-          .toString();
+      params =
+          Uri.parse(params)
+              .replace(queryParameters: queryParameters)
+              .normalizePath()
+              .toString();
     }
     return TendermintRequestDetails(
-        requestID: id,
-        pathParams: params,
-        type: requestType,
-        jsonBody: requestType.isPostRequest ? body : null,
-        headers: requestType.isPostRequest
-            ? ServiceConst.defaultPostHeaders
-            : const {});
+      requestID: id,
+      pathParams: params,
+      type: requestType,
+      jsonBody: requestType.isPostRequest ? body : null,
+      headers:
+          requestType.isPostRequest
+              ? ServiceConst.defaultPostHeaders
+              : const {},
+    );
   }
 
   @override

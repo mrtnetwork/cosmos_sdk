@@ -8,25 +8,33 @@ class OsmosisValidatorPreferenceQueryUserValidatorPreferenceResponse
   final List<OsmosisValidatorPreferenceValidatorPreference> preferences;
 
   OsmosisValidatorPreferenceQueryUserValidatorPreferenceResponse(
-      List<OsmosisValidatorPreferenceValidatorPreference> preferences)
-      : preferences = preferences.immutable;
+    List<OsmosisValidatorPreferenceValidatorPreference> preferences,
+  ) : preferences = preferences.immutable;
   factory OsmosisValidatorPreferenceQueryUserValidatorPreferenceResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return OsmosisValidatorPreferenceQueryUserValidatorPreferenceResponse(decode
-        .getFields<List<int>>(1)
-        .map(
-            (e) => OsmosisValidatorPreferenceValidatorPreference.deserialize(e))
-        .toList());
+    return OsmosisValidatorPreferenceQueryUserValidatorPreferenceResponse(
+      decode
+          .getFields<List<int>>(1)
+          .map(
+            (e) => OsmosisValidatorPreferenceValidatorPreference.deserialize(e),
+          )
+          .toList(),
+    );
   }
   factory OsmosisValidatorPreferenceQueryUserValidatorPreferenceResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisValidatorPreferenceQueryUserValidatorPreferenceResponse(
-        (json["preferences"] as List?)
-                ?.map((e) =>
-                    OsmosisValidatorPreferenceValidatorPreference.fromJson(e))
-                .toList() ??
-            <OsmosisValidatorPreferenceValidatorPreference>[]);
+      (json["preferences"] as List?)
+              ?.map(
+                (e) =>
+                    OsmosisValidatorPreferenceValidatorPreference.fromJson(e),
+              )
+              .toList() ??
+          <OsmosisValidatorPreferenceValidatorPreference>[],
+    );
   }
 
   @override
@@ -38,8 +46,9 @@ class OsmosisValidatorPreferenceQueryUserValidatorPreferenceResponse
   }
 
   @override
-  TypeUrl get typeUrl => OsmosisValidatorPreferenceV1beta1Types
-      .queryUserValidatorPreferenceResponse;
+  TypeUrl get typeUrl =>
+      OsmosisValidatorPreferenceV1beta1Types
+          .queryUserValidatorPreferenceResponse;
 
   @override
   List get values => [preferences];

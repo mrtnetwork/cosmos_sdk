@@ -8,13 +8,16 @@ class OsmosisCosmWasmPoolSpotPrice extends CosmosMessage {
   /// base_asset_denom is the base asset of the spot query.
   final String? baseAssetDenom;
 
-  OsmosisCosmWasmPoolSpotPrice(
-      {this.quoteAssetDenom, required this.baseAssetDenom});
+  OsmosisCosmWasmPoolSpotPrice({
+    this.quoteAssetDenom,
+    required this.baseAssetDenom,
+  });
   factory OsmosisCosmWasmPoolSpotPrice.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisCosmWasmPoolSpotPrice(
-        quoteAssetDenom: decode.getField(1),
-        baseAssetDenom: decode.getField(2));
+      quoteAssetDenom: decode.getField(1),
+      baseAssetDenom: decode.getField(2),
+    );
   }
 
   @override
@@ -24,7 +27,7 @@ class OsmosisCosmWasmPoolSpotPrice extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "quote_asset_denom": quoteAssetDenom,
-      "base_asset_denom": baseAssetDenom
+      "base_asset_denom": baseAssetDenom,
     };
   }
 

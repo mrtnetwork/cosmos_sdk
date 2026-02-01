@@ -5,13 +5,15 @@ import 'package:blockchain_utils/helper/helper.dart';
 class ThorchainNodeMimirs extends CosmosMessage {
   final List<ThorchainNodeMimir> mimirs;
   ThorchainNodeMimirs(List<ThorchainNodeMimir> mimirs)
-      : mimirs = mimirs.immutable;
+    : mimirs = mimirs.immutable;
   factory ThorchainNodeMimirs.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return ThorchainNodeMimirs(decode
-        .getFields<List<int>>(1)
-        .map((e) => ThorchainNodeMimir.deserialize(e))
-        .toList());
+    return ThorchainNodeMimirs(
+      decode
+          .getFields<List<int>>(1)
+          .map((e) => ThorchainNodeMimir.deserialize(e))
+          .toList(),
+    );
   }
 
   @override

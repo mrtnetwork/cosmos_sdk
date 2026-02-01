@@ -53,6 +53,7 @@ class BankMsgUpdateParams
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        BankV1beta1Types.bankMsgUpdateParamsResponse);
+      BankV1beta1Types.bankMsgUpdateParamsResponse,
+    );
   }
 }

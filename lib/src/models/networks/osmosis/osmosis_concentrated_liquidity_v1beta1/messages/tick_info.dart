@@ -32,39 +32,44 @@ class OsmosisConcentratedLiquidityTickInfo extends CosmosMessage {
   /// container easily for events when crossing a tick.
   final OsmosisConcentratedLiquidityUptimeTrackers uptimeTrackers;
 
-  OsmosisConcentratedLiquidityTickInfo(
-      {required this.liquidityGross,
-      required this.liquidityNet,
-      required List<DecCoin>
-          spreadRewardGrowthOsppositeDirectionOfLastTraversal,
-      required this.uptimeTrackers})
-      : spreadRewardGrowthOsppositeDirectionOfLastTraversal =
-            spreadRewardGrowthOsppositeDirectionOfLastTraversal.immutable;
+  OsmosisConcentratedLiquidityTickInfo({
+    required this.liquidityGross,
+    required this.liquidityNet,
+    required List<DecCoin> spreadRewardGrowthOsppositeDirectionOfLastTraversal,
+    required this.uptimeTrackers,
+  }) : spreadRewardGrowthOsppositeDirectionOfLastTraversal =
+           spreadRewardGrowthOsppositeDirectionOfLastTraversal.immutable;
   factory OsmosisConcentratedLiquidityTickInfo.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityTickInfo(
-        liquidityGross: decode.getField(1),
-        liquidityNet: decode.getField(2),
-        spreadRewardGrowthOsppositeDirectionOfLastTraversal: decode
-            .getFields<List<int>>(3)
-            .map((e) => DecCoin.deserialize(e))
-            .toList(),
-        uptimeTrackers: OsmosisConcentratedLiquidityUptimeTrackers.deserialize(
-            decode.getField(4)));
+      liquidityGross: decode.getField(1),
+      liquidityNet: decode.getField(2),
+      spreadRewardGrowthOsppositeDirectionOfLastTraversal:
+          decode
+              .getFields<List<int>>(3)
+              .map((e) => DecCoin.deserialize(e))
+              .toList(),
+      uptimeTrackers: OsmosisConcentratedLiquidityUptimeTrackers.deserialize(
+        decode.getField(4),
+      ),
+    );
   }
   factory OsmosisConcentratedLiquidityTickInfo.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityTickInfo(
-        liquidityGross: json["liquidity_gross"],
-        liquidityNet: json["liquidity_net"],
-        spreadRewardGrowthOsppositeDirectionOfLastTraversal:
-            (json["spread_reward_growth_opposite_direction_of_last_traversal"]
-                        as List?)
-                    ?.map((e) => DecCoin.fromJson(e))
-                    .toList() ??
-                <DecCoin>[],
-        uptimeTrackers: OsmosisConcentratedLiquidityUptimeTrackers.deserialize(
-            json["uptime_trackers"]));
+      liquidityGross: json["liquidity_gross"],
+      liquidityNet: json["liquidity_net"],
+      spreadRewardGrowthOsppositeDirectionOfLastTraversal:
+          (json["spread_reward_growth_opposite_direction_of_last_traversal"]
+                  as List?)
+              ?.map((e) => DecCoin.fromJson(e))
+              .toList() ??
+          <DecCoin>[],
+      uptimeTrackers: OsmosisConcentratedLiquidityUptimeTrackers.deserialize(
+        json["uptime_trackers"],
+      ),
+    );
   }
 
   @override
@@ -79,17 +84,17 @@ class OsmosisConcentratedLiquidityTickInfo extends CosmosMessage {
           spreadRewardGrowthOsppositeDirectionOfLastTraversal
               .map((e) => e.toJson())
               .toList(),
-      "uptime_trackers": uptimeTrackers.toJson()
+      "uptime_trackers": uptimeTrackers.toJson(),
     };
   }
 
   @override
   List get values => [
-        liquidityGross,
-        liquidityNet,
-        spreadRewardGrowthOsppositeDirectionOfLastTraversal,
-        uptimeTrackers
-      ];
+    liquidityGross,
+    liquidityNet,
+    spreadRewardGrowthOsppositeDirectionOfLastTraversal,
+    uptimeTrackers,
+  ];
 
   @override
   TypeUrl get typeUrl => OsmosisConcentratedLiquidityV1beta1Types.tickInfo;

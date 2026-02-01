@@ -23,13 +23,15 @@ class RedelegationEntry extends CosmosMessage {
   final BigInt? unbondingOnHoldRefCount;
   factory RedelegationEntry.fromJson(Map<String, dynamic> json) {
     return RedelegationEntry(
-        completionTime: ProtobufTimestamp.fromString(json["completion_time"]),
-        initialBalance: BigintUtils.parse(json["initial_balance"]),
-        sharesDst: json["shares_dst"],
-        creationHeight: IntUtils.tryParse(json["creation_height"]),
-        unbondingId: BigintUtils.tryParse(json["unbonding_id"]),
-        unbondingOnHoldRefCount:
-            BigintUtils.tryParse("unbonding_on_hold_ref_count"));
+      completionTime: ProtobufTimestamp.fromString(json["completion_time"]),
+      initialBalance: BigintUtils.parse(json["initial_balance"]),
+      sharesDst: json["shares_dst"],
+      creationHeight: IntUtils.tryParse(json["creation_height"]),
+      unbondingId: BigintUtils.tryParse(json["unbonding_id"]),
+      unbondingOnHoldRefCount: BigintUtils.tryParse(
+        "unbonding_on_hold_ref_count",
+      ),
+    );
   }
   const RedelegationEntry({
     this.creationHeight,
@@ -42,12 +44,13 @@ class RedelegationEntry extends CosmosMessage {
   factory RedelegationEntry.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return RedelegationEntry(
-        creationHeight: decode.getField(1),
-        completionTime: ProtobufTimestamp.deserialize(decode.getField(2)),
-        initialBalance: BigintUtils.parse(decode.getField<String>(3)),
-        sharesDst: decode.getField(4),
-        unbondingId: decode.getField(5),
-        unbondingOnHoldRefCount: decode.getField(6));
+      creationHeight: decode.getField(1),
+      completionTime: ProtobufTimestamp.deserialize(decode.getField(2)),
+      initialBalance: BigintUtils.parse(decode.getField<String>(3)),
+      sharesDst: decode.getField(4),
+      unbondingId: decode.getField(5),
+      unbondingOnHoldRefCount: decode.getField(6),
+    );
   }
 
   @override
@@ -70,11 +73,11 @@ class RedelegationEntry extends CosmosMessage {
 
   @override
   List get values => [
-        creationHeight,
-        completionTime,
-        initialBalance.toString(),
-        sharesDst,
-        unbondingId,
-        unbondingOnHoldRefCount
-      ];
+    creationHeight,
+    completionTime,
+    initialBalance.toString(),
+    sharesDst,
+    unbondingId,
+    unbondingOnHoldRefCount,
+  ];
 }

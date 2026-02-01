@@ -19,37 +19,46 @@ class FungibleTokenPacketDataV2 extends CosmosMessage {
 
   /// optional forwarding information
   final ForwardingPacketData? forwarding;
-  const FungibleTokenPacketDataV2(
-      {required this.tokens,
-      required this.sender,
-      required this.receiver,
-      this.memo,
-      this.forwarding});
+  const FungibleTokenPacketDataV2({
+    required this.tokens,
+    required this.sender,
+    required this.receiver,
+    this.memo,
+    this.forwarding,
+  });
   factory FungibleTokenPacketDataV2.fromJson(Map<String, dynamic> json) {
     return FungibleTokenPacketDataV2(
-        tokens: (json["tokens"] as List?)
-                ?.map((e) => IbcTransferV2Token.fromJson(e))
-                .toList() ??
-            [],
-        sender: json["sender"],
-        receiver: json["receiver"],
-        memo: json["memo"],
-        forwarding: json["forwarding"] == null
-            ? null
-            : ForwardingPacketData.fromJson(json["forwarding"]));
+      tokens:
+          (json["tokens"] as List?)
+              ?.map((e) => IbcTransferV2Token.fromJson(e))
+              .toList() ??
+          [],
+      sender: json["sender"],
+      receiver: json["receiver"],
+      memo: json["memo"],
+      forwarding:
+          json["forwarding"] == null
+              ? null
+              : ForwardingPacketData.fromJson(json["forwarding"]),
+    );
   }
   factory FungibleTokenPacketDataV2.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return FungibleTokenPacketDataV2(
-        tokens: decode
-            .getFields<List<int>>(1)
-            .map((e) => IbcTransferV2Token.deserialize(e))
-            .toList(),
-        sender: decode.getField(2),
-        receiver: decode.getField(3),
-        memo: decode.getField(4),
-        forwarding: decode.getResult(5)?.to<ForwardingPacketData, List<int>>(
-            (e) => ForwardingPacketData.deserialize(e)));
+      tokens:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => IbcTransferV2Token.deserialize(e))
+              .toList(),
+      sender: decode.getField(2),
+      receiver: decode.getField(3),
+      memo: decode.getField(4),
+      forwarding: decode
+          .getResult(5)
+          ?.to<ForwardingPacketData, List<int>>(
+            (e) => ForwardingPacketData.deserialize(e),
+          ),
+    );
   }
 
   @override
@@ -62,7 +71,7 @@ class FungibleTokenPacketDataV2 extends CosmosMessage {
       "sender": sender,
       "receiver": receiver,
       "memo": memo,
-      "forwarding": forwarding?.toJson()
+      "forwarding": forwarding?.toJson(),
     };
   }
 

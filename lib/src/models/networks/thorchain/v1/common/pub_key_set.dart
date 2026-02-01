@@ -8,7 +8,9 @@ class ThorchainPubKeySet extends CosmosMessage {
   factory ThorchainPubKeySet.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainPubKeySet(
-        secp256k1: decode.getField(1), ed25519: decode.getField(2));
+      secp256k1: decode.getField(1),
+      ed25519: decode.getField(2),
+    );
   }
 
   @override

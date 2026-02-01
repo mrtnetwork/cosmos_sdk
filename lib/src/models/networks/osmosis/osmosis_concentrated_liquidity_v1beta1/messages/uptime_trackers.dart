@@ -6,22 +6,27 @@ import 'package:blockchain_utils/helper/helper.dart';
 class OsmosisConcentratedLiquidityUptimeTracker extends CosmosMessage {
   final List<DecCoin> uptimeGrowthOutside;
   OsmosisConcentratedLiquidityUptimeTracker(List<DecCoin> uptimeGrowthOutside)
-      : uptimeGrowthOutside = uptimeGrowthOutside.immutable;
+    : uptimeGrowthOutside = uptimeGrowthOutside.immutable;
   factory OsmosisConcentratedLiquidityUptimeTracker.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return OsmosisConcentratedLiquidityUptimeTracker(decode
-        .getFields<List<int>>(1)
-        .map((e) => DecCoin.deserialize(e))
-        .toList());
+    return OsmosisConcentratedLiquidityUptimeTracker(
+      decode
+          .getFields<List<int>>(1)
+          .map((e) => DecCoin.deserialize(e))
+          .toList(),
+    );
   }
   factory OsmosisConcentratedLiquidityUptimeTracker.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityUptimeTracker(
-        (json["uptime_growth_outside"] as List?)
-                ?.map((e) => DecCoin.fromJson(e))
-                .toList() ??
-            <DecCoin>[]);
+      (json["uptime_growth_outside"] as List?)
+              ?.map((e) => DecCoin.fromJson(e))
+              .toList() ??
+          <DecCoin>[],
+    );
   }
 
   @override
@@ -31,7 +36,7 @@ class OsmosisConcentratedLiquidityUptimeTracker extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "uptime_growth_outside":
-          uptimeGrowthOutside.map((e) => e.toJson()).toList()
+          uptimeGrowthOutside.map((e) => e.toJson()).toList(),
     };
   }
 

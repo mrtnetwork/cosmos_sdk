@@ -18,20 +18,22 @@ class OsmosisCosmWasmPoolSwapExactAmountIn extends CosmosMessage {
   /// [swapFee] is the swap fee for this swap estimate.
   final String swapFee;
 
-  OsmosisCosmWasmPoolSwapExactAmountIn(
-      {this.sender,
-      required this.tokenIn,
-      this.tokenOutDenom,
-      required this.tokenOutMinAmount,
-      required this.swapFee});
+  OsmosisCosmWasmPoolSwapExactAmountIn({
+    this.sender,
+    required this.tokenIn,
+    this.tokenOutDenom,
+    required this.tokenOutMinAmount,
+    required this.swapFee,
+  });
   factory OsmosisCosmWasmPoolSwapExactAmountIn.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisCosmWasmPoolSwapExactAmountIn(
-        sender: decode.getField(1),
-        tokenIn: Coin.deserialize(decode.getField(2)),
-        tokenOutDenom: decode.getField(3),
-        tokenOutMinAmount: BigInt.parse(decode.getField(4)),
-        swapFee: decode.getField(5));
+      sender: decode.getField(1),
+      tokenIn: Coin.deserialize(decode.getField(2)),
+      tokenOutDenom: decode.getField(3),
+      tokenOutMinAmount: BigInt.parse(decode.getField(4)),
+      swapFee: decode.getField(5),
+    );
   }
 
   @override
@@ -44,7 +46,7 @@ class OsmosisCosmWasmPoolSwapExactAmountIn extends CosmosMessage {
       "token_in": tokenIn.toJson(),
       "token_out_denom": tokenOutDenom,
       "token_out_min_amount": tokenOutMinAmount.toString(),
-      "swap_fee": swapFee
+      "swap_fee": swapFee,
     };
   }
 
@@ -52,6 +54,11 @@ class OsmosisCosmWasmPoolSwapExactAmountIn extends CosmosMessage {
   TypeUrl get typeUrl => OsmosisCosmWasmPoolV1beta1Types.swapExactAmountIn;
 
   @override
-  List get values =>
-      [sender, tokenIn, tokenOutDenom, tokenOutMinAmount.toString(), swapFee];
+  List get values => [
+    sender,
+    tokenIn,
+    tokenOutDenom,
+    tokenOutMinAmount.toString(),
+    swapFee,
+  ];
 }

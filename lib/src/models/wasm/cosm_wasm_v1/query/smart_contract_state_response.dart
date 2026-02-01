@@ -10,16 +10,19 @@ class CosmWasmV1QuerySmartContractStateResponse extends CosmosMessage {
   /// Data contains the json data returned from the smart contract
   final List<int>? data;
   CosmWasmV1QuerySmartContractStateResponse({required List<int>? data})
-      : data = data?.asImmutableBytes;
+    : data = data?.asImmutableBytes;
   factory CosmWasmV1QuerySmartContractStateResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmWasmV1QuerySmartContractStateResponse(data: decode.getField(1));
   }
   factory CosmWasmV1QuerySmartContractStateResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return CosmWasmV1QuerySmartContractStateResponse(
-        data: json.asBytes("data"));
+      data: json.asBytes("data"),
+    );
   }
 
   @override

@@ -9,18 +9,20 @@ import 'params.dart';
 class OsmosisTokenFactoryGenesisState extends CosmosMessage {
   final OsmosisTokenFactoryParams params;
   final List<OsmosisTokenFactoryGenesisDenom> factoryDenoms;
-  OsmosisTokenFactoryGenesisState(
-      {required this.params,
-      required List<OsmosisTokenFactoryGenesisDenom> factoryDenoms})
-      : factoryDenoms = factoryDenoms.immutable;
+  OsmosisTokenFactoryGenesisState({
+    required this.params,
+    required List<OsmosisTokenFactoryGenesisDenom> factoryDenoms,
+  }) : factoryDenoms = factoryDenoms.immutable;
   factory OsmosisTokenFactoryGenesisState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisTokenFactoryGenesisState(
-        params: OsmosisTokenFactoryParams.deserialize(decode.getField(1)),
-        factoryDenoms: decode
-            .getFields<List<int>>(2)
-            .map((e) => OsmosisTokenFactoryGenesisDenom.deserialize(e))
-            .toList());
+      params: OsmosisTokenFactoryParams.deserialize(decode.getField(1)),
+      factoryDenoms:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => OsmosisTokenFactoryGenesisDenom.deserialize(e))
+              .toList(),
+    );
   }
 
   @override
@@ -30,7 +32,7 @@ class OsmosisTokenFactoryGenesisState extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "params": params.toJson(),
-      "factory_denoms": factoryDenoms.map((e) => e.toJson()).toList()
+      "factory_denoms": factoryDenoms.map((e) => e.toJson()).toList(),
     };
   }
 

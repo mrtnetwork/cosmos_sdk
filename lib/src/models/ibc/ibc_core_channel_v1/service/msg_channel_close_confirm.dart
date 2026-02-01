@@ -16,33 +16,36 @@ class MsgChannelCloseConfirm extends IbcService<EmptyServiceRequestResponse> {
   final IbcClientHeight proofHeight;
   final String? signer;
   final BigInt? counterpartyUpgradeSequence;
-  MsgChannelCloseConfirm(
-      {this.portId,
-      this.channelId,
-      List<int>? proofInit,
-      required this.proofHeight,
-      this.signer,
-      this.counterpartyUpgradeSequence})
-      : proofInit = BytesUtils.tryToBytes(proofInit, unmodifiable: true);
+  MsgChannelCloseConfirm({
+    this.portId,
+    this.channelId,
+    List<int>? proofInit,
+    required this.proofHeight,
+    this.signer,
+    this.counterpartyUpgradeSequence,
+  }) : proofInit = BytesUtils.tryToBytes(proofInit, unmodifiable: true);
   factory MsgChannelCloseConfirm.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgChannelCloseConfirm(
-        portId: decode.getField(1),
-        channelId: decode.getField(2),
-        proofInit: decode.getField(3),
-        proofHeight: IbcClientHeight.deserialize(decode.getField(4)),
-        signer: decode.getField(5),
-        counterpartyUpgradeSequence: decode.getField(6));
+      portId: decode.getField(1),
+      channelId: decode.getField(2),
+      proofInit: decode.getField(3),
+      proofHeight: IbcClientHeight.deserialize(decode.getField(4)),
+      signer: decode.getField(5),
+      counterpartyUpgradeSequence: decode.getField(6),
+    );
   }
   factory MsgChannelCloseConfirm.fromJson(Map<String, dynamic> json) {
     return MsgChannelCloseConfirm(
-        portId: json.as("port_id"),
-        channelId: json.as("channel_id"),
-        proofInit: json.asBytes("proof_init"),
-        proofHeight: IbcClientHeight.fromJson(json.asMap("proof_height")),
-        signer: json.as("signer"),
-        counterpartyUpgradeSequence:
-            json.asBigInt("counterparty_upgrade_sequence"));
+      portId: json.as("port_id"),
+      channelId: json.as("channel_id"),
+      proofInit: json.asBytes("proof_init"),
+      proofHeight: IbcClientHeight.fromJson(json.asMap("proof_height")),
+      signer: json.as("signer"),
+      counterpartyUpgradeSequence: json.asBigInt(
+        "counterparty_upgrade_sequence",
+      ),
+    );
   }
 
   @override
@@ -56,7 +59,7 @@ class MsgChannelCloseConfirm extends IbcService<EmptyServiceRequestResponse> {
       "proof_init": BytesUtils.tryToHexString(proofInit),
       "proof_height": proofHeight.toJson(),
       "signer": signer,
-      "counterparty_upgrade_sequence": counterpartyUpgradeSequence?.toString()
+      "counterparty_upgrade_sequence": counterpartyUpgradeSequence?.toString(),
     };
   }
 
@@ -65,13 +68,13 @@ class MsgChannelCloseConfirm extends IbcService<EmptyServiceRequestResponse> {
 
   @override
   List get values => [
-        portId,
-        channelId,
-        proofInit,
-        proofHeight,
-        signer,
-        counterpartyUpgradeSequence
-      ];
+    portId,
+    channelId,
+    proofInit,
+    proofHeight,
+    signer,
+    counterpartyUpgradeSequence,
+  ];
 
   @override
   List<String?> get signers => [signer];

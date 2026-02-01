@@ -51,49 +51,56 @@ class TXBody extends CosmosMessage {
   /// when the default options are not sufficient. If any of these are present
   /// and can't be handled, they will be ignored
   final List<AnyMessage> nonCriticalExtensionOptions;
-  const TXBody(
-      {required this.messages,
-      this.memo,
-      this.timeoutHeight,
-      this.unordered,
-      this.extensionOptions = const [],
-      this.nonCriticalExtensionOptions = const [],
-      this.messagesJson});
+  const TXBody({
+    required this.messages,
+    this.memo,
+    this.timeoutHeight,
+    this.unordered,
+    this.extensionOptions = const [],
+    this.nonCriticalExtensionOptions = const [],
+    this.messagesJson,
+  });
   factory TXBody.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return TXBody(
-        messages: decode
-            .getFields<List<int>>(1)
-            .map((e) => AnyBytesMessage.deserialize(e))
-            .toList(),
-        memo: decode.getField(2),
-        timeoutHeight: decode.getField(3),
-        unordered: decode.getField(4),
-        extensionOptions: decode
-            .getFields<List<int>>(1023)
-            .map((e) => AnyBytesMessage.deserialize(e))
-            .toList(),
-        nonCriticalExtensionOptions: decode
-            .getFields<List<int>>(2047)
-            .map((e) => AnyBytesMessage.deserialize(e))
-            .toList());
+      messages:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => AnyBytesMessage.deserialize(e))
+              .toList(),
+      memo: decode.getField(2),
+      timeoutHeight: decode.getField(3),
+      unordered: decode.getField(4),
+      extensionOptions:
+          decode
+              .getFields<List<int>>(1023)
+              .map((e) => AnyBytesMessage.deserialize(e))
+              .toList(),
+      nonCriticalExtensionOptions:
+          decode
+              .getFields<List<int>>(2047)
+              .map((e) => AnyBytesMessage.deserialize(e))
+              .toList(),
+    );
   }
   factory TXBody.fromJson(Map<String, dynamic> json) {
     return TXBody(
-        messages: [],
-        messagesJson: json["messages"],
-        extensionOptions: (json["extension_options"] as List?)
-                ?.map((e) => AnyMessage.fromJson(e))
-                .toList() ??
-            [],
-        memo: json["memo"],
-        nonCriticalExtensionOptions:
-            (json["non_critical_extension_options"] as List?)
-                    ?.map((e) => AnyMessage.fromJson(e))
-                    .toList() ??
-                [],
-        timeoutHeight: BigintUtils.tryParse(json["timeout_height"]),
-        unordered: json["unordered"]);
+      messages: [],
+      messagesJson: json["messages"],
+      extensionOptions:
+          (json["extension_options"] as List?)
+              ?.map((e) => AnyMessage.fromJson(e))
+              .toList() ??
+          [],
+      memo: json["memo"],
+      nonCriticalExtensionOptions:
+          (json["non_critical_extension_options"] as List?)
+              ?.map((e) => AnyMessage.fromJson(e))
+              .toList() ??
+          [],
+      timeoutHeight: BigintUtils.tryParse(json["timeout_height"]),
+      unordered: json["unordered"],
+    );
   }
 
   @override
@@ -108,19 +115,19 @@ class TXBody extends CosmosMessage {
       "unordered": unordered,
       "extension_options": extensionOptions.map((e) => e.toJson()).toList(),
       "non_critical_extension_options":
-          nonCriticalExtensionOptions.map((e) => e.toJson()).toList()
+          nonCriticalExtensionOptions.map((e) => e.toJson()).toList(),
     };
   }
 
   @override
   List get values => [
-        messages.map((e) => e.toAny()).toList(),
-        memo,
-        timeoutHeight,
-        unordered,
-        extensionOptions,
-        nonCriticalExtensionOptions
-      ];
+    messages.map((e) => e.toAny()).toList(),
+    memo,
+    timeoutHeight,
+    unordered,
+    extensionOptions,
+    nonCriticalExtensionOptions,
+  ];
   @override
   TypeUrl get typeUrl => TxV1beta1Types.txBody;
 }

@@ -10,22 +10,25 @@ import 'base_proof.dart';
 class Ics23CompressedBatchProof extends Ics23ProofBase {
   final List<Ics23CompressedBatchEntry>? entries;
   final List<Ics23InnerOp>? lookupInners;
-  Ics23CompressedBatchProof(
-      {List<Ics23CompressedBatchEntry>? entries,
-      List<Ics23InnerOp>? lookupInners})
-      : entries = entries?.emptyAsNull?.immutable,
-        lookupInners = lookupInners?.emptyAsNull?.immutable;
+  Ics23CompressedBatchProof({
+    List<Ics23CompressedBatchEntry>? entries,
+    List<Ics23InnerOp>? lookupInners,
+  }) : entries = entries?.emptyAsNull?.immutable,
+       lookupInners = lookupInners?.emptyAsNull?.immutable;
   factory Ics23CompressedBatchProof.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Ics23CompressedBatchProof(
-        entries: decode
-            .getFields<List<int>>(1)
-            .map((e) => Ics23CompressedBatchEntry.deserialize(e))
-            .toList(),
-        lookupInners: decode
-            .getFields<List<int>>(2)
-            .map((e) => Ics23InnerOp.deserialize(e))
-            .toList());
+      entries:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => Ics23CompressedBatchEntry.deserialize(e))
+              .toList(),
+      lookupInners:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => Ics23InnerOp.deserialize(e))
+              .toList(),
+    );
   }
 
   @override
@@ -35,7 +38,7 @@ class Ics23CompressedBatchProof extends Ics23ProofBase {
   Map<String, dynamic> toJson() {
     return {
       "entries": entries?.map((e) => e.toJson()).toList(),
-      "lookup_inners": lookupInners?.map((e) => e.toJson()).toList()
+      "lookup_inners": lookupInners?.map((e) => e.toJson()).toList(),
     };
   }
 

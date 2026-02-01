@@ -8,9 +8,13 @@ class ThorchainEventPool extends CosmosMessage {
   factory ThorchainEventPool.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainEventPool(
-        pool: ThorchainAsset.deserialize(decode.getField(1)),
-        status: decode.getResult(2)?.to<ThorchainPoolStatus, int>(
-            (e) => ThorchainPoolStatus.fromValue(e)));
+      pool: ThorchainAsset.deserialize(decode.getField(1)),
+      status: decode
+          .getResult(2)
+          ?.to<ThorchainPoolStatus, int>(
+            (e) => ThorchainPoolStatus.fromValue(e),
+          ),
+    );
   }
 
   @override

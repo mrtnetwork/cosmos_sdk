@@ -16,15 +16,18 @@ class OsmosisPoolManagerDenomPairTakerFeeProposal extends CosmosMessage {
     required List<OsmosisPoolManagerDenomPairTakerFee> denomPairTakerFee,
   }) : denomPairTakerFee = denomPairTakerFee.immutable;
   factory OsmosisPoolManagerDenomPairTakerFeeProposal.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolManagerDenomPairTakerFeeProposal(
-        title: decode.getField(1),
-        description: decode.getField(2),
-        denomPairTakerFee: decode
-            .getFields<List<int>>(3)
-            .map((e) => OsmosisPoolManagerDenomPairTakerFee.deserialize(e))
-            .toList());
+      title: decode.getField(1),
+      description: decode.getField(2),
+      denomPairTakerFee:
+          decode
+              .getFields<List<int>>(3)
+              .map((e) => OsmosisPoolManagerDenomPairTakerFee.deserialize(e))
+              .toList(),
+    );
   }
 
   @override
@@ -35,7 +38,7 @@ class OsmosisPoolManagerDenomPairTakerFeeProposal extends CosmosMessage {
     return {
       "title": title,
       "description": description,
-      "denom_pair_taker_fee": denomPairTakerFee.map((e) => e.toJson()).toList()
+      "denom_pair_taker_fee": denomPairTakerFee.map((e) => e.toJson()).toList(),
     };
   }
 

@@ -26,37 +26,42 @@ class GovVote extends CosmosMessage {
   final List<GovWeightedVoteOption> options;
   factory GovVote.fromJson(Map<String, dynamic> json) {
     return GovVote(
-        options: (json["options"] as List?)
-                ?.map((e) => GovWeightedVoteOption.fromJson(e))
-                .toList() ??
-            [],
-        proposalId: BigintUtils.parse(json["proposal_id"]),
-        option: json["option"] == null
-            ? null
-            : GovVoteOption.fromName(json["option"]),
-        voter: json["voter"] == null ? null : CosmosBaseAddress(json["voter"]));
+      options:
+          (json["options"] as List?)
+              ?.map((e) => GovWeightedVoteOption.fromJson(e))
+              .toList() ??
+          [],
+      proposalId: BigintUtils.parse(json["proposal_id"]),
+      option:
+          json["option"] == null
+              ? null
+              : GovVoteOption.fromName(json["option"]),
+      voter: json["voter"] == null ? null : CosmosBaseAddress(json["voter"]),
+    );
   }
-  GovVote(
-      {required this.proposalId,
-      this.voter,
-      this.option,
-      required List<GovWeightedVoteOption> options})
-      : options = options.immutable;
+  GovVote({
+    required this.proposalId,
+    this.voter,
+    this.option,
+    required List<GovWeightedVoteOption> options,
+  }) : options = options.immutable;
 
   factory GovVote.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GovVote(
-        proposalId: decode.getField(1),
-        voter: decode
-            .getResult(2)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        option: decode
-            .getResult(3)
-            ?.to<GovVoteOption, int>((e) => GovVoteOption.fromValue(e)),
-        options: decode
-            .getFields<List<int>>(4)
-            .map((e) => GovWeightedVoteOption.deserialize(e))
-            .toList());
+      proposalId: decode.getField(1),
+      voter: decode
+          .getResult(2)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      option: decode
+          .getResult(3)
+          ?.to<GovVoteOption, int>((e) => GovVoteOption.fromValue(e)),
+      options:
+          decode
+              .getFields<List<int>>(4)
+              .map((e) => GovWeightedVoteOption.deserialize(e))
+              .toList(),
+    );
   }
 
   @override
@@ -68,7 +73,7 @@ class GovVote extends CosmosMessage {
       "proposal_id": proposalId.toString(),
       "voter": voter?.address,
       "option": option?.value,
-      "options": options.map((e) => e.toJson()).toList()
+      "options": options.map((e) => e.toJson()).toList(),
     };
   }
 

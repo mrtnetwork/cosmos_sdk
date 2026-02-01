@@ -7,7 +7,8 @@ import 'package:cosmos_sdk/src/utils/quick.dart';
 /// MsgCreateClawbackVestingAccount defines a message that enables creating a
 /// ClawbackVestingAccount.
 class EvmosVestingV2MsgCreateClawbackVestingAccount
-    extends EvmosService<EmptyServiceRequestResponse> with AminoMessage {
+    extends EvmosService<EmptyServiceRequestResponse>
+    with AminoMessage {
   /// funderAddress specifies the account that will be able to fund the vesting account
   final String? funderAddress;
 
@@ -17,23 +18,30 @@ class EvmosVestingV2MsgCreateClawbackVestingAccount
   /// enable_gov_clawback specifies whether the governance module can clawback this account
   final bool? enableGovClawback;
 
-  const EvmosVestingV2MsgCreateClawbackVestingAccount(
-      {this.funderAddress, this.vestingAddress, this.enableGovClawback});
+  const EvmosVestingV2MsgCreateClawbackVestingAccount({
+    this.funderAddress,
+    this.vestingAddress,
+    this.enableGovClawback,
+  });
 
   factory EvmosVestingV2MsgCreateClawbackVestingAccount.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosVestingV2MsgCreateClawbackVestingAccount(
-        funderAddress: decode.getField(1),
-        vestingAddress: decode.getField(2),
-        enableGovClawback: decode.getField(3));
+      funderAddress: decode.getField(1),
+      vestingAddress: decode.getField(2),
+      enableGovClawback: decode.getField(3),
+    );
   }
   factory EvmosVestingV2MsgCreateClawbackVestingAccount.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return EvmosVestingV2MsgCreateClawbackVestingAccount(
-        funderAddress: json.as("funder_address"),
-        vestingAddress: json.as("vesting_address"),
-        enableGovClawback: json.as("enable_gov_clawback"));
+      funderAddress: json.as("funder_address"),
+      vestingAddress: json.as("vesting_address"),
+      enableGovClawback: json.as("enable_gov_clawback"),
+    );
   }
 
   @override
@@ -59,6 +67,7 @@ class EvmosVestingV2MsgCreateClawbackVestingAccount
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        EvmosErc20V1Types.msgCreateClawbackVestingAccountResponse);
+      EvmosErc20V1Types.msgCreateClawbackVestingAccountResponse,
+    );
   }
 }

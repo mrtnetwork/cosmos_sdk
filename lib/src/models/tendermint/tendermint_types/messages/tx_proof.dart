@@ -10,16 +10,17 @@ class TxProof extends CosmosMessage {
   final List<int>? data;
   final Proof? proof;
   TxProof({List<int>? rootHash, List<int>? data, this.proof})
-      : rootHash = BytesUtils.tryToBytes(rootHash),
-        data = BytesUtils.tryToBytes(data);
+    : rootHash = BytesUtils.tryToBytes(rootHash),
+      data = BytesUtils.tryToBytes(data);
   factory TxProof.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return TxProof(
-        rootHash: decode.getField(1),
-        data: decode.getField(2),
-        proof: decode
-            .getResult(3)
-            ?.to<Proof, List<int>>((e) => Proof.deserialize(e)));
+      rootHash: decode.getField(1),
+      data: decode.getField(2),
+      proof: decode
+          .getResult(3)
+          ?.to<Proof, List<int>>((e) => Proof.deserialize(e)),
+    );
   }
   @override
   List<int> get fieldIds => [1, 2, 3];
@@ -29,7 +30,7 @@ class TxProof extends CosmosMessage {
     return {
       "root_hash": BytesUtils.tryToHexString(rootHash),
       "data": BytesUtils.tryToHexString(data),
-      "proof": proof?.toJson()
+      "proof": proof?.toJson(),
     };
   }
 

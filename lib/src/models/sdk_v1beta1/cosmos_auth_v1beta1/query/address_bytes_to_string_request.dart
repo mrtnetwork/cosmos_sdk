@@ -11,7 +11,7 @@ class AddressBytesToStringRequest extends CosmosMessage
     with QueryMessage<AddressBytesToStringResponse> {
   final List<int> addressBytes;
   AddressBytesToStringRequest(List<int> addressBytes)
-      : addressBytes = BytesUtils.toBytes(addressBytes, unmodifiable: true);
+    : addressBytes = BytesUtils.toBytes(addressBytes, unmodifiable: true);
   factory AddressBytesToStringRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return AddressBytesToStringRequest(decode.getField(1));

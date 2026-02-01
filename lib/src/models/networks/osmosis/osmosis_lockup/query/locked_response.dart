@@ -8,14 +8,20 @@ class OsmosisLockupLockedResponse extends CosmosMessage {
   factory OsmosisLockupLockedResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisLockupLockedResponse(
-        lock: decode.getResult(1)?.to<OsmosisLockupPeriodLock, List<int>>(
-            (e) => OsmosisLockupPeriodLock.deserialize(e)));
+      lock: decode
+          .getResult(1)
+          ?.to<OsmosisLockupPeriodLock, List<int>>(
+            (e) => OsmosisLockupPeriodLock.deserialize(e),
+          ),
+    );
   }
   factory OsmosisLockupLockedResponse.fromJson(Map<String, dynamic> json) {
     return OsmosisLockupLockedResponse(
-        lock: json["lock"] == null
-            ? null
-            : OsmosisLockupPeriodLock.fromJson(json["lock"]));
+      lock:
+          json["lock"] == null
+              ? null
+              : OsmosisLockupPeriodLock.fromJson(json["lock"]),
+    );
   }
 
   @override

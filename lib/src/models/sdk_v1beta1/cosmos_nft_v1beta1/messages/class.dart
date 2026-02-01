@@ -28,13 +28,14 @@ class NFTClass extends CosmosMessage {
 
   factory NFTClass.fromJson(Map<String, dynamic> json) {
     return NFTClass(
-        id: json["id"],
-        name: json["name"],
-        description: json["description"],
-        symbol: json["symbol"],
-        uriHash: json["uri_hash"],
-        uri: json["uri"],
-        data: json["data"] == null ? null : AnyMessage.fromJson(json["data"]));
+      id: json["id"],
+      name: json["name"],
+      description: json["description"],
+      symbol: json["symbol"],
+      uriHash: json["uri_hash"],
+      uri: json["uri"],
+      data: json["data"] == null ? null : AnyMessage.fromJson(json["data"]),
+    );
   }
 
   const NFTClass({
@@ -49,15 +50,16 @@ class NFTClass extends CosmosMessage {
   factory NFTClass.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return NFTClass(
-        id: decode.getField(1),
-        name: decode.getField(2),
-        symbol: decode.getField(3),
-        description: decode.getField(4),
-        uri: decode.getField(5),
-        uriHash: decode.getField(6),
-        data: decode
-            .getResult(7)
-            ?.to<AnyMessage, List<int>>((e) => AnyMessage.deserialize(e)));
+      id: decode.getField(1),
+      name: decode.getField(2),
+      symbol: decode.getField(3),
+      description: decode.getField(4),
+      uri: decode.getField(5),
+      uriHash: decode.getField(6),
+      data: decode
+          .getResult(7)
+          ?.to<AnyMessage, List<int>>((e) => AnyMessage.deserialize(e)),
+    );
   }
 
   @override

@@ -23,9 +23,12 @@ class Infraction implements CosmosEnum {
   static Infraction fromValue(int? value) {
     return values.firstWhere(
       (e) => e.value == value,
-      orElse: () => throw DartCosmosSdkPluginException(
-          "No Infraction element found for the given value.",
-          details: {"value": value}),
+      orElse:
+          () =>
+              throw DartCosmosSdkPluginException(
+                "No Infraction element found for the given value.",
+                details: {"value": value},
+              ),
     );
   }
 }

@@ -6,7 +6,8 @@ class OsmosisConcentratedLiquidityLiquidityNetInDirectionRequest
     extends CosmosMessage
     with
         QueryMessage<
-            OsmosisConcentratedLiquidityLiquidityNetInDirectionResponse> {
+          OsmosisConcentratedLiquidityLiquidityNetInDirectionResponse
+        > {
   final BigInt? poolId;
   final String? tokenIn;
   final BigInt? startTick;
@@ -14,23 +15,26 @@ class OsmosisConcentratedLiquidityLiquidityNetInDirectionRequest
   final BigInt? boundTick;
   final bool? useNoBound;
 
-  const OsmosisConcentratedLiquidityLiquidityNetInDirectionRequest(
-      {this.poolId,
-      this.tokenIn,
-      this.startTick,
-      this.useCurTick,
-      this.boundTick,
-      this.useNoBound});
+  const OsmosisConcentratedLiquidityLiquidityNetInDirectionRequest({
+    this.poolId,
+    this.tokenIn,
+    this.startTick,
+    this.useCurTick,
+    this.boundTick,
+    this.useNoBound,
+  });
   factory OsmosisConcentratedLiquidityLiquidityNetInDirectionRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityLiquidityNetInDirectionRequest(
-        poolId: decode.getField(1),
-        tokenIn: decode.getField(2),
-        startTick: decode.getField(3),
-        useCurTick: decode.getField(4),
-        boundTick: decode.getField(5),
-        useNoBound: decode.getField(6));
+      poolId: decode.getField(1),
+      tokenIn: decode.getField(2),
+      startTick: decode.getField(3),
+      useCurTick: decode.getField(4),
+      boundTick: decode.getField(5),
+      useNoBound: decode.getField(6),
+    );
   }
 
   @override
@@ -38,13 +42,13 @@ class OsmosisConcentratedLiquidityLiquidityNetInDirectionRequest
 
   @override
   Map<String, String?> get queryParameters => {
-        "pool_id": poolId?.toString(),
-        "token_in": tokenIn,
-        "start_tick": startTick?.toString(),
-        "use_cur_tick": useCurTick?.toString(),
-        "bound_tick": boundTick?.toString(),
-        "use_no_bound": useNoBound?.toString()
-      };
+    "pool_id": poolId?.toString(),
+    "token_in": tokenIn,
+    "start_tick": startTick?.toString(),
+    "use_cur_tick": useCurTick?.toString(),
+    "bound_tick": boundTick?.toString(),
+    "use_no_bound": useNoBound?.toString(),
+  };
 
   @override
   Map<String, dynamic> toJson() {
@@ -54,7 +58,7 @@ class OsmosisConcentratedLiquidityLiquidityNetInDirectionRequest
       "start_tick": startTick?.toString(),
       "use_cur_tick": useCurTick,
       "bound_tick": boundTick?.toString(),
-      "use_no_bound": useNoBound
+      "use_no_bound": useNoBound,
     };
   }
 
@@ -63,20 +67,30 @@ class OsmosisConcentratedLiquidityLiquidityNetInDirectionRequest
       OsmosisConcentratedLiquidityV1beta1Types.liquidityNetInDirectionRequest;
 
   @override
-  List get values =>
-      [poolId, tokenIn, startTick, useCurTick, boundTick, useNoBound];
+  List get values => [
+    poolId,
+    tokenIn,
+    startTick,
+    useCurTick,
+    boundTick,
+    useNoBound,
+  ];
 
   @override
   OsmosisConcentratedLiquidityLiquidityNetInDirectionResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityLiquidityNetInDirectionResponse.fromJson(
-        json);
+      json,
+    );
   }
 
   @override
   OsmosisConcentratedLiquidityLiquidityNetInDirectionResponse onResponse(
-      List<int> bytes) {
-    return OsmosisConcentratedLiquidityLiquidityNetInDirectionResponse
-        .deserialize(bytes);
+    List<int> bytes,
+  ) {
+    return OsmosisConcentratedLiquidityLiquidityNetInDirectionResponse.deserialize(
+      bytes,
+    );
   }
 }

@@ -21,29 +21,31 @@ class IbcChannelV2Payload extends CosmosMessage {
 
   /// the encoding used for the provided value.
   final List<int>? value;
-  IbcChannelV2Payload(
-      {required this.sourcePort,
-      required this.destinationPort,
-      required this.version,
-      required this.encoding,
-      List<int>? value})
-      : value = value?.asImmutableBytes;
+  IbcChannelV2Payload({
+    required this.sourcePort,
+    required this.destinationPort,
+    required this.version,
+    required this.encoding,
+    List<int>? value,
+  }) : value = value?.asImmutableBytes;
   factory IbcChannelV2Payload.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcChannelV2Payload(
-        sourcePort: decode.getField(1),
-        destinationPort: decode.getField(2),
-        encoding: decode.getField(4),
-        version: decode.getField(3),
-        value: decode.getField(5));
+      sourcePort: decode.getField(1),
+      destinationPort: decode.getField(2),
+      encoding: decode.getField(4),
+      version: decode.getField(3),
+      value: decode.getField(5),
+    );
   }
   factory IbcChannelV2Payload.fromJson(Map<String, dynamic> json) {
     return IbcChannelV2Payload(
-        sourcePort: json.as("source_port"),
-        destinationPort: json.as("destination_port"),
-        encoding: json.as("encoding"),
-        version: json.as("version"),
-        value: json.asBytes("value"));
+      sourcePort: json.as("source_port"),
+      destinationPort: json.as("destination_port"),
+      encoding: json.as("encoding"),
+      version: json.as("version"),
+      value: json.asBytes("value"),
+    );
   }
 
   @override
@@ -56,7 +58,7 @@ class IbcChannelV2Payload extends CosmosMessage {
       "destination_port": destinationPort,
       "encoding": encoding,
       "version": version,
-      "value": CosmosUtils.tryToBase64(value)
+      "value": CosmosUtils.tryToBase64(value),
     };
   }
 

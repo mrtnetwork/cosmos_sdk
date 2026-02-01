@@ -6,13 +6,16 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class MsgChannelUpgradeInitResponse extends CosmosMessage {
   final IbcChannelUpgrade upgrade;
   final BigInt? upgradeSequence;
-  const MsgChannelUpgradeInitResponse(
-      {required this.upgrade, this.upgradeSequence});
+  const MsgChannelUpgradeInitResponse({
+    required this.upgrade,
+    this.upgradeSequence,
+  });
   factory MsgChannelUpgradeInitResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgChannelUpgradeInitResponse(
-        upgrade: IbcChannelUpgrade.deserialize(decode.getField(1)),
-        upgradeSequence: decode.getField(2));
+      upgrade: IbcChannelUpgrade.deserialize(decode.getField(1)),
+      upgradeSequence: decode.getField(2),
+    );
   }
 
   @override
@@ -22,7 +25,7 @@ class MsgChannelUpgradeInitResponse extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "upgrade": upgrade.toJson(),
-      "upgrade_sequence": upgradeSequence?.toString()
+      "upgrade_sequence": upgradeSequence?.toString(),
     };
   }
 

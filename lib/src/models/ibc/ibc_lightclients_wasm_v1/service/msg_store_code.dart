@@ -16,16 +16,19 @@ class IbcLightClientsWasmMsgStoreCode
   /// wasm byte code of light client contract. It can be raw or gzip compressed
   final List<int>? wasmByteCode;
   IbcLightClientsWasmMsgStoreCode({this.signer, List<int>? wasmByteCode})
-      : wasmByteCode = BytesUtils.tryToBytes(wasmByteCode, unmodifiable: true);
+    : wasmByteCode = BytesUtils.tryToBytes(wasmByteCode, unmodifiable: true);
   factory IbcLightClientsWasmMsgStoreCode.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcLightClientsWasmMsgStoreCode(
-        signer: decode.getField(1), wasmByteCode: decode.getField(2));
+      signer: decode.getField(1),
+      wasmByteCode: decode.getField(2),
+    );
   }
   factory IbcLightClientsWasmMsgStoreCode.fromJson(Map<String, dynamic> json) {
     return IbcLightClientsWasmMsgStoreCode(
-        signer: json.as("signer"),
-        wasmByteCode: json.asBytes("wasm_byte_code"));
+      signer: json.as("signer"),
+      wasmByteCode: json.asBytes("wasm_byte_code"),
+    );
   }
 
   @override
@@ -35,7 +38,7 @@ class IbcLightClientsWasmMsgStoreCode
   Map<String, dynamic> toJson() {
     return {
       "signer": signer,
-      "wasm_byte_code": BytesUtils.tryToHexString(wasmByteCode)
+      "wasm_byte_code": BytesUtils.tryToHexString(wasmByteCode),
     };
   }
 

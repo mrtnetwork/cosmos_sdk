@@ -14,25 +14,33 @@ class EvmosInflationV1ExponentialCalculation extends CosmosMessage {
   final String? c;
   final String? bondingTarget;
   final String? maxVariance;
-  EvmosInflationV1ExponentialCalculation(
-      {this.a, this.r, this.c, this.bondingTarget, this.maxVariance});
+  EvmosInflationV1ExponentialCalculation({
+    this.a,
+    this.r,
+    this.c,
+    this.bondingTarget,
+    this.maxVariance,
+  });
   factory EvmosInflationV1ExponentialCalculation.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosInflationV1ExponentialCalculation(
-        a: decode.getField(1),
-        r: decode.getField(2),
-        c: decode.getField(3),
-        bondingTarget: decode.getField(4),
-        maxVariance: decode.getField(5));
+      a: decode.getField(1),
+      r: decode.getField(2),
+      c: decode.getField(3),
+      bondingTarget: decode.getField(4),
+      maxVariance: decode.getField(5),
+    );
   }
   factory EvmosInflationV1ExponentialCalculation.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return EvmosInflationV1ExponentialCalculation(
-        a: json.as("a"),
-        r: json.as("r"),
-        c: json.as("c"),
-        bondingTarget: json.as("bonding_target"),
-        maxVariance: json.as("max_variance"));
+      a: json.as("a"),
+      r: json.as("r"),
+      c: json.as("c"),
+      bondingTarget: json.as("bonding_target"),
+      maxVariance: json.as("max_variance"),
+    );
   }
   @override
   List get values => [a, r, c, bondingTarget, maxVariance];
@@ -49,7 +57,7 @@ class EvmosInflationV1ExponentialCalculation extends CosmosMessage {
       "r": r,
       "c": c,
       "bonding_target": bondingTarget,
-      "max_variance": maxVariance
+      "max_variance": maxVariance,
     };
   }
 }

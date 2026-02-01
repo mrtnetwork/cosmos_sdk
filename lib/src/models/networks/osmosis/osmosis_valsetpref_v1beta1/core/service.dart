@@ -14,67 +14,84 @@ abstract class OsmosisValSetprefV1Beta1<T extends CosmosMessage>
     extends OsmosisService<T> {
   const OsmosisValSetprefV1Beta1();
 
-  static T? fromJson<T extends OsmosisValSetprefV1Beta1>(
-      {required String typeUrl, required Map<String, dynamic> json}) {
+  static T? fromJson<T extends OsmosisValSetprefV1Beta1>({
+    required String typeUrl,
+    required Map<String, dynamic> json,
+  }) {
     final type = OsmosisValSetprefV1beta1Types.findService(typeUrl);
-    final OsmosisValSetprefV1Beta1? service = switch (type) {
-      OsmosisValSetprefV1beta1Types.msgDelegateBondedTokens =>
-        OsmosisValSetprefMsgDelegateBondedTokens.fromJson(json),
-      OsmosisValSetprefV1beta1Types.msgDelegateToValidatorSet =>
-        OsmosisValSetprefMsgDelegateToValidatorSet.fromJson(json),
-      OsmosisValSetprefV1beta1Types.msgWithdrawDelegationRewards =>
-        OsmosisValSetprefMsgWithdrawDelegationRewards.fromJson(json),
-      OsmosisValSetprefV1beta1Types.msgRedelegateValidatorSet =>
-        OsmosisValSetprefMsgRedelegateValidatorSet.fromJson(json),
-      OsmosisValSetprefV1beta1Types.msgSetValidatorSetPreference =>
-        OsmosisValSetprefMsgSetValidatorSetPreference.fromJson(json),
-      OsmosisValSetprefV1beta1Types.msgUndelegateFromRebalancedValidatorSet =>
-        OsmosisValSetprefMsgUndelegateFromRebalancedValidatorSet.fromJson(json),
-      OsmosisValSetprefV1beta1Types.msgUndelegateFromValidatorSet =>
-        OsmosisValSetprefMsgUndelegateFromValidatorSet.fromJson(json),
-      _ => null
-    } as OsmosisValSetprefV1Beta1?;
+    final OsmosisValSetprefV1Beta1? service =
+        switch (type) {
+              OsmosisValSetprefV1beta1Types.msgDelegateBondedTokens =>
+                OsmosisValSetprefMsgDelegateBondedTokens.fromJson(json),
+              OsmosisValSetprefV1beta1Types.msgDelegateToValidatorSet =>
+                OsmosisValSetprefMsgDelegateToValidatorSet.fromJson(json),
+              OsmosisValSetprefV1beta1Types.msgWithdrawDelegationRewards =>
+                OsmosisValSetprefMsgWithdrawDelegationRewards.fromJson(json),
+              OsmosisValSetprefV1beta1Types.msgRedelegateValidatorSet =>
+                OsmosisValSetprefMsgRedelegateValidatorSet.fromJson(json),
+              OsmosisValSetprefV1beta1Types.msgSetValidatorSetPreference =>
+                OsmosisValSetprefMsgSetValidatorSetPreference.fromJson(json),
+              OsmosisValSetprefV1beta1Types
+                  .msgUndelegateFromRebalancedValidatorSet =>
+                OsmosisValSetprefMsgUndelegateFromRebalancedValidatorSet.fromJson(
+                  json,
+                ),
+              OsmosisValSetprefV1beta1Types.msgUndelegateFromValidatorSet =>
+                OsmosisValSetprefMsgUndelegateFromValidatorSet.fromJson(json),
+              _ => null,
+            }
+            as OsmosisValSetprefV1Beta1?;
 
     if (service == null) return null;
     if (service is! T) {
-      throw DartCosmosSdkPluginException("Invalid ValSetprefV1Beta1 Service.",
-          details: {
-            "excepted": "$T",
-            "service": service.runtimeType.toString()
-          });
+      throw DartCosmosSdkPluginException(
+        "Invalid ValSetprefV1Beta1 Service.",
+        details: {"excepted": "$T", "service": service.runtimeType.toString()},
+      );
     }
     return service;
   }
 
-  static T? deserialize<T extends OsmosisValSetprefV1Beta1>(
-      {required String typeUrl, required List<int> bytes}) {
+  static T? deserialize<T extends OsmosisValSetprefV1Beta1>({
+    required String typeUrl,
+    required List<int> bytes,
+  }) {
     final type = OsmosisValSetprefV1beta1Types.findService(typeUrl);
-    final OsmosisValSetprefV1Beta1? service = switch (type) {
-      OsmosisValSetprefV1beta1Types.msgDelegateBondedTokens =>
-        OsmosisValSetprefMsgDelegateBondedTokens.deserialize(bytes),
-      OsmosisValSetprefV1beta1Types.msgDelegateToValidatorSet =>
-        OsmosisValSetprefMsgDelegateToValidatorSet.deserialize(bytes),
-      OsmosisValSetprefV1beta1Types.msgWithdrawDelegationRewards =>
-        OsmosisValSetprefMsgWithdrawDelegationRewards.deserialize(bytes),
-      OsmosisValSetprefV1beta1Types.msgRedelegateValidatorSet =>
-        OsmosisValSetprefMsgRedelegateValidatorSet.deserialize(bytes),
-      OsmosisValSetprefV1beta1Types.msgSetValidatorSetPreference =>
-        OsmosisValSetprefMsgSetValidatorSetPreference.deserialize(bytes),
-      OsmosisValSetprefV1beta1Types.msgUndelegateFromRebalancedValidatorSet =>
-        OsmosisValSetprefMsgUndelegateFromRebalancedValidatorSet.deserialize(
-            bytes),
-      OsmosisValSetprefV1beta1Types.msgUndelegateFromValidatorSet =>
-        OsmosisValSetprefMsgUndelegateFromValidatorSet.deserialize(bytes),
-      _ => null
-    } as OsmosisValSetprefV1Beta1?;
+    final OsmosisValSetprefV1Beta1? service =
+        switch (type) {
+              OsmosisValSetprefV1beta1Types.msgDelegateBondedTokens =>
+                OsmosisValSetprefMsgDelegateBondedTokens.deserialize(bytes),
+              OsmosisValSetprefV1beta1Types.msgDelegateToValidatorSet =>
+                OsmosisValSetprefMsgDelegateToValidatorSet.deserialize(bytes),
+              OsmosisValSetprefV1beta1Types.msgWithdrawDelegationRewards =>
+                OsmosisValSetprefMsgWithdrawDelegationRewards.deserialize(
+                  bytes,
+                ),
+              OsmosisValSetprefV1beta1Types.msgRedelegateValidatorSet =>
+                OsmosisValSetprefMsgRedelegateValidatorSet.deserialize(bytes),
+              OsmosisValSetprefV1beta1Types.msgSetValidatorSetPreference =>
+                OsmosisValSetprefMsgSetValidatorSetPreference.deserialize(
+                  bytes,
+                ),
+              OsmosisValSetprefV1beta1Types
+                  .msgUndelegateFromRebalancedValidatorSet =>
+                OsmosisValSetprefMsgUndelegateFromRebalancedValidatorSet.deserialize(
+                  bytes,
+                ),
+              OsmosisValSetprefV1beta1Types.msgUndelegateFromValidatorSet =>
+                OsmosisValSetprefMsgUndelegateFromValidatorSet.deserialize(
+                  bytes,
+                ),
+              _ => null,
+            }
+            as OsmosisValSetprefV1Beta1?;
 
     if (service == null) return null;
     if (service is! T) {
-      throw DartCosmosSdkPluginException("Invalid ValSetprefV1Beta1 Service.",
-          details: {
-            "excepted": "$T",
-            "service": service.runtimeType.toString()
-          });
+      throw DartCosmosSdkPluginException(
+        "Invalid ValSetprefV1Beta1 Service.",
+        details: {"excepted": "$T", "service": service.runtimeType.toString()},
+      );
     }
     return service;
   }

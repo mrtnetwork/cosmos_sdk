@@ -17,19 +17,18 @@ class Entry extends CosmosMessage {
   factory Entry.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Entry(
-        owner: decode.getField(1),
-        nfts: decode
-            .getFields<List<int>>(2)
-            .map((e) => NFT.deserialize(e))
-            .toList());
+      owner: decode.getField(1),
+      nfts:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => NFT.deserialize(e))
+              .toList(),
+    );
   }
 
   @override
   Map<String, dynamic> toJson() {
-    return {
-      'owner': owner,
-      'nfts': nfts.map((nft) => nft.toJson()).toList(),
-    };
+    return {'owner': owner, 'nfts': nfts.map((nft) => nft.toJson()).toList()};
   }
 
   @override

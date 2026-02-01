@@ -12,9 +12,10 @@ class IbcChannelV2QueryUnreceivedPacketsRequest extends CosmosMessage
   /// list of packet sequences
   final List<BigInt> sequences;
 
-  IbcChannelV2QueryUnreceivedPacketsRequest(
-      {required this.clientId, required List<BigInt> sequences})
-      : sequences = sequences.immutable;
+  IbcChannelV2QueryUnreceivedPacketsRequest({
+    required this.clientId,
+    required List<BigInt> sequences,
+  }) : sequences = sequences.immutable;
 
   @override
   List<int> get fieldIds => [1, 2];
@@ -23,7 +24,7 @@ class IbcChannelV2QueryUnreceivedPacketsRequest extends CosmosMessage
   Map<String, dynamic> toJson() {
     return {
       "client_id": clientId,
-      "sequences": sequences.map((e) => e.toString()).toList()
+      "sequences": sequences.map((e) => e.toString()).toList(),
     };
   }
 
@@ -40,7 +41,8 @@ class IbcChannelV2QueryUnreceivedPacketsRequest extends CosmosMessage
 
   @override
   IbcChannelV2QueryUnreceivedPacketsResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return IbcChannelV2QueryUnreceivedPacketsResponse.fromJson(json);
   }
 

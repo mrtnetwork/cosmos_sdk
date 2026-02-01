@@ -15,8 +15,9 @@ class QueryIncentivizedPacketRequest extends CosmosMessage
   factory QueryIncentivizedPacketRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryIncentivizedPacketRequest(
-        packetId: IbcChannelPacketId.deserialize(decode.getField(1)),
-        queryHeight: decode.getField(2));
+      packetId: IbcChannelPacketId.deserialize(decode.getField(1)),
+      queryHeight: decode.getField(2),
+    );
   }
 
   @override
@@ -26,7 +27,7 @@ class QueryIncentivizedPacketRequest extends CosmosMessage
   Map<String, dynamic> toJson() {
     return {
       "packet_id": packetId.toJson(),
-      "query_height": queryHeight?.toString()
+      "query_height": queryHeight?.toString(),
     };
   }
 
@@ -46,6 +47,9 @@ class QueryIncentivizedPacketRequest extends CosmosMessage
   }
 
   @override
-  List<String> get pathParameters =>
-      [packetId.channelId, packetId.portId, packetId.sequence.toString()];
+  List<String> get pathParameters => [
+    packetId.channelId,
+    packetId.portId,
+    packetId.sequence.toString(),
+  ];
 }

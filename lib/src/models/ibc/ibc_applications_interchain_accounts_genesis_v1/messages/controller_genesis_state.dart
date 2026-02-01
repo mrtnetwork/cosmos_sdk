@@ -11,28 +11,32 @@ class ControllerGenesisState extends CosmosMessage {
   final List<RegisteredInterchainAccount> interchainAccounts;
   final List<String>? ports;
   final InterchainAccountsControllerParams params;
-  ControllerGenesisState(
-      {required List<ActiveChannel> activeChannels,
-      required List<RegisteredInterchainAccount> interchainAccounts,
-      List<String>? ports,
-      required this.params})
-      : activeChannels = activeChannels.immutable,
-        interchainAccounts = interchainAccounts.immutable,
-        ports = ports?.emptyAsNull?.immutable;
+  ControllerGenesisState({
+    required List<ActiveChannel> activeChannels,
+    required List<RegisteredInterchainAccount> interchainAccounts,
+    List<String>? ports,
+    required this.params,
+  }) : activeChannels = activeChannels.immutable,
+       interchainAccounts = interchainAccounts.immutable,
+       ports = ports?.emptyAsNull?.immutable;
   factory ControllerGenesisState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ControllerGenesisState(
-        activeChannels: decode
-            .getFields<List<int>>(1)
-            .map((e) => ActiveChannel.deserialize(e))
-            .toList(),
-        interchainAccounts: decode
-            .getFields<List<int>>(2)
-            .map((e) => RegisteredInterchainAccount.deserialize(e))
-            .toList(),
-        ports: decode.getFields<String>(3),
-        params:
-            InterchainAccountsControllerParams.deserialize(decode.getField(4)));
+      activeChannels:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => ActiveChannel.deserialize(e))
+              .toList(),
+      interchainAccounts:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => RegisteredInterchainAccount.deserialize(e))
+              .toList(),
+      ports: decode.getFields<String>(3),
+      params: InterchainAccountsControllerParams.deserialize(
+        decode.getField(4),
+      ),
+    );
   }
 
   @override
@@ -44,7 +48,7 @@ class ControllerGenesisState extends CosmosMessage {
       "active_channels": activeChannels.map((e) => e.toJson()).toList(),
       "interchain_accounts": interchainAccounts.map((e) => e.toJson()).toList(),
       "ports": ports,
-      "params": params.toJson()
+      "params": params.toJson(),
     };
   }
 

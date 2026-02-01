@@ -8,20 +8,23 @@ import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_staking_v1beta1/types/t
 class RedelegationEntryResponse extends CosmosMessage {
   final RedelegationEntry redelegationEntry;
   final BigInt balance;
-  const RedelegationEntryResponse(
-      {required this.redelegationEntry, required this.balance});
+  const RedelegationEntryResponse({
+    required this.redelegationEntry,
+    required this.balance,
+  });
   factory RedelegationEntryResponse.fromJson(Map<String, dynamic> json) {
     return RedelegationEntryResponse(
-        redelegationEntry:
-            RedelegationEntry.fromJson(json["redelegation_entry"]),
-        balance: BigintUtils.parse(json["balance"]));
+      redelegationEntry: RedelegationEntry.fromJson(json["redelegation_entry"]),
+      balance: BigintUtils.parse(json["balance"]),
+    );
   }
 
   factory RedelegationEntryResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return RedelegationEntryResponse(
-        redelegationEntry: RedelegationEntry.deserialize(decode.getField(1)),
-        balance: BigintUtils.parse(decode.getField<String>(2)));
+      redelegationEntry: RedelegationEntry.deserialize(decode.getField(1)),
+      balance: BigintUtils.parse(decode.getField<String>(2)),
+    );
   }
 
   @override
@@ -31,7 +34,7 @@ class RedelegationEntryResponse extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "redelegation_entry": redelegationEntry.toJson(),
-      "balance": balance.toString()
+      "balance": balance.toString(),
     };
   }
 

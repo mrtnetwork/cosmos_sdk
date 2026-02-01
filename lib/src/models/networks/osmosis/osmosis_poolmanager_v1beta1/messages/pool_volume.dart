@@ -11,17 +11,20 @@ class OsmosisPoolManagerPoolVolume extends CosmosMessage {
   /// [poolVolume] is the cumulative volume of the pool.
   final List<Coin> poolVolume;
 
-  OsmosisPoolManagerPoolVolume(
-      {required this.poolId, required List<Coin> poolVolume})
-      : poolVolume = poolVolume.immutable;
+  OsmosisPoolManagerPoolVolume({
+    required this.poolId,
+    required List<Coin> poolVolume,
+  }) : poolVolume = poolVolume.immutable;
   factory OsmosisPoolManagerPoolVolume.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolManagerPoolVolume(
-        poolId: decode.getField(1),
-        poolVolume: decode
-            .getFields<List<int>>(2)
-            .map((e) => Coin.deserialize(e))
-            .toList());
+      poolId: decode.getField(1),
+      poolVolume:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
+    );
   }
 
   @override
@@ -31,7 +34,7 @@ class OsmosisPoolManagerPoolVolume extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "pool_id": poolId?.toString(),
-      "pool_volume": poolVolume.map((e) => e.toJson()).toList()
+      "pool_volume": poolVolume.map((e) => e.toJson()).toList(),
     };
   }
 

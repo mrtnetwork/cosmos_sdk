@@ -8,7 +8,9 @@ class ThorchainTHORNameAlias extends CosmosMessage {
   factory ThorchainTHORNameAlias.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainTHORNameAlias(
-        chain: decode.getField(1), address: decode.getField(2));
+      chain: decode.getField(1),
+      address: decode.getField(2),
+    );
   }
 
   @override

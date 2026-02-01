@@ -24,11 +24,12 @@ class IbcTendermintHeader extends CosmosMessage {
   final ValidatorSet? validatorSet;
   final IbcClientHeight trustedHeight;
   final ValidatorSet? trustedValidators;
-  IbcTendermintHeader(
-      {this.signedHeader,
-      this.validatorSet,
-      required this.trustedHeight,
-      this.trustedValidators});
+  IbcTendermintHeader({
+    this.signedHeader,
+    this.validatorSet,
+    required this.trustedHeight,
+    this.trustedValidators,
+  });
   factory IbcTendermintHeader.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcTendermintHeader(
@@ -54,7 +55,7 @@ class IbcTendermintHeader extends CosmosMessage {
       "signed_header": signedHeader?.toJson(),
       "validator_set": validatorSet?.toJson(),
       "trusted_height": trustedHeight.toJson(),
-      "trusted_validators": trustedValidators?.toJson()
+      "trusted_validators": trustedValidators?.toJson(),
     };
   }
 
@@ -62,6 +63,10 @@ class IbcTendermintHeader extends CosmosMessage {
   TypeUrl get typeUrl => IbcTypes.ibcTendermintV1Header;
 
   @override
-  List get values =>
-      [signedHeader, validatorSet, trustedHeight, trustedValidators];
+  List get values => [
+    signedHeader,
+    validatorSet,
+    trustedHeight,
+    trustedValidators,
+  ];
 }

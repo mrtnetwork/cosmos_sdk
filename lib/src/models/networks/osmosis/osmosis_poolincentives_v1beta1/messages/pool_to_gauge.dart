@@ -5,14 +5,18 @@ class OsmosisPoolincentivesPoolToGauge extends CosmosMessage {
   final BigInt? poolId;
   final BigInt? gaugeId;
   final ProtobufDuration duration;
-  OsmosisPoolincentivesPoolToGauge(
-      {this.poolId, this.gaugeId, required this.duration});
+  OsmosisPoolincentivesPoolToGauge({
+    this.poolId,
+    this.gaugeId,
+    required this.duration,
+  });
   factory OsmosisPoolincentivesPoolToGauge.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolincentivesPoolToGauge(
-        poolId: decode.getField(1),
-        gaugeId: decode.getField(2),
-        duration: ProtobufDuration.deserialize(decode.getField(3)));
+      poolId: decode.getField(1),
+      gaugeId: decode.getField(2),
+      duration: ProtobufDuration.deserialize(decode.getField(3)),
+    );
   }
 
   @override
@@ -23,7 +27,7 @@ class OsmosisPoolincentivesPoolToGauge extends CosmosMessage {
     return {
       "pool_id": poolId?.toString(),
       "gauge_id": gaugeId?.toString(),
-      "duration": duration.toJson()
+      "duration": duration.toJson(),
     };
   }
 

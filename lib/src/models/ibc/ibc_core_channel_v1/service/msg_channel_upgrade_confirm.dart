@@ -21,44 +21,48 @@ class MsgChannelUpgradeConfirm
   final List<int>? proofUpgrade;
   final IbcClientHeight proofHeight;
   final String? signer;
-  MsgChannelUpgradeConfirm(
-      {this.portId,
-      this.channelId,
-      this.counterpartyChannelState,
-      required this.counterpartyUpgrade,
-      List<int>? proofChannel,
-      List<int>? proofUpgrade,
-      required this.proofHeight,
-      this.signer})
-      : proofChannel = BytesUtils.tryToBytes(proofChannel, unmodifiable: true),
-        proofUpgrade = BytesUtils.tryToBytes(proofUpgrade, unmodifiable: true);
+  MsgChannelUpgradeConfirm({
+    this.portId,
+    this.channelId,
+    this.counterpartyChannelState,
+    required this.counterpartyUpgrade,
+    List<int>? proofChannel,
+    List<int>? proofUpgrade,
+    required this.proofHeight,
+    this.signer,
+  }) : proofChannel = BytesUtils.tryToBytes(proofChannel, unmodifiable: true),
+       proofUpgrade = BytesUtils.tryToBytes(proofUpgrade, unmodifiable: true);
   factory MsgChannelUpgradeConfirm.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgChannelUpgradeConfirm(
-        portId: decode.getField(1),
-        channelId: decode.getField(2),
-        counterpartyChannelState: decode
-            .getResult(3)
-            ?.to<IbcChannelState, int>((e) => IbcChannelState.fromValue(e)),
-        counterpartyUpgrade: IbcChannelUpgrade.deserialize(decode.getField(4)),
-        proofChannel: decode.getField(5),
-        proofUpgrade: decode.getField(6),
-        proofHeight: IbcClientHeight.deserialize(decode.getField(7)),
-        signer: decode.getField(8));
+      portId: decode.getField(1),
+      channelId: decode.getField(2),
+      counterpartyChannelState: decode
+          .getResult(3)
+          ?.to<IbcChannelState, int>((e) => IbcChannelState.fromValue(e)),
+      counterpartyUpgrade: IbcChannelUpgrade.deserialize(decode.getField(4)),
+      proofChannel: decode.getField(5),
+      proofUpgrade: decode.getField(6),
+      proofHeight: IbcClientHeight.deserialize(decode.getField(7)),
+      signer: decode.getField(8),
+    );
   }
   factory MsgChannelUpgradeConfirm.fromJson(Map<String, dynamic> json) {
     return MsgChannelUpgradeConfirm(
-        portId: json.as("port_id"),
-        channelId: json.as("channel_id"),
-        counterpartyChannelState: json.maybeAs<IbcChannelState, String>(
-            key: "counterparty_channel_state",
-            onValue: IbcChannelState.fromValue),
-        counterpartyUpgrade:
-            IbcChannelUpgrade.fromJson(json.asMap("counterparty_upgrade")),
-        proofChannel: json.asBytes("proof_channel"),
-        proofUpgrade: json.asBytes("proof_upgrade"),
-        proofHeight: IbcClientHeight.fromJson(json.asMap("proof_height")),
-        signer: json.as("signer"));
+      portId: json.as("port_id"),
+      channelId: json.as("channel_id"),
+      counterpartyChannelState: json.maybeAs<IbcChannelState, String>(
+        key: "counterparty_channel_state",
+        onValue: IbcChannelState.fromValue,
+      ),
+      counterpartyUpgrade: IbcChannelUpgrade.fromJson(
+        json.asMap("counterparty_upgrade"),
+      ),
+      proofChannel: json.asBytes("proof_channel"),
+      proofUpgrade: json.asBytes("proof_upgrade"),
+      proofHeight: IbcClientHeight.fromJson(json.asMap("proof_height")),
+      signer: json.as("signer"),
+    );
   }
   @override
   List<int> get fieldIds => [1, 2, 3, 4, 5, 6, 7, 8];
@@ -73,7 +77,7 @@ class MsgChannelUpgradeConfirm
       "proof_channel": BytesUtils.tryToBytes(proofChannel),
       "proof_upgrade": BytesUtils.tryToBytes(proofUpgrade),
       "proof_height": proofHeight.toJson(),
-      "signer": signer
+      "signer": signer,
     };
   }
 
@@ -82,15 +86,15 @@ class MsgChannelUpgradeConfirm
 
   @override
   List get values => [
-        portId,
-        channelId,
-        counterpartyChannelState?.value,
-        counterpartyUpgrade,
-        proofChannel,
-        proofUpgrade,
-        proofHeight,
-        signer
-      ];
+    portId,
+    channelId,
+    counterpartyChannelState?.value,
+    counterpartyUpgrade,
+    proofChannel,
+    proofUpgrade,
+    proofHeight,
+    signer,
+  ];
 
   @override
   List<String?> get signers => [signer];

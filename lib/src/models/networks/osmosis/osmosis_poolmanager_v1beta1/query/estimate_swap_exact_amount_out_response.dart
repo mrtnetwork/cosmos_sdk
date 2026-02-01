@@ -6,17 +6,22 @@ class OsmosisPoolManagerEstimateSwapExactAmountOutResponse
     extends CosmosMessage {
   final BigInt tokenInAmount;
   const OsmosisPoolManagerEstimateSwapExactAmountOutResponse(
-      this.tokenInAmount);
+    this.tokenInAmount,
+  );
   factory OsmosisPoolManagerEstimateSwapExactAmountOutResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolManagerEstimateSwapExactAmountOutResponse(
-        BigInt.parse(decode.getField(1)));
+      BigInt.parse(decode.getField(1)),
+    );
   }
   factory OsmosisPoolManagerEstimateSwapExactAmountOutResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisPoolManagerEstimateSwapExactAmountOutResponse(
-        BigintUtils.parse(json["token_in_amount"]));
+      BigintUtils.parse(json["token_in_amount"]),
+    );
   }
 
   @override

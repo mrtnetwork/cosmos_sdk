@@ -8,22 +8,29 @@ class OsmosisConcentratedLiquidityMsgAddToPositionResponse
   final BigInt amount0;
   final BigInt amount1;
 
-  OsmosisConcentratedLiquidityMsgAddToPositionResponse(
-      {this.positionId, required this.amount0, required this.amount1});
+  OsmosisConcentratedLiquidityMsgAddToPositionResponse({
+    this.positionId,
+    required this.amount0,
+    required this.amount1,
+  });
   factory OsmosisConcentratedLiquidityMsgAddToPositionResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityMsgAddToPositionResponse(
-        positionId: decode.getField(1),
-        amount0: BigInt.parse(decode.getField(2)),
-        amount1: BigInt.parse(decode.getField(3)));
+      positionId: decode.getField(1),
+      amount0: BigInt.parse(decode.getField(2)),
+      amount1: BigInt.parse(decode.getField(3)),
+    );
   }
   factory OsmosisConcentratedLiquidityMsgAddToPositionResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityMsgAddToPositionResponse(
-        positionId: BigintUtils.tryParse(json["position_id"]),
-        amount0: BigintUtils.parse(json["amount0"]),
-        amount1: BigintUtils.parse(json["amount1"]));
+      positionId: BigintUtils.tryParse(json["position_id"]),
+      amount0: BigintUtils.parse(json["amount0"]),
+      amount1: BigintUtils.parse(json["amount1"]),
+    );
   }
 
   @override
@@ -34,7 +41,7 @@ class OsmosisConcentratedLiquidityMsgAddToPositionResponse
     return {
       "position_id": positionId?.toString(),
       "amount0": amount0.toString(),
-      "amount1": amount1.toString()
+      "amount1": amount1.toString(),
     };
   }
 

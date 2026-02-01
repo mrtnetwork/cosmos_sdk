@@ -7,25 +7,31 @@ import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// MsgUpdateParams defines a Msg for updating the x/evm module parameters.
 class EvmosEthermintEVMV1MsgUpdateParams
-    extends EvmosService<EmptyServiceRequestResponse> with AminoMessage {
+    extends EvmosService<EmptyServiceRequestResponse>
+    with AminoMessage {
   /// authority is the address of the governance account.
   final String authority;
   // params defines the x/evm parameters to update.
   // NOTE: All parameters must be supplied.
   final EvmosEthermintEVMV1Params params;
-  const EvmosEthermintEVMV1MsgUpdateParams(
-      {required this.authority, required this.params});
+  const EvmosEthermintEVMV1MsgUpdateParams({
+    required this.authority,
+    required this.params,
+  });
   factory EvmosEthermintEVMV1MsgUpdateParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosEthermintEVMV1MsgUpdateParams(
-        authority: decode.getField(1),
-        params: EvmosEthermintEVMV1Params.deserialize(decode.getField(2)));
+      authority: decode.getField(1),
+      params: EvmosEthermintEVMV1Params.deserialize(decode.getField(2)),
+    );
   }
   factory EvmosEthermintEVMV1MsgUpdateParams.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return EvmosEthermintEVMV1MsgUpdateParams(
-        authority: json.as("authority"),
-        params: EvmosEthermintEVMV1Params.fromJson(json.asMap("params")));
+      authority: json.as("authority"),
+      params: EvmosEthermintEVMV1Params.fromJson(json.asMap("params")),
+    );
   }
 
   @override
@@ -45,7 +51,8 @@ class EvmosEthermintEVMV1MsgUpdateParams
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        EvmosErc20V1Types.evmV1MsgUpdateParamsResponse);
+      EvmosErc20V1Types.evmV1MsgUpdateParamsResponse,
+    );
   }
 
   @override

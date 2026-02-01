@@ -34,7 +34,8 @@ class EvmosEthermintEVMV1QueryBalanceRequest extends CosmosMessage
 
   @override
   EvmosEthermintEVMV1QueryBalanceResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return EvmosEthermintEVMV1QueryBalanceResponse.fromJson(json);
   }
 

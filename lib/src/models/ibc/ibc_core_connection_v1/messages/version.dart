@@ -11,16 +11,19 @@ class IbcConnectionVersion extends CosmosMessage {
   final List<String>? features;
   factory IbcConnectionVersion.fromJson(Map<String, dynamic> json) {
     return IbcConnectionVersion(
-        identifier: json["identifier"],
-        features: (json["features"] as List?)?.cast());
+      identifier: json["identifier"],
+      features: (json["features"] as List?)?.cast(),
+    );
   }
 
   IbcConnectionVersion({this.identifier, List<String>? features})
-      : features = features?.immutable;
+    : features = features?.immutable;
   factory IbcConnectionVersion.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcConnectionVersion(
-        identifier: decode.getField(1), features: decode.getFields<String>(2));
+      identifier: decode.getField(1),
+      features: decode.getFields<String>(2),
+    );
   }
 
   @override
@@ -28,10 +31,7 @@ class IbcConnectionVersion extends CosmosMessage {
 
   @override
   Map<String, dynamic> toJson() {
-    return {
-      "identifier": identifier,
-      "features": features,
-    };
+    return {"identifier": identifier, "features": features};
   }
 
   @override

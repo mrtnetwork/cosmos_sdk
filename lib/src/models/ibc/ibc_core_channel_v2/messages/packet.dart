@@ -24,35 +24,39 @@ class IbcChannelV2Packet extends CosmosMessage {
   /// a list of payloads, each one for a specific application.
   final List<IbcChannelV2Payload>? payloads;
 
-  IbcChannelV2Packet(
-      {required this.sequence,
-      required this.sourceClient,
-      required this.destinationClient,
-      required this.timeoutTimestamp,
-      List<IbcChannelV2Payload>? payloads})
-      : payloads = payloads?.immutable;
+  IbcChannelV2Packet({
+    required this.sequence,
+    required this.sourceClient,
+    required this.destinationClient,
+    required this.timeoutTimestamp,
+    List<IbcChannelV2Payload>? payloads,
+  }) : payloads = payloads?.immutable;
   factory IbcChannelV2Packet.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcChannelV2Packet(
-        sequence: decode.getField(1),
-        destinationClient: decode.getField(3),
-        sourceClient: decode.getField(2),
-        timeoutTimestamp: decode.getField(4),
-        payloads: decode
-            .getFields<List<int>>(5)
-            .map((e) => IbcChannelV2Payload.deserialize(e))
-            .toList());
+      sequence: decode.getField(1),
+      destinationClient: decode.getField(3),
+      sourceClient: decode.getField(2),
+      timeoutTimestamp: decode.getField(4),
+      payloads:
+          decode
+              .getFields<List<int>>(5)
+              .map((e) => IbcChannelV2Payload.deserialize(e))
+              .toList(),
+    );
   }
   factory IbcChannelV2Packet.fromJson(Map<String, dynamic> json) {
     return IbcChannelV2Packet(
-        sequence: json.asBigInt("sequence"),
-        sourceClient: json.as("source_client"),
-        destinationClient: json.as("destination_client"),
-        timeoutTimestamp: json.asBigInt("timeout_timestamp"),
-        payloads: json
-            .asListOfMap("payloads")
-            ?.map(IbcChannelV2Payload.fromJson)
-            .toList());
+      sequence: json.asBigInt("sequence"),
+      sourceClient: json.as("source_client"),
+      destinationClient: json.as("destination_client"),
+      timeoutTimestamp: json.asBigInt("timeout_timestamp"),
+      payloads:
+          json
+              .asListOfMap("payloads")
+              ?.map(IbcChannelV2Payload.fromJson)
+              .toList(),
+    );
   }
 
   @override
@@ -65,7 +69,7 @@ class IbcChannelV2Packet extends CosmosMessage {
       "source_client": sourceClient,
       "destination_client": destinationClient,
       "timeout_timestamp": timeoutTimestamp,
-      "payloads": payloads?.map((e) => e.toJson()).toList()
+      "payloads": payloads?.map((e) => e.toJson()).toList(),
     };
   }
 
@@ -73,6 +77,11 @@ class IbcChannelV2Packet extends CosmosMessage {
   TypeUrl get typeUrl => IbcTypes.channelV2Packet;
 
   @override
-  List get values =>
-      [sequence, sourceClient, destinationClient, timeoutTimestamp, payloads];
+  List get values => [
+    sequence,
+    sourceClient,
+    destinationClient,
+    timeoutTimestamp,
+    payloads,
+  ];
 }

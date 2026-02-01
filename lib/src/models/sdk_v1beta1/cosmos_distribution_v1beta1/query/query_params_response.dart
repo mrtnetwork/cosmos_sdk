@@ -10,11 +10,13 @@ class DistributionQueryParamsResponse extends CosmosMessage {
   factory DistributionQueryParamsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionQueryParamsResponse(
-        DistributionParams.deserialize(decode.getField(1)));
+      DistributionParams.deserialize(decode.getField(1)),
+    );
   }
   factory DistributionQueryParamsResponse.fromJson(Map<String, dynamic> json) {
     return DistributionQueryParamsResponse(
-        DistributionParams.fromJson(json["params"]));
+      DistributionParams.fromJson(json["params"]),
+    );
   }
 
   @override

@@ -16,24 +16,29 @@ class IbcChannelV2QueryPacketAcknowledgementResponse extends CosmosMessage {
   /// height at which the proof was retrieved
   final IbcClientHeight proofHeight;
   factory IbcChannelV2QueryPacketAcknowledgementResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return IbcChannelV2QueryPacketAcknowledgementResponse(
       acknowledgement: json.asBytes("acknowledgement"),
       proof: json.asBytes("proof"),
       proofHeight: IbcClientHeight.fromJson(json.asMap("proof_height")),
     );
   }
-  IbcChannelV2QueryPacketAcknowledgementResponse(
-      {List<int>? acknowledgement, List<int>? proof, required this.proofHeight})
-      : proof = proof?.asImmutableBytes,
-        acknowledgement = acknowledgement?.asImmutableBytes;
+  IbcChannelV2QueryPacketAcknowledgementResponse({
+    List<int>? acknowledgement,
+    List<int>? proof,
+    required this.proofHeight,
+  }) : proof = proof?.asImmutableBytes,
+       acknowledgement = acknowledgement?.asImmutableBytes;
   factory IbcChannelV2QueryPacketAcknowledgementResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcChannelV2QueryPacketAcknowledgementResponse(
-        acknowledgement: decode.getField(1),
-        proof: decode.getField(2),
-        proofHeight: IbcClientHeight.deserialize(decode.getField(3)));
+      acknowledgement: decode.getField(1),
+      proof: decode.getField(2),
+      proofHeight: IbcClientHeight.deserialize(decode.getField(3)),
+    );
   }
 
   @override
@@ -44,7 +49,7 @@ class IbcChannelV2QueryPacketAcknowledgementResponse extends CosmosMessage {
     return {
       "acknowledgement": CosmosUtils.tryToBase64(acknowledgement),
       "proof": CosmosUtils.tryToBase64(proof),
-      "proof_height": proofHeight.toJson()
+      "proof_height": proofHeight.toJson(),
     };
   }
 

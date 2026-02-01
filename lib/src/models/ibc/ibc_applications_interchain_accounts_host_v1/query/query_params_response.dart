@@ -9,20 +9,26 @@ class InterchainAccountsHostQueryParamsResponse extends CosmosMessage {
 
   const InterchainAccountsHostQueryParamsResponse({this.params});
   factory InterchainAccountsHostQueryParamsResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return InterchainAccountsHostQueryParamsResponse(
-        params: json["params"] == null
-            ? null
-            : InterchainAccountsHostParams.fromJson(json["params"]));
+      params:
+          json["params"] == null
+              ? null
+              : InterchainAccountsHostParams.fromJson(json["params"]),
+    );
   }
   factory InterchainAccountsHostQueryParamsResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return InterchainAccountsHostQueryParamsResponse(
-        params: decode
-            .getResult(1)
-            ?.to<InterchainAccountsHostParams, List<int>>(
-                (e) => InterchainAccountsHostParams.deserialize(e)));
+      params: decode
+          .getResult(1)
+          ?.to<InterchainAccountsHostParams, List<int>>(
+            (e) => InterchainAccountsHostParams.deserialize(e),
+          ),
+    );
   }
   @override
   List<int> get fieldIds => [1];

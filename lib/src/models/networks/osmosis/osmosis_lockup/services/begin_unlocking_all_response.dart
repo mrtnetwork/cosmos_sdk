@@ -5,17 +5,20 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
 class OsmosisLockupMsgBeginUnlockingAllResponse extends CosmosMessage {
   final List<OsmosisLockupPeriodLock>? unlocks;
-  OsmosisLockupMsgBeginUnlockingAllResponse(
-      {List<OsmosisLockupPeriodLock>? unlocks})
-      : unlocks = unlocks?.emptyAsNull?.immutable;
+  OsmosisLockupMsgBeginUnlockingAllResponse({
+    List<OsmosisLockupPeriodLock>? unlocks,
+  }) : unlocks = unlocks?.emptyAsNull?.immutable;
   factory OsmosisLockupMsgBeginUnlockingAllResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisLockupMsgBeginUnlockingAllResponse(
-        unlocks: decode
-            .getFields<List<int>>(1)
-            .map((e) => OsmosisLockupPeriodLock.deserialize(e))
-            .toList());
+      unlocks:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => OsmosisLockupPeriodLock.deserialize(e))
+              .toList(),
+    );
   }
 
   @override

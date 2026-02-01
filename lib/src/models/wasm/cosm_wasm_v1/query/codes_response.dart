@@ -11,16 +11,18 @@ class CosmWasmV1QueryCodesResponse extends CosmosMessage {
 
   /// pagination defines the pagination in the response.
   final PageResponse? pagination;
-  CosmWasmV1QueryCodesResponse(
-      {required List<CosmWasmV1CodeInfoResponse>? codeInfos, this.pagination})
-      : codeInfos = codeInfos?.immutable;
+  CosmWasmV1QueryCodesResponse({
+    required List<CosmWasmV1CodeInfoResponse>? codeInfos,
+    this.pagination,
+  }) : codeInfos = codeInfos?.immutable;
   factory CosmWasmV1QueryCodesResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmWasmV1QueryCodesResponse(
-      codeInfos: decode
-          .getFields<List<int>>(1)
-          .map((e) => CosmWasmV1CodeInfoResponse.deserialize(e))
-          .toList(),
+      codeInfos:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => CosmWasmV1CodeInfoResponse.deserialize(e))
+              .toList(),
       pagination: decode
           .getResult(2)
           ?.to<PageResponse, List<int>>(PageResponse.deserialize),
@@ -28,12 +30,16 @@ class CosmWasmV1QueryCodesResponse extends CosmosMessage {
   }
   factory CosmWasmV1QueryCodesResponse.fromJson(Map<String, dynamic> json) {
     return CosmWasmV1QueryCodesResponse(
-        pagination: json.maybeAs<PageResponse, Map<String, dynamic>>(
-            key: "pagination", onValue: (e) => PageResponse.fromJson(e)),
-        codeInfos: json
-            .asListOfMap("code_infos")
-            ?.map((e) => CosmWasmV1CodeInfoResponse.fromJson(e))
-            .toList());
+      pagination: json.maybeAs<PageResponse, Map<String, dynamic>>(
+        key: "pagination",
+        onValue: (e) => PageResponse.fromJson(e),
+      ),
+      codeInfos:
+          json
+              .asListOfMap("code_infos")
+              ?.map((e) => CosmWasmV1CodeInfoResponse.fromJson(e))
+              .toList(),
+    );
   }
 
   @override
@@ -43,7 +49,7 @@ class CosmWasmV1QueryCodesResponse extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "code_infos": codeInfos?.map((e) => e.toJson()).toList(),
-      "pagination": pagination?.toJson()
+      "pagination": pagination?.toJson(),
     };
   }
 

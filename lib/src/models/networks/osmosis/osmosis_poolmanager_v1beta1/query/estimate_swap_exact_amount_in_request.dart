@@ -10,21 +10,23 @@ class OsmosisPoolManagerEstimateSwapExactAmountInRequest extends CosmosMessage
   final String? tokenIn;
   final List<OsmosisPoolManagerSwapAmountInRoute> routes;
 
-  OsmosisPoolManagerEstimateSwapExactAmountInRequest(
-      {required this.poolId,
-      this.tokenIn,
-      required List<OsmosisPoolManagerSwapAmountInRoute> routes})
-      : routes = routes.immutable;
+  OsmosisPoolManagerEstimateSwapExactAmountInRequest({
+    required this.poolId,
+    this.tokenIn,
+    required List<OsmosisPoolManagerSwapAmountInRoute> routes,
+  }) : routes = routes.immutable;
   factory OsmosisPoolManagerEstimateSwapExactAmountInRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolManagerEstimateSwapExactAmountInRequest(
       poolId: decode.getField(2),
       tokenIn: decode.getField(3),
-      routes: decode
-          .getFields<List<int>>(4)
-          .map((e) => OsmosisPoolManagerSwapAmountInRoute.deserialize(e))
-          .toList(),
+      routes:
+          decode
+              .getFields<List<int>>(4)
+              .map((e) => OsmosisPoolManagerSwapAmountInRoute.deserialize(e))
+              .toList(),
     );
   }
 
@@ -33,28 +35,29 @@ class OsmosisPoolManagerEstimateSwapExactAmountInRequest extends CosmosMessage
 
   @override
   OsmosisPoolManagerEstimateSwapExactAmountInResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisPoolManagerEstimateSwapExactAmountInResponse.fromJson(json);
   }
 
   @override
   OsmosisPoolManagerEstimateSwapExactAmountInResponse onResponse(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return OsmosisPoolManagerEstimateSwapExactAmountInResponse.deserialize(
-        bytes);
+      bytes,
+    );
   }
 
   @override
-  Map<String, String?> get queryParameters => {
-        "token_in": tokenIn,
-      };
+  Map<String, String?> get queryParameters => {"token_in": tokenIn};
 
   @override
   Map<String, dynamic> toJson() {
     return {
       "pool_id": poolId.toString(),
       "token_in": tokenIn,
-      "routes": routes.map((e) => e.toJson()).toList()
+      "routes": routes.map((e) => e.toJson()).toList(),
     };
   }
 

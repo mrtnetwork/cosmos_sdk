@@ -9,7 +9,7 @@ class TxDecodeAminoRequest extends CosmosMessage
     with QueryMessage<TxDecodeAminoResponse> {
   final List<int> aminoBinary;
   TxDecodeAminoRequest({required List<int> aminoBinary})
-      : aminoBinary = BytesUtils.toBytes(aminoBinary, unmodifiable: true);
+    : aminoBinary = BytesUtils.toBytes(aminoBinary, unmodifiable: true);
 
   @override
   List<int> get fieldIds => [1];

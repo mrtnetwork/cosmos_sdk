@@ -10,25 +10,26 @@ class ThorchainEventTHORName extends CosmosMessage {
   final BigInt fundAmt;
   final BigInt? expire;
   final List<int>? owner;
-  ThorchainEventTHORName(
-      {this.name,
-      this.chain,
-      this.address,
-      required this.registrationFee,
-      required this.fundAmt,
-      this.expire,
-      List<int>? owner})
-      : owner = BytesUtils.tryToBytes(owner, unmodifiable: true);
+  ThorchainEventTHORName({
+    this.name,
+    this.chain,
+    this.address,
+    required this.registrationFee,
+    required this.fundAmt,
+    this.expire,
+    List<int>? owner,
+  }) : owner = BytesUtils.tryToBytes(owner, unmodifiable: true);
   factory ThorchainEventTHORName.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainEventTHORName(
-        name: decode.getField(1),
-        chain: decode.getField(2),
-        address: decode.getField(3),
-        registrationFee: BigInt.parse(decode.getField(4)),
-        fundAmt: BigInt.parse(decode.getField(5)),
-        expire: decode.getField(6),
-        owner: decode.getField(7));
+      name: decode.getField(1),
+      chain: decode.getField(2),
+      address: decode.getField(3),
+      registrationFee: BigInt.parse(decode.getField(4)),
+      fundAmt: BigInt.parse(decode.getField(5)),
+      expire: decode.getField(6),
+      owner: decode.getField(7),
+    );
   }
 
   @override
@@ -43,7 +44,7 @@ class ThorchainEventTHORName extends CosmosMessage {
       "registration_fee": registrationFee.toString(),
       "fund_amt": fundAmt.toString(),
       "expire": expire?.toString(),
-      "owner": BytesUtils.tryToHexString(owner)
+      "owner": BytesUtils.tryToHexString(owner),
     };
   }
 
@@ -52,12 +53,12 @@ class ThorchainEventTHORName extends CosmosMessage {
 
   @override
   List get values => [
-        name,
-        chain,
-        address,
-        registrationFee.toString(),
-        fundAmt.toString(),
-        expire,
-        owner
-      ];
+    name,
+    chain,
+    address,
+    registrationFee.toString(),
+    fundAmt.toString(),
+    expire,
+    owner,
+  ];
 }

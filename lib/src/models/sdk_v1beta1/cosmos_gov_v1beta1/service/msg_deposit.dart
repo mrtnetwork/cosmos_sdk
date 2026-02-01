@@ -18,27 +18,33 @@ class GovMsgDeposit extends GovV1Beta1Service<EmptyServiceRequestResponse>
 
   /// amount to be deposited by depositor.
   final List<Coin> amount;
-  GovMsgDeposit(
-      {required this.proposalId, this.depositor, required this.amount});
+  GovMsgDeposit({
+    required this.proposalId,
+    this.depositor,
+    required this.amount,
+  });
   factory GovMsgDeposit.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GovMsgDeposit(
-        proposalId: decode.getField(1),
-        depositor: decode
-            .getResult(2)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        amount: decode
-            .getFields<List<int>>(3)
-            .map((e) => Coin.deserialize(e))
-            .toList());
+      proposalId: decode.getField(1),
+      depositor: decode
+          .getResult(2)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      amount:
+          decode
+              .getFields<List<int>>(3)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
+    );
   }
   factory GovMsgDeposit.fromJson(Map<String, dynamic> json) {
     return GovMsgDeposit(
-        proposalId: json.asBigInt("proposal_id"),
-        depositor: json.asAddress("depositor"),
-        amount:
-            json.asListOfMap("amount")?.map((e) => Coin.fromJson(e)).toList() ??
-                []);
+      proposalId: json.asBigInt("proposal_id"),
+      depositor: json.asAddress("depositor"),
+      amount:
+          json.asListOfMap("amount")?.map((e) => Coin.fromJson(e)).toList() ??
+          [],
+    );
   }
 
   @override
@@ -49,7 +55,7 @@ class GovMsgDeposit extends GovV1Beta1Service<EmptyServiceRequestResponse>
     return {
       "proposal_id": proposalId.toString(),
       "depositor": depositor?.address,
-      "amount": amount.map((e) => e.toJson()).toList()
+      "amount": amount.map((e) => e.toJson()).toList(),
     };
   }
 

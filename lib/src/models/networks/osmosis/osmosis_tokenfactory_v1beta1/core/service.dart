@@ -12,58 +12,64 @@ abstract class OsmosisTokenFactoryV1Beta1<T extends CosmosMessage>
     extends OsmosisService<T> {
   const OsmosisTokenFactoryV1Beta1();
 
-  static T? fromJson<T extends OsmosisTokenFactoryV1Beta1>(
-      {required String typeUrl, required Map<String, dynamic> json}) {
+  static T? fromJson<T extends OsmosisTokenFactoryV1Beta1>({
+    required String typeUrl,
+    required Map<String, dynamic> json,
+  }) {
     final type = OsmosisTokenFactoryV1beta1Types.findService(typeUrl);
-    final OsmosisTokenFactoryV1Beta1? service = switch (type) {
-      OsmosisTokenFactoryV1beta1Types.msgCreateDenom =>
-        OsmosisTokenFactoryMsgCreateDenom.fromJson(json),
-      OsmosisTokenFactoryV1beta1Types.msgBurn =>
-        OsmosisTokenFactoryMsgBurn.fromJson(json),
-      OsmosisTokenFactoryV1beta1Types.msgChangeAdmin =>
-        OsmosisTokenFactoryMsgChangeAdmin.fromJson(json),
-      OsmosisTokenFactoryV1beta1Types.msgMint =>
-        OsmosisTokenFactoryMsgMint.fromJson(json),
-      OsmosisTokenFactoryV1beta1Types.msgSetDenomMetadata =>
-        OsmosisTokenFactoryMsgSetDenomMetadata.fromJson(json),
-      _ => null
-    } as OsmosisTokenFactoryV1Beta1?;
+    final OsmosisTokenFactoryV1Beta1? service =
+        switch (type) {
+              OsmosisTokenFactoryV1beta1Types.msgCreateDenom =>
+                OsmosisTokenFactoryMsgCreateDenom.fromJson(json),
+              OsmosisTokenFactoryV1beta1Types.msgBurn =>
+                OsmosisTokenFactoryMsgBurn.fromJson(json),
+              OsmosisTokenFactoryV1beta1Types.msgChangeAdmin =>
+                OsmosisTokenFactoryMsgChangeAdmin.fromJson(json),
+              OsmosisTokenFactoryV1beta1Types.msgMint =>
+                OsmosisTokenFactoryMsgMint.fromJson(json),
+              OsmosisTokenFactoryV1beta1Types.msgSetDenomMetadata =>
+                OsmosisTokenFactoryMsgSetDenomMetadata.fromJson(json),
+              _ => null,
+            }
+            as OsmosisTokenFactoryV1Beta1?;
 
     if (service == null) return null;
     if (service is! T) {
-      throw DartCosmosSdkPluginException("Invalid TokenFactory Service.",
-          details: {
-            "excepted": "$T",
-            "service": service.runtimeType.toString()
-          });
+      throw DartCosmosSdkPluginException(
+        "Invalid TokenFactory Service.",
+        details: {"excepted": "$T", "service": service.runtimeType.toString()},
+      );
     }
     return service;
   }
 
-  static T? deserialize<T extends OsmosisTokenFactoryV1Beta1>(
-      {required String typeUrl, required List<int> bytes}) {
+  static T? deserialize<T extends OsmosisTokenFactoryV1Beta1>({
+    required String typeUrl,
+    required List<int> bytes,
+  }) {
     final type = OsmosisTokenFactoryV1beta1Types.findService(typeUrl);
-    final OsmosisTokenFactoryV1Beta1? service = switch (type) {
-      OsmosisTokenFactoryV1beta1Types.msgCreateDenom =>
-        OsmosisTokenFactoryMsgCreateDenom.deserialize(bytes),
-      OsmosisTokenFactoryV1beta1Types.msgBurn =>
-        OsmosisTokenFactoryMsgBurn.deserialize(bytes),
-      OsmosisTokenFactoryV1beta1Types.msgChangeAdmin =>
-        OsmosisTokenFactoryMsgChangeAdmin.deserialize(bytes),
-      OsmosisTokenFactoryV1beta1Types.msgMint =>
-        OsmosisTokenFactoryMsgMint.deserialize(bytes),
-      OsmosisTokenFactoryV1beta1Types.msgSetDenomMetadata =>
-        OsmosisTokenFactoryMsgSetDenomMetadata.deserialize(bytes),
-      _ => null
-    } as OsmosisTokenFactoryV1Beta1?;
+    final OsmosisTokenFactoryV1Beta1? service =
+        switch (type) {
+              OsmosisTokenFactoryV1beta1Types.msgCreateDenom =>
+                OsmosisTokenFactoryMsgCreateDenom.deserialize(bytes),
+              OsmosisTokenFactoryV1beta1Types.msgBurn =>
+                OsmosisTokenFactoryMsgBurn.deserialize(bytes),
+              OsmosisTokenFactoryV1beta1Types.msgChangeAdmin =>
+                OsmosisTokenFactoryMsgChangeAdmin.deserialize(bytes),
+              OsmosisTokenFactoryV1beta1Types.msgMint =>
+                OsmosisTokenFactoryMsgMint.deserialize(bytes),
+              OsmosisTokenFactoryV1beta1Types.msgSetDenomMetadata =>
+                OsmosisTokenFactoryMsgSetDenomMetadata.deserialize(bytes),
+              _ => null,
+            }
+            as OsmosisTokenFactoryV1Beta1?;
 
     if (service == null) return null;
     if (service is! T) {
-      throw DartCosmosSdkPluginException("Invalid TokenFactory Service.",
-          details: {
-            "excepted": "$T",
-            "service": service.runtimeType.toString()
-          });
+      throw DartCosmosSdkPluginException(
+        "Invalid TokenFactory Service.",
+        details: {"excepted": "$T", "service": service.runtimeType.toString()},
+      );
     }
     return service;
   }

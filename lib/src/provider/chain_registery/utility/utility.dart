@@ -8,12 +8,14 @@ class CCRUtilities {
   }) {
     Uri uri = Uri.parse(baseUrl);
     uri = uri.replace(
-        pathSegments: [...uri.pathSegments, chain, schema.pathSegments]);
+      pathSegments: [...uri.pathSegments, chain, schema.pathSegments],
+    );
     return uri;
   }
 
   static List<PingPubChain> readChainDirectories(
-      List<Map<String, dynamic>> json) {
+    List<Map<String, dynamic>> json,
+  ) {
     final List<PingPubChain> chainDirectories = [];
     for (final i in json) {
       if (!i.containsKey("name") && !i.containsKey("type")) {
@@ -22,8 +24,9 @@ class CCRUtilities {
       final String name = i["name"];
       final type = RegisteryPingPubItemType.fromName(i["type"]);
       if (name.startsWith("_") || type.isFile) continue;
-      chainDirectories
-          .add(PingPubChain(name: name, type: type, mtime: i["mtime"]));
+      chainDirectories.add(
+        PingPubChain(name: name, type: type, mtime: i["mtime"]),
+      );
     }
     return chainDirectories;
   }

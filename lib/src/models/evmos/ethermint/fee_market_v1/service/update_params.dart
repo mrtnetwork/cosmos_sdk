@@ -7,27 +7,33 @@ import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// MsgUpdateParams defines a Msg for updating the x/feemarket module parameters.
 class EvmosEthermintFeeMarketV1MsgUpdateParams
-    extends EvmosService<EmptyServiceRequestResponse> with AminoMessage {
+    extends EvmosService<EmptyServiceRequestResponse>
+    with AminoMessage {
   /// authority is the address of the governance account.
   final String authority;
   // params defines the x/feemarket parameters to update.
   // NOTE: All parameters must be supplied.
   final EvmosEthermintFeeMarketV1Params params;
-  const EvmosEthermintFeeMarketV1MsgUpdateParams(
-      {required this.authority, required this.params});
+  const EvmosEthermintFeeMarketV1MsgUpdateParams({
+    required this.authority,
+    required this.params,
+  });
   factory EvmosEthermintFeeMarketV1MsgUpdateParams.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosEthermintFeeMarketV1MsgUpdateParams(
-        authority: decode.getField(1),
-        params:
-            EvmosEthermintFeeMarketV1Params.deserialize(decode.getField(2)));
+      authority: decode.getField(1),
+      params: EvmosEthermintFeeMarketV1Params.deserialize(decode.getField(2)),
+    );
   }
   factory EvmosEthermintFeeMarketV1MsgUpdateParams.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return EvmosEthermintFeeMarketV1MsgUpdateParams(
-        authority: json.as("authority"),
-        params: EvmosEthermintFeeMarketV1Params.fromJson(json.asMap("params")));
+      authority: json.as("authority"),
+      params: EvmosEthermintFeeMarketV1Params.fromJson(json.asMap("params")),
+    );
   }
 
   @override
@@ -47,7 +53,8 @@ class EvmosEthermintFeeMarketV1MsgUpdateParams
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        EvmosErc20V1Types.feeMarketMsgUpdateParamsResponse);
+      EvmosErc20V1Types.feeMarketMsgUpdateParamsResponse,
+    );
   }
 
   @override

@@ -19,8 +19,9 @@ class ProtocolBufferEncoder {
       return;
     }
     throw DartCosmosSdkPluginException(
-        "Value overflows 64-bit signed integer range",
-        details: {"input": value});
+      "Value overflows 64-bit signed integer range",
+      details: {"input": value},
+    );
   }
 
   /// Validate if an [int] value fits within the 32-bit signed integer range.
@@ -29,8 +30,9 @@ class ProtocolBufferEncoder {
       return;
     }
     throw DartCosmosSdkPluginException(
-        "Value overflows 32-bit signed integer range",
-        details: {"input": value});
+      "Value overflows 32-bit signed integer range",
+      details: {"input": value},
+    );
   }
 
   /// Encode a protobuf field with the given [fieldNumber] and [value].
@@ -58,8 +60,10 @@ class ProtocolBufferEncoder {
     } else if (value is Map) {
       return _encodeMap(fieldNumber, value);
     }
-    throw DartCosmosSdkPluginException("unsupported type",
-        details: {"runtime": value.runtimeType, "value": value});
+    throw DartCosmosSdkPluginException(
+      "unsupported type",
+      details: {"runtime": value.runtimeType, "value": value},
+    );
   }
 
   /// Encode a [Map] with the given [fieldNumber] and [value].
@@ -101,15 +105,22 @@ class ProtocolBufferEncoder {
     if (value.isEmpty) return [];
     final List<int> result = [];
     for (final i in value) {
-      result.addAll(_encodeBytes(
-          fieldNumber, _encodeBigInt(fieldNumber, i, withFieldNumber: false)));
+      result.addAll(
+        _encodeBytes(
+          fieldNumber,
+          _encodeBigInt(fieldNumber, i, withFieldNumber: false),
+        ),
+      );
     }
     return result;
   }
 
   /// Encode a [BigInt] with the given [fieldNumber] and [value].
-  static List<int> _encodeBigInt(int fieldNumber, BigInt value,
-      {bool withFieldNumber = true}) {
+  static List<int> _encodeBigInt(
+    int fieldNumber,
+    BigInt value, {
+    bool withFieldNumber = true,
+  }) {
     _validateBigInt(value);
     final List<int> result = [];
 

@@ -16,7 +16,8 @@ class CosmosSecp256R1PublicKey extends CosmosPublicKey {
   factory CosmosSecp256R1PublicKey.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmosSecp256R1PublicKey._(
-        Nist256p1PublicKey.fromBytes(decode.getField(1)));
+      Nist256p1PublicKey.fromBytes(decode.getField(1)),
+    );
   }
 
   @override

@@ -10,19 +10,24 @@ class OsmosisConcentratedLiquidityAccumObject extends CosmosMessage {
   factory OsmosisConcentratedLiquidityAccumObject.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityAccumObject(
-        name: decode.getField(1),
-        accumContent: decode
-            .getResult(2)
-            ?.to<OsmosisAccumAccumulatorContent, List<int>>(
-                (e) => OsmosisAccumAccumulatorContent.deserialize(e)));
+      name: decode.getField(1),
+      accumContent: decode
+          .getResult(2)
+          ?.to<OsmosisAccumAccumulatorContent, List<int>>(
+            (e) => OsmosisAccumAccumulatorContent.deserialize(e),
+          ),
+    );
   }
   factory OsmosisConcentratedLiquidityAccumObject.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityAccumObject(
-        name: json["name"],
-        accumContent: json["accum_content"] == null
-            ? null
-            : OsmosisAccumAccumulatorContent.fromJson(json["accum_content"]));
+      name: json["name"],
+      accumContent:
+          json["accum_content"] == null
+              ? null
+              : OsmosisAccumAccumulatorContent.fromJson(json["accum_content"]),
+    );
   }
 
   @override

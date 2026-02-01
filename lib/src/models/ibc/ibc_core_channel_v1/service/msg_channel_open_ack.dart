@@ -20,35 +20,37 @@ class MsgChannelOpenAck extends IbcService<EmptyServiceRequestResponse> {
   final List<int>? proofTry;
   final IbcClientHeight proofHeight;
   final String? signer;
-  MsgChannelOpenAck(
-      {this.portId,
-      this.channelId,
-      this.counterpartyChannelId,
-      this.counterpartyVersion,
-      List<int>? proofTry,
-      required this.proofHeight,
-      this.signer})
-      : proofTry = BytesUtils.tryToBytes(proofTry, unmodifiable: true);
+  MsgChannelOpenAck({
+    this.portId,
+    this.channelId,
+    this.counterpartyChannelId,
+    this.counterpartyVersion,
+    List<int>? proofTry,
+    required this.proofHeight,
+    this.signer,
+  }) : proofTry = BytesUtils.tryToBytes(proofTry, unmodifiable: true);
   factory MsgChannelOpenAck.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgChannelOpenAck(
-        portId: decode.getField(1),
-        channelId: decode.getField(2),
-        counterpartyChannelId: decode.getField(3),
-        counterpartyVersion: decode.getField(4),
-        proofTry: decode.getField(5),
-        proofHeight: IbcClientHeight.deserialize(decode.getField(6)),
-        signer: decode.getField(7));
+      portId: decode.getField(1),
+      channelId: decode.getField(2),
+      counterpartyChannelId: decode.getField(3),
+      counterpartyVersion: decode.getField(4),
+      proofTry: decode.getField(5),
+      proofHeight: IbcClientHeight.deserialize(decode.getField(6)),
+      signer: decode.getField(7),
+    );
   }
   factory MsgChannelOpenAck.fromJson(Map<String, dynamic> json) {
     return MsgChannelOpenAck(
-        portId: json.as("port_id"),
-        channelId: json.as("channel_id"),
-        counterpartyChannelId: json.as("counterparty_channel_id"),
-        counterpartyVersion: json.as("counterparty_version"),
-        proofTry: json.asBytes("proof_try"),
-        proofHeight: IbcClientHeight.fromJson(json.asMap("proof_height")),
-        signer: json.as("signer"));
+      portId: json.as("port_id"),
+      channelId: json.as("channel_id"),
+      counterpartyChannelId: json.as("counterparty_channel_id"),
+      counterpartyVersion: json.as("counterparty_version"),
+      proofTry: json.asBytes("proof_try"),
+      proofHeight: IbcClientHeight.fromJson(json.asMap("proof_height")),
+      signer: json.as("signer"),
+    );
   }
 
   @override
@@ -63,7 +65,7 @@ class MsgChannelOpenAck extends IbcService<EmptyServiceRequestResponse> {
       "counterparty_version": counterpartyVersion,
       "proof_try": BytesUtils.tryToHexString(proofTry),
       "proof_height": proofHeight.toJson(),
-      "signer": signer
+      "signer": signer,
     };
   }
 
@@ -72,14 +74,14 @@ class MsgChannelOpenAck extends IbcService<EmptyServiceRequestResponse> {
 
   @override
   List get values => [
-        portId,
-        channelId,
-        counterpartyChannelId,
-        counterpartyVersion,
-        proofTry,
-        proofHeight,
-        signer
-      ];
+    portId,
+    channelId,
+    counterpartyChannelId,
+    counterpartyVersion,
+    proofTry,
+    proofHeight,
+    signer,
+  ];
 
   @override
   List<String?> get signers => [signer];

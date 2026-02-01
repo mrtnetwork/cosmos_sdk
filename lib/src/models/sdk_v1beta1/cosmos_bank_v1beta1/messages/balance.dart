@@ -16,11 +16,13 @@ class Balance extends CosmosMessage {
   factory Balance.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Balance(
-        address: CosmosBaseAddress(decode.getField(1)),
-        coins: decode
-            .getFields<List<int>>(2)
-            .map((e) => Coin.deserialize(e))
-            .toList());
+      address: CosmosBaseAddress(decode.getField(1)),
+      coins:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
+    );
   }
 
   @override
@@ -30,7 +32,7 @@ class Balance extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "address": address.address,
-      "coins": coins.map((e) => e.toJson()).toList()
+      "coins": coins.map((e) => e.toJson()).toList(),
     };
   }
 

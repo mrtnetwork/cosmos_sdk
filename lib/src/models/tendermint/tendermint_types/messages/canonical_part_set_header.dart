@@ -7,11 +7,13 @@ class CanonicalPartSetHeader extends CosmosMessage {
   final int? total;
   final List<int>? hash;
   CanonicalPartSetHeader({this.total, List<int>? hash})
-      : hash = BytesUtils.tryToBytes(hash, unmodifiable: true);
+    : hash = BytesUtils.tryToBytes(hash, unmodifiable: true);
   factory CanonicalPartSetHeader.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CanonicalPartSetHeader(
-        total: decode.getField(1), hash: decode.getField(2));
+      total: decode.getField(1),
+      hash: decode.getField(2),
+    );
   }
 
   @override

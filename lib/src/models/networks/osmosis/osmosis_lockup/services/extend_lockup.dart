@@ -17,15 +17,17 @@ class OsmosisLockupMsgExtendLockup
   factory OsmosisLockupMsgExtendLockup.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisLockupMsgExtendLockup(
-        owner: decode.getField(1),
-        id: decode.getField(2),
-        duration: ProtobufDuration.deserialize(decode.getField(3)));
+      owner: decode.getField(1),
+      id: decode.getField(2),
+      duration: ProtobufDuration.deserialize(decode.getField(3)),
+    );
   }
   factory OsmosisLockupMsgExtendLockup.fromJson(Map<String, dynamic> json) {
     return OsmosisLockupMsgExtendLockup(
-        owner: json.as("owner"),
-        id: json.asBigInt("id"),
-        duration: ProtobufDuration.fromString(json.as("duration")));
+      owner: json.as("owner"),
+      id: json.asBigInt("id"),
+      duration: ProtobufDuration.fromString(json.as("duration")),
+    );
   }
 
   @override

@@ -16,21 +16,26 @@ class AuthzQueryGrantsRequest extends CosmosMessage
 
   /// pagination defines an pagination for the request.
   final PageRequest? pagination;
-  const AuthzQueryGrantsRequest(
-      {this.granter, this.grantee, this.msgTypeUrl, this.pagination});
+  const AuthzQueryGrantsRequest({
+    this.granter,
+    this.grantee,
+    this.msgTypeUrl,
+    this.pagination,
+  });
   factory AuthzQueryGrantsRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return AuthzQueryGrantsRequest(
-        granter: decode
-            .getResult(1)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        grantee: decode
-            .getResult(2)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        msgTypeUrl: decode.getField(3),
-        pagination: decode
-            .getResult(4)
-            ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)));
+      granter: decode
+          .getResult(1)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      grantee: decode
+          .getResult(2)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      msgTypeUrl: decode.getField(3),
+      pagination: decode
+          .getResult(4)
+          ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)),
+    );
   }
 
   @override
@@ -42,24 +47,28 @@ class AuthzQueryGrantsRequest extends CosmosMessage
       "granter": granter?.address,
       "grantee": grantee?.address,
       "msg_type_url": msgTypeUrl,
-      "pagination": pagination?.toJson()
+      "pagination": pagination?.toJson(),
     };
   }
 
   @override
   Map<String, String?> get queryParameters => {
-        "granter": granter?.address,
-        "grantee": grantee?.address,
-        "msg_type_url": msgTypeUrl,
-        ...pagination?.queryParameters ?? {}
-      };
+    "granter": granter?.address,
+    "grantee": grantee?.address,
+    "msg_type_url": msgTypeUrl,
+    ...pagination?.queryParameters ?? {},
+  };
 
   @override
   TypeUrl get typeUrl => AuthzV1beta1Types.authzQueryGrantsRequest;
 
   @override
-  List get values =>
-      [granter?.address, grantee?.address, msgTypeUrl, pagination];
+  List get values => [
+    granter?.address,
+    grantee?.address,
+    msgTypeUrl,
+    pagination,
+  ];
 
   @override
   AuthzQueryGrantsResponse onResponse(List<int> bytes) {

@@ -14,16 +14,17 @@ class Ics23InnerOp extends CosmosMessage {
   final List<int>? prefix;
   final List<int>? suffix;
   Ics23InnerOp({this.hash, List<int>? prefix, List<int>? suffix})
-      : prefix = BytesUtils.tryToBytes(prefix, unmodifiable: true),
-        suffix = BytesUtils.tryToBytes(suffix, unmodifiable: true);
+    : prefix = BytesUtils.tryToBytes(prefix, unmodifiable: true),
+      suffix = BytesUtils.tryToBytes(suffix, unmodifiable: true);
   factory Ics23InnerOp.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Ics23InnerOp(
-        hash: decode
-            .getResult(1)
-            ?.to<Ics23HashOp, int>((e) => Ics23HashOp.fromValue(e)),
-        prefix: decode.getField(2),
-        suffix: decode.getField(3));
+      hash: decode
+          .getResult(1)
+          ?.to<Ics23HashOp, int>((e) => Ics23HashOp.fromValue(e)),
+      prefix: decode.getField(2),
+      suffix: decode.getField(3),
+    );
   }
 
   @override
@@ -34,7 +35,7 @@ class Ics23InnerOp extends CosmosMessage {
     return {
       "hash": hash?.value,
       "prefix": BytesUtils.tryToHexString(prefix),
-      "suffix": BytesUtils.tryToHexString(suffix)
+      "suffix": BytesUtils.tryToHexString(suffix),
     };
   }
 

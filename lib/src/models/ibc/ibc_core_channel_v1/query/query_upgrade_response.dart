@@ -21,15 +21,18 @@ class QueryUpgradeResponse extends CosmosMessage {
       proofHeight: IbcClientHeight.fromJson(json["proof_height"]),
     );
   }
-  QueryUpgradeResponse(
-      {required this.upgrade, List<int>? proof, required this.proofHeight})
-      : proof = BytesUtils.tryToBytes(proof, unmodifiable: true);
+  QueryUpgradeResponse({
+    required this.upgrade,
+    List<int>? proof,
+    required this.proofHeight,
+  }) : proof = BytesUtils.tryToBytes(proof, unmodifiable: true);
   factory QueryUpgradeResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryUpgradeResponse(
-        upgrade: IbcChannelUpgrade.deserialize(decode.getField(1)),
-        proof: decode.getField(2),
-        proofHeight: IbcClientHeight.deserialize(decode.getField(3)));
+      upgrade: IbcChannelUpgrade.deserialize(decode.getField(1)),
+      proof: decode.getField(2),
+      proofHeight: IbcClientHeight.deserialize(decode.getField(3)),
+    );
   }
 
   @override
@@ -40,7 +43,7 @@ class QueryUpgradeResponse extends CosmosMessage {
     return {
       "upgrade": upgrade.toJson(),
       "proof": BytesUtils.tryToHexString(proof),
-      "proof_height": proofHeight.toJson()
+      "proof_height": proofHeight.toJson(),
     };
   }
 

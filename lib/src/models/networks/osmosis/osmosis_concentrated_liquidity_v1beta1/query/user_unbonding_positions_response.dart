@@ -7,30 +7,41 @@ class OsmosisConcentratedLiquidityUserUnbondingPositionsResponse
     extends CosmosMessage {
   final List<OsmosisConcentratedLiquidityPositionWithPeriodLock> positions;
 
-  OsmosisConcentratedLiquidityUserUnbondingPositionsResponse(
-      {required List<OsmosisConcentratedLiquidityPositionWithPeriodLock>
-          positions})
-      : positions = positions.immutable;
+  OsmosisConcentratedLiquidityUserUnbondingPositionsResponse({
+    required List<OsmosisConcentratedLiquidityPositionWithPeriodLock> positions,
+  }) : positions = positions.immutable;
   factory OsmosisConcentratedLiquidityUserUnbondingPositionsResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityUserUnbondingPositionsResponse(
-        positions: decode
-            .getFields<List<int>>(1)
-            .map((e) =>
-                OsmosisConcentratedLiquidityPositionWithPeriodLock.deserialize(
-                    e))
-            .toList());
+      positions:
+          decode
+              .getFields<List<int>>(1)
+              .map(
+                (e) =>
+                    OsmosisConcentratedLiquidityPositionWithPeriodLock.deserialize(
+                      e,
+                    ),
+              )
+              .toList(),
+    );
   }
   factory OsmosisConcentratedLiquidityUserUnbondingPositionsResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityUserUnbondingPositionsResponse(
-        positions: (json["positions"] as List?)
-                ?.map((e) =>
+      positions:
+          (json["positions"] as List?)
+              ?.map(
+                (e) =>
                     OsmosisConcentratedLiquidityPositionWithPeriodLock.fromJson(
-                        e))
-                .toList() ??
-            <OsmosisConcentratedLiquidityPositionWithPeriodLock>[]);
+                      e,
+                    ),
+              )
+              .toList() ??
+          <OsmosisConcentratedLiquidityPositionWithPeriodLock>[],
+    );
   }
 
   @override

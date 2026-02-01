@@ -15,22 +15,25 @@ class EvmosRevenueV1Params extends CosmosMessage {
   /// verifying the contract deployer at fee registration
   final BigInt? addrDerivationCostCreate;
 
-  EvmosRevenueV1Params(
-      {this.enableRevenue,
-      this.developerShares,
-      this.addrDerivationCostCreate});
+  EvmosRevenueV1Params({
+    this.enableRevenue,
+    this.developerShares,
+    this.addrDerivationCostCreate,
+  });
   factory EvmosRevenueV1Params.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosRevenueV1Params(
-        enableRevenue: decode.getField(1),
-        developerShares: decode.getField(2),
-        addrDerivationCostCreate: decode.getField(3));
+      enableRevenue: decode.getField(1),
+      developerShares: decode.getField(2),
+      addrDerivationCostCreate: decode.getField(3),
+    );
   }
   factory EvmosRevenueV1Params.fromJson(Map<String, dynamic> json) {
     return EvmosRevenueV1Params(
-        enableRevenue: json.as("enable_revenue"),
-        developerShares: json.as("developer_shares"),
-        addrDerivationCostCreate: json.asBigInt("addr_derivation_cost_create"));
+      enableRevenue: json.as("enable_revenue"),
+      developerShares: json.as("developer_shares"),
+      addrDerivationCostCreate: json.asBigInt("addr_derivation_cost_create"),
+    );
   }
   @override
   List get values => [enableRevenue, developerShares, addrDerivationCostCreate];
@@ -45,7 +48,7 @@ class EvmosRevenueV1Params extends CosmosMessage {
     return {
       "enable_revenue": enableRevenue,
       "developer_shares": developerShares,
-      "addr_derivation_cost_create": addrDerivationCostCreate
+      "addr_derivation_cost_create": addrDerivationCostCreate,
     };
   }
 }

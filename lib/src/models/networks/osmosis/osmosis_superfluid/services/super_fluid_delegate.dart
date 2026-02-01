@@ -11,22 +11,28 @@ class OsmosisSuperfluidMsgSuperfluidDelegate
   final BigInt? lockId;
   final String? valAddr;
 
-  const OsmosisSuperfluidMsgSuperfluidDelegate(
-      {this.sender, this.lockId, this.valAddr});
+  const OsmosisSuperfluidMsgSuperfluidDelegate({
+    this.sender,
+    this.lockId,
+    this.valAddr,
+  });
   factory OsmosisSuperfluidMsgSuperfluidDelegate.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidMsgSuperfluidDelegate(
-        sender: decode.getField(1),
-        lockId: decode.getField(2),
-        valAddr: decode.getField(3));
+      sender: decode.getField(1),
+      lockId: decode.getField(2),
+      valAddr: decode.getField(3),
+    );
   }
   factory OsmosisSuperfluidMsgSuperfluidDelegate.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     // final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidMsgSuperfluidDelegate(
-        sender: json.as("sender"),
-        lockId: json.asBigInt("lock_id"),
-        valAddr: json.as("val_addr"));
+      sender: json.as("sender"),
+      lockId: json.asBigInt("lock_id"),
+      valAddr: json.as("val_addr"),
+    );
   }
 
   @override
@@ -37,7 +43,7 @@ class OsmosisSuperfluidMsgSuperfluidDelegate
     return {
       "sender": sender,
       "lock_id": lockId?.toString(),
-      "val_addr": valAddr
+      "val_addr": valAddr,
     };
   }
 
@@ -52,6 +58,7 @@ class OsmosisSuperfluidMsgSuperfluidDelegate
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        OsmosisSuperfluidTypes.msgSuperfluidDelegateResponse);
+      OsmosisSuperfluidTypes.msgSuperfluidDelegateResponse,
+    );
   }
 }

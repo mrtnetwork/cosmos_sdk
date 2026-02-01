@@ -19,44 +19,49 @@ class ThorchainNodeAccount extends CosmosMessage {
   final String? ipAddress;
   final String? version;
   final ThorchainNodeType? type;
-  ThorchainNodeAccount(
-      {List<int>? nodeAddress,
-      this.status,
-      required this.pubKeySet,
-      this.validatorConsPubKey,
-      required this.bond,
-      this.activeBlockHeight,
-      this.bondAddress,
-      this.statusSince,
-      List<String>? signerMembership,
-      this.requestedToLeave,
-      this.forcedToLeave,
-      this.leaveScore,
-      this.ipAddress,
-      this.version,
-      this.type})
-      : nodeAddress = BytesUtils.tryToBytes(nodeAddress, unmodifiable: true),
-        signerMembership = signerMembership?.emptyAsNull?.immutable;
+  ThorchainNodeAccount({
+    List<int>? nodeAddress,
+    this.status,
+    required this.pubKeySet,
+    this.validatorConsPubKey,
+    required this.bond,
+    this.activeBlockHeight,
+    this.bondAddress,
+    this.statusSince,
+    List<String>? signerMembership,
+    this.requestedToLeave,
+    this.forcedToLeave,
+    this.leaveScore,
+    this.ipAddress,
+    this.version,
+    this.type,
+  }) : nodeAddress = BytesUtils.tryToBytes(nodeAddress, unmodifiable: true),
+       signerMembership = signerMembership?.emptyAsNull?.immutable;
   factory ThorchainNodeAccount.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainNodeAccount(
-        nodeAddress: decode.getField(1),
-        status: decode.getResult(2)?.to<ThorchainNodeStatus, int>(
-            (e) => ThorchainNodeStatus.fromValue(e)),
-        pubKeySet: ThorchainPubKeySet.deserialize(decode.getField(3)),
-        validatorConsPubKey: decode.getField(4),
-        bond: BigInt.parse(decode.getField(5)),
-        activeBlockHeight: decode.getField(6),
-        bondAddress: decode.getField(7),
-        statusSince: decode.getField(8),
-        signerMembership: decode.getFields<String>(9),
-        requestedToLeave: decode.getField(10),
-        forcedToLeave: decode.getField(11),
-        leaveScore: decode.getField(12),
-        ipAddress: decode.getField(13),
-        version: decode.getField(14),
-        type: decode.getResult(15)?.to<ThorchainNodeType, int>(
-            (e) => ThorchainNodeType.fromValue(e)));
+      nodeAddress: decode.getField(1),
+      status: decode
+          .getResult(2)
+          ?.to<ThorchainNodeStatus, int>(
+            (e) => ThorchainNodeStatus.fromValue(e),
+          ),
+      pubKeySet: ThorchainPubKeySet.deserialize(decode.getField(3)),
+      validatorConsPubKey: decode.getField(4),
+      bond: BigInt.parse(decode.getField(5)),
+      activeBlockHeight: decode.getField(6),
+      bondAddress: decode.getField(7),
+      statusSince: decode.getField(8),
+      signerMembership: decode.getFields<String>(9),
+      requestedToLeave: decode.getField(10),
+      forcedToLeave: decode.getField(11),
+      leaveScore: decode.getField(12),
+      ipAddress: decode.getField(13),
+      version: decode.getField(14),
+      type: decode
+          .getResult(15)
+          ?.to<ThorchainNodeType, int>((e) => ThorchainNodeType.fromValue(e)),
+    );
   }
 
   @override
@@ -79,7 +84,7 @@ class ThorchainNodeAccount extends CosmosMessage {
       "leave_score": leaveScore?.toString(),
       "ip_address": ipAddress,
       "version": version,
-      "type": type?.value
+      "type": type?.value,
     };
   }
 
@@ -88,20 +93,20 @@ class ThorchainNodeAccount extends CosmosMessage {
 
   @override
   List get values => [
-        nodeAddress,
-        status?.value,
-        pubKeySet,
-        validatorConsPubKey,
-        bond.toString(),
-        activeBlockHeight,
-        bondAddress,
-        statusSince,
-        signerMembership,
-        requestedToLeave,
-        forcedToLeave,
-        leaveScore,
-        ipAddress,
-        version,
-        type?.value
-      ];
+    nodeAddress,
+    status?.value,
+    pubKeySet,
+    validatorConsPubKey,
+    bond.toString(),
+    activeBlockHeight,
+    bondAddress,
+    statusSince,
+    signerMembership,
+    requestedToLeave,
+    forcedToLeave,
+    leaveScore,
+    ipAddress,
+    version,
+    type?.value,
+  ];
 }

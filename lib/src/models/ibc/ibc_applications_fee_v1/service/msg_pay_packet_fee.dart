@@ -24,29 +24,31 @@ class MsgPayPacketFee extends IbcService<EmptyServiceRequestResponse> {
 
   /// optional list of relayers permitted to the receive packet fees
   final List<String>? relayers;
-  MsgPayPacketFee(
-      {required this.fee,
-      this.sourcePortId,
-      this.sourceChannelId,
-      this.signer,
-      List<String>? relayers})
-      : relayers = relayers?.emptyAsNull?.immutable;
+  MsgPayPacketFee({
+    required this.fee,
+    this.sourcePortId,
+    this.sourceChannelId,
+    this.signer,
+    List<String>? relayers,
+  }) : relayers = relayers?.emptyAsNull?.immutable;
   factory MsgPayPacketFee.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgPayPacketFee(
-        fee: IbcFeeFee.deserialize(decode.getField(1)),
-        sourcePortId: decode.getField(2),
-        sourceChannelId: decode.getField(3),
-        signer: decode.getField(4),
-        relayers: decode.getFields<String>(5));
+      fee: IbcFeeFee.deserialize(decode.getField(1)),
+      sourcePortId: decode.getField(2),
+      sourceChannelId: decode.getField(3),
+      signer: decode.getField(4),
+      relayers: decode.getFields<String>(5),
+    );
   }
   factory MsgPayPacketFee.fromJson(Map<String, dynamic> json) {
     return MsgPayPacketFee(
-        fee: IbcFeeFee.fromJson(json.asMap("fee")),
-        sourcePortId: json.as("source_port_id"),
-        sourceChannelId: json.as("source_channel_id"),
-        signer: json.as("signer"),
-        relayers: json.asListOfString("relayers"));
+      fee: IbcFeeFee.fromJson(json.asMap("fee")),
+      sourcePortId: json.as("source_port_id"),
+      sourceChannelId: json.as("source_channel_id"),
+      signer: json.as("signer"),
+      relayers: json.asListOfString("relayers"),
+    );
   }
 
   @override
@@ -59,7 +61,7 @@ class MsgPayPacketFee extends IbcService<EmptyServiceRequestResponse> {
       "source_port_id": sourcePortId,
       "source_channel_id": sourceChannelId,
       "signer": signer,
-      "relayers": relayers
+      "relayers": relayers,
     };
   }
 

@@ -6,7 +6,8 @@ class OsmosisPoolincentivesQueryIncentivizedPoolsRequest extends CosmosMessage
     with QueryMessage<OsmosisPoolincentivesQueryIncentivizedPoolsResponse> {
   OsmosisPoolincentivesQueryIncentivizedPoolsRequest();
   factory OsmosisPoolincentivesQueryIncentivizedPoolsRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return OsmosisPoolincentivesQueryIncentivizedPoolsRequest();
   }
 
@@ -20,15 +21,18 @@ class OsmosisPoolincentivesQueryIncentivizedPoolsRequest extends CosmosMessage
 
   @override
   OsmosisPoolincentivesQueryIncentivizedPoolsResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisPoolincentivesQueryIncentivizedPoolsResponse.fromJson(json);
   }
 
   @override
   OsmosisPoolincentivesQueryIncentivizedPoolsResponse onResponse(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return OsmosisPoolincentivesQueryIncentivizedPoolsResponse.deserialize(
-        bytes);
+      bytes,
+    );
   }
 
   @override

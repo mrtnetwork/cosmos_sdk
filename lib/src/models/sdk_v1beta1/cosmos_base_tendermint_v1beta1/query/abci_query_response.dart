@@ -24,38 +24,41 @@ class ABCIQueryResponse extends CosmosMessage {
       index: BigintUtils.tryParse(json["index"]),
       key: CosmosUtils.tryToBytes(json["key"]),
       value: CosmosUtils.tryToBytes(json["value"]),
-      proofOps: json["proof_ops"] == null
-          ? null
-          : CosmosProofOps.fromJson(json["proof_ops"]),
+      proofOps:
+          json["proof_ops"] == null
+              ? null
+              : CosmosProofOps.fromJson(json["proof_ops"]),
       codespace: json["codespace"],
       height: BigintUtils.tryParse(json["height"]),
     );
   }
-  ABCIQueryResponse(
-      {this.code,
-      this.log,
-      this.info,
-      this.index,
-      List<int>? key,
-      List<int>? value,
-      this.proofOps,
-      this.height,
-      this.codespace})
-      : key = BytesUtils.tryToBytes(key, unmodifiable: true),
-        value = BytesUtils.tryToBytes(value, unmodifiable: true);
+  ABCIQueryResponse({
+    this.code,
+    this.log,
+    this.info,
+    this.index,
+    List<int>? key,
+    List<int>? value,
+    this.proofOps,
+    this.height,
+    this.codespace,
+  }) : key = BytesUtils.tryToBytes(key, unmodifiable: true),
+       value = BytesUtils.tryToBytes(value, unmodifiable: true);
   factory ABCIQueryResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ABCIQueryResponse(
-        code: decode.getField(1),
-        log: decode.getField(3),
-        info: decode.getField(4),
-        index: decode.getField(5),
-        key: decode.getField(6),
-        value: decode.getField(7),
-        proofOps: decode.getResult(8)?.to<CosmosProofOps, List<int>>(
-            (e) => CosmosProofOps.deserialize(e)),
-        codespace: decode.getField(10),
-        height: decode.getField(9));
+      code: decode.getField(1),
+      log: decode.getField(3),
+      info: decode.getField(4),
+      index: decode.getField(5),
+      key: decode.getField(6),
+      value: decode.getField(7),
+      proofOps: decode
+          .getResult(8)
+          ?.to<CosmosProofOps, List<int>>((e) => CosmosProofOps.deserialize(e)),
+      codespace: decode.getField(10),
+      height: decode.getField(9),
+    );
   }
 
   @override
@@ -72,7 +75,7 @@ class ABCIQueryResponse extends CosmosMessage {
       "value": CosmosUtils.tryToBase64(value),
       "proof_ops": proofOps?.toJson(),
       "height": height?.toString(),
-      "codespace": codespace
+      "codespace": codespace,
     };
   }
 
@@ -80,6 +83,15 @@ class ABCIQueryResponse extends CosmosMessage {
   TypeUrl get typeUrl => BaseTendermintV1beta1Types.abciQueryResponse;
 
   @override
-  List get values =>
-      [code, log, info, index, key, value, proofOps, height, codespace];
+  List get values => [
+    code,
+    log,
+    info,
+    index,
+    key,
+    value,
+    proofOps,
+    height,
+    codespace,
+  ];
 }

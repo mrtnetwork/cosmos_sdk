@@ -33,39 +33,42 @@ class OsmosisIncentiveMsgCreateGauge
   /// over
   final BigInt? numEpochsPaidOver;
 
-  OsmosisIncentiveMsgCreateGauge(
-      {this.isPerpetual,
-      this.owner,
-      required this.distributeTo,
-      required List<Coin> coins,
-      required this.startTime,
-      this.numEpochsPaidOver})
-      : coins = coins.immutable;
+  OsmosisIncentiveMsgCreateGauge({
+    this.isPerpetual,
+    this.owner,
+    required this.distributeTo,
+    required List<Coin> coins,
+    required this.startTime,
+    this.numEpochsPaidOver,
+  }) : coins = coins.immutable;
   factory OsmosisIncentiveMsgCreateGauge.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisIncentiveMsgCreateGauge(
-        isPerpetual: decode.getField(1),
-        owner: decode.getField(2),
-        distributeTo:
-            OsmosisLockupQueryCondition.deserialize(decode.getField(3)),
-        coins: decode
-            .getFields<List<int>>(4)
-            .map((e) => Coin.deserialize(e))
-            .toList(),
-        startTime: ProtobufTimestamp.deserialize(decode.getField(5)),
-        numEpochsPaidOver: decode.getField(6));
+      isPerpetual: decode.getField(1),
+      owner: decode.getField(2),
+      distributeTo: OsmosisLockupQueryCondition.deserialize(decode.getField(3)),
+      coins:
+          decode
+              .getFields<List<int>>(4)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
+      startTime: ProtobufTimestamp.deserialize(decode.getField(5)),
+      numEpochsPaidOver: decode.getField(6),
+    );
   }
   factory OsmosisIncentiveMsgCreateGauge.fromJson(Map<String, dynamic> json) {
     return OsmosisIncentiveMsgCreateGauge(
-        isPerpetual: json.as("is_perpetual"),
-        owner: json.as("owner"),
-        distributeTo: OsmosisLockupQueryCondition.deserialize(
-            json.asMap("distribute_to")),
-        coins:
-            json.asListOfMap("coins")?.map((e) => Coin.fromJson(e)).toList() ??
-                [],
-        startTime: ProtobufTimestamp.fromString(json.as("start_time")),
-        numEpochsPaidOver: json.asBigInt("num_epochs_paid_over"));
+      isPerpetual: json.as("is_perpetual"),
+      owner: json.as("owner"),
+      distributeTo: OsmosisLockupQueryCondition.deserialize(
+        json.asMap("distribute_to"),
+      ),
+      coins:
+          json.asListOfMap("coins")?.map((e) => Coin.fromJson(e)).toList() ??
+          [],
+      startTime: ProtobufTimestamp.fromString(json.as("start_time")),
+      numEpochsPaidOver: json.asBigInt("num_epochs_paid_over"),
+    );
   }
 
   @override
@@ -82,7 +85,7 @@ class OsmosisIncentiveMsgCreateGauge
       "distribute_to": distributeTo.toJson(),
       "coins": coins.map((e) => e.toJson()).toList(),
       "start_time": startTime.toJson(),
-      "num_epochs_paid_over": numEpochsPaidOver?.toString()
+      "num_epochs_paid_over": numEpochsPaidOver?.toString(),
     };
   }
 
@@ -90,12 +93,19 @@ class OsmosisIncentiveMsgCreateGauge
   TypeUrl get typeUrl => OsmosisIncentivesTypes.msgCreateGauge;
 
   @override
-  List get values =>
-      [isPerpetual, owner, distributeTo, coins, startTime, numEpochsPaidOver];
+  List get values => [
+    isPerpetual,
+    owner,
+    distributeTo,
+    coins,
+    startTime,
+    numEpochsPaidOver,
+  ];
 
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        OsmosisIncentivesTypes.msgCreateGaugeResponse);
+      OsmosisIncentivesTypes.msgCreateGaugeResponse,
+    );
   }
 }

@@ -11,30 +11,36 @@ class OsmosisConcentratedLiquidityPoolsResponse extends CosmosMessage {
   /// pagination defines the pagination in the response.
   final PageResponse? pagination;
 
-  OsmosisConcentratedLiquidityPoolsResponse(
-      {List<AnyMessage>? pools, this.pagination})
-      : pools = pools?.emptyAsNull?.immutable;
+  OsmosisConcentratedLiquidityPoolsResponse({
+    List<AnyMessage>? pools,
+    this.pagination,
+  }) : pools = pools?.emptyAsNull?.immutable;
   factory OsmosisConcentratedLiquidityPoolsResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityPoolsResponse(
-        pools: decode
-            .getFields<List<int>>(1)
-            .map((e) => AnyMessage.deserialize(e))
-            .toList(),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
+      pools:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => AnyMessage.deserialize(e))
+              .toList(),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
+    );
   }
   factory OsmosisConcentratedLiquidityPoolsResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityPoolsResponse(
-        pools: (json["pools"] as List?)
-            ?.map((e) => AnyMessage.fromJson(e))
-            .toList(),
-        pagination: json["pagination"] == null
-            ? null
-            : PageResponse.fromJson(json["pagination"]));
+      pools:
+          (json["pools"] as List?)?.map((e) => AnyMessage.fromJson(e)).toList(),
+      pagination:
+          json["pagination"] == null
+              ? null
+              : PageResponse.fromJson(json["pagination"]),
+    );
   }
 
   @override
@@ -44,7 +50,7 @@ class OsmosisConcentratedLiquidityPoolsResponse extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "pools": pools?.map((e) => e.toJson()).toList(),
-      "pagination": pagination?.toJson()
+      "pagination": pagination?.toJson(),
     };
   }
 

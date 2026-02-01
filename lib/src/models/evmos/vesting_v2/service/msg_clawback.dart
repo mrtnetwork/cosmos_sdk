@@ -7,7 +7,8 @@ import 'package:cosmos_sdk/src/models/evmos/core/service.dart';
 /// MsgClawback defines a message that removes unvested tokens from a
 /// ClawbackVestingAccount.
 class EvmosVestingV2MsgClawback
-    extends EvmosService<EvmosVestingV2MsgClawbackResponse> with AminoMessage {
+    extends EvmosService<EvmosVestingV2MsgClawbackResponse>
+    with AminoMessage {
   /// funder_address is the address which funded the account
   final String? funderAddress;
 
@@ -20,8 +21,11 @@ class EvmosVestingV2MsgClawback
   /// the account.
   final String? destAddress;
 
-  const EvmosVestingV2MsgClawback(
-      {this.funderAddress, this.accountAddress, this.destAddress});
+  const EvmosVestingV2MsgClawback({
+    this.funderAddress,
+    this.accountAddress,
+    this.destAddress,
+  });
 
   factory EvmosVestingV2MsgClawback.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -47,7 +51,7 @@ class EvmosVestingV2MsgClawback
     return {
       "funder_address": funderAddress,
       "account_address": accountAddress,
-      "dest_address": destAddress
+      "dest_address": destAddress,
     };
   }
 

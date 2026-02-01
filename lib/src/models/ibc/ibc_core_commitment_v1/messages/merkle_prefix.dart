@@ -10,10 +10,11 @@ class IbcCommitmentMerklePrefix extends CosmosMessage {
   final List<int>? keyPrefix;
   factory IbcCommitmentMerklePrefix.fromJson(Map<String, dynamic> json) {
     return IbcCommitmentMerklePrefix(
-        keyPrefix: CosmosUtils.tryToBytes(json["key_prefix"]));
+      keyPrefix: CosmosUtils.tryToBytes(json["key_prefix"]),
+    );
   }
   IbcCommitmentMerklePrefix({List<int>? keyPrefix})
-      : keyPrefix = BytesUtils.tryToBytes(keyPrefix, unmodifiable: true);
+    : keyPrefix = BytesUtils.tryToBytes(keyPrefix, unmodifiable: true);
   factory IbcCommitmentMerklePrefix.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcCommitmentMerklePrefix(keyPrefix: decode.getField(1));

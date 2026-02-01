@@ -7,16 +7,19 @@ class ThorchainBanVoter extends CosmosMessage {
   final List<int>? nodeAddress;
   final BigInt? blockHeight;
   final List<String>? signers;
-  ThorchainBanVoter(
-      {List<int>? nodeAddress, this.blockHeight, List<String>? signers})
-      : signers = signers?.immutable,
-        nodeAddress = BytesUtils.tryToBytes(nodeAddress, unmodifiable: true);
+  ThorchainBanVoter({
+    List<int>? nodeAddress,
+    this.blockHeight,
+    List<String>? signers,
+  }) : signers = signers?.immutable,
+       nodeAddress = BytesUtils.tryToBytes(nodeAddress, unmodifiable: true);
   factory ThorchainBanVoter.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainBanVoter(
-        nodeAddress: decode.getField(1),
-        blockHeight: decode.getField(2),
-        signers: decode.getFields<String>(3));
+      nodeAddress: decode.getField(1),
+      blockHeight: decode.getField(2),
+      signers: decode.getFields<String>(3),
+    );
   }
 
   @override
@@ -27,7 +30,7 @@ class ThorchainBanVoter extends CosmosMessage {
     return {
       "node_address": BytesUtils.tryToHexString(nodeAddress),
       "block_height": blockHeight?.toString(),
-      "signers": signers
+      "signers": signers,
     };
   }
 

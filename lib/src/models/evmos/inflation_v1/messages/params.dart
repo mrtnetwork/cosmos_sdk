@@ -18,43 +18,50 @@ class EvmosInflationV1Params extends CosmosMessage {
 
   /// enable_inflation is the parameter that enables inflation and halts increasing the skipped_epochs
   final bool? enableInflation;
-  EvmosInflationV1Params(
-      {this.mintDenom,
-      this.exponentialCalculation,
-      this.inflationDistribution,
-      this.enableInflation});
+  EvmosInflationV1Params({
+    this.mintDenom,
+    this.exponentialCalculation,
+    this.inflationDistribution,
+    this.enableInflation,
+  });
   factory EvmosInflationV1Params.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosInflationV1Params(
-        mintDenom: decode.getField(1),
-        exponentialCalculation: decode
-            .getResult(2)
-            ?.to<EvmosInflationV1ExponentialCalculation, List<int>>(
-                EvmosInflationV1ExponentialCalculation.deserialize),
-        inflationDistribution: decode
-            .getResult(3)
-            ?.to<EvmosInflationV1InflationDistribution, List<int>>(
-                EvmosInflationV1InflationDistribution.deserialize),
-        enableInflation: decode.getField(4));
+      mintDenom: decode.getField(1),
+      exponentialCalculation: decode
+          .getResult(2)
+          ?.to<EvmosInflationV1ExponentialCalculation, List<int>>(
+            EvmosInflationV1ExponentialCalculation.deserialize,
+          ),
+      inflationDistribution: decode
+          .getResult(3)
+          ?.to<EvmosInflationV1InflationDistribution, List<int>>(
+            EvmosInflationV1InflationDistribution.deserialize,
+          ),
+      enableInflation: decode.getField(4),
+    );
   }
   factory EvmosInflationV1Params.fromJson(Map<String, dynamic> json) {
     return EvmosInflationV1Params(
-        mintDenom: json.as("mint_denom"),
-        enableInflation: json.as("enable_inflation"),
-        exponentialCalculation: json.maybeAs(
-            key: "exponential_calculation",
-            onValue: EvmosInflationV1ExponentialCalculation.fromJson),
-        inflationDistribution: json.maybeAs(
-            key: "inflation_distribution",
-            onValue: EvmosInflationV1InflationDistribution.fromJson));
+      mintDenom: json.as("mint_denom"),
+      enableInflation: json.as("enable_inflation"),
+      exponentialCalculation: json.maybeAs(
+        key: "exponential_calculation",
+        onValue: EvmosInflationV1ExponentialCalculation.fromJson,
+      ),
+      inflationDistribution: json.maybeAs(
+        key: "inflation_distribution",
+        onValue: EvmosInflationV1InflationDistribution.fromJson,
+      ),
+    );
   }
   @override
   List get values => [
-        mintDenom,
-        exponentialCalculation,
-        inflationDistribution,
-        enableInflation
-      ];
+    mintDenom,
+    exponentialCalculation,
+    inflationDistribution,
+    enableInflation,
+  ];
 
   @override
   List<int> get fieldIds => [1, 2, 3, 4];
@@ -67,7 +74,7 @@ class EvmosInflationV1Params extends CosmosMessage {
       "mint_denom": mintDenom,
       "exponential_calculation": exponentialCalculation?.toJson(),
       "inflation_distribution": inflationDistribution?.toJson(),
-      "enable_inflation": enableInflation
+      "enable_inflation": enableInflation,
     };
   }
 }

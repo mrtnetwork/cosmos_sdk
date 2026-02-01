@@ -22,19 +22,21 @@ class MsgUndelegate extends StakingV1Beta1Service<MsgUndelegateResponse>
   factory MsgUndelegate.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgUndelegate(
-        delegatorAddress: decode
-            .getResult(1)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        validatorAddress: decode
-            .getResult(2)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        amount: Coin.deserialize(decode.getField(3)));
+      delegatorAddress: decode
+          .getResult(1)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      validatorAddress: decode
+          .getResult(2)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      amount: Coin.deserialize(decode.getField(3)),
+    );
   }
   factory MsgUndelegate.fromJson(Map<String, dynamic> json) {
     return MsgUndelegate(
-        delegatorAddress: json.asAddress("delegator_address"),
-        validatorAddress: json.asAddress("validator_address"),
-        amount: Coin.fromJson(json.asMap("amount")));
+      delegatorAddress: json.asAddress("delegator_address"),
+      validatorAddress: json.asAddress("validator_address"),
+      amount: Coin.fromJson(json.asMap("amount")),
+    );
   }
   @override
   Map<String, dynamic> toJson() {
@@ -52,8 +54,11 @@ class MsgUndelegate extends StakingV1Beta1Service<MsgUndelegateResponse>
   TypeUrl get typeUrl => StakingV1beta1Types.msgUndelegate;
 
   @override
-  List get values =>
-      [delegatorAddress?.address, validatorAddress?.address, amount];
+  List get values => [
+    delegatorAddress?.address,
+    validatorAddress?.address,
+    amount,
+  ];
 
   @override
   List<String?> get signers => [delegatorAddress?.address];

@@ -6,17 +6,21 @@ import 'package:blockchain_utils/helper/helper.dart';
 class OsmosisTokenFactoryQueryDenomsFromCreatorResponse extends CosmosMessage {
   final List<String>? denoms;
   OsmosisTokenFactoryQueryDenomsFromCreatorResponse({List<String>? denoms})
-      : denoms = denoms?.emptyAsNull?.immutable;
+    : denoms = denoms?.emptyAsNull?.immutable;
   factory OsmosisTokenFactoryQueryDenomsFromCreatorResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisTokenFactoryQueryDenomsFromCreatorResponse(
-        denoms: decode.getFields<String>(1));
+      denoms: decode.getFields<String>(1),
+    );
   }
   factory OsmosisTokenFactoryQueryDenomsFromCreatorResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisTokenFactoryQueryDenomsFromCreatorResponse(
-        denoms: (json["denoms"] as List?)?.cast());
+      denoms: (json["denoms"] as List?)?.cast(),
+    );
   }
 
   @override

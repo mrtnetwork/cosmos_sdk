@@ -14,21 +14,24 @@ class QueryIncentivizedPacketsForChannelRequest extends CosmosMessage
 
   /// Height to query at
   final BigInt? queryHeight;
-  const QueryIncentivizedPacketsForChannelRequest(
-      {this.pagination,
-      required this.portId,
-      required this.channelId,
-      this.queryHeight});
+  const QueryIncentivizedPacketsForChannelRequest({
+    this.pagination,
+    required this.portId,
+    required this.channelId,
+    this.queryHeight,
+  });
   factory QueryIncentivizedPacketsForChannelRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryIncentivizedPacketsForChannelRequest(
-        pagination: decode
-            .getResult(1)
-            ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)),
-        portId: decode.getField(2),
-        channelId: decode.getField(3),
-        queryHeight: decode.getField(4));
+      pagination: decode
+          .getResult(1)
+          ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)),
+      portId: decode.getField(2),
+      channelId: decode.getField(3),
+      queryHeight: decode.getField(4),
+    );
   }
 
   @override
@@ -40,7 +43,7 @@ class QueryIncentivizedPacketsForChannelRequest extends CosmosMessage
       "pagination": pagination?.toJson(),
       "port_id": portId,
       "channel_id": channelId,
-      "query_height": queryHeight?.toString()
+      "query_height": queryHeight?.toString(),
     };
   }
 
@@ -57,7 +60,8 @@ class QueryIncentivizedPacketsForChannelRequest extends CosmosMessage
 
   @override
   QueryIncentivizedPacketsForChannelResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return QueryIncentivizedPacketsForChannelResponse.fromJson(json);
   }
 
@@ -65,7 +69,7 @@ class QueryIncentivizedPacketsForChannelRequest extends CosmosMessage
   List<String> get pathParameters => [channelId, portId];
   @override
   Map<String, String?> get queryParameters => {
-        "query_height": queryHeight?.toString(),
-        ...pagination?.queryParameters ?? {}
-      };
+    "query_height": queryHeight?.toString(),
+    ...pagination?.queryParameters ?? {},
+  };
 }

@@ -10,8 +10,12 @@ class IbcSoloMachineV2Misbehaviour extends CosmosMessage {
   final BigInt? sequence;
   final IbcSoloMachineV2SignatureAndData? signatureOne;
   final IbcSoloMachineV2SignatureAndData? signatureTwo;
-  IbcSoloMachineV2Misbehaviour(
-      {this.clientId, this.sequence, this.signatureOne, this.signatureTwo});
+  IbcSoloMachineV2Misbehaviour({
+    this.clientId,
+    this.sequence,
+    this.signatureOne,
+    this.signatureTwo,
+  });
   factory IbcSoloMachineV2Misbehaviour.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcSoloMachineV2Misbehaviour(
@@ -20,11 +24,13 @@ class IbcSoloMachineV2Misbehaviour extends CosmosMessage {
       signatureOne: decode
           .getResult(3)
           ?.to<IbcSoloMachineV2SignatureAndData, List<int>>(
-              (e) => IbcSoloMachineV2SignatureAndData.deserialize(e)),
+            (e) => IbcSoloMachineV2SignatureAndData.deserialize(e),
+          ),
       signatureTwo: decode
           .getResult(4)
           ?.to<IbcSoloMachineV2SignatureAndData, List<int>>(
-              (e) => IbcSoloMachineV2SignatureAndData.deserialize(e)),
+            (e) => IbcSoloMachineV2SignatureAndData.deserialize(e),
+          ),
     );
   }
 
@@ -37,7 +43,7 @@ class IbcSoloMachineV2Misbehaviour extends CosmosMessage {
       "client_id": clientId,
       "sequence": sequence?.toString(),
       "signature_one": signatureOne?.toJson(),
-      "signature_two": signatureTwo?.toJson()
+      "signature_two": signatureTwo?.toJson(),
     };
   }
 

@@ -29,25 +29,32 @@ class PageRequest extends CosmosMessage {
   ///
   /// Since: cosmos-sdk 0.43
   final bool? reverse;
-  const PageRequest(
-      {this.countTotal, this.key, this.limit, this.offset, this.reverse});
+  const PageRequest({
+    this.countTotal,
+    this.key,
+    this.limit,
+    this.offset,
+    this.reverse,
+  });
   factory PageRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return PageRequest(
-        key: decode.getResult(1)?.to<List<int>, List<int>>((e) => e),
-        offset: decode.getResult(2)?.cast<BigInt>(),
-        limit: decode.getResult(3)?.cast<BigInt>(),
-        countTotal: decode.getResult(4)?.cast<bool>(),
-        reverse: decode.getResult(5)?.cast<bool>());
+      key: decode.getResult(1)?.to<List<int>, List<int>>((e) => e),
+      offset: decode.getResult(2)?.cast<BigInt>(),
+      limit: decode.getResult(3)?.cast<BigInt>(),
+      countTotal: decode.getResult(4)?.cast<bool>(),
+      reverse: decode.getResult(5)?.cast<bool>(),
+    );
   }
 
   factory PageRequest.fromJson(Map<String, dynamic> json) {
     return PageRequest(
-        key: BytesUtils.tryFromHexString(json["key"]),
-        offset: BigintUtils.tryParse(json["offset"]),
-        limit: BigintUtils.tryParse(json["limit"]),
-        countTotal: json["count_total"],
-        reverse: json["reverse"]);
+      key: BytesUtils.tryFromHexString(json["key"]),
+      offset: BigintUtils.tryParse(json["offset"]),
+      limit: BigintUtils.tryParse(json["limit"]),
+      countTotal: json["count_total"],
+      reverse: json["reverse"],
+    );
   }
 
   @override
@@ -60,17 +67,17 @@ class PageRequest extends CosmosMessage {
       "offset": offset?.toString(),
       "limit": limit?.toString(),
       "count_total": countTotal,
-      "reverse": reverse
+      "reverse": reverse,
     };
   }
 
   Map<String, String?> get queryParameters => {
-        "pagination.key": BytesUtils.tryToHexString(key),
-        "pagination.offset": offset?.toString(),
-        "pagination.limit": limit?.toString(),
-        "pagination.count_total": countTotal?.toString(),
-        "pagination.reverse": reverse?.toString()
-      };
+    "pagination.key": BytesUtils.tryToHexString(key),
+    "pagination.offset": offset?.toString(),
+    "pagination.limit": limit?.toString(),
+    "pagination.count_total": countTotal?.toString(),
+    "pagination.reverse": reverse?.toString(),
+  };
   @override
   TypeUrl get typeUrl => BaseQueryV1beta1Types.pageRequest;
 

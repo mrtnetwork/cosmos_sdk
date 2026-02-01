@@ -7,8 +7,10 @@ import 'package:cosmos_sdk/src/utils/quick.dart';
 import 'msg_set_denom_pair_taker_fee_response.dart';
 
 class OsmosisPoolManagerMsgSetDenomPairTakerFee
-    extends OsmosisPoolManagerV1Beta1<
-        OsmosisPoolManagerMsgSetDenomPairTakerFeeResponse> {
+    extends
+        OsmosisPoolManagerV1Beta1<
+          OsmosisPoolManagerMsgSetDenomPairTakerFeeResponse
+        > {
   final String? sender;
   final List<OsmosisPoolManagerDenomPairTakerFee> denomPairTakerFee;
 
@@ -17,24 +19,30 @@ class OsmosisPoolManagerMsgSetDenomPairTakerFee
     required List<OsmosisPoolManagerDenomPairTakerFee> denomPairTakerFee,
   }) : denomPairTakerFee = denomPairTakerFee.immutable;
   factory OsmosisPoolManagerMsgSetDenomPairTakerFee.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolManagerMsgSetDenomPairTakerFee(
-        sender: decode.getField(1),
-        denomPairTakerFee: decode
-            .getFields<List<int>>(2)
-            .map((e) => OsmosisPoolManagerDenomPairTakerFee.deserialize(e))
-            .toList());
+      sender: decode.getField(1),
+      denomPairTakerFee:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => OsmosisPoolManagerDenomPairTakerFee.deserialize(e))
+              .toList(),
+    );
   }
   factory OsmosisPoolManagerMsgSetDenomPairTakerFee.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisPoolManagerMsgSetDenomPairTakerFee(
-        sender: json.as("sender"),
-        denomPairTakerFee: json
-                .asListOfMap("denom_pair_taker_fee")
-                ?.map((e) => OsmosisPoolManagerDenomPairTakerFee.fromJson(e))
-                .toList() ??
-            []);
+      sender: json.as("sender"),
+      denomPairTakerFee:
+          json
+              .asListOfMap("denom_pair_taker_fee")
+              ?.map((e) => OsmosisPoolManagerDenomPairTakerFee.fromJson(e))
+              .toList() ??
+          [],
+    );
   }
 
   @override
@@ -44,7 +52,7 @@ class OsmosisPoolManagerMsgSetDenomPairTakerFee
   Map<String, dynamic> toJson() {
     return {
       "sender": sender,
-      "denom_pair_taker_fee": denomPairTakerFee.map((e) => e.toJson()).toList()
+      "denom_pair_taker_fee": denomPairTakerFee.map((e) => e.toJson()).toList(),
     };
   }
 
@@ -59,7 +67,8 @@ class OsmosisPoolManagerMsgSetDenomPairTakerFee
 
   @override
   OsmosisPoolManagerMsgSetDenomPairTakerFeeResponse onResponse(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return OsmosisPoolManagerMsgSetDenomPairTakerFeeResponse.deserialize(bytes);
   }
 }

@@ -15,9 +15,12 @@ class ThorchainStatus implements CosmosEnum {
   static ThorchainStatus fromValue(int? value) {
     return values.firstWhere(
       (e) => e.value == value,
-      orElse: () => throw DartCosmosSdkPluginException(
-          "No ThorchainStatus element found for the given value.",
-          details: {"value": value}),
+      orElse:
+          () =>
+              throw DartCosmosSdkPluginException(
+                "No ThorchainStatus element found for the given value.",
+                details: {"value": value},
+              ),
     );
   }
 }

@@ -5,13 +5,16 @@ class OsmosisConcentratedliquidityPoolmodelConcentratedMsgCreateConcentratedPool
     extends CosmosMessage {
   final BigInt? poolId;
 
-  const OsmosisConcentratedliquidityPoolmodelConcentratedMsgCreateConcentratedPoolResponse(
-      {this.poolId});
+  const OsmosisConcentratedliquidityPoolmodelConcentratedMsgCreateConcentratedPoolResponse({
+    this.poolId,
+  });
   factory OsmosisConcentratedliquidityPoolmodelConcentratedMsgCreateConcentratedPoolResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedliquidityPoolmodelConcentratedMsgCreateConcentratedPoolResponse(
-        poolId: decode.getField(1));
+      poolId: decode.getField(1),
+    );
   }
 
   @override

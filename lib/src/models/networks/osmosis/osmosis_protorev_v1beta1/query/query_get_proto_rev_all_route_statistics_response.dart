@@ -11,23 +11,28 @@ class OsmosisProtorevQueryGetProtoRevAllRouteStatisticsResponse
   /// all routes it has successfully executed a trade on
   final List<OsmosisProtorevRouteStatistics> statistics;
   OsmosisProtorevQueryGetProtoRevAllRouteStatisticsResponse(
-      List<OsmosisProtorevRouteStatistics> statistics)
-      : statistics = statistics.immutable;
+    List<OsmosisProtorevRouteStatistics> statistics,
+  ) : statistics = statistics.immutable;
   factory OsmosisProtorevQueryGetProtoRevAllRouteStatisticsResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return OsmosisProtorevQueryGetProtoRevAllRouteStatisticsResponse(decode
-        .getFields<List<int>>(1)
-        .map((e) => OsmosisProtorevRouteStatistics.deserialize(e))
-        .toList());
+    return OsmosisProtorevQueryGetProtoRevAllRouteStatisticsResponse(
+      decode
+          .getFields<List<int>>(1)
+          .map((e) => OsmosisProtorevRouteStatistics.deserialize(e))
+          .toList(),
+    );
   }
   factory OsmosisProtorevQueryGetProtoRevAllRouteStatisticsResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisProtorevQueryGetProtoRevAllRouteStatisticsResponse(
-        (json["statistics"] as List?)
-                ?.map((e) => OsmosisProtorevRouteStatistics.fromJson(e))
-                .toList() ??
-            <OsmosisProtorevRouteStatistics>[]);
+      (json["statistics"] as List?)
+              ?.map((e) => OsmosisProtorevRouteStatistics.fromJson(e))
+              .toList() ??
+          <OsmosisProtorevRouteStatistics>[],
+    );
   }
 
   @override

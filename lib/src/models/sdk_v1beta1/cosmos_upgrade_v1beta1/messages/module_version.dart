@@ -13,7 +13,9 @@ class ModuleVersion extends CosmosMessage {
   final BigInt? version;
   factory ModuleVersion.fromJson(Map<String, dynamic> json) {
     return ModuleVersion(
-        name: json["name"], version: BigintUtils.tryParse(json["version"]));
+      name: json["name"],
+      version: BigintUtils.tryParse(json["version"]),
+    );
   }
   const ModuleVersion({this.name, this.version});
   factory ModuleVersion.deserialize(List<int> bytes) {

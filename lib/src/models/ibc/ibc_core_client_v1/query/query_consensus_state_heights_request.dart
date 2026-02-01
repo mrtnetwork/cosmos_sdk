@@ -12,15 +12,18 @@ class QueryConsensusStateHeightsRequest extends CosmosMessage
 
   /// pagination request
   final PageRequest? pagination;
-  const QueryConsensusStateHeightsRequest(
-      {required this.clientId, this.pagination});
+  const QueryConsensusStateHeightsRequest({
+    required this.clientId,
+    this.pagination,
+  });
   factory QueryConsensusStateHeightsRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryConsensusStateHeightsRequest(
-        clientId: decode.getField(1),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)));
+      clientId: decode.getField(1),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)),
+    );
   }
 
   @override

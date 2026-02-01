@@ -7,12 +7,13 @@ import 'package:cosmos_sdk/src/provider/tendermint/models/models/ordering.dart';
 /// https://docs.tendermint.com/v0.34/rpc/#/Info/block_search
 class TendermintRequestBlockSearch
     extends TendermintRequest<Map<String, dynamic>, Map<String, dynamic>> {
-  TendermintRequestBlockSearch(
-      {this.query = "block.height > 1000 AND valset.changed > 0",
-      this.page,
-      this.perPage,
-      this.orderBy,
-      this.matchEvents});
+  TendermintRequestBlockSearch({
+    this.query = "block.height > 1000 AND valset.changed > 0",
+    this.page,
+    this.perPage,
+    this.orderBy,
+    this.matchEvents,
+  });
 
   final String query;
 
@@ -40,10 +41,10 @@ class TendermintRequestBlockSearch
 
   @override
   Map<String, String?> get parameters => {
-        "query": query,
-        "page": page?.toString(),
-        "per_page": perPage?.toString(),
-        "order_by": orderBy?.name,
-        "match_events": matchEvents?.toString()
-      };
+    "query": query,
+    "page": page?.toString(),
+    "per_page": perPage?.toString(),
+    "order_by": orderBy?.name,
+    "match_events": matchEvents?.toString(),
+  };
 }

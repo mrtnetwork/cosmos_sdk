@@ -11,16 +11,19 @@ class IbcLightClientsWasmClientState extends CosmosMessage {
   final List<int>? data;
   final List<int>? checksum;
   final IbcClientHeight latestHeight;
-  IbcLightClientsWasmClientState(
-      {List<int>? data, List<int>? checksum, required this.latestHeight})
-      : data = BytesUtils.tryToBytes(data),
-        checksum = BytesUtils.tryToBytes(checksum);
+  IbcLightClientsWasmClientState({
+    List<int>? data,
+    List<int>? checksum,
+    required this.latestHeight,
+  }) : data = BytesUtils.tryToBytes(data),
+       checksum = BytesUtils.tryToBytes(checksum);
   factory IbcLightClientsWasmClientState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcLightClientsWasmClientState(
-        data: decode.getField(1),
-        checksum: decode.getField(2),
-        latestHeight: IbcClientHeight.deserialize(decode.getField(3)));
+      data: decode.getField(1),
+      checksum: decode.getField(2),
+      latestHeight: IbcClientHeight.deserialize(decode.getField(3)),
+    );
   }
 
   @override
@@ -31,7 +34,7 @@ class IbcLightClientsWasmClientState extends CosmosMessage {
     return {
       "data": BytesUtils.tryToHexString(data),
       "checksum": BytesUtils.tryToHexString(checksum),
-      "latest_height": latestHeight.toJson()
+      "latest_height": latestHeight.toJson(),
     };
   }
 

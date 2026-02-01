@@ -12,22 +12,28 @@ class MsgPruneAcknowledgements
   final String? channelId;
   final BigInt? limit;
   final String? signer;
-  const MsgPruneAcknowledgements(
-      {this.portId, this.channelId, this.limit, this.signer});
+  const MsgPruneAcknowledgements({
+    this.portId,
+    this.channelId,
+    this.limit,
+    this.signer,
+  });
   factory MsgPruneAcknowledgements.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgPruneAcknowledgements(
-        portId: decode.getField(1),
-        channelId: decode.getField(2),
-        limit: decode.getField(3),
-        signer: decode.getField(4));
+      portId: decode.getField(1),
+      channelId: decode.getField(2),
+      limit: decode.getField(3),
+      signer: decode.getField(4),
+    );
   }
   factory MsgPruneAcknowledgements.fromJson(Map<String, dynamic> json) {
     return MsgPruneAcknowledgements(
-        portId: json.as("port_id"),
-        channelId: json.as("channel_id"),
-        limit: json.asBigInt("limit"),
-        signer: json.as("signer"));
+      portId: json.as("port_id"),
+      channelId: json.as("channel_id"),
+      limit: json.asBigInt("limit"),
+      signer: json.as("signer"),
+    );
   }
 
   @override
@@ -39,7 +45,7 @@ class MsgPruneAcknowledgements
       "port_id": portId,
       "channel_id": channelId,
       "limit": limit?.toString(),
-      "signer": signer
+      "signer": signer,
     };
   }
 

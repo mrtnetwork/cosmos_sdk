@@ -9,13 +9,16 @@ class DistributionQueryValidatorOutstandingRewardsRequest extends CosmosMessage
     with QueryMessage<DistributionQueryValidatorOutstandingRewardsResponse> {
   /// validator_address defines the validator address to query for.
   final CosmosBaseAddress validatorAddress;
-  const DistributionQueryValidatorOutstandingRewardsRequest(
-      {required this.validatorAddress});
+  const DistributionQueryValidatorOutstandingRewardsRequest({
+    required this.validatorAddress,
+  });
   factory DistributionQueryValidatorOutstandingRewardsRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionQueryValidatorOutstandingRewardsRequest(
-        validatorAddress: CosmosBaseAddress(decode.getField(1)));
+      validatorAddress: CosmosBaseAddress(decode.getField(1)),
+    );
   }
 
   @override
@@ -27,22 +30,26 @@ class DistributionQueryValidatorOutstandingRewardsRequest extends CosmosMessage
   }
 
   @override
-  TypeUrl get typeUrl => DistributionV1beta1Types
-      .distributionQueryValidatorOutstandingRewardsRequest;
+  TypeUrl get typeUrl =>
+      DistributionV1beta1Types
+          .distributionQueryValidatorOutstandingRewardsRequest;
 
   @override
   List get values => [validatorAddress];
 
   @override
   DistributionQueryValidatorOutstandingRewardsResponse onResponse(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return DistributionQueryValidatorOutstandingRewardsResponse.deserialize(
-        bytes);
+      bytes,
+    );
   }
 
   @override
   DistributionQueryValidatorOutstandingRewardsResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return DistributionQueryValidatorOutstandingRewardsResponse.fromJson(json);
   }
 

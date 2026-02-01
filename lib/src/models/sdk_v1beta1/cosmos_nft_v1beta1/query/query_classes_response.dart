@@ -13,26 +13,30 @@ class QueryClassesResponse extends CosmosMessage {
   const QueryClassesResponse({required this.classes, this.pagination});
   factory QueryClassesResponse.fromJson(Map<String, dynamic> json) {
     return QueryClassesResponse(
-      classes: (json["classes"] as List?)
+      classes:
+          (json["classes"] as List?)
               ?.map((e) => NFTClass.fromJson(e))
               .toList() ??
           [],
-      pagination: json["pagination"] == null
-          ? null
-          : PageResponse.fromJson(json["pagination"]),
+      pagination:
+          json["pagination"] == null
+              ? null
+              : PageResponse.fromJson(json["pagination"]),
     );
   }
 
   factory QueryClassesResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryClassesResponse(
-        classes: decode
-            .getFields<List<int>>(1)
-            .map((e) => NFTClass.deserialize(e))
-            .toList(),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
+      classes:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => NFTClass.deserialize(e))
+              .toList(),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
+    );
   }
   @override
   List<int> get fieldIds => [1, 2];
@@ -41,7 +45,7 @@ class QueryClassesResponse extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "classes": classes.map((e) => e.toJson()).toList(),
-      "pagination": pagination.toString()
+      "pagination": pagination.toString(),
     };
   }
 

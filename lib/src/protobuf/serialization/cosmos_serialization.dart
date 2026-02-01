@@ -29,12 +29,13 @@ abstract class CosmosProtocolBuffer {
   List<int> toBuffer() {
     if (values.length != fieldIds.length) {
       throw DartCosmosSdkPluginException(
-          "The values and field IDs must have the same length.",
-          details: {
-            "values": values,
-            "fieldIds": fieldIds,
-            "class": runtimeType.toString(),
-          });
+        "The values and field IDs must have the same length.",
+        details: {
+          "values": values,
+          "fieldIds": fieldIds,
+          "class": runtimeType.toString(),
+        },
+      );
     }
     final bytes = DynamicByteTracker();
     for (int i = 0; i < values.length; i++) {
@@ -78,8 +79,10 @@ abstract class TypeUrl {
 
   String rpcUrl({List<dynamic> pathParameters = const []}) {
     if (rpc == null) {
-      throw DartCosmosSdkPluginException("RPC not supported",
-          details: {"type": typeUrl});
+      throw DartCosmosSdkPluginException(
+        "RPC not supported",
+        details: {"type": typeUrl},
+      );
     }
     final paths = CosmosUtils.extractParams(rpc!);
     String params = rpc!;
@@ -152,10 +155,12 @@ mixin AminoMessage<Response extends CosmosMessage> on ServiceMessage<Response> {
       onError: (notfound) {
         if (notfound) {
           return AminoJsonParserException(
-              "Invalid amino message: 'type' field is missing.");
+            "Invalid amino message: 'type' field is missing.",
+          );
         }
         return AminoJsonParserException(
-            "Invalid amino message: 'type' field must be a valid string.");
+          "Invalid amino message: 'type' field must be a valid string.",
+        );
       },
     );
     final Map<String, dynamic> value = json.asMap(
@@ -163,10 +168,12 @@ mixin AminoMessage<Response extends CosmosMessage> on ServiceMessage<Response> {
       onError: (notfound) {
         if (notfound) {
           return AminoJsonParserException(
-              "Invalid amino message: 'value' field is missing.");
+            "Invalid amino message: 'value' field is missing.",
+          );
         }
         return AminoJsonParserException(
-            "Invalid amino message: 'value' field must be a valid object.");
+          "Invalid amino message: 'value' field must be a valid object.",
+        );
       },
     );
 
@@ -175,43 +182,52 @@ mixin AminoMessage<Response extends CosmosMessage> on ServiceMessage<Response> {
       return UnknownAminoService(value: value, aminoType: typeStr);
     }
     return switch (type) {
-      AminoTypes.msgTransfer => MsgTransfer.fromJson(value),
-      AminoTypes.msgSend => MsgSend.fromJson(value),
-      AminoTypes.msgMultiSend => MsgMultiSend.fromJson(json),
-      AminoTypes.msgVerifyInvariant => MsgVerifyInvariant.fromJson(json),
-      AminoTypes.msgModifyWithdrawAddress =>
-        DistributionMsgSetWithdrawAddress.fromJson(json),
-      AminoTypes.msgWithdrawDelegationReward =>
-        DistributionMsgWithdrawDelegatorReward.fromJson(json),
-      AminoTypes.msgWithdrawValidatorCommission =>
-        DistributionMsgWithdrawValidatorCommission.fromJson(json),
-      AminoTypes.msgFundCommunityPool =>
-        DistributionMsgFundCommunityPool.fromJson(json),
-      AminoTypes.msgVote => GovMsgVote.fromJson(json),
-      AminoTypes.msgDeposit => GovMsgDeposit.fromJson(json),
-      AminoTypes.msgUnjail => SlashingMsgUnjail.fromJson(json),
-      AminoTypes.msgBeginRedelegate => MsgBeginRedelegate.fromJson(json),
-      AminoTypes.msgCreateValidator => MsgCreateValidator.fromJson(json),
-      AminoTypes.msgDelegate => MsgDelegate.fromJson(json),
-      AminoTypes.msgEditValidator => MsgEditValidator.fromJson(json),
-      AminoTypes.msgUndelegate => MsgUndelegate.fromJson(json),
-      AminoTypes.msgCreateVestingAccount =>
-        MsgCreateVestingAccount.fromJson(json),
-      AminoTypes.cctp =>
-        CCTPV1Service.fromJson(typeUrl: typeStr, json: json, amino: true),
-      AminoTypes.evmos ||
-      AminoTypes.ethermint =>
-        EvmosService.fromJson(typeUrl: typeStr, json: json, amino: true),
-      AminoTypes.ophost =>
-        OpInitService.fromJson(typeUrl: typeStr, json: json, amino: true),
-    } as AminoMessage;
+          AminoTypes.msgTransfer => MsgTransfer.fromJson(value),
+          AminoTypes.msgSend => MsgSend.fromJson(value),
+          AminoTypes.msgMultiSend => MsgMultiSend.fromJson(json),
+          AminoTypes.msgVerifyInvariant => MsgVerifyInvariant.fromJson(json),
+          AminoTypes.msgModifyWithdrawAddress =>
+            DistributionMsgSetWithdrawAddress.fromJson(json),
+          AminoTypes.msgWithdrawDelegationReward =>
+            DistributionMsgWithdrawDelegatorReward.fromJson(json),
+          AminoTypes.msgWithdrawValidatorCommission =>
+            DistributionMsgWithdrawValidatorCommission.fromJson(json),
+          AminoTypes.msgFundCommunityPool =>
+            DistributionMsgFundCommunityPool.fromJson(json),
+          AminoTypes.msgVote => GovMsgVote.fromJson(json),
+          AminoTypes.msgDeposit => GovMsgDeposit.fromJson(json),
+          AminoTypes.msgUnjail => SlashingMsgUnjail.fromJson(json),
+          AminoTypes.msgBeginRedelegate => MsgBeginRedelegate.fromJson(json),
+          AminoTypes.msgCreateValidator => MsgCreateValidator.fromJson(json),
+          AminoTypes.msgDelegate => MsgDelegate.fromJson(json),
+          AminoTypes.msgEditValidator => MsgEditValidator.fromJson(json),
+          AminoTypes.msgUndelegate => MsgUndelegate.fromJson(json),
+          AminoTypes.msgCreateVestingAccount =>
+            MsgCreateVestingAccount.fromJson(json),
+          AminoTypes.cctp => CCTPV1Service.fromJson(
+            typeUrl: typeStr,
+            json: json,
+            amino: true,
+          ),
+          AminoTypes.evmos || AminoTypes.ethermint => EvmosService.fromJson(
+            typeUrl: typeStr,
+            json: json,
+            amino: true,
+          ),
+          AminoTypes.ophost => OpInitService.fromJson(
+            typeUrl: typeStr,
+            json: json,
+            amino: true,
+          ),
+        }
+        as AminoMessage;
   }
 
   String get aminoType => typeUrl.aminoType!;
   Map<String, dynamic> toAminoJson() {
     return {
       "type": aminoType,
-      "value": toJson()..removeWhere((k, v) => v == null)
+      "value": toJson()..removeWhere((k, v) => v == null),
     };
   }
 }
@@ -221,52 +237,80 @@ abstract class ServiceMessage<Response extends CosmosMessage>
   const ServiceMessage();
   abstract final List<String?> signers;
   Response onResponse(List<int> bytes);
-  static T? fromJson<T extends ServiceMessage>(
-      {required String typeUrl, required Map<String, dynamic> json}) {
+  static T? fromJson<T extends ServiceMessage>({
+    required String typeUrl,
+    required Map<String, dynamic> json,
+  }) {
     final String root = typeUrl.substring(0, typeUrl.indexOf('.'));
     return switch (root) {
-      CosmWasm1Beta1Service.root =>
-        CosmWasm1Beta1Service.fromJson(typeUrl: typeUrl, json: json),
+      CosmWasm1Beta1Service.root => CosmWasm1Beta1Service.fromJson(
+        typeUrl: typeUrl,
+        json: json,
+      ),
       IbcService.root => IbcService.fromJson(typeUrl: typeUrl, json: json),
-      EvmosService.evmosRoot ||
-      EvmosService.ethermintRoot =>
+      EvmosService.evmosRoot || EvmosService.ethermintRoot =>
         EvmosService.fromJson(typeUrl: typeUrl, json: json),
-      CosmosSDKService.root =>
-        CosmosSDKService.fromJson(typeUrl: typeUrl, json: json),
-      OsmosisService.root =>
-        OsmosisService.fromJson(typeUrl: typeUrl, json: json),
-      InitiaService.root =>
-        InitiaService.fromJson(typeUrl: typeUrl, json: json),
-      CCTPV1Service.root =>
-        CCTPV1Service.fromJson<T>(typeUrl: typeUrl, json: json),
-      OpInitService.root =>
-        OpInitService.fromJson(typeUrl: typeUrl, json: json),
-      _ => null
+      CosmosSDKService.root => CosmosSDKService.fromJson(
+        typeUrl: typeUrl,
+        json: json,
+      ),
+      OsmosisService.root => OsmosisService.fromJson(
+        typeUrl: typeUrl,
+        json: json,
+      ),
+      InitiaService.root => InitiaService.fromJson(
+        typeUrl: typeUrl,
+        json: json,
+      ),
+      CCTPV1Service.root => CCTPV1Service.fromJson<T>(
+        typeUrl: typeUrl,
+        json: json,
+      ),
+      OpInitService.root => OpInitService.fromJson(
+        typeUrl: typeUrl,
+        json: json,
+      ),
+      _ => null,
     };
   }
 
-  static T? deserialize<T extends ServiceMessage>(
-      {required String typeUrl, required List<int> bytes}) {
+  static T? deserialize<T extends ServiceMessage>({
+    required String typeUrl,
+    required List<int> bytes,
+  }) {
     final String root = typeUrl.substring(0, typeUrl.indexOf('.'));
     return switch (root) {
-      CosmWasm1Beta1Service.root =>
-        CosmWasm1Beta1Service.deserialize<T>(typeUrl: typeUrl, bytes: bytes),
-      IbcService.root =>
-        IbcService.deserialize<T>(typeUrl: typeUrl, bytes: bytes),
-      EvmosService.evmosRoot ||
-      EvmosService.ethermintRoot =>
+      CosmWasm1Beta1Service.root => CosmWasm1Beta1Service.deserialize<T>(
+        typeUrl: typeUrl,
+        bytes: bytes,
+      ),
+      IbcService.root => IbcService.deserialize<T>(
+        typeUrl: typeUrl,
+        bytes: bytes,
+      ),
+      EvmosService.evmosRoot || EvmosService.ethermintRoot =>
         EvmosService.deserialize(typeUrl: typeUrl, bytes: bytes),
-      CosmosSDKService.root =>
-        CosmosSDKService.deserialize<T>(typeUrl: typeUrl, bytes: bytes),
-      OsmosisService.root =>
-        OsmosisService.deserialize<T>(typeUrl: typeUrl, bytes: bytes),
-      CCTPV1Service.root =>
-        CCTPV1Service.deserialize(typeUrl: typeUrl, bytes: bytes),
-      InitiaService.root =>
-        InitiaService.deserialize(typeUrl: typeUrl, bytes: bytes),
-      OpInitService.root =>
-        OpInitService.deserialize(typeUrl: typeUrl, bytes: bytes),
-      _ => null
+      CosmosSDKService.root => CosmosSDKService.deserialize<T>(
+        typeUrl: typeUrl,
+        bytes: bytes,
+      ),
+      OsmosisService.root => OsmosisService.deserialize<T>(
+        typeUrl: typeUrl,
+        bytes: bytes,
+      ),
+      CCTPV1Service.root => CCTPV1Service.deserialize(
+        typeUrl: typeUrl,
+        bytes: bytes,
+      ),
+      InitiaService.root => InitiaService.deserialize(
+        typeUrl: typeUrl,
+        bytes: bytes,
+      ),
+      OpInitService.root => OpInitService.deserialize(
+        typeUrl: typeUrl,
+        bytes: bytes,
+      ),
+      _ => null,
     };
   }
 }

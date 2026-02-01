@@ -6,11 +6,13 @@ class ThorchainNodePauseChain extends CosmosMessage {
   final List<int>? nodeAddress;
   final BigInt? blockHeight;
   ThorchainNodePauseChain({List<int>? nodeAddress, this.blockHeight})
-      : nodeAddress = BytesUtils.tryToBytes(nodeAddress);
+    : nodeAddress = BytesUtils.tryToBytes(nodeAddress);
   factory ThorchainNodePauseChain.deserialized(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainNodePauseChain(
-        nodeAddress: decode.getField(1), blockHeight: decode.getField(2));
+      nodeAddress: decode.getField(1),
+      blockHeight: decode.getField(2),
+    );
   }
 
   @override
@@ -20,7 +22,7 @@ class ThorchainNodePauseChain extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "node_address": BytesUtils.tryToHexString(nodeAddress),
-      "block_height": blockHeight?.toString()
+      "block_height": blockHeight?.toString(),
     };
   }
 

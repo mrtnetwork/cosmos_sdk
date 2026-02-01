@@ -11,16 +11,19 @@ class QueryFeeEnabledChannelsRequest extends CosmosMessage
 
   /// block height at which to query
   final BigInt queryHeight;
-  const QueryFeeEnabledChannelsRequest(
-      {this.pagination, required this.queryHeight});
+  const QueryFeeEnabledChannelsRequest({
+    this.pagination,
+    required this.queryHeight,
+  });
 
   factory QueryFeeEnabledChannelsRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryFeeEnabledChannelsRequest(
-        pagination: decode
-            .getResult(1)
-            ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)),
-        queryHeight: decode.getField(2));
+      pagination: decode
+          .getResult(1)
+          ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)),
+      queryHeight: decode.getField(2),
+    );
   }
 
   @override
@@ -30,7 +33,7 @@ class QueryFeeEnabledChannelsRequest extends CosmosMessage
   Map<String, dynamic> toJson() {
     return {
       "pagination": pagination?.toJson(),
-      "query_height": queryHeight.toString()
+      "query_height": queryHeight.toString(),
     };
   }
 
@@ -54,7 +57,7 @@ class QueryFeeEnabledChannelsRequest extends CosmosMessage
   List<String> get pathParameters => [queryHeight.toString()];
   @override
   Map<String, String?> get queryParameters => {
-        "query_height": queryHeight.toString(),
-        ...pagination?.queryParameters ?? {}
-      };
+    "query_height": queryHeight.toString(),
+    ...pagination?.queryParameters ?? {},
+  };
 }

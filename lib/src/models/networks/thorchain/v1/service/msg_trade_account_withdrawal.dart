@@ -8,21 +8,22 @@ class ThorchainMsgTradeAccountWithdrawal extends CosmosMessage {
   final BigInt amount;
   final String? assetAddress;
   final List<int>? signer;
-  ThorchainMsgTradeAccountWithdrawal(
-      {required this.tx,
-      required this.asset,
-      required this.amount,
-      this.assetAddress,
-      List<int>? signer})
-      : signer = BytesUtils.tryToBytes(signer, unmodifiable: true);
+  ThorchainMsgTradeAccountWithdrawal({
+    required this.tx,
+    required this.asset,
+    required this.amount,
+    this.assetAddress,
+    List<int>? signer,
+  }) : signer = BytesUtils.tryToBytes(signer, unmodifiable: true);
   factory ThorchainMsgTradeAccountWithdrawal.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainMsgTradeAccountWithdrawal(
-        tx: ThorchainTx.deserialize(decode.getField(1)),
-        asset: ThorchainAsset.deserialize(decode.getField(2)),
-        amount: BigintUtils.parse(decode.getField<String>(3)),
-        assetAddress: decode.getField(4),
-        signer: decode.getField(5));
+      tx: ThorchainTx.deserialize(decode.getField(1)),
+      asset: ThorchainAsset.deserialize(decode.getField(2)),
+      amount: BigintUtils.parse(decode.getField<String>(3)),
+      assetAddress: decode.getField(4),
+      signer: decode.getField(5),
+    );
   }
 
   @override
@@ -35,7 +36,7 @@ class ThorchainMsgTradeAccountWithdrawal extends CosmosMessage {
       "asset": asset.toJson(),
       "amount": amount.toString(),
       "asset_address": assetAddress,
-      "signer": BytesUtils.tryToHexString(signer)
+      "signer": BytesUtils.tryToHexString(signer),
     };
   }
 

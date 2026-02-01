@@ -8,15 +8,19 @@ class ParamChange extends CosmosMessage {
   final String? value;
   factory ParamChange.fromJson(Map<String, dynamic> json) {
     return ParamChange(
-        key: json["key"], subspace: json["subspace"], value: json["value"]);
+      key: json["key"],
+      subspace: json["subspace"],
+      value: json["value"],
+    );
   }
   const ParamChange({this.subspace, this.key, this.value});
   factory ParamChange.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ParamChange(
-        subspace: decode.getField(1),
-        key: decode.getField(2),
-        value: decode.getField(3));
+      subspace: decode.getField(1),
+      key: decode.getField(2),
+      value: decode.getField(3),
+    );
   }
 
   @override

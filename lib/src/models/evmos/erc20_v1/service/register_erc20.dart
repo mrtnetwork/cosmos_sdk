@@ -7,27 +7,31 @@ import 'package:cosmos_sdk/src/utils/quick.dart';
 /// MsgRegisterERC20 is the Msg/RegisterERC20 request type for registering
 /// an Erc20 contract token pair.
 class EvmosErc20V1MsgRegisterERC20
-    extends EvmosService<EmptyServiceRequestResponse> with AminoMessage {
+    extends EvmosService<EmptyServiceRequestResponse>
+    with AminoMessage {
   /// authority is the address of the governance account
   final String? authority;
 
   /// erc20addresses is a slice of ERC20 token contract hex addresses
   final List<String>? erc20addresses;
 
-  const EvmosErc20V1MsgRegisterERC20(
-      {required this.authority, required this.erc20addresses});
+  const EvmosErc20V1MsgRegisterERC20({
+    required this.authority,
+    required this.erc20addresses,
+  });
 
   factory EvmosErc20V1MsgRegisterERC20.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosErc20V1MsgRegisterERC20(
-        authority: decode.getField(1),
-        erc20addresses: decode.getFields<String>(2));
+      authority: decode.getField(1),
+      erc20addresses: decode.getFields<String>(2),
+    );
   }
   factory EvmosErc20V1MsgRegisterERC20.fromJson(Map<String, dynamic> json) {
     return EvmosErc20V1MsgRegisterERC20(
-        authority: json.as("authority"),
-        erc20addresses:
-            json.asListOfString("erc20addresses", throwOnNull: false));
+      authority: json.as("authority"),
+      erc20addresses: json.asListOfString("erc20addresses", throwOnNull: false),
+    );
   }
 
   @override
@@ -49,6 +53,7 @@ class EvmosErc20V1MsgRegisterERC20
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        EvmosErc20V1Types.msgRegisterERC20Response);
+      EvmosErc20V1Types.msgRegisterERC20Response,
+    );
   }
 }

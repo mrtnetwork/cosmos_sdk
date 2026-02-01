@@ -40,7 +40,7 @@ class ABCIResponse {
       "value": value,
       "key": key,
       "index": index,
-      "code": code
+      "code": code,
     };
   }
 
@@ -49,7 +49,11 @@ class ABCIResponse {
   List<int> valueBytes() {
     if (value == null) {
       throw RPCError(
-          errorCode: code, message: log, request: {}, details: toJson());
+        errorCode: code,
+        message: log,
+        request: {},
+        details: toJson(),
+      );
     }
     return StringUtils.encode(value!, type: StringEncoding.base64);
   }

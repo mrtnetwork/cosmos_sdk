@@ -9,42 +9,51 @@ abstract class CrisisV1Beta1Service<T extends CosmosMessage>
     extends CosmosSDKService<T> {
   const CrisisV1Beta1Service();
 
-  static T? fromJson<T extends CrisisV1Beta1Service>(
-      {required String typeUrl, required Map<String, dynamic> json}) {
+  static T? fromJson<T extends CrisisV1Beta1Service>({
+    required String typeUrl,
+    required Map<String, dynamic> json,
+  }) {
     final type = CrisisV1beta1.findService(typeUrl);
-    final CrisisV1Beta1Service? service = switch (type) {
-      CrisisV1beta1.crisisMsgUpdateParams =>
-        CrisisMsgUpdateParams.fromJson(json),
-      CrisisV1beta1.msgVerifyInvariant => MsgVerifyInvariant.fromJson(json),
-      _ => null
-    } as CrisisV1Beta1Service?;
+    final CrisisV1Beta1Service? service =
+        switch (type) {
+              CrisisV1beta1.crisisMsgUpdateParams =>
+                CrisisMsgUpdateParams.fromJson(json),
+              CrisisV1beta1.msgVerifyInvariant => MsgVerifyInvariant.fromJson(
+                json,
+              ),
+              _ => null,
+            }
+            as CrisisV1Beta1Service?;
     if (service == null) return null;
     if (service is! T) {
-      throw DartCosmosSdkPluginException("Invalid CrisisV1beta1 Service.",
-          details: {
-            "excepted": "$T",
-            "service": service.runtimeType.toString()
-          });
+      throw DartCosmosSdkPluginException(
+        "Invalid CrisisV1beta1 Service.",
+        details: {"excepted": "$T", "service": service.runtimeType.toString()},
+      );
     }
     return service;
   }
 
-  static T? deserialize<T extends CrisisV1Beta1Service>(
-      {required String typeUrl, required List<int> bytes}) {
+  static T? deserialize<T extends CrisisV1Beta1Service>({
+    required String typeUrl,
+    required List<int> bytes,
+  }) {
     final type = CrisisV1beta1.findService(typeUrl);
-    final CrisisV1Beta1Service? service = switch (type) {
-      CrisisV1beta1.crisisMsgUpdateParams =>
-        CrisisMsgUpdateParams.deserialize(bytes),
-      CrisisV1beta1.msgVerifyInvariant => MsgVerifyInvariant.deserialize(bytes),
-      _ => null
-    } as CrisisV1Beta1Service?;
+    final CrisisV1Beta1Service? service =
+        switch (type) {
+              CrisisV1beta1.crisisMsgUpdateParams =>
+                CrisisMsgUpdateParams.deserialize(bytes),
+              CrisisV1beta1.msgVerifyInvariant =>
+                MsgVerifyInvariant.deserialize(bytes),
+              _ => null,
+            }
+            as CrisisV1Beta1Service?;
     if (service == null) return null;
     if (service is! T) {
-      throw DartCosmosSdkPluginException("Invalid CrisisV1beta1 Service.",
-          details: {
-            "excepted": "$T",
-            "service": service.runtimeType.toString()
-          });
+      throw DartCosmosSdkPluginException(
+        "Invalid CrisisV1beta1 Service.",
+        details: {"excepted": "$T", "service": service.runtimeType.toString()},
+      );
     }
     return service;
   }

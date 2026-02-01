@@ -17,36 +17,40 @@ class OsmosisProtorevRouteStatistics extends CosmosMessage {
   /// route is the route that was used (pool ids along the arbitrage route)
   final List<BigInt>? route;
 
-  OsmosisProtorevRouteStatistics(
-      {required List<Coin> profits,
-      required this.numberOfTrades,
-      List<BigInt>? route})
-      : route = route?.emptyAsNull?.immutable,
-        profits = profits.immutable;
+  OsmosisProtorevRouteStatistics({
+    required List<Coin> profits,
+    required this.numberOfTrades,
+    List<BigInt>? route,
+  }) : route = route?.emptyAsNull?.immutable,
+       profits = profits.immutable;
 
   factory OsmosisProtorevRouteStatistics.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisProtorevRouteStatistics(
-        profits: decode
-            .getFields<List<int>>(1)
-            .map((e) => Coin.deserialize(e))
-            .toList(),
-        numberOfTrades: decode.getField(2),
-        route: decode
-                .getResult<ProtocolBufferDecoderResult?>(3)
-                ?.to<List<BigInt>, List<int>>(
-                    (e) => e.map((e) => BigintUtils.parse(e)).toList()) ??
-            <BigInt>[]);
+      profits:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
+      numberOfTrades: decode.getField(2),
+      route:
+          decode
+              .getResult<ProtocolBufferDecoderResult?>(3)
+              ?.to<List<BigInt>, List<int>>(
+                (e) => e.map((e) => BigintUtils.parse(e)).toList(),
+              ) ??
+          <BigInt>[],
+    );
   }
   factory OsmosisProtorevRouteStatistics.fromJson(Map<String, dynamic> json) {
     return OsmosisProtorevRouteStatistics(
-        profits:
-            (json["profits"] as List?)?.map((e) => Coin.fromJson(e)).toList() ??
-                <Coin>[],
-        numberOfTrades: BigintUtils.parse(json["number_of_trades"]),
-        route: (json["route"] as List?)
-            ?.map((e) => BigintUtils.parse(e))
-            .toList());
+      profits:
+          (json["profits"] as List?)?.map((e) => Coin.fromJson(e)).toList() ??
+          <Coin>[],
+      numberOfTrades: BigintUtils.parse(json["number_of_trades"]),
+      route:
+          (json["route"] as List?)?.map((e) => BigintUtils.parse(e)).toList(),
+    );
   }
 
   @override
@@ -57,7 +61,7 @@ class OsmosisProtorevRouteStatistics extends CosmosMessage {
     return {
       "profits": profits.map((e) => e.toJson()).toList(),
       "number_of_trades": numberOfTrades.toString(),
-      "route": route?.map((e) => e.toString()).toList()
+      "route": route?.map((e) => e.toString()).toList(),
     };
   }
 

@@ -39,42 +39,44 @@ class EvmosEthermintEVMV1Log extends CosmosMessage {
   /// reorganisation. You must pay attention to this field if you receive logs
   /// through a filter query.
   final bool removed;
-  EvmosEthermintEVMV1Log(
-      {required this.address,
-      required List<String> topics,
-      required List<int> data,
-      required this.blockNumber,
-      required this.transactionHash,
-      required this.transactionIndex,
-      required this.blockHash,
-      required this.logIndex,
-      required this.removed})
-      : data = data.immutable,
-        topics = topics.immutable;
+  EvmosEthermintEVMV1Log({
+    required this.address,
+    required List<String> topics,
+    required List<int> data,
+    required this.blockNumber,
+    required this.transactionHash,
+    required this.transactionIndex,
+    required this.blockHash,
+    required this.logIndex,
+    required this.removed,
+  }) : data = data.immutable,
+       topics = topics.immutable;
   factory EvmosEthermintEVMV1Log.fromJson(Map<String, dynamic> json) {
     return EvmosEthermintEVMV1Log(
-        address: json["address"],
-        blockHash: json["block_hash"],
-        blockNumber: BigintUtils.parse(json["block_number"]),
-        data: CosmosUtils.toBytes(json["data"]),
-        logIndex: BigintUtils.parse(json["index"]),
-        removed: json["removed"],
-        topics: (json["topics"] as List?)?.cast() ?? [],
-        transactionHash: json["tx_hash"],
-        transactionIndex: BigintUtils.parse(json["tx_index"]));
+      address: json["address"],
+      blockHash: json["block_hash"],
+      blockNumber: BigintUtils.parse(json["block_number"]),
+      data: CosmosUtils.toBytes(json["data"]),
+      logIndex: BigintUtils.parse(json["index"]),
+      removed: json["removed"],
+      topics: (json["topics"] as List?)?.cast() ?? [],
+      transactionHash: json["tx_hash"],
+      transactionIndex: BigintUtils.parse(json["tx_index"]),
+    );
   }
   factory EvmosEthermintEVMV1Log.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosEthermintEVMV1Log(
-        address: decode.getField(1),
-        topics: decode.getFields<String>(2),
-        data: decode.getField(3),
-        blockNumber: decode.getField(4),
-        transactionHash: decode.getField(5),
-        transactionIndex: decode.getField(6),
-        blockHash: decode.getField(7),
-        logIndex: decode.getField(8),
-        removed: decode.getField(9));
+      address: decode.getField(1),
+      topics: decode.getFields<String>(2),
+      data: decode.getField(3),
+      blockNumber: decode.getField(4),
+      transactionHash: decode.getField(5),
+      transactionIndex: decode.getField(6),
+      blockHash: decode.getField(7),
+      logIndex: decode.getField(8),
+      removed: decode.getField(9),
+    );
   }
 
   @override
@@ -91,7 +93,7 @@ class EvmosEthermintEVMV1Log extends CosmosMessage {
       "tx_index": transactionIndex,
       "block_hash": blockHash,
       "index": logIndex,
-      "removed": removed
+      "removed": removed,
     };
   }
 
@@ -100,14 +102,14 @@ class EvmosEthermintEVMV1Log extends CosmosMessage {
 
   @override
   List get values => [
-        address,
-        topics,
-        data,
-        blockNumber,
-        transactionHash,
-        transactionIndex,
-        blockHash,
-        logIndex,
-        removed
-      ];
+    address,
+    topics,
+    data,
+    blockNumber,
+    transactionHash,
+    transactionIndex,
+    blockHash,
+    logIndex,
+    removed,
+  ];
 }

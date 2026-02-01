@@ -9,22 +9,31 @@ import 'msg_lock_and_super_fluid_delegate_response.dart';
 /// and runs "ExitPool" on it, to get the constituent tokens. e.g. z gamm/pool/1 tokens ExitPools into constituent tokens
 /// x uatom, y uosmo. Then it creates a new lock for every constituent token, with the duration associated with the lock.
 /// If the lock was unbonding, the new lockup durations should be the time left until unbond completion.
-class OsmosisSuperfluidMsgUnPoolWhitelistedPool extends OsmosisSuperfluid<
-    OsmosisSuperfluidMsgLockAndSuperfluidDelegateResponse> {
+class OsmosisSuperfluidMsgUnPoolWhitelistedPool
+    extends
+        OsmosisSuperfluid<
+          OsmosisSuperfluidMsgLockAndSuperfluidDelegateResponse
+        > {
   final String? sender;
   final BigInt? poolId;
 
   OsmosisSuperfluidMsgUnPoolWhitelistedPool({this.sender, this.poolId});
   factory OsmosisSuperfluidMsgUnPoolWhitelistedPool.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidMsgUnPoolWhitelistedPool(
-        sender: decode.getField(1), poolId: decode.getField(2));
+      sender: decode.getField(1),
+      poolId: decode.getField(2),
+    );
   }
   factory OsmosisSuperfluidMsgUnPoolWhitelistedPool.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisSuperfluidMsgUnPoolWhitelistedPool(
-        sender: json.as("sender"), poolId: json.asBigInt("pool_id"));
+      sender: json.as("sender"),
+      poolId: json.asBigInt("pool_id"),
+    );
   }
 
   @override
@@ -45,8 +54,10 @@ class OsmosisSuperfluidMsgUnPoolWhitelistedPool extends OsmosisSuperfluid<
   List<String?> get signers => [sender];
   @override
   OsmosisSuperfluidMsgLockAndSuperfluidDelegateResponse onResponse(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return OsmosisSuperfluidMsgLockAndSuperfluidDelegateResponse.deserialize(
-        bytes);
+      bytes,
+    );
   }
 }

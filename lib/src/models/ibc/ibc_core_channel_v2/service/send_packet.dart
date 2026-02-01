@@ -15,32 +15,36 @@ class IbcChannelV2MsgSendPacket
   final BigInt? timoutTimestamp;
   final List<IbcChannelV2Payload>? payloads;
   final String? signer;
-  IbcChannelV2MsgSendPacket(
-      {required this.sourceClient,
-      List<IbcChannelV2Payload>? payloads,
-      required this.timoutTimestamp,
-      this.signer})
-      : payloads = payloads?.immutable;
+  IbcChannelV2MsgSendPacket({
+    required this.sourceClient,
+    List<IbcChannelV2Payload>? payloads,
+    required this.timoutTimestamp,
+    this.signer,
+  }) : payloads = payloads?.immutable;
   factory IbcChannelV2MsgSendPacket.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcChannelV2MsgSendPacket(
-        sourceClient: decode.getField(1),
-        timoutTimestamp: decode.getField(2),
-        payloads: decode
-            .getFields<List<int>>(3)
-            .map((e) => IbcChannelV2Payload.deserialize(e))
-            .toList(),
-        signer: decode.getField(4));
+      sourceClient: decode.getField(1),
+      timoutTimestamp: decode.getField(2),
+      payloads:
+          decode
+              .getFields<List<int>>(3)
+              .map((e) => IbcChannelV2Payload.deserialize(e))
+              .toList(),
+      signer: decode.getField(4),
+    );
   }
   factory IbcChannelV2MsgSendPacket.fromJson(Map<String, dynamic> json) {
     return IbcChannelV2MsgSendPacket(
-        sourceClient: json.as("source_client"),
-        timoutTimestamp: json.asBigInt("timeout_timestamp"),
-        payloads: json
-            .asListOfMap("payloads")
-            ?.map(IbcChannelV2Payload.fromJson)
-            .toList(),
-        signer: json.as("signer"));
+      sourceClient: json.as("source_client"),
+      timoutTimestamp: json.asBigInt("timeout_timestamp"),
+      payloads:
+          json
+              .asListOfMap("payloads")
+              ?.map(IbcChannelV2Payload.fromJson)
+              .toList(),
+      signer: json.as("signer"),
+    );
   }
   @override
   List<int> get fieldIds => [1, 2, 3, 4];
@@ -51,7 +55,7 @@ class IbcChannelV2MsgSendPacket
       "source_client": sourceClient,
       "timeout_timestamp": timoutTimestamp?.toString(),
       "payloads": payloads?.map((e) => e.toJson()).toList(),
-      "signer": signer
+      "signer": signer,
     };
   }
 

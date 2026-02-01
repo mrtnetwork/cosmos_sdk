@@ -8,18 +8,22 @@ class ParameterChangeProposal extends CosmosMessage {
   final String? title;
   final String? description;
   final List<ParamChange> changes;
-  ParameterChangeProposal(
-      {this.title, this.description, required List<ParamChange> changes})
-      : changes = changes.immutable;
+  ParameterChangeProposal({
+    this.title,
+    this.description,
+    required List<ParamChange> changes,
+  }) : changes = changes.immutable;
   factory ParameterChangeProposal.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ParameterChangeProposal(
-        title: decode.getField(1),
-        description: decode.getField(2),
-        changes: decode
-            .getFields<List<int>>(3)
-            .map((e) => ParamChange.deserialize(e))
-            .toList());
+      title: decode.getField(1),
+      description: decode.getField(2),
+      changes:
+          decode
+              .getFields<List<int>>(3)
+              .map((e) => ParamChange.deserialize(e))
+              .toList(),
+    );
   }
 
   @override
@@ -30,7 +34,7 @@ class ParameterChangeProposal extends CosmosMessage {
     return {
       "title": title,
       "description": description,
-      "changes": changes.map((e) => e.toJson()).toList()
+      "changes": changes.map((e) => e.toJson()).toList(),
     };
   }
 

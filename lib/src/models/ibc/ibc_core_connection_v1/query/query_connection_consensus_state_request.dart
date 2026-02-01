@@ -10,17 +10,20 @@ class IbcConnectionQueryConnectionConsensusStateRequest extends CosmosMessage
   final String connectionId;
   final BigInt revisionNumber;
   final BigInt revisionHeight;
-  const IbcConnectionQueryConnectionConsensusStateRequest(
-      {required this.connectionId,
-      required this.revisionNumber,
-      required this.revisionHeight});
+  const IbcConnectionQueryConnectionConsensusStateRequest({
+    required this.connectionId,
+    required this.revisionNumber,
+    required this.revisionHeight,
+  });
   factory IbcConnectionQueryConnectionConsensusStateRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcConnectionQueryConnectionConsensusStateRequest(
-        connectionId: decode.getField(1),
-        revisionNumber: decode.getField(2),
-        revisionHeight: decode.getField(3));
+      connectionId: decode.getField(1),
+      revisionNumber: decode.getField(2),
+      revisionHeight: decode.getField(3),
+    );
   }
 
   @override
@@ -31,7 +34,7 @@ class IbcConnectionQueryConnectionConsensusStateRequest extends CosmosMessage
     return {
       "connection_id": connectionId,
       "revision_number": revisionNumber.toString(),
-      "revision_height": revisionHeight.toString()
+      "revision_height": revisionHeight.toString(),
     };
   }
 
@@ -44,18 +47,24 @@ class IbcConnectionQueryConnectionConsensusStateRequest extends CosmosMessage
 
   @override
   IbcConnectionQueryConnectionConsensusStateResponse onResponse(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return IbcConnectionQueryConnectionConsensusStateResponse.deserialize(
-        bytes);
+      bytes,
+    );
   }
 
   @override
   IbcConnectionQueryConnectionConsensusStateResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return IbcConnectionQueryConnectionConsensusStateResponse.fromJson(json);
   }
 
   @override
-  List<String> get pathParameters =>
-      [connectionId, revisionNumber.toString(), revisionHeight.toString()];
+  List<String> get pathParameters => [
+    connectionId,
+    revisionNumber.toString(),
+    revisionHeight.toString(),
+  ];
 }

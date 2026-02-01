@@ -7,25 +7,30 @@ class OsmosisPoolincentivesGaugeIdWithDuration extends CosmosMessage {
   final ProtobufDuration duration;
   final String? gaugeIncentivePercentage;
 
-  OsmosisPoolincentivesGaugeIdWithDuration(
-      {required this.gaugeId,
-      required this.duration,
-      this.gaugeIncentivePercentage});
+  OsmosisPoolincentivesGaugeIdWithDuration({
+    required this.gaugeId,
+    required this.duration,
+    this.gaugeIncentivePercentage,
+  });
   factory OsmosisPoolincentivesGaugeIdWithDuration.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolincentivesGaugeIdWithDuration(
-        gaugeId: decode.getField(1),
-        duration: ProtobufDuration.deserialize(decode.getField(2)),
-        gaugeIncentivePercentage: decode.getField(3));
+      gaugeId: decode.getField(1),
+      duration: ProtobufDuration.deserialize(decode.getField(2)),
+      gaugeIncentivePercentage: decode.getField(3),
+    );
   }
 
   factory OsmosisPoolincentivesGaugeIdWithDuration.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisPoolincentivesGaugeIdWithDuration(
-        gaugeId: BigintUtils.tryParse(json["gauge_id"]),
-        duration: ProtobufDuration.fromString(json["duration"]),
-        gaugeIncentivePercentage: json["gauge_incentive_percentage"]);
+      gaugeId: BigintUtils.tryParse(json["gauge_id"]),
+      duration: ProtobufDuration.fromString(json["duration"]),
+      gaugeIncentivePercentage: json["gauge_incentive_percentage"],
+    );
   }
 
   @override
@@ -36,7 +41,7 @@ class OsmosisPoolincentivesGaugeIdWithDuration extends CosmosMessage {
     return {
       "gauge_id": gaugeId?.toString(),
       "duration": duration.toJson(),
-      "gauge_incentive_percentage": gaugeIncentivePercentage
+      "gauge_incentive_percentage": gaugeIncentivePercentage,
     };
   }
 

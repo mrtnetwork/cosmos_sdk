@@ -38,6 +38,7 @@ class SlashingMsgUnjail
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        SlashingV1beta1Types.slashingMsgUnjailResponse);
+      SlashingV1beta1Types.slashingMsgUnjailResponse,
+    );
   }
 }

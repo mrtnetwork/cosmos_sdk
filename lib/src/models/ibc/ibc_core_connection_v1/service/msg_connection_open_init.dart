@@ -15,32 +15,42 @@ class IbcConnectionMsgConnectionOpenInit
   final IbcConnectionVersion? version;
   final BigInt? delayPeriod;
   final String? signer;
-  const IbcConnectionMsgConnectionOpenInit(
-      {this.clientId,
-      required this.counterparty,
-      this.version,
-      this.delayPeriod,
-      this.signer});
+  const IbcConnectionMsgConnectionOpenInit({
+    this.clientId,
+    required this.counterparty,
+    this.version,
+    this.delayPeriod,
+    this.signer,
+  });
   factory IbcConnectionMsgConnectionOpenInit.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcConnectionMsgConnectionOpenInit(
-        clientId: decode.getField(1),
-        counterparty: IbcConnectionCounterparty.deserialize(decode.getField(2)),
-        version: decode.getResult(3)?.to<IbcConnectionVersion, List<int>>(
-            (e) => IbcConnectionVersion.deserialize(e)),
-        signer: decode.getField(5),
-        delayPeriod: decode.getField(4));
+      clientId: decode.getField(1),
+      counterparty: IbcConnectionCounterparty.deserialize(decode.getField(2)),
+      version: decode
+          .getResult(3)
+          ?.to<IbcConnectionVersion, List<int>>(
+            (e) => IbcConnectionVersion.deserialize(e),
+          ),
+      signer: decode.getField(5),
+      delayPeriod: decode.getField(4),
+    );
   }
   factory IbcConnectionMsgConnectionOpenInit.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return IbcConnectionMsgConnectionOpenInit(
-        clientId: json.as("client_id"),
-        counterparty:
-            IbcConnectionCounterparty.fromJson(json.asMap("counterparty")),
-        version: json.maybeAs<IbcConnectionVersion, Map<String, dynamic>>(
-            key: "version", onValue: IbcConnectionVersion.fromJson),
-        delayPeriod: json.asBigInt("delay_period"),
-        signer: json.as("signer"));
+      clientId: json.as("client_id"),
+      counterparty: IbcConnectionCounterparty.fromJson(
+        json.asMap("counterparty"),
+      ),
+      version: json.maybeAs<IbcConnectionVersion, Map<String, dynamic>>(
+        key: "version",
+        onValue: IbcConnectionVersion.fromJson,
+      ),
+      delayPeriod: json.asBigInt("delay_period"),
+      signer: json.as("signer"),
+    );
   }
 
   @override
@@ -53,7 +63,7 @@ class IbcConnectionMsgConnectionOpenInit
       "counterparty": counterparty.toJson(),
       "version": version?.toJson(),
       "delay_period": delayPeriod?.toString(),
-      "signer": signer
+      "signer": signer,
     };
   }
 

@@ -8,13 +8,15 @@ import 'epoch_info.dart';
 class OmosisEpochsGenesisState extends CosmosMessage {
   final List<OmosisEpochsEpochInfo> epochs;
   OmosisEpochsGenesisState(List<OmosisEpochsEpochInfo> epochs)
-      : epochs = epochs.immutable;
+    : epochs = epochs.immutable;
   factory OmosisEpochsGenesisState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return OmosisEpochsGenesisState(decode
-        .getFields<List<int>>(1)
-        .map((e) => OmosisEpochsEpochInfo.deserialize(e))
-        .toList());
+    return OmosisEpochsGenesisState(
+      decode
+          .getFields<List<int>>(1)
+          .map((e) => OmosisEpochsEpochInfo.deserialize(e))
+          .toList(),
+    );
   }
 
   @override

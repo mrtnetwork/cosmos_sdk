@@ -6,22 +6,26 @@ import 'package:blockchain_utils/helper/helper.dart';
 class EvidenceList extends CosmosMessage {
   final List<Evidence> evidence;
   EvidenceList({required List<Evidence> evidence})
-      : evidence = evidence.immutable;
+    : evidence = evidence.immutable;
   factory EvidenceList.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvidenceList(
-        evidence: decode
-            .getFields<List<int>>(1)
-            .map((e) => Evidence.deserialize(e))
-            .toList());
+      evidence:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => Evidence.deserialize(e))
+              .toList(),
+    );
   }
   factory EvidenceList.fromJson(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvidenceList(
-        evidence: decode
-            .getFields<List<int>>(1)
-            .map((e) => Evidence.deserialize(e))
-            .toList());
+      evidence:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => Evidence.deserialize(e))
+              .toList(),
+    );
   }
 
   @override

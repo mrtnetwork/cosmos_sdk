@@ -12,7 +12,8 @@ class EvmosEthermintEVMV1QueryCodeResponse extends CosmosMessage {
     return EvmosEthermintEVMV1QueryCodeResponse(decode.getField(1));
   }
   factory EvmosEthermintEVMV1QueryCodeResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return EvmosEthermintEVMV1QueryCodeResponse(json["base_fee"]);
   }
 

@@ -21,7 +21,9 @@ class IbcChannelErrorReceipt extends CosmosMessage {
   factory IbcChannelErrorReceipt.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcChannelErrorReceipt(
-        sequence: decode.getField(1), message: decode.getField(2));
+      sequence: decode.getField(1),
+      message: decode.getField(2),
+    );
   }
 
   @override

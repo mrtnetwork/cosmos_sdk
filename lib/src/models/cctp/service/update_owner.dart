@@ -13,11 +13,15 @@ class CCTPV1MsgUpdateOwner extends CCTPV1Service<EmptyServiceRequestResponse>
   factory CCTPV1MsgUpdateOwner.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CCTPV1MsgUpdateOwner(
-        from: decode.getField(1), newOwner: decode.getField(2));
+      from: decode.getField(1),
+      newOwner: decode.getField(2),
+    );
   }
   factory CCTPV1MsgUpdateOwner.fromJson(Map<String, dynamic> json) {
     return CCTPV1MsgUpdateOwner(
-        from: json.as("from"), newOwner: json.as("new_owner"));
+      from: json.as("from"),
+      newOwner: json.as("new_owner"),
+    );
   }
 
   @override

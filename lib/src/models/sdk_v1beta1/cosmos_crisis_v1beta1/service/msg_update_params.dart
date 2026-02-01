@@ -30,7 +30,9 @@ class CrisisMsgUpdateParams
   factory CrisisMsgUpdateParams.fromJson(Map<String, dynamic> json) {
     return CrisisMsgUpdateParams(
       authority: json.maybeAs<CosmosBaseAddress, String>(
-          key: "authority", onValue: (e) => CosmosBaseAddress(e)),
+        key: "authority",
+        onValue: (e) => CosmosBaseAddress(e),
+      ),
       constantFee: Coin.fromJson(json.asMap("authority")),
     );
   }
@@ -42,7 +44,7 @@ class CrisisMsgUpdateParams
   Map<String, dynamic> toJson() {
     return {
       "authority": authority?.address,
-      "constant_fee": constantFee.toJson()
+      "constant_fee": constantFee.toJson(),
     };
   }
 
@@ -56,6 +58,7 @@ class CrisisMsgUpdateParams
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        CrisisV1beta1.crisisMsgUpdateParamsResponse);
+      CrisisV1beta1.crisisMsgUpdateParamsResponse,
+    );
   }
 }

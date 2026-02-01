@@ -14,25 +14,33 @@ class MsgRegisterInterchainAccount
   final String? connectionId;
   final String? version;
   final IbcChannelOrder? ordering;
-  const MsgRegisterInterchainAccount(
-      {this.owner, this.connectionId, this.version, this.ordering});
+  const MsgRegisterInterchainAccount({
+    this.owner,
+    this.connectionId,
+    this.version,
+    this.ordering,
+  });
   factory MsgRegisterInterchainAccount.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgRegisterInterchainAccount(
-        owner: decode.getField(1),
-        connectionId: decode.getField(2),
-        version: decode.getField(3),
-        ordering: decode
-            .getResult(4)
-            ?.to<IbcChannelOrder, int>((e) => IbcChannelOrder.fromValue(e)));
+      owner: decode.getField(1),
+      connectionId: decode.getField(2),
+      version: decode.getField(3),
+      ordering: decode
+          .getResult(4)
+          ?.to<IbcChannelOrder, int>((e) => IbcChannelOrder.fromValue(e)),
+    );
   }
   factory MsgRegisterInterchainAccount.fromJson(Map<String, dynamic> json) {
     return MsgRegisterInterchainAccount(
-        owner: json.as("owner"),
-        connectionId: json.as("connection_id"),
-        version: json.as("version"),
-        ordering: json.maybeAs<IbcChannelOrder, String>(
-            key: "ordering", onValue: IbcChannelOrder.fromValue));
+      owner: json.as("owner"),
+      connectionId: json.as("connection_id"),
+      version: json.as("version"),
+      ordering: json.maybeAs<IbcChannelOrder, String>(
+        key: "ordering",
+        onValue: IbcChannelOrder.fromValue,
+      ),
+    );
   }
 
   @override
@@ -44,7 +52,7 @@ class MsgRegisterInterchainAccount
       "owner": owner,
       "connection_id": connectionId,
       "version": version,
-      "ordering": ordering?.value
+      "ordering": ordering?.value,
     };
   }
 

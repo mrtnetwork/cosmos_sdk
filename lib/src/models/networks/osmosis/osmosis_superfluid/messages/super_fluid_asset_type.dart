@@ -8,9 +8,10 @@ class OsmosisSuperfluidSuperfluidAssetType implements CosmosEnum {
   static const OsmosisSuperfluidSuperfluidAssetType superfluidAssetTypeLPShare =
       OsmosisSuperfluidSuperfluidAssetType._(1, "SuperfluidAssetTypeLPShare");
   static const OsmosisSuperfluidSuperfluidAssetType
-      superfluidAssetTypeConcentratedShare =
-      OsmosisSuperfluidSuperfluidAssetType._(
-          2, "SuperfluidAssetTypeConcentratedShare");
+  superfluidAssetTypeConcentratedShare = OsmosisSuperfluidSuperfluidAssetType._(
+    2,
+    "SuperfluidAssetTypeConcentratedShare",
+  );
 
   @override
   final int value;
@@ -21,24 +22,30 @@ class OsmosisSuperfluidSuperfluidAssetType implements CosmosEnum {
   static const List<OsmosisSuperfluidSuperfluidAssetType> values = [
     superfluidAssetTypeNative,
     superfluidAssetTypeLPShare,
-    superfluidAssetTypeConcentratedShare
+    superfluidAssetTypeConcentratedShare,
   ];
 
   static OsmosisSuperfluidSuperfluidAssetType fromValue(int? value) {
     return values.firstWhere(
       (e) => e.value == value,
-      orElse: () => throw DartCosmosSdkPluginException(
-          "No OsmosisSuperfluidSuperfluidAssetType element found for the given value.",
-          details: {"value": value}),
+      orElse:
+          () =>
+              throw DartCosmosSdkPluginException(
+                "No OsmosisSuperfluidSuperfluidAssetType element found for the given value.",
+                details: {"value": value},
+              ),
     );
   }
 
   static OsmosisSuperfluidSuperfluidAssetType fromName(String? name) {
     return values.firstWhere(
       (e) => e.name == name,
-      orElse: () => throw DartCosmosSdkPluginException(
-          "No OsmosisSuperfluidSuperfluidAssetType element found for the given name.",
-          details: {"value": name}),
+      orElse:
+          () =>
+              throw DartCosmosSdkPluginException(
+                "No OsmosisSuperfluidSuperfluidAssetType element found for the given name.",
+                details: {"value": name},
+              ),
     );
   }
 }

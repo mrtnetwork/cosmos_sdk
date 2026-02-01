@@ -13,22 +13,25 @@ class QueryNFTsResponse extends CosmosMessage {
   factory QueryNFTsResponse.fromJson(Map<String, dynamic> json) {
     return QueryNFTsResponse(
       nfts: (json["nfts"] as List?)?.map((e) => NFT.fromJson(e)).toList() ?? [],
-      pagination: json["pagination"] == null
-          ? null
-          : PageResponse.fromJson(json["pagination"]),
+      pagination:
+          json["pagination"] == null
+              ? null
+              : PageResponse.fromJson(json["pagination"]),
     );
   }
   QueryNFTsResponse({required this.nfts, this.pagination});
   factory QueryNFTsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryNFTsResponse(
-        nfts: decode
-            .getFields<List<int>>(1)
-            .map((e) => NFT.deserialize(e))
-            .toList(),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
+      nfts:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => NFT.deserialize(e))
+              .toList(),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
+    );
   }
 
   @override

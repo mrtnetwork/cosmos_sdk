@@ -22,15 +22,17 @@ class Delegation extends CosmosMessage {
   factory Delegation.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Delegation(
-        delegatorAddress: CosmosBaseAddress(decode.getField(1)),
-        validatorAddress: CosmosBaseAddress(decode.getField(2)),
-        shares: decode.getField(3));
+      delegatorAddress: CosmosBaseAddress(decode.getField(1)),
+      validatorAddress: CosmosBaseAddress(decode.getField(2)),
+      shares: decode.getField(3),
+    );
   }
   factory Delegation.fromJson(Map<String, dynamic> json) {
     return Delegation(
-        delegatorAddress: CosmosBaseAddress(json["delegator_address"]),
-        validatorAddress: CosmosBaseAddress(json["validator_address"]),
-        shares: json["shares"]);
+      delegatorAddress: CosmosBaseAddress(json["delegator_address"]),
+      validatorAddress: CosmosBaseAddress(json["validator_address"]),
+      shares: json["shares"],
+    );
   }
 
   @override
@@ -49,6 +51,9 @@ class Delegation extends CosmosMessage {
   TypeUrl get typeUrl => StakingV1beta1Types.delegation;
 
   @override
-  List get values =>
-      [delegatorAddress.address, validatorAddress.address, shares];
+  List get values => [
+    delegatorAddress.address,
+    validatorAddress.address,
+    shares,
+  ];
 }

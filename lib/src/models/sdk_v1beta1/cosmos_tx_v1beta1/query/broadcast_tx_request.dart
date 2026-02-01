@@ -11,7 +11,7 @@ class BroadcastTxRequest extends CosmosMessage
   final List<int> txBytes;
   final BroadcastMode? mode;
   BroadcastTxRequest({required List<int> txBytes, this.mode})
-      : txBytes = BytesUtils.toBytes(txBytes, unmodifiable: true);
+    : txBytes = BytesUtils.toBytes(txBytes, unmodifiable: true);
 
   @override
   List<int> get fieldIds => [1, 2];

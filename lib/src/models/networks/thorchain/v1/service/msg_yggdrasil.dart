@@ -10,27 +10,29 @@ class ThorchainMsgYggdrasil extends CosmosMessage {
   final List<ThorchainCoin> coins;
   final BigInt? blockHeight;
   final List<int>? signer;
-  ThorchainMsgYggdrasil(
-      {required this.tx,
-      this.pubKey,
-      this.addFunds,
-      required List<ThorchainCoin> coins,
-      this.blockHeight,
-      List<int>? signer})
-      : coins = coins.immutable,
-        signer = BytesUtils.tryToBytes(signer, unmodifiable: true);
+  ThorchainMsgYggdrasil({
+    required this.tx,
+    this.pubKey,
+    this.addFunds,
+    required List<ThorchainCoin> coins,
+    this.blockHeight,
+    List<int>? signer,
+  }) : coins = coins.immutable,
+       signer = BytesUtils.tryToBytes(signer, unmodifiable: true);
   factory ThorchainMsgYggdrasil.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainMsgYggdrasil(
-        tx: ThorchainTx.deserialize(decode.getField(1)),
-        pubKey: decode.getField(2),
-        addFunds: decode.getField(3),
-        coins: decode
-            .getFields<List<int>>(4)
-            .map((e) => ThorchainCoin.deserialize(e))
-            .toList(),
-        blockHeight: decode.getField(5),
-        signer: decode.getField(6));
+      tx: ThorchainTx.deserialize(decode.getField(1)),
+      pubKey: decode.getField(2),
+      addFunds: decode.getField(3),
+      coins:
+          decode
+              .getFields<List<int>>(4)
+              .map((e) => ThorchainCoin.deserialize(e))
+              .toList(),
+      blockHeight: decode.getField(5),
+      signer: decode.getField(6),
+    );
   }
 
   @override
@@ -44,7 +46,7 @@ class ThorchainMsgYggdrasil extends CosmosMessage {
       "add_funds": addFunds,
       "coins": coins.map((e) => e.toJson()).toList(),
       "block_height": blockHeight?.toString(),
-      "signer": BytesUtils.tryToHexString(signer)
+      "signer": BytesUtils.tryToHexString(signer),
     };
   }
 

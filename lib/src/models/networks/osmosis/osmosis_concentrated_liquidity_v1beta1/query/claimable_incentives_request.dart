@@ -11,18 +11,21 @@ class OsmosisConcentratedLiquidityClaimableIncentivesRequest
     this.positionId,
   });
   factory OsmosisConcentratedLiquidityClaimableIncentivesRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityClaimableIncentivesRequest(
-        positionId: decode.getField(1));
+      positionId: decode.getField(1),
+    );
   }
 
   @override
   List<int> get fieldIds => [1];
 
   @override
-  Map<String, String?> get queryParameters =>
-      {"position_id": positionId?.toString()};
+  Map<String, String?> get queryParameters => {
+    "position_id": positionId?.toString(),
+  };
 
   @override
   Map<String, dynamic> toJson() {
@@ -38,15 +41,19 @@ class OsmosisConcentratedLiquidityClaimableIncentivesRequest
 
   @override
   OsmosisConcentratedLiquidityClaimableIncentivesResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityClaimableIncentivesResponse.fromJson(
-        json);
+      json,
+    );
   }
 
   @override
   OsmosisConcentratedLiquidityClaimableIncentivesResponse onResponse(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return OsmosisConcentratedLiquidityClaimableIncentivesResponse.deserialize(
-        bytes);
+      bytes,
+    );
   }
 }

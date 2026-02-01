@@ -6,16 +6,20 @@ class OsmosisConcentratedLiquidityUserUnbondingPositionsRequest
     extends CosmosMessage
     with
         QueryMessage<
-            OsmosisConcentratedLiquidityUserUnbondingPositionsResponse> {
+          OsmosisConcentratedLiquidityUserUnbondingPositionsResponse
+        > {
   final String address;
 
-  const OsmosisConcentratedLiquidityUserUnbondingPositionsRequest(
-      {required this.address});
+  const OsmosisConcentratedLiquidityUserUnbondingPositionsRequest({
+    required this.address,
+  });
   factory OsmosisConcentratedLiquidityUserUnbondingPositionsRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityUserUnbondingPositionsRequest(
-        address: decode.getField(1));
+      address: decode.getField(1),
+    );
   }
 
   @override
@@ -40,15 +44,19 @@ class OsmosisConcentratedLiquidityUserUnbondingPositionsRequest
 
   @override
   OsmosisConcentratedLiquidityUserUnbondingPositionsResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityUserUnbondingPositionsResponse.fromJson(
-        json);
+      json,
+    );
   }
 
   @override
   OsmosisConcentratedLiquidityUserUnbondingPositionsResponse onResponse(
-      List<int> bytes) {
-    return OsmosisConcentratedLiquidityUserUnbondingPositionsResponse
-        .deserialize(bytes);
+    List<int> bytes,
+  ) {
+    return OsmosisConcentratedLiquidityUserUnbondingPositionsResponse.deserialize(
+      bytes,
+    );
   }
 }

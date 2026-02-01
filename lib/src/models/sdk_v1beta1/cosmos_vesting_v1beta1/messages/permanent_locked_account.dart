@@ -16,31 +16,31 @@ class PermanentLockedAccount extends CosmosBaseAccount {
   final BaseVestingAccount? baseVestingAccount;
 
   /// Constructs a new instance of [PermanentLockedAccount].
-  const PermanentLockedAccount({
-    this.baseVestingAccount,
-  });
+  const PermanentLockedAccount({this.baseVestingAccount});
   factory PermanentLockedAccount.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return PermanentLockedAccount(
-        baseVestingAccount: decode
-            .getResult(1)
-            ?.to<BaseVestingAccount, List<int>>(
-                (e) => BaseVestingAccount.deserialize(e)));
+      baseVestingAccount: decode
+          .getResult(1)
+          ?.to<BaseVestingAccount, List<int>>(
+            (e) => BaseVestingAccount.deserialize(e),
+          ),
+    );
   }
   factory PermanentLockedAccount.fromJson(Map<String, dynamic> json) {
     return PermanentLockedAccount(
-        baseVestingAccount:
-            json.valueTo<BaseVestingAccount, Map<String, dynamic>>(
-                key: "base_vesting_account",
-                parse: (e) => BaseVestingAccount.fromJson(e)));
+      baseVestingAccount: json
+          .valueTo<BaseVestingAccount, Map<String, dynamic>>(
+            key: "base_vesting_account",
+            parse: (e) => BaseVestingAccount.fromJson(e),
+          ),
+    );
   }
 
   /// Converts this instance of [PermanentLockedAccount] to a JSON object.
   @override
   Map<String, dynamic> toJson() {
-    return {
-      'base_vesting_account': baseVestingAccount?.toJson(),
-    };
+    return {'base_vesting_account': baseVestingAccount?.toJson()};
   }
 
   @override

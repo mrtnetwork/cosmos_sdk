@@ -18,22 +18,28 @@ class MsgRegisterCounterpartyPayee
 
   /// the counterparty payee address
   final String? counterpartyPayee;
-  const MsgRegisterCounterpartyPayee(
-      {this.portId, this.channelId, this.relayer, this.counterpartyPayee});
+  const MsgRegisterCounterpartyPayee({
+    this.portId,
+    this.channelId,
+    this.relayer,
+    this.counterpartyPayee,
+  });
   factory MsgRegisterCounterpartyPayee.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgRegisterCounterpartyPayee(
-        portId: decode.getField(1),
-        channelId: decode.getField(2),
-        relayer: decode.getField(3),
-        counterpartyPayee: decode.getField(4));
+      portId: decode.getField(1),
+      channelId: decode.getField(2),
+      relayer: decode.getField(3),
+      counterpartyPayee: decode.getField(4),
+    );
   }
   factory MsgRegisterCounterpartyPayee.fromJson(Map<String, dynamic> json) {
     return MsgRegisterCounterpartyPayee(
-        portId: json.as("port_id"),
-        channelId: json.as("channel_id"),
-        relayer: json.as("relayer"),
-        counterpartyPayee: json.as("counterparty_payee"));
+      portId: json.as("port_id"),
+      channelId: json.as("channel_id"),
+      relayer: json.as("relayer"),
+      counterpartyPayee: json.as("counterparty_payee"),
+    );
   }
 
   @override
@@ -61,6 +67,7 @@ class MsgRegisterCounterpartyPayee
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        IbcTypes.msgRegisterCounterpartyPayeeResponse);
+      IbcTypes.msgRegisterCounterpartyPayeeResponse,
+    );
   }
 }

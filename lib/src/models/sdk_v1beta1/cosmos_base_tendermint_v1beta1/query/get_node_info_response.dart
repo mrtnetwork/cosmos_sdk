@@ -11,20 +11,27 @@ class GetNodeInfoResponse extends CosmosMessage {
   factory GetNodeInfoResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GetNodeInfoResponse(
-        defaultNodeInfo: decode.getResult(1)?.to<DefaultNodeInfo, List<int>>(
-            (e) => DefaultNodeInfo.deserialize(e)),
-        applicationVersion: decode
-            .getResult(2)
-            ?.to<VersionInfo, List<int>>((e) => VersionInfo.deserialize(e)));
+      defaultNodeInfo: decode
+          .getResult(1)
+          ?.to<DefaultNodeInfo, List<int>>(
+            (e) => DefaultNodeInfo.deserialize(e),
+          ),
+      applicationVersion: decode
+          .getResult(2)
+          ?.to<VersionInfo, List<int>>((e) => VersionInfo.deserialize(e)),
+    );
   }
   factory GetNodeInfoResponse.fromJson(Map<String, dynamic> json) {
     return GetNodeInfoResponse(
-        defaultNodeInfo: (json["default_node_info"] == null
-            ? null
-            : DefaultNodeInfo.fromJson(json["default_node_info"])),
-        applicationVersion: (json["application_version"] == null
-            ? null
-            : VersionInfo.fromJson(json["application_version"])));
+      defaultNodeInfo:
+          (json["default_node_info"] == null
+              ? null
+              : DefaultNodeInfo.fromJson(json["default_node_info"])),
+      applicationVersion:
+          (json["application_version"] == null
+              ? null
+              : VersionInfo.fromJson(json["application_version"])),
+    );
   }
   @override
   List<int> get fieldIds => [1, 2];
@@ -33,7 +40,7 @@ class GetNodeInfoResponse extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "default_node_info": defaultNodeInfo?.toJson(),
-      "application_version": applicationVersion?.toJson()
+      "application_version": applicationVersion?.toJson(),
     };
   }
 

@@ -13,9 +13,11 @@ class EvmosEthermintEVMV1QueryTraceTxResponse extends CosmosMessage {
     return EvmosEthermintEVMV1QueryTraceTxResponse(decode.getField(1));
   }
   factory EvmosEthermintEVMV1QueryTraceTxResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return EvmosEthermintEVMV1QueryTraceTxResponse(
-        CosmosUtils.toBytes(json["value"]));
+      CosmosUtils.toBytes(json["value"]),
+    );
   }
 
   @override

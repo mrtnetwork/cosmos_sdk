@@ -10,21 +10,22 @@ class ThorchainMsgDonate extends CosmosMessage {
   final BigInt runeAmount;
   final ThorchainTx tx;
   final List<int>? signer;
-  ThorchainMsgDonate(
-      {required this.asset,
-      required this.assetAmount,
-      required this.runeAmount,
-      required this.tx,
-      List<int>? signer})
-      : signer = BytesUtils.tryToBytes(signer, unmodifiable: true);
+  ThorchainMsgDonate({
+    required this.asset,
+    required this.assetAmount,
+    required this.runeAmount,
+    required this.tx,
+    List<int>? signer,
+  }) : signer = BytesUtils.tryToBytes(signer, unmodifiable: true);
   factory ThorchainMsgDonate.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainMsgDonate(
-        asset: ThorchainAsset.deserialize(decode.getField(1)),
-        assetAmount: BigintUtils.parse(decode.getField<String>(2)),
-        runeAmount: BigintUtils.parse(decode.getField<String>(3)),
-        tx: ThorchainTx.deserialize(decode.getField(4)),
-        signer: decode.getField(5));
+      asset: ThorchainAsset.deserialize(decode.getField(1)),
+      assetAmount: BigintUtils.parse(decode.getField<String>(2)),
+      runeAmount: BigintUtils.parse(decode.getField<String>(3)),
+      tx: ThorchainTx.deserialize(decode.getField(4)),
+      signer: decode.getField(5),
+    );
   }
 
   @override
@@ -37,7 +38,7 @@ class ThorchainMsgDonate extends CosmosMessage {
       "asset_amount": assetAmount.toString(),
       "rune_amount": runeAmount.toString(),
       "tx": tx.toJson(),
-      "signer": BytesUtils.tryToHexString(signer)
+      "signer": BytesUtils.tryToHexString(signer),
     };
   }
 
@@ -45,6 +46,11 @@ class ThorchainMsgDonate extends CosmosMessage {
   TypeUrl get typeUrl => ThorchainV1Types.msgDonate;
 
   @override
-  List get values =>
-      [asset, assetAmount.toString(), runeAmount.toString(), tx, signer];
+  List get values => [
+    asset,
+    assetAmount.toString(),
+    runeAmount.toString(),
+    tx,
+    signer,
+  ];
 }

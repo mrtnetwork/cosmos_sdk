@@ -8,7 +8,9 @@ class ThorchainEventTssKeysignMetric extends CosmosMessage {
   factory ThorchainEventTssKeysignMetric.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainEventTssKeysignMetric(
-        txId: decode.getField(1), medianDurationMs: decode.getField(2));
+      txId: decode.getField(1),
+      medianDurationMs: decode.getField(2),
+    );
   }
 
   @override

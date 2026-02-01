@@ -7,11 +7,13 @@ import 'package:cosmos_sdk/src/utils/utils.dart';
 class IbcLightClientsWasmQueryCodeResponse extends CosmosMessage {
   final List<int>? data;
   IbcLightClientsWasmQueryCodeResponse({List<int>? data})
-      : data = BytesUtils.tryToBytes(data, unmodifiable: true);
+    : data = BytesUtils.tryToBytes(data, unmodifiable: true);
   factory IbcLightClientsWasmQueryCodeResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return IbcLightClientsWasmQueryCodeResponse(
-        data: CosmosUtils.tryToBytes(json["data"]));
+      data: CosmosUtils.tryToBytes(json["data"]),
+    );
   }
   factory IbcLightClientsWasmQueryCodeResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

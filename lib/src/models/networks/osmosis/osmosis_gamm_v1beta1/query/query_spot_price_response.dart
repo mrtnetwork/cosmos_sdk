@@ -10,7 +10,8 @@ class OsmosisGammQuerySpotPriceResponse extends CosmosMessage {
     return OsmosisGammQuerySpotPriceResponse(spotPrice: decode.getField(1));
   }
   factory OsmosisGammQuerySpotPriceResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisGammQuerySpotPriceResponse(spotPrice: json["spot_price"]);
   }
 

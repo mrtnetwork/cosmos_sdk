@@ -10,7 +10,8 @@ class EvmosEthermintEVMV1QueryCosmosAccountRequest extends CosmosMessage
   final String address;
   const EvmosEthermintEVMV1QueryCosmosAccountRequest(this.address);
   factory EvmosEthermintEVMV1QueryCosmosAccountRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosEthermintEVMV1QueryCosmosAccountRequest(decode.getField(1));
   }
@@ -36,7 +37,8 @@ class EvmosEthermintEVMV1QueryCosmosAccountRequest extends CosmosMessage
 
   @override
   EvmosEthermintEVMV1QueryCosmosAccountResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return EvmosEthermintEVMV1QueryCosmosAccountResponse.fromJson(json);
   }
 

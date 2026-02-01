@@ -8,11 +8,13 @@ class CompactBitArray extends CosmosProtocolBuffer {
   final int extraBitsStored;
   final List<int> elems;
   CompactBitArray({required List<int> elems, required this.extraBitsStored})
-      : elems = BytesUtils.toBytes(elems, unmodifiable: true);
+    : elems = BytesUtils.toBytes(elems, unmodifiable: true);
   factory CompactBitArray.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CompactBitArray(
-        elems: decode.getField(2), extraBitsStored: decode.getField(1));
+      elems: decode.getField(2),
+      extraBitsStored: decode.getField(1),
+    );
   }
 
   @override
@@ -22,7 +24,7 @@ class CompactBitArray extends CosmosProtocolBuffer {
   Map<String, dynamic> toJson() {
     return {
       "extra_bits_stored": extraBitsStored,
-      "elems": BytesUtils.toHexString(elems)
+      "elems": BytesUtils.toHexString(elems),
     };
   }
 

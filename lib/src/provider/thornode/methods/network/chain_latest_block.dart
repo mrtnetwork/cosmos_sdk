@@ -3,8 +3,12 @@ import 'package:cosmos_sdk/src/provider/thornode/core/thorenode.dart';
 import 'package:cosmos_sdk/src/provider/thornode/models/models/latest_block.dart';
 
 /// Returns the last block information for the provided chain.
-class ThorNodeRequestChainLatestBlock extends ThorNodeRequestParam<
-    List<ThorLatestBlockResponse>, List<Map<String, dynamic>>> {
+class ThorNodeRequestChainLatestBlock
+    extends
+        ThorNodeRequestParam<
+          List<ThorLatestBlockResponse>,
+          List<Map<String, dynamic>>
+        > {
   ThorNodeRequestChainLatestBlock({this.height, required this.chain});
 
   /// optional block height, defaults to current tip

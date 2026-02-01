@@ -12,26 +12,30 @@ class OsmosisGammMsgJoinSwapExternAmountIn
   final Coin tokenIn;
   final BigInt shareOutMintAmount;
 
-  OsmosisGammMsgJoinSwapExternAmountIn(
-      {this.sender,
-      required this.poolId,
-      required this.tokenIn,
-      required this.shareOutMintAmount});
+  OsmosisGammMsgJoinSwapExternAmountIn({
+    this.sender,
+    required this.poolId,
+    required this.tokenIn,
+    required this.shareOutMintAmount,
+  });
   factory OsmosisGammMsgJoinSwapExternAmountIn.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisGammMsgJoinSwapExternAmountIn(
-        sender: decode.getField(1),
-        poolId: decode.getField(2),
-        tokenIn: Coin.deserialize(decode.getField(3)),
-        shareOutMintAmount: BigInt.parse(decode.getField(4)));
+      sender: decode.getField(1),
+      poolId: decode.getField(2),
+      tokenIn: Coin.deserialize(decode.getField(3)),
+      shareOutMintAmount: BigInt.parse(decode.getField(4)),
+    );
   }
   factory OsmosisGammMsgJoinSwapExternAmountIn.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisGammMsgJoinSwapExternAmountIn(
-        sender: json.as("sender"),
-        poolId: json.asBigInt("pool_id"),
-        tokenIn: Coin.fromJson(json.asMap("token_in")),
-        shareOutMintAmount: json.asBigInt("share_out_min_amount"));
+      sender: json.as("sender"),
+      poolId: json.asBigInt("pool_id"),
+      tokenIn: Coin.fromJson(json.asMap("token_in")),
+      shareOutMintAmount: json.asBigInt("share_out_min_amount"),
+    );
   }
   @override
   List<int> get fieldIds => [1, 2, 3, 4];

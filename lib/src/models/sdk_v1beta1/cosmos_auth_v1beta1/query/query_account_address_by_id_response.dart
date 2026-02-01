@@ -11,11 +11,13 @@ class QueryAccountAddressByIDResponse extends CosmosMessage {
   factory QueryAccountAddressByIDResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryAccountAddressByIDResponse(
-        CosmosBaseAddress(decode.getField(1)));
+      CosmosBaseAddress(decode.getField(1)),
+    );
   }
   factory QueryAccountAddressByIDResponse.fromJson(Map<String, dynamic> json) {
     return QueryAccountAddressByIDResponse(
-        CosmosBaseAddress.fromBytes(json["account_address"]));
+      CosmosBaseAddress.fromBytes(json["account_address"]),
+    );
   }
 
   @override

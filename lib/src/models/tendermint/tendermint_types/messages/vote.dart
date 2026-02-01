@@ -38,27 +38,32 @@ class Vote extends CosmosMessage {
     List<int>? signature,
     List<int>? extension,
     List<int>? extensionSignature,
-  })  : validatorAddress =
-            BytesUtils.tryToBytes(validatorAddress, unmodifiable: true),
-        signature = BytesUtils.tryToBytes(signature, unmodifiable: true),
-        extension = BytesUtils.tryToBytes(extension, unmodifiable: true),
-        extensionSignature =
-            BytesUtils.tryToBytes(extensionSignature, unmodifiable: true);
+  }) : validatorAddress = BytesUtils.tryToBytes(
+         validatorAddress,
+         unmodifiable: true,
+       ),
+       signature = BytesUtils.tryToBytes(signature, unmodifiable: true),
+       extension = BytesUtils.tryToBytes(extension, unmodifiable: true),
+       extensionSignature = BytesUtils.tryToBytes(
+         extensionSignature,
+         unmodifiable: true,
+       );
   factory Vote.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Vote(
-        type: decode
-            .getResult(1)
-            ?.to<SignedMsgType, int>((e) => SignedMsgType.fromValue(e)),
-        height: decode.getField(2),
-        round: decode.getField(3),
-        blockId: BlockID.deserialize(decode.getField(4)),
-        timestamp: ProtobufTimestamp.deserialize(decode.getField(5)),
-        validatorAddress: decode.getField(6),
-        validatorIndex: decode.getField(7),
-        signature: decode.getField(8),
-        extension: decode.getField(9),
-        extensionSignature: decode.getField(10));
+      type: decode
+          .getResult(1)
+          ?.to<SignedMsgType, int>((e) => SignedMsgType.fromValue(e)),
+      height: decode.getField(2),
+      round: decode.getField(3),
+      blockId: BlockID.deserialize(decode.getField(4)),
+      timestamp: ProtobufTimestamp.deserialize(decode.getField(5)),
+      validatorAddress: decode.getField(6),
+      validatorIndex: decode.getField(7),
+      signature: decode.getField(8),
+      extension: decode.getField(9),
+      extensionSignature: decode.getField(10),
+    );
   }
 
   /// Converts the vote to a JSON-serializable map.
@@ -86,15 +91,15 @@ class Vote extends CosmosMessage {
 
   @override
   List get values => [
-        type,
-        height,
-        round,
-        blockId,
-        timestamp,
-        validatorAddress,
-        validatorIndex,
-        signature,
-        extension,
-        extensionSignature
-      ];
+    type,
+    height,
+    round,
+    blockId,
+    timestamp,
+    validatorAddress,
+    validatorIndex,
+    signature,
+    extension,
+    extensionSignature,
+  ];
 }

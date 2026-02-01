@@ -17,86 +17,107 @@ abstract class OsmosisSuperfluid<T extends CosmosMessage>
     extends OsmosisService<T> {
   const OsmosisSuperfluid();
 
-  static T? fromJson<T extends OsmosisSuperfluid>(
-      {required String typeUrl, required Map<String, dynamic> json}) {
+  static T? fromJson<T extends OsmosisSuperfluid>({
+    required String typeUrl,
+    required Map<String, dynamic> json,
+  }) {
     final type = OsmosisSuperfluidTypes.findService(typeUrl);
-    final OsmosisSuperfluid? service = switch (type) {
-      OsmosisSuperfluidTypes.msgAddToConcentratedLiquiditySuperfluidPosition =>
-        OsmosisSuperfluidMsgAddToConcentratedLiquiditySuperfluidPosition
-            .fromJson(json),
-      OsmosisSuperfluidTypes.msgCreateFullRangePositionAndSuperfluidDelegate =>
-        OsmosisSuperfluidMsgCreateFullRangePositionAndSuperfluidDelegate
-            .fromJson(json),
-      OsmosisSuperfluidTypes.msgLockAndSuperfluidDelegate =>
-        OsmosisSuperfluidMsgLockAndSuperfluidDelegate.fromJson(json),
-      OsmosisSuperfluidTypes.msgSuperfluidDelegate =>
-        OsmosisSuperfluidMsgSuperfluidDelegate.fromJson(json),
-      OsmosisSuperfluidTypes.msgSuperfluidUnbondLock =>
-        OsmosisSuperfluidMsgSuperfluidUnbondLock.fromJson(json),
-      OsmosisSuperfluidTypes.msgSuperfluidUndelegateAndUnbondLock =>
-        OsmosisSuperfluidMsgSuperfluidUndelegateAndUnbondLock.fromJson(json),
-      OsmosisSuperfluidTypes.msgSuperfluidUndelegate =>
-        OsmosisSuperfluidMsgSuperfluidUndelegate.fromJson(json),
-      OsmosisSuperfluidTypes.msgUnPoolWhitelistedPool =>
-        OsmosisSuperfluidMsgUnPoolWhitelistedPool.fromJson(json),
-      OsmosisSuperfluidTypes.msgUnbondConvertAndStake =>
-        OsmosisSuperfluidMsgUnbondConvertAndStake.fromJson(json),
-      OsmosisSuperfluidTypes
-            .msgUnlockAndMigrateSharesToFullRangeConcentratedPosition =>
-        OsmosisSuperfluidMsgUnlockAndMigrateSharesToFullRangeConcentratedPosition
-            .fromJson(json),
-      _ => null
-    } as OsmosisSuperfluid?;
+    final OsmosisSuperfluid? service =
+        switch (type) {
+              OsmosisSuperfluidTypes
+                  .msgAddToConcentratedLiquiditySuperfluidPosition =>
+                OsmosisSuperfluidMsgAddToConcentratedLiquiditySuperfluidPosition.fromJson(
+                  json,
+                ),
+              OsmosisSuperfluidTypes
+                  .msgCreateFullRangePositionAndSuperfluidDelegate =>
+                OsmosisSuperfluidMsgCreateFullRangePositionAndSuperfluidDelegate.fromJson(
+                  json,
+                ),
+              OsmosisSuperfluidTypes.msgLockAndSuperfluidDelegate =>
+                OsmosisSuperfluidMsgLockAndSuperfluidDelegate.fromJson(json),
+              OsmosisSuperfluidTypes.msgSuperfluidDelegate =>
+                OsmosisSuperfluidMsgSuperfluidDelegate.fromJson(json),
+              OsmosisSuperfluidTypes.msgSuperfluidUnbondLock =>
+                OsmosisSuperfluidMsgSuperfluidUnbondLock.fromJson(json),
+              OsmosisSuperfluidTypes.msgSuperfluidUndelegateAndUnbondLock =>
+                OsmosisSuperfluidMsgSuperfluidUndelegateAndUnbondLock.fromJson(
+                  json,
+                ),
+              OsmosisSuperfluidTypes.msgSuperfluidUndelegate =>
+                OsmosisSuperfluidMsgSuperfluidUndelegate.fromJson(json),
+              OsmosisSuperfluidTypes.msgUnPoolWhitelistedPool =>
+                OsmosisSuperfluidMsgUnPoolWhitelistedPool.fromJson(json),
+              OsmosisSuperfluidTypes.msgUnbondConvertAndStake =>
+                OsmosisSuperfluidMsgUnbondConvertAndStake.fromJson(json),
+              OsmosisSuperfluidTypes
+                  .msgUnlockAndMigrateSharesToFullRangeConcentratedPosition =>
+                OsmosisSuperfluidMsgUnlockAndMigrateSharesToFullRangeConcentratedPosition.fromJson(
+                  json,
+                ),
+              _ => null,
+            }
+            as OsmosisSuperfluid?;
 
     if (service == null) return null;
     if (service is! T) {
-      throw DartCosmosSdkPluginException("Invalid Superfluid Service.",
-          details: {
-            "excepted": "$T",
-            "service": service.runtimeType.toString()
-          });
+      throw DartCosmosSdkPluginException(
+        "Invalid Superfluid Service.",
+        details: {"excepted": "$T", "service": service.runtimeType.toString()},
+      );
     }
     return service;
   }
 
-  static T? deserialize<T extends OsmosisSuperfluid>(
-      {required String typeUrl, required List<int> bytes}) {
+  static T? deserialize<T extends OsmosisSuperfluid>({
+    required String typeUrl,
+    required List<int> bytes,
+  }) {
     final type = OsmosisSuperfluidTypes.findService(typeUrl);
-    final OsmosisSuperfluid? service = switch (type) {
-      OsmosisSuperfluidTypes.msgAddToConcentratedLiquiditySuperfluidPosition =>
-        OsmosisSuperfluidMsgAddToConcentratedLiquiditySuperfluidPosition
-            .deserialize(bytes),
-      OsmosisSuperfluidTypes.msgCreateFullRangePositionAndSuperfluidDelegate =>
-        OsmosisSuperfluidMsgCreateFullRangePositionAndSuperfluidDelegate
-            .deserialize(bytes),
-      OsmosisSuperfluidTypes.msgLockAndSuperfluidDelegate =>
-        OsmosisSuperfluidMsgLockAndSuperfluidDelegate.deserialize(bytes),
-      OsmosisSuperfluidTypes.msgSuperfluidDelegate =>
-        OsmosisSuperfluidMsgSuperfluidDelegate.deserialize(bytes),
-      OsmosisSuperfluidTypes.msgSuperfluidUnbondLock =>
-        OsmosisSuperfluidMsgSuperfluidUnbondLock.deserialize(bytes),
-      OsmosisSuperfluidTypes.msgSuperfluidUndelegateAndUnbondLock =>
-        OsmosisSuperfluidMsgSuperfluidUndelegateAndUnbondLock.deserialize(
-            bytes),
-      OsmosisSuperfluidTypes.msgSuperfluidUndelegate =>
-        OsmosisSuperfluidMsgSuperfluidUndelegate.deserialize(bytes),
-      OsmosisSuperfluidTypes.msgUnPoolWhitelistedPool =>
-        OsmosisSuperfluidMsgUnPoolWhitelistedPool.deserialize(bytes),
-      OsmosisSuperfluidTypes.msgUnbondConvertAndStake =>
-        OsmosisSuperfluidMsgUnbondConvertAndStake.deserialize(bytes),
-      OsmosisSuperfluidTypes
-            .msgUnlockAndMigrateSharesToFullRangeConcentratedPosition =>
-        OsmosisSuperfluidMsgUnlockAndMigrateSharesToFullRangeConcentratedPosition
-            .deserialize(bytes),
-      _ => null
-    } as OsmosisSuperfluid?;
+    final OsmosisSuperfluid? service =
+        switch (type) {
+              OsmosisSuperfluidTypes
+                  .msgAddToConcentratedLiquiditySuperfluidPosition =>
+                OsmosisSuperfluidMsgAddToConcentratedLiquiditySuperfluidPosition.deserialize(
+                  bytes,
+                ),
+              OsmosisSuperfluidTypes
+                  .msgCreateFullRangePositionAndSuperfluidDelegate =>
+                OsmosisSuperfluidMsgCreateFullRangePositionAndSuperfluidDelegate.deserialize(
+                  bytes,
+                ),
+              OsmosisSuperfluidTypes.msgLockAndSuperfluidDelegate =>
+                OsmosisSuperfluidMsgLockAndSuperfluidDelegate.deserialize(
+                  bytes,
+                ),
+              OsmosisSuperfluidTypes.msgSuperfluidDelegate =>
+                OsmosisSuperfluidMsgSuperfluidDelegate.deserialize(bytes),
+              OsmosisSuperfluidTypes.msgSuperfluidUnbondLock =>
+                OsmosisSuperfluidMsgSuperfluidUnbondLock.deserialize(bytes),
+              OsmosisSuperfluidTypes.msgSuperfluidUndelegateAndUnbondLock =>
+                OsmosisSuperfluidMsgSuperfluidUndelegateAndUnbondLock.deserialize(
+                  bytes,
+                ),
+              OsmosisSuperfluidTypes.msgSuperfluidUndelegate =>
+                OsmosisSuperfluidMsgSuperfluidUndelegate.deserialize(bytes),
+              OsmosisSuperfluidTypes.msgUnPoolWhitelistedPool =>
+                OsmosisSuperfluidMsgUnPoolWhitelistedPool.deserialize(bytes),
+              OsmosisSuperfluidTypes.msgUnbondConvertAndStake =>
+                OsmosisSuperfluidMsgUnbondConvertAndStake.deserialize(bytes),
+              OsmosisSuperfluidTypes
+                  .msgUnlockAndMigrateSharesToFullRangeConcentratedPosition =>
+                OsmosisSuperfluidMsgUnlockAndMigrateSharesToFullRangeConcentratedPosition.deserialize(
+                  bytes,
+                ),
+              _ => null,
+            }
+            as OsmosisSuperfluid?;
     if (service == null) return null;
     if (service is! T) {
-      throw DartCosmosSdkPluginException("Invalid Superfluid Service.",
-          details: {
-            "excepted": "$T",
-            "service": service.runtimeType.toString()
-          });
+      throw DartCosmosSdkPluginException(
+        "Invalid Superfluid Service.",
+        details: {"excepted": "$T", "service": service.runtimeType.toString()},
+      );
     }
     return service;
   }

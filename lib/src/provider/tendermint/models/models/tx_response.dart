@@ -7,18 +7,23 @@ class BrodcastTxResponse {
   final DeliverTxResponse deliverTx;
   final BigInt height;
   final String hash;
-  const BrodcastTxResponse(
-      {required this.checkTx,
-      required this.hash,
-      required this.height,
-      required this.deliverTx});
+  const BrodcastTxResponse({
+    required this.checkTx,
+    required this.hash,
+    required this.height,
+    required this.deliverTx,
+  });
   factory BrodcastTxResponse.fromJson(Map<String, dynamic> json) {
     return BrodcastTxResponse(
-        checkTx: CheckTxResponse.fromJson(json["check_tx"]),
-        hash: json["hash"],
-        height: BigintUtils.parse(json["height"]),
-        deliverTx: DeliverTxResponse.fromJson(Map<String, dynamic>.from(
-            json["deliver_tx"] ?? json["tx_result"] ?? {})));
+      checkTx: CheckTxResponse.fromJson(json["check_tx"]),
+      hash: json["hash"],
+      height: BigintUtils.parse(json["height"]),
+      deliverTx: DeliverTxResponse.fromJson(
+        Map<String, dynamic>.from(
+          json["deliver_tx"] ?? json["tx_result"] ?? {},
+        ),
+      ),
+    );
   }
   Map<String, dynamic> toJson() {
     return {

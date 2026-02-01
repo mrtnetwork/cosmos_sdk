@@ -10,31 +10,35 @@ class Commit extends CosmosMessage {
   final int? round;
   final BlockID blockID;
   final List<CommitSig> signatures;
-  Commit(
-      {this.height,
-      this.round,
-      required this.blockID,
-      required List<CommitSig> signatures})
-      : signatures = signatures.immutable;
+  Commit({
+    this.height,
+    this.round,
+    required this.blockID,
+    required List<CommitSig> signatures,
+  }) : signatures = signatures.immutable;
   factory Commit.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Commit(
-        blockID: BlockID.deserialize(decode.getField(3)),
-        height: decode.getField(1),
-        round: decode.getField(2),
-        signatures: decode
-            .getFields<List<int>>(4)
-            .map((e) => CommitSig.deserialize(e))
-            .toList());
+      blockID: BlockID.deserialize(decode.getField(3)),
+      height: decode.getField(1),
+      round: decode.getField(2),
+      signatures:
+          decode
+              .getFields<List<int>>(4)
+              .map((e) => CommitSig.deserialize(e))
+              .toList(),
+    );
   }
   factory Commit.fromJson(Map<String, dynamic> json) {
     return Commit(
-        blockID: BlockID.fromJson(json["block_id"]),
-        signatures: (json["signatures"] as List)
-            .map((e) => CommitSig.fromJson(e))
-            .toList(),
-        height: BigInt.tryParse(json["height"] ?? ""),
-        round: json["round"]);
+      blockID: BlockID.fromJson(json["block_id"]),
+      signatures:
+          (json["signatures"] as List)
+              .map((e) => CommitSig.fromJson(e))
+              .toList(),
+      height: BigInt.tryParse(json["height"] ?? ""),
+      round: json["round"],
+    );
   }
 
   @override
@@ -46,7 +50,7 @@ class Commit extends CosmosMessage {
       "height": height?.toString(),
       "round": round,
       "block_id": blockID.toJson(),
-      "signatures": signatures.map((e) => e.toJson()).toList()
+      "signatures": signatures.map((e) => e.toJson()).toList(),
     };
   }
 

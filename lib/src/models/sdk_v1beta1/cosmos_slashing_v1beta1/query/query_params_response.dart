@@ -12,7 +12,8 @@ class SlashingQueryParamsResponse extends CosmosMessage {
   factory SlashingQueryParamsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return SlashingQueryParamsResponse(
-        SlashingParams.deserialize(decode.getField(1)));
+      SlashingParams.deserialize(decode.getField(1)),
+    );
   }
 
   @override

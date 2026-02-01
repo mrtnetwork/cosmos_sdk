@@ -21,19 +21,21 @@ class OsmosisProtorevPoolWeights extends CosmosMessage {
   /// The weight of a cosmwasm pool
   final BigInt? cosmwasmWeight;
 
-  OsmosisProtorevPoolWeights(
-      {this.stableWeight,
-      this.balancerWeight,
-      this.concentratedWeight,
-      this.cosmwasmWeight});
+  OsmosisProtorevPoolWeights({
+    this.stableWeight,
+    this.balancerWeight,
+    this.concentratedWeight,
+    this.cosmwasmWeight,
+  });
 
   factory OsmosisProtorevPoolWeights.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisProtorevPoolWeights(
-        stableWeight: decode.getField(1),
-        balancerWeight: decode.getField(2),
-        concentratedWeight: decode.getField(3),
-        cosmwasmWeight: decode.getField(4));
+      stableWeight: decode.getField(1),
+      balancerWeight: decode.getField(2),
+      concentratedWeight: decode.getField(3),
+      cosmwasmWeight: decode.getField(4),
+    );
   }
 
   @override
@@ -45,7 +47,7 @@ class OsmosisProtorevPoolWeights extends CosmosMessage {
       "stable_weight": stableWeight?.toString(),
       "balancer_weight": balancerWeight?.toString(),
       "concentrated_weight": concentratedWeight?.toString(),
-      "cosmwasm_weight": cosmwasmWeight?.toString()
+      "cosmwasm_weight": cosmwasmWeight?.toString(),
     };
   }
 
@@ -53,6 +55,10 @@ class OsmosisProtorevPoolWeights extends CosmosMessage {
   TypeUrl get typeUrl => OsmosisProtorevV1beta1Types.poolWeights;
 
   @override
-  List get values =>
-      [stableWeight, balancerWeight, concentratedWeight, cosmwasmWeight];
+  List get values => [
+    stableWeight,
+    balancerWeight,
+    concentratedWeight,
+    cosmwasmWeight,
+  ];
 }

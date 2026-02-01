@@ -6,11 +6,13 @@ class ThorchainNodeTssTime extends CosmosMessage {
   final List<int>? address;
   final BigInt? tssTime;
   ThorchainNodeTssTime({List<int>? address, this.tssTime})
-      : address = BytesUtils.tryToBytes(address, unmodifiable: true);
+    : address = BytesUtils.tryToBytes(address, unmodifiable: true);
   factory ThorchainNodeTssTime.deserialized(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainNodeTssTime(
-        address: decode.getField(1), tssTime: decode.getField(2));
+      address: decode.getField(1),
+      tssTime: decode.getField(2),
+    );
   }
 
   @override
@@ -20,7 +22,7 @@ class ThorchainNodeTssTime extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "address": BytesUtils.tryToHexString(address),
-      "tss_time": tssTime?.toString()
+      "tss_time": tssTime?.toString(),
     };
   }
 

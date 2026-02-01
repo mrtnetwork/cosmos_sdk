@@ -7,16 +7,20 @@ class OsmosisSuperfluidRemoveSuperfluidAssetsProposal extends CosmosMessage {
   final String? title;
   final String? description;
   final List<String>? superfluidAssetDenoms;
-  OsmosisSuperfluidRemoveSuperfluidAssetsProposal(
-      {this.title, this.description, List<String>? superfluidAssetDenoms})
-      : superfluidAssetDenoms = superfluidAssetDenoms?.emptyAsNull?.immutable;
+  OsmosisSuperfluidRemoveSuperfluidAssetsProposal({
+    this.title,
+    this.description,
+    List<String>? superfluidAssetDenoms,
+  }) : superfluidAssetDenoms = superfluidAssetDenoms?.emptyAsNull?.immutable;
   factory OsmosisSuperfluidRemoveSuperfluidAssetsProposal.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidRemoveSuperfluidAssetsProposal(
-        description: decode.getField(2),
-        title: decode.getField(1),
-        superfluidAssetDenoms: decode.getFields<String>(3));
+      description: decode.getField(2),
+      title: decode.getField(1),
+      superfluidAssetDenoms: decode.getFields<String>(3),
+    );
   }
 
   @override
@@ -27,7 +31,7 @@ class OsmosisSuperfluidRemoveSuperfluidAssetsProposal extends CosmosMessage {
     return {
       "title": title,
       "description": description,
-      "superfluid_asset_denoms": superfluidAssetDenoms
+      "superfluid_asset_denoms": superfluidAssetDenoms,
     };
   }
 

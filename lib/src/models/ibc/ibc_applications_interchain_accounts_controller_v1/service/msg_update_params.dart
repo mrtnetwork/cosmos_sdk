@@ -16,19 +16,24 @@ class InterchainAccountsControllerMsgUpdateParams
   ///
   /// NOTE: All parameters must be supplied.
   final InterchainAccountsControllerParams params;
-  const InterchainAccountsControllerMsgUpdateParams(
-      {this.signer, required this.params});
+  const InterchainAccountsControllerMsgUpdateParams({
+    this.signer,
+    required this.params,
+  });
   factory InterchainAccountsControllerMsgUpdateParams.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return InterchainAccountsControllerMsgUpdateParams(
       signer: decode.getField(1),
-      params:
-          InterchainAccountsControllerParams.deserialize(decode.getField(2)),
+      params: InterchainAccountsControllerParams.deserialize(
+        decode.getField(2),
+      ),
     );
   }
   factory InterchainAccountsControllerMsgUpdateParams.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return InterchainAccountsControllerMsgUpdateParams(
       signer: json.as("signer"),
       params: InterchainAccountsControllerParams.fromJson(json.asMap("params")),
@@ -55,6 +60,7 @@ class InterchainAccountsControllerMsgUpdateParams
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        IbcTypes.interchainAccountsControllerMsgUpdateParamsResponse);
+      IbcTypes.interchainAccountsControllerMsgUpdateParamsResponse,
+    );
   }
 }

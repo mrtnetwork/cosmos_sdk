@@ -12,17 +12,20 @@ class EvmosEthermintEVMV1TransactionLogs extends CosmosMessage {
 
   /// logs is an array of Logs for the given transaction hash
   final List<EvmosEthermintEVMV1Log> logs;
-  EvmosEthermintEVMV1TransactionLogs(
-      {required this.hash, required List<EvmosEthermintEVMV1Log> logs})
-      : logs = logs.immutable;
+  EvmosEthermintEVMV1TransactionLogs({
+    required this.hash,
+    required List<EvmosEthermintEVMV1Log> logs,
+  }) : logs = logs.immutable;
   factory EvmosEthermintEVMV1TransactionLogs.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosEthermintEVMV1TransactionLogs(
-        hash: decode.getField(1),
-        logs: decode
-            .getFields<List<int>>(2)
-            .map((e) => EvmosEthermintEVMV1Log.deserialize(e))
-            .toList());
+      hash: decode.getField(1),
+      logs:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => EvmosEthermintEVMV1Log.deserialize(e))
+              .toList(),
+    );
   }
 
   @override

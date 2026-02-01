@@ -15,21 +15,25 @@ class C4eChiainContinuousVestingPeriod extends CosmosMessage {
   factory C4eChiainContinuousVestingPeriod.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return C4eChiainContinuousVestingPeriod(
-        startTime: decode.getField(1),
-        endTime: decode.getField(2),
-        amount: decode
-            .getFields<List<int>>(3)
-            .map((e) => Coin.deserialize(e))
-            .toList());
+      startTime: decode.getField(1),
+      endTime: decode.getField(2),
+      amount:
+          decode
+              .getFields<List<int>>(3)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
+    );
   }
   factory C4eChiainContinuousVestingPeriod.fromJson(Map<String, dynamic> json) {
     return C4eChiainContinuousVestingPeriod(
-        startTime: json.valueAs("start_time"),
-        endTime: json.valueAs("end_time"),
-        amount: json
-            .valueAsList<List<Map<String, dynamic>>?>('amount')
-            ?.map((e) => Coin.fromJson(e))
-            .toList());
+      startTime: json.valueAs("start_time"),
+      endTime: json.valueAs("end_time"),
+      amount:
+          json
+              .valueAsList<List<Map<String, dynamic>>?>('amount')
+              ?.map((e) => Coin.fromJson(e))
+              .toList(),
+    );
   }
 
   @override
@@ -37,7 +41,7 @@ class C4eChiainContinuousVestingPeriod extends CosmosMessage {
     return {
       'start_time': startTime?.toString(),
       'end_time': endTime?.toString(),
-      "amount": amount?.map((e) => e.toJson()).toList()
+      "amount": amount?.map((e) => e.toJson()).toList(),
     };
   }
 

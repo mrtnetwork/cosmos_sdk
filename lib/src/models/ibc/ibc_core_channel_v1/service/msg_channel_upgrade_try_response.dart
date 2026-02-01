@@ -8,15 +8,22 @@ class MsgChannelUpgradeTryResponse extends CosmosMessage {
   final IbcChannelUpgrade upgrade;
   final BigInt? upgradeSequence;
   final IbcChannelResponseResultType? result;
-  const MsgChannelUpgradeTryResponse(
-      {required this.upgrade, this.upgradeSequence, this.result});
+  const MsgChannelUpgradeTryResponse({
+    required this.upgrade,
+    this.upgradeSequence,
+    this.result,
+  });
   factory MsgChannelUpgradeTryResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgChannelUpgradeTryResponse(
-        upgrade: IbcChannelUpgrade.deserialize(decode.getField(1)),
-        upgradeSequence: decode.getField(2),
-        result: decode.getResult(3)?.to<IbcChannelResponseResultType, int>(
-            (e) => IbcChannelResponseResultType.fromValue(e)));
+      upgrade: IbcChannelUpgrade.deserialize(decode.getField(1)),
+      upgradeSequence: decode.getField(2),
+      result: decode
+          .getResult(3)
+          ?.to<IbcChannelResponseResultType, int>(
+            (e) => IbcChannelResponseResultType.fromValue(e),
+          ),
+    );
   }
 
   @override
@@ -27,7 +34,7 @@ class MsgChannelUpgradeTryResponse extends CosmosMessage {
     return {
       "upgrade": upgrade.toJson(),
       "upgrade_sequence": upgradeSequence?.toString(),
-      "result": result?.value
+      "result": result?.value,
     };
   }
 

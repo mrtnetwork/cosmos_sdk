@@ -18,9 +18,10 @@ class Module extends CosmosMessage {
   factory Module.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Module(
-        path: decode.getField(1),
-        version: decode.getField(2),
-        sum: decode.getField(3));
+      path: decode.getField(1),
+      version: decode.getField(2),
+      sum: decode.getField(3),
+    );
   }
 
   @override

@@ -19,61 +19,74 @@ class OsmosisConcentratedLiquidityPoolData extends CosmosMessage {
   /// incentive records to be set
   final List<OsmosisConcentratedLiquidityIncentiveRecord> incentiveRecords;
 
-  OsmosisConcentratedLiquidityPoolData(
-      {this.pool,
-      required List<OsmosisConcentratedLiquidityFullTick> ticks,
-      required this.spreadRewardAccumulator,
-      required List<OsmosisConcentratedLiquidityAccumObject>
-          incentivesAccumulators,
-      required List<OsmosisConcentratedLiquidityIncentiveRecord>
-          incentiveRecords})
-      : ticks = ticks.immutable,
-        incentivesAccumulators = incentivesAccumulators.immutable,
-        incentiveRecords = incentiveRecords.immutable;
+  OsmosisConcentratedLiquidityPoolData({
+    this.pool,
+    required List<OsmosisConcentratedLiquidityFullTick> ticks,
+    required this.spreadRewardAccumulator,
+    required List<OsmosisConcentratedLiquidityAccumObject>
+    incentivesAccumulators,
+    required List<OsmosisConcentratedLiquidityIncentiveRecord> incentiveRecords,
+  }) : ticks = ticks.immutable,
+       incentivesAccumulators = incentivesAccumulators.immutable,
+       incentiveRecords = incentiveRecords.immutable;
   factory OsmosisConcentratedLiquidityPoolData.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityPoolData(
-        pool: decode
-            .getResult(1)
-            ?.to<AnyMessage, List<int>>((e) => AnyMessage.deserialize(e)),
-        ticks: decode
-            .getFields<List<int>>(2)
-            .map((e) => OsmosisConcentratedLiquidityFullTick.deserialize(e))
-            .toList(),
-        spreadRewardAccumulator:
-            OsmosisConcentratedLiquidityAccumObject.deserialize(
-                decode.getField(3)),
-        incentivesAccumulators: decode
-            .getFields<List<int>>(4)
-            .map((e) => OsmosisConcentratedLiquidityAccumObject.deserialize(e))
-            .toList(),
-        incentiveRecords: decode
-            .getFields<List<int>>(5)
-            .map((e) =>
-                OsmosisConcentratedLiquidityIncentiveRecord.deserialize(e))
-            .toList());
+      pool: decode
+          .getResult(1)
+          ?.to<AnyMessage, List<int>>((e) => AnyMessage.deserialize(e)),
+      ticks:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => OsmosisConcentratedLiquidityFullTick.deserialize(e))
+              .toList(),
+      spreadRewardAccumulator:
+          OsmosisConcentratedLiquidityAccumObject.deserialize(
+            decode.getField(3),
+          ),
+      incentivesAccumulators:
+          decode
+              .getFields<List<int>>(4)
+              .map(
+                (e) => OsmosisConcentratedLiquidityAccumObject.deserialize(e),
+              )
+              .toList(),
+      incentiveRecords:
+          decode
+              .getFields<List<int>>(5)
+              .map(
+                (e) =>
+                    OsmosisConcentratedLiquidityIncentiveRecord.deserialize(e),
+              )
+              .toList(),
+    );
   }
   factory OsmosisConcentratedLiquidityPoolData.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityPoolData(
-        pool: json["pool"] == null ? null : AnyMessage.fromJson(json["pool"]),
-        incentiveRecords: (json["incentive_records"] as List?)
-                ?.map((e) =>
-                    OsmosisConcentratedLiquidityIncentiveRecord.fromJson(e))
-                .toList() ??
-            <OsmosisConcentratedLiquidityIncentiveRecord>[],
-        spreadRewardAccumulator:
-            OsmosisConcentratedLiquidityAccumObject.fromJson(
-                json["incentives_accumulators"]),
-        incentivesAccumulators: (json["incentives_accumulators"] as List?)
-                ?.map(
-                    (e) => OsmosisConcentratedLiquidityAccumObject.fromJson(e))
-                .toList() ??
-            <OsmosisConcentratedLiquidityAccumObject>[],
-        ticks: (json["ticks"] as List?)
-                ?.map((e) => OsmosisConcentratedLiquidityFullTick.fromJson(e))
-                .toList() ??
-            <OsmosisConcentratedLiquidityFullTick>[]);
+      pool: json["pool"] == null ? null : AnyMessage.fromJson(json["pool"]),
+      incentiveRecords:
+          (json["incentive_records"] as List?)
+              ?.map(
+                (e) => OsmosisConcentratedLiquidityIncentiveRecord.fromJson(e),
+              )
+              .toList() ??
+          <OsmosisConcentratedLiquidityIncentiveRecord>[],
+      spreadRewardAccumulator: OsmosisConcentratedLiquidityAccumObject.fromJson(
+        json["incentives_accumulators"],
+      ),
+      incentivesAccumulators:
+          (json["incentives_accumulators"] as List?)
+              ?.map((e) => OsmosisConcentratedLiquidityAccumObject.fromJson(e))
+              .toList() ??
+          <OsmosisConcentratedLiquidityAccumObject>[],
+      ticks:
+          (json["ticks"] as List?)
+              ?.map((e) => OsmosisConcentratedLiquidityFullTick.fromJson(e))
+              .toList() ??
+          <OsmosisConcentratedLiquidityFullTick>[],
+    );
   }
 
   @override
@@ -87,18 +100,18 @@ class OsmosisConcentratedLiquidityPoolData extends CosmosMessage {
       "spread_reward_accumulator": spreadRewardAccumulator.toJson(),
       "incentives_accumulators":
           incentivesAccumulators.map((e) => e.toJson()).toList(),
-      "incentive_records": incentiveRecords.map((e) => e.toJson()).toList()
+      "incentive_records": incentiveRecords.map((e) => e.toJson()).toList(),
     };
   }
 
   @override
   List get values => [
-        pool,
-        ticks,
-        spreadRewardAccumulator,
-        incentivesAccumulators,
-        incentiveRecords,
-      ];
+    pool,
+    ticks,
+    spreadRewardAccumulator,
+    incentivesAccumulators,
+    incentiveRecords,
+  ];
 
   @override
   TypeUrl get typeUrl => OsmosisConcentratedLiquidityV1beta1Types.poolData;

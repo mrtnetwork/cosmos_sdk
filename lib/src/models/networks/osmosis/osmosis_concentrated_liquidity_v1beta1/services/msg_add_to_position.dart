@@ -5,8 +5,10 @@ import 'package:cosmos_sdk/src/utils/quick.dart';
 import 'msg_add_to_position_response.dart';
 
 class OsmosisConcentratedLiquidityMsgAddToPosition
-    extends OsmosisConcentratedLiquidityV1Beta1<
-        OsmosisConcentratedLiquidityMsgAddToPositionResponse> {
+    extends
+        OsmosisConcentratedLiquidityV1Beta1<
+          OsmosisConcentratedLiquidityMsgAddToPositionResponse
+        > {
   final BigInt? positionId;
   final String? sender;
 
@@ -28,33 +30,38 @@ class OsmosisConcentratedLiquidityMsgAddToPosition
   /// liquidity of the position.
   final BigInt tokenMinAmount1;
 
-  OsmosisConcentratedLiquidityMsgAddToPosition(
-      {this.positionId,
-      this.sender,
-      required this.amount0,
-      required this.amount1,
-      required this.tokenMinAmount0,
-      required this.tokenMinAmount1});
+  OsmosisConcentratedLiquidityMsgAddToPosition({
+    this.positionId,
+    this.sender,
+    required this.amount0,
+    required this.amount1,
+    required this.tokenMinAmount0,
+    required this.tokenMinAmount1,
+  });
   factory OsmosisConcentratedLiquidityMsgAddToPosition.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityMsgAddToPosition(
-        positionId: decode.getField(1),
-        sender: decode.getField(2),
-        amount0: BigInt.parse(decode.getField(3)),
-        amount1: BigInt.parse(decode.getField(4)),
-        tokenMinAmount0: BigInt.parse(decode.getField(5)),
-        tokenMinAmount1: BigInt.parse(decode.getField(6)));
+      positionId: decode.getField(1),
+      sender: decode.getField(2),
+      amount0: BigInt.parse(decode.getField(3)),
+      amount1: BigInt.parse(decode.getField(4)),
+      tokenMinAmount0: BigInt.parse(decode.getField(5)),
+      tokenMinAmount1: BigInt.parse(decode.getField(6)),
+    );
   }
   factory OsmosisConcentratedLiquidityMsgAddToPosition.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityMsgAddToPosition(
-        positionId: json.asBigInt("position_id"),
-        sender: json.as("sender"),
-        amount0: json.asBigInt("amount0"),
-        amount1: json.asBigInt("amount1"),
-        tokenMinAmount0: json.asBigInt("token_min_amount0"),
-        tokenMinAmount1: json.asBigInt("token_min_amount1"));
+      positionId: json.asBigInt("position_id"),
+      sender: json.as("sender"),
+      amount0: json.asBigInt("amount0"),
+      amount1: json.asBigInt("amount1"),
+      tokenMinAmount0: json.asBigInt("token_min_amount0"),
+      tokenMinAmount1: json.asBigInt("token_min_amount1"),
+    );
   }
 
   @override
@@ -68,19 +75,19 @@ class OsmosisConcentratedLiquidityMsgAddToPosition
       "amount0": amount0.toString(),
       "amount1": amount1.toString(),
       "token_min_amount0": tokenMinAmount0.toString(),
-      "token_min_amount1": tokenMinAmount1.toString()
+      "token_min_amount1": tokenMinAmount1.toString(),
     };
   }
 
   @override
   List get values => [
-        positionId,
-        sender,
-        amount0.toString(),
-        amount1.toString(),
-        tokenMinAmount0.toString(),
-        tokenMinAmount1.toString()
-      ];
+    positionId,
+    sender,
+    amount0.toString(),
+    amount1.toString(),
+    tokenMinAmount0.toString(),
+    tokenMinAmount1.toString(),
+  ];
 
   @override
   TypeUrl get typeUrl =>
@@ -88,9 +95,11 @@ class OsmosisConcentratedLiquidityMsgAddToPosition
 
   @override
   OsmosisConcentratedLiquidityMsgAddToPositionResponse onResponse(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return OsmosisConcentratedLiquidityMsgAddToPositionResponse.deserialize(
-        bytes);
+      bytes,
+    );
   }
 
   @override

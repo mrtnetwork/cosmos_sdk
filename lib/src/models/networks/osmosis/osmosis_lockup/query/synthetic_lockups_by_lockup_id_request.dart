@@ -7,10 +7,12 @@ class OsmosisLockupSyntheticLockupsByLockupIDRequest extends CosmosMessage
   final BigInt lockId;
   const OsmosisLockupSyntheticLockupsByLockupIDRequest({required this.lockId});
   factory OsmosisLockupSyntheticLockupsByLockupIDRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisLockupSyntheticLockupsByLockupIDRequest(
-        lockId: decode.getField(1));
+      lockId: decode.getField(1),
+    );
   }
   @override
   List<int> get fieldIds => [1];

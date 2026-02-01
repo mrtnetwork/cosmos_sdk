@@ -9,14 +9,16 @@ class SignatureDescriptors extends CosmosMessage {
   /// signatures are the signature descriptors
   final List<SignatureDescriptor>? signatures;
   SignatureDescriptors({List<SignatureDescriptor>? signatures})
-      : signatures = signatures?.emptyAsNull?.immutable;
+    : signatures = signatures?.emptyAsNull?.immutable;
   factory SignatureDescriptors.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return SignatureDescriptors(
-        signatures: decode
-            .getFields<List<int>>(1)
-            .map((e) => SignatureDescriptor.deserialize(e))
-            .toList());
+      signatures:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => SignatureDescriptor.deserialize(e))
+              .toList(),
+    );
   }
 
   @override

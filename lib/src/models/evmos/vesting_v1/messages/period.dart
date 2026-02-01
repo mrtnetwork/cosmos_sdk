@@ -14,13 +14,15 @@ class EvmosVestingV1Period extends CosmosMessage {
   factory EvmosVestingV1Period.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosVestingV1Period(
-        length: decode.getField(1),
-        amount: decode.getResult(2)?.to<Coin, List<int>>(Coin.deserialize));
+      length: decode.getField(1),
+      amount: decode.getResult(2)?.to<Coin, List<int>>(Coin.deserialize),
+    );
   }
   factory EvmosVestingV1Period.fromJson(Map<String, dynamic> json) {
     return EvmosVestingV1Period(
-        length: json.asBigInt("length"),
-        amount: json.maybeAs(key: "amount", onValue: Coin.deserialize));
+      length: json.asBigInt("length"),
+      amount: json.maybeAs(key: "amount", onValue: Coin.deserialize),
+    );
   }
   @override
   List get values => [length, amount];

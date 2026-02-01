@@ -18,11 +18,15 @@ class CosmWasmV1MsgStoreCodeResponse extends CosmosMessage {
   factory CosmWasmV1MsgStoreCodeResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmWasmV1MsgStoreCodeResponse(
-        codeId: decode.getField(1), checksum: decode.getField(2));
+      codeId: decode.getField(1),
+      checksum: decode.getField(2),
+    );
   }
   factory CosmWasmV1MsgStoreCodeResponse.fromJson(Map<String, dynamic> json) {
     return CosmWasmV1MsgStoreCodeResponse(
-        checksum: json.asBytes("checksum"), codeId: json.asBigInt("code_id"));
+      checksum: json.asBytes("checksum"),
+      codeId: json.asBigInt("code_id"),
+    );
   }
 
   @override
@@ -32,7 +36,7 @@ class CosmWasmV1MsgStoreCodeResponse extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "checksum": CosmosUtils.tryToBase64(checksum),
-      "code_id": codeId?.toString()
+      "code_id": codeId?.toString(),
     };
   }
 

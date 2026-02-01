@@ -16,15 +16,14 @@ class QueryNFTOwnerRequest extends CosmosMessage
   factory QueryNFTOwnerRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryNFTOwnerRequest(
-        classId: decode.getField(1), id: decode.getField(2));
+      classId: decode.getField(1),
+      id: decode.getField(2),
+    );
   }
 
   @override
   Map<String, dynamic> toJson() {
-    return {
-      'class_id': classId,
-      'id': id,
-    };
+    return {'class_id': classId, 'id': id};
   }
 
   @override

@@ -6,7 +6,8 @@ import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// MsgCancelRevenue defines a message that cancels a registered Revenue
 class EvmosRevenueV1MsgCancelRevenue
-    extends EvmosService<EmptyServiceRequestResponse> with AminoMessage {
+    extends EvmosService<EmptyServiceRequestResponse>
+    with AminoMessage {
   /// contract_address in hex format
   final String? contractAddress;
 
@@ -14,19 +15,23 @@ class EvmosRevenueV1MsgCancelRevenue
   /// sending the transaction which deploys the contract
   final String? deployerAddress;
 
-  const EvmosRevenueV1MsgCancelRevenue(
-      {this.contractAddress, this.deployerAddress});
+  const EvmosRevenueV1MsgCancelRevenue({
+    this.contractAddress,
+    this.deployerAddress,
+  });
 
   factory EvmosRevenueV1MsgCancelRevenue.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosRevenueV1MsgCancelRevenue(
-        contractAddress: decode.getField(1),
-        deployerAddress: decode.getField(2));
+      contractAddress: decode.getField(1),
+      deployerAddress: decode.getField(2),
+    );
   }
   factory EvmosRevenueV1MsgCancelRevenue.fromJson(Map<String, dynamic> json) {
     return EvmosRevenueV1MsgCancelRevenue(
-        contractAddress: json.as("contract_address"),
-        deployerAddress: json.as("deployer_address"));
+      contractAddress: json.as("contract_address"),
+      deployerAddress: json.as("deployer_address"),
+    );
   }
 
   @override
@@ -36,7 +41,7 @@ class EvmosRevenueV1MsgCancelRevenue
   Map<String, dynamic> toJson() {
     return {
       "contract_address": contractAddress,
-      "deployer_address": deployerAddress
+      "deployer_address": deployerAddress,
     };
   }
 
@@ -51,6 +56,7 @@ class EvmosRevenueV1MsgCancelRevenue
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        EvmosErc20V1Types.msgCancelRevenueResponse);
+      EvmosErc20V1Types.msgCancelRevenueResponse,
+    );
   }
 }

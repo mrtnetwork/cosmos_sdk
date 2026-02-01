@@ -11,29 +11,31 @@ class ThorchainMsgTssKeysignFail extends CosmosMessage {
   final List<ThorchainCoin> coins;
   final String? pubKey;
   final List<int>? signer;
-  ThorchainMsgTssKeysignFail(
-      {this.id,
-      this.height,
-      required this.blame,
-      this.memo,
-      required List<ThorchainCoin> coins,
-      this.pubKey,
-      List<int>? signer})
-      : signer = BytesUtils.tryToBytes(signer, unmodifiable: true),
-        coins = coins.immutable;
+  ThorchainMsgTssKeysignFail({
+    this.id,
+    this.height,
+    required this.blame,
+    this.memo,
+    required List<ThorchainCoin> coins,
+    this.pubKey,
+    List<int>? signer,
+  }) : signer = BytesUtils.tryToBytes(signer, unmodifiable: true),
+       coins = coins.immutable;
   factory ThorchainMsgTssKeysignFail.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainMsgTssKeysignFail(
-        id: decode.getField(1),
-        height: decode.getField(2),
-        blame: ThorchainBlame.deserialize(decode.getField(3)),
-        memo: decode.getField(4),
-        coins: decode
-            .getFields<List<int>>(5)
-            .map((e) => ThorchainCoin.deserialize(e))
-            .toList(),
-        pubKey: decode.getField(6),
-        signer: decode.getField(7));
+      id: decode.getField(1),
+      height: decode.getField(2),
+      blame: ThorchainBlame.deserialize(decode.getField(3)),
+      memo: decode.getField(4),
+      coins:
+          decode
+              .getFields<List<int>>(5)
+              .map((e) => ThorchainCoin.deserialize(e))
+              .toList(),
+      pubKey: decode.getField(6),
+      signer: decode.getField(7),
+    );
   }
 
   @override
@@ -48,7 +50,7 @@ class ThorchainMsgTssKeysignFail extends CosmosMessage {
       "memo": memo,
       "coins": coins.map((e) => e.toJson()).toList(),
       "pub_key": pubKey,
-      "signer": BytesUtils.tryToHexString(signer)
+      "signer": BytesUtils.tryToHexString(signer),
     };
   }
 

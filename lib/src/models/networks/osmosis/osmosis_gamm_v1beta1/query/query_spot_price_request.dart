@@ -7,15 +7,19 @@ class OsmosisGammQuerySpotPriceRequest extends CosmosMessage
   final BigInt poolId;
   final String? baseAssetDenom;
   final String? quoteDssetDenom;
-  OsmosisGammQuerySpotPriceRequest(
-      {required this.poolId, this.baseAssetDenom, this.quoteDssetDenom});
+  OsmosisGammQuerySpotPriceRequest({
+    required this.poolId,
+    this.baseAssetDenom,
+    this.quoteDssetDenom,
+  });
   factory OsmosisGammQuerySpotPriceRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
 
     return OsmosisGammQuerySpotPriceRequest(
-        poolId: decode.getField(1),
-        baseAssetDenom: decode.getField(2),
-        quoteDssetDenom: decode.getField(3));
+      poolId: decode.getField(1),
+      baseAssetDenom: decode.getField(2),
+      quoteDssetDenom: decode.getField(3),
+    );
   }
 
   @override
@@ -34,7 +38,7 @@ class OsmosisGammQuerySpotPriceRequest extends CosmosMessage
     return {
       "pool_id": poolId.toString(),
       "base_asset_denom": baseAssetDenom,
-      "quote_asset_denom": quoteDssetDenom
+      "quote_asset_denom": quoteDssetDenom,
     };
   }
 
@@ -51,7 +55,7 @@ class OsmosisGammQuerySpotPriceRequest extends CosmosMessage
 
   @override
   Map<String, String?> get queryParameters => {
-        "base_asset_denom": baseAssetDenom,
-        "quote_asset_denom": quoteDssetDenom
-      };
+    "base_asset_denom": baseAssetDenom,
+    "quote_asset_denom": quoteDssetDenom,
+  };
 }

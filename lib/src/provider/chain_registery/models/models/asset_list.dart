@@ -54,24 +54,28 @@ class CCRAsset {
       deprecated: json['deprecated'] as bool?,
       description: json['description'],
       extendedDescription: json['extended_description'],
-      denomUnits: (json['denom_units'] as List)
-          .map((item) => CCRDenomUnit.fromJson(item))
-          .toList(),
+      denomUnits:
+          (json['denom_units'] as List)
+              .map((item) => CCRDenomUnit.fromJson(item))
+              .toList(),
       typeAsset: json['type_asset'],
       address: json['address'],
       base: json['base'],
       name: json['name'],
       display: json['display'],
       symbol: json['symbol'],
-      traces: (json['traces'] as List?)
+      traces:
+          (json['traces'] as List?)
               ?.map((item) => CCRIbcTransactionBase.fromJson(item))
               .toList() ??
           [],
       ibc: json['ibc'] != null ? CCRIbcData.fromJson(json['ibc']) : null,
-      logoURIs: json['logo_URIs'] != null
-          ? CCRLogoUris.fromJson(json['logo_URIs'])
-          : null,
-      images: (json['images'] as List?)
+      logoURIs:
+          json['logo_URIs'] != null
+              ? CCRLogoUris.fromJson(json['logo_URIs'])
+              : null,
+      images:
+          (json['images'] as List?)
               ?.map((item) => CCRImageData.fromJson(item))
               .toList() ??
           [],
@@ -121,16 +125,13 @@ class CCRDenomUnit {
   });
   factory CCRDenomUnit.fromJson(Map<String, dynamic> json) {
     return CCRDenomUnit(
-        denom: json["denom"],
-        exponent: json["exponent"],
-        aliases: (json["aliases"] as List?)?.cast());
+      denom: json["denom"],
+      exponent: json["exponent"],
+      aliases: (json["aliases"] as List?)?.cast(),
+    );
   }
   Map<String, dynamic> toJson() {
-    return {
-      'denom': denom,
-      'exponent': exponent,
-      'aliases': aliases,
-    };
+    return {'denom': denom, 'exponent': exponent, 'aliases': aliases};
   }
 }
 
@@ -139,10 +140,11 @@ class CCRIbcData {
   final String dstChannel;
   final String sourceDenom;
 
-  CCRIbcData(
-      {required this.sourceChannel,
-      required this.dstChannel,
-      required this.sourceDenom});
+  CCRIbcData({
+    required this.sourceChannel,
+    required this.dstChannel,
+    required this.sourceDenom,
+  });
 
   // From JSON factory constructor
   factory CCRIbcData.fromJson(Map<String, dynamic> json) {
@@ -167,25 +169,16 @@ class CCRLogoUris {
   final String? png;
   final String? svg;
 
-  CCRLogoUris({
-    this.png,
-    this.svg,
-  });
+  CCRLogoUris({this.png, this.svg});
 
   // From JSON factory constructor
   factory CCRLogoUris.fromJson(Map<String, dynamic> json) {
-    return CCRLogoUris(
-      png: json['png'],
-      svg: json['svg'],
-    );
+    return CCRLogoUris(png: json['png'], svg: json['svg']);
   }
 
   // To JSON method
   Map<String, dynamic> toJson() {
-    return {
-      'png': png,
-      'svg': svg,
-    };
+    return {'png': png, 'svg': svg};
   }
 }
 
@@ -195,19 +188,15 @@ class CCRImageData {
   final String? svg;
   final CCRTheme? theme;
 
-  CCRImageData({
-    this.imageSync,
-    this.png,
-    this.svg,
-    this.theme,
-  });
+  CCRImageData({this.imageSync, this.png, this.svg, this.theme});
 
   // From JSON factory constructor
   factory CCRImageData.fromJson(Map<String, dynamic> json) {
     return CCRImageData(
-      imageSync: json['imageSync'] != null
-          ? CCRPointer.fromJson(json['imageSync'])
-          : null,
+      imageSync:
+          json['imageSync'] != null
+              ? CCRPointer.fromJson(json['imageSync'])
+              : null,
       png: json['png'],
       svg: json['svg'],
       theme: json['theme'] != null ? CCRTheme.fromJson(json['theme']) : null,
@@ -291,8 +280,10 @@ abstract class CCRIbcTransactionBase {
       case "legacy-mintage":
         return CCRNonIbcTransition.fromJson(json);
       default:
-        throw DartCosmosSdkPluginException("unknown ibc transaction type.",
-            details: {"type": json["type"]});
+        throw DartCosmosSdkPluginException(
+          "unknown ibc transaction type.",
+          details: {"type": json["type"]},
+        );
     }
   }
   Map<String, dynamic> toJson();
@@ -345,10 +336,11 @@ class CCRCounterparty {
   // From JSON factory constructor
   factory CCRCounterparty.fromJson(Map<String, dynamic> json) {
     return CCRCounterparty(
-        chainName: json['chain_name'],
-        baseDenom: json['base_denom'],
-        channelId: json['channel_id'],
-        port: json["port"]);
+      chainName: json['chain_name'],
+      baseDenom: json['base_denom'],
+      channelId: json['channel_id'],
+      port: json["port"],
+    );
   }
 
   // To JSON method
@@ -357,7 +349,7 @@ class CCRCounterparty {
       'chain_name': chainName,
       'base_denom': baseDenom,
       'channel_id': channelId,
-      "port": port
+      "port": port,
     };
   }
 }
@@ -366,25 +358,16 @@ class CCRAssetChain {
   final String channelId;
   final String? path;
 
-  const CCRAssetChain({
-    required this.channelId,
-    this.path,
-  });
+  const CCRAssetChain({required this.channelId, this.path});
 
   // From JSON factory constructor
   factory CCRAssetChain.fromJson(Map<String, dynamic> json) {
-    return CCRAssetChain(
-      channelId: json['channel_id'],
-      path: json['path'],
-    );
+    return CCRAssetChain(channelId: json['channel_id'], path: json['path']);
   }
 
   // To JSON method
   Map<String, dynamic> toJson() {
-    return {
-      'channelId': channelId,
-      'path': path,
-    };
+    return {'channelId': channelId, 'path': path};
   }
 }
 
@@ -455,11 +438,7 @@ class CCRChainCw20 {
   final String channelId;
   final String? path;
 
-  CCRChainCw20({
-    required this.port,
-    required this.channelId,
-    this.path,
-  });
+  CCRChainCw20({required this.port, required this.channelId, this.path});
 
   factory CCRChainCw20.fromJson(Map<String, dynamic> json) {
     return CCRChainCw20(
@@ -470,11 +449,7 @@ class CCRChainCw20 {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'port': port,
-      'channel_id': channelId,
-      'path': path,
-    };
+    return {'port': port, 'channel_id': channelId, 'path': path};
   }
 }
 
@@ -551,11 +526,7 @@ class CCRChainBridge {
   final String channelId;
   final String? path;
 
-  CCRChainBridge({
-    this.port,
-    required this.channelId,
-    this.path,
-  });
+  CCRChainBridge({this.port, required this.channelId, this.path});
 
   // From JSON factory constructor
   factory CCRChainBridge.fromJson(Map<String, dynamic> json) {
@@ -568,11 +539,7 @@ class CCRChainBridge {
 
   // To JSON method
   Map<String, dynamic> toJson() {
-    return {
-      'port': port,
-      'channel_id': channelId,
-      'path': path,
-    };
+    return {'port': port, 'channel_id': channelId, 'path': path};
   }
 }
 
@@ -648,16 +615,12 @@ class CCRChainNonIbc {
 
   // From JSON factory constructor
   factory CCRChainNonIbc.fromJson(Map<String, dynamic> json) {
-    return CCRChainNonIbc(
-      contract: json['contract'],
-    );
+    return CCRChainNonIbc(contract: json['contract']);
   }
 
   // To JSON method
   Map<String, dynamic> toJson() {
-    return {
-      'contract': contract,
-    };
+    return {'contract': contract};
   }
 }
 
@@ -673,9 +636,10 @@ class CCRAssetList {
     return CCRAssetList(
       schema: json['\$schema'],
       chainName: json['chain_name'],
-      assets: (json['assets'] as List)
-          .map((assetJson) => CCRAsset.fromJson(assetJson))
-          .toList(),
+      assets:
+          (json['assets'] as List)
+              .map((assetJson) => CCRAsset.fromJson(assetJson))
+              .toList(),
     );
   }
 
@@ -684,7 +648,7 @@ class CCRAssetList {
     return {
       '\$schema': schema,
       'chainName': chainName,
-      'assets': assets.map((asset) => asset.toJson()).toList()
+      'assets': assets.map((asset) => asset.toJson()).toList(),
     };
   }
 }

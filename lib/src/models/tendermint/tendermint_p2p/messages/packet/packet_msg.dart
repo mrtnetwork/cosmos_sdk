@@ -10,13 +10,14 @@ class PacketMsg extends PacketMessage {
   final bool? eof;
   final List<int>? data;
   PacketMsg({this.channelId, this.eof, List<int>? data})
-      : data = BytesUtils.tryToBytes(data, unmodifiable: true);
+    : data = BytesUtils.tryToBytes(data, unmodifiable: true);
   factory PacketMsg.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return PacketMsg(
-        channelId: decode.getField(1),
-        eof: decode.getField(2),
-        data: decode.getField(3));
+      channelId: decode.getField(1),
+      eof: decode.getField(2),
+      data: decode.getField(3),
+    );
   }
 
   @override
@@ -27,7 +28,7 @@ class PacketMsg extends PacketMessage {
     return {
       "channel_id": channelId,
       "eof": eof,
-      "data": BytesUtils.tryToHexString(data)
+      "data": BytesUtils.tryToHexString(data),
     };
   }
 

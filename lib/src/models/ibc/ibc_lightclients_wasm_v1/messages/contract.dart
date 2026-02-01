@@ -9,7 +9,7 @@ class IbcLightClientsWasmContract extends CosmosMessage {
   /// implemented as a Wasm contract.
   final List<int>? codeBytes;
   IbcLightClientsWasmContract({List<int>? codeBytes})
-      : codeBytes = BytesUtils.tryToBytes(codeBytes);
+    : codeBytes = BytesUtils.tryToBytes(codeBytes);
   factory IbcLightClientsWasmContract.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcLightClientsWasmContract(codeBytes: decode.getField(1));

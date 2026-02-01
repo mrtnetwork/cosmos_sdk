@@ -20,11 +20,16 @@ class SignatureDescriptor extends CosmosMessage {
   factory SignatureDescriptor.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return SignatureDescriptor(
-        publicKey:
-            decode.getResult(1)?.to<Any, List<int>>((e) => Any.deserialize(e)),
-        data: decode.getResult(2)?.to<SignatureDescriptorData, List<int>>(
-            (e) => SignatureDescriptorData.deserialize(e)),
-        sequence: decode.getField(3));
+      publicKey: decode
+          .getResult(1)
+          ?.to<Any, List<int>>((e) => Any.deserialize(e)),
+      data: decode
+          .getResult(2)
+          ?.to<SignatureDescriptorData, List<int>>(
+            (e) => SignatureDescriptorData.deserialize(e),
+          ),
+      sequence: decode.getField(3),
+    );
   }
 
   @override
@@ -35,7 +40,7 @@ class SignatureDescriptor extends CosmosMessage {
     return {
       "public_key": publicKey?.toJson(),
       "data": data?.toJson(),
-      "sequence": sequence?.toString()
+      "sequence": sequence?.toString(),
     };
   }
 

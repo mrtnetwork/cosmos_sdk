@@ -6,18 +6,23 @@ class OsmosisProtorevQueryGetProtoRevDeveloperAccountResponse
     extends CosmosMessage {
   /// [developerAccount] is the developer account of the module
   final String? developerAccount;
-  const OsmosisProtorevQueryGetProtoRevDeveloperAccountResponse(
-      {this.developerAccount});
+  const OsmosisProtorevQueryGetProtoRevDeveloperAccountResponse({
+    this.developerAccount,
+  });
   factory OsmosisProtorevQueryGetProtoRevDeveloperAccountResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisProtorevQueryGetProtoRevDeveloperAccountResponse(
-        developerAccount: decode.getField(1));
+      developerAccount: decode.getField(1),
+    );
   }
   factory OsmosisProtorevQueryGetProtoRevDeveloperAccountResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisProtorevQueryGetProtoRevDeveloperAccountResponse(
-        developerAccount: json["developer_account"]);
+      developerAccount: json["developer_account"],
+    );
   }
 
   @override

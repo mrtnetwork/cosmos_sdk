@@ -16,6 +16,7 @@ mixin ChainRegistryServiceProvider
   ///   }
   @override
   Future<ChainRegistryResponse<T>> doRequest<T>(
-      ChainRegistryRequestRequestDetails params,
-      {Duration? timeout});
+    ChainRegistryRequestRequestDetails params, {
+    Duration? timeout,
+  });
 }

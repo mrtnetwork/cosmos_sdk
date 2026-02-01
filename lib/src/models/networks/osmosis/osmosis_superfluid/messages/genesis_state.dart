@@ -18,53 +18,67 @@ class OsmosisSuperfluidGenesisState extends CosmosMessage {
   /// osmo_equivalent_multipliers is the records of osmo equivalent amount of
   /// each superfluid registered pool, updated every epoch.
   final List<OsmosisSuperfluidOsmoEquivalentMultiplierRecord>
-      osmoEquivalentMultipliers;
+  osmoEquivalentMultipliers;
 
   /// intermediary_accounts is a secondary account for superfluid staking that
   /// plays an intermediary role between validators and the delegators.
   final List<OsmosisSuperfluidUnpoolSuperfluidIntermediaryAccount>
-      intermediaryAccounts;
+  intermediaryAccounts;
   final List<OsmosisSuperfluidLockIdIntermediaryAccountConnection>
-      intemediaryAccountConnections;
+  intemediaryAccountConnections;
 
   OsmosisSuperfluidGenesisState({
     required this.params,
     required List<OsmosisSuperfluidSuperfluidAsset> superfluidAssets,
     required List<OsmosisSuperfluidOsmoEquivalentMultiplierRecord>
-        osmoEquivalentMultipliers,
+    osmoEquivalentMultipliers,
     required List<OsmosisSuperfluidUnpoolSuperfluidIntermediaryAccount>
-        intermediaryAccounts,
+    intermediaryAccounts,
     required List<OsmosisSuperfluidLockIdIntermediaryAccountConnection>
-        intemediaryAccountConnections,
-  })  : superfluidAssets = superfluidAssets.immutable,
-        osmoEquivalentMultipliers = osmoEquivalentMultipliers.immutable,
-        intermediaryAccounts = intermediaryAccounts.immutable,
-        intemediaryAccountConnections = intemediaryAccountConnections.immutable;
+    intemediaryAccountConnections,
+  }) : superfluidAssets = superfluidAssets.immutable,
+       osmoEquivalentMultipliers = osmoEquivalentMultipliers.immutable,
+       intermediaryAccounts = intermediaryAccounts.immutable,
+       intemediaryAccountConnections = intemediaryAccountConnections.immutable;
   factory OsmosisSuperfluidGenesisState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidGenesisState(
       params: OsmosisSuperfluidParams.deserialize(decode.getField(1)),
-      superfluidAssets: decode
-          .getFields<List<int>>(2)
-          .map((e) => OsmosisSuperfluidSuperfluidAsset.deserialize(e))
-          .toList(),
-      osmoEquivalentMultipliers: decode
-          .getFields<List<int>>(3)
-          .map((e) =>
-              OsmosisSuperfluidOsmoEquivalentMultiplierRecord.deserialize(e))
-          .toList(),
-      intermediaryAccounts: decode
-          .getFields<List<int>>(4)
-          .map((e) =>
-              OsmosisSuperfluidUnpoolSuperfluidIntermediaryAccount.deserialize(
-                  e))
-          .toList(),
-      intemediaryAccountConnections: decode
-          .getFields<List<int>>(5)
-          .map((e) =>
-              OsmosisSuperfluidLockIdIntermediaryAccountConnection.deserialize(
-                  e))
-          .toList(),
+      superfluidAssets:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => OsmosisSuperfluidSuperfluidAsset.deserialize(e))
+              .toList(),
+      osmoEquivalentMultipliers:
+          decode
+              .getFields<List<int>>(3)
+              .map(
+                (e) =>
+                    OsmosisSuperfluidOsmoEquivalentMultiplierRecord.deserialize(
+                      e,
+                    ),
+              )
+              .toList(),
+      intermediaryAccounts:
+          decode
+              .getFields<List<int>>(4)
+              .map(
+                (e) =>
+                    OsmosisSuperfluidUnpoolSuperfluidIntermediaryAccount.deserialize(
+                      e,
+                    ),
+              )
+              .toList(),
+      intemediaryAccountConnections:
+          decode
+              .getFields<List<int>>(5)
+              .map(
+                (e) =>
+                    OsmosisSuperfluidLockIdIntermediaryAccountConnection.deserialize(
+                      e,
+                    ),
+              )
+              .toList(),
     );
   }
 
@@ -81,7 +95,7 @@ class OsmosisSuperfluidGenesisState extends CosmosMessage {
       "intermediary_accounts":
           intermediaryAccounts.map((e) => e.toJson()).toList(),
       "intemediary_account_connections":
-          intemediaryAccountConnections.map((e) => e.toJson()).toList()
+          intemediaryAccountConnections.map((e) => e.toJson()).toList(),
     };
   }
 
@@ -90,10 +104,10 @@ class OsmosisSuperfluidGenesisState extends CosmosMessage {
 
   @override
   List get values => [
-        params,
-        superfluidAssets,
-        osmoEquivalentMultipliers,
-        intermediaryAccounts,
-        intemediaryAccountConnections
-      ];
+    params,
+    superfluidAssets,
+    osmoEquivalentMultipliers,
+    intermediaryAccounts,
+    intemediaryAccountConnections,
+  ];
 }

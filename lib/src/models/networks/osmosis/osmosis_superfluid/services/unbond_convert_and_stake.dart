@@ -5,8 +5,11 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:cosmos_sdk/src/utils/quick.dart';
 import 'super_fluid_undelegate_and_unbond_lock_response.dart';
 
-class OsmosisSuperfluidMsgUnbondConvertAndStake extends OsmosisSuperfluid<
-    OsmosisSuperfluidMsgSuperfluidUndelegateAndUnbondLockResponse> {
+class OsmosisSuperfluidMsgUnbondConvertAndStake
+    extends
+        OsmosisSuperfluid<
+          OsmosisSuperfluidMsgSuperfluidUndelegateAndUnbondLockResponse
+        > {
   /// lock ID to convert and stake.
   /// lock id with 0 should be provided if converting liquid gamm shares to stake
   final BigInt? lockId;
@@ -25,30 +28,35 @@ class OsmosisSuperfluidMsgUnbondConvertAndStake extends OsmosisSuperfluid<
   /// For all other cases, this field would be disregarded.
   final Coin sharesToConvert;
 
-  OsmosisSuperfluidMsgUnbondConvertAndStake(
-      {this.lockId,
-      this.sender,
-      this.valAddr,
-      required this.minAmtToStake,
-      required this.sharesToConvert});
+  OsmosisSuperfluidMsgUnbondConvertAndStake({
+    this.lockId,
+    this.sender,
+    this.valAddr,
+    required this.minAmtToStake,
+    required this.sharesToConvert,
+  });
   factory OsmosisSuperfluidMsgUnbondConvertAndStake.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidMsgUnbondConvertAndStake(
-        lockId: decode.getField(1),
-        sender: decode.getField(2),
-        valAddr: decode.getField(3),
-        minAmtToStake: BigInt.parse(decode.getField(4)),
-        sharesToConvert: Coin.deserialize(decode.getField(5)));
+      lockId: decode.getField(1),
+      sender: decode.getField(2),
+      valAddr: decode.getField(3),
+      minAmtToStake: BigInt.parse(decode.getField(4)),
+      sharesToConvert: Coin.deserialize(decode.getField(5)),
+    );
   }
   factory OsmosisSuperfluidMsgUnbondConvertAndStake.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisSuperfluidMsgUnbondConvertAndStake(
-        lockId: json.asBigInt("lock_id"),
-        sender: json.as("sender"),
-        valAddr: json.as("val_addr"),
-        minAmtToStake: json.asBigInt("min_amt_to_stake"),
-        sharesToConvert: Coin.fromJson(json.asMap("shares_to_convert")));
+      lockId: json.asBigInt("lock_id"),
+      sender: json.as("sender"),
+      valAddr: json.as("val_addr"),
+      minAmtToStake: json.asBigInt("min_amt_to_stake"),
+      sharesToConvert: Coin.fromJson(json.asMap("shares_to_convert")),
+    );
   }
 
   @override
@@ -61,7 +69,7 @@ class OsmosisSuperfluidMsgUnbondConvertAndStake extends OsmosisSuperfluid<
       "sender": sender,
       "val_addr": valAddr,
       "min_amt_to_stake": minAmtToStake.toString(),
-      "shares_to_convert": sharesToConvert.toJson()
+      "shares_to_convert": sharesToConvert.toJson(),
     };
   }
 
@@ -69,15 +77,22 @@ class OsmosisSuperfluidMsgUnbondConvertAndStake extends OsmosisSuperfluid<
   TypeUrl get typeUrl => OsmosisSuperfluidTypes.msgUnbondConvertAndStake;
 
   @override
-  List get values =>
-      [lockId, sender, valAddr, minAmtToStake.toString(), sharesToConvert];
+  List get values => [
+    lockId,
+    sender,
+    valAddr,
+    minAmtToStake.toString(),
+    sharesToConvert,
+  ];
 
   @override
   List<String?> get signers => [sender];
   @override
   OsmosisSuperfluidMsgSuperfluidUndelegateAndUnbondLockResponse onResponse(
-      List<int> bytes) {
-    return OsmosisSuperfluidMsgSuperfluidUndelegateAndUnbondLockResponse
-        .deserialize(bytes);
+    List<int> bytes,
+  ) {
+    return OsmosisSuperfluidMsgSuperfluidUndelegateAndUnbondLockResponse.deserialize(
+      bytes,
+    );
   }
 }

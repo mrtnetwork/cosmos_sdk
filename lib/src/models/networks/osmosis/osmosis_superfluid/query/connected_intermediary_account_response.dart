@@ -7,22 +7,31 @@ class OsmosisSuperfluidConnectedIntermediaryAccountResponse
   final OsmosisSuperfluidUnpoolSuperfluidIntermediaryAccount? account;
   const OsmosisSuperfluidConnectedIntermediaryAccountResponse({this.account});
   factory OsmosisSuperfluidConnectedIntermediaryAccountResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidConnectedIntermediaryAccountResponse(
-        account: decode.getResult(1)?.to<
-                OsmosisSuperfluidUnpoolSuperfluidIntermediaryAccount,
-                List<int>>(
-            (e) => OsmosisSuperfluidUnpoolSuperfluidIntermediaryAccount
-                .deserialize(e)));
+      account: decode
+          .getResult(1)
+          ?.to<OsmosisSuperfluidUnpoolSuperfluidIntermediaryAccount, List<int>>(
+            (e) =>
+                OsmosisSuperfluidUnpoolSuperfluidIntermediaryAccount.deserialize(
+                  e,
+                ),
+          ),
+    );
   }
   factory OsmosisSuperfluidConnectedIntermediaryAccountResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisSuperfluidConnectedIntermediaryAccountResponse(
-        account: json["account"] == null
-            ? null
-            : OsmosisSuperfluidUnpoolSuperfluidIntermediaryAccount.fromJson(
-                json["account"]));
+      account:
+          json["account"] == null
+              ? null
+              : OsmosisSuperfluidUnpoolSuperfluidIntermediaryAccount.fromJson(
+                json["account"],
+              ),
+    );
   }
 
   @override

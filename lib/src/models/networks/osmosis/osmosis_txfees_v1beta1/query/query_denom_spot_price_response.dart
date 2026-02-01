@@ -6,19 +6,26 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class OsmosisTxfeesQueryDenomSpotPriceResponse extends CosmosMessage {
   final BigInt? poolID;
   final String spotPrice;
-  const OsmosisTxfeesQueryDenomSpotPriceResponse(
-      {this.poolID, required this.spotPrice});
+  const OsmosisTxfeesQueryDenomSpotPriceResponse({
+    this.poolID,
+    required this.spotPrice,
+  });
   factory OsmosisTxfeesQueryDenomSpotPriceResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisTxfeesQueryDenomSpotPriceResponse(
-        poolID: decode.getField(1), spotPrice: decode.getField(2));
+      poolID: decode.getField(1),
+      spotPrice: decode.getField(2),
+    );
   }
   factory OsmosisTxfeesQueryDenomSpotPriceResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisTxfeesQueryDenomSpotPriceResponse(
-        poolID: BigintUtils.tryParse(json["poolID"]),
-        spotPrice: json["spot_price"]);
+      poolID: BigintUtils.tryParse(json["poolID"]),
+      spotPrice: json["spot_price"],
+    );
   }
 
   @override

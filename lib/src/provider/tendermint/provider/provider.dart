@@ -11,22 +11,26 @@ class TendermintProvider implements BaseProvider<TendermintRequestDetails> {
   /// Constructs a new [TendermintProvider] instance with the specified [rpc] service provider.
   TendermintProvider(this.rpc);
 
-  static SERVICERESPONSE _findError<SERVICERESPONSE>(
-      {required BaseServiceRequest request,
-      required BaseServiceResponse<Map<String, dynamic>> response,
-      required TendermintRequestDetails params}) {
+  static SERVICERESPONSE _findError<SERVICERESPONSE>({
+    required BaseServiceRequest request,
+    required BaseServiceResponse<Map<String, dynamic>> response,
+    required TendermintRequestDetails params,
+  }) {
     final r = response.getResult(params);
     if (r.containsKey("code") || r.containsKey("error")) {
       final errorCode = IntUtils.tryParse(r["code"]);
       final message = (r["error"] ?? r["message"])?.toString();
       throw RPCError(
-          message: message ?? 'tendermint request failed.',
-          request: params.toJson(),
-          errorCode: errorCode,
-          details: {});
+        message: message ?? 'tendermint request failed.',
+        request: params.toJson(),
+        errorCode: errorCode,
+        details: {},
+      );
     }
     return ServiceProviderUtils.parseResponse(
-        object: r["result"] ?? r, params: params);
+      object: r["result"] ?? r,
+      params: params,
+    );
   }
 
   /// Sends a request to the tendermint using the specified [request] parameter.
@@ -34,9 +38,10 @@ class TendermintProvider implements BaseProvider<TendermintRequestDetails> {
   /// The [timeout] parameter, if provided, sets the maximum duration for the request.
   @override
   Future<RESULT> request<RESULT, SERVICERESPONSE>(
-      BaseServiceRequest<RESULT, SERVICERESPONSE, TendermintRequestDetails>
-          request,
-      {Duration? timeout}) async {
+    BaseServiceRequest<RESULT, SERVICERESPONSE, TendermintRequestDetails>
+    request, {
+    Duration? timeout,
+  }) async {
     final r = await requestDynamic(request, timeout: timeout);
     return request.onResonse(r);
   }
@@ -49,13 +54,19 @@ class TendermintProvider implements BaseProvider<TendermintRequestDetails> {
   /// Whatever is received will be returned
   @override
   Future<SERVICERESPONSE> requestDynamic<RESULT, SERVICERESPONSE>(
-      BaseServiceRequest<RESULT, SERVICERESPONSE, TendermintRequestDetails>
-          request,
-      {Duration? timeout}) async {
+    BaseServiceRequest<RESULT, SERVICERESPONSE, TendermintRequestDetails>
+    request, {
+    Duration? timeout,
+  }) async {
     final params = request.buildRequest(_id++);
-    final response =
-        await rpc.doRequest<Map<String, dynamic>>(params, timeout: timeout);
+    final response = await rpc.doRequest<Map<String, dynamic>>(
+      params,
+      timeout: timeout,
+    );
     return _findError<SERVICERESPONSE>(
-        params: params, response: response, request: request);
+      params: params,
+      response: response,
+      request: request,
+    );
   }
 }

@@ -26,20 +26,23 @@ class QueryPacketAcknowledgementsRequest extends CosmosMessage
     this.pagination,
     List<BigInt>? packetCommitmentSequences,
   }) : packetCommitmentSequences =
-            packetCommitmentSequences?.emptyAsNull?.immutable;
+           packetCommitmentSequences?.emptyAsNull?.immutable;
   factory QueryPacketAcknowledgementsRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryPacketAcknowledgementsRequest(
-        portId: decode.getField(1),
-        channelId: decode.getField(2),
-        pagination: decode
-            .getResult(3)
-            ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)),
-        packetCommitmentSequences: decode
-                .getResult<ProtocolBufferDecoderResult?>(4)
-                ?.to<List<BigInt>, List<int>>(
-                    (e) => e.map((e) => BigintUtils.parse(e)).toList()) ??
-            <BigInt>[]);
+      portId: decode.getField(1),
+      channelId: decode.getField(2),
+      pagination: decode
+          .getResult(3)
+          ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)),
+      packetCommitmentSequences:
+          decode
+              .getResult<ProtocolBufferDecoderResult?>(4)
+              ?.to<List<BigInt>, List<int>>(
+                (e) => e.map((e) => BigintUtils.parse(e)).toList(),
+              ) ??
+          <BigInt>[],
+    );
   }
 
   @override
@@ -69,7 +72,8 @@ class QueryPacketAcknowledgementsRequest extends CosmosMessage
 
   @override
   QueryPacketAcknowledgementsResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return QueryPacketAcknowledgementsResponse.fromJson(json);
   }
 
@@ -78,7 +82,7 @@ class QueryPacketAcknowledgementsRequest extends CosmosMessage
 
   @override
   Map<String, String?> get queryParameters => {
-        "packet_commitment_sequences": packetCommitmentSequences?.join(","),
-        ...pagination?.queryParameters ?? {}
-      };
+    "packet_commitment_sequences": packetCommitmentSequences?.join(","),
+    ...pagination?.queryParameters ?? {},
+  };
 }

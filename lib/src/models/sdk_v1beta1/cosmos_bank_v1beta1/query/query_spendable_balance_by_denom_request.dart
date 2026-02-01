@@ -13,13 +13,16 @@ class QuerySpendableBalanceByDenomRequest extends CosmosMessage
 
   /// denom is the coin denom to query balances for.
   final String denom;
-  const QuerySpendableBalanceByDenomRequest(
-      {required this.address, required this.denom});
+  const QuerySpendableBalanceByDenomRequest({
+    required this.address,
+    required this.denom,
+  });
   factory QuerySpendableBalanceByDenomRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QuerySpendableBalanceByDenomRequest(
-        address: CosmosBaseAddress(decode.getField(1)),
-        denom: decode.getField(2));
+      address: CosmosBaseAddress(decode.getField(1)),
+      denom: decode.getField(2),
+    );
   }
 
   @override
@@ -43,7 +46,8 @@ class QuerySpendableBalanceByDenomRequest extends CosmosMessage
 
   @override
   QuerySpendableBalanceByDenomResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return QuerySpendableBalanceByDenomResponse.fromJson(json);
   }
 

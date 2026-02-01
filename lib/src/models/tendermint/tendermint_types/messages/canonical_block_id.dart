@@ -8,12 +8,13 @@ class CanonicalBlockID extends CosmosMessage {
   final List<int>? hash;
   final CanonicalPartSetHeader partSetHeader;
   CanonicalBlockID({List<int>? hash, required this.partSetHeader})
-      : hash = BytesUtils.tryToBytes(hash, unmodifiable: true);
+    : hash = BytesUtils.tryToBytes(hash, unmodifiable: true);
   factory CanonicalBlockID.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CanonicalBlockID(
-        partSetHeader: CanonicalPartSetHeader.deserialize(decode.getField(2)),
-        hash: decode.getField(1));
+      partSetHeader: CanonicalPartSetHeader.deserialize(decode.getField(2)),
+      hash: decode.getField(1),
+    );
   }
 
   @override
@@ -23,7 +24,7 @@ class CanonicalBlockID extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "hash": BytesUtils.tryToHexString(hash),
-      "part_set_header": partSetHeader.toJson()
+      "part_set_header": partSetHeader.toJson(),
     };
   }
 

@@ -7,7 +7,8 @@ class OsmosisPoolManagerEstimateTradeBasedOnPriceImpactRequest
     extends CosmosMessage
     with
         QueryMessage<
-            OsmosisPoolManagerEstimateTradeBasedOnPriceImpactResponse> {
+          OsmosisPoolManagerEstimateTradeBasedOnPriceImpactResponse
+        > {
   /// from_coin is the total amount of tokens that the user wants to sell.
   final Coin fromCoin;
 
@@ -36,14 +37,16 @@ class OsmosisPoolManagerEstimateTradeBasedOnPriceImpactRequest
     required this.externalPrice,
   });
   factory OsmosisPoolManagerEstimateTradeBasedOnPriceImpactRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolManagerEstimateTradeBasedOnPriceImpactRequest(
-        fromCoin: Coin.deserialize(decode.getField(1)),
-        toCoinDenom: decode.getField(2),
-        poolId: decode.getField(3),
-        maxPriceImpact: decode.getField(4),
-        externalPrice: decode.getField(5));
+      fromCoin: Coin.deserialize(decode.getField(1)),
+      toCoinDenom: decode.getField(2),
+      poolId: decode.getField(3),
+      maxPriceImpact: decode.getField(4),
+      externalPrice: decode.getField(5),
+    );
   }
 
   @override
@@ -51,25 +54,29 @@ class OsmosisPoolManagerEstimateTradeBasedOnPriceImpactRequest
 
   @override
   OsmosisPoolManagerEstimateTradeBasedOnPriceImpactResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisPoolManagerEstimateTradeBasedOnPriceImpactResponse.fromJson(
-        json);
+      json,
+    );
   }
 
   @override
   OsmosisPoolManagerEstimateTradeBasedOnPriceImpactResponse onResponse(
-      List<int> bytes) {
-    return OsmosisPoolManagerEstimateTradeBasedOnPriceImpactResponse
-        .deserialize(bytes);
+    List<int> bytes,
+  ) {
+    return OsmosisPoolManagerEstimateTradeBasedOnPriceImpactResponse.deserialize(
+      bytes,
+    );
   }
 
   @override
   Map<String, String?> get queryParameters => {
-        "to_coin_denom": toCoinDenom,
-        "max_price_impact": maxPriceImpact,
-        "external_price": externalPrice,
-        ...fromCoin.toQueryParam("from_coin")
-      };
+    "to_coin_denom": toCoinDenom,
+    "max_price_impact": maxPriceImpact,
+    "external_price": externalPrice,
+    ...fromCoin.toQueryParam("from_coin"),
+  };
 
   @override
   Map<String, dynamic> toJson() {
@@ -78,7 +85,7 @@ class OsmosisPoolManagerEstimateTradeBasedOnPriceImpactRequest
       "to_coin_denom": toCoinDenom,
       "pool_id": poolId.toString(),
       "max_price_impact": maxPriceImpact,
-      "external_price": externalPrice
+      "external_price": externalPrice,
     };
   }
 
@@ -87,8 +94,13 @@ class OsmosisPoolManagerEstimateTradeBasedOnPriceImpactRequest
       OsmosisPoolManagerV1beta1Types.estimateTradeBasedOnPriceImpactRequest;
 
   @override
-  List get values =>
-      [fromCoin, toCoinDenom, poolId, maxPriceImpact, externalPrice];
+  List get values => [
+    fromCoin,
+    toCoinDenom,
+    poolId,
+    maxPriceImpact,
+    externalPrice,
+  ];
 
   @override
   List<String> get pathParameters => [poolId.toString()];

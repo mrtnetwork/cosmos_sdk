@@ -14,12 +14,15 @@ class OsmosisTokenFactoryMsgMint
   factory OsmosisTokenFactoryMsgMint.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisTokenFactoryMsgMint(
-        sender: decode.getField(1),
-        amount: Coin.deserialize(decode.getField(2)));
+      sender: decode.getField(1),
+      amount: Coin.deserialize(decode.getField(2)),
+    );
   }
   factory OsmosisTokenFactoryMsgMint.fromJson(Map<String, dynamic> json) {
     return OsmosisTokenFactoryMsgMint(
-        sender: json.as("sender"), amount: Coin.fromJson(json.asMap("amount")));
+      sender: json.as("sender"),
+      amount: Coin.fromJson(json.asMap("amount")),
+    );
   }
 
   @override
@@ -39,7 +42,8 @@ class OsmosisTokenFactoryMsgMint
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        OsmosisTokenFactoryV1beta1Types.msgMintResponse);
+      OsmosisTokenFactoryV1beta1Types.msgMintResponse,
+    );
   }
 
   @override

@@ -14,10 +14,12 @@ class GovWeightedVoteOption extends CosmosMessage {
   const GovWeightedVoteOption({this.option, required this.weight});
   factory GovWeightedVoteOption.fromJson(Map<String, dynamic> json) {
     return GovWeightedVoteOption(
-        weight: json["weight"],
-        option: json["option"] == null
-            ? null
-            : GovVoteOption.fromName(json["option"]));
+      weight: json["weight"],
+      option:
+          json["option"] == null
+              ? null
+              : GovVoteOption.fromName(json["option"]),
+    );
   }
 
   factory GovWeightedVoteOption.deserialize(List<int> bytes) {

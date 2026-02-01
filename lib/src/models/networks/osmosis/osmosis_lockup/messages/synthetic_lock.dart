@@ -40,10 +40,11 @@ class OsmosisLockupSyntheticLock extends CosmosMessage {
   }
   factory OsmosisLockupSyntheticLock.fromJson(Map<String, dynamic> json) {
     return OsmosisLockupSyntheticLock(
-        endTime: ProtobufTimestamp.fromString(json["end_time"]),
-        duration: ProtobufDuration.fromString(json["duration"]),
-        synthDenom: json["synth_denom"],
-        underlyingLockId: BigintUtils.tryParse(json["underlying_lock_id"]));
+      endTime: ProtobufTimestamp.fromString(json["end_time"]),
+      duration: ProtobufDuration.fromString(json["duration"]),
+      synthDenom: json["synth_denom"],
+      underlyingLockId: BigintUtils.tryParse(json["underlying_lock_id"]),
+    );
   }
 
   @override
@@ -55,7 +56,7 @@ class OsmosisLockupSyntheticLock extends CosmosMessage {
       "underlying_lock_id": underlyingLockId?.toString(),
       "synth_denom": synthDenom,
       "duration": duration.toJson(),
-      "end_time": endTime.toJson()
+      "end_time": endTime.toJson(),
     };
   }
 

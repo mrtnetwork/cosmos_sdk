@@ -10,15 +10,19 @@ class OsmosisValSetprefUserValidatorPreferencesRequest extends CosmosMessage
   final String address;
   OsmosisValSetprefUserValidatorPreferencesRequest({required this.address});
   factory OsmosisValSetprefUserValidatorPreferencesRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisValSetprefUserValidatorPreferencesRequest(
-        address: decode.getField(1));
+      address: decode.getField(1),
+    );
   }
   factory OsmosisValSetprefUserValidatorPreferencesRequest.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisValSetprefUserValidatorPreferencesRequest(
-        address: json["address"]);
+      address: json["address"],
+    );
   }
 
   @override
@@ -38,13 +42,15 @@ class OsmosisValSetprefUserValidatorPreferencesRequest extends CosmosMessage
 
   @override
   OsmosisValSetprefUserValidatorPreferencesResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisValSetprefUserValidatorPreferencesResponse.fromJson(json);
   }
 
   @override
   OsmosisValSetprefUserValidatorPreferencesResponse onResponse(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return OsmosisValSetprefUserValidatorPreferencesResponse.deserialize(bytes);
   }
 

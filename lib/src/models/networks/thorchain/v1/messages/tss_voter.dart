@@ -18,19 +18,20 @@ class ThorchainTssVoter extends CosmosMessage {
     List<String>? chains,
     List<String>? signers,
     this.majorityConsensusBlockHeight,
-  })  : pubKeys = pubKeys?.emptyAsNull?.immutable,
-        chains = chains?.emptyAsNull?.immutable,
-        signers = signers?.emptyAsNull?.immutable;
+  }) : pubKeys = pubKeys?.emptyAsNull?.immutable,
+       chains = chains?.emptyAsNull?.immutable,
+       signers = signers?.emptyAsNull?.immutable;
   factory ThorchainTssVoter.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainTssVoter(
-        id: decode.getField(1),
-        poolPubKey: decode.getField(2),
-        pubKeys: decode.getFields<String>(3),
-        blockHeight: decode.getField(4),
-        chains: decode.getFields<String>(5),
-        signers: decode.getFields<String>(6),
-        majorityConsensusBlockHeight: decode.getField(7));
+      id: decode.getField(1),
+      poolPubKey: decode.getField(2),
+      pubKeys: decode.getFields<String>(3),
+      blockHeight: decode.getField(4),
+      chains: decode.getFields<String>(5),
+      signers: decode.getFields<String>(6),
+      majorityConsensusBlockHeight: decode.getField(7),
+    );
   }
 
   @override
@@ -46,7 +47,7 @@ class ThorchainTssVoter extends CosmosMessage {
       "chains": chains,
       "signers": signers,
       "majority_consensus_block_height":
-          majorityConsensusBlockHeight?.toString()
+          majorityConsensusBlockHeight?.toString(),
     };
   }
 
@@ -55,12 +56,12 @@ class ThorchainTssVoter extends CosmosMessage {
 
   @override
   List get values => [
-        id,
-        poolPubKey,
-        pubKeys,
-        blockHeight,
-        chains,
-        signers,
-        majorityConsensusBlockHeight
-      ];
+    id,
+    poolPubKey,
+    pubKeys,
+    blockHeight,
+    chains,
+    signers,
+    majorityConsensusBlockHeight,
+  ];
 }

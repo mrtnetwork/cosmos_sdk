@@ -10,13 +10,16 @@ class MsgUndelegateResponse extends CosmosMessage {
   ///
   /// Since: cosmos-sdk 0.50
   final Coin amount;
-  const MsgUndelegateResponse(
-      {required this.complationTime, required this.amount});
+  const MsgUndelegateResponse({
+    required this.complationTime,
+    required this.amount,
+  });
   factory MsgUndelegateResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgUndelegateResponse(
-        complationTime: ProtobufTimestamp.deserialize(decode.getField(1)),
-        amount: Coin.deserialize(decode.getField(2)));
+      complationTime: ProtobufTimestamp.deserialize(decode.getField(1)),
+      amount: Coin.deserialize(decode.getField(2)),
+    );
   }
   @override
   Map<String, dynamic> toJson() {

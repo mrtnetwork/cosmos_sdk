@@ -9,7 +9,7 @@ class MsgData extends CosmosMessage {
   final String msgType;
   final List<int> data;
   MsgData({required this.msgType, required List<int> data})
-      : data = BytesUtils.toBytes(data, unmodifiable: true);
+    : data = BytesUtils.toBytes(data, unmodifiable: true);
   factory MsgData.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgData(msgType: decode.getField(1), data: decode.getField(2));

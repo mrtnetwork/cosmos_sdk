@@ -10,15 +10,20 @@ class OsmosisTwapArithmeticTwapToNowRequest extends CosmosMessage
   final String? quoteAsset;
   final ProtobufTimestamp startTime;
 
-  OsmosisTwapArithmeticTwapToNowRequest(
-      {this.poolId, this.baseAsset, this.quoteAsset, required this.startTime});
+  OsmosisTwapArithmeticTwapToNowRequest({
+    this.poolId,
+    this.baseAsset,
+    this.quoteAsset,
+    required this.startTime,
+  });
   factory OsmosisTwapArithmeticTwapToNowRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisTwapArithmeticTwapToNowRequest(
-        poolId: decode.getField(1),
-        baseAsset: decode.getField(2),
-        quoteAsset: decode.getField(3),
-        startTime: ProtobufTimestamp.deserialize(decode.getField(4)));
+      poolId: decode.getField(1),
+      baseAsset: decode.getField(2),
+      quoteAsset: decode.getField(3),
+      startTime: ProtobufTimestamp.deserialize(decode.getField(4)),
+    );
   }
 
   @override
@@ -30,7 +35,7 @@ class OsmosisTwapArithmeticTwapToNowRequest extends CosmosMessage
       "pool_id": poolId?.toString(),
       "base_asset": baseAsset,
       "quote_asset": quoteAsset,
-      "start_time": startTime.toJson()
+      "start_time": startTime.toJson(),
     };
   }
 
@@ -42,15 +47,16 @@ class OsmosisTwapArithmeticTwapToNowRequest extends CosmosMessage
 
   @override
   Map<String, String?> get queryParameters => {
-        "pool_id": poolId?.toString(),
-        "base_asset": baseAsset,
-        "quote_asset": quoteAsset,
-        "start_time": startTime.toString()
-      };
+    "pool_id": poolId?.toString(),
+    "base_asset": baseAsset,
+    "quote_asset": quoteAsset,
+    "start_time": startTime.toString(),
+  };
 
   @override
   OsmosisTwapArithmeticTwapToNowResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisTwapArithmeticTwapToNowResponse.fromJson(json);
   }
 

@@ -12,26 +12,30 @@ class IbcTransferV2Denom extends CosmosMessage {
   /// the trace of the token
   final List<IbcTransferV1Hop> trace;
 
-  IbcTransferV2Denom(
-      {required this.base, required List<IbcTransferV1Hop> trace})
-      : trace = trace.immutable;
+  IbcTransferV2Denom({
+    required this.base,
+    required List<IbcTransferV1Hop> trace,
+  }) : trace = trace.immutable;
   factory IbcTransferV2Denom.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcTransferV2Denom(
       base: decode.getField(1),
-      trace: decode
-          .getFields<List<int>>(3)
-          .map((e) => IbcTransferV1Hop.deserialize(e))
-          .toList(),
+      trace:
+          decode
+              .getFields<List<int>>(3)
+              .map((e) => IbcTransferV1Hop.deserialize(e))
+              .toList(),
     );
   }
   factory IbcTransferV2Denom.fromJson(Map<String, dynamic> json) {
     return IbcTransferV2Denom(
-        base: json["base"],
-        trace: (json["trace"] as List?)
-                ?.map((e) => IbcTransferV1Hop.fromJson(e))
-                .toList() ??
-            []);
+      base: json["base"],
+      trace:
+          (json["trace"] as List?)
+              ?.map((e) => IbcTransferV1Hop.fromJson(e))
+              .toList() ??
+          [],
+    );
   }
 
   @override
@@ -39,10 +43,7 @@ class IbcTransferV2Denom extends CosmosMessage {
 
   @override
   Map<String, dynamic> toJson() {
-    return {
-      "base": base,
-      "trace": trace.map((e) => e.toJson()).toList(),
-    };
+    return {"base": base, "trace": trace.map((e) => e.toJson()).toList()};
   }
 
   @override

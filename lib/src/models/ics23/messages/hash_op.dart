@@ -23,14 +23,17 @@ class Ics23HashOp implements CosmosEnum {
     keccak,
     ripemd160,
     bitcoin,
-    sha512256
+    sha512256,
   ];
   static Ics23HashOp fromValue(int? value) {
     return values.firstWhere(
       (element) => element.value == value,
-      orElse: () => throw DartCosmosSdkPluginException(
-          "No matching element found for the given value.",
-          details: {"value": value}),
+      orElse:
+          () =>
+              throw DartCosmosSdkPluginException(
+                "No matching element found for the given value.",
+                details: {"value": value},
+              ),
     );
   }
 }

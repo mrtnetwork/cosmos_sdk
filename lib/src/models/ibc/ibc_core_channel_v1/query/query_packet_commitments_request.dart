@@ -15,16 +15,20 @@ class QueryPacketCommitmentsRequest extends CosmosMessage
 
   /// pagination request
   final PageRequest? pagination;
-  const QueryPacketCommitmentsRequest(
-      {required this.portId, required this.channelId, this.pagination});
+  const QueryPacketCommitmentsRequest({
+    required this.portId,
+    required this.channelId,
+    this.pagination,
+  });
   factory QueryPacketCommitmentsRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryPacketCommitmentsRequest(
-        portId: decode.getField(1),
-        channelId: decode.getField(2),
-        pagination: decode
-            .getResult(3)
-            ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)));
+      portId: decode.getField(1),
+      channelId: decode.getField(2),
+      pagination: decode
+          .getResult(3)
+          ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)),
+    );
   }
 
   @override
@@ -35,7 +39,7 @@ class QueryPacketCommitmentsRequest extends CosmosMessage
     return {
       "port_id": portId,
       "channel_id": channelId,
-      "pagination": pagination?.toJson()
+      "pagination": pagination?.toJson(),
     };
   }
 

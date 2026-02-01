@@ -5,8 +5,12 @@ import 'package:cosmos_sdk/src/provider/tendermint/core/tendermint.dart';
 /// https://docs.tendermint.com/v0.34/rpc/#/Unsafe/dial_peers
 class TendermintRequestBroadcastDialPeers
     extends TendermintRequest<Map<String, dynamic>, Map<String, dynamic>> {
-  TendermintRequestBroadcastDialPeers(
-      {this.peers, this.unconditional, this.persistent, this.private});
+  TendermintRequestBroadcastDialPeers({
+    this.peers,
+    this.unconditional,
+    this.persistent,
+    this.private,
+  });
 
   /// Have the peers you are dialing be persistent
   final bool? persistent;
@@ -29,9 +33,9 @@ class TendermintRequestBroadcastDialPeers
 
   @override
   Map<String, String?> get parameters => {
-        "peers": peers?.toString(),
-        "persistent": persistent?.toString(),
-        "unconditional": unconditional?.toString(),
-        "private": private?.toString()
-      };
+    "peers": peers?.toString(),
+    "persistent": persistent?.toString(),
+    "unconditional": unconditional?.toString(),
+    "private": private?.toString(),
+  };
 }

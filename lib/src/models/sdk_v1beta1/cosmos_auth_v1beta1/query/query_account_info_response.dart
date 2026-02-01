@@ -11,7 +11,8 @@ class QueryAccountInfoResponse extends CosmosMessage {
   factory QueryAccountInfoResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryAccountInfoResponse(
-        BaseAccount.deserialize(decode.getField(1)));
+      BaseAccount.deserialize(decode.getField(1)),
+    );
   }
   factory QueryAccountInfoResponse.fromJson(Map<String, dynamic> json) {
     return QueryAccountInfoResponse(BaseAccount.fromJson(json["info"]));

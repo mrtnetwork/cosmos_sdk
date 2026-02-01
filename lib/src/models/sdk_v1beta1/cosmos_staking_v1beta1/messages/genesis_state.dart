@@ -46,38 +46,44 @@ class StakingGenesisState extends CosmosMessage {
     required List<UnbondingDelegation> unbondingDelegations,
     required List<Redelegation> redelegations,
     required this.exported,
-  })  : lastValidatorPowers = lastValidatorPowers.immutable,
-        validators = validators.immutable,
-        delegations = delegations.immutable,
-        unbondingDelegations = unbondingDelegations.immutable,
-        redelegations = redelegations.immutable,
-        lastTotalPower = BytesUtils.toBytes(lastTotalPower, unmodifiable: true);
+  }) : lastValidatorPowers = lastValidatorPowers.immutable,
+       validators = validators.immutable,
+       delegations = delegations.immutable,
+       unbondingDelegations = unbondingDelegations.immutable,
+       redelegations = redelegations.immutable,
+       lastTotalPower = BytesUtils.toBytes(lastTotalPower, unmodifiable: true);
   factory StakingGenesisState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return StakingGenesisState(
-        params: StakingParams.deserialize(decode.getField(1)),
-        lastTotalPower: decode.getField(2),
-        lastValidatorPowers: decode
-            .getFields<List<int>>(3)
-            .map((e) => LastValidatorPower.deserialize(e))
-            .toList(),
-        validators: decode
-            .getFields<List<int>>(4)
-            .map((e) => StakingValidator.deserialize(e))
-            .toList(),
-        delegations: decode
-            .getFields<List<int>>(5)
-            .map((e) => Delegation.deserialize(e))
-            .toList(),
-        unbondingDelegations: decode
-            .getFields<List<int>>(6)
-            .map((e) => UnbondingDelegation.deserialize(e))
-            .toList(),
-        redelegations: decode
-            .getFields<List<int>>(7)
-            .map((e) => Redelegation.deserialize(e))
-            .toList(),
-        exported: decode.getField(8));
+      params: StakingParams.deserialize(decode.getField(1)),
+      lastTotalPower: decode.getField(2),
+      lastValidatorPowers:
+          decode
+              .getFields<List<int>>(3)
+              .map((e) => LastValidatorPower.deserialize(e))
+              .toList(),
+      validators:
+          decode
+              .getFields<List<int>>(4)
+              .map((e) => StakingValidator.deserialize(e))
+              .toList(),
+      delegations:
+          decode
+              .getFields<List<int>>(5)
+              .map((e) => Delegation.deserialize(e))
+              .toList(),
+      unbondingDelegations:
+          decode
+              .getFields<List<int>>(6)
+              .map((e) => UnbondingDelegation.deserialize(e))
+              .toList(),
+      redelegations:
+          decode
+              .getFields<List<int>>(7)
+              .map((e) => Redelegation.deserialize(e))
+              .toList(),
+      exported: decode.getField(8),
+    );
   }
 
   @override
@@ -90,9 +96,10 @@ class StakingGenesisState extends CosmosMessage {
       'validators': validators.map((validator) => validator.toJson()).toList(),
       'delegations':
           delegations.map((delegation) => delegation.toJson()).toList(),
-      'unbonding_delegations': unbondingDelegations
-          .map((delegation) => delegation.toJson())
-          .toList(),
+      'unbonding_delegations':
+          unbondingDelegations
+              .map((delegation) => delegation.toJson())
+              .toList(),
       'redelegations':
           redelegations.map((redelegation) => redelegation.toJson()).toList(),
       'exported': exported,
@@ -107,13 +114,13 @@ class StakingGenesisState extends CosmosMessage {
 
   @override
   List get values => [
-        params,
-        lastTotalPower,
-        lastValidatorPowers,
-        validators,
-        delegations,
-        unbondingDelegations,
-        redelegations,
-        exported
-      ];
+    params,
+    lastTotalPower,
+    lastValidatorPowers,
+    validators,
+    delegations,
+    unbondingDelegations,
+    redelegations,
+    exported,
+  ];
 }

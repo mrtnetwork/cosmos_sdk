@@ -8,7 +8,8 @@ class OsmosisPoolManagerPoolResponse extends CosmosMessage {
   factory OsmosisPoolManagerPoolResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolManagerPoolResponse(
-        AnyMessage.deserialize(decode.getField(1)));
+      AnyMessage.deserialize(decode.getField(1)),
+    );
   }
   factory OsmosisPoolManagerPoolResponse.fromJson(Map<String, dynamic> json) {
     return OsmosisPoolManagerPoolResponse(AnyMessage.fromJson(json["pool"]));

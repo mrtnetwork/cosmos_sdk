@@ -9,16 +9,19 @@ class DistributionQueryValidatorOutstandingRewardsResponse
   final DistributionValidatorOutstandingRewards rewards;
   const DistributionQueryValidatorOutstandingRewardsResponse(this.rewards);
   factory DistributionQueryValidatorOutstandingRewardsResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return DistributionQueryValidatorOutstandingRewardsResponse(
-        DistributionValidatorOutstandingRewards.fromJson(json["rewards"]));
+      DistributionValidatorOutstandingRewards.fromJson(json["rewards"]),
+    );
   }
   factory DistributionQueryValidatorOutstandingRewardsResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionQueryValidatorOutstandingRewardsResponse(
-        DistributionValidatorOutstandingRewards.deserialize(
-            decode.getField(1)));
+      DistributionValidatorOutstandingRewards.deserialize(decode.getField(1)),
+    );
   }
 
   @override
@@ -30,8 +33,9 @@ class DistributionQueryValidatorOutstandingRewardsResponse
   }
 
   @override
-  TypeUrl get typeUrl => DistributionV1beta1Types
-      .distributionQueryValidatorOutstandingRewardsResponse;
+  TypeUrl get typeUrl =>
+      DistributionV1beta1Types
+          .distributionQueryValidatorOutstandingRewardsResponse;
 
   @override
   List get values => [rewards];

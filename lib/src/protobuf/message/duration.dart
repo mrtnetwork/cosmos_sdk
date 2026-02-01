@@ -25,7 +25,9 @@ class ProtobufDuration extends CosmosProtocolBuffer {
   factory ProtobufDuration.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ProtobufDuration(
-        seconds: decode.getField(1), nanos: decode.getField(2));
+      seconds: decode.getField(1),
+      nanos: decode.getField(2),
+    );
   }
   factory ProtobufDuration.fromString(String duration) {
     final match = CosmosConstants.strDurationRegExp.firstMatch(duration);

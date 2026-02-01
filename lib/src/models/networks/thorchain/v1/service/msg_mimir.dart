@@ -7,13 +7,14 @@ class ThorchainMsgMimir extends CosmosMessage {
   final BigInt? value;
   final List<int>? signer;
   ThorchainMsgMimir({this.key, this.value, List<int>? signer})
-      : signer = BytesUtils.tryToBytes(signer);
+    : signer = BytesUtils.tryToBytes(signer);
   factory ThorchainMsgMimir.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainMsgMimir(
-        key: decode.getField(1),
-        value: decode.getField(2),
-        signer: decode.getField(3));
+      key: decode.getField(1),
+      value: decode.getField(2),
+      signer: decode.getField(3),
+    );
   }
 
   @override
@@ -24,7 +25,7 @@ class ThorchainMsgMimir extends CosmosMessage {
     return {
       "key": key,
       "value": value?.toString(),
-      "signer": BytesUtils.tryToHexString(signer)
+      "signer": BytesUtils.tryToHexString(signer),
     };
   }
 

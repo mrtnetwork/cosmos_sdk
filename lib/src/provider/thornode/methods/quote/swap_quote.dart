@@ -3,22 +3,24 @@ import 'package:cosmos_sdk/src/provider/thornode/core/thorenode.dart';
 import 'package:cosmos_sdk/src/provider/thornode/models/models/quote_response.dart';
 
 /// Provide a quote estimate for the provided swap.
-class ThorNodeRequestSwapQuote extends ThorNodeRequestParam<
-    ThoreNodeQouteSwapResponse, Map<String, dynamic>> {
-  ThorNodeRequestSwapQuote(
-      {this.height,
-      required this.fromAsset,
-      required this.toAsset,
-      required this.amount,
-      this.destination,
-      this.refundAddress,
-      this.streamingInterval,
-      this.streamingQuantity,
-      this.toleranceBps,
-      this.affiliateBps,
-      this.affiliate,
-      this.fromAddress,
-      this.liquidityToleranceBps});
+class ThorNodeRequestSwapQuote
+    extends
+        ThorNodeRequestParam<ThoreNodeQouteSwapResponse, Map<String, dynamic>> {
+  ThorNodeRequestSwapQuote({
+    this.height,
+    required this.fromAsset,
+    required this.toAsset,
+    required this.amount,
+    this.destination,
+    this.refundAddress,
+    this.streamingInterval,
+    this.streamingQuantity,
+    this.toleranceBps,
+    this.affiliateBps,
+    this.affiliate,
+    this.fromAddress,
+    this.liquidityToleranceBps,
+  });
 
   /// optional block height, defaults to current tip
   final BigInt? height;
@@ -65,20 +67,20 @@ class ThorNodeRequestSwapQuote extends ThorNodeRequestParam<
 
   @override
   Map<String, String?> get parameters => {
-        "height": height?.toString(),
-        "from_asset": fromAsset,
-        "to_asset": toAsset,
-        "amount": amount.toString(),
-        "destination": destination,
-        "refund_address": refundAddress,
-        "streaming_interval": streamingInterval?.toString(),
-        "streaming_quantity": streamingQuantity?.toString(),
-        "tolerance_bps": toleranceBps?.toString(),
-        "affiliate_bps": affiliateBps?.toString(),
-        "affiliate": affiliate,
-        "from_address": fromAddress,
-        "liquidity_tolerance_bps": liquidityToleranceBps?.toString()
-      }..removeWhere((k, v) => v == null);
+    "height": height?.toString(),
+    "from_asset": fromAsset,
+    "to_asset": toAsset,
+    "amount": amount.toString(),
+    "destination": destination,
+    "refund_address": refundAddress,
+    "streaming_interval": streamingInterval?.toString(),
+    "streaming_quantity": streamingQuantity?.toString(),
+    "tolerance_bps": toleranceBps?.toString(),
+    "affiliate_bps": affiliateBps?.toString(),
+    "affiliate": affiliate,
+    "from_address": fromAddress,
+    "liquidity_tolerance_bps": liquidityToleranceBps?.toString(),
+  }..removeWhere((k, v) => v == null);
 
   @override
   ThoreNodeQouteSwapResponse onResonse(Map<String, dynamic> result) {

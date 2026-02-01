@@ -27,25 +27,28 @@ class CosmWasmV1ExecuteContract
     required this.contract,
     required List<int>? msg,
     required List<Coin>? funds,
-  })  : msg = msg?.asImmutableBytes,
-        funds = funds?.immutable;
+  }) : msg = msg?.asImmutableBytes,
+       funds = funds?.immutable;
   factory CosmWasmV1ExecuteContract.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmWasmV1ExecuteContract(
-        sender: decode.getField(1),
-        contract: decode.getField(2),
-        msg: decode.getField(3),
-        funds: decode
-            .getFields<List<int>>(5)
-            .map((e) => Coin.deserialize(e))
-            .toList());
+      sender: decode.getField(1),
+      contract: decode.getField(2),
+      msg: decode.getField(3),
+      funds:
+          decode
+              .getFields<List<int>>(5)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
+    );
   }
   factory CosmWasmV1ExecuteContract.fromJson(Map<String, dynamic> json) {
     return CosmWasmV1ExecuteContract(
-        sender: json.as("sender"),
-        contract: json.as("contract"),
-        funds: json.asListOfMap("funds")?.map((e) => Coin.fromJson(e)).toList(),
-        msg: json.asBytes("msg"));
+      sender: json.as("sender"),
+      contract: json.as("contract"),
+      funds: json.asListOfMap("funds")?.map((e) => Coin.fromJson(e)).toList(),
+      msg: json.asBytes("msg"),
+    );
   }
 
   @override
@@ -57,7 +60,7 @@ class CosmWasmV1ExecuteContract
       "sender": sender,
       "contract": contract,
       "msg": CosmosUtils.tryToBase64(msg),
-      "funds": funds?.map((e) => e.toJson()).toList()
+      "funds": funds?.map((e) => e.toJson()).toList(),
     };
   }
 

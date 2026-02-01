@@ -9,7 +9,8 @@ class QueryTotalEscrowForDenomResponse extends CosmosMessage {
   factory QueryTotalEscrowForDenomResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryTotalEscrowForDenomResponse(
-        Coin.deserialize(decode.getField(1)));
+      Coin.deserialize(decode.getField(1)),
+    );
   }
   factory QueryTotalEscrowForDenomResponse.fromJson(Map<String, dynamic> json) {
     return QueryTotalEscrowForDenomResponse(Coin.fromJson(json["amount"]));

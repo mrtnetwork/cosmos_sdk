@@ -14,36 +14,40 @@ class OsmosisSuperfluidConcentratedPoolUserPositionRecord
   final Coin delegationAmount;
   final Coin equivalentStakedAmount;
 
-  const OsmosisSuperfluidConcentratedPoolUserPositionRecord(
-      {this.validatorAddress,
-      this.positionId,
-      this.lockId,
-      required this.syntheticLock,
-      required this.delegationAmount,
-      required this.equivalentStakedAmount});
+  const OsmosisSuperfluidConcentratedPoolUserPositionRecord({
+    this.validatorAddress,
+    this.positionId,
+    this.lockId,
+    required this.syntheticLock,
+    required this.delegationAmount,
+    required this.equivalentStakedAmount,
+  });
   factory OsmosisSuperfluidConcentratedPoolUserPositionRecord.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidConcentratedPoolUserPositionRecord(
-        validatorAddress: decode.getField(1),
-        positionId: decode.getField(2),
-        lockId: decode.getField(3),
-        syntheticLock:
-            OsmosisLockupSyntheticLock.deserialize(decode.getField(4)),
-        delegationAmount: Coin.deserialize(decode.getField(5)),
-        equivalentStakedAmount: Coin.deserialize(decode.getField(6)));
+      validatorAddress: decode.getField(1),
+      positionId: decode.getField(2),
+      lockId: decode.getField(3),
+      syntheticLock: OsmosisLockupSyntheticLock.deserialize(decode.getField(4)),
+      delegationAmount: Coin.deserialize(decode.getField(5)),
+      equivalentStakedAmount: Coin.deserialize(decode.getField(6)),
+    );
   }
   factory OsmosisSuperfluidConcentratedPoolUserPositionRecord.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisSuperfluidConcentratedPoolUserPositionRecord(
-        validatorAddress: json["validator_address"],
-        positionId: BigintUtils.tryParse(json["position_id"]),
-        lockId: BigintUtils.tryParse(json["lock_id"]),
-        syntheticLock:
-            OsmosisLockupSyntheticLock.fromJson(json["synthetic_lock"]),
-        delegationAmount: Coin.fromJson(json["delegation_amount"]),
-        equivalentStakedAmount:
-            Coin.fromJson(json["equivalent_staked_amount"]));
+      validatorAddress: json["validator_address"],
+      positionId: BigintUtils.tryParse(json["position_id"]),
+      lockId: BigintUtils.tryParse(json["lock_id"]),
+      syntheticLock: OsmosisLockupSyntheticLock.fromJson(
+        json["synthetic_lock"],
+      ),
+      delegationAmount: Coin.fromJson(json["delegation_amount"]),
+      equivalentStakedAmount: Coin.fromJson(json["equivalent_staked_amount"]),
+    );
   }
 
   @override
@@ -57,7 +61,7 @@ class OsmosisSuperfluidConcentratedPoolUserPositionRecord
       "lock_id": lockId?.toString(),
       "synthetic_lock": syntheticLock.toJson(),
       "delegation_amount": delegationAmount.toJson(),
-      "equivalent_staked_amount": equivalentStakedAmount.toJson()
+      "equivalent_staked_amount": equivalentStakedAmount.toJson(),
     };
   }
 
@@ -67,11 +71,11 @@ class OsmosisSuperfluidConcentratedPoolUserPositionRecord
 
   @override
   List get values => [
-        validatorAddress,
-        positionId,
-        lockId,
-        syntheticLock,
-        delegationAmount,
-        elctrumMnemonicWordsList
-      ];
+    validatorAddress,
+    positionId,
+    lockId,
+    syntheticLock,
+    delegationAmount,
+    elctrumMnemonicWordsList,
+  ];
 }

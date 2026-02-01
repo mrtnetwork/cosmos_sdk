@@ -18,25 +18,31 @@ class IbcConnectionQueryConnectionResponse extends CosmosMessage {
   final IbcClientHeight proofHeight;
 
   factory IbcConnectionQueryConnectionResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return IbcConnectionQueryConnectionResponse(
-        proofHeight: IbcClientHeight.fromJson(json["proof_height"]),
-        connection: json["connection"] == null
-            ? null
-            : IbcConnectionConnectionEnd.fromJson(json["connection"]),
-        proof: CosmosUtils.tryToBytes(json["proof"]));
+      proofHeight: IbcClientHeight.fromJson(json["proof_height"]),
+      connection:
+          json["connection"] == null
+              ? null
+              : IbcConnectionConnectionEnd.fromJson(json["connection"]),
+      proof: CosmosUtils.tryToBytes(json["proof"]),
+    );
   }
 
-  IbcConnectionQueryConnectionResponse(
-      {this.connection, List<int>? proof, required this.proofHeight})
-      : proof = BytesUtils.tryToBytes(proof);
+  IbcConnectionQueryConnectionResponse({
+    this.connection,
+    List<int>? proof,
+    required this.proofHeight,
+  }) : proof = BytesUtils.tryToBytes(proof);
   factory IbcConnectionQueryConnectionResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcConnectionQueryConnectionResponse(
       connection: decode
           .getResult(1)
           ?.to<IbcConnectionConnectionEnd, List<int>>(
-              (e) => IbcConnectionConnectionEnd.deserialize(e)),
+            (e) => IbcConnectionConnectionEnd.deserialize(e),
+          ),
       proof: decode.getField(2),
       proofHeight: IbcClientHeight.deserialize(decode.getField(3)),
     );
@@ -50,7 +56,7 @@ class IbcConnectionQueryConnectionResponse extends CosmosMessage {
     return {
       "connection": connection?.toJson(),
       "proof": BytesUtils.tryToHexString(proof),
-      "proof_height": proofHeight.toJson()
+      "proof_height": proofHeight.toJson(),
     };
   }
 

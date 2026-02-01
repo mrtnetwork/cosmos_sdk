@@ -8,11 +8,13 @@ class IbcSoloMachineV2NextSequenceRecvData extends CosmosMessage {
   final List<int>? path;
   final BigInt? nextSeqRecv;
   IbcSoloMachineV2NextSequenceRecvData({List<int>? path, this.nextSeqRecv})
-      : path = BytesUtils.tryToBytes(path, unmodifiable: true);
+    : path = BytesUtils.tryToBytes(path, unmodifiable: true);
   factory IbcSoloMachineV2NextSequenceRecvData.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcSoloMachineV2NextSequenceRecvData(
-        path: decode.getField(1), nextSeqRecv: decode.getField(2));
+      path: decode.getField(1),
+      nextSeqRecv: decode.getField(2),
+    );
   }
 
   @override
@@ -22,7 +24,7 @@ class IbcSoloMachineV2NextSequenceRecvData extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "path": BytesUtils.tryToHexString(path),
-      "next_seq_recv": nextSeqRecv?.toString()
+      "next_seq_recv": nextSeqRecv?.toString(),
     };
   }
 

@@ -15,28 +15,33 @@ class GovQueryProposalsResponse extends CosmosMessage {
 
   factory GovQueryProposalsResponse.fromJson(Map<String, dynamic> json) {
     return GovQueryProposalsResponse(
-      proposals: (json["proposals"] as List?)
+      proposals:
+          (json["proposals"] as List?)
               ?.map((e) => GovProposal.fromJson(e))
               .toList() ??
           [],
-      pagination: json["pagination"] == null
-          ? null
-          : PageResponse.fromJson(json["pagination"]),
+      pagination:
+          json["pagination"] == null
+              ? null
+              : PageResponse.fromJson(json["pagination"]),
     );
   }
-  GovQueryProposalsResponse(
-      {required List<GovProposal> proposals, this.pagination})
-      : proposals = proposals.immutable;
+  GovQueryProposalsResponse({
+    required List<GovProposal> proposals,
+    this.pagination,
+  }) : proposals = proposals.immutable;
   factory GovQueryProposalsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GovQueryProposalsResponse(
-        proposals: decode
-            .getFields<List<int>>(1)
-            .map((e) => GovProposal.deserialize(e))
-            .toList(),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
+      proposals:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => GovProposal.deserialize(e))
+              .toList(),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
+    );
   }
 
   @override
@@ -46,7 +51,7 @@ class GovQueryProposalsResponse extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "proposals": proposals.map((e) => e.toJson()).toList(),
-      "pagination": pagination?.toJson()
+      "pagination": pagination?.toJson(),
     };
   }
 

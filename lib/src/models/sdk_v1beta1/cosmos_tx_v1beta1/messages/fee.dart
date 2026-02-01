@@ -30,7 +30,7 @@ class Fee extends CosmosMessage {
     return Fee(
       amount:
           (json["amount"] as List?)?.map((e) => Coin.fromJson(e)).toList() ??
-              [],
+          [],
       gasLimit: BigintUtils.tryParse(json["gas_limit"]),
       granter:
           json["granter"] == null ? null : CosmosBaseAddress(json["granter"]),
@@ -40,17 +40,19 @@ class Fee extends CosmosMessage {
   factory Fee.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Fee(
-        amount: decode
-            .getFields<List<int>>(1)
-            .map((e) => Coin.deserialize(e))
-            .toList(),
-        gasLimit: decode.getResult(2)?.cast<BigInt>(),
-        granter: decode
-            .getResult(3)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        payer: decode
-            .getResult(4)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)));
+      amount:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
+      gasLimit: decode.getResult(2)?.cast<BigInt>(),
+      granter: decode
+          .getResult(3)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      payer: decode
+          .getResult(4)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+    );
   }
   Fee copyWith({
     List<Coin>? amount,
@@ -75,7 +77,7 @@ class Fee extends CosmosMessage {
       "amount": amount.map((e) => e.toJson()).toList(),
       "gas_limit": gasLimit?.toString(),
       "payer": payer?.address,
-      "granter": granter?.address
+      "granter": granter?.address,
     };
   }
 
@@ -84,7 +86,7 @@ class Fee extends CosmosMessage {
       "amount": amount.map((e) => e.toJson()).toList(),
       "gas": gasLimit?.toString(),
       "payer": payer?.address,
-      "granter": granter?.address
+      "granter": granter?.address,
     }..removeWhere((k, v) => v == null);
   }
 

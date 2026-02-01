@@ -18,7 +18,8 @@ class MsgEnableTokenizeShares
   }
   factory MsgEnableTokenizeShares.fromJson(Map<String, dynamic> json) {
     return MsgEnableTokenizeShares(
-        delegatorAddress: json.as("delegator_address"));
+      delegatorAddress: json.as("delegator_address"),
+    );
   }
 
   @override

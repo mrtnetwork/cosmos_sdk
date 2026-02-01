@@ -8,13 +8,13 @@ class ThorchainEventSwitchV87 extends CosmosMessage {
   final ThorchainCoin burn;
   final String? txId;
   final BigInt mint;
-  ThorchainEventSwitchV87(
-      {List<int>? toAddress,
-      this.fromAddress,
-      required this.burn,
-      this.txId,
-      required this.mint})
-      : toAddress = BytesUtils.tryToBytes(toAddress);
+  ThorchainEventSwitchV87({
+    List<int>? toAddress,
+    this.fromAddress,
+    required this.burn,
+    this.txId,
+    required this.mint,
+  }) : toAddress = BytesUtils.tryToBytes(toAddress);
   factory ThorchainEventSwitchV87.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainEventSwitchV87(
@@ -36,7 +36,7 @@ class ThorchainEventSwitchV87 extends CosmosMessage {
       "from_address": fromAddress,
       "burn": burn.toJson(),
       "tx_id": txId,
-      "mint": mint.toString()
+      "mint": mint.toString(),
     };
   }
 

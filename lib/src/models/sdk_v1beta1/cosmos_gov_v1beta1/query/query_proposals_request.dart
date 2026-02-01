@@ -21,23 +21,28 @@ class GovQueryProposalsRequest extends CosmosMessage
   /// pagination defines an optional pagination for the request.
   final PageRequest? pagination;
 
-  const GovQueryProposalsRequest(
-      {this.proposalStatus, this.voter, this.depositor, this.pagination});
+  const GovQueryProposalsRequest({
+    this.proposalStatus,
+    this.voter,
+    this.depositor,
+    this.pagination,
+  });
   factory GovQueryProposalsRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GovQueryProposalsRequest(
-        proposalStatus: decode
-            .getResult(1)
-            ?.to<ProposalStatus, int>((e) => ProposalStatus.fromValue(e)),
-        voter: decode
-            .getResult(2)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        depositor: decode
-            .getResult(3)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        pagination: decode
-            .getResult(4)
-            ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)));
+      proposalStatus: decode
+          .getResult(1)
+          ?.to<ProposalStatus, int>((e) => ProposalStatus.fromValue(e)),
+      voter: decode
+          .getResult(2)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      depositor: decode
+          .getResult(3)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      pagination: decode
+          .getResult(4)
+          ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)),
+    );
   }
 
   @override
@@ -49,7 +54,7 @@ class GovQueryProposalsRequest extends CosmosMessage
       "proposal_status": proposalStatus?.value,
       "voter": voter?.address,
       "depositor": depositor?.address,
-      "pagination": pagination?.toJson()
+      "pagination": pagination?.toJson(),
     };
   }
 
@@ -57,8 +62,12 @@ class GovQueryProposalsRequest extends CosmosMessage
   TypeUrl get typeUrl => GovV1beta1types.govQueryProposalsRequest;
 
   @override
-  List get values =>
-      [proposalStatus?.value, voter?.address, depositor?.address, pagination];
+  List get values => [
+    proposalStatus?.value,
+    voter?.address,
+    depositor?.address,
+    pagination,
+  ];
 
   @override
   GovQueryProposalsResponse onResponse(List<int> bytes) {
@@ -72,9 +81,9 @@ class GovQueryProposalsRequest extends CosmosMessage
 
   @override
   Map<String, String?> get queryParameters => {
-        "proposal_status": proposalStatus?.value.toString(),
-        "voter": voter?.address,
-        "depositor": depositor?.address,
-        ...pagination?.queryParameters ?? {}
-      };
+    "proposal_status": proposalStatus?.value.toString(),
+    "voter": voter?.address,
+    "depositor": depositor?.address,
+    ...pagination?.queryParameters ?? {},
+  };
 }

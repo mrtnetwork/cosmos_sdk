@@ -6,18 +6,24 @@ class OsmosisPoolManagerSwapAmountOutRoute extends CosmosMessage {
   final BigInt? poolId;
   final String? tokenInDenom;
 
-  OsmosisPoolManagerSwapAmountOutRoute(
-      {required this.poolId, required this.tokenInDenom});
+  OsmosisPoolManagerSwapAmountOutRoute({
+    required this.poolId,
+    required this.tokenInDenom,
+  });
   factory OsmosisPoolManagerSwapAmountOutRoute.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolManagerSwapAmountOutRoute(
-        poolId: decode.getField(1), tokenInDenom: decode.getField(2));
+      poolId: decode.getField(1),
+      tokenInDenom: decode.getField(2),
+    );
   }
   factory OsmosisPoolManagerSwapAmountOutRoute.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisPoolManagerSwapAmountOutRoute(
-        poolId: json.asBigInt("pool_id"),
-        tokenInDenom: json.as("token_in_denom"));
+      poolId: json.asBigInt("pool_id"),
+      tokenInDenom: json.as("token_in_denom"),
+    );
   }
 
   @override

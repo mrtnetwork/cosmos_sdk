@@ -31,38 +31,42 @@ class IbcChannelChannel extends CosmosMessage {
   final BigInt? upgradeSequence;
   factory IbcChannelChannel.fromJson(Map<String, dynamic> json) {
     return IbcChannelChannel(
-        counterparty: IbcChannelCounterParty.fromJson(json["counterparty"]),
-        connectionHops: (json["connection_hops"] as List?)?.cast(),
-        ordering: json["ordering"] == null
-            ? null
-            : IbcChannelOrder.fromValue(json["ordering"]),
-        state: json["state"] == null
-            ? null
-            : IbcChannelState.fromValue(json["state"]),
-        upgradeSequence: BigintUtils.tryParse(json["upgrade_sequence"]),
-        version: json["version"]);
+      counterparty: IbcChannelCounterParty.fromJson(json["counterparty"]),
+      connectionHops: (json["connection_hops"] as List?)?.cast(),
+      ordering:
+          json["ordering"] == null
+              ? null
+              : IbcChannelOrder.fromValue(json["ordering"]),
+      state:
+          json["state"] == null
+              ? null
+              : IbcChannelState.fromValue(json["state"]),
+      upgradeSequence: BigintUtils.tryParse(json["upgrade_sequence"]),
+      version: json["version"],
+    );
   }
-  IbcChannelChannel(
-      {this.state,
-      this.ordering,
-      required this.counterparty,
-      List<String>? connectionHops,
-      this.version,
-      this.upgradeSequence})
-      : connectionHops = connectionHops?.emptyAsNull?.immutable;
+  IbcChannelChannel({
+    this.state,
+    this.ordering,
+    required this.counterparty,
+    List<String>? connectionHops,
+    this.version,
+    this.upgradeSequence,
+  }) : connectionHops = connectionHops?.emptyAsNull?.immutable;
   factory IbcChannelChannel.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcChannelChannel(
-        state: decode
-            .getResult(1)
-            ?.to<IbcChannelState, int>((e) => IbcChannelState.fromValue(e)),
-        ordering: decode
-            .getResult(2)
-            ?.to<IbcChannelOrder, int>((e) => IbcChannelOrder.fromValue(e)),
-        counterparty: IbcChannelCounterParty.deserialize(decode.getField(3)),
-        connectionHops: decode.getFields<String>(4),
-        version: decode.getField(5),
-        upgradeSequence: decode.getField(6));
+      state: decode
+          .getResult(1)
+          ?.to<IbcChannelState, int>((e) => IbcChannelState.fromValue(e)),
+      ordering: decode
+          .getResult(2)
+          ?.to<IbcChannelOrder, int>((e) => IbcChannelOrder.fromValue(e)),
+      counterparty: IbcChannelCounterParty.deserialize(decode.getField(3)),
+      connectionHops: decode.getFields<String>(4),
+      version: decode.getField(5),
+      upgradeSequence: decode.getField(6),
+    );
   }
 
   @override
@@ -76,7 +80,7 @@ class IbcChannelChannel extends CosmosMessage {
       "counterparty": counterparty.toJson(),
       "connection_hops": connectionHops,
       "version": version,
-      "upgrade_sequence": upgradeSequence?.toString()
+      "upgrade_sequence": upgradeSequence?.toString(),
     };
   }
 
@@ -85,11 +89,11 @@ class IbcChannelChannel extends CosmosMessage {
 
   @override
   List get values => [
-        state?.value,
-        ordering?.value,
-        counterparty,
-        connectionHops,
-        version,
-        upgradeSequence
-      ];
+    state?.value,
+    ordering?.value,
+    counterparty,
+    connectionHops,
+    version,
+    upgradeSequence,
+  ];
 }

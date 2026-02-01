@@ -19,21 +19,22 @@ class SignDoc extends CosmosMessage {
 
   /// account_number is the account number of the account in state
   final BigInt accountNumber;
-  SignDoc(
-      {required List<int> bodyBytes,
-      required List<int> authInfoBytes,
-      required this.chainId,
-      required this.accountNumber})
-      : bodyBytes = BytesUtils.toBytes(bodyBytes, unmodifiable: true),
-        authInfoBytes = BytesUtils.toBytes(authInfoBytes, unmodifiable: true);
+  SignDoc({
+    required List<int> bodyBytes,
+    required List<int> authInfoBytes,
+    required this.chainId,
+    required this.accountNumber,
+  }) : bodyBytes = BytesUtils.toBytes(bodyBytes, unmodifiable: true),
+       authInfoBytes = BytesUtils.toBytes(authInfoBytes, unmodifiable: true);
   factory SignDoc.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
 
     return SignDoc(
-        bodyBytes: decode.getField(1),
-        authInfoBytes: decode.getField(2),
-        chainId: decode.getField(3),
-        accountNumber: decode.getField(4));
+      bodyBytes: decode.getField(1),
+      authInfoBytes: decode.getField(2),
+      chainId: decode.getField(3),
+      accountNumber: decode.getField(4),
+    );
   }
 
   @override
@@ -45,7 +46,7 @@ class SignDoc extends CosmosMessage {
       "body_bytes": BytesUtils.toHexString(bodyBytes),
       "auth_info_bytes": BytesUtils.toHexString(authInfoBytes),
       "chain_id": chainId,
-      "account_number": accountNumber.toString()
+      "account_number": accountNumber.toString(),
     };
   }
 

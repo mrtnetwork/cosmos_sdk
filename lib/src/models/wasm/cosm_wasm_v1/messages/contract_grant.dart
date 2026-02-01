@@ -15,25 +15,33 @@ class CosmWasmV1ContractGrant extends CosmosMessage {
   /// to the contract in the operation. When no filter applies on execution, the
   /// operation is prohibited.
   final Any? filter;
-  const CosmWasmV1ContractGrant(
-      {required this.contract, required this.limit, required this.filter});
+  const CosmWasmV1ContractGrant({
+    required this.contract,
+    required this.limit,
+    required this.filter,
+  });
 
   factory CosmWasmV1ContractGrant.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmWasmV1ContractGrant(
-        contract: decode.getField(1),
-        limit:
-            decode.getResult(2)?.to<Any, List<int>>((e) => Any.deserialize(e)),
-        filter:
-            decode.getResult(3)?.to<Any, List<int>>((e) => Any.deserialize(e)));
+      contract: decode.getField(1),
+      limit: decode.getResult(2)?.to<Any, List<int>>((e) => Any.deserialize(e)),
+      filter: decode
+          .getResult(3)
+          ?.to<Any, List<int>>((e) => Any.deserialize(e)),
+    );
   }
   factory CosmWasmV1ContractGrant.fromJson(Map<String, dynamic> json) {
     return CosmWasmV1ContractGrant(
       contract: json.as("contract"),
       filter: json.maybeAs<Any, Map<String, dynamic>>(
-          key: "filter", onValue: (e) => Any.fromJson(e)),
+        key: "filter",
+        onValue: (e) => Any.fromJson(e),
+      ),
       limit: json.maybeAs<Any, Map<String, dynamic>>(
-          key: "limit", onValue: (e) => Any.fromJson(e)),
+        key: "limit",
+        onValue: (e) => Any.fromJson(e),
+      ),
     );
   }
 
@@ -45,7 +53,7 @@ class CosmWasmV1ContractGrant extends CosmosMessage {
     return {
       "contract": contract,
       "filter": filter?.toJson(),
-      "limit": limit?.toJson()
+      "limit": limit?.toJson(),
     };
   }
 

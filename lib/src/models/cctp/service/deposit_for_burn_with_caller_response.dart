@@ -8,12 +8,14 @@ class CCTPV1MsgDepositForBurnWithCallerResponse extends CosmosMessage {
   const CCTPV1MsgDepositForBurnWithCallerResponse(this.nonce);
 
   factory CCTPV1MsgDepositForBurnWithCallerResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CCTPV1MsgDepositForBurnWithCallerResponse(decode.getField(1));
   }
   factory CCTPV1MsgDepositForBurnWithCallerResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return CCTPV1MsgDepositForBurnWithCallerResponse(json.asBigInt("nonce"));
   }
 

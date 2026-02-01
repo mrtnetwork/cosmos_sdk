@@ -10,7 +10,8 @@ class OsmosisPoolManagerV2SpotPriceResponse extends CosmosMessage {
     return OsmosisPoolManagerV2SpotPriceResponse(decode.getField(1));
   }
   factory OsmosisPoolManagerV2SpotPriceResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisPoolManagerV2SpotPriceResponse(json["spot_price"]);
   }
 

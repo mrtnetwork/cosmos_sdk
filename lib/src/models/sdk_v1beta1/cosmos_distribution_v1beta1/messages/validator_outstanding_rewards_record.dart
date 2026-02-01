@@ -12,20 +12,24 @@ class DistributionValidatorOutstandingRewardsRecord extends CosmosMessage {
 
   /// outstanding_rewards represents the outstanding rewards of a validator.
   final List<DecCoin> outstandingRewards;
-  DistributionValidatorOutstandingRewardsRecord(
-      {this.validatorAddress, required List<DecCoin> outstandingRewards})
-      : outstandingRewards = outstandingRewards.immutable;
+  DistributionValidatorOutstandingRewardsRecord({
+    this.validatorAddress,
+    required List<DecCoin> outstandingRewards,
+  }) : outstandingRewards = outstandingRewards.immutable;
   factory DistributionValidatorOutstandingRewardsRecord.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionValidatorOutstandingRewardsRecord(
-        validatorAddress: decode
-            .getResult(1)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        outstandingRewards: decode
-            .getFields<List<int>>(2)
-            .map((e) => DecCoin.deserialize(e))
-            .toList());
+      validatorAddress: decode
+          .getResult(1)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      outstandingRewards:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => DecCoin.deserialize(e))
+              .toList(),
+    );
   }
   @override
   List<int> get fieldIds => [1, 2];
@@ -34,7 +38,7 @@ class DistributionValidatorOutstandingRewardsRecord extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "validator_address": validatorAddress?.address,
-      "outstanding_rewards": outstandingRewards.map((e) => e.toJson()).toList()
+      "outstanding_rewards": outstandingRewards.map((e) => e.toJson()).toList(),
     };
   }
 

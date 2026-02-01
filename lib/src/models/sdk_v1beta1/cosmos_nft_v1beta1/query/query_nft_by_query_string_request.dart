@@ -17,15 +17,14 @@ class QueryNFTByQueryStringRequest extends CosmosMessage
   factory QueryNFTByQueryStringRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryNFTByQueryStringRequest(
-        classId: decode.getField(1), id: decode.getField(2));
+      classId: decode.getField(1),
+      id: decode.getField(2),
+    );
   }
 
   @override
   Map<String, dynamic> toJson() {
-    return {
-      'class_id': classId,
-      'id': id,
-    };
+    return {'class_id': classId, 'id': id};
   }
 
   @override
@@ -48,8 +47,5 @@ class QueryNFTByQueryStringRequest extends CosmosMessage
   }
 
   @override
-  Map<String, String?> get queryParameters => {
-        'class_id': classId,
-        'id': id,
-      };
+  Map<String, String?> get queryParameters => {'class_id': classId, 'id': id};
 }

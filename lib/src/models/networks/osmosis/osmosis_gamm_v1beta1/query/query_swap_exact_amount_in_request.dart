@@ -11,36 +11,41 @@ class OsmosisGammQuerySwapExactAmountInRequest extends CosmosMessage
   final String? tokenIn;
   final List<OsmosisGammSwapAmountInRoute> routes;
 
-  OsmosisGammQuerySwapExactAmountInRequest(
-      {this.sender,
-      required this.poolId,
-      this.tokenIn,
-      required List<OsmosisGammSwapAmountInRoute> routes})
-      : routes = routes.immutable;
+  OsmosisGammQuerySwapExactAmountInRequest({
+    this.sender,
+    required this.poolId,
+    this.tokenIn,
+    required List<OsmosisGammSwapAmountInRoute> routes,
+  }) : routes = routes.immutable;
 
   factory OsmosisGammQuerySwapExactAmountInRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisGammQuerySwapExactAmountInRequest(
       sender: decode.getField(1),
       poolId: decode.getField(2),
       tokenIn: decode.getField(3),
-      routes: decode
-          .getFields<List<int>>(4)
-          .map((e) => OsmosisGammSwapAmountInRoute.deserialize(e))
-          .toList(),
+      routes:
+          decode
+              .getFields<List<int>>(4)
+              .map((e) => OsmosisGammSwapAmountInRoute.deserialize(e))
+              .toList(),
     );
   }
   factory OsmosisGammQuerySwapExactAmountInRequest.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisGammQuerySwapExactAmountInRequest(
-        sender: json["sender"],
-        poolId: BigintUtils.parse(json["pool_id"]),
-        tokenIn: json["token_in"],
-        routes: (json["routes"] as List?)
-                ?.map((e) => OsmosisGammSwapAmountInRoute.fromJson(e))
-                .toList() ??
-            <OsmosisGammSwapAmountInRoute>[]);
+      sender: json["sender"],
+      poolId: BigintUtils.parse(json["pool_id"]),
+      tokenIn: json["token_in"],
+      routes:
+          (json["routes"] as List?)
+              ?.map((e) => OsmosisGammSwapAmountInRoute.fromJson(e))
+              .toList() ??
+          <OsmosisGammSwapAmountInRoute>[],
+    );
   }
 
   @override
@@ -52,7 +57,7 @@ class OsmosisGammQuerySwapExactAmountInRequest extends CosmosMessage
       "sender": sender,
       "pool_id": poolId.toString(),
       "token_in": tokenIn,
-      "routes": routes.map((e) => e.toJson()).toList()
+      "routes": routes.map((e) => e.toJson()).toList(),
     };
   }
 
@@ -69,13 +74,16 @@ class OsmosisGammQuerySwapExactAmountInRequest extends CosmosMessage
 
   @override
   OsmosisGammQuerySwapExactAmountInResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisGammQuerySwapExactAmountInResponse.fromJson(json);
   }
 
   @override
-  Map<String, String?> get queryParameters =>
-      {"sender": sender, "token_in": tokenIn};
+  Map<String, String?> get queryParameters => {
+    "sender": sender,
+    "token_in": tokenIn,
+  };
 
   @override
   List<String> get pathParameters => [poolId.toString()];

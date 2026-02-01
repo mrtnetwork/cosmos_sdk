@@ -2,8 +2,12 @@ import 'package:cosmos_sdk/src/provider/thornode/core/core.dart';
 import 'package:cosmos_sdk/src/provider/thornode/core/thorenode.dart';
 
 /// Returns the scheduled queue.
-class ThorNodeRequestQueueScheduled extends ThorNodeRequestParam<
-    List<Map<String, dynamic>>, List<Map<String, dynamic>>> {
+class ThorNodeRequestQueueScheduled
+    extends
+        ThorNodeRequestParam<
+          List<Map<String, dynamic>>,
+          List<Map<String, dynamic>>
+        > {
   ThorNodeRequestQueueScheduled({this.height});
 
   /// optional block height, defaults to current tip

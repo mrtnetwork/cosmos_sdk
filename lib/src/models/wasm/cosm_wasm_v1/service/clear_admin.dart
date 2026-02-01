@@ -12,18 +12,19 @@ class CosmWasmV1ClearAdmin
 
   /// Contract is the address of the smart contract
   final String? contract;
-  CosmWasmV1ClearAdmin({
-    required this.sender,
-    required this.contract,
-  });
+  CosmWasmV1ClearAdmin({required this.sender, required this.contract});
   factory CosmWasmV1ClearAdmin.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmWasmV1ClearAdmin(
-        sender: decode.getField(1), contract: decode.getField(3));
+      sender: decode.getField(1),
+      contract: decode.getField(3),
+    );
   }
   factory CosmWasmV1ClearAdmin.fromJson(Map<String, dynamic> json) {
     return CosmWasmV1ClearAdmin(
-        sender: json.as("sender"), contract: json.as("contract"));
+      sender: json.as("sender"),
+      contract: json.as("contract"),
+    );
   }
 
   @override

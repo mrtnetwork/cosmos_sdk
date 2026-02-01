@@ -10,28 +10,34 @@ class OsmosisGammPoolParams extends CosmosMessage {
   final String exitFee;
   final OsmosisGammSmoothWeightChangeParams? smoothWeightChangeParams;
 
-  OsmosisGammPoolParams(
-      {required this.swapFee,
-      required this.exitFee,
-      this.smoothWeightChangeParams});
+  OsmosisGammPoolParams({
+    required this.swapFee,
+    required this.exitFee,
+    this.smoothWeightChangeParams,
+  });
   factory OsmosisGammPoolParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisGammPoolParams(
-        swapFee: decode.getField(1),
-        exitFee: decode.getField(2),
-        smoothWeightChangeParams: decode
-            .getResult(3)
-            ?.to<OsmosisGammSmoothWeightChangeParams, List<int>>(
-                (e) => OsmosisGammSmoothWeightChangeParams.deserialize(e)));
+      swapFee: decode.getField(1),
+      exitFee: decode.getField(2),
+      smoothWeightChangeParams: decode
+          .getResult(3)
+          ?.to<OsmosisGammSmoothWeightChangeParams, List<int>>(
+            (e) => OsmosisGammSmoothWeightChangeParams.deserialize(e),
+          ),
+    );
   }
   factory OsmosisGammPoolParams.fromJson(Map<String, dynamic> json) {
     return OsmosisGammPoolParams(
-        swapFee: json["swap_fee"],
-        exitFee: json["exit_fee"],
-        smoothWeightChangeParams: json["smooth_weight_change_params"] == null
-            ? null
-            : OsmosisGammSmoothWeightChangeParams.fromJson(
-                json["smooth_weight_change_params"]));
+      swapFee: json["swap_fee"],
+      exitFee: json["exit_fee"],
+      smoothWeightChangeParams:
+          json["smooth_weight_change_params"] == null
+              ? null
+              : OsmosisGammSmoothWeightChangeParams.fromJson(
+                json["smooth_weight_change_params"],
+              ),
+    );
   }
 
   @override
@@ -42,7 +48,7 @@ class OsmosisGammPoolParams extends CosmosMessage {
     return {
       "swap_fee": swapFee,
       "exit_fee": exitFee,
-      "smooth_weight_change_params": smoothWeightChangeParams?.toJson()
+      "smooth_weight_change_params": smoothWeightChangeParams?.toJson(),
     };
   }
 

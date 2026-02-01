@@ -30,30 +30,32 @@ class EvmosEthermintEVMV1TraceConfig extends CosmosMessage {
   final String tracerJsonConfig;
   factory EvmosEthermintEVMV1TraceConfig.fromJson(Map<String, dynamic> json) {
     return EvmosEthermintEVMV1TraceConfig(
-        debug: json["debug"],
-        disableStack: json["disable_stack"],
-        disableStorage: json["disable_storage"],
-        enableMemory: json["enable_memory"],
-        enableReturnData: json["enable_return_data"],
-        limit: IntUtils.parse(json["limit"]),
-        overrides: EvmosEthermintEVMV1ChainConfig.fromJson(json["overrides"]),
-        reexec: BigintUtils.parse(json["reexec"]),
-        timeout: json["timeout"],
-        tracer: json["tracer"],
-        tracerJsonConfig: json["tracer_json_config"]);
+      debug: json["debug"],
+      disableStack: json["disable_stack"],
+      disableStorage: json["disable_storage"],
+      enableMemory: json["enable_memory"],
+      enableReturnData: json["enable_return_data"],
+      limit: IntUtils.parse(json["limit"]),
+      overrides: EvmosEthermintEVMV1ChainConfig.fromJson(json["overrides"]),
+      reexec: BigintUtils.parse(json["reexec"]),
+      timeout: json["timeout"],
+      tracer: json["tracer"],
+      tracerJsonConfig: json["tracer_json_config"],
+    );
   }
-  EvmosEthermintEVMV1TraceConfig(
-      {required this.tracer,
-      required this.timeout,
-      required this.reexec,
-      required this.disableStack,
-      required this.disableStorage,
-      required this.debug,
-      required this.limit,
-      required this.overrides,
-      required this.enableMemory,
-      required this.enableReturnData,
-      required this.tracerJsonConfig});
+  EvmosEthermintEVMV1TraceConfig({
+    required this.tracer,
+    required this.timeout,
+    required this.reexec,
+    required this.disableStack,
+    required this.disableStorage,
+    required this.debug,
+    required this.limit,
+    required this.overrides,
+    required this.enableMemory,
+    required this.enableReturnData,
+    required this.tracerJsonConfig,
+  });
   factory EvmosEthermintEVMV1TraceConfig.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosEthermintEVMV1TraceConfig(
@@ -64,8 +66,9 @@ class EvmosEthermintEVMV1TraceConfig extends CosmosMessage {
       disableStorage: decode.getField(6),
       debug: decode.getField(8),
       limit: decode.getField(9),
-      overrides:
-          EvmosEthermintEVMV1ChainConfig.deserialize(decode.getField(10)),
+      overrides: EvmosEthermintEVMV1ChainConfig.deserialize(
+        decode.getField(10),
+      ),
       enableMemory: decode.getField(11),
       enableReturnData: decode.getField(12),
       tracerJsonConfig: decode.getField(13),
@@ -97,16 +100,16 @@ class EvmosEthermintEVMV1TraceConfig extends CosmosMessage {
 
   @override
   List get values => [
-        tracer,
-        timeout,
-        reexec,
-        disableStack,
-        disableStorage,
-        debug,
-        limit,
-        overrides,
-        enableMemory,
-        enableReturnData,
-        tracerJsonConfig
-      ];
+    tracer,
+    timeout,
+    reexec,
+    disableStack,
+    disableStorage,
+    debug,
+    limit,
+    overrides,
+    enableMemory,
+    enableReturnData,
+    tracerJsonConfig,
+  ];
 }

@@ -13,14 +13,16 @@ class OsmosisSuperfluidMsgAddToConcentratedLiquiditySuperfluidPositionResponse
   final String? newLiquidity;
   final BigInt? lockId;
 
-  OsmosisSuperfluidMsgAddToConcentratedLiquiditySuperfluidPositionResponse(
-      {this.positionId,
-      required this.amount0,
-      required this.amount1,
-      this.newLiquidity,
-      this.lockId});
+  OsmosisSuperfluidMsgAddToConcentratedLiquiditySuperfluidPositionResponse({
+    this.positionId,
+    required this.amount0,
+    required this.amount1,
+    this.newLiquidity,
+    this.lockId,
+  });
   factory OsmosisSuperfluidMsgAddToConcentratedLiquiditySuperfluidPositionResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidMsgAddToConcentratedLiquiditySuperfluidPositionResponse(
       positionId: decode.getField(1),
@@ -41,13 +43,14 @@ class OsmosisSuperfluidMsgAddToConcentratedLiquiditySuperfluidPositionResponse
       "amount0": amount0.toString(),
       "amount1": amount1.toString(),
       "new_liquidity": newLiquidity,
-      "lock_id": lockId?.toString()
+      "lock_id": lockId?.toString(),
     };
   }
 
   @override
-  TypeUrl get typeUrl => OsmosisSuperfluidTypes
-      .msgAddToConcentratedLiquiditySuperfluidPositionResponse;
+  TypeUrl get typeUrl =>
+      OsmosisSuperfluidTypes
+          .msgAddToConcentratedLiquiditySuperfluidPositionResponse;
 
   @override
   List get values => [positionId, amount0, amount1, lockId, newLiquidity];

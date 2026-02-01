@@ -3,10 +3,17 @@ import 'package:cosmos_sdk/src/provider/thornode/core/thorenode.dart';
 import 'package:cosmos_sdk/src/provider/thornode/models/models/borrower_information.dart';
 
 /// Returns the borrower position given the pool and address.
-class ThorNodeRequestAddressBorrowerSaverPosition extends ThorNodeRequestParam<
-    AssetBorrowerPositionResponse, Map<String, dynamic>> {
-  ThorNodeRequestAddressBorrowerSaverPosition(
-      {required this.asset, required this.address, this.height});
+class ThorNodeRequestAddressBorrowerSaverPosition
+    extends
+        ThorNodeRequestParam<
+          AssetBorrowerPositionResponse,
+          Map<String, dynamic>
+        > {
+  ThorNodeRequestAddressBorrowerSaverPosition({
+    required this.asset,
+    required this.address,
+    this.height,
+  });
 
   /// optional block height, defaults to current tip
   final BigInt? height;

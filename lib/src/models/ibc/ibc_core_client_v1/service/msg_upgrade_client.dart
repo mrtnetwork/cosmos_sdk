@@ -27,41 +27,51 @@ class MsgUpgradeClient extends IbcService<EmptyServiceRequestResponse> {
 
   /// signer address
   final String? signer;
-  MsgUpgradeClient(
-      {this.clientId,
-      this.clientState,
-      this.consensusState,
-      List<int>? proofUpgradeClient,
-      List<int>? proofUpgradeConsensusState,
-      this.signer})
-      : proofUpgradeClient =
-            BytesUtils.tryToBytes(proofUpgradeClient, unmodifiable: true),
-        proofUpgradeConsensusState = BytesUtils.tryToBytes(
-            proofUpgradeConsensusState,
-            unmodifiable: true);
+  MsgUpgradeClient({
+    this.clientId,
+    this.clientState,
+    this.consensusState,
+    List<int>? proofUpgradeClient,
+    List<int>? proofUpgradeConsensusState,
+    this.signer,
+  }) : proofUpgradeClient = BytesUtils.tryToBytes(
+         proofUpgradeClient,
+         unmodifiable: true,
+       ),
+       proofUpgradeConsensusState = BytesUtils.tryToBytes(
+         proofUpgradeConsensusState,
+         unmodifiable: true,
+       );
   factory MsgUpgradeClient.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgUpgradeClient(
-        clientId: decode.getField(1),
-        clientState:
-            decode.getResult(2)?.to<Any, List<int>>((e) => Any.deserialize(e)),
-        consensusState:
-            decode.getResult(3)?.to<Any, List<int>>((e) => Any.deserialize(e)),
-        proofUpgradeClient: decode.getField(4),
-        proofUpgradeConsensusState: decode.getField(5),
-        signer: decode.getField(6));
+      clientId: decode.getField(1),
+      clientState: decode
+          .getResult(2)
+          ?.to<Any, List<int>>((e) => Any.deserialize(e)),
+      consensusState: decode
+          .getResult(3)
+          ?.to<Any, List<int>>((e) => Any.deserialize(e)),
+      proofUpgradeClient: decode.getField(4),
+      proofUpgradeConsensusState: decode.getField(5),
+      signer: decode.getField(6),
+    );
   }
   factory MsgUpgradeClient.fromJson(Map<String, dynamic> json) {
     return MsgUpgradeClient(
-        clientId: json.as("client_id"),
-        clientState: json.maybeAs<Any, Map<String, dynamic>>(
-            key: "client_state", onValue: Any.fromJson),
-        consensusState: json.maybeAs<Any, Map<String, dynamic>>(
-            key: "consensus_state", onValue: Any.fromJson),
-        proofUpgradeClient: json.asBytes("proof_upgrade_client"),
-        proofUpgradeConsensusState:
-            json.asBytes("proof_upgrade_consensus_state"),
-        signer: json.as("signer"));
+      clientId: json.as("client_id"),
+      clientState: json.maybeAs<Any, Map<String, dynamic>>(
+        key: "client_state",
+        onValue: Any.fromJson,
+      ),
+      consensusState: json.maybeAs<Any, Map<String, dynamic>>(
+        key: "consensus_state",
+        onValue: Any.fromJson,
+      ),
+      proofUpgradeClient: json.asBytes("proof_upgrade_client"),
+      proofUpgradeConsensusState: json.asBytes("proof_upgrade_consensus_state"),
+      signer: json.as("signer"),
+    );
   }
 
   @override
@@ -74,9 +84,10 @@ class MsgUpgradeClient extends IbcService<EmptyServiceRequestResponse> {
       "client_state": clientState?.toJson(),
       "consensus_state": consensusState?.toJson(),
       "proof_upgrade_client": BytesUtils.tryToHexString(proofUpgradeClient),
-      "proof_upgrade_consensus_state":
-          BytesUtils.tryToHexString(proofUpgradeConsensusState),
-      "signer": signer
+      "proof_upgrade_consensus_state": BytesUtils.tryToHexString(
+        proofUpgradeConsensusState,
+      ),
+      "signer": signer,
     };
   }
 
@@ -85,13 +96,13 @@ class MsgUpgradeClient extends IbcService<EmptyServiceRequestResponse> {
 
   @override
   List get values => [
-        clientId,
-        clientState,
-        consensusState,
-        proofUpgradeClient,
-        proofUpgradeConsensusState,
-        signer
-      ];
+    clientId,
+    clientState,
+    consensusState,
+    proofUpgradeClient,
+    proofUpgradeConsensusState,
+    signer,
+  ];
 
   @override
   List<String?> get signers => [signer];

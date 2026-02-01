@@ -35,30 +35,33 @@ class MsgCreateVestingAccount
   factory MsgCreateVestingAccount.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgCreateVestingAccount(
-        fromAddress: decode
-            .getResult(1)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        toAddress: decode
-            .getResult(2)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        amount: decode
-            .getFields<List<int>>(3)
-            .map((e) => Coin.deserialize(e))
-            .toList(),
-        endTime: decode.getField(4),
-        delayed: decode.getField(5),
-        startTime: decode.getField(6));
+      fromAddress: decode
+          .getResult(1)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      toAddress: decode
+          .getResult(2)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      amount:
+          decode
+              .getFields<List<int>>(3)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
+      endTime: decode.getField(4),
+      delayed: decode.getField(5),
+      startTime: decode.getField(6),
+    );
   }
   factory MsgCreateVestingAccount.fromJson(Map<String, dynamic> json) {
     return MsgCreateVestingAccount(
-        fromAddress: json.asAddress("from_address"),
-        toAddress: json.asAddress("to_address"),
-        amount:
-            json.asListOfMap("amount")?.map((e) => Coin.fromJson(e)).toList() ??
-                [],
-        endTime: json.asBigInt("end_time"),
-        delayed: json.as("delayed"),
-        startTime: json.asBigInt("start_time"));
+      fromAddress: json.asAddress("from_address"),
+      toAddress: json.asAddress("to_address"),
+      amount:
+          json.asListOfMap("amount")?.map((e) => Coin.fromJson(e)).toList() ??
+          [],
+      endTime: json.asBigInt("end_time"),
+      delayed: json.as("delayed"),
+      startTime: json.asBigInt("start_time"),
+    );
   }
 
   /// Converts this instance of [MsgCreateVestingAccount] to a JSON object.
@@ -82,13 +85,13 @@ class MsgCreateVestingAccount
 
   @override
   List get values => [
-        fromAddress?.address,
-        toAddress?.address,
-        amount,
-        endTime,
-        delayed,
-        startTime
-      ];
+    fromAddress?.address,
+    toAddress?.address,
+    amount,
+    endTime,
+    delayed,
+    startTime,
+  ];
 
   @override
   List<String?> get signers => [fromAddress?.address];
@@ -96,6 +99,7 @@ class MsgCreateVestingAccount
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        VestingV1beta1Types.msgCreateVestingAccountResponse);
+      VestingV1beta1Types.msgCreateVestingAccountResponse,
+    );
   }
 }

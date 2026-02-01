@@ -51,8 +51,10 @@ class AnyJsonMessage extends AnyMessage {
     return AnyJsonMessage._(json, UnknownTypeUrl(json["@type"]));
   }
   @override
-  List<int> get fieldIds => throw DartCosmosSdkPluginException(
-      "Failed to convert unknown message to Protobuf.");
+  List<int> get fieldIds =>
+      throw DartCosmosSdkPluginException(
+        "Failed to convert unknown message to Protobuf.",
+      );
 
   @override
   Map<String, dynamic> toJson() {
@@ -63,6 +65,8 @@ class AnyJsonMessage extends AnyMessage {
   final TypeUrl typeUrl;
 
   @override
-  List get values => throw DartCosmosSdkPluginException(
-      "Failed to convert unknown message to Protobuf.");
+  List get values =>
+      throw DartCosmosSdkPluginException(
+        "Failed to convert unknown message to Protobuf.",
+      );
 }

@@ -7,7 +7,8 @@ class EvmosEthermintTypesV1ExtensionOptionDynamicFeeTx extends CosmosMessage {
   final String maxPriorityPrice;
   const EvmosEthermintTypesV1ExtensionOptionDynamicFeeTx(this.maxPriorityPrice);
   factory EvmosEthermintTypesV1ExtensionOptionDynamicFeeTx.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosEthermintTypesV1ExtensionOptionDynamicFeeTx(decode.getField(1));
   }

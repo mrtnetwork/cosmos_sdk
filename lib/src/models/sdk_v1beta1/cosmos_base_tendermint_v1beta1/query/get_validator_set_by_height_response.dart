@@ -16,33 +16,37 @@ class GetValidatorSetByHeightResponse extends CosmosMessage {
 
   factory GetValidatorSetByHeightResponse.fromJson(Map<String, dynamic> json) {
     return GetValidatorSetByHeightResponse(
-      validators: (json["validators"] as List?)
+      validators:
+          (json["validators"] as List?)
               ?.map((e) => CosmosTendermintValidator.fromJson(e))
               .toList() ??
           [],
       blockHeight: BigintUtils.tryParse(json["block_height"]),
-      pagination: json["pagination"] == null
-          ? null
-          : PageResponse.fromJson(json["pagination"]),
+      pagination:
+          json["pagination"] == null
+              ? null
+              : PageResponse.fromJson(json["pagination"]),
     );
   }
 
-  GetValidatorSetByHeightResponse(
-      {this.blockHeight,
-      required List<CosmosTendermintValidator> validators,
-      this.pagination})
-      : validators = validators.immutable;
+  GetValidatorSetByHeightResponse({
+    this.blockHeight,
+    required List<CosmosTendermintValidator> validators,
+    this.pagination,
+  }) : validators = validators.immutable;
   factory GetValidatorSetByHeightResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GetValidatorSetByHeightResponse(
-        blockHeight: decode.getField(1),
-        validators: decode
-            .getFields<List<int>>(2)
-            .map((e) => CosmosTendermintValidator.deserialize(e))
-            .toList(),
-        pagination: decode
-            .getResult(3)
-            ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
+      blockHeight: decode.getField(1),
+      validators:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => CosmosTendermintValidator.deserialize(e))
+              .toList(),
+      pagination: decode
+          .getResult(3)
+          ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
+    );
   }
 
   @override
@@ -53,7 +57,7 @@ class GetValidatorSetByHeightResponse extends CosmosMessage {
     return {
       "block_height": blockHeight?.toString(),
       "validator": validators.map((e) => e.toJson()).toList(),
-      "pagination": pagination?.toJson()
+      "pagination": pagination?.toJson(),
     };
   }
 

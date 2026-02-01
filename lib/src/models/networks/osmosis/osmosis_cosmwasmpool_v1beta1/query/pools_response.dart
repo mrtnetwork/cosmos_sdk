@@ -8,16 +8,18 @@ class OsmosisCosmWasmPoolPoolsResponse extends CosmosMessage {
   final List<AnyMessage>? pools;
   final PageResponse? pagination;
 
-  OsmosisCosmWasmPoolPoolsResponse(
-      {List<AnyMessage>? pools, required this.pagination})
-      : pools = pools?.emptyAsNull?.immutable;
+  OsmosisCosmWasmPoolPoolsResponse({
+    List<AnyMessage>? pools,
+    required this.pagination,
+  }) : pools = pools?.emptyAsNull?.immutable;
   factory OsmosisCosmWasmPoolPoolsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisCosmWasmPoolPoolsResponse(
-      pools: decode
-          .getFields<List<int>>(1)
-          .map((e) => AnyMessage.deserialize(e))
-          .toList(),
+      pools:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => AnyMessage.deserialize(e))
+              .toList(),
       pagination: decode
           .getResult(2)
           ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
@@ -27,9 +29,10 @@ class OsmosisCosmWasmPoolPoolsResponse extends CosmosMessage {
     return OsmosisCosmWasmPoolPoolsResponse(
       pools:
           (json["pools"] as List?)?.map((e) => AnyMessage.fromJson(e)).toList(),
-      pagination: json["pagination"] == null
-          ? null
-          : PageResponse.fromJson(json["pagination"]),
+      pagination:
+          json["pagination"] == null
+              ? null
+              : PageResponse.fromJson(json["pagination"]),
     );
   }
 
@@ -40,7 +43,7 @@ class OsmosisCosmWasmPoolPoolsResponse extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "pools": pools?.map((e) => e.toJson()).toList(),
-      "pagination": pagination?.toJson()
+      "pagination": pagination?.toJson(),
     };
   }
 

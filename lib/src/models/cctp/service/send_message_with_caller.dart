@@ -24,19 +24,21 @@ class CCTPV1MsgSendMessageWithCaller
   factory CCTPV1MsgSendMessageWithCaller.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CCTPV1MsgSendMessageWithCaller(
-        from: decode.getField(1),
-        destinationDomain: decode.getField(2),
-        recipient: decode.getField(3),
-        messageBody: decode.getField(4),
-        destinationCaller: decode.getField(5));
+      from: decode.getField(1),
+      destinationDomain: decode.getField(2),
+      recipient: decode.getField(3),
+      messageBody: decode.getField(4),
+      destinationCaller: decode.getField(5),
+    );
   }
   factory CCTPV1MsgSendMessageWithCaller.fromJson(Map<String, dynamic> json) {
     return CCTPV1MsgSendMessageWithCaller(
-        from: json.as("from"),
-        destinationDomain: json.as("destination_domain"),
-        recipient: json.asBytes("recipient"),
-        messageBody: json.asBytes("message_body"),
-        destinationCaller: json.asBytes("destination_caller"));
+      from: json.as("from"),
+      destinationDomain: json.as("destination_domain"),
+      recipient: json.asBytes("recipient"),
+      messageBody: json.asBytes("message_body"),
+      destinationCaller: json.asBytes("destination_caller"),
+    );
   }
 
   @override
@@ -49,7 +51,7 @@ class CCTPV1MsgSendMessageWithCaller
       "message_body": CosmosUtils.tryToBase64(messageBody),
       "destination_domain": destinationDomain,
       "recipient": CosmosUtils.tryToBase64(recipient),
-      "destination_caller": CosmosUtils.tryToBase64(destinationCaller)
+      "destination_caller": CosmosUtils.tryToBase64(destinationCaller),
     };
   }
 
@@ -57,8 +59,13 @@ class CCTPV1MsgSendMessageWithCaller
   TypeUrl get typeUrl => CCTPV1Types.msgSendMessageWithCaller;
 
   @override
-  List get values =>
-      [from, destinationDomain, recipient, messageBody, destinationCaller];
+  List get values => [
+    from,
+    destinationDomain,
+    recipient,
+    messageBody,
+    destinationCaller,
+  ];
   @override
   List<String?> get signers => [from];
 

@@ -10,8 +10,10 @@ class CosmWasmV1QueryContractsByCodeRequest extends CosmosMessage
     with QueryMessage<CosmWasmV1QueryContractsByCodeResponse> {
   final BigInt codeId;
   final PageRequest? pagination;
-  CosmWasmV1QueryContractsByCodeRequest(
-      {required this.codeId, this.pagination});
+  CosmWasmV1QueryContractsByCodeRequest({
+    required this.codeId,
+    this.pagination,
+  });
 
   @override
   List<int> get fieldIds => [1, 2];
@@ -34,7 +36,8 @@ class CosmWasmV1QueryContractsByCodeRequest extends CosmosMessage
 
   @override
   CosmWasmV1QueryContractsByCodeResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return CosmWasmV1QueryContractsByCodeResponse.fromJson(json);
   }
 
@@ -43,6 +46,6 @@ class CosmWasmV1QueryContractsByCodeRequest extends CosmosMessage
 
   @override
   Map<String, String?> get queryParameters => {
-        ...pagination?.queryParameters ?? {},
-      };
+    ...pagination?.queryParameters ?? {},
+  };
 }

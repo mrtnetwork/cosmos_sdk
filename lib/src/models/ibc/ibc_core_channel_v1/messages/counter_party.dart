@@ -10,13 +10,17 @@ class IbcChannelCounterParty extends CosmosMessage {
   final String? channelId;
   factory IbcChannelCounterParty.fromJson(Map<String, dynamic> json) {
     return IbcChannelCounterParty(
-        channelId: json["channel_id"], portId: json["port_id"]);
+      channelId: json["channel_id"],
+      portId: json["port_id"],
+    );
   }
   const IbcChannelCounterParty({this.portId, this.channelId});
   factory IbcChannelCounterParty.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcChannelCounterParty(
-        portId: decode.getField(1), channelId: decode.getField(2));
+      portId: decode.getField(1),
+      channelId: decode.getField(2),
+    );
   }
 
   @override

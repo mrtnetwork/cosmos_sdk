@@ -12,7 +12,9 @@ class EvmosEthermintEVMV1State extends CosmosMessage {
   factory EvmosEthermintEVMV1State.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosEthermintEVMV1State(
-        key: decode.getField<String>(1), value: decode.getField<String>(2));
+      key: decode.getField<String>(1),
+      value: decode.getField<String>(2),
+    );
   }
 
   @override

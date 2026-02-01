@@ -13,8 +13,10 @@ class EvmosEthermintEVMV1QueryTxLogsRequest extends CosmosMessage
   /// pagination defines an optional pagination for the request.
   final PageRequest? pagination;
 
-  EvmosEthermintEVMV1QueryTxLogsRequest(
-      {required this.hash, required this.pagination});
+  EvmosEthermintEVMV1QueryTxLogsRequest({
+    required this.hash,
+    required this.pagination,
+  });
   factory EvmosEthermintEVMV1QueryTxLogsRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosEthermintEVMV1QueryTxLogsRequest(
@@ -37,15 +39,13 @@ class EvmosEthermintEVMV1QueryTxLogsRequest extends CosmosMessage
   TypeUrl get typeUrl => EvmosErc20V1Types.txLogsRequest;
 
   @override
-  List get values => [
-        hash,
-        pagination,
-      ];
+  List get values => [hash, pagination];
 
   @override
   Map<String, String?> get queryParameters =>
       throw DartCosmosSdkPluginException(
-          "Unsuported method. use grpc method instead rpc.");
+        "Unsuported method. use grpc method instead rpc.",
+      );
   @override
   EvmosEthermintEVMV1QueryTxLogsResponse onResponse(List<int> bytes) {
     return EvmosEthermintEVMV1QueryTxLogsResponse.deserialize(bytes);
@@ -53,7 +53,8 @@ class EvmosEthermintEVMV1QueryTxLogsRequest extends CosmosMessage
 
   @override
   EvmosEthermintEVMV1QueryTxLogsResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     throw UnimplementedError();
   }
 }

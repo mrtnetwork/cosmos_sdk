@@ -5,12 +5,16 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class OsmosisGammSwapAmountOutRoute extends CosmosMessage {
   final BigInt? poolId;
   final String? tokenInDenom;
-  const OsmosisGammSwapAmountOutRoute(
-      {required this.poolId, required this.tokenInDenom});
+  const OsmosisGammSwapAmountOutRoute({
+    required this.poolId,
+    required this.tokenInDenom,
+  });
   factory OsmosisGammSwapAmountOutRoute.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisGammSwapAmountOutRoute(
-        poolId: decode.getField(1), tokenInDenom: decode.getField(2));
+      poolId: decode.getField(1),
+      tokenInDenom: decode.getField(2),
+    );
   }
   factory OsmosisGammSwapAmountOutRoute.fromJson(Map<String, dynamic> json) {
     return OsmosisGammSwapAmountOutRoute(

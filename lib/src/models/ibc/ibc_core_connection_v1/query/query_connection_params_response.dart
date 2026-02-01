@@ -8,18 +8,26 @@ class IbcConnectionQueryConnectionParamsResponse extends CosmosMessage {
   final IbcConnectionParams? params;
   const IbcConnectionQueryConnectionParamsResponse({this.params});
   factory IbcConnectionQueryConnectionParamsResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return IbcConnectionQueryConnectionParamsResponse(
-        params: json["params"] == null
-            ? null
-            : IbcConnectionParams.fromJson(json["params"]));
+      params:
+          json["params"] == null
+              ? null
+              : IbcConnectionParams.fromJson(json["params"]),
+    );
   }
   factory IbcConnectionQueryConnectionParamsResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcConnectionQueryConnectionParamsResponse(
-        params: decode.getResult(1)?.to<IbcConnectionParams, List<int>>(
-            (e) => IbcConnectionParams.deserialize(e)));
+      params: decode
+          .getResult(1)
+          ?.to<IbcConnectionParams, List<int>>(
+            (e) => IbcConnectionParams.deserialize(e),
+          ),
+    );
   }
 
   @override

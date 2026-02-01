@@ -21,15 +21,19 @@ class EvidenceParams extends CosmosMessage {
   /// and should fall comfortably under the max block bytes.
   /// Default is 1048576 or 1MB
   final BigInt? maxBytes;
-  EvidenceParams(
-      {this.maxAgeNumBlocks, required this.maxAgeDuration, this.maxBytes});
+  EvidenceParams({
+    this.maxAgeNumBlocks,
+    required this.maxAgeDuration,
+    this.maxBytes,
+  });
 
   factory EvidenceParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvidenceParams(
-        maxAgeNumBlocks: decode.getField(1),
-        maxAgeDuration: ProtobufDuration.deserialize(decode.getField(2)),
-        maxBytes: decode.getField(3));
+      maxAgeNumBlocks: decode.getField(1),
+      maxAgeDuration: ProtobufDuration.deserialize(decode.getField(2)),
+      maxBytes: decode.getField(3),
+    );
   }
 
   @override
@@ -40,7 +44,7 @@ class EvidenceParams extends CosmosMessage {
     return {
       "max_age_num_blocks": maxAgeNumBlocks?.toString(),
       "max_age_duration": maxAgeDuration.toJson(),
-      "max_bytes": maxBytes?.toString
+      "max_bytes": maxBytes?.toString,
     };
   }
 

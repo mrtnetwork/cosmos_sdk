@@ -25,28 +25,31 @@ class PeriodicAllowance extends CosmosMessage {
   /// it is calculated from the start time of the first transaction after the
   /// last period ended
   final ProtobufTimestamp periodReset;
-  PeriodicAllowance(
-      {required this.basic,
-      required this.period,
-      required List<Coin> periodSpendLimit,
-      required List<Coin> periodCanSpend,
-      required this.periodReset})
-      : periodSpendLimit = periodSpendLimit.immutable,
-        periodCanSpend = periodCanSpend.immutable;
+  PeriodicAllowance({
+    required this.basic,
+    required this.period,
+    required List<Coin> periodSpendLimit,
+    required List<Coin> periodCanSpend,
+    required this.periodReset,
+  }) : periodSpendLimit = periodSpendLimit.immutable,
+       periodCanSpend = periodCanSpend.immutable;
   factory PeriodicAllowance.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return PeriodicAllowance(
-        basic: BasicAllowance.deserialize(decode.getField(1)),
-        period: ProtobufDuration.deserialize(decode.getField(2)),
-        periodSpendLimit: decode
-            .getFields<List<int>>(3)
-            .map((e) => Coin.deserialize(e))
-            .toList(),
-        periodCanSpend: decode
-            .getFields<List<int>>(4)
-            .map((e) => Coin.deserialize(e))
-            .toList(),
-        periodReset: ProtobufTimestamp.deserialize(decode.getField(5)));
+      basic: BasicAllowance.deserialize(decode.getField(1)),
+      period: ProtobufDuration.deserialize(decode.getField(2)),
+      periodSpendLimit:
+          decode
+              .getFields<List<int>>(3)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
+      periodCanSpend:
+          decode
+              .getFields<List<int>>(4)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
+      periodReset: ProtobufTimestamp.deserialize(decode.getField(5)),
+    );
   }
 
   @override
@@ -59,7 +62,7 @@ class PeriodicAllowance extends CosmosMessage {
       "period": period.toJson(),
       "period_spend_limit": periodSpendLimit.map((e) => e.toJson()).toList(),
       "period_can_spend": periodCanSpend.map((e) => e.toJson()).toList(),
-      "period_reset": periodReset.toJson()
+      "period_reset": periodReset.toJson(),
     };
   }
 
@@ -67,6 +70,11 @@ class PeriodicAllowance extends CosmosMessage {
   TypeUrl get typeUrl => FeegrantV1beta1Types.periodicAllowance;
 
   @override
-  List get values =>
-      [basic, period, periodSpendLimit, periodCanSpend, periodReset];
+  List get values => [
+    basic,
+    period,
+    periodSpendLimit,
+    periodCanSpend,
+    periodReset,
+  ];
 }

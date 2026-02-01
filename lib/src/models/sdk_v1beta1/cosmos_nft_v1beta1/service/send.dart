@@ -22,22 +22,24 @@ class MsgNFTSend extends NFTV1Beta1Service<EmptyServiceRequestResponse> {
   const MsgNFTSend({this.classId, this.id, this.sender, this.receiver});
   factory MsgNFTSend.fromJson(Map<String, dynamic> json) {
     return MsgNFTSend(
-        classId: json.as("class_id"),
-        id: json.as("id"),
-        receiver: json.asAddress("receiver"),
-        sender: json.asAddress("sender"));
+      classId: json.as("class_id"),
+      id: json.as("id"),
+      receiver: json.asAddress("receiver"),
+      sender: json.asAddress("sender"),
+    );
   }
   factory MsgNFTSend.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgNFTSend(
-        classId: decode.getField(1),
-        id: decode.getField(2),
-        receiver: decode
-            .getResult(3)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        sender: decode
-            .getResult(4)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)));
+      classId: decode.getField(1),
+      id: decode.getField(2),
+      receiver: decode
+          .getResult(3)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      sender: decode
+          .getResult(4)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+    );
   }
 
   @override
@@ -46,7 +48,7 @@ class MsgNFTSend extends NFTV1Beta1Service<EmptyServiceRequestResponse> {
       'class_id': classId,
       'id': id,
       'sender': sender?.address,
-      'receiver': receiver?.address
+      'receiver': receiver?.address,
     };
   }
 

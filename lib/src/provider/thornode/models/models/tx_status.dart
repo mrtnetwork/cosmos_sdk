@@ -59,9 +59,11 @@ class OutTx {
       fromAddress: json['from_address'],
       toAddress: json['to_address'],
       coins: List<ThorCoinResponse>.from(
-          json['coins'].map((x) => ThorCoinResponse.fromJson(x))),
+        json['coins'].map((x) => ThorCoinResponse.fromJson(x)),
+      ),
       gas: List<ThorCoinResponse>.from(
-          json['gas'].map((x) => ThorCoinResponse.fromJson(x))),
+        json['gas'].map((x) => ThorCoinResponse.fromJson(x)),
+      ),
       memo: json['memo'],
     );
   }
@@ -100,7 +102,8 @@ class Stages {
     return Stages(
       inboundObserved: InboundObserved.fromJson(json['inbound_observed']),
       inboundConfirmationCounted: InboundConfirmationCounted.fromJson(
-          json['inbound_confirmation_counted']),
+        json['inbound_confirmation_counted'],
+      ),
       inboundFinalised: InboundFinalised.fromJson(json['inbound_finalised']),
       swapStatus: SwapStatus.fromJson(json['swap_status']),
       outboundDelay: OutboundDelay.fromJson(json['outbound_delay']),
@@ -124,10 +127,7 @@ class InboundObserved {
   final int finalCount;
   final bool completed;
 
-  const InboundObserved({
-    required this.finalCount,
-    required this.completed,
-  });
+  const InboundObserved({required this.finalCount, required this.completed});
 
   factory InboundObserved.fromJson(Map<String, dynamic> json) {
     return InboundObserved(
@@ -137,110 +137,77 @@ class InboundObserved {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'final_count': finalCount,
-      'completed': completed,
-    };
+    return {'final_count': finalCount, 'completed': completed};
   }
 }
 
 class InboundConfirmationCounted {
   final bool completed;
 
-  const InboundConfirmationCounted({
-    required this.completed,
-  });
+  const InboundConfirmationCounted({required this.completed});
 
   factory InboundConfirmationCounted.fromJson(Map<String, dynamic> json) {
-    return InboundConfirmationCounted(
-      completed: json['completed'],
-    );
+    return InboundConfirmationCounted(completed: json['completed']);
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'completed': completed,
-    };
+    return {'completed': completed};
   }
 }
 
 class InboundFinalised {
   final bool completed;
 
-  const InboundFinalised({
-    required this.completed,
-  });
+  const InboundFinalised({required this.completed});
 
   factory InboundFinalised.fromJson(Map<String, dynamic> json) {
-    return InboundFinalised(
-      completed: json['completed'],
-    );
+    return InboundFinalised(completed: json['completed']);
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'completed': completed,
-    };
+    return {'completed': completed};
   }
 }
 
 class SwapStatus {
   final bool pending;
 
-  const SwapStatus({
-    required this.pending,
-  });
+  const SwapStatus({required this.pending});
 
   factory SwapStatus.fromJson(Map<String, dynamic> json) {
-    return SwapStatus(
-      pending: json['pending'],
-    );
+    return SwapStatus(pending: json['pending']);
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'pending': pending,
-    };
+    return {'pending': pending};
   }
 }
 
 class OutboundDelay {
   final bool completed;
 
-  const OutboundDelay({
-    required this.completed,
-  });
+  const OutboundDelay({required this.completed});
 
   factory OutboundDelay.fromJson(Map<String, dynamic> json) {
-    return OutboundDelay(
-      completed: json['completed'],
-    );
+    return OutboundDelay(completed: json['completed']);
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'completed': completed,
-    };
+    return {'completed': completed};
   }
 }
 
 class OutboundSigned {
   final bool completed;
 
-  const OutboundSigned({
-    required this.completed,
-  });
+  const OutboundSigned({required this.completed});
 
   factory OutboundSigned.fromJson(Map<String, dynamic> json) {
-    return OutboundSigned(
-      completed: json['completed'],
-    );
+    return OutboundSigned(completed: json['completed']);
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'completed': completed,
-    };
+    return {'completed': completed};
   }
 }
 
@@ -261,7 +228,8 @@ class TxStatusResponse {
     return TxStatusResponse(
       tx: ThorTxDetailsResponse.fromJson(json['tx']),
       plannedOutTxs: List<PlannedOutTxResponse>.from(
-          json['planned_out_txs'].map((x) => PlannedOutTxResponse.fromJson(x))),
+        json['planned_out_txs'].map((x) => PlannedOutTxResponse.fromJson(x)),
+      ),
       outTxs: List<OutTx>.from(json['out_txs'].map((x) => OutTx.fromJson(x))),
       stages: Stages.fromJson(json['stages']),
     );

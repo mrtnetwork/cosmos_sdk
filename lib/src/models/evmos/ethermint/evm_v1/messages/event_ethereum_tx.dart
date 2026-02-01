@@ -17,24 +17,26 @@ class EvmosEthermintEVMV1EventEthereumTx extends CosmosMessage {
   final String recipient;
   // eth_tx_failed contains a VM error should it occur
   final String? ethTxFailed;
-  const EvmosEthermintEVMV1EventEthereumTx(
-      {required this.amount,
-      required this.ethHash,
-      required this.index,
-      required this.gasUsed,
-      required this.hash,
-      required this.recipient,
-      required this.ethTxFailed});
+  const EvmosEthermintEVMV1EventEthereumTx({
+    required this.amount,
+    required this.ethHash,
+    required this.index,
+    required this.gasUsed,
+    required this.hash,
+    required this.recipient,
+    required this.ethTxFailed,
+  });
   factory EvmosEthermintEVMV1EventEthereumTx.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosEthermintEVMV1EventEthereumTx(
-        amount: decode.getField(1),
-        ethHash: decode.getField(2),
-        index: decode.getField(3),
-        gasUsed: decode.getField(4),
-        hash: decode.getField(5),
-        recipient: decode.getField(6),
-        ethTxFailed: decode.getField(7));
+      amount: decode.getField(1),
+      ethHash: decode.getField(2),
+      index: decode.getField(3),
+      gasUsed: decode.getField(4),
+      hash: decode.getField(5),
+      recipient: decode.getField(6),
+      ethTxFailed: decode.getField(7),
+    );
   }
 
   @override
@@ -49,7 +51,7 @@ class EvmosEthermintEVMV1EventEthereumTx extends CosmosMessage {
       "gas_used": gasUsed,
       "hash": hash,
       "recipient": recipient,
-      "ethTxFailed": ethTxFailed
+      "ethTxFailed": ethTxFailed,
     };
   }
 
@@ -57,6 +59,13 @@ class EvmosEthermintEVMV1EventEthereumTx extends CosmosMessage {
   TypeUrl get typeUrl => EvmosErc20V1Types.eventEthereumTx;
 
   @override
-  List get values =>
-      [amount, ethHash, index, gasUsed, hash, recipient, ethTxFailed];
+  List get values => [
+    amount,
+    ethHash,
+    index,
+    gasUsed,
+    hash,
+    recipient,
+    ethTxFailed,
+  ];
 }

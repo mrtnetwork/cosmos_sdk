@@ -8,10 +8,12 @@ class OsmosisProtorevQueryGetProtoRevAllRouteStatisticsRequest
     extends CosmosMessage
     with
         QueryMessage<
-            OsmosisProtorevQueryGetProtoRevAllRouteStatisticsResponse> {
+          OsmosisProtorevQueryGetProtoRevAllRouteStatisticsResponse
+        > {
   const OsmosisProtorevQueryGetProtoRevAllRouteStatisticsRequest();
   factory OsmosisProtorevQueryGetProtoRevAllRouteStatisticsRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return const OsmosisProtorevQueryGetProtoRevAllRouteStatisticsRequest();
   }
 
@@ -28,16 +30,20 @@ class OsmosisProtorevQueryGetProtoRevAllRouteStatisticsRequest
 
   @override
   OsmosisProtorevQueryGetProtoRevAllRouteStatisticsResponse onResponse(
-      List<int> bytes) {
-    return OsmosisProtorevQueryGetProtoRevAllRouteStatisticsResponse
-        .deserialize(bytes);
+    List<int> bytes,
+  ) {
+    return OsmosisProtorevQueryGetProtoRevAllRouteStatisticsResponse.deserialize(
+      bytes,
+    );
   }
 
   @override
   OsmosisProtorevQueryGetProtoRevAllRouteStatisticsResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisProtorevQueryGetProtoRevAllRouteStatisticsResponse.fromJson(
-        json);
+      json,
+    );
   }
 
   @override

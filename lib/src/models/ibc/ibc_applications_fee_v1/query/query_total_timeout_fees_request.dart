@@ -13,7 +13,8 @@ class QueryTotalTimeoutFeesRequest extends CosmosMessage
   factory QueryTotalTimeoutFeesRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryTotalTimeoutFeesRequest(
-        packetId: IbcChannelPacketId.deserialize(decode.getField(1)));
+      packetId: IbcChannelPacketId.deserialize(decode.getField(1)),
+    );
   }
 
   @override
@@ -41,6 +42,9 @@ class QueryTotalTimeoutFeesRequest extends CosmosMessage
   }
 
   @override
-  List<String> get pathParameters =>
-      [packetId.channelId, packetId.portId, packetId.sequence.toString()];
+  List<String> get pathParameters => [
+    packetId.channelId,
+    packetId.portId,
+    packetId.sequence.toString(),
+  ];
 }

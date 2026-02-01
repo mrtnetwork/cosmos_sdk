@@ -16,16 +16,21 @@ class OsmosisValSetprefMsgDelegateBondedTokens
 
   OsmosisValSetprefMsgDelegateBondedTokens({this.delegator, this.lockId});
   factory OsmosisValSetprefMsgDelegateBondedTokens.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisValSetprefMsgDelegateBondedTokens(
-        delegator: decode.getField(1), lockId: decode.getField(2));
+      delegator: decode.getField(1),
+      lockId: decode.getField(2),
+    );
   }
   factory OsmosisValSetprefMsgDelegateBondedTokens.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisValSetprefMsgDelegateBondedTokens(
-        delegator: json["delegator"],
-        lockId: BigintUtils.tryParse(json["lockID"]));
+      delegator: json["delegator"],
+      lockId: BigintUtils.tryParse(json["lockID"]),
+    );
   }
 
   @override
@@ -45,7 +50,8 @@ class OsmosisValSetprefMsgDelegateBondedTokens
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        OsmosisValSetprefV1beta1Types.msgDelegateBondedTokensResponse);
+      OsmosisValSetprefV1beta1Types.msgDelegateBondedTokensResponse,
+    );
   }
 
   @override

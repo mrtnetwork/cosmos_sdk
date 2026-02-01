@@ -7,13 +7,14 @@ class ThorchainMsgOutboundTx extends CosmosMessage {
   final String? inTxId;
   final List<int>? signer;
   ThorchainMsgOutboundTx({required this.tx, this.inTxId, List<int>? signer})
-      : signer = BytesUtils.tryToBytes(signer, unmodifiable: true);
+    : signer = BytesUtils.tryToBytes(signer, unmodifiable: true);
   factory ThorchainMsgOutboundTx.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainMsgOutboundTx(
-        tx: ThorchainObservedTx.deserialize(decode.getField(1)),
-        inTxId: decode.getField(2),
-        signer: decode.getField(3));
+      tx: ThorchainObservedTx.deserialize(decode.getField(1)),
+      inTxId: decode.getField(2),
+      signer: decode.getField(3),
+    );
   }
 
   @override
@@ -24,7 +25,7 @@ class ThorchainMsgOutboundTx extends CosmosMessage {
     return {
       "tx": tx.toJson(),
       "in_tx_id": inTxId,
-      "signer": BytesUtils.tryToHexString(signer)
+      "signer": BytesUtils.tryToHexString(signer),
     };
   }
 

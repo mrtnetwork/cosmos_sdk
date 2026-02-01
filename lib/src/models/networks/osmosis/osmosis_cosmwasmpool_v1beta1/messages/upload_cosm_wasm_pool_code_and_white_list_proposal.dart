@@ -13,16 +13,20 @@ class OsmosisCosmWasmPoolUploadCosmWasmPoolCodeAndWhiteListProposal
   /// WASMByteCode can be raw or gzip compressed
   final List<int>? wasmByteCode;
 
-  OsmosisCosmWasmPoolUploadCosmWasmPoolCodeAndWhiteListProposal(
-      {this.title, this.description, List<int>? wasmByteCode})
-      : wasmByteCode = BytesUtils.tryToBytes(wasmByteCode, unmodifiable: true);
+  OsmosisCosmWasmPoolUploadCosmWasmPoolCodeAndWhiteListProposal({
+    this.title,
+    this.description,
+    List<int>? wasmByteCode,
+  }) : wasmByteCode = BytesUtils.tryToBytes(wasmByteCode, unmodifiable: true);
   factory OsmosisCosmWasmPoolUploadCosmWasmPoolCodeAndWhiteListProposal.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisCosmWasmPoolUploadCosmWasmPoolCodeAndWhiteListProposal(
-        title: decode.getField(1),
-        description: decode.getField(2),
-        wasmByteCode: decode.getField(3));
+      title: decode.getField(1),
+      description: decode.getField(2),
+      wasmByteCode: decode.getField(3),
+    );
   }
 
   @override
@@ -33,13 +37,14 @@ class OsmosisCosmWasmPoolUploadCosmWasmPoolCodeAndWhiteListProposal
     return {
       "title": title,
       "description": description,
-      "wasm_byte_code": BytesUtils.tryToHexString(wasmByteCode)
+      "wasm_byte_code": BytesUtils.tryToHexString(wasmByteCode),
     };
   }
 
   @override
-  TypeUrl get typeUrl => OsmosisCosmWasmPoolV1beta1Types
-      .uploadCosmWasmPoolCodeAndWhiteListProposal;
+  TypeUrl get typeUrl =>
+      OsmosisCosmWasmPoolV1beta1Types
+          .uploadCosmWasmPoolCodeAndWhiteListProposal;
 
   @override
   List get values => [title, description, wasmByteCode];

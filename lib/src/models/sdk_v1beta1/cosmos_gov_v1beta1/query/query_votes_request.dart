@@ -16,10 +16,11 @@ class GovQueryVotesRequest extends CosmosMessage
   factory GovQueryVotesRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GovQueryVotesRequest(
-        proposalId: decode.getField(1),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)));
+      proposalId: decode.getField(1),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)),
+    );
   }
   @override
   List<int> get fieldIds => [1, 2];
@@ -28,7 +29,7 @@ class GovQueryVotesRequest extends CosmosMessage
   Map<String, dynamic> toJson() {
     return {
       "proposal_id": proposalId.toString(),
-      "pagination": pagination?.toJson()
+      "pagination": pagination?.toJson(),
     };
   }
 

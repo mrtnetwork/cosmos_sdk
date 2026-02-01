@@ -8,11 +8,11 @@ import 'package:cosmos_sdk/cosmos_sdk.dart';
 import 'package:http/http.dart' as http;
 
 class ChainRegistryHTTPProvider implements ChainRegistryServiceProvider {
-  ChainRegistryHTTPProvider(
-      {this.url = CCRConst.chainRegisteryUri,
-      http.Client? client,
-      this.defaultRequestTimeout = const Duration(seconds: 30)})
-      : client = client ?? http.Client();
+  ChainRegistryHTTPProvider({
+    this.url = CCRConst.chainRegisteryUri,
+    http.Client? client,
+    this.defaultRequestTimeout = const Duration(seconds: 30),
+  }) : client = client ?? http.Client();
 
   final String url;
   final http.Client client;
@@ -20,11 +20,13 @@ class ChainRegistryHTTPProvider implements ChainRegistryServiceProvider {
 
   @override
   Future<BaseServiceResponse<T>> doRequest<T>(
-      ChainRegistryRequestRequestDetails params,
-      {Duration? timeout}) async {
+    ChainRegistryRequestRequestDetails params, {
+    Duration? timeout,
+  }) async {
     final uri = params.toUri(url);
-    final response = await client.get(uri,
-        headers: {...params.headers}).timeout(timeout ?? defaultRequestTimeout);
+    final response = await client
+        .get(uri, headers: {...params.headers})
+        .timeout(timeout ?? defaultRequestTimeout);
     return params.parseResponse(response.bodyBytes, response.statusCode);
   }
 }
@@ -34,7 +36,7 @@ void main() async {
 
   Map<String, dynamic> chainInfos = {
     ChainType.mainnet.name: [],
-    ChainType.testnet.name: []
+    ChainType.testnet.name: [],
   };
 
   String getUrl(ChainType type) {
@@ -47,14 +49,17 @@ void main() async {
   }
 
   for (final chain in chains) {
-    final provider =
-        ChainRegistryProvider(ChainRegistryHTTPProvider(url: getUrl(chain)));
-    final chains =
-        await provider.request(ChainRegistryRequestCosmosDirectoryChains());
+    final provider = ChainRegistryProvider(
+      ChainRegistryHTTPProvider(url: getUrl(chain)),
+    );
+    final chains = await provider.request(
+      ChainRegistryRequestCosmosDirectoryChains(),
+    );
     final List<Map<String, dynamic>> infos = [];
     for (final i in chains) {
-      final data = await provider
-          .request(ChainRegistryRequestCosmosDirectoryChain(chainName: i.name));
+      final data = await provider.request(
+        ChainRegistryRequestCosmosDirectoryChain(chainName: i.name),
+      );
       final natvieAsset = data.assets?.firstWhere((e) => e.denom == i.denom);
       if (natvieAsset == null) {
         continue;
@@ -63,14 +68,18 @@ void main() async {
       List<String> txPageUrls = [];
       for (final e in i.explorers) {
         if (e.accountPage != null) {
-          accountPageUrls.add(e.accountPage!
-              .replaceFirst("\${accountAddress}", "#address")
-              .replaceFirst(r"{$accountAddress}", "#address"));
+          accountPageUrls.add(
+            e.accountPage!
+                .replaceFirst("\${accountAddress}", "#address")
+                .replaceFirst(r"{$accountAddress}", "#address"),
+          );
         }
         if (e.txPage != null) {
-          txPageUrls.add(e.txPage!
-              .replaceFirst("\${txHash}", "#txid")
-              .replaceFirst("#txId", "#txid"));
+          txPageUrls.add(
+            e.txPage!
+                .replaceFirst("\${txHash}", "#txid")
+                .replaceFirst("#txId", "#txid"),
+          );
         }
       }
       final Map<String, dynamic> chainData = {
@@ -89,16 +98,17 @@ void main() async {
           if (natvieAsset.logoURIs?.svg != null)
             "svg_logo": natvieAsset.logoURIs?.svg,
           if (natvieAsset.coingeckoId != null)
-            "coingecko_id": natvieAsset.coingeckoId
+            "coingecko_id": natvieAsset.coingeckoId,
         },
         "best_apis": i.bestApis.toJson(),
         "explorers": {
-          "account_page":
-              accountPageUrls.firstWhereNullable((e) => !e.contains(r"${")),
-          "tx_page": txPageUrls.firstWhereNullable((e) => !e.contains(r"${"))
+          "account_page": accountPageUrls.firstWhereNullable(
+            (e) => !e.contains(r"${"),
+          ),
+          "tx_page": txPageUrls.firstWhereNullable((e) => !e.contains(r"${")),
         },
         "slip44": i.slip44,
-        "path": i.path
+        "path": i.path,
       };
       if (data.keyAlgos.isNotEmpty) {
         chainData["algs"] = data.keyAlgos;
@@ -115,7 +125,7 @@ void main() async {
           "symbol": asset.symbol,
           if (asset.logoURIs?.png != null) "png_logo": asset.logoURIs?.png,
           if (asset.logoURIs?.svg != null) "svg_logo": asset.logoURIs?.svg,
-          if (asset.coingeckoId != null) "coingecko_id": asset.coingeckoId
+          if (asset.coingeckoId != null) "coingecko_id": asset.coingeckoId,
         }..removeWhere((k, v) => v == null);
         final fee = {...f, ...i.toJson()};
         fees.add(fee);

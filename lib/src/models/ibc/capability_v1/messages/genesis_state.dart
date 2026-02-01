@@ -15,11 +15,13 @@ class CapabilityGenesisState extends CosmosMessage {
   factory CapabilityGenesisState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CapabilityGenesisState(
-        index: decode.getField(1),
-        owners: decode
-            .getFields<List<int>>(2)
-            .map((e) => GenesisOwners.deserialize(e))
-            .toList());
+      index: decode.getField(1),
+      owners:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => GenesisOwners.deserialize(e))
+              .toList(),
+    );
   }
 
   @override
@@ -29,7 +31,7 @@ class CapabilityGenesisState extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "index": index?.toString(),
-      "owners": owners.map((e) => e.toJson()).toList()
+      "owners": owners.map((e) => e.toJson()).toList(),
     };
   }
 

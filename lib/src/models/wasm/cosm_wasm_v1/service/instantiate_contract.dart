@@ -36,29 +36,32 @@ class CosmWasmV1InstantiateContract
     required this.label,
     required List<int>? msg,
     required List<Coin>? funds,
-  })  : msg = msg?.asImmutableBytes,
-        funds = funds?.immutable;
+  }) : msg = msg?.asImmutableBytes,
+       funds = funds?.immutable;
   factory CosmWasmV1InstantiateContract.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmWasmV1InstantiateContract(
-        sender: decode.getField(1),
-        admin: decode.getField(2),
-        codeId: decode.getField(3),
-        label: decode.getField(4),
-        msg: decode.getField(5),
-        funds: decode
-            .getFields<List<int>>(6)
-            .map((e) => Coin.deserialize(e))
-            .toList());
+      sender: decode.getField(1),
+      admin: decode.getField(2),
+      codeId: decode.getField(3),
+      label: decode.getField(4),
+      msg: decode.getField(5),
+      funds:
+          decode
+              .getFields<List<int>>(6)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
+    );
   }
   factory CosmWasmV1InstantiateContract.fromJson(Map<String, dynamic> json) {
     return CosmWasmV1InstantiateContract(
-        sender: json.as("sender"),
-        admin: json.as("admin"),
-        codeId: json.asBigInt("code_id"),
-        label: json.as("label"),
-        funds: json.asListOfMap("funds")?.map((e) => Coin.fromJson(e)).toList(),
-        msg: json.asBytes("msg"));
+      sender: json.as("sender"),
+      admin: json.as("admin"),
+      codeId: json.asBigInt("code_id"),
+      label: json.as("label"),
+      funds: json.asListOfMap("funds")?.map((e) => Coin.fromJson(e)).toList(),
+      msg: json.asBytes("msg"),
+    );
   }
 
   @override
@@ -72,7 +75,7 @@ class CosmWasmV1InstantiateContract
       "code_id": codeId?.toString(),
       "label": label,
       "msg": CosmosUtils.tryToBase64(msg),
-      "funds": funds?.map((e) => e.toJson()).toList()
+      "funds": funds?.map((e) => e.toJson()).toList(),
     };
   }
 

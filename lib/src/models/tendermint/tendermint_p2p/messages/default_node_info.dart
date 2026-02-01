@@ -15,37 +15,41 @@ class DefaultNodeInfo extends CosmosMessage {
   final DefaultNodeInfoOther other;
   factory DefaultNodeInfo.fromJson(Map<String, dynamic> json) {
     return DefaultNodeInfo(
-        protocolVersion: ProtocolVersion.fromJson(json["protocol_version"]),
-        channels: StringUtils.tryEncode(json["channels"],
-            type: StringEncoding.base64),
-        other: DefaultNodeInfoOther.fromJson(json["other"]),
-        defaultNodeId: json["default_node_id"],
-        listenAddress: json["listen_addr"],
-        moniker: json["moniker"],
-        network: json["network"],
-        version: json["version"]);
+      protocolVersion: ProtocolVersion.fromJson(json["protocol_version"]),
+      channels: StringUtils.tryEncode(
+        json["channels"],
+        type: StringEncoding.base64,
+      ),
+      other: DefaultNodeInfoOther.fromJson(json["other"]),
+      defaultNodeId: json["default_node_id"],
+      listenAddress: json["listen_addr"],
+      moniker: json["moniker"],
+      network: json["network"],
+      version: json["version"],
+    );
   }
-  DefaultNodeInfo(
-      {required this.protocolVersion,
-      this.defaultNodeId,
-      this.listenAddress,
-      this.network,
-      this.version,
-      List<int>? channels,
-      this.moniker,
-      required this.other})
-      : channels = BytesUtils.tryToBytes(channels, unmodifiable: true);
+  DefaultNodeInfo({
+    required this.protocolVersion,
+    this.defaultNodeId,
+    this.listenAddress,
+    this.network,
+    this.version,
+    List<int>? channels,
+    this.moniker,
+    required this.other,
+  }) : channels = BytesUtils.tryToBytes(channels, unmodifiable: true);
   factory DefaultNodeInfo.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DefaultNodeInfo(
-        protocolVersion: ProtocolVersion.deserialize(decode.getField(1)),
-        defaultNodeId: decode.getField(2),
-        listenAddress: decode.getField(3),
-        network: decode.getField(4),
-        version: decode.getField(5),
-        channels: decode.getField(6),
-        moniker: decode.getField(7),
-        other: DefaultNodeInfoOther.deserialize(decode.getField(8)));
+      protocolVersion: ProtocolVersion.deserialize(decode.getField(1)),
+      defaultNodeId: decode.getField(2),
+      listenAddress: decode.getField(3),
+      network: decode.getField(4),
+      version: decode.getField(5),
+      channels: decode.getField(6),
+      moniker: decode.getField(7),
+      other: DefaultNodeInfoOther.deserialize(decode.getField(8)),
+    );
   }
 
   @override
@@ -61,7 +65,7 @@ class DefaultNodeInfo extends CosmosMessage {
       "version": version,
       "channels": StringUtils.tryDecode(channels, type: StringEncoding.base64),
       "moniker": moniker,
-      "other": other.toJson()
+      "other": other.toJson(),
     };
   }
 
@@ -70,13 +74,13 @@ class DefaultNodeInfo extends CosmosMessage {
 
   @override
   List get values => [
-        protocolVersion,
-        defaultNodeId,
-        listenAddress,
-        network,
-        version,
-        channels,
-        moniker,
-        other
-      ];
+    protocolVersion,
+    defaultNodeId,
+    listenAddress,
+    network,
+    version,
+    channels,
+    moniker,
+    other,
+  ];
 }

@@ -5,10 +5,12 @@ class OsmosisGammMsgJoinSwapExternAmountInResponse extends CosmosMessage {
   final BigInt shareOutAmount;
   OsmosisGammMsgJoinSwapExternAmountInResponse(this.shareOutAmount);
   factory OsmosisGammMsgJoinSwapExternAmountInResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisGammMsgJoinSwapExternAmountInResponse(
-        BigInt.parse(decode.getField(1)));
+      BigInt.parse(decode.getField(1)),
+    );
   }
 
   @override

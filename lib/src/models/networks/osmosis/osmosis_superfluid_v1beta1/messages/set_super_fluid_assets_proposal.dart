@@ -8,21 +8,24 @@ class OsmosisSuperfluidSetSuperfluidAssetsProposal extends CosmosMessage {
   final String? title;
   final String? description;
   final List<OsmosisSuperfluidSuperfluidAsset> assets;
-  OsmosisSuperfluidSetSuperfluidAssetsProposal(
-      {this.title,
-      this.description,
-      required List<OsmosisSuperfluidSuperfluidAsset> assets})
-      : assets = assets.immutable;
+  OsmosisSuperfluidSetSuperfluidAssetsProposal({
+    this.title,
+    this.description,
+    required List<OsmosisSuperfluidSuperfluidAsset> assets,
+  }) : assets = assets.immutable;
   factory OsmosisSuperfluidSetSuperfluidAssetsProposal.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidSetSuperfluidAssetsProposal(
-        description: decode.getField(2),
-        title: decode.getField(1),
-        assets: decode
-            .getFields<List<int>>(3)
-            .map((e) => OsmosisSuperfluidSuperfluidAsset.deserialize(e))
-            .toList());
+      description: decode.getField(2),
+      title: decode.getField(1),
+      assets:
+          decode
+              .getFields<List<int>>(3)
+              .map((e) => OsmosisSuperfluidSuperfluidAsset.deserialize(e))
+              .toList(),
+    );
   }
 
   @override
@@ -33,7 +36,7 @@ class OsmosisSuperfluidSetSuperfluidAssetsProposal extends CosmosMessage {
     return {
       "title": title,
       "description": description,
-      "assets": assets.map((e) => e.toJson()).toList()
+      "assets": assets.map((e) => e.toJson()).toList(),
     };
   }
 

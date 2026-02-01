@@ -29,35 +29,39 @@ class Result extends CosmosMessage {
       data: CosmosUtils.toBytes(json["data"]),
       events:
           (json["events"] as List?)?.map((e) => Event.fromJson(e)).toList() ??
-              [],
+          [],
       log: json["log"],
-      msgResponses: (json["msg_responses"] as List?)
+      msgResponses:
+          (json["msg_responses"] as List?)
               ?.map((e) => AnyMessage.fromJson(e))
               .toList() ??
           [],
     );
   }
-  Result(
-      {List<int>? data,
-      required this.log,
-      required List<Event> events,
-      required List<AnyMessage> msgResponses})
-      : data = BytesUtils.tryToBytes(data, unmodifiable: true),
-        events = List<Event>.unmodifiable(events),
-        msgResponses = List<AnyMessage>.unmodifiable(msgResponses);
+  Result({
+    List<int>? data,
+    required this.log,
+    required List<Event> events,
+    required List<AnyMessage> msgResponses,
+  }) : data = BytesUtils.tryToBytes(data, unmodifiable: true),
+       events = List<Event>.unmodifiable(events),
+       msgResponses = List<AnyMessage>.unmodifiable(msgResponses);
   factory Result.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Result(
-        data: decode.getField(1),
-        log: decode.getField(2),
-        events: decode
-            .getFields<List<int>>(3)
-            .map((e) => Event.deserialize(e))
-            .toList(),
-        msgResponses: decode
-            .getFields<List<int>>(4)
-            .map((e) => AnyMessage.deserialize(e))
-            .toList());
+      data: decode.getField(1),
+      log: decode.getField(2),
+      events:
+          decode
+              .getFields<List<int>>(3)
+              .map((e) => Event.deserialize(e))
+              .toList(),
+      msgResponses:
+          decode
+              .getFields<List<int>>(4)
+              .map((e) => AnyMessage.deserialize(e))
+              .toList(),
+    );
   }
 
   @override
@@ -69,7 +73,7 @@ class Result extends CosmosMessage {
       "data": BytesUtils.tryToHexString(data),
       "log": log,
       "events": events.map((e) => e.toJson()).toList(),
-      "msg_responses": msgResponses.map((e) => e.toJson()).toList()
+      "msg_responses": msgResponses.map((e) => e.toJson()).toList(),
     };
   }
 

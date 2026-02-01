@@ -9,15 +9,19 @@ class EvmosEthermintFeeMarketV1QueryParamsResponse extends CosmosMessage {
 
   const EvmosEthermintFeeMarketV1QueryParamsResponse(this.params);
   factory EvmosEthermintFeeMarketV1QueryParamsResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosEthermintFeeMarketV1QueryParamsResponse(
-        EvmosEthermintFeeMarketV1Params.deserialize(decode.getField(1)));
+      EvmosEthermintFeeMarketV1Params.deserialize(decode.getField(1)),
+    );
   }
   factory EvmosEthermintFeeMarketV1QueryParamsResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return EvmosEthermintFeeMarketV1QueryParamsResponse(
-        EvmosEthermintFeeMarketV1Params.fromJson(json["params"]));
+      EvmosEthermintFeeMarketV1Params.fromJson(json["params"]),
+    );
   }
 
   @override

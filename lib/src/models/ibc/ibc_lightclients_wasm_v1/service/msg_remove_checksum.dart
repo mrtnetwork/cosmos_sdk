@@ -15,7 +15,7 @@ class IbcLightClientsWasmMsgRemoveChecksum
   /// checksum is the sha256 hash to be removed from the store
   final List<int>? checksum;
   IbcLightClientsWasmMsgRemoveChecksum({this.signer, List<int>? checksum})
-      : checksum = BytesUtils.tryToBytes(checksum, unmodifiable: true);
+    : checksum = BytesUtils.tryToBytes(checksum, unmodifiable: true);
   factory IbcLightClientsWasmMsgRemoveChecksum.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcLightClientsWasmMsgRemoveChecksum(
@@ -24,9 +24,12 @@ class IbcLightClientsWasmMsgRemoveChecksum
     );
   }
   factory IbcLightClientsWasmMsgRemoveChecksum.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return IbcLightClientsWasmMsgRemoveChecksum(
-        signer: json.as("signer"), checksum: json.asBytes("checksum"));
+      signer: json.as("signer"),
+      checksum: json.asBytes("checksum"),
+    );
   }
 
   @override
@@ -49,6 +52,7 @@ class IbcLightClientsWasmMsgRemoveChecksum
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        IbcTypes.ibcLightClientsWasmMsgRemoveChecksumResponse);
+      IbcTypes.ibcLightClientsWasmMsgRemoveChecksumResponse,
+    );
   }
 }

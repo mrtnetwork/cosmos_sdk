@@ -9,55 +9,68 @@ abstract class OsmosisGammPoolmodelsStableSwapV1Beta1<T extends CosmosMessage>
     extends OsmosisService<T> {
   const OsmosisGammPoolmodelsStableSwapV1Beta1();
 
-  static T? fromJson<T extends OsmosisGammPoolmodelsStableSwapV1Beta1>(
-      {required String typeUrl, required Map<String, dynamic> json}) {
-    final type =
-        OsmosisGammPoolmodelsStableSwapV1beta1Types.findService(typeUrl);
-    final OsmosisGammPoolmodelsStableSwapV1Beta1? service = switch (type) {
-      OsmosisGammPoolmodelsStableSwapV1beta1Types.msgCreateStableswapPool =>
-        OsmosisGammPoolmodelsStableSwapMsgCreateStableswapPool.fromJson(json),
-      OsmosisGammPoolmodelsStableSwapV1beta1Types
-            .msgStableSwapAdjustScalingFactors =>
-        OsmosisGammPoolmodelsStableSwapMsgStableSwapAdjustScalingFactors
-            .fromJson(json),
-      _ => null
-    } as OsmosisGammPoolmodelsStableSwapV1Beta1?;
+  static T? fromJson<T extends OsmosisGammPoolmodelsStableSwapV1Beta1>({
+    required String typeUrl,
+    required Map<String, dynamic> json,
+  }) {
+    final type = OsmosisGammPoolmodelsStableSwapV1beta1Types.findService(
+      typeUrl,
+    );
+    final OsmosisGammPoolmodelsStableSwapV1Beta1? service =
+        switch (type) {
+              OsmosisGammPoolmodelsStableSwapV1beta1Types
+                  .msgCreateStableswapPool =>
+                OsmosisGammPoolmodelsStableSwapMsgCreateStableswapPool.fromJson(
+                  json,
+                ),
+              OsmosisGammPoolmodelsStableSwapV1beta1Types
+                  .msgStableSwapAdjustScalingFactors =>
+                OsmosisGammPoolmodelsStableSwapMsgStableSwapAdjustScalingFactors.fromJson(
+                  json,
+                ),
+              _ => null,
+            }
+            as OsmosisGammPoolmodelsStableSwapV1Beta1?;
 
     if (service == null) return null;
     if (service is! T) {
       throw DartCosmosSdkPluginException(
-          "Invalid GammPoolmodelsStableSwapV1Beta1 Service.",
-          details: {
-            "excepted": "$T",
-            "service": service.runtimeType.toString()
-          });
+        "Invalid GammPoolmodelsStableSwapV1Beta1 Service.",
+        details: {"excepted": "$T", "service": service.runtimeType.toString()},
+      );
     }
     return service;
   }
 
-  static T? deserialize<T extends OsmosisGammPoolmodelsStableSwapV1Beta1>(
-      {required String typeUrl, required List<int> bytes}) {
-    final type =
-        OsmosisGammPoolmodelsStableSwapV1beta1Types.findService(typeUrl);
-    final OsmosisGammPoolmodelsStableSwapV1Beta1? service = switch (type) {
-      OsmosisGammPoolmodelsStableSwapV1beta1Types.msgCreateStableswapPool =>
-        OsmosisGammPoolmodelsStableSwapMsgCreateStableswapPool.deserialize(
-            bytes),
-      OsmosisGammPoolmodelsStableSwapV1beta1Types
-            .msgStableSwapAdjustScalingFactors =>
-        OsmosisGammPoolmodelsStableSwapMsgStableSwapAdjustScalingFactors
-            .deserialize(bytes),
-      _ => null
-    } as OsmosisGammPoolmodelsStableSwapV1Beta1?;
+  static T? deserialize<T extends OsmosisGammPoolmodelsStableSwapV1Beta1>({
+    required String typeUrl,
+    required List<int> bytes,
+  }) {
+    final type = OsmosisGammPoolmodelsStableSwapV1beta1Types.findService(
+      typeUrl,
+    );
+    final OsmosisGammPoolmodelsStableSwapV1Beta1? service =
+        switch (type) {
+              OsmosisGammPoolmodelsStableSwapV1beta1Types
+                  .msgCreateStableswapPool =>
+                OsmosisGammPoolmodelsStableSwapMsgCreateStableswapPool.deserialize(
+                  bytes,
+                ),
+              OsmosisGammPoolmodelsStableSwapV1beta1Types
+                  .msgStableSwapAdjustScalingFactors =>
+                OsmosisGammPoolmodelsStableSwapMsgStableSwapAdjustScalingFactors.deserialize(
+                  bytes,
+                ),
+              _ => null,
+            }
+            as OsmosisGammPoolmodelsStableSwapV1Beta1?;
 
     if (service == null) return null;
     if (service is! T) {
       throw DartCosmosSdkPluginException(
-          "Invalid GammPoolmodelsStableSwapV1Beta1 Service.",
-          details: {
-            "excepted": "$T",
-            "service": service.runtimeType.toString()
-          });
+        "Invalid GammPoolmodelsStableSwapV1Beta1 Service.",
+        details: {"excepted": "$T", "service": service.runtimeType.toString()},
+      );
     }
     return service;
   }

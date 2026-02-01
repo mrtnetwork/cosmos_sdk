@@ -8,12 +8,15 @@ class OsmosisSuperfluidQueryParamsResponse extends CosmosMessage {
   factory OsmosisSuperfluidQueryParamsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidQueryParamsResponse(
-        OsmosisSuperfluidParams.deserialize(decode.getField(1)));
+      OsmosisSuperfluidParams.deserialize(decode.getField(1)),
+    );
   }
   factory OsmosisSuperfluidQueryParamsResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisSuperfluidQueryParamsResponse(
-        OsmosisSuperfluidParams.deserialize(json["params"]));
+      OsmosisSuperfluidParams.deserialize(json["params"]),
+    );
   }
 
   @override

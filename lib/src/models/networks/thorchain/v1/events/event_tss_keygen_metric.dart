@@ -8,7 +8,9 @@ class ThorchainEventTssKeygenMetric extends CosmosMessage {
   factory ThorchainEventTssKeygenMetric.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainEventTssKeygenMetric(
-        pubKey: decode.getField(1), medianDurationMs: decode.getField(2));
+      pubKey: decode.getField(1),
+      medianDurationMs: decode.getField(2),
+    );
   }
 
   @override
@@ -18,7 +20,7 @@ class ThorchainEventTssKeygenMetric extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "pub_key": pubKey,
-      "median_duration_ms": medianDurationMs?.toString()
+      "median_duration_ms": medianDurationMs?.toString(),
     };
   }
 

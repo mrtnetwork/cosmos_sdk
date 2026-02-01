@@ -9,15 +9,21 @@ class IbcTransferQueryParamsResponse extends CosmosMessage {
   const IbcTransferQueryParamsResponse({this.params});
   factory IbcTransferQueryParamsResponse.fromJson(Map<String, dynamic> json) {
     return IbcTransferQueryParamsResponse(
-        params: json["params"] == null
-            ? null
-            : IbcTransaferParams.fromJson(json["params"]));
+      params:
+          json["params"] == null
+              ? null
+              : IbcTransaferParams.fromJson(json["params"]),
+    );
   }
   factory IbcTransferQueryParamsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcTransferQueryParamsResponse(
-        params: decode.getResult(1)?.to<IbcTransaferParams, List<int>>(
-            (e) => IbcTransaferParams.deserialize(e)));
+      params: decode
+          .getResult(1)
+          ?.to<IbcTransaferParams, List<int>>(
+            (e) => IbcTransaferParams.deserialize(e),
+          ),
+    );
   }
 
   @override

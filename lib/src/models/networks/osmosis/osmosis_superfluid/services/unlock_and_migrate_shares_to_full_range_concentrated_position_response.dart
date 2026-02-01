@@ -8,19 +8,22 @@ class OsmosisSuperfluidMsgUnlockAndMigrateSharesToFullRangeConcentratedPositionR
   final String liquidityCreated;
   final ProtobufTimestamp joinTime;
 
-  OsmosisSuperfluidMsgUnlockAndMigrateSharesToFullRangeConcentratedPositionResponse(
-      {required this.amount0,
-      required this.amount1,
-      required this.liquidityCreated,
-      required this.joinTime});
+  OsmosisSuperfluidMsgUnlockAndMigrateSharesToFullRangeConcentratedPositionResponse({
+    required this.amount0,
+    required this.amount1,
+    required this.liquidityCreated,
+    required this.joinTime,
+  });
   factory OsmosisSuperfluidMsgUnlockAndMigrateSharesToFullRangeConcentratedPositionResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidMsgUnlockAndMigrateSharesToFullRangeConcentratedPositionResponse(
-        amount0: BigInt.parse(decode.getField(1)),
-        amount1: BigInt.parse(decode.getField(2)),
-        liquidityCreated: decode.getField(3),
-        joinTime: ProtobufTimestamp.deserialize(decode.getField(4)));
+      amount0: BigInt.parse(decode.getField(1)),
+      amount1: BigInt.parse(decode.getField(2)),
+      liquidityCreated: decode.getField(3),
+      joinTime: ProtobufTimestamp.deserialize(decode.getField(4)),
+    );
   }
 
   @override
@@ -32,15 +35,20 @@ class OsmosisSuperfluidMsgUnlockAndMigrateSharesToFullRangeConcentratedPositionR
       "amount0": amount0.toString(),
       "amount1": amount1.toString(),
       "liquidity_created": liquidityCreated,
-      "join_time": joinTime.toJson()
+      "join_time": joinTime.toJson(),
     };
   }
 
   @override
-  TypeUrl get typeUrl => OsmosisSuperfluidTypes
-      .msgUnlockAndMigrateSharesToFullRangeConcentratedPositionResponse;
+  TypeUrl get typeUrl =>
+      OsmosisSuperfluidTypes
+          .msgUnlockAndMigrateSharesToFullRangeConcentratedPositionResponse;
 
   @override
-  List get values =>
-      [amount0.toString(), amount1.toString(), liquidityCreated, joinTime];
+  List get values => [
+    amount0.toString(),
+    amount1.toString(),
+    liquidityCreated,
+    joinTime,
+  ];
 }

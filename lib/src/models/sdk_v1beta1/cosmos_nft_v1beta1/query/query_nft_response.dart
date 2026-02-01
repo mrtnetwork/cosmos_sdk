@@ -16,15 +16,13 @@ class QueryNFTResponse extends CosmosMessage {
   factory QueryNFTResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryNFTResponse(
-        nft:
-            decode.getResult(1)?.to<NFT, List<int>>((e) => NFT.deserialize(e)));
+      nft: decode.getResult(1)?.to<NFT, List<int>>((e) => NFT.deserialize(e)),
+    );
   }
 
   @override
   Map<String, dynamic> toJson() {
-    return {
-      'owner': nft?.toJson(),
-    };
+    return {'owner': nft?.toJson()};
   }
 
   @override

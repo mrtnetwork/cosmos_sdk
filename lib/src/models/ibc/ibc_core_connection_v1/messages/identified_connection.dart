@@ -27,36 +27,41 @@ class IbcConnectionIdentifiedConnection extends CosmosMessage {
   /// delay period associated with this connection.
   final BigInt? delayPeriod;
   factory IbcConnectionIdentifiedConnection.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return IbcConnectionIdentifiedConnection(
-        counterparty: IbcConnectionCounterparty.fromJson(json["counterparty"]),
-        clientId: json["client_id"],
-        delayPeriod: BigintUtils.tryParse(json["delay_period"]),
-        id: json["id"],
-        state: json["state"] == null
-            ? null
-            : IbcConnectionState.fromValue(json["state"]),
-        versions: (json["versions"] as List?)
-            ?.map((e) => IbcConnectionVersion.fromJson(e))
-            .toList());
+      counterparty: IbcConnectionCounterparty.fromJson(json["counterparty"]),
+      clientId: json["client_id"],
+      delayPeriod: BigintUtils.tryParse(json["delay_period"]),
+      id: json["id"],
+      state:
+          json["state"] == null
+              ? null
+              : IbcConnectionState.fromValue(json["state"]),
+      versions:
+          (json["versions"] as List?)
+              ?.map((e) => IbcConnectionVersion.fromJson(e))
+              .toList(),
+    );
   }
-  IbcConnectionIdentifiedConnection(
-      {this.id,
-      this.clientId,
-      List<IbcConnectionVersion>? versions,
-      this.state,
-      required this.counterparty,
-      this.delayPeriod})
-      : versions = versions?.emptyAsNull?.immutable;
+  IbcConnectionIdentifiedConnection({
+    this.id,
+    this.clientId,
+    List<IbcConnectionVersion>? versions,
+    this.state,
+    required this.counterparty,
+    this.delayPeriod,
+  }) : versions = versions?.emptyAsNull?.immutable;
   factory IbcConnectionIdentifiedConnection.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcConnectionIdentifiedConnection(
       id: decode.getField(1),
       clientId: decode.getField(2),
-      versions: decode
-          .getFields<List<int>>(3)
-          .map((e) => IbcConnectionVersion.deserialize(e))
-          .toList(),
+      versions:
+          decode
+              .getFields<List<int>>(3)
+              .map((e) => IbcConnectionVersion.deserialize(e))
+              .toList(),
       delayPeriod: decode.getField(6),
       state: decode
           .getResult(4)
@@ -76,7 +81,7 @@ class IbcConnectionIdentifiedConnection extends CosmosMessage {
       "versions": versions?.map((e) => e.toJson()).toList(),
       "state": state?.value,
       "counterparty": counterparty.toJson(),
-      "delay_period": delayPeriod?.toString()
+      "delay_period": delayPeriod?.toString(),
     };
   }
 
@@ -84,6 +89,12 @@ class IbcConnectionIdentifiedConnection extends CosmosMessage {
   TypeUrl get typeUrl => IbcTypes.ibcConnectionIdentifiedConnection;
 
   @override
-  List get values =>
-      [id, clientId, versions, state?.value, counterparty, delayPeriod];
+  List get values => [
+    id,
+    clientId,
+    versions,
+    state?.value,
+    counterparty,
+    delayPeriod,
+  ];
 }

@@ -8,7 +8,8 @@ import 'package:cosmos_sdk/src/utils/quick.dart';
 // MsgUpdateParams is the Msg/UpdateParams request type for Erc20 parameters.
 // Since: cosmos-sdk 0.47
 class EvmosErc20V1MsgUpdateParams
-    extends EvmosService<EmptyServiceRequestResponse> with AminoMessage {
+    extends EvmosService<EmptyServiceRequestResponse>
+    with AminoMessage {
   /// authority is the address of the governance account
   final String? authority;
 
@@ -16,21 +17,25 @@ class EvmosErc20V1MsgUpdateParams
   /// NOTE: All parameters must be supplied.
   final EvmosErc20V1Params? params;
 
-  const EvmosErc20V1MsgUpdateParams(
-      {required this.authority, required this.params});
+  const EvmosErc20V1MsgUpdateParams({
+    required this.authority,
+    required this.params,
+  });
 
   factory EvmosErc20V1MsgUpdateParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosErc20V1MsgUpdateParams(
-        authority: decode.getField(1),
-        params: decode.getResult(2)?.to<EvmosErc20V1Params, List<int>>(
-            EvmosErc20V1Params.deserialize));
+      authority: decode.getField(1),
+      params: decode
+          .getResult(2)
+          ?.to<EvmosErc20V1Params, List<int>>(EvmosErc20V1Params.deserialize),
+    );
   }
   factory EvmosErc20V1MsgUpdateParams.fromJson(Map<String, dynamic> json) {
     return EvmosErc20V1MsgUpdateParams(
-        authority: json.as("authority"),
-        params:
-            json.maybeAs(key: "params", onValue: EvmosErc20V1Params.fromJson));
+      authority: json.as("authority"),
+      params: json.maybeAs(key: "params", onValue: EvmosErc20V1Params.fromJson),
+    );
   }
 
   @override
@@ -52,6 +57,7 @@ class EvmosErc20V1MsgUpdateParams
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        EvmosErc20V1Types.msgUpdateParamsResponse);
+      EvmosErc20V1Types.msgUpdateParamsResponse,
+    );
   }
 }

@@ -6,12 +6,15 @@ class OsmosisSuperfluidMsgSuperfluidUndelegateAndUnbondLockResponse
   final BigInt totalAmtStaked;
 
   OsmosisSuperfluidMsgSuperfluidUndelegateAndUnbondLockResponse(
-      this.totalAmtStaked);
+    this.totalAmtStaked,
+  );
   factory OsmosisSuperfluidMsgSuperfluidUndelegateAndUnbondLockResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidMsgSuperfluidUndelegateAndUnbondLockResponse(
-        BigInt.parse(decode.getField(1)));
+      BigInt.parse(decode.getField(1)),
+    );
   }
 
   @override

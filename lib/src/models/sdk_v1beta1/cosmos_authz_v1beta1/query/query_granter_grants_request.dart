@@ -12,15 +12,18 @@ class AuthzQueryGranterGrantsRequest extends CosmosMessage
 
   /// pagination defines an pagination for the request.
   final PageRequest? pagination;
-  const AuthzQueryGranterGrantsRequest(
-      {required this.granter, this.pagination});
+  const AuthzQueryGranterGrantsRequest({
+    required this.granter,
+    this.pagination,
+  });
   factory AuthzQueryGranterGrantsRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return AuthzQueryGranterGrantsRequest(
-        granter: CosmosBaseAddress(decode.getField(1)),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)));
+      granter: CosmosBaseAddress(decode.getField(1)),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)),
+    );
   }
 
   @override

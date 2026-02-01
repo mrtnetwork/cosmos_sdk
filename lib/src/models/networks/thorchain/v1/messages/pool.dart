@@ -12,17 +12,18 @@ class ThorchainPool extends CosmosMessage {
   final BigInt synthUnits;
   final BigInt pendingInboundRune;
   final BigInt pendingInboundAsset;
-  const ThorchainPool(
-      {required this.balanceRune,
-      required this.balanceAsset,
-      required this.asset,
-      required this.lpUnits,
-      this.status,
-      this.statusSince,
-      this.decimals,
-      required this.synthUnits,
-      required this.pendingInboundRune,
-      required this.pendingInboundAsset});
+  const ThorchainPool({
+    required this.balanceRune,
+    required this.balanceAsset,
+    required this.asset,
+    required this.lpUnits,
+    this.status,
+    this.statusSince,
+    this.decimals,
+    required this.synthUnits,
+    required this.pendingInboundRune,
+    required this.pendingInboundAsset,
+  });
   factory ThorchainPool.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainPool(
@@ -30,8 +31,11 @@ class ThorchainPool extends CosmosMessage {
       balanceAsset: BigInt.parse(decode.getField(2)),
       asset: ThorchainAsset.deserialize(decode.getField(3)),
       lpUnits: BigInt.parse(decode.getField(4)),
-      status: decode.getResult(5)?.to<ThorchainPoolStatus, int>(
-          (e) => ThorchainPoolStatus.fromValue(e)),
+      status: decode
+          .getResult(5)
+          ?.to<ThorchainPoolStatus, int>(
+            (e) => ThorchainPoolStatus.fromValue(e),
+          ),
       statusSince: decode.getField(10),
       decimals: decode.getField(6),
       synthUnits: BigInt.parse(decode.getField(7)),
@@ -55,7 +59,7 @@ class ThorchainPool extends CosmosMessage {
       "decimals": decimals?.toString(),
       "synth_units": synthUnits.toString(),
       "pending_inbound_rune": pendingInboundRune.toString(),
-      "pending_inbound_asset": pendingInboundAsset.toString()
+      "pending_inbound_asset": pendingInboundAsset.toString(),
     };
   }
 
@@ -64,15 +68,15 @@ class ThorchainPool extends CosmosMessage {
 
   @override
   List get values => [
-        balanceRune.toString(),
-        balanceAsset.toString(),
-        asset,
-        lpUnits.toString(),
-        status?.value,
-        decimals,
-        synthUnits.toString(),
-        pendingInboundRune.toString(),
-        pendingInboundAsset.toString(),
-        statusSince
-      ];
+    balanceRune.toString(),
+    balanceAsset.toString(),
+    asset,
+    lpUnits.toString(),
+    status?.value,
+    decimals,
+    synthUnits.toString(),
+    pendingInboundRune.toString(),
+    pendingInboundAsset.toString(),
+    statusSince,
+  ];
 }

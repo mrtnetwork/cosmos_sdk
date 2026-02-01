@@ -14,7 +14,9 @@ class ParamsQueryParamsRequest extends CosmosMessage
   factory ParamsQueryParamsRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ParamsQueryParamsRequest(
-        subspace: decode.getField(1), key: decode.getField(2));
+      subspace: decode.getField(1),
+      key: decode.getField(2),
+    );
   }
 
   @override

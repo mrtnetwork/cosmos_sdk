@@ -8,16 +8,20 @@ class OsmosisConcentratedLiquidityIncentiveRecordsRequest extends CosmosMessage
   final BigInt? poolId;
   final PageRequest? pagination;
 
-  const OsmosisConcentratedLiquidityIncentiveRecordsRequest(
-      {this.poolId, this.pagination});
+  const OsmosisConcentratedLiquidityIncentiveRecordsRequest({
+    this.poolId,
+    this.pagination,
+  });
   factory OsmosisConcentratedLiquidityIncentiveRecordsRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityIncentiveRecordsRequest(
-        poolId: decode.getField(1),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)));
+      poolId: decode.getField(1),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)),
+    );
   }
 
   @override
@@ -40,14 +44,17 @@ class OsmosisConcentratedLiquidityIncentiveRecordsRequest extends CosmosMessage
 
   @override
   OsmosisConcentratedLiquidityIncentiveRecordsResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityIncentiveRecordsResponse.fromJson(json);
   }
 
   @override
   OsmosisConcentratedLiquidityIncentiveRecordsResponse onResponse(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return OsmosisConcentratedLiquidityIncentiveRecordsResponse.deserialize(
-        bytes);
+      bytes,
+    );
   }
 }

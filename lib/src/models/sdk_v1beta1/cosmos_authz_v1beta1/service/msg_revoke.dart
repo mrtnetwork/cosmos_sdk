@@ -12,24 +12,29 @@ class AuthzMsgRevoke extends AuthzV1Beta1Service<EmptyServiceRequestResponse> {
   final CosmosBaseAddress granter;
   final CosmosBaseAddress grantee;
   final String? msgTypeUrl;
-  const AuthzMsgRevoke(
-      {required this.granter, required this.grantee, this.msgTypeUrl});
+  const AuthzMsgRevoke({
+    required this.granter,
+    required this.grantee,
+    this.msgTypeUrl,
+  });
   factory AuthzMsgRevoke.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return AuthzMsgRevoke(
-        granter: decode
-            .getResult(1)!
-            .to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        grantee: decode
-            .getResult(2)!
-            .to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        msgTypeUrl: decode.getField(3));
+      granter: decode
+          .getResult(1)!
+          .to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      grantee: decode
+          .getResult(2)!
+          .to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      msgTypeUrl: decode.getField(3),
+    );
   }
   factory AuthzMsgRevoke.fromJson(Map<String, dynamic> json) {
     return AuthzMsgRevoke(
-        granter: CosmosBaseAddress(json.as("granter")),
-        grantee: CosmosBaseAddress(json.as("grantee")),
-        msgTypeUrl: json.as("msg_type_url"));
+      granter: CosmosBaseAddress(json.as("granter")),
+      grantee: CosmosBaseAddress(json.as("grantee")),
+      msgTypeUrl: json.as("msg_type_url"),
+    );
   }
 
   @override
@@ -40,7 +45,7 @@ class AuthzMsgRevoke extends AuthzV1Beta1Service<EmptyServiceRequestResponse> {
     return {
       "granter": granter.address,
       "grantee": grantee.address,
-      "msg_type_url": msgTypeUrl
+      "msg_type_url": msgTypeUrl,
     };
   }
 
@@ -56,6 +61,7 @@ class AuthzMsgRevoke extends AuthzV1Beta1Service<EmptyServiceRequestResponse> {
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        AuthzV1beta1Types.authzMsgRevokeResponse);
+      AuthzV1beta1Types.authzMsgRevokeResponse,
+    );
   }
 }

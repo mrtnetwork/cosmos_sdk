@@ -17,10 +17,11 @@ class QueryDenomOwnersRequest extends CosmosMessage
   factory QueryDenomOwnersRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryDenomOwnersRequest(
-        denom: decode.getField(1),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)));
+      denom: decode.getField(1),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)),
+    );
   }
 
   @override
@@ -51,6 +52,7 @@ class QueryDenomOwnersRequest extends CosmosMessage
   List<String> get pathParameters => [denom];
 
   @override
-  Map<String, String?> get queryParameters =>
-      {...pagination?.queryParameters ?? {}};
+  Map<String, String?> get queryParameters => {
+    ...pagination?.queryParameters ?? {},
+  };
 }

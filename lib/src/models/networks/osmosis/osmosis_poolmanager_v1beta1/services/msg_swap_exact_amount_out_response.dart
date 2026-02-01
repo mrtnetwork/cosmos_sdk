@@ -6,10 +6,12 @@ class OsmosisPoolManagerMsgSwapExactAmountOutResponse extends CosmosMessage {
 
   OsmosisPoolManagerMsgSwapExactAmountOutResponse(this.tokenInAmount);
   factory OsmosisPoolManagerMsgSwapExactAmountOutResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolManagerMsgSwapExactAmountOutResponse(
-        BigInt.parse(decode.getField(1)));
+      BigInt.parse(decode.getField(1)),
+    );
   }
 
   @override

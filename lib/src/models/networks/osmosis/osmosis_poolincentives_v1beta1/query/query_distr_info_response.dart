@@ -7,15 +7,19 @@ class OsmosisPoolincentivesQueryDistrInfoResponse extends CosmosMessage {
 
   OsmosisPoolincentivesQueryDistrInfoResponse(this.distrInfo);
   factory OsmosisPoolincentivesQueryDistrInfoResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolincentivesQueryDistrInfoResponse(
-        OsmosisPoolincentivesDistrInfo.deserialize(decode.getField(1)));
+      OsmosisPoolincentivesDistrInfo.deserialize(decode.getField(1)),
+    );
   }
   factory OsmosisPoolincentivesQueryDistrInfoResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisPoolincentivesQueryDistrInfoResponse(
-        OsmosisPoolincentivesDistrInfo.fromJson(json["distr_info"]));
+      OsmosisPoolincentivesDistrInfo.fromJson(json["distr_info"]),
+    );
   }
 
   @override

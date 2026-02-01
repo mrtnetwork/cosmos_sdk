@@ -18,29 +18,30 @@ class Ics23LeafOp extends CosmosMessage {
   /// prefix is a fixed bytes that may optionally be included at the beginning to differentiate
   /// a leaf node from an inner node.
   final List<int>? prefix;
-  Ics23LeafOp(
-      {this.hash,
-      this.prehashKey,
-      this.prehashValue,
-      this.length,
-      List<int>? prefix})
-      : prefix = BytesUtils.tryToBytes(prefix, unmodifiable: true);
+  Ics23LeafOp({
+    this.hash,
+    this.prehashKey,
+    this.prehashValue,
+    this.length,
+    List<int>? prefix,
+  }) : prefix = BytesUtils.tryToBytes(prefix, unmodifiable: true);
   factory Ics23LeafOp.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Ics23LeafOp(
-        hash: decode
-            .getResult(1)
-            ?.to<Ics23HashOp, int>((e) => Ics23HashOp.fromValue(e)),
-        prehashKey: decode
-            .getResult(2)
-            ?.to<Ics23HashOp, int>((e) => Ics23HashOp.fromValue(e)),
-        prehashValue: decode
-            .getResult(3)
-            ?.to<Ics23HashOp, int>((e) => Ics23HashOp.fromValue(e)),
-        length: decode
-            .getResult(4)
-            ?.to<Ics23LengthOp, int>((e) => Ics23LengthOp.fromValue(e)),
-        prefix: decode.getField(5));
+      hash: decode
+          .getResult(1)
+          ?.to<Ics23HashOp, int>((e) => Ics23HashOp.fromValue(e)),
+      prehashKey: decode
+          .getResult(2)
+          ?.to<Ics23HashOp, int>((e) => Ics23HashOp.fromValue(e)),
+      prehashValue: decode
+          .getResult(3)
+          ?.to<Ics23HashOp, int>((e) => Ics23HashOp.fromValue(e)),
+      length: decode
+          .getResult(4)
+          ?.to<Ics23LengthOp, int>((e) => Ics23LengthOp.fromValue(e)),
+      prefix: decode.getField(5),
+    );
   }
 
   @override
@@ -53,7 +54,7 @@ class Ics23LeafOp extends CosmosMessage {
       "prehash_key": prehashKey?.value,
       "prehash_value": prehashValue?.value,
       "length": length?.value,
-      "prefix": BytesUtils.tryToHexString(prefix)
+      "prefix": BytesUtils.tryToHexString(prefix),
     };
   }
 
@@ -62,10 +63,10 @@ class Ics23LeafOp extends CosmosMessage {
 
   @override
   List get values => [
-        hash?.value,
-        prehashKey?.value,
-        prehashValue?.value,
-        length?.value,
-        prefix
-      ];
+    hash?.value,
+    prehashKey?.value,
+    prehashValue?.value,
+    length?.value,
+    prefix,
+  ];
 }

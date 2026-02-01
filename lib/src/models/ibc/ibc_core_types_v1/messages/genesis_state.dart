@@ -9,17 +9,20 @@ class IbcTypeGenesisState extends CosmosMessage {
   final IbcClientGenesisState clientGenesis;
   final IbcConnectionGenesisState connectionGenesis;
   final IbcChannelGenesisState channelGenesis;
-  const IbcTypeGenesisState(
-      {required this.channelGenesis,
-      required this.clientGenesis,
-      required this.connectionGenesis});
+  const IbcTypeGenesisState({
+    required this.channelGenesis,
+    required this.clientGenesis,
+    required this.connectionGenesis,
+  });
   factory IbcTypeGenesisState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcTypeGenesisState(
-        channelGenesis: IbcChannelGenesisState.deserialize(decode.getField(3)),
-        clientGenesis: IbcClientGenesisState.deserialize(decode.getField(1)),
-        connectionGenesis:
-            IbcConnectionGenesisState.deserialize(decode.getField(2)));
+      channelGenesis: IbcChannelGenesisState.deserialize(decode.getField(3)),
+      clientGenesis: IbcClientGenesisState.deserialize(decode.getField(1)),
+      connectionGenesis: IbcConnectionGenesisState.deserialize(
+        decode.getField(2),
+      ),
+    );
   }
 
   @override
@@ -30,7 +33,7 @@ class IbcTypeGenesisState extends CosmosMessage {
     return {
       "client_genesis": clientGenesis.toJson(),
       "connection_genesis": connectionGenesis.toJson(),
-      "channel_genesis": channelGenesis.toJson()
+      "channel_genesis": channelGenesis.toJson(),
     };
   }
 

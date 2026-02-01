@@ -11,12 +11,16 @@ class QueryChannelClientStateRequest extends CosmosMessage
 
   /// channel unique identifier
   final String channelId;
-  const QueryChannelClientStateRequest(
-      {required this.portId, required this.channelId});
+  const QueryChannelClientStateRequest({
+    required this.portId,
+    required this.channelId,
+  });
   factory QueryChannelClientStateRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryChannelClientStateRequest(
-        portId: decode.getField(1), channelId: decode.getField(2));
+      portId: decode.getField(1),
+      channelId: decode.getField(2),
+    );
   }
 
   @override

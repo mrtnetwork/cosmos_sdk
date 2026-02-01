@@ -15,9 +15,10 @@ class QueryTotalSupplyRequest extends CosmosMessage
   factory QueryTotalSupplyRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryTotalSupplyRequest(
-        pagination: decode
-            .getResult(1)
-            ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)));
+      pagination: decode
+          .getResult(1)
+          ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)),
+    );
   }
 
   @override
@@ -45,6 +46,7 @@ class QueryTotalSupplyRequest extends CosmosMessage
   }
 
   @override
-  Map<String, String?> get queryParameters =>
-      {...pagination?.queryParameters ?? {}};
+  Map<String, String?> get queryParameters => {
+    ...pagination?.queryParameters ?? {},
+  };
 }

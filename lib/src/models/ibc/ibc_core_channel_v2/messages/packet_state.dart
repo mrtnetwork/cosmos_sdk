@@ -19,21 +19,25 @@ class IbcChannelV2PacketState extends CosmosMessage {
   /// embedded data that represents packet state
   final List<int>? data;
 
-  IbcChannelV2PacketState(
-      {required this.sequence, required this.clientId, List<int>? data})
-      : data = data?.asImmutableBytes;
+  IbcChannelV2PacketState({
+    required this.sequence,
+    required this.clientId,
+    List<int>? data,
+  }) : data = data?.asImmutableBytes;
   factory IbcChannelV2PacketState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcChannelV2PacketState(
-        sequence: decode.getField(2),
-        clientId: decode.getField(1),
-        data: decode.getField(3));
+      sequence: decode.getField(2),
+      clientId: decode.getField(1),
+      data: decode.getField(3),
+    );
   }
   factory IbcChannelV2PacketState.fromJson(Map<String, dynamic> json) {
     return IbcChannelV2PacketState(
-        sequence: json.asBigInt("sequence"),
-        clientId: json.as("client_id"),
-        data: json.asBytes("data"));
+      sequence: json.asBigInt("sequence"),
+      clientId: json.as("client_id"),
+      data: json.asBytes("data"),
+    );
   }
 
   @override
@@ -44,7 +48,7 @@ class IbcChannelV2PacketState extends CosmosMessage {
     return {
       "sequence": sequence?.toString(),
       "client_id": clientId,
-      "data": CosmosUtils.tryToBase64(data)
+      "data": CosmosUtils.tryToBase64(data),
     };
   }
 

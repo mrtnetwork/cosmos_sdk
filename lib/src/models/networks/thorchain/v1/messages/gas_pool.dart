@@ -6,18 +6,20 @@ class ThorchainGasPool extends CosmosMessage {
   final BigInt runeAmt;
   final BigInt assetAmt;
   final BigInt? count;
-  const ThorchainGasPool(
-      {required this.asset,
-      required this.runeAmt,
-      required this.assetAmt,
-      this.count});
+  const ThorchainGasPool({
+    required this.asset,
+    required this.runeAmt,
+    required this.assetAmt,
+    this.count,
+  });
   factory ThorchainGasPool.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainGasPool(
-        asset: ThorchainAsset.deserialize(decode.getField(1)),
-        runeAmt: BigInt.parse(decode.getField(2)),
-        assetAmt: BigInt.parse(decode.getField(3)),
-        count: decode.getField(4));
+      asset: ThorchainAsset.deserialize(decode.getField(1)),
+      runeAmt: BigInt.parse(decode.getField(2)),
+      assetAmt: BigInt.parse(decode.getField(3)),
+      count: decode.getField(4),
+    );
   }
 
   @override
@@ -29,7 +31,7 @@ class ThorchainGasPool extends CosmosMessage {
       "asset": asset.toJson(),
       "rune_amt": runeAmt.toString(),
       "asset_amt": assetAmt.toString(),
-      "count": count?.toString()
+      "count": count?.toString(),
     };
   }
 

@@ -9,17 +9,20 @@ class BlockData extends CosmosMessage {
   /// This means that block.AppHash does not include these txs.
   final List<List<int>> txs;
   BlockData({required List<List<int>> txs})
-      : txs = List<List<int>>.unmodifiable(
-            txs.map((e) => BytesUtils.toBytes(e).toList()));
+    : txs = List<List<int>>.unmodifiable(
+        txs.map((e) => BytesUtils.toBytes(e).toList()),
+      );
   factory BlockData.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return BlockData(txs: decode.getFields<List<int>>(1));
   }
   factory BlockData.fromJson(Map<String, dynamic> json) {
     return BlockData(
-        txs: (json["txs"] as List)
-            .map((e) => StringUtils.encode(e, type: StringEncoding.base64))
-            .toList());
+      txs:
+          (json["txs"] as List)
+              .map((e) => StringUtils.encode(e, type: StringEncoding.base64))
+              .toList(),
+    );
   }
 
   @override

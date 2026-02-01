@@ -11,21 +11,26 @@ class OsmosisTwapArithmeticTwapRequest extends CosmosMessage
   final ProtobufTimestamp startTime;
   final ProtobufTimestamp? endTime;
 
-  OsmosisTwapArithmeticTwapRequest(
-      {this.poolId,
-      this.baseAsset,
-      this.quoteAsset,
-      required this.startTime,
-      this.endTime});
+  OsmosisTwapArithmeticTwapRequest({
+    this.poolId,
+    this.baseAsset,
+    this.quoteAsset,
+    required this.startTime,
+    this.endTime,
+  });
   factory OsmosisTwapArithmeticTwapRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisTwapArithmeticTwapRequest(
-        poolId: decode.getField(1),
-        baseAsset: decode.getField(2),
-        quoteAsset: decode.getField(3),
-        startTime: ProtobufTimestamp.deserialize(decode.getField(4)),
-        endTime: decode.getResult(5)?.to<ProtobufTimestamp, List<int>>(
-            (e) => ProtobufTimestamp.deserialize(e)));
+      poolId: decode.getField(1),
+      baseAsset: decode.getField(2),
+      quoteAsset: decode.getField(3),
+      startTime: ProtobufTimestamp.deserialize(decode.getField(4)),
+      endTime: decode
+          .getResult(5)
+          ?.to<ProtobufTimestamp, List<int>>(
+            (e) => ProtobufTimestamp.deserialize(e),
+          ),
+    );
   }
 
   @override
@@ -38,7 +43,7 @@ class OsmosisTwapArithmeticTwapRequest extends CosmosMessage
       "base_asset": baseAsset,
       "quote_asset": quoteAsset,
       "start_time": startTime.toJson(),
-      "end_time": endTime?.toJson()
+      "end_time": endTime?.toJson(),
     };
   }
 
@@ -50,12 +55,12 @@ class OsmosisTwapArithmeticTwapRequest extends CosmosMessage
 
   @override
   Map<String, String?> get queryParameters => {
-        "pool_id": poolId?.toString(),
-        "base_asset": baseAsset,
-        "quote_asset": quoteAsset,
-        "start_time": startTime.toString(),
-        "end_time": endTime?.toString()
-      };
+    "pool_id": poolId?.toString(),
+    "base_asset": baseAsset,
+    "quote_asset": quoteAsset,
+    "start_time": startTime.toString(),
+    "end_time": endTime?.toString(),
+  };
 
   @override
   OsmosisTwapArithmeticTwapResponse onJsonResponse(Map<String, dynamic> json) {

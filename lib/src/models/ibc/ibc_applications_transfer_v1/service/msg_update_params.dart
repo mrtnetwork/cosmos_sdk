@@ -26,8 +26,9 @@ class IbcTransferMsgUpdateParams
   }
   factory IbcTransferMsgUpdateParams.fromJson(Map<String, dynamic> json) {
     return IbcTransferMsgUpdateParams(
-        signer: json.as("signer"),
-        params: IbcTransaferParams.fromJson(json.asMap("params")));
+      signer: json.as("signer"),
+      params: IbcTransaferParams.fromJson(json.asMap("params")),
+    );
   }
 
   @override
@@ -50,6 +51,7 @@ class IbcTransferMsgUpdateParams
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        IbcTypes.ibcTransfermsgUpdateParamsResponse);
+      IbcTypes.ibcTransfermsgUpdateParamsResponse,
+    );
   }
 }

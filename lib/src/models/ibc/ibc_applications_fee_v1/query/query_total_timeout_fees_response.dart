@@ -8,23 +8,27 @@ class QueryTotalTimeoutFeesResponse extends CosmosMessage {
   /// the total packet receive fees
   final List<Coin> timeoutFees;
   QueryTotalTimeoutFeesResponse({required List<Coin> timeoutFees})
-      : timeoutFees = timeoutFees.immutable;
+    : timeoutFees = timeoutFees.immutable;
 
   factory QueryTotalTimeoutFeesResponse.fromJson(Map<String, dynamic> json) {
     return QueryTotalTimeoutFeesResponse(
-        timeoutFees: (json["timeout_fees"] as List?)
-                ?.map((e) => Coin.fromJson(e))
-                .toList() ??
-            []);
+      timeoutFees:
+          (json["timeout_fees"] as List?)
+              ?.map((e) => Coin.fromJson(e))
+              .toList() ??
+          [],
+    );
   }
 
   factory QueryTotalTimeoutFeesResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryTotalTimeoutFeesResponse(
-        timeoutFees: decode
-            .getFields<List<int>>(1)
-            .map((e) => Coin.deserialize(e))
-            .toList());
+      timeoutFees:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
+    );
   }
 
   @override

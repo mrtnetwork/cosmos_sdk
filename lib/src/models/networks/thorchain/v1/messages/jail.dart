@@ -7,13 +7,14 @@ class ThorchainJail extends CosmosMessage {
   final BigInt? releaseHeight;
   final String? reason;
   ThorchainJail({List<int>? nodeAddress, this.releaseHeight, this.reason})
-      : nodeAddress = BytesUtils.tryToBytes(nodeAddress, unmodifiable: true);
+    : nodeAddress = BytesUtils.tryToBytes(nodeAddress, unmodifiable: true);
   factory ThorchainJail.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainJail(
-        nodeAddress: decode.getField(1),
-        releaseHeight: decode.getField(2),
-        reason: decode.getField(3));
+      nodeAddress: decode.getField(1),
+      releaseHeight: decode.getField(2),
+      reason: decode.getField(3),
+    );
   }
 
   @override
@@ -24,7 +25,7 @@ class ThorchainJail extends CosmosMessage {
     return {
       "node_address": BytesUtils.tryToHexString(nodeAddress),
       "release_height": releaseHeight?.toString(),
-      "reason": reason
+      "reason": reason,
     };
   }
 

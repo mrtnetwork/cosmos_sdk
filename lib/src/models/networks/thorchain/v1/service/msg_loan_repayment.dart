@@ -10,25 +10,26 @@ class ThorchainMsgLoanRepayment extends CosmosMessage {
   final List<int>? signer;
   final String? from;
   final String? txId;
-  ThorchainMsgLoanRepayment(
-      {this.owner,
-      required this.collateralAsset,
-      required this.coin,
-      required this.minOut,
-      List<int>? signer,
-      this.from,
-      this.txId})
-      : signer = BytesUtils.tryToBytes(signer, unmodifiable: true);
+  ThorchainMsgLoanRepayment({
+    this.owner,
+    required this.collateralAsset,
+    required this.coin,
+    required this.minOut,
+    List<int>? signer,
+    this.from,
+    this.txId,
+  }) : signer = BytesUtils.tryToBytes(signer, unmodifiable: true);
   factory ThorchainMsgLoanRepayment.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainMsgLoanRepayment(
-        owner: decode.getField(1),
-        collateralAsset: ThorchainAsset.deserialize(decode.getField(2)),
-        coin: ThorchainCoin.deserialize(decode.getField(3)),
-        minOut: BigintUtils.parse(decode.getField<String>(4)),
-        signer: decode.getField(5),
-        from: decode.getField(6),
-        txId: decode.getField(7));
+      owner: decode.getField(1),
+      collateralAsset: ThorchainAsset.deserialize(decode.getField(2)),
+      coin: ThorchainCoin.deserialize(decode.getField(3)),
+      minOut: BigintUtils.parse(decode.getField<String>(4)),
+      signer: decode.getField(5),
+      from: decode.getField(6),
+      txId: decode.getField(7),
+    );
   }
 
   @override
@@ -43,7 +44,7 @@ class ThorchainMsgLoanRepayment extends CosmosMessage {
       "min_out": minOut.toString(),
       "signer": BytesUtils.tryToHexString(signer),
       "from": from,
-      "tx_id": txId
+      "tx_id": txId,
     };
   }
 
@@ -51,6 +52,13 @@ class ThorchainMsgLoanRepayment extends CosmosMessage {
   TypeUrl get typeUrl => ThorchainV1Types.msgLoanRepayment;
 
   @override
-  List get values =>
-      [owner, collateralAsset, coin, minOut.toString(), signer, from, txId];
+  List get values => [
+    owner,
+    collateralAsset,
+    coin,
+    minOut.toString(),
+    signer,
+    from,
+    txId,
+  ];
 }

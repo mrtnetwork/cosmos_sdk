@@ -17,30 +17,33 @@ class OsmosisValidatorPreferenceMsgDelegateToValidatorSet
   /// B, 2osmo to C.
   final Coin coin;
 
-  const OsmosisValidatorPreferenceMsgDelegateToValidatorSet(
-      {this.delegator, required this.coin});
+  const OsmosisValidatorPreferenceMsgDelegateToValidatorSet({
+    this.delegator,
+    required this.coin,
+  });
   factory OsmosisValidatorPreferenceMsgDelegateToValidatorSet.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisValidatorPreferenceMsgDelegateToValidatorSet(
-        delegator: decode.getField(1),
-        coin: Coin.deserialize(decode.getField(2)));
+      delegator: decode.getField(1),
+      coin: Coin.deserialize(decode.getField(2)),
+    );
   }
   factory OsmosisValidatorPreferenceMsgDelegateToValidatorSet.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisValidatorPreferenceMsgDelegateToValidatorSet(
-        delegator: json.as("delegator"),
-        coin: Coin.fromJson(json.asMap("coin")));
+      delegator: json.as("delegator"),
+      coin: Coin.fromJson(json.asMap("coin")),
+    );
   }
   @override
   List<int> get fieldIds => [1, 2];
 
   @override
   Map<String, dynamic> toJson() {
-    return {
-      "delegator": delegator,
-      "coin": coin.toJson(),
-    };
+    return {"delegator": delegator, "coin": coin.toJson()};
   }
 
   @override
@@ -52,8 +55,9 @@ class OsmosisValidatorPreferenceMsgDelegateToValidatorSet
 
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
-    return EmptyServiceRequestResponse(OsmosisValidatorPreferenceV1beta1Types
-        .msgDelegateToValidatorSetResponse);
+    return EmptyServiceRequestResponse(
+      OsmosisValidatorPreferenceV1beta1Types.msgDelegateToValidatorSetResponse,
+    );
   }
 
   @override

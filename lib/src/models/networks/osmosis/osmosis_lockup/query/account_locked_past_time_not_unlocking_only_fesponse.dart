@@ -7,23 +7,28 @@ class OsmosisLockupAccountLockedPastTimeNotUnlockingOnlyResponse
     extends CosmosMessage {
   final List<OsmosisLockupPeriodLock> locks;
   OsmosisLockupAccountLockedPastTimeNotUnlockingOnlyResponse(
-      List<OsmosisLockupPeriodLock> locks)
-      : locks = locks.immutable;
+    List<OsmosisLockupPeriodLock> locks,
+  ) : locks = locks.immutable;
   factory OsmosisLockupAccountLockedPastTimeNotUnlockingOnlyResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return OsmosisLockupAccountLockedPastTimeNotUnlockingOnlyResponse(decode
-        .getFields<List<int>>(1)
-        .map((e) => OsmosisLockupPeriodLock.deserialize(e))
-        .toList());
+    return OsmosisLockupAccountLockedPastTimeNotUnlockingOnlyResponse(
+      decode
+          .getFields<List<int>>(1)
+          .map((e) => OsmosisLockupPeriodLock.deserialize(e))
+          .toList(),
+    );
   }
   factory OsmosisLockupAccountLockedPastTimeNotUnlockingOnlyResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisLockupAccountLockedPastTimeNotUnlockingOnlyResponse(
-        (json["locks"] as List?)
-                ?.map((e) => OsmosisLockupPeriodLock.deserialize(e))
-                .toList() ??
-            <OsmosisLockupPeriodLock>[]);
+      (json["locks"] as List?)
+              ?.map((e) => OsmosisLockupPeriodLock.deserialize(e))
+              .toList() ??
+          <OsmosisLockupPeriodLock>[],
+    );
   }
   @override
   List<int> get fieldIds => [1];

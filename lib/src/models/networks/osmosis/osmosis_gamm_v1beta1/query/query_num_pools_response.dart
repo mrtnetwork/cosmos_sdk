@@ -12,7 +12,8 @@ class OsmosisGammQueryNumPoolsResponse extends CosmosMessage {
   }
   factory OsmosisGammQueryNumPoolsResponse.fromJson(Map<String, dynamic> json) {
     return OsmosisGammQueryNumPoolsResponse(
-        numPools: BigintUtils.tryParse(json["num_pools"]));
+      numPools: BigintUtils.tryParse(json["num_pools"]),
+    );
   }
 
   @override

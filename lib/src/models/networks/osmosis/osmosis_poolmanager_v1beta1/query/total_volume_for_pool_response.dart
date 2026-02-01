@@ -6,20 +6,22 @@ import 'package:blockchain_utils/helper/helper.dart';
 class OsmosisPoolManagerTotalVolumeForPoolResponse extends CosmosMessage {
   final List<Coin> volume;
   OsmosisPoolManagerTotalVolumeForPoolResponse(List<Coin> volume)
-      : volume = volume.immutable;
+    : volume = volume.immutable;
   factory OsmosisPoolManagerTotalVolumeForPoolResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return OsmosisPoolManagerTotalVolumeForPoolResponse(decode
-        .getFields<List<int>>(1)
-        .map((e) => Coin.deserialize(e))
-        .toList());
+    return OsmosisPoolManagerTotalVolumeForPoolResponse(
+      decode.getFields<List<int>>(1).map((e) => Coin.deserialize(e)).toList(),
+    );
   }
   factory OsmosisPoolManagerTotalVolumeForPoolResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisPoolManagerTotalVolumeForPoolResponse(
-        (json["volume"] as List?)?.map((e) => Coin.fromJson(e)).toList() ??
-            <Coin>[]);
+      (json["volume"] as List?)?.map((e) => Coin.fromJson(e)).toList() ??
+          <Coin>[],
+    );
   }
 
   @override

@@ -38,22 +38,26 @@ class BankGenesisState extends CosmosMessage {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return BankGenesisState(
       params: BankParams.deserialize(decode.getField(1)),
-      balances: decode
-          .getFields<List<int>>(2)
-          .map((e) => Balance.deserialize(e))
-          .toList(),
-      supply: decode
-          .getFields<List<int>>(3)
-          .map((e) => Coin.deserialize(e))
-          .toList(),
-      denomMetadata: decode
-          .getFields<List<int>>(4)
-          .map((e) => Metadata.deserialize(e))
-          .toList(),
-      sendEnabled: decode
-          .getFields<List<int>>(5)
-          .map((e) => SendEnabled.deserialize(e))
-          .toList(),
+      balances:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => Balance.deserialize(e))
+              .toList(),
+      supply:
+          decode
+              .getFields<List<int>>(3)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
+      denomMetadata:
+          decode
+              .getFields<List<int>>(4)
+              .map((e) => Metadata.deserialize(e))
+              .toList(),
+      sendEnabled:
+          decode
+              .getFields<List<int>>(5)
+              .map((e) => SendEnabled.deserialize(e))
+              .toList(),
     );
   }
 
@@ -67,7 +71,7 @@ class BankGenesisState extends CosmosMessage {
       "balances": balances.map((e) => e.toJson()).toList(),
       "supply": supply.map((e) => e.toJson()).toList(),
       "denom_metadata": denomMetadata.map((e) => e.toJson()).toList(),
-      "send_enabled": sendEnabled.map((e) => e.toJson()).toList()
+      "send_enabled": sendEnabled.map((e) => e.toJson()).toList(),
     };
   }
 

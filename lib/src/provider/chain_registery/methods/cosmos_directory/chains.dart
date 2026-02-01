@@ -2,8 +2,9 @@ import 'package:cosmos_sdk/src/provider/chain_registery/core/core.dart';
 import 'package:cosmos_sdk/src/provider/chain_registery/models/models/comsos_directory.dart';
 import 'package:cosmos_sdk/src/utils/quick.dart';
 
-class ChainRegistryRequestCosmosDirectoryChains extends ChainRegistryRequest<
-    List<CosmosDirectoryChain>, Map<String, dynamic>> {
+class ChainRegistryRequestCosmosDirectoryChains
+    extends
+        ChainRegistryRequest<List<CosmosDirectoryChain>, Map<String, dynamic>> {
   ChainRegistryRequestCosmosDirectoryChains();
 
   @override

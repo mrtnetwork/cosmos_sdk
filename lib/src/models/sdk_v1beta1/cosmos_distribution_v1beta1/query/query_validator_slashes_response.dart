@@ -13,31 +13,38 @@ class DistributionQueryValidatorSlashesResponse extends CosmosMessage {
   /// pagination defines the pagination in the response.
   final PageResponse? pagination;
   factory DistributionQueryValidatorSlashesResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return DistributionQueryValidatorSlashesResponse(
-      slashes: (json["slashes"] as List?)
+      slashes:
+          (json["slashes"] as List?)
               ?.map((e) => DistributionValidatorSlashEvent.fromJson(e))
               .toList() ??
           [],
-      pagination: json["pagination"] == null
-          ? null
-          : PageResponse.fromJson(json["pagination"]),
+      pagination:
+          json["pagination"] == null
+              ? null
+              : PageResponse.fromJson(json["pagination"]),
     );
   }
-  DistributionQueryValidatorSlashesResponse(
-      {required List<DistributionValidatorSlashEvent> slashes, this.pagination})
-      : slashes = slashes.immutable;
+  DistributionQueryValidatorSlashesResponse({
+    required List<DistributionValidatorSlashEvent> slashes,
+    this.pagination,
+  }) : slashes = slashes.immutable;
   factory DistributionQueryValidatorSlashesResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionQueryValidatorSlashesResponse(
-        slashes: decode
-            .getFields<List<int>>(1)
-            .map((e) => DistributionValidatorSlashEvent.deserialize(e))
-            .toList(),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
+      slashes:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => DistributionValidatorSlashEvent.deserialize(e))
+              .toList(),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
+    );
   }
 
   @override
@@ -47,7 +54,7 @@ class DistributionQueryValidatorSlashesResponse extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "slashes": slashes.map((e) => e.toJson()).toList(),
-      "pagination": pagination?.toJson()
+      "pagination": pagination?.toJson(),
     };
   }
 

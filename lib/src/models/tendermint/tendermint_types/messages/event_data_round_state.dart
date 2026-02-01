@@ -10,9 +10,10 @@ class EventDataRoundState extends CosmosMessage {
   factory EventDataRoundState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EventDataRoundState(
-        height: decode.getField(1),
-        round: decode.getField(2),
-        step: decode.getField(3));
+      height: decode.getField(1),
+      round: decode.getField(2),
+      step: decode.getField(3),
+    );
   }
 
   @override

@@ -16,8 +16,10 @@ class SignMode implements CosmosEnum {
 
   /// sign-mode-unspecified specifies an unknown signing mode and will be
   /// rejected.
-  static const SignMode signModeUnspecified =
-      SignMode._(0, "signModeUnspecified");
+  static const SignMode signModeUnspecified = SignMode._(
+    0,
+    "signModeUnspecified",
+  );
 
   /// sign-mode-direct specifies a signing mode which uses SignDoc and is
   /// verified with raw bytes from Tx.
@@ -39,8 +41,10 @@ class SignMode implements CosmosEnum {
 
   /// sign-mode-legacy-amino-json is a backwards compatibility mode which uses
   /// Amino JSON and will be removed in the future.
-  static const SignMode signModeLegacyAminoJson =
-      SignMode._(127, "signModeLegacyAminoJson");
+  static const SignMode signModeLegacyAminoJson = SignMode._(
+    127,
+    "signModeLegacyAminoJson",
+  );
 
   /// sign-mode-eip-191 specifies the sign mode for EIP 191 signing on the Cosmos
   /// SDK. Ref: https://eips.ethereum.org/EIPS/eip-191
@@ -65,24 +69,30 @@ class SignMode implements CosmosEnum {
     signModeTextual,
     signModeDirectAux,
     signModeLegacyAminoJson,
-    signModeEip191
+    signModeEip191,
   ];
 
   static SignMode fromValue(int? value) {
     return values.firstWhere(
       (element) => element.value == value,
-      orElse: () => throw DartCosmosSdkPluginException(
-          "No matching element found for the given value.",
-          details: {"value": value}),
+      orElse:
+          () =>
+              throw DartCosmosSdkPluginException(
+                "No matching element found for the given value.",
+                details: {"value": value},
+              ),
     );
   }
 
   static SignMode fromName(String? name) {
     return values.firstWhere(
       (element) => element.name == name,
-      orElse: () => throw DartCosmosSdkPluginException(
-          "No matching element found for the given value.",
-          details: {"name": name}),
+      orElse:
+          () =>
+              throw DartCosmosSdkPluginException(
+                "No matching element found for the given value.",
+                details: {"name": name},
+              ),
     );
   }
 }

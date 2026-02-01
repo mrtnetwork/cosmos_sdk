@@ -4,11 +4,15 @@ import 'package:cosmos_sdk/src/provider/thornode/models/models/asset_liquidity_p
 
 /// Returns all liquidity provider information for an asset..
 class ThorNodeRequestAssetLiquidityProvidersInformation
-    extends ThorNodeRequestParam<
-        List<AssetLiquidityProviderInformationResponse>,
-        List<Map<String, dynamic>>> {
-  ThorNodeRequestAssetLiquidityProvidersInformation(
-      {required this.asset, this.height});
+    extends
+        ThorNodeRequestParam<
+          List<AssetLiquidityProviderInformationResponse>,
+          List<Map<String, dynamic>>
+        > {
+  ThorNodeRequestAssetLiquidityProvidersInformation({
+    required this.asset,
+    this.height,
+  });
 
   /// optional block height, defaults to current tip
   final BigInt? height;
@@ -27,7 +31,8 @@ class ThorNodeRequestAssetLiquidityProvidersInformation
 
   @override
   List<AssetLiquidityProviderInformationResponse> onResonse(
-      List<Map<String, dynamic>> result) {
+    List<Map<String, dynamic>> result,
+  ) {
     return result
         .map((e) => AssetLiquidityProviderInformationResponse.fromJson(e))
         .toList();

@@ -7,13 +7,14 @@ class ThorchainMsgMigrate extends CosmosMessage {
   final BigInt? blockHeight;
   final List<int>? signer;
   ThorchainMsgMigrate({required this.tx, this.blockHeight, List<int>? signer})
-      : signer = BytesUtils.tryToBytes(signer);
+    : signer = BytesUtils.tryToBytes(signer);
   factory ThorchainMsgMigrate.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainMsgMigrate(
-        tx: ThorchainObservedTx.deserialize(decode.getField(1)),
-        blockHeight: decode.getField(2),
-        signer: decode.getField(3));
+      tx: ThorchainObservedTx.deserialize(decode.getField(1)),
+      blockHeight: decode.getField(2),
+      signer: decode.getField(3),
+    );
   }
 
   @override
@@ -24,7 +25,7 @@ class ThorchainMsgMigrate extends CosmosMessage {
     return {
       "tx": tx.toJson(),
       "block_height": blockHeight?.toString(),
-      "signer": BytesUtils.tryToHexString(signer)
+      "signer": BytesUtils.tryToHexString(signer),
     };
   }
 

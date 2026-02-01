@@ -7,7 +7,8 @@ class OsmosisProtorevQueryGetProtoRevAdminAccountRequest extends CosmosMessage
     with QueryMessage<OsmosisProtorevQueryGetProtoRevAdminAccountResponse> {
   const OsmosisProtorevQueryGetProtoRevAdminAccountRequest();
   factory OsmosisProtorevQueryGetProtoRevAdminAccountRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return const OsmosisProtorevQueryGetProtoRevAdminAccountRequest();
   }
 
@@ -24,14 +25,17 @@ class OsmosisProtorevQueryGetProtoRevAdminAccountRequest extends CosmosMessage
 
   @override
   OsmosisProtorevQueryGetProtoRevAdminAccountResponse onResponse(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return OsmosisProtorevQueryGetProtoRevAdminAccountResponse.deserialize(
-        bytes);
+      bytes,
+    );
   }
 
   @override
   OsmosisProtorevQueryGetProtoRevAdminAccountResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisProtorevQueryGetProtoRevAdminAccountResponse.fromJson(json);
   }
 

@@ -15,20 +15,25 @@ class MsgRecoverClient extends IbcService<EmptyServiceRequestResponse> {
 
   /// signer address
   final String? signer;
-  const MsgRecoverClient(
-      {this.subjectClientId, this.substituteClientId, this.signer});
+  const MsgRecoverClient({
+    this.subjectClientId,
+    this.substituteClientId,
+    this.signer,
+  });
   factory MsgRecoverClient.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgRecoverClient(
-        subjectClientId: decode.getField(1),
-        substituteClientId: decode.getField(2),
-        signer: decode.getField(3));
+      subjectClientId: decode.getField(1),
+      substituteClientId: decode.getField(2),
+      signer: decode.getField(3),
+    );
   }
   factory MsgRecoverClient.fromJson(Map<String, dynamic> json) {
     return MsgRecoverClient(
-        subjectClientId: json.as("subject_client_id"),
-        substituteClientId: json.as("substitute_client_id"),
-        signer: json.as("signer"));
+      subjectClientId: json.as("subject_client_id"),
+      substituteClientId: json.as("substitute_client_id"),
+      signer: json.as("signer"),
+    );
   }
 
   @override
@@ -39,7 +44,7 @@ class MsgRecoverClient extends IbcService<EmptyServiceRequestResponse> {
     return {
       "subject_client_id": subjectClientId,
       "substitute_client_id": substituteClientId,
-      "signer": signer
+      "signer": signer,
     };
   }
 

@@ -21,30 +21,26 @@ class NFT extends CosmosMessage {
   final AnyMessage? data;
   factory NFT.fromJson(Map<String, dynamic> json) {
     return NFT(
-        classId: json["class_id"],
-        id: json["id"],
-        uri: json["uri"],
-        uriHash: json["uri_hash"],
-        data: json["data"] == null ? null : AnyMessage.fromJson(json["data"]));
+      classId: json["class_id"],
+      id: json["id"],
+      uri: json["uri"],
+      uriHash: json["uri_hash"],
+      data: json["data"] == null ? null : AnyMessage.fromJson(json["data"]),
+    );
   }
-  const NFT({
-    this.classId,
-    this.id,
-    this.uri,
-    this.uriHash,
-    this.data,
-  });
+  const NFT({this.classId, this.id, this.uri, this.uriHash, this.data});
 
   factory NFT.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return NFT(
-        classId: decode.getField(1),
-        id: decode.getField(2),
-        uri: decode.getField(3),
-        uriHash: decode.getField(4),
-        data: decode
-            .getResult(10)
-            ?.to<AnyMessage, List<int>>((e) => AnyMessage.deserialize(e)));
+      classId: decode.getField(1),
+      id: decode.getField(2),
+      uri: decode.getField(3),
+      uriHash: decode.getField(4),
+      data: decode
+          .getResult(10)
+          ?.to<AnyMessage, List<int>>((e) => AnyMessage.deserialize(e)),
+    );
   }
 
   @override

@@ -10,12 +10,16 @@ class OsmosisStreamSwapQueryUserPosition extends CosmosMessage
   /// user account address
   final String user;
 
-  OsmosisStreamSwapQueryUserPosition(
-      {required this.saleId, required this.user});
+  OsmosisStreamSwapQueryUserPosition({
+    required this.saleId,
+    required this.user,
+  });
   factory OsmosisStreamSwapQueryUserPosition.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisStreamSwapQueryUserPosition(
-        saleId: decode.getField(1), user: decode.getField(2));
+      saleId: decode.getField(1),
+      user: decode.getField(2),
+    );
   }
 
   @override
@@ -37,7 +41,8 @@ class OsmosisStreamSwapQueryUserPosition extends CosmosMessage
 
   @override
   OsmosisStreamSwapQueryUserPositionResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisStreamSwapQueryUserPositionResponse.fromJson(json);
   }
 

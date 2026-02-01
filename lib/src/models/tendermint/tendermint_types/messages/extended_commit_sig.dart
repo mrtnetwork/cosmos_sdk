@@ -19,29 +19,32 @@ class ExtendedCommitSig extends CosmosMessage {
   /// Vote extension signature
   final List<int>? extensionSignature;
 
-  ExtendedCommitSig(
-      {this.blockIDFlag,
-      List<int>? validatorBytes,
-      required this.timestamp,
-      List<int>? signature,
-      List<int>? extension,
-      List<int>? extensionSignature})
-      : validatorBytes =
-            BytesUtils.tryToBytes(validatorBytes, unmodifiable: true),
-        signature = BytesUtils.tryToBytes(signature, unmodifiable: true),
-        extension = BytesUtils.tryToBytes(extension, unmodifiable: true),
-        extensionSignature = BytesUtils.tryToBytes(extensionSignature);
+  ExtendedCommitSig({
+    this.blockIDFlag,
+    List<int>? validatorBytes,
+    required this.timestamp,
+    List<int>? signature,
+    List<int>? extension,
+    List<int>? extensionSignature,
+  }) : validatorBytes = BytesUtils.tryToBytes(
+         validatorBytes,
+         unmodifiable: true,
+       ),
+       signature = BytesUtils.tryToBytes(signature, unmodifiable: true),
+       extension = BytesUtils.tryToBytes(extension, unmodifiable: true),
+       extensionSignature = BytesUtils.tryToBytes(extensionSignature);
   factory ExtendedCommitSig.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ExtendedCommitSig(
-        blockIDFlag: decode
-            .getResult(1)
-            ?.to<BlockIDFlag, int>((e) => BlockIDFlag.fromValue(e)),
-        validatorBytes: decode.getField(2),
-        timestamp: ProtobufTimestamp.deserialize(decode.getField(3)),
-        signature: decode.getField(4),
-        extension: decode.getField(5),
-        extensionSignature: decode.getField(6));
+      blockIDFlag: decode
+          .getResult(1)
+          ?.to<BlockIDFlag, int>((e) => BlockIDFlag.fromValue(e)),
+      validatorBytes: decode.getField(2),
+      timestamp: ProtobufTimestamp.deserialize(decode.getField(3)),
+      signature: decode.getField(4),
+      extension: decode.getField(5),
+      extensionSignature: decode.getField(6),
+    );
   }
 
   @override
@@ -55,7 +58,7 @@ class ExtendedCommitSig extends CosmosMessage {
       "timestamp": timestamp.toJson(),
       "signature": BytesUtils.tryToHexString(signature),
       "extension": BytesUtils.tryToHexString(extension),
-      "extension_signature": BytesUtils.tryToHexString(extensionSignature)
+      "extension_signature": BytesUtils.tryToHexString(extensionSignature),
     };
   }
 

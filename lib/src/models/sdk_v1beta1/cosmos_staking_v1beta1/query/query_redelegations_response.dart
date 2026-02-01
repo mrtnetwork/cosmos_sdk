@@ -9,30 +9,36 @@ class QueryRedelegationsResponse extends CosmosMessage {
 
   /// pagination defines the pagination in the response.
   final PageResponse? pagination;
-  const QueryRedelegationsResponse(
-      {required this.redelegationResponses, this.pagination});
+  const QueryRedelegationsResponse({
+    required this.redelegationResponses,
+    this.pagination,
+  });
 
   factory QueryRedelegationsResponse.fromJson(Map<String, dynamic> json) {
     return QueryRedelegationsResponse(
-      redelegationResponses: (json["redelegation_responses"] as List?)
+      redelegationResponses:
+          (json["redelegation_responses"] as List?)
               ?.map((e) => RedelegationResponse.fromJson(e))
               .toList() ??
           [],
-      pagination: json["pagination"] == null
-          ? null
-          : PageResponse.fromJson(json["pagination"]),
+      pagination:
+          json["pagination"] == null
+              ? null
+              : PageResponse.fromJson(json["pagination"]),
     );
   }
   factory QueryRedelegationsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryRedelegationsResponse(
-        redelegationResponses: decode
-            .getFields<List<int>>(1)
-            .map((e) => RedelegationResponse.deserialize(e))
-            .toList(),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
+      redelegationResponses:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => RedelegationResponse.deserialize(e))
+              .toList(),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
+    );
   }
 
   @override
@@ -43,7 +49,7 @@ class QueryRedelegationsResponse extends CosmosMessage {
     return {
       "redelegation_responses":
           redelegationResponses.map((e) => e.toJson()).toList(),
-      "pagination": pagination?.toJson()
+      "pagination": pagination?.toJson(),
     };
   }
 

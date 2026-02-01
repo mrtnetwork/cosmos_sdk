@@ -6,22 +6,28 @@ import 'package:blockchain_utils/helper/helper.dart';
 class OsmosisLockupAccountLockedDurationResponse extends CosmosMessage {
   final List<OsmosisLockupPeriodLock> locks;
   OsmosisLockupAccountLockedDurationResponse(
-      List<OsmosisLockupPeriodLock> locks)
-      : locks = locks.immutable;
+    List<OsmosisLockupPeriodLock> locks,
+  ) : locks = locks.immutable;
   factory OsmosisLockupAccountLockedDurationResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return OsmosisLockupAccountLockedDurationResponse(decode
-        .getFields<List<int>>(1)
-        .map((e) => OsmosisLockupPeriodLock.deserialize(e))
-        .toList());
+    return OsmosisLockupAccountLockedDurationResponse(
+      decode
+          .getFields<List<int>>(1)
+          .map((e) => OsmosisLockupPeriodLock.deserialize(e))
+          .toList(),
+    );
   }
   factory OsmosisLockupAccountLockedDurationResponse.fromJson(
-      Map<String, dynamic> json) {
-    return OsmosisLockupAccountLockedDurationResponse((json["locks"] as List?)
-            ?.map((e) => OsmosisLockupPeriodLock.deserialize(e))
-            .toList() ??
-        <OsmosisLockupPeriodLock>[]);
+    Map<String, dynamic> json,
+  ) {
+    return OsmosisLockupAccountLockedDurationResponse(
+      (json["locks"] as List?)
+              ?.map((e) => OsmosisLockupPeriodLock.deserialize(e))
+              .toList() ??
+          <OsmosisLockupPeriodLock>[],
+    );
   }
   @override
   List<int> get fieldIds => [1];

@@ -8,10 +8,12 @@ class OsmosisTokenFactoryQueryDenomsFromCreatorRequest extends CosmosMessage
   final String creator;
   OsmosisTokenFactoryQueryDenomsFromCreatorRequest({required this.creator});
   factory OsmosisTokenFactoryQueryDenomsFromCreatorRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisTokenFactoryQueryDenomsFromCreatorRequest(
-        creator: decode.getField(1));
+      creator: decode.getField(1),
+    );
   }
 
   @override
@@ -31,13 +33,15 @@ class OsmosisTokenFactoryQueryDenomsFromCreatorRequest extends CosmosMessage
 
   @override
   OsmosisTokenFactoryQueryDenomsFromCreatorResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisTokenFactoryQueryDenomsFromCreatorResponse.fromJson(json);
   }
 
   @override
   OsmosisTokenFactoryQueryDenomsFromCreatorResponse onResponse(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return OsmosisTokenFactoryQueryDenomsFromCreatorResponse.deserialize(bytes);
   }
 

@@ -23,15 +23,16 @@ class DVVTriplet extends CosmosMessage {
   factory DVVTriplet.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DVVTriplet(
-        delegatorAddress: decode
-            .getResult(1)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        validatorDstAddress: decode
-            .getResult(3)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        validatorSrcAddress: decode
-            .getResult(2)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)));
+      delegatorAddress: decode
+          .getResult(1)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      validatorDstAddress: decode
+          .getResult(3)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      validatorSrcAddress: decode
+          .getResult(2)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+    );
   }
 
   @override
@@ -51,8 +52,8 @@ class DVVTriplet extends CosmosMessage {
 
   @override
   List get values => [
-        delegatorAddress?.address,
-        validatorSrcAddress?.address,
-        validatorDstAddress?.address
-      ];
+    delegatorAddress?.address,
+    validatorSrcAddress?.address,
+    validatorDstAddress?.address,
+  ];
 }

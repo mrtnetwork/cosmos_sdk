@@ -13,30 +13,35 @@ class IbcTransferV2QueryDenomsResponse extends CosmosMessage {
   /// pagination defines the pagination in the response.
   final PageResponse? pagination;
 
-  IbcTransferV2QueryDenomsResponse(
-      {required List<IbcTransferV2Denom> denoms, this.pagination})
-      : denoms = denoms.immutable;
+  IbcTransferV2QueryDenomsResponse({
+    required List<IbcTransferV2Denom> denoms,
+    this.pagination,
+  }) : denoms = denoms.immutable;
   factory IbcTransferV2QueryDenomsResponse.fromJson(Map<String, dynamic> json) {
     return IbcTransferV2QueryDenomsResponse(
-      denoms: (json["denoms"] as List?)
+      denoms:
+          (json["denoms"] as List?)
               ?.map((e) => IbcTransferV2Denom.fromJson(e))
               .toList() ??
           [],
-      pagination: json["pagination"] == null
-          ? null
-          : PageResponse.fromJson(json["pagination"]),
+      pagination:
+          json["pagination"] == null
+              ? null
+              : PageResponse.fromJson(json["pagination"]),
     );
   }
   factory IbcTransferV2QueryDenomsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcTransferV2QueryDenomsResponse(
-        denoms: decode
-            .getFields<List<int>>(1)
-            .map((e) => IbcTransferV2Denom.deserialize(e))
-            .toList(),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
+      denoms:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => IbcTransferV2Denom.deserialize(e))
+              .toList(),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
+    );
   }
 
   @override
@@ -46,7 +51,7 @@ class IbcTransferV2QueryDenomsResponse extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "pagination": pagination?.toJson(),
-      "denoms": denoms.map((e) => e.toJson()).toList()
+      "denoms": denoms.map((e) => e.toJson()).toList(),
     };
   }
 

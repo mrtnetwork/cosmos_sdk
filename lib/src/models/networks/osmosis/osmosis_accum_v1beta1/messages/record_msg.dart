@@ -38,33 +38,38 @@ class OsmosisAccumRecord extends CosmosMessage {
     required this.numShares,
     required List<DecCoin> accumValuePerShare,
     required List<DecCoin> unclaimedRewardsTotal,
-  })  : accumValuePerShare = accumValuePerShare.immutable,
-        unclaimedRewardsTotal = unclaimedRewardsTotal.immutable;
+  }) : accumValuePerShare = accumValuePerShare.immutable,
+       unclaimedRewardsTotal = unclaimedRewardsTotal.immutable;
   factory OsmosisAccumRecord.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisAccumRecord(
       numShares: decode.getField(1),
-      accumValuePerShare: decode
-          .getFields<List<int>>(2)
-          .map((e) => DecCoin.deserialize(e))
-          .toList(),
-      unclaimedRewardsTotal: decode
-          .getFields<List<int>>(3)
-          .map((e) => DecCoin.deserialize(e))
-          .toList(),
+      accumValuePerShare:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => DecCoin.deserialize(e))
+              .toList(),
+      unclaimedRewardsTotal:
+          decode
+              .getFields<List<int>>(3)
+              .map((e) => DecCoin.deserialize(e))
+              .toList(),
     );
   }
   factory OsmosisAccumRecord.fromJson(Map<String, dynamic> json) {
     return OsmosisAccumRecord(
-        numShares: json["num_shares"],
-        accumValuePerShare: (json["accum_value_per_share"] as List?)
-                ?.map((e) => DecCoin.deserialize(e))
-                .toList() ??
-            <DecCoin>[],
-        unclaimedRewardsTotal: (json["unclaimed_rewards_total"] as List?)
-                ?.map((e) => DecCoin.deserialize(e))
-                .toList() ??
-            <DecCoin>[]);
+      numShares: json["num_shares"],
+      accumValuePerShare:
+          (json["accum_value_per_share"] as List?)
+              ?.map((e) => DecCoin.deserialize(e))
+              .toList() ??
+          <DecCoin>[],
+      unclaimedRewardsTotal:
+          (json["unclaimed_rewards_total"] as List?)
+              ?.map((e) => DecCoin.deserialize(e))
+              .toList() ??
+          <DecCoin>[],
+    );
   }
 
   @override
@@ -77,7 +82,7 @@ class OsmosisAccumRecord extends CosmosMessage {
       "accum_value_per_share":
           accumValuePerShare.map((e) => e.toJson()).toList(),
       "unclaimed_rewards_total":
-          unclaimedRewardsTotal.map((e) => e.toJson()).toList()
+          unclaimedRewardsTotal.map((e) => e.toJson()).toList(),
     };
   }
 

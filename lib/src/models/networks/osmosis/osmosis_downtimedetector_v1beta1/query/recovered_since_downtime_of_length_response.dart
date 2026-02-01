@@ -4,18 +4,23 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class OsmosisDowntimeDetectorRecoveredSinceDowntimeOfLengthResponse
     extends CosmosMessage {
   final bool? succesfullyRecovered;
-  OsmosisDowntimeDetectorRecoveredSinceDowntimeOfLengthResponse(
-      {this.succesfullyRecovered});
+  OsmosisDowntimeDetectorRecoveredSinceDowntimeOfLengthResponse({
+    this.succesfullyRecovered,
+  });
   factory OsmosisDowntimeDetectorRecoveredSinceDowntimeOfLengthResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisDowntimeDetectorRecoveredSinceDowntimeOfLengthResponse(
-        succesfullyRecovered: decode.getField(1));
+      succesfullyRecovered: decode.getField(1),
+    );
   }
   factory OsmosisDowntimeDetectorRecoveredSinceDowntimeOfLengthResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisDowntimeDetectorRecoveredSinceDowntimeOfLengthResponse(
-        succesfullyRecovered: json["succesfully_recovered"]);
+      succesfullyRecovered: json["succesfully_recovered"],
+    );
   }
 
   @override
@@ -27,8 +32,9 @@ class OsmosisDowntimeDetectorRecoveredSinceDowntimeOfLengthResponse
   }
 
   @override
-  TypeUrl get typeUrl => OsmosisDowntimeDetectorV1beta1Types
-      .recoveredSinceDowntimeOfLengthResponse;
+  TypeUrl get typeUrl =>
+      OsmosisDowntimeDetectorV1beta1Types
+          .recoveredSinceDowntimeOfLengthResponse;
 
   @override
   List get values => [succesfullyRecovered];

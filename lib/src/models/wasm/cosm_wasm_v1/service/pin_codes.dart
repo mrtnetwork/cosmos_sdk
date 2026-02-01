@@ -14,22 +14,21 @@ class CosmWasmV1PinCodes
   /// CodeIDs references the WASM codes
   final List<BigInt>? codeIds;
 
-  CosmWasmV1PinCodes({
-    required this.authority,
-    required List<BigInt>? codeIds,
-  }) : codeIds = codeIds?.immutable;
+  CosmWasmV1PinCodes({required this.authority, required List<BigInt>? codeIds})
+    : codeIds = codeIds?.immutable;
   factory CosmWasmV1PinCodes.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmWasmV1PinCodes(
-        authority: decode.getField(1), codeIds: decode.getFields<BigInt>(2));
+      authority: decode.getField(1),
+      codeIds: decode.getFields<BigInt>(2),
+    );
   }
   factory CosmWasmV1PinCodes.fromJson(Map<String, dynamic> json) {
     return CosmWasmV1PinCodes(
-        authority: json.as("authority"),
-        codeIds: json
-            .as<List?>("code_ids")
-            ?.map((e) => BigintUtils.parse(e))
-            .toList());
+      authority: json.as("authority"),
+      codeIds:
+          json.as<List?>("code_ids")?.map((e) => BigintUtils.parse(e)).toList(),
+    );
   }
 
   @override
@@ -39,7 +38,7 @@ class CosmWasmV1PinCodes
   Map<String, dynamic> toJson() {
     return {
       "authority": authority,
-      "code_ids": codeIds?.map((e) => e.toString()).toList()
+      "code_ids": codeIds?.map((e) => e.toString()).toList(),
     };
   }
 

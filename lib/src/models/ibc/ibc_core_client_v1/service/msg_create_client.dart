@@ -20,18 +20,23 @@ class MsgCreateClient extends IbcService<EmptyServiceRequestResponse> {
   factory MsgCreateClient.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgCreateClient(
-        clientState: decode.getResult(1)?.to<Any, List<int>>(Any.deserialize),
-        consensusState:
-            decode.getResult(2)?.to<Any, List<int>>(Any.deserialize),
-        signer: decode.getField(3));
+      clientState: decode.getResult(1)?.to<Any, List<int>>(Any.deserialize),
+      consensusState: decode.getResult(2)?.to<Any, List<int>>(Any.deserialize),
+      signer: decode.getField(3),
+    );
   }
   factory MsgCreateClient.fromJson(Map<String, dynamic> json) {
     return MsgCreateClient(
-        clientState: json.maybeAs<Any, Map<String, dynamic>>(
-            key: "client_state", onValue: Any.fromJson),
-        consensusState: json.maybeAs<Any, Map<String, dynamic>>(
-            key: "consensus_state", onValue: Any.fromJson),
-        signer: json.as("signer"));
+      clientState: json.maybeAs<Any, Map<String, dynamic>>(
+        key: "client_state",
+        onValue: Any.fromJson,
+      ),
+      consensusState: json.maybeAs<Any, Map<String, dynamic>>(
+        key: "consensus_state",
+        onValue: Any.fromJson,
+      ),
+      signer: json.as("signer"),
+    );
   }
 
   @override

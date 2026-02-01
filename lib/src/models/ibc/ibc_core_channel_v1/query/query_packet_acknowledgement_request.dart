@@ -14,14 +14,18 @@ class QueryPacketAcknowledgementRequest extends CosmosMessage
 
   /// packet sequence
   final BigInt sequence;
-  const QueryPacketAcknowledgementRequest(
-      {required this.portId, required this.channelId, required this.sequence});
+  const QueryPacketAcknowledgementRequest({
+    required this.portId,
+    required this.channelId,
+    required this.sequence,
+  });
   factory QueryPacketAcknowledgementRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryPacketAcknowledgementRequest(
-        portId: decode.getField(1),
-        channelId: decode.getField(2),
-        sequence: decode.getField(3));
+      portId: decode.getField(1),
+      channelId: decode.getField(2),
+      sequence: decode.getField(3),
+    );
   }
 
   @override
@@ -32,7 +36,7 @@ class QueryPacketAcknowledgementRequest extends CosmosMessage
     return {
       "port_id": portId,
       "channel_id": channelId,
-      "sequence": sequence.toString()
+      "sequence": sequence.toString(),
     };
   }
 

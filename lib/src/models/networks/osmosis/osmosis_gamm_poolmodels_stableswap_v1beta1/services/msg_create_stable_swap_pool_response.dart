@@ -5,13 +5,16 @@ class OsmosisGammPoolmodelsStableSwapMsgCreateStableswapPoolResponse
     extends CosmosMessage {
   final BigInt? poolId;
   const OsmosisGammPoolmodelsStableSwapMsgCreateStableswapPoolResponse(
-      this.poolId);
+    this.poolId,
+  );
 
   factory OsmosisGammPoolmodelsStableSwapMsgCreateStableswapPoolResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisGammPoolmodelsStableSwapMsgCreateStableswapPoolResponse(
-        decode.getField(1));
+      decode.getField(1),
+    );
   }
 
   @override
@@ -23,8 +26,9 @@ class OsmosisGammPoolmodelsStableSwapMsgCreateStableswapPoolResponse
   }
 
   @override
-  TypeUrl get typeUrl => OsmosisGammPoolmodelsStableSwapV1beta1Types
-      .msgCreateStableswapPoolResponse;
+  TypeUrl get typeUrl =>
+      OsmosisGammPoolmodelsStableSwapV1beta1Types
+          .msgCreateStableswapPoolResponse;
 
   @override
   List get values => [poolId];

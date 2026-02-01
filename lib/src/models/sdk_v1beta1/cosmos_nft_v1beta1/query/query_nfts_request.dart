@@ -20,11 +20,12 @@ class QueryNFTsRequest extends CosmosMessage
   factory QueryNFTsRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryNFTsRequest(
-        classId: decode.getField(1),
-        owner: decode.getField(2),
-        pagination: decode
-            .getResult(3)
-            ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)));
+      classId: decode.getField(1),
+      owner: decode.getField(2),
+      pagination: decode
+          .getResult(3)
+          ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)),
+    );
   }
 
   @override
@@ -57,8 +58,8 @@ class QueryNFTsRequest extends CosmosMessage
 
   @override
   Map<String, String?> get queryParameters => {
-        ...pagination?.queryParameters ?? {},
-        'class_id': classId,
-        'owner': owner,
-      };
+    ...pagination?.queryParameters ?? {},
+    'class_id': classId,
+    'owner': owner,
+  };
 }

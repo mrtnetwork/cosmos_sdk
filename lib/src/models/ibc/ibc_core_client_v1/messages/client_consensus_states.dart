@@ -11,17 +11,20 @@ class IbcClientClientConsensusStates extends CosmosMessage {
 
   /// consensus states and their heights associated with the client
   final List<ConsensusStateWithHeight> consensusStates;
-  IbcClientClientConsensusStates(
-      {required List<ConsensusStateWithHeight> consensusStates, this.clientId})
-      : consensusStates = consensusStates.immutable;
+  IbcClientClientConsensusStates({
+    required List<ConsensusStateWithHeight> consensusStates,
+    this.clientId,
+  }) : consensusStates = consensusStates.immutable;
   factory IbcClientClientConsensusStates.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcClientClientConsensusStates(
-        clientId: decode.getField(1),
-        consensusStates: decode
-            .getFields<List<int>>(2)
-            .map((e) => ConsensusStateWithHeight.deserialize(e))
-            .toList());
+      clientId: decode.getField(1),
+      consensusStates:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => ConsensusStateWithHeight.deserialize(e))
+              .toList(),
+    );
   }
 
   @override
@@ -31,7 +34,7 @@ class IbcClientClientConsensusStates extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "client_id": clientId,
-      "consensus_states": consensusStates.map((e) => e.toJson()).toList()
+      "consensus_states": consensusStates.map((e) => e.toJson()).toList(),
     };
   }
 

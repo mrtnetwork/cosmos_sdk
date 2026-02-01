@@ -9,13 +9,16 @@ class DistributionQueryDelegatorValidatorsRequest extends CosmosMessage
     with QueryMessage<DistributionQueryDelegatorValidatorsResponse> {
   /// validators defines the validators a delegator is delegating for.
   final CosmosBaseAddress delegatorAddress;
-  const DistributionQueryDelegatorValidatorsRequest(
-      {required this.delegatorAddress});
+  const DistributionQueryDelegatorValidatorsRequest({
+    required this.delegatorAddress,
+  });
   factory DistributionQueryDelegatorValidatorsRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionQueryDelegatorValidatorsRequest(
-        delegatorAddress: CosmosBaseAddress(decode.getField(1)));
+      delegatorAddress: CosmosBaseAddress(decode.getField(1)),
+    );
   }
 
   @override
@@ -40,7 +43,8 @@ class DistributionQueryDelegatorValidatorsRequest extends CosmosMessage
 
   @override
   DistributionQueryDelegatorValidatorsResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return DistributionQueryDelegatorValidatorsResponse.fromJson(json);
   }
 

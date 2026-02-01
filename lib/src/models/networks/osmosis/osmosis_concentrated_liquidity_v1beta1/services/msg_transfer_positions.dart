@@ -12,30 +12,39 @@ class OsmosisConcentratedLiquidityMsgTransferPositionsResponse
   final String? sender;
   final String? newOwner;
 
-  OsmosisConcentratedLiquidityMsgTransferPositionsResponse(
-      {List<BigInt>? positionIds, this.sender, this.newOwner})
-      : positionIds = positionIds?.emptyAsNull?.immutable;
+  OsmosisConcentratedLiquidityMsgTransferPositionsResponse({
+    List<BigInt>? positionIds,
+    this.sender,
+    this.newOwner,
+  }) : positionIds = positionIds?.emptyAsNull?.immutable;
   factory OsmosisConcentratedLiquidityMsgTransferPositionsResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityMsgTransferPositionsResponse(
-        positionIds: decode
-                .getResult<ProtocolBufferDecoderResult?>(1)
-                ?.to<List<BigInt>, List<int>>(
-                    (e) => e.map((e) => BigintUtils.parse(e)).toList()) ??
-            <BigInt>[],
-        sender: decode.getField(2),
-        newOwner: decode.getField(3));
+      positionIds:
+          decode
+              .getResult<ProtocolBufferDecoderResult?>(1)
+              ?.to<List<BigInt>, List<int>>(
+                (e) => e.map((e) => BigintUtils.parse(e)).toList(),
+              ) ??
+          <BigInt>[],
+      sender: decode.getField(2),
+      newOwner: decode.getField(3),
+    );
   }
   factory OsmosisConcentratedLiquidityMsgTransferPositionsResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityMsgTransferPositionsResponse(
-        positionIds: json
-            .as<List?>("position_ids")
-            ?.map((e) => BigintUtils.parse(e))
-            .toList(),
-        sender: json.as("sender"),
-        newOwner: json.as("new_owner"));
+      positionIds:
+          json
+              .as<List?>("position_ids")
+              ?.map((e) => BigintUtils.parse(e))
+              .toList(),
+      sender: json.as("sender"),
+      newOwner: json.as("new_owner"),
+    );
   }
   @override
   List<int> get fieldIds => [1, 2, 3];
@@ -45,7 +54,7 @@ class OsmosisConcentratedLiquidityMsgTransferPositionsResponse
     return {
       "sender": sender,
       "position_ids": positionIds?.map((e) => e.toString()).toList(),
-      "new_owner": newOwner
+      "new_owner": newOwner,
     };
   }
 
@@ -59,7 +68,8 @@ class OsmosisConcentratedLiquidityMsgTransferPositionsResponse
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        OsmosisConcentratedLiquidityV1beta1Types.msgTransferPositionsResponse);
+      OsmosisConcentratedLiquidityV1beta1Types.msgTransferPositionsResponse,
+    );
   }
 
   @override

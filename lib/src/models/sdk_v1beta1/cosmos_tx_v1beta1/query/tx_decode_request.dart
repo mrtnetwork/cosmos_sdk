@@ -10,7 +10,7 @@ class TxDecodeRequest extends CosmosMessage
   /// tx_bytes is the raw transaction.
   final List<int> txBytes;
   TxDecodeRequest({required List<int> txBytes})
-      : txBytes = BytesUtils.toBytes(txBytes, unmodifiable: true);
+    : txBytes = BytesUtils.toBytes(txBytes, unmodifiable: true);
 
   @override
   List<int> get fieldIds => [1];

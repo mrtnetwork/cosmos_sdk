@@ -8,10 +8,12 @@ class OsmosisCosmWasmPoolContractInfoByPoolIdRequest extends CosmosMessage
   final BigInt? poolId;
   OsmosisCosmWasmPoolContractInfoByPoolIdRequest({this.poolId});
   factory OsmosisCosmWasmPoolContractInfoByPoolIdRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisCosmWasmPoolContractInfoByPoolIdRequest(
-        poolId: decode.getField(1));
+      poolId: decode.getField(1),
+    );
   }
 
   @override
@@ -36,7 +38,8 @@ class OsmosisCosmWasmPoolContractInfoByPoolIdRequest extends CosmosMessage
 
   @override
   OsmosisCosmWasmContractInfoByPoolIdResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisCosmWasmContractInfoByPoolIdResponse.fromJson(json);
   }
 

@@ -13,9 +13,11 @@ class IbcSoloMachineV2HeaderData extends CosmosMessage {
   factory IbcSoloMachineV2HeaderData.fromByte(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcSoloMachineV2HeaderData(
-        newPublicKey:
-            decode.getResult(1)?.to<Any, List<int>>((e) => Any.deserialize(e)),
-        newDiversifier: decode.getField(2));
+      newPublicKey: decode
+          .getResult(1)
+          ?.to<Any, List<int>>((e) => Any.deserialize(e)),
+      newDiversifier: decode.getField(2),
+    );
   }
 
   @override
@@ -25,7 +27,7 @@ class IbcSoloMachineV2HeaderData extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "new_pub_key": newPublicKey?.toJson(),
-      "new_diversifier": newDiversifier
+      "new_diversifier": newDiversifier,
     };
   }
 

@@ -18,34 +18,37 @@ class GetBlockWithTxsResponse extends CosmosMessage {
   final PageResponse? pagination;
   factory GetBlockWithTxsResponse.fromJson(Map<String, dynamic> json) {
     return GetBlockWithTxsResponse(
-        pagination: json["pagination"] == null
-            ? null
-            : PageResponse.fromJson(json["pagination"]),
-        txs: (json["txs"] as List?)?.map((e) => Tx.fromJson(e)).toList() ?? [],
-        blockID: json["block_id"] == null
-            ? null
-            : BlockID.fromJson(json["block_id"]),
-        block: json["block"] == null ? null : Block.fromJson(json["block"]));
+      pagination:
+          json["pagination"] == null
+              ? null
+              : PageResponse.fromJson(json["pagination"]),
+      txs: (json["txs"] as List?)?.map((e) => Tx.fromJson(e)).toList() ?? [],
+      blockID:
+          json["block_id"] == null ? null : BlockID.fromJson(json["block_id"]),
+      block: json["block"] == null ? null : Block.fromJson(json["block"]),
+    );
   }
-  GetBlockWithTxsResponse(
-      {required List<Tx> txs, this.block, this.blockID, this.pagination})
-      : txs = txs.immutable;
+  GetBlockWithTxsResponse({
+    required List<Tx> txs,
+    this.block,
+    this.blockID,
+    this.pagination,
+  }) : txs = txs.immutable;
   factory GetBlockWithTxsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GetBlockWithTxsResponse(
-        txs: decode
-            .getFields<List<int>>(1)
-            .map((e) => Tx.deserialize(e))
-            .toList(),
-        blockID: decode
-            .getResult(2)
-            ?.to<BlockID, List<int>>((e) => BlockID.deserialize(e)),
-        block: decode
-            .getResult(3)
-            ?.to<Block, List<int>>((e) => Block.deserialize(e)),
-        pagination: decode
-            .getResult(4)
-            ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
+      txs:
+          decode.getFields<List<int>>(1).map((e) => Tx.deserialize(e)).toList(),
+      blockID: decode
+          .getResult(2)
+          ?.to<BlockID, List<int>>((e) => BlockID.deserialize(e)),
+      block: decode
+          .getResult(3)
+          ?.to<Block, List<int>>((e) => Block.deserialize(e)),
+      pagination: decode
+          .getResult(4)
+          ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
+    );
   }
 
   @override
@@ -57,7 +60,7 @@ class GetBlockWithTxsResponse extends CosmosMessage {
       "txs": txs.map((e) => e.toJson()).toList(),
       "block_id": blockID?.toJson(),
       "block": block?.toJson(),
-      "pagination": pagination?.toJson()
+      "pagination": pagination?.toJson(),
     };
   }
 

@@ -33,26 +33,28 @@ class GetTxsEventRequest extends CosmosMessage
   /// Since cosmos-sdk 0.50
   final String? query;
 
-  GetTxsEventRequest(
-      {List<String>? events,
-      this.pagination,
-      this.orderBy,
-      this.page,
-      this.limit,
-      this.query})
-      : events = events?.immutable;
+  GetTxsEventRequest({
+    List<String>? events,
+    this.pagination,
+    this.orderBy,
+    this.page,
+    this.limit,
+    this.query,
+  }) : events = events?.immutable;
   factory GetTxsEventRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GetTxsEventRequest(
-        events: decode.getFields<String>(1),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)),
-        limit: decode.getField(5),
-        orderBy:
-            decode.getResult(3)?.to<OrderBy, int>((e) => OrderBy.fromValue(e)),
-        page: decode.getField(4),
-        query: decode.getField(6));
+      events: decode.getFields<String>(1),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)),
+      limit: decode.getField(5),
+      orderBy: decode
+          .getResult(3)
+          ?.to<OrderBy, int>((e) => OrderBy.fromValue(e)),
+      page: decode.getField(4),
+      query: decode.getField(6),
+    );
   }
 
   @override
@@ -66,7 +68,7 @@ class GetTxsEventRequest extends CosmosMessage
       "order_by": orderBy?.value,
       "page": page?.toString(),
       "limit": limit?.toString(),
-      "query": query
+      "query": query,
     };
   }
 
@@ -88,11 +90,11 @@ class GetTxsEventRequest extends CosmosMessage
 
   @override
   Map<String, String?> get queryParameters => {
-        "events": events?.join(","),
-        "order_by": orderBy?.value.toString(),
-        "page": page?.toString(),
-        "limit": limit?.toString(),
-        "query": query,
-        ...pagination?.queryParameters ?? {}
-      };
+    "events": events?.join(","),
+    "order_by": orderBy?.value.toString(),
+    "page": page?.toString(),
+    "limit": limit?.toString(),
+    "query": query,
+    ...pagination?.queryParameters ?? {},
+  };
 }

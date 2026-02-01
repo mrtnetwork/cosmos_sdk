@@ -9,14 +9,18 @@ class OsmosisIncentiveGaugeByIDResponse extends CosmosMessage {
   factory OsmosisIncentiveGaugeByIDResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisIncentiveGaugeByIDResponse(
-        gauge: OsmosisIncentivesGauge.deserialize(decode.getField(1)));
+      gauge: OsmosisIncentivesGauge.deserialize(decode.getField(1)),
+    );
   }
   factory OsmosisIncentiveGaugeByIDResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisIncentiveGaugeByIDResponse(
-        gauge: json["gauge"] == null
-            ? null
-            : OsmosisIncentivesGauge.fromJson(json["gauge"]));
+      gauge:
+          json["gauge"] == null
+              ? null
+              : OsmosisIncentivesGauge.fromJson(json["gauge"]),
+    );
   }
 
   @override

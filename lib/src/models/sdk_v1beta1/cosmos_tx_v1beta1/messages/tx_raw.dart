@@ -20,21 +20,24 @@ class TxRaw extends CosmosMessage {
   /// AuthInfo's signer_infos to allow connecting signature meta information like
   /// public key and signing mode by position.
   final List<List<int>> signatures;
-  TxRaw(
-      {required List<int> bodyBytes,
-      required List<int> authInfoBytes,
-      required List<List<int>> signatures})
-      : bodyBytes = BytesUtils.toBytes(bodyBytes, unmodifiable: true),
-        authInfoBytes = BytesUtils.toBytes(authInfoBytes, unmodifiable: true),
-        signatures = List<List<int>>.unmodifiable(signatures
-            .map((e) => BytesUtils.toBytes(e, unmodifiable: true))
-            .toList());
+  TxRaw({
+    required List<int> bodyBytes,
+    required List<int> authInfoBytes,
+    required List<List<int>> signatures,
+  }) : bodyBytes = BytesUtils.toBytes(bodyBytes, unmodifiable: true),
+       authInfoBytes = BytesUtils.toBytes(authInfoBytes, unmodifiable: true),
+       signatures = List<List<int>>.unmodifiable(
+         signatures
+             .map((e) => BytesUtils.toBytes(e, unmodifiable: true))
+             .toList(),
+       );
   factory TxRaw.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return TxRaw(
-        bodyBytes: decode.getField(1),
-        authInfoBytes: decode.getField(2),
-        signatures: decode.getFields<List<int>>(3));
+      bodyBytes: decode.getField(1),
+      authInfoBytes: decode.getField(2),
+      signatures: decode.getFields<List<int>>(3),
+    );
   }
 
   @override
@@ -45,7 +48,7 @@ class TxRaw extends CosmosMessage {
     return {
       "body_bytes": BytesUtils.toHexString(bodyBytes),
       "auth_info_bytes": BytesUtils.toHexString(authInfoBytes),
-      "signatures": signatures.map((e) => BytesUtils.toHexString(e)).toList()
+      "signatures": signatures.map((e) => BytesUtils.toHexString(e)).toList(),
     };
   }
 

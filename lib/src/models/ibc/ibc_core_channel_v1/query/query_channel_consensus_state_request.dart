@@ -17,18 +17,20 @@ class QueryChannelConsensusStateRequest extends CosmosMessage
 
   /// revision height of the consensus state
   final BigInt revisionHeight;
-  const QueryChannelConsensusStateRequest(
-      {required this.portId,
-      required this.channelId,
-      required this.revisionHeight,
-      required this.revisionNumber});
+  const QueryChannelConsensusStateRequest({
+    required this.portId,
+    required this.channelId,
+    required this.revisionHeight,
+    required this.revisionNumber,
+  });
   factory QueryChannelConsensusStateRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryChannelConsensusStateRequest(
-        portId: decode.getField(1),
-        channelId: decode.getField(2),
-        revisionNumber: decode.getField(3),
-        revisionHeight: decode.getField(4));
+      portId: decode.getField(1),
+      channelId: decode.getField(2),
+      revisionNumber: decode.getField(3),
+      revisionHeight: decode.getField(4),
+    );
   }
 
   @override
@@ -40,7 +42,7 @@ class QueryChannelConsensusStateRequest extends CosmosMessage
       "port_id": portId,
       "channel_id": channelId,
       "revision_number": revisionNumber.toString(),
-      "revision_height": revisionHeight.toString()
+      "revision_height": revisionHeight.toString(),
     };
   }
 
@@ -61,6 +63,10 @@ class QueryChannelConsensusStateRequest extends CosmosMessage
   }
 
   @override
-  List<String> get pathParameters =>
-      [channelId, portId, revisionNumber.toString(), revisionHeight.toString()];
+  List<String> get pathParameters => [
+    channelId,
+    portId,
+    revisionNumber.toString(),
+    revisionHeight.toString(),
+  ];
 }

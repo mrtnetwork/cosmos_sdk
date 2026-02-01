@@ -11,7 +11,8 @@ class EvmosEthermintEVMV1QueryStorageResponse extends CosmosMessage {
     return EvmosEthermintEVMV1QueryStorageResponse(decode.getField(1));
   }
   factory EvmosEthermintEVMV1QueryStorageResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return EvmosEthermintEVMV1QueryStorageResponse(json["value"]);
   }
 

@@ -88,18 +88,24 @@ class OsmosisDowntimeDetectorDowntime implements CosmosEnum {
   static OsmosisDowntimeDetectorDowntime fromValue(int? value) {
     return values.firstWhere(
       (e) => e.value == value,
-      orElse: () => throw DartCosmosSdkPluginException(
-          "No OsmosisDowntimeDetectorDowntime element found for the given value.",
-          details: {"value": value}),
+      orElse:
+          () =>
+              throw DartCosmosSdkPluginException(
+                "No OsmosisDowntimeDetectorDowntime element found for the given value.",
+                details: {"value": value},
+              ),
     );
   }
 
   static OsmosisDowntimeDetectorDowntime fromName(String? name) {
     return values.firstWhere(
       (e) => e.name == name,
-      orElse: () => throw DartCosmosSdkPluginException(
-          "No OsmosisDowntimeDetectorDowntime element found for the given name.",
-          details: {"name": name}),
+      orElse:
+          () =>
+              throw DartCosmosSdkPluginException(
+                "No OsmosisDowntimeDetectorDowntime element found for the given name.",
+                details: {"name": name},
+              ),
     );
   }
 }

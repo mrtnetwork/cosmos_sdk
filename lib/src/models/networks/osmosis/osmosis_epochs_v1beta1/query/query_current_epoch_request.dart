@@ -34,7 +34,8 @@ class OmosisEpochsQueryCurrentEpochRequest extends CosmosMessage
 
   @override
   OmosisEpochsQueryCurrentEpochResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OmosisEpochsQueryCurrentEpochResponse.fromJson(json);
   }
 

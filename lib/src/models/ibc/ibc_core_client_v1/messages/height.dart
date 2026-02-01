@@ -17,8 +17,9 @@ class IbcClientHeight extends CosmosMessage {
 
   factory IbcClientHeight.fromJson(Map<String, dynamic> json) {
     return IbcClientHeight(
-        revisionHeight: BigintUtils.tryParse(json["revision_height"]),
-        revisionNumber: BigintUtils.tryParse(json["revision_number"]));
+      revisionHeight: BigintUtils.tryParse(json["revision_height"]),
+      revisionNumber: BigintUtils.tryParse(json["revision_number"]),
+    );
   }
   const IbcClientHeight({this.revisionHeight, this.revisionNumber});
   factory IbcClientHeight.deserialize(List<int> bytes) {
@@ -36,7 +37,7 @@ class IbcClientHeight extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "revision_number": revisionNumber?.toString(),
-      "revision_height": revisionHeight?.toString()
+      "revision_height": revisionHeight?.toString(),
     };
   }
 

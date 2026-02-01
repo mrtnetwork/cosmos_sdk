@@ -6,20 +6,24 @@ class OsmosisTwapParams extends CosmosMessage {
   final String? pruneEpochIdentifier;
   final ProtobufDuration recordHistoryKeepPeriod;
 
-  OsmosisTwapParams(
-      {this.pruneEpochIdentifier, required this.recordHistoryKeepPeriod});
+  OsmosisTwapParams({
+    this.pruneEpochIdentifier,
+    required this.recordHistoryKeepPeriod,
+  });
   factory OsmosisTwapParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisTwapParams(
-        pruneEpochIdentifier: decode.getField(1),
-        recordHistoryKeepPeriod:
-            ProtobufDuration.deserialize(decode.getField(2)));
+      pruneEpochIdentifier: decode.getField(1),
+      recordHistoryKeepPeriod: ProtobufDuration.deserialize(decode.getField(2)),
+    );
   }
   factory OsmosisTwapParams.fromJson(Map<String, dynamic> json) {
     return OsmosisTwapParams(
-        recordHistoryKeepPeriod:
-            ProtobufDuration.fromString(json["record_history_keep_period"]),
-        pruneEpochIdentifier: json["prune_epoch_identifier"]);
+      recordHistoryKeepPeriod: ProtobufDuration.fromString(
+        json["record_history_keep_period"],
+      ),
+      pruneEpochIdentifier: json["prune_epoch_identifier"],
+    );
   }
 
   @override
@@ -29,7 +33,7 @@ class OsmosisTwapParams extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "prune_epoch_identifier": pruneEpochIdentifier,
-      "record_history_keep_period": recordHistoryKeepPeriod.toJson()
+      "record_history_keep_period": recordHistoryKeepPeriod.toJson(),
     };
   }
 

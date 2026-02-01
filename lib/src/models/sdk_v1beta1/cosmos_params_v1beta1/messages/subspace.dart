@@ -9,13 +9,17 @@ class ParamsSubspace extends CosmosMessage {
   final List<String>? keys;
   factory ParamsSubspace.fromJson(Map<String, dynamic> json) {
     return ParamsSubspace(
-        keys: (json["keys"] as List?)?.cast(), subspace: json["subspace"]);
+      keys: (json["keys"] as List?)?.cast(),
+      subspace: json["subspace"],
+    );
   }
   ParamsSubspace({this.subspace, List<String>? keys}) : keys = keys?.immutable;
   factory ParamsSubspace.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ParamsSubspace(
-        subspace: decode.getField(1), keys: decode.getFields<String>(2));
+      subspace: decode.getField(1),
+      keys: decode.getFields<String>(2),
+    );
   }
 
   @override

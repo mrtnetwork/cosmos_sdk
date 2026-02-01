@@ -14,22 +14,28 @@ class MsgChannelUpgradeInit extends IbcService<MsgChannelUpgradeInitResponse> {
   final String? channelId;
   final UpgradeFields fields;
   final String? signer;
-  const MsgChannelUpgradeInit(
-      {this.portId, this.channelId, required this.fields, this.signer});
+  const MsgChannelUpgradeInit({
+    this.portId,
+    this.channelId,
+    required this.fields,
+    this.signer,
+  });
   factory MsgChannelUpgradeInit.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgChannelUpgradeInit(
-        portId: decode.getField(1),
-        channelId: decode.getField(2),
-        fields: UpgradeFields.deserialize(decode.getField(3)),
-        signer: decode.getField(4));
+      portId: decode.getField(1),
+      channelId: decode.getField(2),
+      fields: UpgradeFields.deserialize(decode.getField(3)),
+      signer: decode.getField(4),
+    );
   }
   factory MsgChannelUpgradeInit.fromJson(Map<String, dynamic> json) {
     return MsgChannelUpgradeInit(
-        portId: json.as("port_id"),
-        channelId: json.as("channel_id"),
-        fields: UpgradeFields.fromJson(json.asMap("fields")),
-        signer: json.as("signer"));
+      portId: json.as("port_id"),
+      channelId: json.as("channel_id"),
+      fields: UpgradeFields.fromJson(json.asMap("fields")),
+      signer: json.as("signer"),
+    );
   }
 
   @override

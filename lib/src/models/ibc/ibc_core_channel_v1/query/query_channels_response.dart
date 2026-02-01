@@ -17,27 +17,30 @@ class QueryChannelsResponse extends CosmosMessage {
   final IbcClientHeight height;
   factory QueryChannelsResponse.fromJson(Map<String, dynamic> json) {
     return QueryChannelsResponse(
-      channels: (json["channels"] as List?)
-          ?.map((e) => IbcChannelIdentifiedChannel.fromJson(e))
-          .toList(),
+      channels:
+          (json["channels"] as List?)
+              ?.map((e) => IbcChannelIdentifiedChannel.fromJson(e))
+              .toList(),
       height: IbcClientHeight.fromJson(json["height"]),
-      pagination: json["pagination"] == null
-          ? null
-          : PageResponse.fromJson(json["pagination"]),
+      pagination:
+          json["pagination"] == null
+              ? null
+              : PageResponse.fromJson(json["pagination"]),
     );
   }
-  QueryChannelsResponse(
-      {List<IbcChannelIdentifiedChannel>? channels,
-      this.pagination,
-      required this.height})
-      : channels = channels?.emptyAsNull?.immutable;
+  QueryChannelsResponse({
+    List<IbcChannelIdentifiedChannel>? channels,
+    this.pagination,
+    required this.height,
+  }) : channels = channels?.emptyAsNull?.immutable;
   factory QueryChannelsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryChannelsResponse(
-      channels: decode
-          .getFields<List<int>>(1)
-          .map((e) => IbcChannelIdentifiedChannel.deserialize(e))
-          .toList(),
+      channels:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => IbcChannelIdentifiedChannel.deserialize(e))
+              .toList(),
       pagination: decode
           .getResult(2)
           ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
@@ -53,7 +56,7 @@ class QueryChannelsResponse extends CosmosMessage {
     return {
       "channels": channels?.map((e) => e.toJson()).toList(),
       "pagination": pagination?.toJson(),
-      "height": height.toJson()
+      "height": height.toJson(),
     };
   }
 

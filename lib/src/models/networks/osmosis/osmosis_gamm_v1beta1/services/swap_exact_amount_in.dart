@@ -13,20 +13,21 @@ class OsmosisGammMsgSwapExactAmountIn
   final List<OsmosisGammSwapAmountInRoute> routes;
   final Coin tokenIn;
   final String tokenOutMinAmount;
-  OsmosisGammMsgSwapExactAmountIn(
-      {this.sender,
-      required List<OsmosisGammSwapAmountInRoute> routes,
-      required this.tokenIn,
-      required this.tokenOutMinAmount})
-      : routes = routes.immutable;
+  OsmosisGammMsgSwapExactAmountIn({
+    this.sender,
+    required List<OsmosisGammSwapAmountInRoute> routes,
+    required this.tokenIn,
+    required this.tokenOutMinAmount,
+  }) : routes = routes.immutable;
   factory OsmosisGammMsgSwapExactAmountIn.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisGammMsgSwapExactAmountIn(
       sender: decode.getField(1),
-      routes: decode
-          .getFields<List<int>>(2)
-          .map((e) => OsmosisGammSwapAmountInRoute.deserialize(e))
-          .toList(),
+      routes:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => OsmosisGammSwapAmountInRoute.deserialize(e))
+              .toList(),
       tokenIn: Coin.deserialize(decode.getField(3)),
       tokenOutMinAmount: decode.getField(4),
     );
@@ -34,7 +35,8 @@ class OsmosisGammMsgSwapExactAmountIn
   factory OsmosisGammMsgSwapExactAmountIn.fromJson(Map<String, dynamic> json) {
     return OsmosisGammMsgSwapExactAmountIn(
       sender: json.as("sender"),
-      routes: json
+      routes:
+          json
               .asListOfMap("routes")
               ?.map((e) => OsmosisGammSwapAmountInRoute.fromJson(e))
               .toList() ??
@@ -53,7 +55,7 @@ class OsmosisGammMsgSwapExactAmountIn
       "sender": sender,
       "routes": routes.map((e) => e.toJson()).toList(),
       "token_in": tokenIn.toJson(),
-      "token_out_min_amount": tokenOutMinAmount
+      "token_out_min_amount": tokenOutMinAmount,
     };
   }
 

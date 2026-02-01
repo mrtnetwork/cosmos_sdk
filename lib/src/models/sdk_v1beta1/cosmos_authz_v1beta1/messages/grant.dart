@@ -16,9 +16,13 @@ class AuthzGrant extends CosmosMessage {
   factory AuthzGrant.fromJson(Map<String, dynamic> json) {
     return AuthzGrant(
       authorization: json.maybeAs<AnyMessage, Map<String, dynamic>>(
-          key: "authorization", onValue: (e) => AnyMessage.fromJson(e)),
+        key: "authorization",
+        onValue: (e) => AnyMessage.fromJson(e),
+      ),
       expiration: json.maybeAs<ProtobufTimestamp, String>(
-          key: "expiration", onValue: (e) => ProtobufTimestamp.fromString(e)),
+        key: "expiration",
+        onValue: (e) => ProtobufTimestamp.fromString(e),
+      ),
     );
   }
   factory AuthzGrant.deserialize(List<int> bytes) {
@@ -27,8 +31,11 @@ class AuthzGrant extends CosmosMessage {
       authorization: decode
           .getResult(1)
           ?.to<AnyMessage, List<int>>((e) => AnyMessage.deserialize(e)),
-      expiration: decode.getResult(2)?.to<ProtobufTimestamp, List<int>>(
-          (e) => ProtobufTimestamp.deserialize(e)),
+      expiration: decode
+          .getResult(2)
+          ?.to<ProtobufTimestamp, List<int>>(
+            (e) => ProtobufTimestamp.deserialize(e),
+          ),
     );
   }
   @override
@@ -38,7 +45,7 @@ class AuthzGrant extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "authorization": authorization?.toJson(),
-      "expiration": expiration?.toJson()
+      "expiration": expiration?.toJson(),
     };
   }
 

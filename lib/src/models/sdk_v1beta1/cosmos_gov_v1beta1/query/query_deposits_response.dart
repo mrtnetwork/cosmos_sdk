@@ -14,28 +14,33 @@ class GovQueryDepositsResponse extends CosmosMessage {
   final PageResponse? pagination;
   factory GovQueryDepositsResponse.fromJson(Map<String, dynamic> json) {
     return GovQueryDepositsResponse(
-      deposits: (json["deposits"] as List?)
+      deposits:
+          (json["deposits"] as List?)
               ?.map((e) => GovDeposit.fromJson(e))
               .toList() ??
           [],
-      pagination: json["pagination"] == null
-          ? null
-          : PageResponse.fromJson(json["pagination"]),
+      pagination:
+          json["pagination"] == null
+              ? null
+              : PageResponse.fromJson(json["pagination"]),
     );
   }
-  GovQueryDepositsResponse(
-      {required List<GovDeposit> deposits, this.pagination})
-      : deposits = deposits.immutable;
+  GovQueryDepositsResponse({
+    required List<GovDeposit> deposits,
+    this.pagination,
+  }) : deposits = deposits.immutable;
   factory GovQueryDepositsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GovQueryDepositsResponse(
-        deposits: decode
-            .getFields<List<int>>(1)
-            .map((e) => GovDeposit.deserialize(e))
-            .toList(),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
+      deposits:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => GovDeposit.deserialize(e))
+              .toList(),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
+    );
   }
 
   @override
@@ -45,7 +50,7 @@ class GovQueryDepositsResponse extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "deposits": deposits.map((e) => e.toJson()).toList(),
-      "pagination": pagination?.toJson()
+      "pagination": pagination?.toJson(),
     };
   }
 

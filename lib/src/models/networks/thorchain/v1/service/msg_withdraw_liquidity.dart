@@ -29,7 +29,7 @@ class ThorchainMsgWithdrawLiquidity extends CosmosMessage {
       "basis_points": basisPoints.toString(),
       "asset": asset.toJson(),
       "withdrawal_asset": withdrawalAsset.toJson(),
-      "signer": BytesUtils.tryToHexString(signer)
+      "signer": BytesUtils.tryToHexString(signer),
     };
   }
 
@@ -38,11 +38,11 @@ class ThorchainMsgWithdrawLiquidity extends CosmosMessage {
 
   @override
   List get values => [
-        tx,
-        withdrawAddress,
-        basisPoints.toString(),
-        asset,
-        withdrawalAsset,
-        signer
-      ];
+    tx,
+    withdrawAddress,
+    basisPoints.toString(),
+    asset,
+    withdrawalAsset,
+    signer,
+  ];
 }

@@ -8,15 +8,23 @@ import 'package:blockchain_utils/blockchain_utils.dart';
 /// https://docs.tendermint.com/v0.34/rpc/#/ABCI/abci_query
 class TendermintRequestBroadcastAbciQuery
     extends TendermintRequest<ABCIResponse, Map<String, dynamic>> {
-  TendermintRequestBroadcastAbciQuery(
-      {required this.path, required this.data, this.height, this.prove});
-  factory TendermintRequestBroadcastAbciQuery.fromQueryRequest(
-      {required QueryMessage request, int? height, bool? prove}) {
+  TendermintRequestBroadcastAbciQuery({
+    required this.path,
+    required this.data,
+    this.height,
+    this.prove,
+  });
+  factory TendermintRequestBroadcastAbciQuery.fromQueryRequest({
+    required QueryMessage request,
+    int? height,
+    bool? prove,
+  }) {
     return TendermintRequestBroadcastAbciQuery(
-        path: request.typeUrl.query!,
-        data: BytesUtils.toHexString(request.toBuffer(), prefix: "0x"),
-        height: height,
-        prove: prove);
+      path: request.typeUrl.query!,
+      data: BytesUtils.toHexString(request.toBuffer(), prefix: "0x"),
+      height: height,
+      prove: prove,
+    );
   }
 
   /// Path to the data ("/a/b/c")
@@ -42,11 +50,11 @@ class TendermintRequestBroadcastAbciQuery
 
   @override
   Map<String, String?> get parameters => {
-        "path": '''"$path"''',
-        "data": data,
-        "height": height?.toString(),
-        "prove": prove?.toString()
-      };
+    "path": '''"$path"''',
+    "data": data,
+    "height": height?.toString(),
+    "prove": prove?.toString(),
+  };
   @override
   ABCIResponse onResonse(Map<String, dynamic> result) {
     return ABCIResponse.fromJson(result["response"]);

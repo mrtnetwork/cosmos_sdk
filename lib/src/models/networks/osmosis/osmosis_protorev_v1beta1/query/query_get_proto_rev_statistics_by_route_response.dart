@@ -9,17 +9,22 @@ class OsmosisProtorevQueryGetProtoRevStatisticsByRouteResponse
   /// swap on a given pool and the profits from the trades
   final OsmosisProtorevRouteStatistics statistics;
   const OsmosisProtorevQueryGetProtoRevStatisticsByRouteResponse(
-      this.statistics);
+    this.statistics,
+  );
   factory OsmosisProtorevQueryGetProtoRevStatisticsByRouteResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisProtorevQueryGetProtoRevStatisticsByRouteResponse(
-        OsmosisProtorevRouteStatistics.deserialize(decode.getField(1)));
+      OsmosisProtorevRouteStatistics.deserialize(decode.getField(1)),
+    );
   }
   factory OsmosisProtorevQueryGetProtoRevStatisticsByRouteResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisProtorevQueryGetProtoRevStatisticsByRouteResponse(
-        OsmosisProtorevRouteStatistics.fromJson(json["statistics"]));
+      OsmosisProtorevRouteStatistics.fromJson(json["statistics"]),
+    );
   }
 
   @override

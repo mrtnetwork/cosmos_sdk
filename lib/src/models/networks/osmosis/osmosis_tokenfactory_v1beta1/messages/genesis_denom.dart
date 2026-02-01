@@ -8,15 +8,18 @@ import 'denom_authority_metadata.dart';
 class OsmosisTokenFactoryGenesisDenom extends CosmosMessage {
   final String? denom;
   final OsmosisTokenFactoryDenomAuthorityMetadata authorityMetadata;
-  OsmosisTokenFactoryGenesisDenom(
-      {this.denom, required this.authorityMetadata});
+  OsmosisTokenFactoryGenesisDenom({
+    this.denom,
+    required this.authorityMetadata,
+  });
   factory OsmosisTokenFactoryGenesisDenom.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisTokenFactoryGenesisDenom(
-        denom: decode.getField(1),
-        authorityMetadata:
-            OsmosisTokenFactoryDenomAuthorityMetadata.deserialize(
-                decode.getField(2)));
+      denom: decode.getField(1),
+      authorityMetadata: OsmosisTokenFactoryDenomAuthorityMetadata.deserialize(
+        decode.getField(2),
+      ),
+    );
   }
 
   @override

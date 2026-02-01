@@ -11,18 +11,22 @@ class EvmosEthermintTypesV1EthAccount extends CosmosBaseAccount {
   final BaseAccount baseAccount;
   // code_hash is the hash calculated from the code contents
   final String codeHash;
-  const EvmosEthermintTypesV1EthAccount(
-      {required this.baseAccount, required this.codeHash});
+  const EvmosEthermintTypesV1EthAccount({
+    required this.baseAccount,
+    required this.codeHash,
+  });
   factory EvmosEthermintTypesV1EthAccount.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosEthermintTypesV1EthAccount(
-        baseAccount: BaseAccount.deserialize(decode.getField(1)),
-        codeHash: decode.getField(2));
+      baseAccount: BaseAccount.deserialize(decode.getField(1)),
+      codeHash: decode.getField(2),
+    );
   }
   factory EvmosEthermintTypesV1EthAccount.fromJson(Map<String, dynamic> json) {
     return EvmosEthermintTypesV1EthAccount(
-        baseAccount: BaseAccount.fromJson(json["base_account"]),
-        codeHash: json["code_hash"]);
+      baseAccount: BaseAccount.fromJson(json["base_account"]),
+      codeHash: json["code_hash"],
+    );
   }
 
   @override

@@ -24,19 +24,20 @@ class GovTallyParams extends CosmosMessage {
       vetoThreshold: CosmosUtils.toBytes(json["veto_threshold"]),
     );
   }
-  GovTallyParams(
-      {required List<int> quorum,
-      required List<int> threshold,
-      required List<int> vetoThreshold})
-      : quorum = BytesUtils.toBytes(quorum, unmodifiable: true),
-        threshold = BytesUtils.toBytes(threshold, unmodifiable: true),
-        vetoThreshold = BytesUtils.toBytes(vetoThreshold, unmodifiable: true);
+  GovTallyParams({
+    required List<int> quorum,
+    required List<int> threshold,
+    required List<int> vetoThreshold,
+  }) : quorum = BytesUtils.toBytes(quorum, unmodifiable: true),
+       threshold = BytesUtils.toBytes(threshold, unmodifiable: true),
+       vetoThreshold = BytesUtils.toBytes(vetoThreshold, unmodifiable: true);
   factory GovTallyParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GovTallyParams(
-        quorum: decode.getField(1),
-        threshold: decode.getField(2),
-        vetoThreshold: decode.getField(3));
+      quorum: decode.getField(1),
+      threshold: decode.getField(2),
+      vetoThreshold: decode.getField(3),
+    );
   }
 
   @override
@@ -47,7 +48,7 @@ class GovTallyParams extends CosmosMessage {
     return {
       "quorum": CosmosUtils.toBase64(quorum),
       "threshold": CosmosUtils.toBase64(threshold),
-      "veto_threshold": CosmosUtils.toBase64(vetoThreshold)
+      "veto_threshold": CosmosUtils.toBase64(vetoThreshold),
     };
   }
 

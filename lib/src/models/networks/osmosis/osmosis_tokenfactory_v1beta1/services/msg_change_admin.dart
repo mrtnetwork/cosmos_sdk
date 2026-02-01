@@ -14,16 +14,19 @@ class OsmosisTokenFactoryMsgChangeAdmin
   factory OsmosisTokenFactoryMsgChangeAdmin.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisTokenFactoryMsgChangeAdmin(
-        sender: decode.getField(1),
-        denom: decode.getField(2),
-        newAdmin: decode.getField(3));
+      sender: decode.getField(1),
+      denom: decode.getField(2),
+      newAdmin: decode.getField(3),
+    );
   }
   factory OsmosisTokenFactoryMsgChangeAdmin.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisTokenFactoryMsgChangeAdmin(
-        sender: json.as("sender"),
-        denom: json.as("denom"),
-        newAdmin: json.as("new_admin"));
+      sender: json.as("sender"),
+      denom: json.as("denom"),
+      newAdmin: json.as("new_admin"),
+    );
   }
   @override
   List<int> get fieldIds => [1, 2, 3];
@@ -42,7 +45,8 @@ class OsmosisTokenFactoryMsgChangeAdmin
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        OsmosisTokenFactoryV1beta1Types.msgChangeAdminResponse);
+      OsmosisTokenFactoryV1beta1Types.msgChangeAdminResponse,
+    );
   }
 
   @override

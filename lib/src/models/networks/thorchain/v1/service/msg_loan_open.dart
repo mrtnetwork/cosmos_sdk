@@ -16,37 +16,38 @@ class ThorchainMsgLoanOpen extends CosmosMessage {
   final BigInt aggregatorTargetLimit;
   final List<int>? signer;
   final String? txId;
-  ThorchainMsgLoanOpen(
-      {this.owner,
-      required this.collateralAsset,
-      required this.collateralAmount,
-      required this.targetAddress,
-      required this.targetAsset,
-      required this.minOut,
-      this.affiliateAddress,
-      required this.affiliateBasisPoints,
-      this.aggregator,
-      this.aggregatorTargetAddress,
-      required this.aggregatorTargetLimit,
-      List<int>? signer,
-      this.txId})
-      : signer = BytesUtils.tryToBytes(signer, unmodifiable: true);
+  ThorchainMsgLoanOpen({
+    this.owner,
+    required this.collateralAsset,
+    required this.collateralAmount,
+    required this.targetAddress,
+    required this.targetAsset,
+    required this.minOut,
+    this.affiliateAddress,
+    required this.affiliateBasisPoints,
+    this.aggregator,
+    this.aggregatorTargetAddress,
+    required this.aggregatorTargetLimit,
+    List<int>? signer,
+    this.txId,
+  }) : signer = BytesUtils.tryToBytes(signer, unmodifiable: true);
   factory ThorchainMsgLoanOpen.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainMsgLoanOpen(
-        owner: decode.getField(1),
-        collateralAsset: ThorchainAsset.deserialize(decode.getField(2)),
-        collateralAmount: BigintUtils.parse(decode.getField<String>(3)),
-        targetAddress: decode.getField(4),
-        targetAsset: ThorchainAsset.deserialize(decode.getField(5)),
-        minOut: BigintUtils.parse(decode.getField<String>(6)),
-        affiliateAddress: decode.getField(7),
-        affiliateBasisPoints: BigintUtils.parse(decode.getField<String>(8)),
-        aggregator: decode.getField(9),
-        aggregatorTargetAddress: decode.getField(10),
-        aggregatorTargetLimit: BigintUtils.parse(decode.getField<String>(11)),
-        signer: decode.getField(12),
-        txId: decode.getField(13));
+      owner: decode.getField(1),
+      collateralAsset: ThorchainAsset.deserialize(decode.getField(2)),
+      collateralAmount: BigintUtils.parse(decode.getField<String>(3)),
+      targetAddress: decode.getField(4),
+      targetAsset: ThorchainAsset.deserialize(decode.getField(5)),
+      minOut: BigintUtils.parse(decode.getField<String>(6)),
+      affiliateAddress: decode.getField(7),
+      affiliateBasisPoints: BigintUtils.parse(decode.getField<String>(8)),
+      aggregator: decode.getField(9),
+      aggregatorTargetAddress: decode.getField(10),
+      aggregatorTargetLimit: BigintUtils.parse(decode.getField<String>(11)),
+      signer: decode.getField(12),
+      txId: decode.getField(13),
+    );
   }
 
   @override
@@ -67,7 +68,7 @@ class ThorchainMsgLoanOpen extends CosmosMessage {
       "aggregator_target_address": aggregatorTargetAddress,
       "aggregator_target_limit": aggregatorTargetLimit.toString(),
       "signer": BytesUtils.tryToHexString(signer),
-      "tx_id": txId
+      "tx_id": txId,
     };
   }
 
@@ -76,18 +77,18 @@ class ThorchainMsgLoanOpen extends CosmosMessage {
 
   @override
   List get values => [
-        owner,
-        collateralAsset,
-        collateralAmount.toString(),
-        targetAddress,
-        targetAsset,
-        minOut.toString(),
-        affiliateAddress,
-        affiliateBasisPoints.toString(),
-        aggregator,
-        aggregatorTargetAddress,
-        aggregatorTargetLimit,
-        signer,
-        txId
-      ];
+    owner,
+    collateralAsset,
+    collateralAmount.toString(),
+    targetAddress,
+    targetAsset,
+    minOut.toString(),
+    affiliateAddress,
+    affiliateBasisPoints.toString(),
+    aggregator,
+    aggregatorTargetAddress,
+    aggregatorTargetLimit,
+    signer,
+    txId,
+  ];
 }

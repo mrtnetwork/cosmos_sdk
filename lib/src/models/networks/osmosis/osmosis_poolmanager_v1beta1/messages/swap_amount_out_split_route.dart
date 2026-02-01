@@ -8,27 +8,35 @@ class OsmosisPoolManagerSwapAmountOutSplitRoute extends CosmosMessage {
   final List<OsmosisPoolManagerSwapAmountOutRoute> pools;
   final String tokenOutAmount;
 
-  OsmosisPoolManagerSwapAmountOutSplitRoute(
-      {required this.pools, required this.tokenOutAmount});
+  OsmosisPoolManagerSwapAmountOutSplitRoute({
+    required this.pools,
+    required this.tokenOutAmount,
+  });
   factory OsmosisPoolManagerSwapAmountOutSplitRoute.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolManagerSwapAmountOutSplitRoute(
-        pools: decode
-            .getFields<List<int>>(1)
-            .map((e) => OsmosisPoolManagerSwapAmountOutRoute.deserialize(e))
-            .toList(),
-        tokenOutAmount: decode.getField(2));
+      pools:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => OsmosisPoolManagerSwapAmountOutRoute.deserialize(e))
+              .toList(),
+      tokenOutAmount: decode.getField(2),
+    );
   }
   factory OsmosisPoolManagerSwapAmountOutSplitRoute.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisPoolManagerSwapAmountOutSplitRoute(
-        pools: json
-                .asListOfMap("pools")
-                ?.map((e) => OsmosisPoolManagerSwapAmountOutRoute.fromJson(e))
-                .toList() ??
-            [],
-        tokenOutAmount: json.as("token_out_amount"));
+      pools:
+          json
+              .asListOfMap("pools")
+              ?.map((e) => OsmosisPoolManagerSwapAmountOutRoute.fromJson(e))
+              .toList() ??
+          [],
+      tokenOutAmount: json.as("token_out_amount"),
+    );
   }
 
   @override
@@ -38,7 +46,7 @@ class OsmosisPoolManagerSwapAmountOutSplitRoute extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "pools": pools.map((e) => e.toJson()).toList(),
-      "token_out_amount": tokenOutAmount
+      "token_out_amount": tokenOutAmount,
     };
   }
 

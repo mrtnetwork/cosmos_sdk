@@ -8,8 +8,9 @@ class ThorchainPoolAmt extends CosmosMessage {
   factory ThorchainPoolAmt.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainPoolAmt(
-        asset: ThorchainAsset.deserialize(decode.getField(1)),
-        amount: decode.getField(2));
+      asset: ThorchainAsset.deserialize(decode.getField(1)),
+      amount: decode.getField(2),
+    );
   }
 
   @override

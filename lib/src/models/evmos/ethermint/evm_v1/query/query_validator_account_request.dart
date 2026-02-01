@@ -10,7 +10,8 @@ class EvmosEthermintEVMV1QueryValidatorAccountRequest extends CosmosMessage
   final String consAddress;
   const EvmosEthermintEVMV1QueryValidatorAccountRequest(this.consAddress);
   factory EvmosEthermintEVMV1QueryValidatorAccountRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosEthermintEVMV1QueryValidatorAccountRequest(decode.getField(1));
   }
@@ -36,7 +37,8 @@ class EvmosEthermintEVMV1QueryValidatorAccountRequest extends CosmosMessage
 
   @override
   EvmosEthermintEVMV1QueryValidatorAccountResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return EvmosEthermintEVMV1QueryValidatorAccountResponse.fromJson(json);
   }
 

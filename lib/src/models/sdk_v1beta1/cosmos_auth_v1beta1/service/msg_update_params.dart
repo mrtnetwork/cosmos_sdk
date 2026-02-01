@@ -23,13 +23,15 @@ class AuthMsgUpdateParams
   factory AuthMsgUpdateParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return AuthMsgUpdateParams(
-        authority: CosmosBaseAddress(decode.getField(1)),
-        params: AuthParams.deserialize(decode.getField(2)));
+      authority: CosmosBaseAddress(decode.getField(1)),
+      params: AuthParams.deserialize(decode.getField(2)),
+    );
   }
   factory AuthMsgUpdateParams.fromJson(Map<String, dynamic> json) {
     return AuthMsgUpdateParams(
-        authority: CosmosBaseAddress(json.as("authority")),
-        params: AuthParams.fromJson(json.asMap("params")));
+      authority: CosmosBaseAddress(json.as("authority")),
+      params: AuthParams.fromJson(json.asMap("params")),
+    );
   }
 
   @override
@@ -37,10 +39,7 @@ class AuthMsgUpdateParams
 
   @override
   Map<String, dynamic> toJson() {
-    return {
-      "authority": authority.address,
-      "params": params.toJson(),
-    };
+    return {"authority": authority.address, "params": params.toJson()};
   }
 
   @override
@@ -55,6 +54,7 @@ class AuthMsgUpdateParams
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        AuthV1beta1Types.msgUpdateParamsResponse);
+      AuthV1beta1Types.msgUpdateParamsResponse,
+    );
   }
 }

@@ -6,15 +6,18 @@ class OsmosisConcentratedliquidityPoolmodelConcentratedV1beta1Types
   static const String root =
       "/osmosis.concentratedliquidity.poolmodel.concentrated.v1beta1";
   const OsmosisConcentratedliquidityPoolmodelConcentratedV1beta1Types._(
-      super.typeUrl);
+    super.typeUrl,
+  );
   static const OsmosisConcentratedliquidityPoolmodelConcentratedV1beta1Types
-      msgCreateConcentratedPool =
+  msgCreateConcentratedPool =
       OsmosisConcentratedliquidityPoolmodelConcentratedV1beta1Types._(
-          "/osmosis.concentratedliquidity.poolmodel.concentrated.v1beta1.MsgCreateConcentratedPool");
+        "/osmosis.concentratedliquidity.poolmodel.concentrated.v1beta1.MsgCreateConcentratedPool",
+      );
   static const OsmosisConcentratedliquidityPoolmodelConcentratedV1beta1Types
-      msgCreateConcentratedPoolResponse =
+  msgCreateConcentratedPoolResponse =
       OsmosisConcentratedliquidityPoolmodelConcentratedV1beta1Types._(
-          "/osmosis.concentratedliquidity.poolmodel.concentrated.v1beta1.MsgCreateConcentratedPoolResponse");
+        "/osmosis.concentratedliquidity.poolmodel.concentrated.v1beta1.MsgCreateConcentratedPoolResponse",
+      );
 
   static const List<TypeUrl> services = [msgCreateConcentratedPool];
   static TypeUrl? findService(String? typeUrl) {

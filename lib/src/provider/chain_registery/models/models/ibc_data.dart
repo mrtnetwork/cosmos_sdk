@@ -4,15 +4,11 @@ class CCRChainOperatorInfo {
   CCRChainOperatorInfo({this.address});
 
   factory CCRChainOperatorInfo.fromJson(Map<String, dynamic> json) {
-    return CCRChainOperatorInfo(
-      address: json['address'] as String?,
-    );
+    return CCRChainOperatorInfo(address: json['address'] as String?);
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'address': address,
-    };
+    return {'address': address};
   }
 }
 
@@ -96,15 +92,20 @@ class CCRIBCData {
       schema: json['\$schema'] as String?,
       chain1: CCRChainInfo.fromJson(json['chain1'] as Map<String, dynamic>),
       chain2: CCRChainInfo.fromJson(json['chain2'] as Map<String, dynamic>),
-      channels: (json['channels'] as List<dynamic>)
-          .map((e) => CCRChannelInfo.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      operators: json['operators'] != null
-          ? (json['operators'] as List<dynamic>)
-              .map((e) =>
-                  CCRChainOperatorInfo.fromJson(e as Map<String, dynamic>))
-              .toList()
-          : null,
+      channels:
+          (json['channels'] as List<dynamic>)
+              .map((e) => CCRChannelInfo.fromJson(e as Map<String, dynamic>))
+              .toList(),
+      operators:
+          json['operators'] != null
+              ? (json['operators'] as List<dynamic>)
+                  .map(
+                    (e) => CCRChainOperatorInfo.fromJson(
+                      e as Map<String, dynamic>,
+                    ),
+                  )
+                  .toList()
+              : null,
     );
   }
 

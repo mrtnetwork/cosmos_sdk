@@ -9,14 +9,14 @@ class DistributionMsgWithdrawDelegatorRewardResponse extends CosmosMessage {
   /// Since: cosmos-sdk 0.46
   final List<Coin> amount;
   DistributionMsgWithdrawDelegatorRewardResponse(List<Coin> amount)
-      : amount = amount.immutable;
+    : amount = amount.immutable;
   factory DistributionMsgWithdrawDelegatorRewardResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return DistributionMsgWithdrawDelegatorRewardResponse(decode
-        .getFields<List<int>>(1)
-        .map((e) => Coin.deserialize(e))
-        .toList());
+    return DistributionMsgWithdrawDelegatorRewardResponse(
+      decode.getFields<List<int>>(1).map((e) => Coin.deserialize(e)).toList(),
+    );
   }
   @override
   List<int> get fieldIds => [1];

@@ -30,7 +30,8 @@ class ThorAsgardInboundAddressesResponse {
   });
 
   factory ThorAsgardInboundAddressesResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return ThorAsgardInboundAddressesResponse(
       chain: json['chain'],
       pubKey: json['pub_key'],

@@ -13,11 +13,15 @@ class CCTPV1MsgDisableAttester
   factory CCTPV1MsgDisableAttester.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CCTPV1MsgDisableAttester(
-        from: decode.getField(1), attester: decode.getField(2));
+      from: decode.getField(1),
+      attester: decode.getField(2),
+    );
   }
   factory CCTPV1MsgDisableAttester.fromJson(Map<String, dynamic> json) {
     return CCTPV1MsgDisableAttester(
-        from: json.as("from"), attester: json.as("attester"));
+      from: json.as("from"),
+      attester: json.as("attester"),
+    );
   }
 
   @override

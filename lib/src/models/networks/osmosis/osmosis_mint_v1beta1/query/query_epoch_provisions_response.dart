@@ -7,17 +7,17 @@ class OsmosisMintQueryEpochProvisionsResponse extends CosmosMessage {
   /// epoch_provisions is the current minting per epoch provisions value.
   final List<int> epochProvisions;
   OsmosisMintQueryEpochProvisionsResponse(List<int> epochProvisions)
-      : epochProvisions =
-            BytesUtils.toBytes(epochProvisions, unmodifiable: true);
+    : epochProvisions = BytesUtils.toBytes(epochProvisions, unmodifiable: true);
   factory OsmosisMintQueryEpochProvisionsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisMintQueryEpochProvisionsResponse(decode.getField(1));
   }
   factory OsmosisMintQueryEpochProvisionsResponse.fromJson(
-      Map<String, dynamic> json) {
-    return OsmosisMintQueryEpochProvisionsResponse(StringUtils.encode(
-        json["epoch_provisions"],
-        type: StringEncoding.base64));
+    Map<String, dynamic> json,
+  ) {
+    return OsmosisMintQueryEpochProvisionsResponse(
+      StringUtils.encode(json["epoch_provisions"], type: StringEncoding.base64),
+    );
   }
   @override
   List<int> get fieldIds => [1];

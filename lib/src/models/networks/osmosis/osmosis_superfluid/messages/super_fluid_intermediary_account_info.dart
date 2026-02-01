@@ -8,24 +8,32 @@ class OsmosisSuperfluidUnpoolSuperfluidIntermediaryAccountInfo
   final String? valAddr;
   final BigInt? gaugeId;
   final String? address;
-  const OsmosisSuperfluidUnpoolSuperfluidIntermediaryAccountInfo(
-      {this.denom, this.valAddr, this.gaugeId, this.address});
+  const OsmosisSuperfluidUnpoolSuperfluidIntermediaryAccountInfo({
+    this.denom,
+    this.valAddr,
+    this.gaugeId,
+    this.address,
+  });
   factory OsmosisSuperfluidUnpoolSuperfluidIntermediaryAccountInfo.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidUnpoolSuperfluidIntermediaryAccountInfo(
-        denom: decode.getField(1),
-        valAddr: decode.getField(2),
-        gaugeId: decode.getField(3),
-        address: decode.getField(4));
+      denom: decode.getField(1),
+      valAddr: decode.getField(2),
+      gaugeId: decode.getField(3),
+      address: decode.getField(4),
+    );
   }
   factory OsmosisSuperfluidUnpoolSuperfluidIntermediaryAccountInfo.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisSuperfluidUnpoolSuperfluidIntermediaryAccountInfo(
-        denom: json["denom"],
-        valAddr: json["val_addr"],
-        gaugeId: BigintUtils.tryParse(json["gauge_id"]),
-        address: json["address"]);
+      denom: json["denom"],
+      valAddr: json["val_addr"],
+      gaugeId: BigintUtils.tryParse(json["gauge_id"]),
+      address: json["address"],
+    );
   }
 
   @override
@@ -37,7 +45,7 @@ class OsmosisSuperfluidUnpoolSuperfluidIntermediaryAccountInfo
       "denom": denom,
       "val_addr": valAddr,
       "gauge_id": gaugeId?.toString(),
-      "address": address
+      "address": address,
     };
   }
 

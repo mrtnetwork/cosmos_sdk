@@ -7,8 +7,10 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class InterchainAccountsGenesisGenesisState extends CosmosMessage {
   final ControllerGenesisState controllerGenesisState;
   final HostGenesisState hostGenesisState;
-  const InterchainAccountsGenesisGenesisState(
-      {required this.controllerGenesisState, required this.hostGenesisState});
+  const InterchainAccountsGenesisGenesisState({
+    required this.controllerGenesisState,
+    required this.hostGenesisState,
+  });
 
   @override
   List<int> get fieldIds => [1, 2];
@@ -17,7 +19,7 @@ class InterchainAccountsGenesisGenesisState extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "controller_genesis_state": controllerGenesisState.toJson(),
-      "host_genesis_state": hostGenesisState.toJson()
+      "host_genesis_state": hostGenesisState.toJson(),
     };
   }
 

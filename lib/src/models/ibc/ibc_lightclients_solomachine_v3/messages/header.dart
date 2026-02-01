@@ -9,20 +9,22 @@ class IbcSoloMachineV3Header extends CosmosMessage {
   final List<int>? signature;
   final Any? newPublicKey;
   final String? newDiversifier;
-  IbcSoloMachineV3Header(
-      {this.timestamp,
-      List<int>? signature,
-      this.newPublicKey,
-      this.newDiversifier})
-      : signature = BytesUtils.tryToBytes(signature);
+  IbcSoloMachineV3Header({
+    this.timestamp,
+    List<int>? signature,
+    this.newPublicKey,
+    this.newDiversifier,
+  }) : signature = BytesUtils.tryToBytes(signature);
   factory IbcSoloMachineV3Header.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcSoloMachineV3Header(
-        timestamp: decode.getField(1),
-        signature: decode.getField(2),
-        newPublicKey:
-            decode.getResult(3)?.to<Any, List<int>>((e) => Any.deserialize(e)),
-        newDiversifier: decode.getField(4));
+      timestamp: decode.getField(1),
+      signature: decode.getField(2),
+      newPublicKey: decode
+          .getResult(3)
+          ?.to<Any, List<int>>((e) => Any.deserialize(e)),
+      newDiversifier: decode.getField(4),
+    );
   }
 
   @override
@@ -34,7 +36,7 @@ class IbcSoloMachineV3Header extends CosmosMessage {
       "timestamp": timestamp?.toString(),
       "signature": BytesUtils.tryToHexString(signature),
       "new_public_key": newPublicKey?.toJson(),
-      "new_diversifier": newDiversifier
+      "new_diversifier": newDiversifier,
     };
   }
 

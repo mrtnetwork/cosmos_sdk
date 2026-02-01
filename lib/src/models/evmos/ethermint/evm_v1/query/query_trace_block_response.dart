@@ -9,14 +9,17 @@ class EvmosEthermintEVMV1QueryTraceBlockResponse extends CosmosMessage {
   final List<int> data;
   const EvmosEthermintEVMV1QueryTraceBlockResponse(this.data);
   factory EvmosEthermintEVMV1QueryTraceBlockResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosEthermintEVMV1QueryTraceBlockResponse(decode.getField(1));
   }
   factory EvmosEthermintEVMV1QueryTraceBlockResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return EvmosEthermintEVMV1QueryTraceBlockResponse(
-        CosmosUtils.toBytes(json["data"]));
+      CosmosUtils.toBytes(json["data"]),
+    );
   }
 
   @override

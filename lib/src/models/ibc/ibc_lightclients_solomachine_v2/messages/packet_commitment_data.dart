@@ -8,12 +8,14 @@ class IbcSoloMachineV2PacketCommitmentData extends CosmosMessage {
   final List<int>? path;
   final List<int>? commitment;
   IbcSoloMachineV2PacketCommitmentData({List<int>? path, List<int>? commitment})
-      : path = BytesUtils.tryToBytes(path, unmodifiable: true),
-        commitment = BytesUtils.tryToBytes(commitment, unmodifiable: true);
+    : path = BytesUtils.tryToBytes(path, unmodifiable: true),
+      commitment = BytesUtils.tryToBytes(commitment, unmodifiable: true);
   factory IbcSoloMachineV2PacketCommitmentData.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcSoloMachineV2PacketCommitmentData(
-        path: decode.getField(1), commitment: decode.getField(2));
+      path: decode.getField(1),
+      commitment: decode.getField(2),
+    );
   }
   @override
   List<int> get fieldIds => [1, 2];

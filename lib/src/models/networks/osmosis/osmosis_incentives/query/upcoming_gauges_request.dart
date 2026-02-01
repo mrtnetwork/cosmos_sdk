@@ -11,9 +11,10 @@ class OsmosisIncentiveUpcomingGaugesRequest extends CosmosMessage
   factory OsmosisIncentiveUpcomingGaugesRequest.fromBytes(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisIncentiveUpcomingGaugesRequest(
-        pagination: decode
-            .getResult(1)
-            ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)));
+      pagination: decode
+          .getResult(1)
+          ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)),
+    );
   }
 
   @override
@@ -37,7 +38,8 @@ class OsmosisIncentiveUpcomingGaugesRequest extends CosmosMessage
 
   @override
   OsmosisIncentiveUpcomingGaugesResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisIncentiveUpcomingGaugesResponse.fromJson(json);
   }
 

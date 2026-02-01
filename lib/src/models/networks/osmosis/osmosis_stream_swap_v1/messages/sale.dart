@@ -56,44 +56,46 @@ class OsmosisStreamSwapSale extends CosmosMessage {
   /// URL with sale and project details.
   final String? url;
 
-  const OsmosisStreamSwapSale(
-      {this.treasury,
-      this.id,
-      this.tokenOut,
-      this.tokenIn,
-      required this.tokenOutSupply,
-      required this.startTime,
-      required this.endTime,
-      this.round,
-      this.endRound,
-      required this.outRemaining,
-      required this.outSold,
-      required this.outPerShare,
-      required this.staked,
-      required this.income,
-      required this.shares,
-      this.name,
-      this.url});
+  const OsmosisStreamSwapSale({
+    this.treasury,
+    this.id,
+    this.tokenOut,
+    this.tokenIn,
+    required this.tokenOutSupply,
+    required this.startTime,
+    required this.endTime,
+    this.round,
+    this.endRound,
+    required this.outRemaining,
+    required this.outSold,
+    required this.outPerShare,
+    required this.staked,
+    required this.income,
+    required this.shares,
+    this.name,
+    this.url,
+  });
   factory OsmosisStreamSwapSale.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisStreamSwapSale(
-        treasury: decode.getField(1),
-        id: decode.getField(2),
-        tokenOut: decode.getField(3),
-        tokenIn: decode.getField(4),
-        tokenOutSupply: decode.getField(5),
-        startTime: ProtobufTimestamp.deserialize(decode.getField(6)),
-        endTime: ProtobufTimestamp.deserialize(decode.getField(7)),
-        round: decode.getField(8),
-        endRound: decode.getField(9),
-        outRemaining: decode.getField(10),
-        outSold: decode.getField(11),
-        outPerShare: decode.getField(12),
-        staked: decode.getField(13),
-        income: decode.getField(14),
-        shares: decode.getField(15),
-        name: decode.getField(20),
-        url: decode.getField(21));
+      treasury: decode.getField(1),
+      id: decode.getField(2),
+      tokenOut: decode.getField(3),
+      tokenIn: decode.getField(4),
+      tokenOutSupply: decode.getField(5),
+      startTime: ProtobufTimestamp.deserialize(decode.getField(6)),
+      endTime: ProtobufTimestamp.deserialize(decode.getField(7)),
+      round: decode.getField(8),
+      endRound: decode.getField(9),
+      outRemaining: decode.getField(10),
+      outSold: decode.getField(11),
+      outPerShare: decode.getField(12),
+      staked: decode.getField(13),
+      income: decode.getField(14),
+      shares: decode.getField(15),
+      name: decode.getField(20),
+      url: decode.getField(21),
+    );
   }
   factory OsmosisStreamSwapSale.fromJson(Map<String, dynamic> json) {
     return OsmosisStreamSwapSale(
@@ -118,8 +120,25 @@ class OsmosisStreamSwapSale extends CosmosMessage {
   }
 
   @override
-  List<int> get fieldIds =>
-      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 20, 21];
+  List<int> get fieldIds => [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    20,
+    21,
+  ];
 
   @override
   Map<String, dynamic> toJson() {
@@ -140,7 +159,7 @@ class OsmosisStreamSwapSale extends CosmosMessage {
       "income": income,
       "shares": shares,
       "name": name,
-      "url": url
+      "url": url,
     };
   }
 
@@ -149,22 +168,22 @@ class OsmosisStreamSwapSale extends CosmosMessage {
 
   @override
   List get values => [
-        treasury,
-        id,
-        tokenOut,
-        tokenIn,
-        tokenOutSupply,
-        startTime,
-        endTime,
-        round,
-        endRound,
-        outRemaining,
-        outSold,
-        outPerShare,
-        staked,
-        income,
-        shares,
-        name,
-        url
-      ];
+    treasury,
+    id,
+    tokenOut,
+    tokenIn,
+    tokenOutSupply,
+    startTime,
+    endTime,
+    round,
+    endRound,
+    outRemaining,
+    outSold,
+    outPerShare,
+    staked,
+    income,
+    shares,
+    name,
+    url,
+  ];
 }

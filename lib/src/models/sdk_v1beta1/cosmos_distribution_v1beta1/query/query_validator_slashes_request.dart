@@ -19,21 +19,24 @@ class DistributionQueryValidatorSlashesRequest extends CosmosMessage
 
   /// pagination defines an optional pagination for the request.
   final PageRequest? pagination;
-  const DistributionQueryValidatorSlashesRequest(
-      {required this.validatorAddress,
-      this.startingHeight,
-      this.endingHeight,
-      this.pagination});
+  const DistributionQueryValidatorSlashesRequest({
+    required this.validatorAddress,
+    this.startingHeight,
+    this.endingHeight,
+    this.pagination,
+  });
   factory DistributionQueryValidatorSlashesRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final deocde = CosmosProtocolBuffer.decode(bytes);
     return DistributionQueryValidatorSlashesRequest(
-        validatorAddress: CosmosBaseAddress(deocde.getField(1)),
-        startingHeight: deocde.getField(2),
-        endingHeight: deocde.getField(3),
-        pagination: deocde
-            .getResult(4)
-            ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)));
+      validatorAddress: CosmosBaseAddress(deocde.getField(1)),
+      startingHeight: deocde.getField(2),
+      endingHeight: deocde.getField(3),
+      pagination: deocde
+          .getResult(4)
+          ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)),
+    );
   }
 
   @override
@@ -45,24 +48,28 @@ class DistributionQueryValidatorSlashesRequest extends CosmosMessage
       "validator_address": validatorAddress.address,
       "starting_height": startingHeight?.toString(),
       "ending_height": endingHeight?.toString(),
-      "pagination": pagination?.toJson()
+      "pagination": pagination?.toJson(),
     };
   }
 
   @override
   Map<String, String?> get queryParameters => {
-        "starting_height": startingHeight?.toString(),
-        "ending_height": endingHeight?.toString(),
-        ...pagination?.queryParameters ?? {}
-      };
+    "starting_height": startingHeight?.toString(),
+    "ending_height": endingHeight?.toString(),
+    ...pagination?.queryParameters ?? {},
+  };
 
   @override
   TypeUrl get typeUrl =>
       DistributionV1beta1Types.distributionQueryValidatorSlashesRequest;
 
   @override
-  List get values =>
-      [validatorAddress.address, startingHeight, endingHeight, pagination];
+  List get values => [
+    validatorAddress.address,
+    startingHeight,
+    endingHeight,
+    pagination,
+  ];
 
   @override
   DistributionQueryValidatorSlashesResponse onResponse(List<int> bytes) {
@@ -71,7 +78,8 @@ class DistributionQueryValidatorSlashesRequest extends CosmosMessage
 
   @override
   DistributionQueryValidatorSlashesResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return DistributionQueryValidatorSlashesResponse.fromJson(json);
   }
 

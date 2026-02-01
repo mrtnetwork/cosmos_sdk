@@ -6,7 +6,7 @@ class ThorchainBondProvider extends CosmosMessage {
   final List<int>? bondAddress;
   final BigInt bond;
   ThorchainBondProvider({List<int>? bondAddress, required this.bond})
-      : bondAddress = BytesUtils.tryToBytes(bondAddress, unmodifiable: true);
+    : bondAddress = BytesUtils.tryToBytes(bondAddress, unmodifiable: true);
   factory ThorchainBondProvider.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainBondProvider(
@@ -22,7 +22,7 @@ class ThorchainBondProvider extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "bond_address": BytesUtils.tryToHexString(bondAddress),
-      "bond": bond.toString()
+      "bond": bond.toString(),
     };
   }
 

@@ -23,8 +23,9 @@ class ProtobufTimestamp extends CosmosProtocolBuffer {
   factory ProtobufTimestamp.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ProtobufTimestamp(
-        seconds: BigintUtils.parse(decode.getField(1)),
-        nanos: BigintUtils.tryParse(decode.getField(2)));
+      seconds: BigintUtils.parse(decode.getField(1)),
+      nanos: BigintUtils.tryParse(decode.getField(2)),
+    );
   }
   factory ProtobufTimestamp.fromString(String time) {
     final parse = DateTime.parse(time);
@@ -41,11 +42,13 @@ class ProtobufTimestamp extends CosmosProtocolBuffer {
   @override
   String toString() {
     if (nanos != null) {
-      return DateTime.fromMicrosecondsSinceEpoch(nanos!.toInt())
-          .toIso8601String();
+      return DateTime.fromMicrosecondsSinceEpoch(
+        nanos!.toInt(),
+      ).toIso8601String();
     }
-    return DateTime.fromMillisecondsSinceEpoch((seconds.toInt() * 1000))
-        .toIso8601String();
+    return DateTime.fromMillisecondsSinceEpoch(
+      (seconds.toInt() * 1000),
+    ).toIso8601String();
   }
 
   @override

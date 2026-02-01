@@ -9,7 +9,8 @@ class OsmosisTxfeesQueryBaseDenomResponse extends CosmosMessage {
     return OsmosisTxfeesQueryBaseDenomResponse(baseDenom: decode.getField(1));
   }
   factory OsmosisTxfeesQueryBaseDenomResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisTxfeesQueryBaseDenomResponse(baseDenom: json["base_denom"]);
   }
 

@@ -3,8 +3,12 @@ import 'package:cosmos_sdk/src/provider/thornode/core/thorenode.dart';
 import 'package:cosmos_sdk/src/provider/thornode/models/models/queue_statistics.dart';
 
 /// Returns all trade accounts for an asset
-class ThorNodeRequestQueue extends ThorNodeRequestParam<
-    ThorQueueStatisticsResponse, Map<String, dynamic>> {
+class ThorNodeRequestQueue
+    extends
+        ThorNodeRequestParam<
+          ThorQueueStatisticsResponse,
+          Map<String, dynamic>
+        > {
   ThorNodeRequestQueue({this.height});
 
   /// optional block height, defaults to current tip

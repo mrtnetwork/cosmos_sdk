@@ -6,30 +6,41 @@ import 'package:blockchain_utils/helper/helper.dart';
 class OsmosisSuperfluidUserConcentratedSuperfluidPositionsUndelegatingResponse
     extends CosmosMessage {
   final List<OsmosisSuperfluidConcentratedPoolUserPositionRecord>
-      clPoolUserPositionRecords;
+  clPoolUserPositionRecords;
   OsmosisSuperfluidUserConcentratedSuperfluidPositionsUndelegatingResponse(
-      List<OsmosisSuperfluidConcentratedPoolUserPositionRecord>
-          clPoolUserPositionRecords)
-      : clPoolUserPositionRecords = clPoolUserPositionRecords.immutable;
+    List<OsmosisSuperfluidConcentratedPoolUserPositionRecord>
+    clPoolUserPositionRecords,
+  ) : clPoolUserPositionRecords = clPoolUserPositionRecords.immutable;
   factory OsmosisSuperfluidUserConcentratedSuperfluidPositionsUndelegatingResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidUserConcentratedSuperfluidPositionsUndelegatingResponse(
-        decode
-            .getFields<List<int>>(1)
-            .map((e) =>
+      decode
+          .getFields<List<int>>(1)
+          .map(
+            (e) =>
                 OsmosisSuperfluidConcentratedPoolUserPositionRecord.deserialize(
-                    e))
-            .toList());
+                  e,
+                ),
+          )
+          .toList(),
+    );
   }
   factory OsmosisSuperfluidUserConcentratedSuperfluidPositionsUndelegatingResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisSuperfluidUserConcentratedSuperfluidPositionsUndelegatingResponse(
-        (json["cl_pool_user_position_records"] as List?)
-                ?.map((e) => OsmosisSuperfluidConcentratedPoolUserPositionRecord
-                    .fromJson(e))
-                .toList() ??
-            <OsmosisSuperfluidConcentratedPoolUserPositionRecord>[]);
+      (json["cl_pool_user_position_records"] as List?)
+              ?.map(
+                (e) =>
+                    OsmosisSuperfluidConcentratedPoolUserPositionRecord.fromJson(
+                      e,
+                    ),
+              )
+              .toList() ??
+          <OsmosisSuperfluidConcentratedPoolUserPositionRecord>[],
+    );
   }
 
   @override
@@ -39,13 +50,14 @@ class OsmosisSuperfluidUserConcentratedSuperfluidPositionsUndelegatingResponse
   Map<String, dynamic> toJson() {
     return {
       "cl_pool_user_position_records":
-          clPoolUserPositionRecords.map((e) => e.toJson()).toList()
+          clPoolUserPositionRecords.map((e) => e.toJson()).toList(),
     };
   }
 
   @override
-  TypeUrl get typeUrl => OsmosisSuperfluidTypes
-      .userConcentratedSuperfluidPositionsUndelegatingResponse;
+  TypeUrl get typeUrl =>
+      OsmosisSuperfluidTypes
+          .userConcentratedSuperfluidPositionsUndelegatingResponse;
 
   @override
   List get values => [clPoolUserPositionRecords];

@@ -38,30 +38,34 @@ class OsmosisCosmWasmPoolMigratePoolContractsProposal extends CosmosMessage {
 
   /// MigrateMsg migrate message to be used for migrating the pool contracts.
   final List<int>? migrateMsg;
-  OsmosisCosmWasmPoolMigratePoolContractsProposal(
-      {this.title,
-      this.description,
-      List<BigInt>? poolIds,
-      this.newCodeId,
-      List<int>? wasmByteCode,
-      List<int>? migrateMsg})
-      : poolIds = poolIds?.emptyAsNull?.immutable,
-        wasmByteCode = BytesUtils.tryToBytes(wasmByteCode, unmodifiable: true),
-        migrateMsg = BytesUtils.tryToBytes(migrateMsg, unmodifiable: true);
+  OsmosisCosmWasmPoolMigratePoolContractsProposal({
+    this.title,
+    this.description,
+    List<BigInt>? poolIds,
+    this.newCodeId,
+    List<int>? wasmByteCode,
+    List<int>? migrateMsg,
+  }) : poolIds = poolIds?.emptyAsNull?.immutable,
+       wasmByteCode = BytesUtils.tryToBytes(wasmByteCode, unmodifiable: true),
+       migrateMsg = BytesUtils.tryToBytes(migrateMsg, unmodifiable: true);
   factory OsmosisCosmWasmPoolMigratePoolContractsProposal.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisCosmWasmPoolMigratePoolContractsProposal(
-        title: decode.getField(1),
-        description: decode.getField(2),
-        poolIds: decode
-                .getResult<ProtocolBufferDecoderResult?>(3)
-                ?.to<List<BigInt>, List<int>>(
-                    (e) => e.map((e) => BigintUtils.parse(e)).toList()) ??
-            <BigInt>[],
-        newCodeId: decode.getField(4),
-        wasmByteCode: decode.getField(5),
-        migrateMsg: decode.getField(6));
+      title: decode.getField(1),
+      description: decode.getField(2),
+      poolIds:
+          decode
+              .getResult<ProtocolBufferDecoderResult?>(3)
+              ?.to<List<BigInt>, List<int>>(
+                (e) => e.map((e) => BigintUtils.parse(e)).toList(),
+              ) ??
+          <BigInt>[],
+      newCodeId: decode.getField(4),
+      wasmByteCode: decode.getField(5),
+      migrateMsg: decode.getField(6),
+    );
   }
 
   @override
@@ -84,6 +88,12 @@ class OsmosisCosmWasmPoolMigratePoolContractsProposal extends CosmosMessage {
       OsmosisCosmWasmPoolV1beta1Types.migratePoolContractsProposal;
 
   @override
-  List get values =>
-      [title, description, poolIds, newCodeId, wasmByteCode, migrateMsg];
+  List get values => [
+    title,
+    description,
+    poolIds,
+    newCodeId,
+    wasmByteCode,
+    migrateMsg,
+  ];
 }

@@ -28,25 +28,26 @@ class SignDocDirectAux extends CosmosMessage {
 
   /// tips have been deprecated and should not be used
   final Tip? tip;
-  SignDocDirectAux(
-      {List<int>? bodyBytes,
-      this.publicKey,
-      this.chainId,
-      this.accountNumber,
-      this.sequence,
-      this.tip})
-      : bodyBytes = BytesUtils.tryToBytes(bodyBytes, unmodifiable: true);
+  SignDocDirectAux({
+    List<int>? bodyBytes,
+    this.publicKey,
+    this.chainId,
+    this.accountNumber,
+    this.sequence,
+    this.tip,
+  }) : bodyBytes = BytesUtils.tryToBytes(bodyBytes, unmodifiable: true);
   factory SignDocDirectAux.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return SignDocDirectAux(
-        bodyBytes: decode.getField(1),
-        publicKey:
-            decode.getResult(2)?.to<Any, List<int>>((e) => Any.deserialize(e)),
-        accountNumber: decode.getField(4),
-        chainId: decode.getField(3),
-        sequence: decode.getField(5),
-        tip:
-            decode.getResult(6)?.to<Tip, List<int>>((e) => Tip.deserialize(e)));
+      bodyBytes: decode.getField(1),
+      publicKey: decode
+          .getResult(2)
+          ?.to<Any, List<int>>((e) => Any.deserialize(e)),
+      accountNumber: decode.getField(4),
+      chainId: decode.getField(3),
+      sequence: decode.getField(5),
+      tip: decode.getResult(6)?.to<Tip, List<int>>((e) => Tip.deserialize(e)),
+    );
   }
 
   @override
@@ -60,7 +61,7 @@ class SignDocDirectAux extends CosmosMessage {
       "chain_id": chainId,
       "account_number": accountNumber?.toString(),
       "sequence": sequence?.toString(),
-      "tip": tip?.toJson()
+      "tip": tip?.toJson(),
     };
   }
 
@@ -68,6 +69,12 @@ class SignDocDirectAux extends CosmosMessage {
   TypeUrl get typeUrl => TxV1beta1Types.signDocDirectAux;
 
   @override
-  List get values =>
-      [bodyBytes, publicKey, chainId, accountNumber, sequence, tip];
+  List get values => [
+    bodyBytes,
+    publicKey,
+    chainId,
+    accountNumber,
+    sequence,
+    tip,
+  ];
 }

@@ -26,8 +26,9 @@ class IbcChannelMsgUpdateParams
   }
   factory IbcChannelMsgUpdateParams.fromJson(Map<String, dynamic> json) {
     return IbcChannelMsgUpdateParams(
-        authority: json.as("authority"),
-        params: IbcChannelParams.fromJson(json.asMap("params")));
+      authority: json.as("authority"),
+      params: IbcChannelParams.fromJson(json.asMap("params")),
+    );
   }
 
   @override
@@ -50,6 +51,7 @@ class IbcChannelMsgUpdateParams
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        IbcTypes.ibcChannelmsgUpdateParamsResponse);
+      IbcTypes.ibcChannelmsgUpdateParamsResponse,
+    );
   }
 }

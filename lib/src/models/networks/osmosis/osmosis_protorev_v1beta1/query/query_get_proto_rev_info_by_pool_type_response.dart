@@ -9,17 +9,22 @@ class OsmosisProtorevQueryGetProtoRevInfoByPoolTypeResponse
   /// pool types are handled by the module.
   final OsmosisProtorevInfoByPoolType infoByPoolType;
   const OsmosisProtorevQueryGetProtoRevInfoByPoolTypeResponse(
-      this.infoByPoolType);
+    this.infoByPoolType,
+  );
   factory OsmosisProtorevQueryGetProtoRevInfoByPoolTypeResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisProtorevQueryGetProtoRevInfoByPoolTypeResponse(
-        OsmosisProtorevInfoByPoolType.deserialize(decode.getField(1)));
+      OsmosisProtorevInfoByPoolType.deserialize(decode.getField(1)),
+    );
   }
   factory OsmosisProtorevQueryGetProtoRevInfoByPoolTypeResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisProtorevQueryGetProtoRevInfoByPoolTypeResponse(
-        OsmosisProtorevInfoByPoolType.fromJson(json["info_by_pool_type"]));
+      OsmosisProtorevInfoByPoolType.fromJson(json["info_by_pool_type"]),
+    );
   }
 
   @override

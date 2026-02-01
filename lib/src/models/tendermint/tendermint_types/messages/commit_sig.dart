@@ -9,32 +9,40 @@ class CommitSig extends CosmosMessage {
   final List<int>? validatorAddress;
   final ProtobufTimestamp timestamp;
   final List<int>? signature;
-  CommitSig(
-      {this.blockIDFlag,
-      List<int>? validatorAddress,
-      required this.timestamp,
-      List<int>? signature})
-      : validatorAddress =
-            BytesUtils.tryToBytes(validatorAddress, unmodifiable: true),
-        signature = BytesUtils.tryToBytes(signature, unmodifiable: true);
+  CommitSig({
+    this.blockIDFlag,
+    List<int>? validatorAddress,
+    required this.timestamp,
+    List<int>? signature,
+  }) : validatorAddress = BytesUtils.tryToBytes(
+         validatorAddress,
+         unmodifiable: true,
+       ),
+       signature = BytesUtils.tryToBytes(signature, unmodifiable: true);
   factory CommitSig.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CommitSig(
-        blockIDFlag: decode
-            .getResult(1)
-            ?.to<BlockIDFlag, int>((e) => BlockIDFlag.fromValue(e)),
-        validatorAddress: decode.getField(2),
-        timestamp: ProtobufTimestamp.deserialize(decode.getField(3)),
-        signature: decode.getField(4));
+      blockIDFlag: decode
+          .getResult(1)
+          ?.to<BlockIDFlag, int>((e) => BlockIDFlag.fromValue(e)),
+      validatorAddress: decode.getField(2),
+      timestamp: ProtobufTimestamp.deserialize(decode.getField(3)),
+      signature: decode.getField(4),
+    );
   }
   factory CommitSig.fromJson(Map<String, dynamic> json) {
     return CommitSig(
-        blockIDFlag: BlockIDFlag.fromName(json["block_id_flag"]),
-        validatorAddress: StringUtils.tryEncode(json["validator_address"],
-            type: StringEncoding.base64),
-        timestamp: ProtobufTimestamp.fromString(json["timestamp"]),
-        signature: StringUtils.tryEncode(json["signature"],
-            type: StringEncoding.base64));
+      blockIDFlag: BlockIDFlag.fromName(json["block_id_flag"]),
+      validatorAddress: StringUtils.tryEncode(
+        json["validator_address"],
+        type: StringEncoding.base64,
+      ),
+      timestamp: ProtobufTimestamp.fromString(json["timestamp"]),
+      signature: StringUtils.tryEncode(
+        json["signature"],
+        type: StringEncoding.base64,
+      ),
+    );
   }
 
   @override
@@ -46,7 +54,7 @@ class CommitSig extends CosmosMessage {
       "block_id_flag": blockIDFlag?.value,
       "validator_address": BytesUtils.tryToHexString(validatorAddress),
       "timestamp": timestamp.toJson(),
-      "signature": BytesUtils.tryToHexString(signature)
+      "signature": BytesUtils.tryToHexString(signature),
     };
   }
 

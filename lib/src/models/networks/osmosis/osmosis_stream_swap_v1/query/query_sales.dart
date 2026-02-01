@@ -12,9 +12,10 @@ class OsmosisStreamSwapQuerySales extends CosmosMessage
   factory OsmosisStreamSwapQuerySales.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisStreamSwapQuerySales(
-        pagination: decode
-            .getResult(1)
-            ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)));
+      pagination: decode
+          .getResult(1)
+          ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)),
+    );
   }
 
   @override
@@ -36,7 +37,8 @@ class OsmosisStreamSwapQuerySales extends CosmosMessage
 
   @override
   OsmosisStreamSwapQuerySalesResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisStreamSwapQuerySalesResponse.fromJson(json);
   }
 

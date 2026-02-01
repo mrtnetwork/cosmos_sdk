@@ -6,11 +6,13 @@ class ThorchainMsgSetIPAddress extends CosmosMessage {
   final String? ipAddress;
   final List<int>? signer;
   ThorchainMsgSetIPAddress({this.ipAddress, List<int>? signer})
-      : signer = BytesUtils.tryToBytes(signer, unmodifiable: true);
+    : signer = BytesUtils.tryToBytes(signer, unmodifiable: true);
   factory ThorchainMsgSetIPAddress.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainMsgSetIPAddress(
-        ipAddress: decode.getField(1), signer: decode.getField(2));
+      ipAddress: decode.getField(1),
+      signer: decode.getField(2),
+    );
   }
 
   @override
@@ -20,7 +22,7 @@ class ThorchainMsgSetIPAddress extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "ip_address": ipAddress,
-      "signer": BytesUtils.tryToHexString(signer)
+      "signer": BytesUtils.tryToHexString(signer),
     };
   }
 

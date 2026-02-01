@@ -18,11 +18,12 @@ class QueryRedelegationsRequest extends CosmosMessage
 
   /// pagination defines an optional pagination for the request.
   final PageRequest? pagination;
-  const QueryRedelegationsRequest(
-      {required this.delegatorAddr,
-      required this.srcValidatorAddr,
-      required this.dstValidatorAddr,
-      this.pagination});
+  const QueryRedelegationsRequest({
+    required this.delegatorAddr,
+    required this.srcValidatorAddr,
+    required this.dstValidatorAddr,
+    this.pagination,
+  });
   @override
   List<int> get fieldIds => [1, 2, 3, 4];
 
@@ -32,7 +33,7 @@ class QueryRedelegationsRequest extends CosmosMessage
       "delegator_addr": delegatorAddr.address,
       "src_validator_addr": srcValidatorAddr.address,
       "dst_validator_addr": dstValidatorAddr.address,
-      "pagination": pagination?.toJson()
+      "pagination": pagination?.toJson(),
     };
   }
 
@@ -40,8 +41,12 @@ class QueryRedelegationsRequest extends CosmosMessage
   TypeUrl get typeUrl => StakingV1beta1Types.queryRedelegationsRequest;
 
   @override
-  List get values =>
-      [delegatorAddr, srcValidatorAddr, dstValidatorAddr, pagination];
+  List get values => [
+    delegatorAddr,
+    srcValidatorAddr,
+    dstValidatorAddr,
+    pagination,
+  ];
 
   @override
   QueryRedelegationsResponse onResponse(List<int> bytes) {
@@ -57,8 +62,8 @@ class QueryRedelegationsRequest extends CosmosMessage
   List<String> get pathParameters => [delegatorAddr.address];
   @override
   Map<String, String?> get queryParameters => {
-        "src_validator_addr": srcValidatorAddr.address,
-        "dst_validator_addr": dstValidatorAddr.address,
-        ...pagination?.queryParameters ?? {}
-      };
+    "src_validator_addr": srcValidatorAddr.address,
+    "dst_validator_addr": dstValidatorAddr.address,
+    ...pagination?.queryParameters ?? {},
+  };
 }

@@ -6,14 +6,18 @@ class RegisteredInterchainAccount extends CosmosMessage {
   final String? connectionId;
   final String? portId;
   final String? accountAddress;
-  const RegisteredInterchainAccount(
-      {this.connectionId, this.portId, this.accountAddress});
+  const RegisteredInterchainAccount({
+    this.connectionId,
+    this.portId,
+    this.accountAddress,
+  });
   factory RegisteredInterchainAccount.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return RegisteredInterchainAccount(
-        connectionId: decode.getField(1),
-        portId: decode.getField(2),
-        accountAddress: decode.getField(3));
+      connectionId: decode.getField(1),
+      portId: decode.getField(2),
+      accountAddress: decode.getField(3),
+    );
   }
 
   @override
@@ -24,7 +28,7 @@ class RegisteredInterchainAccount extends CosmosMessage {
     return {
       "connection_id": connectionId,
       "port_id": portId,
-      "account_address": accountAddress
+      "account_address": accountAddress,
     };
   }
 

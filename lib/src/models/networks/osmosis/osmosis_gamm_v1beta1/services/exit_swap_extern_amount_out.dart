@@ -12,11 +12,12 @@ class OsmosisGammMsgExitSwapExternAmountOut
   final Coin tokenOut;
   final BigInt shareInMaxAmount;
 
-  OsmosisGammMsgExitSwapExternAmountOut(
-      {this.sender,
-      this.poolId,
-      required this.tokenOut,
-      required this.shareInMaxAmount});
+  OsmosisGammMsgExitSwapExternAmountOut({
+    this.sender,
+    this.poolId,
+    required this.tokenOut,
+    required this.shareInMaxAmount,
+  });
   factory OsmosisGammMsgExitSwapExternAmountOut.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisGammMsgExitSwapExternAmountOut(
@@ -27,7 +28,8 @@ class OsmosisGammMsgExitSwapExternAmountOut
     );
   }
   factory OsmosisGammMsgExitSwapExternAmountOut.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisGammMsgExitSwapExternAmountOut(
       sender: json.as("sender"),
       poolId: json.asBigInt("pool_id"),

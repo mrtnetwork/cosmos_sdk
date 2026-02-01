@@ -12,11 +12,15 @@ class CCTPV1MsgEnableAttester extends CCTPV1Service<EmptyServiceRequestResponse>
   factory CCTPV1MsgEnableAttester.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CCTPV1MsgEnableAttester(
-        from: decode.getField(1), attester: decode.getField(2));
+      from: decode.getField(1),
+      attester: decode.getField(2),
+    );
   }
   factory CCTPV1MsgEnableAttester.fromJson(Map<String, dynamic> json) {
     return CCTPV1MsgEnableAttester(
-        from: json.as("from"), attester: json.as("attester"));
+      from: json.as("from"),
+      attester: json.as("attester"),
+    );
   }
 
   @override

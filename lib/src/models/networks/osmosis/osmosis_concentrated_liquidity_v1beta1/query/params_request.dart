@@ -6,7 +6,8 @@ class OsmosisConcentratedLiquidityParamsRequest extends CosmosMessage
     with QueryMessage<OsmosisConcentratedLiquidityParamsResponse> {
   OsmosisConcentratedLiquidityParamsRequest();
   factory OsmosisConcentratedLiquidityParamsRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return OsmosisConcentratedLiquidityParamsRequest();
   }
 
@@ -29,7 +30,8 @@ class OsmosisConcentratedLiquidityParamsRequest extends CosmosMessage
 
   @override
   OsmosisConcentratedLiquidityParamsResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityParamsResponse.fromJson(json);
   }
 

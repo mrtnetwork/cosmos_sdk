@@ -14,29 +14,32 @@ class CCTPV1MsgDepositForBurn
   final int? destinationDomain;
   final List<int>? mintRecipient;
   final String? burnToken;
-  const CCTPV1MsgDepositForBurn(
-      {this.from,
-      this.amount,
-      this.destinationDomain,
-      this.mintRecipient,
-      this.burnToken});
+  const CCTPV1MsgDepositForBurn({
+    this.from,
+    this.amount,
+    this.destinationDomain,
+    this.mintRecipient,
+    this.burnToken,
+  });
 
   factory CCTPV1MsgDepositForBurn.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CCTPV1MsgDepositForBurn(
-        from: decode.getField(1),
-        amount: decode.getField(2),
-        destinationDomain: decode.getField(3),
-        burnToken: decode.getField(5),
-        mintRecipient: decode.getField(4));
+      from: decode.getField(1),
+      amount: decode.getField(2),
+      destinationDomain: decode.getField(3),
+      burnToken: decode.getField(5),
+      mintRecipient: decode.getField(4),
+    );
   }
   factory CCTPV1MsgDepositForBurn.fromJson(Map<String, dynamic> json) {
     return CCTPV1MsgDepositForBurn(
-        from: json.as("from"),
-        amount: json.as("amount"),
-        destinationDomain: json.as("destination_domain"),
-        burnToken: json.as("burn_token"),
-        mintRecipient: json.asBytes("mint_recipient"));
+      from: json.as("from"),
+      amount: json.as("amount"),
+      destinationDomain: json.as("destination_domain"),
+      burnToken: json.as("burn_token"),
+      mintRecipient: json.asBytes("mint_recipient"),
+    );
   }
 
   @override
@@ -49,7 +52,7 @@ class CCTPV1MsgDepositForBurn
       "amount": amount,
       "destination_domain": destinationDomain,
       "burn_token": burnToken,
-      "mint_recipient": CosmosUtils.tryToBase64(mintRecipient)
+      "mint_recipient": CosmosUtils.tryToBase64(mintRecipient),
     };
   }
 
@@ -57,8 +60,13 @@ class CCTPV1MsgDepositForBurn
   TypeUrl get typeUrl => CCTPV1Types.msgDepositForBurn;
 
   @override
-  List get values =>
-      [from, amount, destinationDomain, mintRecipient, burnToken];
+  List get values => [
+    from,
+    amount,
+    destinationDomain,
+    mintRecipient,
+    burnToken,
+  ];
   @override
   List<String?> get signers => [from];
 

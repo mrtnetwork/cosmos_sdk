@@ -13,14 +13,16 @@ class GetTxResponse extends CosmosMessage {
   const GetTxResponse({required this.tx, required this.txResponse});
   factory GetTxResponse.fromJson(Map<String, dynamic> json) {
     return GetTxResponse(
-        tx: Tx.fromJson(json["tx"]),
-        txResponse: TxResponse.fromJson(json["tx_response"]));
+      tx: Tx.fromJson(json["tx"]),
+      txResponse: TxResponse.fromJson(json["tx_response"]),
+    );
   }
   factory GetTxResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GetTxResponse(
-        tx: Tx.deserialize(decode.getField(1)),
-        txResponse: TxResponse.deserialize(decode.getField(2)));
+      tx: Tx.deserialize(decode.getField(1)),
+      txResponse: TxResponse.deserialize(decode.getField(2)),
+    );
   }
 
   @override

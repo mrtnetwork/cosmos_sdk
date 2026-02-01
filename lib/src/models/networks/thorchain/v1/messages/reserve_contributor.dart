@@ -18,10 +18,7 @@ class ThorchainReserveContributor extends CosmosMessage {
 
   @override
   Map<String, dynamic> toJson() {
-    return {
-      "address": address,
-      "amount": amount.toString(),
-    };
+    return {"address": address, "amount": amount.toString()};
   }
 
   @override

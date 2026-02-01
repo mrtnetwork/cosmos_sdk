@@ -5,17 +5,20 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:cosmos_sdk/src/utils/quick.dart';
 
 class CCTPV1MsgPauseSendingAndReceivingMessages
-    extends CCTPV1Service<EmptyServiceRequestResponse> with AminoMessage {
+    extends CCTPV1Service<EmptyServiceRequestResponse>
+    with AminoMessage {
   final String from;
   const CCTPV1MsgPauseSendingAndReceivingMessages(this.from);
 
   factory CCTPV1MsgPauseSendingAndReceivingMessages.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CCTPV1MsgPauseSendingAndReceivingMessages(decode.getField(1));
   }
   factory CCTPV1MsgPauseSendingAndReceivingMessages.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return CCTPV1MsgPauseSendingAndReceivingMessages(json.as("from"));
   }
 
@@ -38,6 +41,7 @@ class CCTPV1MsgPauseSendingAndReceivingMessages
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        CCTPV1Types.msgPauseSendingAndReceivingMessagesResponse);
+      CCTPV1Types.msgPauseSendingAndReceivingMessagesResponse,
+    );
   }
 }

@@ -8,18 +8,26 @@ class OsmosisGammPoolmodelsStableSwapPoolParams extends CosmosMessage {
   final String swapFee;
   final String exitFee;
 
-  OsmosisGammPoolmodelsStableSwapPoolParams(
-      {required this.swapFee, required this.exitFee});
+  OsmosisGammPoolmodelsStableSwapPoolParams({
+    required this.swapFee,
+    required this.exitFee,
+  });
   factory OsmosisGammPoolmodelsStableSwapPoolParams.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisGammPoolmodelsStableSwapPoolParams(
-        swapFee: decode.getField(1), exitFee: decode.getField(2));
+      swapFee: decode.getField(1),
+      exitFee: decode.getField(2),
+    );
   }
   factory OsmosisGammPoolmodelsStableSwapPoolParams.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisGammPoolmodelsStableSwapPoolParams(
-        swapFee: json["swap_fee"], exitFee: json["exit_fee"]);
+      swapFee: json["swap_fee"],
+      exitFee: json["exit_fee"],
+    );
   }
 
   @override

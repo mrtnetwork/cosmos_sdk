@@ -18,15 +18,14 @@ class QueryOwnerByQueryStringRequest extends CosmosMessage
   factory QueryOwnerByQueryStringRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryOwnerByQueryStringRequest(
-        classId: decode.getField(1), id: decode.getField(2));
+      classId: decode.getField(1),
+      id: decode.getField(2),
+    );
   }
 
   @override
   Map<String, dynamic> toJson() {
-    return {
-      'class_id': classId,
-      'id': id,
-    };
+    return {'class_id': classId, 'id': id};
   }
 
   @override
@@ -48,8 +47,5 @@ class QueryOwnerByQueryStringRequest extends CosmosMessage
   }
 
   @override
-  Map<String, String?> get queryParameters => {
-        'class_id': classId,
-        'id': id,
-      };
+  Map<String, String?> get queryParameters => {'class_id': classId, 'id': id};
 }

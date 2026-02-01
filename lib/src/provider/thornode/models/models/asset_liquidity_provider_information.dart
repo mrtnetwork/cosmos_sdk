@@ -36,7 +36,8 @@ class AssetLiquidityProviderInformationResponse {
   });
 
   factory AssetLiquidityProviderInformationResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return AssetLiquidityProviderInformationResponse(
       asset: json['asset'],
       runeAddress: json['rune_address'],

@@ -6,7 +6,8 @@ class OsmosisSuperfluidTotalSuperfluidDelegationsRequest extends CosmosMessage
     with QueryMessage<OsmosisSuperfluidTotalSuperfluidDelegationsResponse> {
   const OsmosisSuperfluidTotalSuperfluidDelegationsRequest();
   factory OsmosisSuperfluidTotalSuperfluidDelegationsRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return const OsmosisSuperfluidTotalSuperfluidDelegationsRequest();
   }
 
@@ -30,14 +31,17 @@ class OsmosisSuperfluidTotalSuperfluidDelegationsRequest extends CosmosMessage
 
   @override
   OsmosisSuperfluidTotalSuperfluidDelegationsResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisSuperfluidTotalSuperfluidDelegationsResponse.fromJson(json);
   }
 
   @override
   OsmosisSuperfluidTotalSuperfluidDelegationsResponse onResponse(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return OsmosisSuperfluidTotalSuperfluidDelegationsResponse.deserialize(
-        bytes);
+      bytes,
+    );
   }
 }

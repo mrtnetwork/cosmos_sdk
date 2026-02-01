@@ -12,12 +12,16 @@ class IbcFeeFeeEnabledChannel extends CosmosMessage {
   factory IbcFeeFeeEnabledChannel.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcFeeFeeEnabledChannel(
-        portId: decode.getField(1), channelId: decode.getField(2));
+      portId: decode.getField(1),
+      channelId: decode.getField(2),
+    );
   }
 
   factory IbcFeeFeeEnabledChannel.fromJson(Map<String, dynamic> json) {
     return IbcFeeFeeEnabledChannel(
-        portId: json["port_id"], channelId: json["channel_id"]);
+      portId: json["port_id"],
+      channelId: json["channel_id"],
+    );
   }
 
   @override

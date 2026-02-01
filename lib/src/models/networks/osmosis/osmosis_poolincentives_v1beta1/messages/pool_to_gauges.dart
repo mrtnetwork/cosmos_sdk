@@ -7,14 +7,16 @@ import 'pool_to_gauge.dart';
 class OsmosisPoolincentivesPoolToGauges extends CosmosMessage {
   final List<OsmosisPoolincentivesPoolToGauge> poolToGauge;
   OsmosisPoolincentivesPoolToGauges(
-      List<OsmosisPoolincentivesPoolToGauge> poolToGauge)
-      : poolToGauge = poolToGauge.immutable;
+    List<OsmosisPoolincentivesPoolToGauge> poolToGauge,
+  ) : poolToGauge = poolToGauge.immutable;
   factory OsmosisPoolincentivesPoolToGauges.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return OsmosisPoolincentivesPoolToGauges(decode
-        .getFields<List<int>>(2)
-        .map((e) => OsmosisPoolincentivesPoolToGauge.deserialize(e))
-        .toList());
+    return OsmosisPoolincentivesPoolToGauges(
+      decode
+          .getFields<List<int>>(2)
+          .map((e) => OsmosisPoolincentivesPoolToGauge.deserialize(e))
+          .toList(),
+    );
   }
 
   @override

@@ -15,27 +15,31 @@ class MsgRecvPacket extends IbcService<MsgRecvPacketResponse> {
   final List<int>? proofCommitment;
   final IbcClientHeight proofHeight;
   final String? signer;
-  MsgRecvPacket(
-      {required this.packet,
-      List<int>? proofCommitment,
-      required this.proofHeight,
-      this.signer})
-      : proofCommitment =
-            BytesUtils.tryToBytes(proofCommitment, unmodifiable: true);
+  MsgRecvPacket({
+    required this.packet,
+    List<int>? proofCommitment,
+    required this.proofHeight,
+    this.signer,
+  }) : proofCommitment = BytesUtils.tryToBytes(
+         proofCommitment,
+         unmodifiable: true,
+       );
   factory MsgRecvPacket.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgRecvPacket(
-        proofCommitment: decode.getField(2),
-        packet: IbcChannelPacket.deserialize(decode.getField(1)),
-        proofHeight: IbcClientHeight.deserialize(decode.getField(3)),
-        signer: decode.getField(4));
+      proofCommitment: decode.getField(2),
+      packet: IbcChannelPacket.deserialize(decode.getField(1)),
+      proofHeight: IbcClientHeight.deserialize(decode.getField(3)),
+      signer: decode.getField(4),
+    );
   }
   factory MsgRecvPacket.fromJson(Map<String, dynamic> json) {
     return MsgRecvPacket(
-        proofCommitment: json.asBytes("proof_commitment"),
-        packet: IbcChannelPacket.fromJson(json.asMap("packet")),
-        proofHeight: IbcClientHeight.fromJson(json.asMap("proof_height")),
-        signer: json.as("signer"));
+      proofCommitment: json.asBytes("proof_commitment"),
+      packet: IbcChannelPacket.fromJson(json.asMap("packet")),
+      proofHeight: IbcClientHeight.fromJson(json.asMap("proof_height")),
+      signer: json.as("signer"),
+    );
   }
 
   @override
@@ -47,7 +51,7 @@ class MsgRecvPacket extends IbcService<MsgRecvPacketResponse> {
       "packet": packet.toJson(),
       "proof_commitment": BytesUtils.tryToHexString(proofCommitment),
       "proof_height": proofHeight.toJson(),
-      "signer": signer
+      "signer": signer,
     };
   }
 

@@ -12,9 +12,11 @@ class QueryNFTBalanceByQueryStringResponse extends CosmosMessage {
     return QueryNFTBalanceByQueryStringResponse(amount: decode.getField(1));
   }
   factory QueryNFTBalanceByQueryStringResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return QueryNFTBalanceByQueryStringResponse(
-        amount: BigintUtils.tryParse(json["amount"]));
+      amount: BigintUtils.tryParse(json["amount"]),
+    );
   }
 
   @override

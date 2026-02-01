@@ -17,27 +17,30 @@ class FeeGrant extends CosmosMessage {
 
   factory FeeGrant.fromJson(Map<String, dynamic> json) {
     return FeeGrant(
-        granter:
-            json["granter"] == null ? null : CosmosBaseAddress(json["granter"]),
-        grantee:
-            json["grantee"] == null ? null : CosmosBaseAddress(json["grantee"]),
-        allowance: json["allowance"] == null
-            ? null
-            : AnyMessage.fromJson(json["allowance"]));
+      granter:
+          json["granter"] == null ? null : CosmosBaseAddress(json["granter"]),
+      grantee:
+          json["grantee"] == null ? null : CosmosBaseAddress(json["grantee"]),
+      allowance:
+          json["allowance"] == null
+              ? null
+              : AnyMessage.fromJson(json["allowance"]),
+    );
   }
   const FeeGrant({this.granter, this.grantee, this.allowance});
   factory FeeGrant.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return FeeGrant(
-        granter: decode
-            .getResult(1)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        grantee: decode
-            .getResult(2)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        allowance: decode
-            .getResult(3)
-            ?.to<AnyMessage, List<int>>((e) => AnyMessage.deserialize(e)));
+      granter: decode
+          .getResult(1)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      grantee: decode
+          .getResult(2)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      allowance: decode
+          .getResult(3)
+          ?.to<AnyMessage, List<int>>((e) => AnyMessage.deserialize(e)),
+    );
   }
 
   @override
@@ -48,7 +51,7 @@ class FeeGrant extends CosmosMessage {
     return {
       "granter": granter?.address,
       "grantee": grantee?.address,
-      "allowance": allowance?.toJson()
+      "allowance": allowance?.toJson(),
     };
   }
 

@@ -9,13 +9,14 @@ class ThorchainSwapperClout extends CosmosMessage {
   final BigInt spent;
   final BigInt? lastSpentHeight;
   final BigInt? lastReclaimHeight;
-  const ThorchainSwapperClout(
-      {this.address,
-      required this.score,
-      required this.reclaimed,
-      required this.spent,
-      this.lastSpentHeight,
-      this.lastReclaimHeight});
+  const ThorchainSwapperClout({
+    this.address,
+    required this.score,
+    required this.reclaimed,
+    required this.spent,
+    this.lastSpentHeight,
+    this.lastReclaimHeight,
+  });
   factory ThorchainSwapperClout.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainSwapperClout(
@@ -39,7 +40,7 @@ class ThorchainSwapperClout extends CosmosMessage {
       "reclaimed": reclaimed.toString(),
       "spent": spent.toString(),
       "last_spent_height": lastSpentHeight?.toString(),
-      "last_reclaim_height": lastReclaimHeight?.toString()
+      "last_reclaim_height": lastReclaimHeight?.toString(),
     };
   }
 
@@ -48,11 +49,11 @@ class ThorchainSwapperClout extends CosmosMessage {
 
   @override
   List get values => [
-        address,
-        score.toString(),
-        reclaimed.toString(),
-        spent.toString(),
-        lastSpentHeight,
-        lastReclaimHeight
-      ];
+    address,
+    score.toString(),
+    reclaimed.toString(),
+    spent.toString(),
+    lastSpentHeight,
+    lastReclaimHeight,
+  ];
 }

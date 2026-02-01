@@ -19,28 +19,30 @@ class MsgMultiSend extends BankV1Beta1Service<EmptyServiceRequestResponse>
 
   factory MsgMultiSend.fromJson(Map<String, dynamic> json) {
     return MsgMultiSend(
-        outputs: json
-            .asListOfMap("outputs")!
-            .map((e) => Output.fromJson(e))
-            .toList(),
-        inputs:
-            json.asListOfMap("inputs")!.map((e) => Input.fromJson(e)).toList());
+      outputs:
+          json.asListOfMap("outputs")!.map((e) => Output.fromJson(e)).toList(),
+      inputs:
+          json.asListOfMap("inputs")!.map((e) => Input.fromJson(e)).toList(),
+    );
   }
 
   MsgMultiSend({required List<Input> inputs, required List<Output> outputs})
-      : inputs = inputs.immutable,
-        outputs = outputs.immutable;
+    : inputs = inputs.immutable,
+      outputs = outputs.immutable;
   factory MsgMultiSend.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgMultiSend(
-        inputs: decode
-            .getFields<List<int>>(1)
-            .map((e) => Input.deserialize(e))
-            .toList(),
-        outputs: decode
-            .getFields<List<int>>(2)
-            .map((e) => Output.deserialize(e))
-            .toList());
+      inputs:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => Input.deserialize(e))
+              .toList(),
+      outputs:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => Output.deserialize(e))
+              .toList(),
+    );
   }
 
   @override
@@ -50,7 +52,7 @@ class MsgMultiSend extends BankV1Beta1Service<EmptyServiceRequestResponse>
   Map<String, dynamic> toJson() {
     return {
       "inputs": inputs.map((e) => e.toJson()).toList(),
-      "outputs": outputs.map((e) => e.toJson()).toList()
+      "outputs": outputs.map((e) => e.toJson()).toList(),
     };
   }
 

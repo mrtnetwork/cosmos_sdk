@@ -12,7 +12,8 @@ class OsmosisTxfeesQueryDenomSpotPriceRequest extends CosmosMessage
     return OsmosisTxfeesQueryDenomSpotPriceRequest(denom: decode.getField(1));
   }
   factory OsmosisTxfeesQueryDenomSpotPriceRequest.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisTxfeesQueryDenomSpotPriceRequest(denom: json["denom"]);
   }
 
@@ -32,7 +33,8 @@ class OsmosisTxfeesQueryDenomSpotPriceRequest extends CosmosMessage
 
   @override
   OsmosisTxfeesQueryDenomSpotPriceResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisTxfeesQueryDenomSpotPriceResponse.fromJson(json);
   }
 

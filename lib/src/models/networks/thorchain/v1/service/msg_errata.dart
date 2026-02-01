@@ -7,13 +7,14 @@ class ThorchainMsgErrataTx extends CosmosMessage {
   final String? chain;
   final List<int>? signer;
   ThorchainMsgErrataTx({this.txId, this.chain, List<int>? signer})
-      : signer = BytesUtils.tryToBytes(signer, unmodifiable: true);
+    : signer = BytesUtils.tryToBytes(signer, unmodifiable: true);
   factory ThorchainMsgErrataTx.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainMsgErrataTx(
-        txId: decode.getField(1),
-        chain: decode.getField(2),
-        signer: decode.getField(3));
+      txId: decode.getField(1),
+      chain: decode.getField(2),
+      signer: decode.getField(3),
+    );
   }
 
   @override

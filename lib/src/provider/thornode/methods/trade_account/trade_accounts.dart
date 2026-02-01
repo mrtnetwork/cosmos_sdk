@@ -3,8 +3,12 @@ import 'package:cosmos_sdk/src/provider/thornode/core/thorenode.dart';
 import 'package:cosmos_sdk/src/provider/thornode/models/models/trade_account.dart';
 
 /// Returns all trade accounts for an asset
-class ThorNodeRequestTradeAccounts extends ThorNodeRequestParam<
-    List<ThorTradeAccountResponse>, List<Map<String, dynamic>>> {
+class ThorNodeRequestTradeAccounts
+    extends
+        ThorNodeRequestParam<
+          List<ThorTradeAccountResponse>,
+          List<Map<String, dynamic>>
+        > {
   ThorNodeRequestTradeAccounts({required this.asset, this.height});
 
   /// optional block height, defaults to current tip

@@ -31,27 +31,28 @@ class IbcChannelPacket extends CosmosMessage {
 
   /// block timestamp (in nanoseconds) after which the packet times out
   final BigInt? timeoutTimestamp;
-  IbcChannelPacket(
-      {this.sequence,
-      this.sourcePort,
-      this.sourceChannel,
-      this.destinationPort,
-      this.destinationChannel,
-      List<int>? data,
-      required this.timeoutHeight,
-      this.timeoutTimestamp})
-      : data = BytesUtils.tryToBytes(data, unmodifiable: true);
+  IbcChannelPacket({
+    this.sequence,
+    this.sourcePort,
+    this.sourceChannel,
+    this.destinationPort,
+    this.destinationChannel,
+    List<int>? data,
+    required this.timeoutHeight,
+    this.timeoutTimestamp,
+  }) : data = BytesUtils.tryToBytes(data, unmodifiable: true);
   factory IbcChannelPacket.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcChannelPacket(
-        sequence: decode.getField(1),
-        sourcePort: decode.getField(2),
-        sourceChannel: decode.getField(3),
-        destinationPort: decode.getField(4),
-        destinationChannel: decode.getField(5),
-        data: decode.getField(6),
-        timeoutHeight: IbcClientHeight.deserialize(decode.getField(7)),
-        timeoutTimestamp: decode.getField(8));
+      sequence: decode.getField(1),
+      sourcePort: decode.getField(2),
+      sourceChannel: decode.getField(3),
+      destinationPort: decode.getField(4),
+      destinationChannel: decode.getField(5),
+      data: decode.getField(6),
+      timeoutHeight: IbcClientHeight.deserialize(decode.getField(7)),
+      timeoutTimestamp: decode.getField(8),
+    );
   }
   factory IbcChannelPacket.fromJson(Map<String, dynamic> json) {
     return IbcChannelPacket(
@@ -79,7 +80,7 @@ class IbcChannelPacket extends CosmosMessage {
       "destination_channel": destinationChannel,
       "data": BytesUtils.tryToHexString(data),
       "timeout_height": timeoutHeight.toJson(),
-      "timeout_timestamp": timeoutTimestamp?.toString()
+      "timeout_timestamp": timeoutTimestamp?.toString(),
     };
   }
 
@@ -88,13 +89,13 @@ class IbcChannelPacket extends CosmosMessage {
 
   @override
   List get values => [
-        sequence,
-        sourcePort,
-        sourceChannel,
-        destinationPort,
-        destinationChannel,
-        data,
-        timeoutHeight,
-        timeoutTimestamp
-      ];
+    sequence,
+    sourcePort,
+    sourceChannel,
+    destinationPort,
+    destinationChannel,
+    data,
+    timeoutHeight,
+    timeoutTimestamp,
+  ];
 }

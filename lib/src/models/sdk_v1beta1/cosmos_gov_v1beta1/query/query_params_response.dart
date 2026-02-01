@@ -15,10 +15,11 @@ class GovQueryParamsResponse extends CosmosMessage {
 
   /// tally_params defines the parameters related to tally.
   final GovTallyParams tallyParams;
-  const GovQueryParamsResponse(
-      {required this.votingParams,
-      required this.depositParams,
-      required this.tallyParams});
+  const GovQueryParamsResponse({
+    required this.votingParams,
+    required this.depositParams,
+    required this.tallyParams,
+  });
   factory GovQueryParamsResponse.fromJson(Map<String, dynamic> json) {
     return GovQueryParamsResponse(
       votingParams: GovVotingParams.fromJson(json["voting_params"]),
@@ -29,9 +30,10 @@ class GovQueryParamsResponse extends CosmosMessage {
   factory GovQueryParamsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GovQueryParamsResponse(
-        votingParams: GovVotingParams.deserialize(decode.getField(1)),
-        depositParams: GovDepositParams.deserialize(decode.getField(2)),
-        tallyParams: GovTallyParams.deserialize(decode.getField(3)));
+      votingParams: GovVotingParams.deserialize(decode.getField(1)),
+      depositParams: GovDepositParams.deserialize(decode.getField(2)),
+      tallyParams: GovTallyParams.deserialize(decode.getField(3)),
+    );
   }
 
   @override
@@ -42,7 +44,7 @@ class GovQueryParamsResponse extends CosmosMessage {
     return {
       "voting_params": votingParams.toJson(),
       "deposit_params": depositParams.toJson(),
-      "tally_params": tallyParams.toJson()
+      "tally_params": tallyParams.toJson(),
     };
   }
 

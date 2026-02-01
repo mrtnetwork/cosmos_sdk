@@ -12,30 +12,37 @@ class CosmWasmV1QueryContractHistoryResponse extends CosmosMessage {
 
   /// pagination defines the pagination in the response.
   final PageResponse? pagination;
-  CosmWasmV1QueryContractHistoryResponse(
-      {required List<CosmWasmV1ContractCodeHistoryEntry>? entries,
-      this.pagination})
-      : entries = entries?.immutable;
+  CosmWasmV1QueryContractHistoryResponse({
+    required List<CosmWasmV1ContractCodeHistoryEntry>? entries,
+    this.pagination,
+  }) : entries = entries?.immutable;
   factory CosmWasmV1QueryContractHistoryResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmWasmV1QueryContractHistoryResponse(
-        entries: decode
-            .getFields<List<int>>(1)
-            .map((e) => CosmWasmV1ContractCodeHistoryEntry.deserialize(e))
-            .toList(),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
+      entries:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => CosmWasmV1ContractCodeHistoryEntry.deserialize(e))
+              .toList(),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
+    );
   }
   factory CosmWasmV1QueryContractHistoryResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return CosmWasmV1QueryContractHistoryResponse(
-        entries: json
-            .asListOfMap("entries")
-            ?.map((e) => CosmWasmV1ContractCodeHistoryEntry.fromJson(e))
-            .toList(),
-        pagination: json.maybeAs<PageResponse, Map<String, dynamic>>(
-            key: "pagination", onValue: (e) => PageResponse.fromJson(e)));
+      entries:
+          json
+              .asListOfMap("entries")
+              ?.map((e) => CosmWasmV1ContractCodeHistoryEntry.fromJson(e))
+              .toList(),
+      pagination: json.maybeAs<PageResponse, Map<String, dynamic>>(
+        key: "pagination",
+        onValue: (e) => PageResponse.fromJson(e),
+      ),
+    );
   }
 
   @override
@@ -45,7 +52,7 @@ class CosmWasmV1QueryContractHistoryResponse extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "entries": entries?.map((e) => e.toJson()).toList(),
-      "pagination": pagination?.toJson()
+      "pagination": pagination?.toJson(),
     };
   }
 

@@ -9,21 +9,27 @@ class IbcClientV2QueryCounterpartyInfoResponse extends CosmosMessage {
   final IbcClientV2CounterpartyInfo? counterpartyInfo;
   IbcClientV2QueryCounterpartyInfoResponse({this.counterpartyInfo});
   factory IbcClientV2QueryCounterpartyInfoResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return IbcClientV2QueryCounterpartyInfoResponse(
-        counterpartyInfo:
-            json.maybeAs<IbcClientV2CounterpartyInfo, Map<String, dynamic>>(
-                key: "counterparty_info",
-                onValue: IbcClientV2CounterpartyInfo.fromJson));
+      counterpartyInfo: json
+          .maybeAs<IbcClientV2CounterpartyInfo, Map<String, dynamic>>(
+            key: "counterparty_info",
+            onValue: IbcClientV2CounterpartyInfo.fromJson,
+          ),
+    );
   }
   factory IbcClientV2QueryCounterpartyInfoResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcClientV2QueryCounterpartyInfoResponse(
-        counterpartyInfo: decode
-            .getResult(1)
-            ?.to<IbcClientV2CounterpartyInfo, List<int>>(
-                IbcClientV2CounterpartyInfo.deserialize));
+      counterpartyInfo: decode
+          .getResult(1)
+          ?.to<IbcClientV2CounterpartyInfo, List<int>>(
+            IbcClientV2CounterpartyInfo.deserialize,
+          ),
+    );
   }
 
   @override

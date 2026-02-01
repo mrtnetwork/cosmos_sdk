@@ -17,17 +17,19 @@ class MsgBurn extends BankV1Beta1Service<EmptyServiceRequestResponse> {
   factory MsgBurn.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgBurn(
-        address: CosmosBaseAddress(decode.getField(1)),
-        amount: decode
-            .getFields<List<int>>(2)
-            .map((e) => Coin.deserialize(e))
-            .toList());
+      address: CosmosBaseAddress(decode.getField(1)),
+      amount:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
+    );
   }
   factory MsgBurn.fromJson(Map<String, dynamic> json) {
     return MsgBurn(
-        address: CosmosBaseAddress(json.as("address")),
-        amount:
-            json.asListOfMap("amount")!.map((e) => Coin.fromJson(e)).toList());
+      address: CosmosBaseAddress(json.as("address")),
+      amount: json.asListOfMap("amount")!.map((e) => Coin.fromJson(e)).toList(),
+    );
   }
   @override
   List<int> get fieldIds => [1, 2];
@@ -36,7 +38,7 @@ class MsgBurn extends BankV1Beta1Service<EmptyServiceRequestResponse> {
   Map<String, dynamic> toJson() {
     return {
       "address": address.address,
-      "amount": amount.map((e) => e.toJson()).toList()
+      "amount": amount.map((e) => e.toJson()).toList(),
     };
   }
 

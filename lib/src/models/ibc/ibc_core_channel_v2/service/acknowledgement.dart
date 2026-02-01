@@ -17,41 +17,49 @@ class IbcChannelV2MsgAcknowledgement
   final List<int>? proofAcked;
   final IbcClientHeight? proofHeight;
   final String? signer;
-  IbcChannelV2MsgAcknowledgement(
-      {required this.packet,
-      required this.acknowledgement,
-      List<int>? proofAcked,
-      required this.proofHeight,
-      this.signer})
-      : proofAcked = proofAcked?.asImmutableBytes;
+  IbcChannelV2MsgAcknowledgement({
+    required this.packet,
+    required this.acknowledgement,
+    List<int>? proofAcked,
+    required this.proofHeight,
+    this.signer,
+  }) : proofAcked = proofAcked?.asImmutableBytes;
   factory IbcChannelV2MsgAcknowledgement.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcChannelV2MsgAcknowledgement(
-        packet: decode
-            .getResult(1)
-            ?.to<IbcChannelV2Packet, List<int>>(IbcChannelV2Packet.deserialize),
-        acknowledgement: decode
-            .getResult(2)
-            ?.to<IbcChannelV2Acknowledgement, List<int>>(
-                IbcChannelV2Acknowledgement.deserialize),
-        proofAcked: decode.getField(3),
-        proofHeight: decode
-            .getResult(4)
-            ?.to<IbcClientHeight, List<int>>(IbcClientHeight.deserialize),
-        signer: decode.getField(5));
+      packet: decode
+          .getResult(1)
+          ?.to<IbcChannelV2Packet, List<int>>(IbcChannelV2Packet.deserialize),
+      acknowledgement: decode
+          .getResult(2)
+          ?.to<IbcChannelV2Acknowledgement, List<int>>(
+            IbcChannelV2Acknowledgement.deserialize,
+          ),
+      proofAcked: decode.getField(3),
+      proofHeight: decode
+          .getResult(4)
+          ?.to<IbcClientHeight, List<int>>(IbcClientHeight.deserialize),
+      signer: decode.getField(5),
+    );
   }
   factory IbcChannelV2MsgAcknowledgement.fromJson(Map<String, dynamic> json) {
     return IbcChannelV2MsgAcknowledgement(
-        packet: json.maybeAs<IbcChannelV2Packet, Map<String, dynamic>>(
-            key: "packet", onValue: IbcChannelV2Packet.fromJson),
-        proofAcked: json.asBytes("proof_acked"),
-        acknowledgement:
-            json.maybeAs<IbcChannelV2Acknowledgement, Map<String, dynamic>>(
-                key: "acknowledgement",
-                onValue: IbcChannelV2Acknowledgement.fromJson),
-        proofHeight: json.maybeAs<IbcClientHeight, Map<String, dynamic>>(
-            key: "proof_height", onValue: IbcClientHeight.fromJson),
-        signer: json.as("signer"));
+      packet: json.maybeAs<IbcChannelV2Packet, Map<String, dynamic>>(
+        key: "packet",
+        onValue: IbcChannelV2Packet.fromJson,
+      ),
+      proofAcked: json.asBytes("proof_acked"),
+      acknowledgement: json
+          .maybeAs<IbcChannelV2Acknowledgement, Map<String, dynamic>>(
+            key: "acknowledgement",
+            onValue: IbcChannelV2Acknowledgement.fromJson,
+          ),
+      proofHeight: json.maybeAs<IbcClientHeight, Map<String, dynamic>>(
+        key: "proof_height",
+        onValue: IbcClientHeight.fromJson,
+      ),
+      signer: json.as("signer"),
+    );
   }
   @override
   List<int> get fieldIds => [1, 2, 3, 4, 5];
@@ -63,7 +71,7 @@ class IbcChannelV2MsgAcknowledgement
       "acknowledgement": acknowledgement?.toJson(),
       "proof_acked": CosmosUtils.tryToBase64(proofAcked),
       "proof_height": proofHeight?.toJson(),
-      "signer": signer
+      "signer": signer,
     };
   }
 

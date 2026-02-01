@@ -5,19 +5,26 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class OsmosisConcentratedLiquidityTickLiquidityNet extends CosmosMessage {
   final String liquidityNet;
   final BigInt? tickIndex;
-  OsmosisConcentratedLiquidityTickLiquidityNet(
-      {required this.liquidityNet, this.tickIndex});
+  OsmosisConcentratedLiquidityTickLiquidityNet({
+    required this.liquidityNet,
+    this.tickIndex,
+  });
   factory OsmosisConcentratedLiquidityTickLiquidityNet.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityTickLiquidityNet(
-        liquidityNet: decode.getField(1), tickIndex: decode.getField(2));
+      liquidityNet: decode.getField(1),
+      tickIndex: decode.getField(2),
+    );
   }
   factory OsmosisConcentratedLiquidityTickLiquidityNet.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityTickLiquidityNet(
-        liquidityNet: json["liquidity_net"],
-        tickIndex: BigintUtils.tryParse(json["tick_index"]));
+      liquidityNet: json["liquidity_net"],
+      tickIndex: BigintUtils.tryParse(json["tick_index"]),
+    );
   }
 
   @override

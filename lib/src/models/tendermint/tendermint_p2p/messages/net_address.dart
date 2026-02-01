@@ -10,9 +10,10 @@ class NetAddress extends CosmosMessage {
   factory NetAddress.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return NetAddress(
-        id: decode.getField(1),
-        ip: decode.getField(2),
-        port: decode.getField(3));
+      id: decode.getField(1),
+      ip: decode.getField(2),
+      port: decode.getField(3),
+    );
   }
 
   @override

@@ -21,15 +21,20 @@ class GovMsgSubmitProposal
 
   /// proposer is the account address of the proposer.
   final CosmosBaseAddress? proposer;
-  GovMsgSubmitProposal(
-      {this.content, required List<Coin> initialDeposit, this.proposer})
-      : initialDeposit = initialDeposit.immutable;
+  GovMsgSubmitProposal({
+    this.content,
+    required List<Coin> initialDeposit,
+    this.proposer,
+  }) : initialDeposit = initialDeposit.immutable;
   factory GovMsgSubmitProposal.fromJson(Map<String, dynamic> json) {
     return GovMsgSubmitProposal(
       proposer: json.asAddress("proposer"),
       content: json.maybeAs<Any, Map<String, dynamic>>(
-          key: "content", onValue: (e) => Any.fromJson(e)),
-      initialDeposit: json
+        key: "content",
+        onValue: (e) => Any.fromJson(e),
+      ),
+      initialDeposit:
+          json
               .asListOfMap("initial_deposit")
               ?.map((e) => Coin.fromJson(e))
               .toList() ??
@@ -39,15 +44,18 @@ class GovMsgSubmitProposal
   factory GovMsgSubmitProposal.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GovMsgSubmitProposal(
-        content:
-            decode.getResult(1)?.to<Any, List<int>>((e) => Any.deserialize(e)),
-        initialDeposit: decode
-            .getFields<List<int>>(2)
-            .map((e) => Coin.deserialize(e))
-            .toList(),
-        proposer: decode
-            .getResult(3)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)));
+      content: decode
+          .getResult(1)
+          ?.to<Any, List<int>>((e) => Any.deserialize(e)),
+      initialDeposit:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
+      proposer: decode
+          .getResult(3)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+    );
   }
 
   @override
@@ -58,7 +66,7 @@ class GovMsgSubmitProposal
     return {
       "content": amino ? content?.toAminoJson() : content?.toJson(),
       "initial_deposit": initialDeposit.map((e) => e.toJson()).toList(),
-      "proposer": proposer?.address
+      "proposer": proposer?.address,
     };
   }
 
@@ -66,7 +74,7 @@ class GovMsgSubmitProposal
   Map<String, dynamic> toAminoJson() {
     return {
       "type": typeUrl.aminoType!,
-      "value": toJson(amino: true)..removeWhere((k, v) => v == null)
+      "value": toJson(amino: true)..removeWhere((k, v) => v == null),
     };
   }
 

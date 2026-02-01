@@ -14,31 +14,36 @@ class OsmosisProtorevTokenPairArbRoutes extends CosmosMessage {
   /// Token denomination of the second asset
   final String? tokenOut;
 
-  OsmosisProtorevTokenPairArbRoutes(
-      {required List<OsmosisProtorevRoute> arbRsoutes,
-      this.tokenIn,
-      this.tokenOut})
-      : arbRsoutes = arbRsoutes.immutable;
+  OsmosisProtorevTokenPairArbRoutes({
+    required List<OsmosisProtorevRoute> arbRsoutes,
+    this.tokenIn,
+    this.tokenOut,
+  }) : arbRsoutes = arbRsoutes.immutable;
 
   factory OsmosisProtorevTokenPairArbRoutes.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisProtorevTokenPairArbRoutes(
-        arbRsoutes: decode
-            .getFields<List<int>>(1)
-            .map((e) => OsmosisProtorevRoute.deserialize(e))
-            .toList(),
-        tokenIn: decode.getField(2),
-        tokenOut: decode.getField(3));
+      arbRsoutes:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => OsmosisProtorevRoute.deserialize(e))
+              .toList(),
+      tokenIn: decode.getField(2),
+      tokenOut: decode.getField(3),
+    );
   }
   factory OsmosisProtorevTokenPairArbRoutes.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisProtorevTokenPairArbRoutes(
-        arbRsoutes: (json["arb_routes"] as List?)
-                ?.map((e) => OsmosisProtorevRoute.fromJson(e))
-                .toList() ??
-            <OsmosisProtorevRoute>[],
-        tokenIn: json["token_in"],
-        tokenOut: json["token_out"]);
+      arbRsoutes:
+          (json["arb_routes"] as List?)
+              ?.map((e) => OsmosisProtorevRoute.fromJson(e))
+              .toList() ??
+          <OsmosisProtorevRoute>[],
+      tokenIn: json["token_in"],
+      tokenOut: json["token_out"],
+    );
   }
 
   @override
@@ -49,7 +54,7 @@ class OsmosisProtorevTokenPairArbRoutes extends CosmosMessage {
     return {
       "arb_routes": arbRsoutes.map((e) => e.toJson()).toList(),
       "token_in": tokenIn,
-      "token_out": tokenOut
+      "token_out": tokenOut,
     };
   }
 

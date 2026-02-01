@@ -14,7 +14,9 @@ class IbcFeeMetadata extends CosmosMessage {
   factory IbcFeeMetadata.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcFeeMetadata(
-        feeVersion: decode.getField(1), appVersion: decode.getField(2));
+      feeVersion: decode.getField(1),
+      appVersion: decode.getField(2),
+    );
   }
 
   @override

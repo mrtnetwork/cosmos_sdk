@@ -20,22 +20,26 @@ abstract class ThorNodeRequestParam<RESULT, RESPONSE>
   ThorNodeRequestDetails buildRequest(int id) {
     final pathParams = CosmosUtils.extractParams(method);
     if (pathParams.length != pathParameters.length) {
-      throw DartCosmosSdkPluginException("Invalid Path Parameters.", details: {
-        "pathParams": pathParameters,
-        "ExceptedPathParametersLength": pathParams.length
-      });
+      throw DartCosmosSdkPluginException(
+        "Invalid Path Parameters.",
+        details: {
+          "pathParams": pathParameters,
+          "ExceptedPathParametersLength": pathParams.length,
+        },
+      );
     }
     String params = method;
     for (int i = 0; i < pathParams.length; i++) {
       params = params.replaceFirst(pathParams[i], pathParameters[i]);
     }
     final existsParams = Map<String, String>.from(
-        parameters..removeWhere((key, value) => value == null));
+      parameters..removeWhere((key, value) => value == null),
+    );
     if (existsParams.isNotEmpty) {
-      params = Uri.parse(params)
-          .replace(queryParameters: existsParams)
-          .normalizePath()
-          .toString();
+      params =
+          Uri.parse(
+            params,
+          ).replace(queryParameters: existsParams).normalizePath().toString();
     }
 
     return ThorNodeRequestDetails(requestID: id, pathParams: params);
@@ -51,9 +55,7 @@ class ThorNodeRequestDetails extends BaseServiceRequestParams {
   const ThorNodeRequestDetails({
     required super.requestID,
     required this.pathParams,
-    super.headers = const {
-      "Accept": "application/json",
-    },
+    super.headers = const {"Accept": "application/json"},
   }) : super(type: RequestServiceType.get);
 
   /// URL path parameters

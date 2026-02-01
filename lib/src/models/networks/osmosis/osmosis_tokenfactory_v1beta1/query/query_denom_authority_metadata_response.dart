@@ -7,19 +7,24 @@ class OsmosisTokenFactoryQueryDenomAuthorityMetadataResponse
     extends CosmosMessage {
   final OsmosisTokenFactoryDenomAuthorityMetadata authorityMetadata;
   OsmosisTokenFactoryQueryDenomAuthorityMetadataResponse(
-      this.authorityMetadata);
+    this.authorityMetadata,
+  );
   factory OsmosisTokenFactoryQueryDenomAuthorityMetadataResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisTokenFactoryQueryDenomAuthorityMetadataResponse(
-        OsmosisTokenFactoryDenomAuthorityMetadata.deserialize(
-            decode.getField(1)));
+      OsmosisTokenFactoryDenomAuthorityMetadata.deserialize(decode.getField(1)),
+    );
   }
   factory OsmosisTokenFactoryQueryDenomAuthorityMetadataResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisTokenFactoryQueryDenomAuthorityMetadataResponse(
-        OsmosisTokenFactoryDenomAuthorityMetadata.fromJson(
-            json["authority_metadata"]));
+      OsmosisTokenFactoryDenomAuthorityMetadata.fromJson(
+        json["authority_metadata"],
+      ),
+    );
   }
 
   @override

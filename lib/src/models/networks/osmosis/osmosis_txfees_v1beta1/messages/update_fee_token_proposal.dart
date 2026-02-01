@@ -11,21 +11,27 @@ class OsmosisTxfeesUpdateFeeTokenProposal extends CosmosMessage {
   final String? title;
   final String? description;
   final OsmosisTxfeesFeeToken feetoken;
-  const OsmosisTxfeesUpdateFeeTokenProposal(
-      {this.title, this.description, required this.feetoken});
+  const OsmosisTxfeesUpdateFeeTokenProposal({
+    this.title,
+    this.description,
+    required this.feetoken,
+  });
   factory OsmosisTxfeesUpdateFeeTokenProposal.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisTxfeesUpdateFeeTokenProposal(
-        title: decode.getField(1),
-        description: decode.getField(2),
-        feetoken: OsmosisTxfeesFeeToken.deserialize(decode.getField(3)));
+      title: decode.getField(1),
+      description: decode.getField(2),
+      feetoken: OsmosisTxfeesFeeToken.deserialize(decode.getField(3)),
+    );
   }
   factory OsmosisTxfeesUpdateFeeTokenProposal.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisTxfeesUpdateFeeTokenProposal(
-        title: json["title"],
-        description: json["description"],
-        feetoken: OsmosisTxfeesFeeToken.fromJson(json["feetoken"]));
+      title: json["title"],
+      description: json["description"],
+      feetoken: OsmosisTxfeesFeeToken.fromJson(json["feetoken"]),
+    );
   }
 
   @override
@@ -36,7 +42,7 @@ class OsmosisTxfeesUpdateFeeTokenProposal extends CosmosMessage {
     return {
       "title": title,
       "description": description,
-      "feetoken": feetoken.toJson()
+      "feetoken": feetoken.toJson(),
     };
   }
 

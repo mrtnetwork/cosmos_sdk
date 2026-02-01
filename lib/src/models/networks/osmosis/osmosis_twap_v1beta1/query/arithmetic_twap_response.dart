@@ -11,7 +11,8 @@ class OsmosisTwapArithmeticTwapResponse extends CosmosMessage {
     return OsmosisTwapArithmeticTwapResponse(decode.getField(1));
   }
   factory OsmosisTwapArithmeticTwapResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisTwapArithmeticTwapResponse(json["arithmetic_twap"]);
   }
 

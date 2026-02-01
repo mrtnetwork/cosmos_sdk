@@ -12,7 +12,8 @@ class CCTPV1MsgSendMessageWithCallerResponse extends CosmosMessage {
     return CCTPV1MsgSendMessageWithCallerResponse(decode.getField(1));
   }
   factory CCTPV1MsgSendMessageWithCallerResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return CCTPV1MsgSendMessageWithCallerResponse(json.asBigInt("nonce"));
   }
 

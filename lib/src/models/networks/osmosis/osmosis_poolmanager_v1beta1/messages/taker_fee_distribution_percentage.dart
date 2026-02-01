@@ -6,19 +6,26 @@ class OsmosisPoolManagerTakerFeeDistributionPercentage extends CosmosMessage {
   final String stakingRewards;
   final String communityPool;
 
-  OsmosisPoolManagerTakerFeeDistributionPercentage(
-      {required this.stakingRewards, required this.communityPool});
+  OsmosisPoolManagerTakerFeeDistributionPercentage({
+    required this.stakingRewards,
+    required this.communityPool,
+  });
   factory OsmosisPoolManagerTakerFeeDistributionPercentage.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolManagerTakerFeeDistributionPercentage(
-        stakingRewards: decode.getField(1), communityPool: decode.getField(2));
+      stakingRewards: decode.getField(1),
+      communityPool: decode.getField(2),
+    );
   }
   factory OsmosisPoolManagerTakerFeeDistributionPercentage.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisPoolManagerTakerFeeDistributionPercentage(
-        stakingRewards: json["staking_rewards"],
-        communityPool: json["community_pool"]);
+      stakingRewards: json["staking_rewards"],
+      communityPool: json["community_pool"],
+    );
   }
 
   @override

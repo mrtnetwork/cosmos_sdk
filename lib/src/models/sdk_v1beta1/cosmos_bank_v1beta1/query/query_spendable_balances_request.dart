@@ -45,6 +45,7 @@ class QuerySpendableBalancesRequest extends CosmosMessage
   List<String> get pathParameters => [address.address];
 
   @override
-  Map<String, String?> get queryParameters =>
-      {...pagination?.queryParameters ?? {}};
+  Map<String, String?> get queryParameters => {
+    ...pagination?.queryParameters ?? {},
+  };
 }

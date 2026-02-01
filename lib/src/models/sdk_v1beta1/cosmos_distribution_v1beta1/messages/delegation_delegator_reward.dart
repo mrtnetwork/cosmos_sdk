@@ -9,30 +9,35 @@ import 'package:blockchain_utils/helper/helper.dart';
 class DistributionDelegationDelegatorReward extends CosmosMessage {
   final CosmosBaseAddress? validatorddress;
   final List<DecCoin> reward;
-  DistributionDelegationDelegatorReward(
-      {this.validatorddress, required List<DecCoin> reward})
-      : reward = reward.immutable;
+  DistributionDelegationDelegatorReward({
+    this.validatorddress,
+    required List<DecCoin> reward,
+  }) : reward = reward.immutable;
   factory DistributionDelegationDelegatorReward.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return DistributionDelegationDelegatorReward(
-        validatorddress: json["validator_address"] == null
-            ? null
-            : CosmosBaseAddress(json["validator_address"]),
-        reward: (json["reward"] as List?)
-                ?.map((e) => DecCoin.fromJson(e))
-                .toList() ??
-            []);
+      validatorddress:
+          json["validator_address"] == null
+              ? null
+              : CosmosBaseAddress(json["validator_address"]),
+      reward:
+          (json["reward"] as List?)?.map((e) => DecCoin.fromJson(e)).toList() ??
+          [],
+    );
   }
   factory DistributionDelegationDelegatorReward.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionDelegationDelegatorReward(
-        validatorddress: decode
-            .getResult(1)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        reward: decode
-            .getFields<List<int>>(2)
-            .map((e) => DecCoin.deserialize(e))
-            .toList());
+      validatorddress: decode
+          .getResult(1)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      reward:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => DecCoin.deserialize(e))
+              .toList(),
+    );
   }
 
   @override
@@ -42,7 +47,7 @@ class DistributionDelegationDelegatorReward extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "validator_address": validatorddress?.address,
-      "reward": reward.map((e) => e.toJson()).toList()
+      "reward": reward.map((e) => e.toJson()).toList(),
     };
   }
 

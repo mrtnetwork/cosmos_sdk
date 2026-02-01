@@ -11,17 +11,17 @@ class DVVTriplets extends CosmosMessage {
   factory DVVTriplets.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DVVTriplets(
-        triplets: decode
-            .getFields<List<int>>(1)
-            .map((e) => DVVTriplet.deserialize(e))
-            .toList());
+      triplets:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => DVVTriplet.deserialize(e))
+              .toList(),
+    );
   }
 
   @override
   Map<String, dynamic> toJson() {
-    return {
-      'triplets': triplets.map((triplet) => triplet.toJson()).toList(),
-    };
+    return {'triplets': triplets.map((triplet) => triplet.toJson()).toList()};
   }
 
   @override

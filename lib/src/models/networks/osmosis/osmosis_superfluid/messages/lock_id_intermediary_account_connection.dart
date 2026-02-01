@@ -7,13 +7,18 @@ class OsmosisSuperfluidLockIdIntermediaryAccountConnection
   final BigInt? lockId;
   final String? intermediaryAccount;
 
-  const OsmosisSuperfluidLockIdIntermediaryAccountConnection(
-      {this.lockId, this.intermediaryAccount});
+  const OsmosisSuperfluidLockIdIntermediaryAccountConnection({
+    this.lockId,
+    this.intermediaryAccount,
+  });
   factory OsmosisSuperfluidLockIdIntermediaryAccountConnection.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidLockIdIntermediaryAccountConnection(
-        lockId: decode.getField(1), intermediaryAccount: decode.getField(2));
+      lockId: decode.getField(1),
+      intermediaryAccount: decode.getField(2),
+    );
   }
 
   @override
@@ -23,7 +28,7 @@ class OsmosisSuperfluidLockIdIntermediaryAccountConnection
   Map<String, dynamic> toJson() {
     return {
       "lock_id": lockId?.toString(),
-      "intermediary_account": intermediaryAccount
+      "intermediary_account": intermediaryAccount,
     };
   }
 

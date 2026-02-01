@@ -8,32 +8,45 @@ class OsmosisConcentratedLiquidityLiquidityPerTickRangeResponse
     extends CosmosMessage {
   final List<OsmosisConcentratedLiquidityLiquidityDepthWithRange> liquidity;
   final BigInt? bucketIndex;
-  OsmosisConcentratedLiquidityLiquidityPerTickRangeResponse(
-      {required List<OsmosisConcentratedLiquidityLiquidityDepthWithRange>
-          liquidity,
-      this.bucketIndex})
-      : liquidity = liquidity.immutable;
+  OsmosisConcentratedLiquidityLiquidityPerTickRangeResponse({
+    required List<OsmosisConcentratedLiquidityLiquidityDepthWithRange>
+    liquidity,
+    this.bucketIndex,
+  }) : liquidity = liquidity.immutable;
   factory OsmosisConcentratedLiquidityLiquidityPerTickRangeResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityLiquidityPerTickRangeResponse(
-        liquidity: decode
-            .getFields<List<int>>(1)
-            .map((e) =>
-                OsmosisConcentratedLiquidityLiquidityDepthWithRange.deserialize(
-                    e))
-            .toList(),
-        bucketIndex: decode.getField(2));
+      liquidity:
+          decode
+              .getFields<List<int>>(1)
+              .map(
+                (e) =>
+                    OsmosisConcentratedLiquidityLiquidityDepthWithRange.deserialize(
+                      e,
+                    ),
+              )
+              .toList(),
+      bucketIndex: decode.getField(2),
+    );
   }
   factory OsmosisConcentratedLiquidityLiquidityPerTickRangeResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityLiquidityPerTickRangeResponse(
-        liquidity: (json["liquidity"] as List?)
-                ?.map((e) => OsmosisConcentratedLiquidityLiquidityDepthWithRange
-                    .deserialize(e))
-                .toList() ??
-            <OsmosisConcentratedLiquidityLiquidityDepthWithRange>[],
-        bucketIndex: BigintUtils.tryParse(json["bucket_index"]));
+      liquidity:
+          (json["liquidity"] as List?)
+              ?.map(
+                (e) =>
+                    OsmosisConcentratedLiquidityLiquidityDepthWithRange.deserialize(
+                      e,
+                    ),
+              )
+              .toList() ??
+          <OsmosisConcentratedLiquidityLiquidityDepthWithRange>[],
+      bucketIndex: BigintUtils.tryParse(json["bucket_index"]),
+    );
   }
 
   @override
@@ -43,7 +56,7 @@ class OsmosisConcentratedLiquidityLiquidityPerTickRangeResponse
   Map<String, dynamic> toJson() {
     return {
       "liquidity": liquidity.map((e) => e.toJson()).toList(),
-      "bucket_index": bucketIndex?.toString()
+      "bucket_index": bucketIndex?.toString(),
     };
   }
 

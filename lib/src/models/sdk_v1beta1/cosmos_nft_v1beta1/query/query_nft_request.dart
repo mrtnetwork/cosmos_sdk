@@ -20,10 +20,7 @@ class QueryNFTRequest extends CosmosMessage
 
   @override
   Map<String, dynamic> toJson() {
-    return {
-      'class_id': classId,
-      'id': id,
-    };
+    return {'class_id': classId, 'id': id};
   }
 
   @override

@@ -12,25 +12,31 @@ class BankParams extends CosmosMessage {
   /// As of cosmos-sdk 0.47, this only exists for backwards compatibility of genesis files.
   final List<SendEnabled> sendEnabled;
   final bool defaultSendEnabled;
-  const BankParams(
-      {this.sendEnabled = const [], required this.defaultSendEnabled});
+  const BankParams({
+    this.sendEnabled = const [],
+    required this.defaultSendEnabled,
+  });
   factory BankParams.fromJson(Map<String, dynamic> json) {
     return BankParams(
-        sendEnabled: json
-                .asListOfMap("send_enabled", throwOnNull: true)
-                ?.map((e) => SendEnabled.fromJson(e))
-                .toList() ??
-            [],
-        defaultSendEnabled: json.as("default_send_enabled"));
+      sendEnabled:
+          json
+              .asListOfMap("send_enabled", throwOnNull: true)
+              ?.map((e) => SendEnabled.fromJson(e))
+              .toList() ??
+          [],
+      defaultSendEnabled: json.as("default_send_enabled"),
+    );
   }
   factory BankParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return BankParams(
-        defaultSendEnabled: decode.getField(2),
-        sendEnabled: decode
-            .getFields<List<int>>(1)
-            .map((e) => SendEnabled.deserialize(e))
-            .toList());
+      defaultSendEnabled: decode.getField(2),
+      sendEnabled:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => SendEnabled.deserialize(e))
+              .toList(),
+    );
   }
 
   @override
@@ -40,7 +46,7 @@ class BankParams extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "send_enabled": sendEnabled.map((e) => e.toJson()).toList(),
-      "default_send_enabled": defaultSendEnabled
+      "default_send_enabled": defaultSendEnabled,
     };
   }
 

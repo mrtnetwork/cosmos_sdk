@@ -11,10 +11,12 @@ class DVPairs extends CosmosMessage {
   factory DVPairs.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DVPairs(
-        pairs: decode
-            .getFields<List<int>>(1)
-            .map((e) => DVPair.deserialize(e))
-            .toList());
+      pairs:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => DVPair.deserialize(e))
+              .toList(),
+    );
   }
 
   @override

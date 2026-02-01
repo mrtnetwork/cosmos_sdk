@@ -31,35 +31,40 @@ class OsmosisGammPool extends CosmosMessage {
   /// sum of all non-normalized pool weights
   final String totalWeight;
 
-  OsmosisGammPool(
-      {this.address,
-      this.id,
-      required this.poolParams,
-      this.futurePoolGovernor,
-      required this.totalShares,
-      required List<OsmosisGammPoolAsset> poolAssets,
-      required this.totalWeight})
-      : poolAssets = poolAssets.immutable;
+  OsmosisGammPool({
+    this.address,
+    this.id,
+    required this.poolParams,
+    this.futurePoolGovernor,
+    required this.totalShares,
+    required List<OsmosisGammPoolAsset> poolAssets,
+    required this.totalWeight,
+  }) : poolAssets = poolAssets.immutable;
   factory OsmosisGammPool.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisGammPool(
-        address: decode.getField(1),
-        id: decode.getField(2),
-        poolParams: OsmosisGammPoolParams.deserialize(decode.getField(3)),
-        futurePoolGovernor: decode.getField(4),
-        totalShares: Coin.deserialize(decode.getField(5)),
-        poolAssets: decode
-            .getFields<List<int>>(6)
-            .map((e) => OsmosisGammPoolAsset.deserialize(e))
-            .toList(),
-        totalWeight: decode.getField(7));
+      address: decode.getField(1),
+      id: decode.getField(2),
+      poolParams: OsmosisGammPoolParams.deserialize(decode.getField(3)),
+      futurePoolGovernor: decode.getField(4),
+      totalShares: Coin.deserialize(decode.getField(5)),
+      poolAssets:
+          decode
+              .getFields<List<int>>(6)
+              .map((e) => OsmosisGammPoolAsset.deserialize(e))
+              .toList(),
+      totalWeight: decode.getField(7),
+    );
   }
   factory OsmosisGammPool.fromAny(Any any) {
     if (any.typeUrl != OsmosisGammV1beta1Types.pool.typeUrl) {
-      throw DartCosmosSdkPluginException("Invalid type url.", details: {
-        "excepted": OsmosisGammV1beta1Types.pool.typeUrl,
-        "type_url": any.typeUrl
-      });
+      throw DartCosmosSdkPluginException(
+        "Invalid type url.",
+        details: {
+          "excepted": OsmosisGammV1beta1Types.pool.typeUrl,
+          "type_url": any.typeUrl,
+        },
+      );
     }
     return OsmosisGammPool.deserialize(any.value);
   }
@@ -76,7 +81,7 @@ class OsmosisGammPool extends CosmosMessage {
       "future_pool_governor": futurePoolGovernor,
       "total_shares": totalShares.toJson(),
       "pool_assets": poolAssets.map((e) => e.toJson()).toList(),
-      "total_weight": totalWeight
+      "total_weight": totalWeight,
     };
   }
 
@@ -85,12 +90,12 @@ class OsmosisGammPool extends CosmosMessage {
 
   @override
   List get values => [
-        address,
-        id,
-        poolParams,
-        futurePoolGovernor,
-        totalShares,
-        poolAssets,
-        totalWeight
-      ];
+    address,
+    id,
+    poolParams,
+    futurePoolGovernor,
+    totalShares,
+    poolAssets,
+    totalWeight,
+  ];
 }

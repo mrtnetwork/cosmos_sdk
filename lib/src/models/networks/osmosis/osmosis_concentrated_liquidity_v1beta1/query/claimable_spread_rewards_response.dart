@@ -8,18 +8,19 @@ class OsmosisConcentratedLiquidityClaimableSpreadRewardsResponse
   final List<Coin> claimableSpreadRewards;
 
   OsmosisConcentratedLiquidityClaimableSpreadRewardsResponse(
-      List<Coin> claimableSpreadRewards)
-      : claimableSpreadRewards = claimableSpreadRewards.immutable;
+    List<Coin> claimableSpreadRewards,
+  ) : claimableSpreadRewards = claimableSpreadRewards.immutable;
   factory OsmosisConcentratedLiquidityClaimableSpreadRewardsResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return OsmosisConcentratedLiquidityClaimableSpreadRewardsResponse(decode
-        .getFields<List<int>>(1)
-        .map((e) => Coin.deserialize(e))
-        .toList());
+    return OsmosisConcentratedLiquidityClaimableSpreadRewardsResponse(
+      decode.getFields<List<int>>(1).map((e) => Coin.deserialize(e)).toList(),
+    );
   }
   factory OsmosisConcentratedLiquidityClaimableSpreadRewardsResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityClaimableSpreadRewardsResponse(
       (json["claimable_spread_rewards"] as List?)
               ?.map((e) => Coin.fromJson(e))
@@ -35,7 +36,7 @@ class OsmosisConcentratedLiquidityClaimableSpreadRewardsResponse
   Map<String, dynamic> toJson() {
     return {
       "claimable_spread_rewards":
-          claimableSpreadRewards.map((e) => e.toJson()).toList()
+          claimableSpreadRewards.map((e) => e.toJson()).toList(),
     };
   }
 

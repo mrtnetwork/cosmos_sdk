@@ -6,7 +6,8 @@ class OsmosisConcentratedLiquidityGetTotalLiquidityRequest extends CosmosMessage
     with QueryMessage<OsmosisConcentratedLiquidityGetTotalLiquidityResponse> {
   const OsmosisConcentratedLiquidityGetTotalLiquidityRequest();
   factory OsmosisConcentratedLiquidityGetTotalLiquidityRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return const OsmosisConcentratedLiquidityGetTotalLiquidityRequest();
   }
 
@@ -30,14 +31,17 @@ class OsmosisConcentratedLiquidityGetTotalLiquidityRequest extends CosmosMessage
 
   @override
   OsmosisConcentratedLiquidityGetTotalLiquidityResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityGetTotalLiquidityResponse.fromJson(json);
   }
 
   @override
   OsmosisConcentratedLiquidityGetTotalLiquidityResponse onResponse(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return OsmosisConcentratedLiquidityGetTotalLiquidityResponse.deserialize(
-        bytes);
+      bytes,
+    );
   }
 }

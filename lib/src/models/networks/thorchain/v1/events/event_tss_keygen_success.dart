@@ -6,15 +6,18 @@ class ThorchainEventTssKeygenSuccess extends CosmosMessage {
   final String? pubKey;
   final List<String>? members;
   final BigInt? height;
-  ThorchainEventTssKeygenSuccess(
-      {this.pubKey, List<String>? members, this.height})
-      : members = members?.emptyAsNull?.immutable;
+  ThorchainEventTssKeygenSuccess({
+    this.pubKey,
+    List<String>? members,
+    this.height,
+  }) : members = members?.emptyAsNull?.immutable;
   factory ThorchainEventTssKeygenSuccess.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainEventTssKeygenSuccess(
-        pubKey: decode.getField(1),
-        members: decode.getFields<String>(2),
-        height: decode.getField(3));
+      pubKey: decode.getField(1),
+      members: decode.getFields<String>(2),
+      height: decode.getField(3),
+    );
   }
 
   @override

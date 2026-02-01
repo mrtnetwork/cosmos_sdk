@@ -31,7 +31,8 @@ class IbcClientV2QueryCounterpartyInfoRequest extends CosmosMessage
 
   @override
   IbcClientV2QueryCounterpartyInfoResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return IbcClientV2QueryCounterpartyInfoResponse.fromJson(json);
   }
 

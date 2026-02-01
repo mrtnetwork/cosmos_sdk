@@ -8,27 +8,36 @@ class OsmosisConcentratedLiquidityNumNextInitializedTicksRequest
     extends CosmosMessage
     with
         QueryMessage<
-            OsmosisConcentratedLiquidityNumNextInitializedTicksResponse> {
+          OsmosisConcentratedLiquidityNumNextInitializedTicksResponse
+        > {
   final BigInt? poolId;
   final String? tokenInDenom;
   final BigInt? numNextInitializedTicks;
-  OsmosisConcentratedLiquidityNumNextInitializedTicksRequest(
-      {this.poolId, this.tokenInDenom, this.numNextInitializedTicks});
+  OsmosisConcentratedLiquidityNumNextInitializedTicksRequest({
+    this.poolId,
+    this.tokenInDenom,
+    this.numNextInitializedTicks,
+  });
   factory OsmosisConcentratedLiquidityNumNextInitializedTicksRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityNumNextInitializedTicksRequest(
-        poolId: decode.getField(1),
-        tokenInDenom: decode.getField(2),
-        numNextInitializedTicks: decode.getField(3));
+      poolId: decode.getField(1),
+      tokenInDenom: decode.getField(2),
+      numNextInitializedTicks: decode.getField(3),
+    );
   }
   factory OsmosisConcentratedLiquidityNumNextInitializedTicksRequest.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityNumNextInitializedTicksRequest(
-        poolId: BigintUtils.tryParse(json["pool_id"]),
-        numNextInitializedTicks:
-            BigintUtils.tryParse(json["num_next_initialized_ticks"]),
-        tokenInDenom: json["token_in_denom"]);
+      poolId: BigintUtils.tryParse(json["pool_id"]),
+      numNextInitializedTicks: BigintUtils.tryParse(
+        json["num_next_initialized_ticks"],
+      ),
+      tokenInDenom: json["token_in_denom"],
+    );
   }
 
   @override
@@ -39,7 +48,7 @@ class OsmosisConcentratedLiquidityNumNextInitializedTicksRequest
     return {
       "pool_id": poolId?.toString(),
       "token_in_denom": tokenInDenom,
-      "num_next_initialized_ticks": numNextInitializedTicks?.toString()
+      "num_next_initialized_ticks": numNextInitializedTicks?.toString(),
     };
   }
 
@@ -52,22 +61,26 @@ class OsmosisConcentratedLiquidityNumNextInitializedTicksRequest
 
   @override
   Map<String, String?> get queryParameters => {
-        "pool_id": poolId?.toString(),
-        "token_in_denom": tokenInDenom,
-        "num_next_initialized_ticks": numNextInitializedTicks?.toString()
-      };
+    "pool_id": poolId?.toString(),
+    "token_in_denom": tokenInDenom,
+    "num_next_initialized_ticks": numNextInitializedTicks?.toString(),
+  };
 
   @override
   OsmosisConcentratedLiquidityNumNextInitializedTicksResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityNumNextInitializedTicksResponse.fromJson(
-        json);
+      json,
+    );
   }
 
   @override
   OsmosisConcentratedLiquidityNumNextInitializedTicksResponse onResponse(
-      List<int> bytes) {
-    return OsmosisConcentratedLiquidityNumNextInitializedTicksResponse
-        .deserialize(bytes);
+    List<int> bytes,
+  ) {
+    return OsmosisConcentratedLiquidityNumNextInitializedTicksResponse.deserialize(
+      bytes,
+    );
   }
 }

@@ -9,12 +9,14 @@ class SlashingQuerySigningInfoResponse extends CosmosMessage {
   const SlashingQuerySigningInfoResponse(this.valSigningInfo);
   factory SlashingQuerySigningInfoResponse.fromJson(Map<String, dynamic> json) {
     return SlashingQuerySigningInfoResponse(
-        SlashingValidatorSigningInfo.fromJson(json["val_signing_info"]));
+      SlashingValidatorSigningInfo.fromJson(json["val_signing_info"]),
+    );
   }
   factory SlashingQuerySigningInfoResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return SlashingQuerySigningInfoResponse(
-        SlashingValidatorSigningInfo.deserialize(decode.getField(1)));
+      SlashingValidatorSigningInfo.deserialize(decode.getField(1)),
+    );
   }
 
   @override

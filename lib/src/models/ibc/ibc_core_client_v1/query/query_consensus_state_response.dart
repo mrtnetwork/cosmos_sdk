@@ -17,25 +17,31 @@ class IbcClientQueryConsensusStateResponse extends CosmosMessage {
   /// height at which the proof was retrieved
   final IbcClientHeight proofHeight;
   factory IbcClientQueryConsensusStateResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return IbcClientQueryConsensusStateResponse(
-        consensusState: json["consensus_state"] == null
-            ? null
-            : AnyMessage.fromJson(json["consensus_state"]),
-        proofHeight: IbcClientHeight.fromJson(json["proof_height"]),
-        proof: CosmosUtils.tryToBytes(json["proof"]));
+      consensusState:
+          json["consensus_state"] == null
+              ? null
+              : AnyMessage.fromJson(json["consensus_state"]),
+      proofHeight: IbcClientHeight.fromJson(json["proof_height"]),
+      proof: CosmosUtils.tryToBytes(json["proof"]),
+    );
   }
-  IbcClientQueryConsensusStateResponse(
-      {this.consensusState, List<int>? proof, required this.proofHeight})
-      : proof = BytesUtils.tryToBytes(proof, unmodifiable: true);
+  IbcClientQueryConsensusStateResponse({
+    this.consensusState,
+    List<int>? proof,
+    required this.proofHeight,
+  }) : proof = BytesUtils.tryToBytes(proof, unmodifiable: true);
   factory IbcClientQueryConsensusStateResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcClientQueryConsensusStateResponse(
-        consensusState: decode
-            .getResult(1)
-            ?.to<AnyMessage, List<int>>((e) => AnyMessage.deserialize(e)),
-        proof: decode.getField(2),
-        proofHeight: IbcClientHeight.deserialize(decode.getField(3)));
+      consensusState: decode
+          .getResult(1)
+          ?.to<AnyMessage, List<int>>((e) => AnyMessage.deserialize(e)),
+      proof: decode.getField(2),
+      proofHeight: IbcClientHeight.deserialize(decode.getField(3)),
+    );
   }
 
   @override
@@ -46,7 +52,7 @@ class IbcClientQueryConsensusStateResponse extends CosmosMessage {
     return {
       "consensus_state": consensusState?.toJson(),
       "proof": BytesUtils.tryToHexString(proof),
-      "proof_height": proofHeight.toJson()
+      "proof_height": proofHeight.toJson(),
     };
   }
 

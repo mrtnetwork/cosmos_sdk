@@ -6,30 +6,39 @@ import 'package:cosmos_sdk/src/utils/quick.dart';
 import 'super_fluid_undelegate_and_unbond_lock_response.dart';
 
 class OsmosisSuperfluidMsgSuperfluidUndelegateAndUnbondLock
-    extends OsmosisSuperfluid<
-        OsmosisSuperfluidMsgSuperfluidUndelegateAndUnbondLockResponse> {
+    extends
+        OsmosisSuperfluid<
+          OsmosisSuperfluidMsgSuperfluidUndelegateAndUnbondLockResponse
+        > {
   final String? sender;
   final BigInt? lockId;
 
   /// Amount of unlocking coin.
   final Coin coin;
-  const OsmosisSuperfluidMsgSuperfluidUndelegateAndUnbondLock(
-      {this.sender, this.lockId, required this.coin});
+  const OsmosisSuperfluidMsgSuperfluidUndelegateAndUnbondLock({
+    this.sender,
+    this.lockId,
+    required this.coin,
+  });
   factory OsmosisSuperfluidMsgSuperfluidUndelegateAndUnbondLock.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     // final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidMsgSuperfluidUndelegateAndUnbondLock(
-        sender: json.as("sender"),
-        lockId: json.asBigInt("lock_id"),
-        coin: Coin.deserialize(json.asMap("coin")));
+      sender: json.as("sender"),
+      lockId: json.asBigInt("lock_id"),
+      coin: Coin.deserialize(json.asMap("coin")),
+    );
   }
   factory OsmosisSuperfluidMsgSuperfluidUndelegateAndUnbondLock.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidMsgSuperfluidUndelegateAndUnbondLock(
-        sender: decode.getField(1),
-        lockId: decode.getField(2),
-        coin: Coin.deserialize(decode.getField(3)));
+      sender: decode.getField(1),
+      lockId: decode.getField(2),
+      coin: Coin.deserialize(decode.getField(3)),
+    );
   }
 
   @override
@@ -40,7 +49,7 @@ class OsmosisSuperfluidMsgSuperfluidUndelegateAndUnbondLock
     return {
       "sender": sender,
       "lock_id": lockId?.toString(),
-      "coin": coin.toJson()
+      "coin": coin.toJson(),
     };
   }
 
@@ -55,8 +64,10 @@ class OsmosisSuperfluidMsgSuperfluidUndelegateAndUnbondLock
   List<String?> get signers => [sender];
   @override
   OsmosisSuperfluidMsgSuperfluidUndelegateAndUnbondLockResponse onResponse(
-      List<int> bytes) {
-    return OsmosisSuperfluidMsgSuperfluidUndelegateAndUnbondLockResponse
-        .deserialize(bytes);
+    List<int> bytes,
+  ) {
+    return OsmosisSuperfluidMsgSuperfluidUndelegateAndUnbondLockResponse.deserialize(
+      bytes,
+    );
   }
 }

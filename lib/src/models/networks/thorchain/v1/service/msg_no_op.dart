@@ -7,13 +7,14 @@ class ThorchainMsgNoOp extends CosmosMessage {
   final List<int>? signer;
   final String? action;
   ThorchainMsgNoOp({required this.observedTx, List<int>? signer, this.action})
-      : signer = BytesUtils.tryToBytes(signer, unmodifiable: true);
+    : signer = BytesUtils.tryToBytes(signer, unmodifiable: true);
   factory ThorchainMsgNoOp.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainMsgNoOp(
-        observedTx: ThorchainObservedTx.deserialize(decode.getField(1)),
-        signer: decode.getField(2),
-        action: decode.getField(3));
+      observedTx: ThorchainObservedTx.deserialize(decode.getField(1)),
+      signer: decode.getField(2),
+      action: decode.getField(3),
+    );
   }
 
   @override
@@ -24,7 +25,7 @@ class ThorchainMsgNoOp extends CosmosMessage {
     return {
       "observed_tx": observedTx.toJson(),
       "signer": BytesUtils.tryToHexString(signer),
-      "action": action
+      "action": action,
     };
   }
 

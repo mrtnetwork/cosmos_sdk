@@ -7,15 +7,19 @@ class OsmosisConcentratedLiquidityPositionByIdResponse extends CosmosMessage {
 
   OsmosisConcentratedLiquidityPositionByIdResponse(this.position);
   factory OsmosisConcentratedLiquidityPositionByIdResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityPositionByIdResponse(
-        FullPositionBreakdown.deserialize(decode.getField(1)));
+      FullPositionBreakdown.deserialize(decode.getField(1)),
+    );
   }
   factory OsmosisConcentratedLiquidityPositionByIdResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityPositionByIdResponse(
-        FullPositionBreakdown.fromJson(json["position"]));
+      FullPositionBreakdown.fromJson(json["position"]),
+    );
   }
 
   @override

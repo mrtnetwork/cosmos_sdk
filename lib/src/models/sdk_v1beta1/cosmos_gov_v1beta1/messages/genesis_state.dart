@@ -31,48 +31,55 @@ class GovGenesisState extends CosmosMessage {
 
   /// tally_params defines all the parameters related to tally.
   final List<GovTallyParams> tallyParams;
-  GovGenesisState(
-      {this.startingProposalId,
-      required List<GovDeposit> deposits,
-      required List<GovVote> votes,
-      required List<GovProposal> proposals,
-      required List<GovDepositParams> depositParams,
-      required List<GovVotingParams> votingParams,
-      required List<GovTallyParams> tallyParams})
-      : deposits = deposits.immutable,
-        votes = votes.immutable,
-        proposals = proposals.immutable,
-        depositParams = depositParams.immutable,
-        votingParams = votingParams.immutable,
-        tallyParams = tallyParams.immutable;
+  GovGenesisState({
+    this.startingProposalId,
+    required List<GovDeposit> deposits,
+    required List<GovVote> votes,
+    required List<GovProposal> proposals,
+    required List<GovDepositParams> depositParams,
+    required List<GovVotingParams> votingParams,
+    required List<GovTallyParams> tallyParams,
+  }) : deposits = deposits.immutable,
+       votes = votes.immutable,
+       proposals = proposals.immutable,
+       depositParams = depositParams.immutable,
+       votingParams = votingParams.immutable,
+       tallyParams = tallyParams.immutable;
   factory GovGenesisState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GovGenesisState(
-        startingProposalId: decode.getField(1),
-        deposits: decode
-            .getFields<List<int>>(2)
-            .map((e) => GovDeposit.deserialize(e))
-            .toList(),
-        votes: decode
-            .getFields<List<int>>(3)
-            .map((e) => GovVote.deserialize(e))
-            .toList(),
-        proposals: decode
-            .getFields<List<int>>(4)
-            .map((e) => GovProposal.deserialize(e))
-            .toList(),
-        depositParams: decode
-            .getFields<List<int>>(5)
-            .map((e) => GovDepositParams.deserialize(e))
-            .toList(),
-        votingParams: decode
-            .getFields<List<int>>(6)
-            .map((e) => GovVotingParams.deserialize(e))
-            .toList(),
-        tallyParams: decode
-            .getFields<List<int>>(7)
-            .map((e) => GovTallyParams.deserialize(e))
-            .toList());
+      startingProposalId: decode.getField(1),
+      deposits:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => GovDeposit.deserialize(e))
+              .toList(),
+      votes:
+          decode
+              .getFields<List<int>>(3)
+              .map((e) => GovVote.deserialize(e))
+              .toList(),
+      proposals:
+          decode
+              .getFields<List<int>>(4)
+              .map((e) => GovProposal.deserialize(e))
+              .toList(),
+      depositParams:
+          decode
+              .getFields<List<int>>(5)
+              .map((e) => GovDepositParams.deserialize(e))
+              .toList(),
+      votingParams:
+          decode
+              .getFields<List<int>>(6)
+              .map((e) => GovVotingParams.deserialize(e))
+              .toList(),
+      tallyParams:
+          decode
+              .getFields<List<int>>(7)
+              .map((e) => GovTallyParams.deserialize(e))
+              .toList(),
+    );
   }
 
   @override
@@ -96,12 +103,12 @@ class GovGenesisState extends CosmosMessage {
 
   @override
   List get values => [
-        startingProposalId,
-        deposits,
-        votes,
-        proposals,
-        depositParams,
-        votingParams,
-        tallyParams
-      ];
+    startingProposalId,
+    deposits,
+    votes,
+    proposals,
+    depositParams,
+    votingParams,
+    tallyParams,
+  ];
 }

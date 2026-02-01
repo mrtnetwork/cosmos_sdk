@@ -18,20 +18,22 @@ class ThorchainMsgSolvency extends CosmosMessage {
     required List<ThorchainCoin> coins,
     this.height,
     List<int>? signer,
-  })  : coins = coins.immutable,
-        signer = BytesUtils.tryToBytes(signer, unmodifiable: true);
+  }) : coins = coins.immutable,
+       signer = BytesUtils.tryToBytes(signer, unmodifiable: true);
   factory ThorchainMsgSolvency.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainMsgSolvency(
-        id: decode.getField(1),
-        chain: decode.getField(2),
-        pubKey: decode.getField(3),
-        coins: decode
-            .getFields<List<int>>(4)
-            .map((e) => ThorchainCoin.deserialize(e))
-            .toList(),
-        height: decode.getField(5),
-        signer: decode.getField(6));
+      id: decode.getField(1),
+      chain: decode.getField(2),
+      pubKey: decode.getField(3),
+      coins:
+          decode
+              .getFields<List<int>>(4)
+              .map((e) => ThorchainCoin.deserialize(e))
+              .toList(),
+      height: decode.getField(5),
+      signer: decode.getField(6),
+    );
   }
 
   @override
@@ -45,7 +47,7 @@ class ThorchainMsgSolvency extends CosmosMessage {
       "pub_key": pubKey,
       "coins": coins.map((e) => e.toJson()).toList(),
       "height": height?.toString(),
-      "signer": BytesUtils.tryToHexString(signer)
+      "signer": BytesUtils.tryToHexString(signer),
     };
   }
 

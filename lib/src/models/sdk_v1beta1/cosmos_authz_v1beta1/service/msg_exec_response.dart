@@ -7,9 +7,9 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class AuthzMsgExecResponse extends CosmosMessage {
   final List<List<int>> results;
   AuthzMsgExecResponse({required List<List<int>> results})
-      : results = List<List<int>>.unmodifiable(results
-            .map((e) => BytesUtils.toBytes(e, unmodifiable: true))
-            .toList());
+    : results = List<List<int>>.unmodifiable(
+        results.map((e) => BytesUtils.toBytes(e, unmodifiable: true)).toList(),
+      );
   factory AuthzMsgExecResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return AuthzMsgExecResponse(results: decode.getFields<List<int>>(1));

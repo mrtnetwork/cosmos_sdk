@@ -10,17 +10,23 @@ class InterchainAccountsHostMsgModuleQuerySafeResponse extends CosmosMessage {
   /// protobuf encoded responses for each query
   final List<List<int>>? responses;
 
-  InterchainAccountsHostMsgModuleQuerySafeResponse(
-      {this.height, List<List<int>>? responses})
-      : responses = responses == null
-            ? null
-            : List<List<int>>.unmodifiable(
-                responses.map((e) => BytesUtils.tryToBytes(e)));
+  InterchainAccountsHostMsgModuleQuerySafeResponse({
+    this.height,
+    List<List<int>>? responses,
+  }) : responses =
+           responses == null
+               ? null
+               : List<List<int>>.unmodifiable(
+                 responses.map((e) => BytesUtils.tryToBytes(e)),
+               );
   factory InterchainAccountsHostMsgModuleQuerySafeResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return InterchainAccountsHostMsgModuleQuerySafeResponse(
-        height: decode.getField(1), responses: decode.getFields<List<int>>(2));
+      height: decode.getField(1),
+      responses: decode.getFields<List<int>>(2),
+    );
   }
   @override
   List<int> get fieldIds => [1, 2];
@@ -29,7 +35,7 @@ class InterchainAccountsHostMsgModuleQuerySafeResponse extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "height": height?.toString(),
-      "responses": responses?.map((e) => BytesUtils.tryToHexString(e)).toList()
+      "responses": responses?.map((e) => BytesUtils.tryToHexString(e)).toList(),
     };
   }
 

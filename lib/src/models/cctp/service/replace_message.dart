@@ -24,11 +24,12 @@ class CCTPV1MsgReplaceMessage extends CCTPV1Service<EmptyServiceRequestResponse>
   factory CCTPV1MsgReplaceMessage.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CCTPV1MsgReplaceMessage(
-        from: decode.getField(1),
-        originalMessage: decode.getField(2),
-        originalAttestation: decode.getField(3),
-        newDestinationCaller: decode.getField(5),
-        newMessageBody: decode.getField(4));
+      from: decode.getField(1),
+      originalMessage: decode.getField(2),
+      originalAttestation: decode.getField(3),
+      newDestinationCaller: decode.getField(5),
+      newMessageBody: decode.getField(4),
+    );
   }
   factory CCTPV1MsgReplaceMessage.fromJson(Map<String, dynamic> json) {
     return CCTPV1MsgReplaceMessage(
@@ -59,12 +60,12 @@ class CCTPV1MsgReplaceMessage extends CCTPV1Service<EmptyServiceRequestResponse>
 
   @override
   List get values => [
-        from,
-        originalMessage,
-        originalAttestation,
-        newMessageBody,
-        newDestinationCaller,
-      ];
+    from,
+    originalMessage,
+    originalAttestation,
+    newMessageBody,
+    newDestinationCaller,
+  ];
   @override
   List<String?> get signers => [from];
 

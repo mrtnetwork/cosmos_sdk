@@ -5,22 +5,30 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:cosmos_sdk/src/utils/quick.dart';
 
 class CCTPV1MsgRemoveRemoteTokenMessenger
-    extends CCTPV1Service<EmptyServiceRequestResponse> with AminoMessage {
+    extends CCTPV1Service<EmptyServiceRequestResponse>
+    with AminoMessage {
   final String? from;
   final int? domainId;
 
-  const CCTPV1MsgRemoveRemoteTokenMessenger(
-      {required this.from, required this.domainId});
+  const CCTPV1MsgRemoveRemoteTokenMessenger({
+    required this.from,
+    required this.domainId,
+  });
 
   factory CCTPV1MsgRemoveRemoteTokenMessenger.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CCTPV1MsgRemoveRemoteTokenMessenger(
-        domainId: decode.getField(2), from: decode.getField(1));
+      domainId: decode.getField(2),
+      from: decode.getField(1),
+    );
   }
   factory CCTPV1MsgRemoveRemoteTokenMessenger.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return CCTPV1MsgRemoveRemoteTokenMessenger(
-        from: json.as("from"), domainId: json.as("domain_id"));
+      from: json.as("from"),
+      domainId: json.as("domain_id"),
+    );
   }
 
   @override
@@ -42,6 +50,7 @@ class CCTPV1MsgRemoveRemoteTokenMessenger
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        CCTPV1Types.msgRemoveRemoteTokenMessengerResponse);
+      CCTPV1Types.msgRemoveRemoteTokenMessengerResponse,
+    );
   }
 }

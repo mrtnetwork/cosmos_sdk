@@ -37,29 +37,34 @@ class MsgCreateValidator
   factory MsgCreateValidator.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgCreateValidator(
-        description: Description.deserialize(decode.getField(1)),
-        commission: CommissionRates.deserialize(decode.getField(2)),
-        minSelfDelegation: BigintUtils.parse(decode.getField<String>(3)),
-        delegatorAddress: decode
-            .getResult(4)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        validatorAddress: decode
-            .getResult(5)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        pubkey:
-            decode.getResult(6)?.to<Any, List<int>>((e) => Any.deserialize(e)),
-        value: Coin.deserialize(decode.getField(7)));
+      description: Description.deserialize(decode.getField(1)),
+      commission: CommissionRates.deserialize(decode.getField(2)),
+      minSelfDelegation: BigintUtils.parse(decode.getField<String>(3)),
+      delegatorAddress: decode
+          .getResult(4)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      validatorAddress: decode
+          .getResult(5)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      pubkey: decode
+          .getResult(6)
+          ?.to<Any, List<int>>((e) => Any.deserialize(e)),
+      value: Coin.deserialize(decode.getField(7)),
+    );
   }
   factory MsgCreateValidator.fromJson(Map<String, dynamic> json) {
     return MsgCreateValidator(
-        description: Description.fromJson(json.asMap("description")),
-        commission: CommissionRates.fromJson(json.asMap("commission")),
-        minSelfDelegation: json.asBigInt("min_self_delegation"),
-        delegatorAddress: json.asAddress("delegator_address"),
-        validatorAddress: json.asAddress("validator_address"),
-        pubkey: json.maybeAs<Any, Map<String, dynamic>>(
-            key: "pubkey", onValue: (e) => Any.fromJson(e)),
-        value: Coin.fromJson(json.asMap("value")));
+      description: Description.fromJson(json.asMap("description")),
+      commission: CommissionRates.fromJson(json.asMap("commission")),
+      minSelfDelegation: json.asBigInt("min_self_delegation"),
+      delegatorAddress: json.asAddress("delegator_address"),
+      validatorAddress: json.asAddress("validator_address"),
+      pubkey: json.maybeAs<Any, Map<String, dynamic>>(
+        key: "pubkey",
+        onValue: (e) => Any.fromJson(e),
+      ),
+      value: Coin.fromJson(json.asMap("value")),
+    );
   }
   @override
   Map<String, dynamic> toJson({bool amino = false}) {
@@ -78,7 +83,7 @@ class MsgCreateValidator
   Map<String, dynamic> toAminoJson() {
     return {
       "type": typeUrl.aminoType!,
-      "value": toJson(amino: true)..removeWhere((k, v) => v == null)
+      "value": toJson(amino: true)..removeWhere((k, v) => v == null),
     };
   }
 
@@ -89,14 +94,14 @@ class MsgCreateValidator
 
   @override
   List get values => [
-        description,
-        commission,
-        minSelfDelegation.toString(),
-        delegatorAddress?.address,
-        validatorAddress?.address,
-        pubkey,
-        value
-      ];
+    description,
+    commission,
+    minSelfDelegation.toString(),
+    delegatorAddress?.address,
+    validatorAddress?.address,
+    pubkey,
+    value,
+  ];
 
   @override
   List<String?> get signers => [validatorAddress?.address];
@@ -104,6 +109,7 @@ class MsgCreateValidator
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        StakingV1beta1Types.msgCreateValidatorResponse);
+      StakingV1beta1Types.msgCreateValidatorResponse,
+    );
   }
 }

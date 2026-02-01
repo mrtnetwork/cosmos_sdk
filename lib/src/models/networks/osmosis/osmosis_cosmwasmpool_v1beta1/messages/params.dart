@@ -17,13 +17,15 @@ class OsmosisCosmWasmPoolParams extends CosmosMessage {
   factory OsmosisCosmWasmPoolParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisCosmWasmPoolParams(
-        codeIdWhitelist: decode.getField(1),
-        poolMigrationLimit: decode.getField(2));
+      codeIdWhitelist: decode.getField(1),
+      poolMigrationLimit: decode.getField(2),
+    );
   }
   factory OsmosisCosmWasmPoolParams.fromJson(Map<String, dynamic> json) {
     return OsmosisCosmWasmPoolParams(
-        poolMigrationLimit: BigintUtils.tryParse(json["pool_migration_limit"]),
-        codeIdWhitelist: BigintUtils.tryParse(json["code_id_whitelist"]));
+      poolMigrationLimit: BigintUtils.tryParse(json["pool_migration_limit"]),
+      codeIdWhitelist: BigintUtils.tryParse(json["code_id_whitelist"]),
+    );
   }
 
   @override
@@ -33,7 +35,7 @@ class OsmosisCosmWasmPoolParams extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "code_id_whitelist": codeIdWhitelist?.toString(),
-      "pool_migration_limit": poolMigrationLimit?.toString()
+      "pool_migration_limit": poolMigrationLimit?.toString(),
     };
   }
 

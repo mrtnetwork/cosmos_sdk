@@ -13,19 +13,22 @@ class IbcTendermintConsensusState extends CosmosMessage {
   /// commitment root (i.e app hash)
   final IbcCommitmentMerkleMerkleRoot root;
   final List<int>? nextValidatorsHash;
-  IbcTendermintConsensusState(
-      {required this.timestamp,
-      required this.root,
-      List<int>? nextValidatorsHash})
-      : nextValidatorsHash =
-            BytesUtils.tryToBytes(nextValidatorsHash, unmodifiable: true);
+  IbcTendermintConsensusState({
+    required this.timestamp,
+    required this.root,
+    List<int>? nextValidatorsHash,
+  }) : nextValidatorsHash = BytesUtils.tryToBytes(
+         nextValidatorsHash,
+         unmodifiable: true,
+       );
 
   factory IbcTendermintConsensusState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcTendermintConsensusState(
-        timestamp: ProtobufTimestamp.deserialize(decode.getField(1)),
-        root: IbcCommitmentMerkleMerkleRoot.deserialize(decode.getField(2)),
-        nextValidatorsHash: decode.getField(3));
+      timestamp: ProtobufTimestamp.deserialize(decode.getField(1)),
+      root: IbcCommitmentMerkleMerkleRoot.deserialize(decode.getField(2)),
+      nextValidatorsHash: decode.getField(3),
+    );
   }
 
   @override
@@ -36,7 +39,7 @@ class IbcTendermintConsensusState extends CosmosMessage {
     return {
       "timestamp": timestamp.toJson(),
       "root": root.toJson(),
-      "next_validators_hash": BytesUtils.tryToHexString(nextValidatorsHash)
+      "next_validators_hash": BytesUtils.tryToHexString(nextValidatorsHash),
     };
   }
 

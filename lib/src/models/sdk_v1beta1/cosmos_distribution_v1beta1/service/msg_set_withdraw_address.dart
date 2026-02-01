@@ -12,23 +12,28 @@ class DistributionMsgSetWithdrawAddress
     with AminoMessage<EmptyServiceRequestResponse> {
   final CosmosBaseAddress? delegatorAddress;
   final CosmosBaseAddress? withdrawAddress;
-  const DistributionMsgSetWithdrawAddress(
-      {this.delegatorAddress, this.withdrawAddress});
+  const DistributionMsgSetWithdrawAddress({
+    this.delegatorAddress,
+    this.withdrawAddress,
+  });
   factory DistributionMsgSetWithdrawAddress.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionMsgSetWithdrawAddress(
-        delegatorAddress: decode
-            .getResult(1)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        withdrawAddress: decode
-            .getResult(2)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)));
+      delegatorAddress: decode
+          .getResult(1)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      withdrawAddress: decode
+          .getResult(2)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+    );
   }
   factory DistributionMsgSetWithdrawAddress.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return DistributionMsgSetWithdrawAddress(
-        delegatorAddress: json.asAddress("delegator_address"),
-        withdrawAddress: json.asAddress("withdraw_address"));
+      delegatorAddress: json.asAddress("delegator_address"),
+      withdrawAddress: json.asAddress("withdraw_address"),
+    );
   }
 
   @override
@@ -38,7 +43,7 @@ class DistributionMsgSetWithdrawAddress
   Map<String, dynamic> toJson() {
     return {
       "delegator_address": delegatorAddress?.address,
-      "withdraw_address": withdrawAddress?.address
+      "withdraw_address": withdrawAddress?.address,
     };
   }
 
@@ -54,6 +59,7 @@ class DistributionMsgSetWithdrawAddress
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        DistributionV1beta1Types.distributionMsgSetWithdrawAddressResponse);
+      DistributionV1beta1Types.distributionMsgSetWithdrawAddressResponse,
+    );
   }
 }

@@ -9,7 +9,7 @@ class IbcLightClientsWasmConsensusState extends CosmosMessage {
   /// implemented as a Wasm contract.
   final List<int>? data;
   IbcLightClientsWasmConsensusState({List<int>? data})
-      : data = BytesUtils.tryToBytes(data);
+    : data = BytesUtils.tryToBytes(data);
   factory IbcLightClientsWasmConsensusState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcLightClientsWasmConsensusState(data: decode.getField(1));

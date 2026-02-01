@@ -9,12 +9,14 @@ class ParamsQueryParamsResponse extends CosmosMessage {
   const ParamsQueryParamsResponse(this.param);
   factory ParamsQueryParamsResponse.fromJson(Map<String, dynamic> json) {
     return ParamsQueryParamsResponse(
-        ParamChange.fromJson(json["param"] ?? json["params"]));
+      ParamChange.fromJson(json["param"] ?? json["params"]),
+    );
   }
   factory ParamsQueryParamsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ParamsQueryParamsResponse(
-        ParamChange.deserialize(decode.getField(1)));
+      ParamChange.deserialize(decode.getField(1)),
+    );
   }
 
   @override

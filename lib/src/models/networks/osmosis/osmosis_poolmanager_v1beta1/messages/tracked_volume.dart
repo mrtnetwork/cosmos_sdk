@@ -6,13 +6,12 @@ import 'package:blockchain_utils/helper/helper.dart';
 class OsmosisPoolManagerTrackedVolume extends CosmosMessage {
   final List<Coin> amount;
   OsmosisPoolManagerTrackedVolume(List<Coin> amount)
-      : amount = amount.immutable;
+    : amount = amount.immutable;
   factory OsmosisPoolManagerTrackedVolume.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return OsmosisPoolManagerTrackedVolume(decode
-        .getFields<List<int>>(1)
-        .map((e) => Coin.deserialize(e))
-        .toList());
+    return OsmosisPoolManagerTrackedVolume(
+      decode.getFields<List<int>>(1).map((e) => Coin.deserialize(e)).toList(),
+    );
   }
 
   @override

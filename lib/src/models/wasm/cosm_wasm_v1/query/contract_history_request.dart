@@ -10,8 +10,10 @@ class CosmWasmV1QueryContractHistoryRequest extends CosmosMessage
   /// address is the address of the contract to query
   final String address;
   final PageRequest? pagination;
-  CosmWasmV1QueryContractHistoryRequest(
-      {required this.address, this.pagination});
+  CosmWasmV1QueryContractHistoryRequest({
+    required this.address,
+    this.pagination,
+  });
 
   @override
   List<int> get fieldIds => [1, 2];
@@ -34,7 +36,8 @@ class CosmWasmV1QueryContractHistoryRequest extends CosmosMessage
 
   @override
   CosmWasmV1QueryContractHistoryResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return CosmWasmV1QueryContractHistoryResponse.fromJson(json);
   }
 
@@ -43,6 +46,6 @@ class CosmWasmV1QueryContractHistoryRequest extends CosmosMessage
 
   @override
   Map<String, String?> get queryParameters => {
-        ...pagination?.queryParameters ?? {},
-      };
+    ...pagination?.queryParameters ?? {},
+  };
 }

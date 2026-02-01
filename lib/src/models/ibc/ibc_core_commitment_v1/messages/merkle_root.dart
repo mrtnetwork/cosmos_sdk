@@ -7,7 +7,7 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class IbcCommitmentMerkleMerkleRoot extends CosmosMessage {
   final List<int>? hash;
   IbcCommitmentMerkleMerkleRoot({List<int>? hash})
-      : hash = BytesUtils.tryToBytes(hash, unmodifiable: true);
+    : hash = BytesUtils.tryToBytes(hash, unmodifiable: true);
   factory IbcCommitmentMerkleMerkleRoot.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcCommitmentMerkleMerkleRoot(hash: decode.getField(1));

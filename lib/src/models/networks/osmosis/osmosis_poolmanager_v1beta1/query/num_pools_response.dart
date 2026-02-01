@@ -10,9 +10,11 @@ class OsmosisPoolManagerNumPoolsResponse extends CosmosMessage {
     return OsmosisPoolManagerNumPoolsResponse(numPools: decode.getField(1));
   }
   factory OsmosisPoolManagerNumPoolsResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisPoolManagerNumPoolsResponse(
-        numPools: BigintUtils.tryParse(json["num_pools"]));
+      numPools: BigintUtils.tryParse(json["num_pools"]),
+    );
   }
 
   @override

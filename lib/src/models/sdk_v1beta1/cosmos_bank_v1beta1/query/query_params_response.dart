@@ -11,7 +11,8 @@ class QueryParamsResponse extends CosmosMessage {
   factory QueryParamsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryParamsResponse(
-        params: BankParams.deserialize(decode.getField(1)));
+      params: BankParams.deserialize(decode.getField(1)),
+    );
   }
   factory QueryParamsResponse.fromJson(Map<String, dynamic> json) {
     return QueryParamsResponse(params: BankParams.fromJson(json["params"]));

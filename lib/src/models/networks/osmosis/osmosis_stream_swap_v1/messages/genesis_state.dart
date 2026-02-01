@@ -11,25 +11,27 @@ class OsmosisStreamSwapGenesisState extends CosmosMessage {
   final List<OsmosisStreamSwapUserPositionKV> userPositions;
   final BigInt? nextSaleId;
   final OsmosisStreamSwapParams params;
-  OsmosisStreamSwapGenesisState(
-      {required List<OsmosisStreamSwapSale> sales,
-      required List<OsmosisStreamSwapUserPositionKV> userPositions,
-      this.nextSaleId,
-      required this.params})
-      : sales = sales.immutable,
-        userPositions = userPositions.immutable;
+  OsmosisStreamSwapGenesisState({
+    required List<OsmosisStreamSwapSale> sales,
+    required List<OsmosisStreamSwapUserPositionKV> userPositions,
+    this.nextSaleId,
+    required this.params,
+  }) : sales = sales.immutable,
+       userPositions = userPositions.immutable;
   factory OsmosisStreamSwapGenesisState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisStreamSwapGenesisState(
       nextSaleId: decode.getField(3),
-      sales: decode
-          .getFields<List<int>>(1)
-          .map((e) => OsmosisStreamSwapSale.deserialize(e))
-          .toList(),
-      userPositions: decode
-          .getFields<List<int>>(2)
-          .map((e) => OsmosisStreamSwapUserPositionKV.deserialize(e))
-          .toList(),
+      sales:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => OsmosisStreamSwapSale.deserialize(e))
+              .toList(),
+      userPositions:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => OsmosisStreamSwapUserPositionKV.deserialize(e))
+              .toList(),
       params: OsmosisStreamSwapParams.deserialize(decode.getField(4)),
     );
   }
@@ -43,7 +45,7 @@ class OsmosisStreamSwapGenesisState extends CosmosMessage {
       "sales": sales.map((e) => e.toJson()).toList(),
       "user_positions": userPositions.map((e) => e.toJson()).toList(),
       "next_sale_id": nextSaleId?.toString(),
-      "params": params.toJson()
+      "params": params.toJson(),
     };
   }
 

@@ -13,22 +13,29 @@ class OsmosisConcentratedLiquidityFullTick extends CosmosMessage {
 
   /// tick's info.
   final OsmosisConcentratedLiquidityTickInfo info;
-  OsmosisConcentratedLiquidityFullTick(
-      {this.poolId, this.tickIndex, required this.info});
+  OsmosisConcentratedLiquidityFullTick({
+    this.poolId,
+    this.tickIndex,
+    required this.info,
+  });
   factory OsmosisConcentratedLiquidityFullTick.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityFullTick(
-        poolId: decode.getField(1),
-        tickIndex: decode.getField(2),
-        info: OsmosisConcentratedLiquidityTickInfo.deserialize(
-            decode.getField(3)));
+      poolId: decode.getField(1),
+      tickIndex: decode.getField(2),
+      info: OsmosisConcentratedLiquidityTickInfo.deserialize(
+        decode.getField(3),
+      ),
+    );
   }
   factory OsmosisConcentratedLiquidityFullTick.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityFullTick(
-        poolId: BigintUtils.tryParse(json["pool_id"]),
-        tickIndex: BigintUtils.tryParse(json["tick_index"]),
-        info: OsmosisConcentratedLiquidityTickInfo.fromJson(json["info"]));
+      poolId: BigintUtils.tryParse(json["pool_id"]),
+      tickIndex: BigintUtils.tryParse(json["tick_index"]),
+      info: OsmosisConcentratedLiquidityTickInfo.fromJson(json["info"]),
+    );
   }
 
   @override
@@ -39,7 +46,7 @@ class OsmosisConcentratedLiquidityFullTick extends CosmosMessage {
     return {
       "pool_id": poolId?.toString(),
       "tick_index": tickIndex?.toString(),
-      "info": info.toJson()
+      "info": info.toJson(),
     };
   }
 

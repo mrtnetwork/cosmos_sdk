@@ -38,53 +38,56 @@ class OsmosisIncentivesGauge extends CosmosMessage {
 
   /// distributed_coins are coins that have been distributed already
   final List<Coin> distributedCoins;
-  OsmosisIncentivesGauge(
-      {this.id,
-      this.isPerpetual,
-      required this.distributeTo,
-      required List<Coin> coins,
-      required this.startTime,
-      this.numEpochsPaidOver,
-      this.filledEpochs,
-      required List<Coin> distributedCoins})
-      : coins = coins.immutable,
-        distributedCoins = distributedCoins.immutable;
+  OsmosisIncentivesGauge({
+    this.id,
+    this.isPerpetual,
+    required this.distributeTo,
+    required List<Coin> coins,
+    required this.startTime,
+    this.numEpochsPaidOver,
+    this.filledEpochs,
+    required List<Coin> distributedCoins,
+  }) : coins = coins.immutable,
+       distributedCoins = distributedCoins.immutable;
   factory OsmosisIncentivesGauge.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisIncentivesGauge(
       id: decode.getField(1),
       isPerpetual: decode.getField(2),
       distributeTo: OsmosisLockupQueryCondition.deserialize(decode.getField(3)),
-      coins: decode
-          .getFields<List<int>>(4)
-          .map((e) => Coin.deserialize(e))
-          .toList(),
+      coins:
+          decode
+              .getFields<List<int>>(4)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
       startTime: ProtobufTimestamp.deserialize(decode.getField(5)),
       numEpochsPaidOver: decode.getField(6),
       filledEpochs: decode.getField(7),
-      distributedCoins: decode
-          .getFields<List<int>>(8)
-          .map((e) => Coin.deserialize(e))
-          .toList(),
+      distributedCoins:
+          decode
+              .getFields<List<int>>(8)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
     );
   }
 
   factory OsmosisIncentivesGauge.fromJson(Map<String, dynamic> json) {
     return OsmosisIncentivesGauge(
-        id: BigintUtils.tryParse(json["id"]),
-        isPerpetual: json["is_perpetual"],
-        distributeTo:
-            OsmosisLockupQueryCondition.fromJson(json["distribute_to"]),
-        coins:
-            (json["coins"] as List?)?.map((e) => Coin.fromJson(e)).toList() ??
-                <Coin>[],
-        startTime: ProtobufTimestamp.fromString(json["start_time"]),
-        distributedCoins: (json["distributed_coins"] as List?)
-                ?.map((e) => Coin.fromJson(e))
-                .toList() ??
-            <Coin>[],
-        filledEpochs: BigintUtils.tryParse(json["filled_epochs"]),
-        numEpochsPaidOver: BigintUtils.tryParse(json["num_epochs_paid_over"]));
+      id: BigintUtils.tryParse(json["id"]),
+      isPerpetual: json["is_perpetual"],
+      distributeTo: OsmosisLockupQueryCondition.fromJson(json["distribute_to"]),
+      coins:
+          (json["coins"] as List?)?.map((e) => Coin.fromJson(e)).toList() ??
+          <Coin>[],
+      startTime: ProtobufTimestamp.fromString(json["start_time"]),
+      distributedCoins:
+          (json["distributed_coins"] as List?)
+              ?.map((e) => Coin.fromJson(e))
+              .toList() ??
+          <Coin>[],
+      filledEpochs: BigintUtils.tryParse(json["filled_epochs"]),
+      numEpochsPaidOver: BigintUtils.tryParse(json["num_epochs_paid_over"]),
+    );
   }
 
   @override
@@ -100,7 +103,7 @@ class OsmosisIncentivesGauge extends CosmosMessage {
       "start_time": startTime.toJson(),
       "num_epochs_paid_over": numEpochsPaidOver?.toString(),
       "filled_epochs": filledEpochs?.toString(),
-      "distributed_coins": distributedCoins.map((e) => e.toJson()).toList()
+      "distributed_coins": distributedCoins.map((e) => e.toJson()).toList(),
     };
   }
 
@@ -109,13 +112,13 @@ class OsmosisIncentivesGauge extends CosmosMessage {
 
   @override
   List get values => [
-        id,
-        isPerpetual,
-        distributeTo,
-        coins,
-        startTime,
-        numEpochsPaidOver,
-        filledEpochs,
-        distributedCoins
-      ];
+    id,
+    isPerpetual,
+    distributeTo,
+    coins,
+    startTime,
+    numEpochsPaidOver,
+    filledEpochs,
+    distributedCoins,
+  ];
 }

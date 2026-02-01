@@ -17,33 +17,38 @@ class OsmosisConcentratedLiquidityMsgCreatePositionResponse
   final BigInt? lowerTick;
   final BigInt? upperTick;
 
-  OsmosisConcentratedLiquidityMsgCreatePositionResponse(
-      {this.positionId,
-      required this.amount0,
-      required this.amount1,
-      required this.liquidityCreated,
-      this.lowerTick,
-      this.upperTick});
+  OsmosisConcentratedLiquidityMsgCreatePositionResponse({
+    this.positionId,
+    required this.amount0,
+    required this.amount1,
+    required this.liquidityCreated,
+    this.lowerTick,
+    this.upperTick,
+  });
   factory OsmosisConcentratedLiquidityMsgCreatePositionResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityMsgCreatePositionResponse(
-        positionId: decode.getField(1),
-        amount0: BigInt.parse(decode.getField(2)),
-        amount1: BigInt.parse(decode.getField(3)),
-        liquidityCreated: decode.getField(5),
-        lowerTick: decode.getField(6),
-        upperTick: decode.getField(7));
+      positionId: decode.getField(1),
+      amount0: BigInt.parse(decode.getField(2)),
+      amount1: BigInt.parse(decode.getField(3)),
+      liquidityCreated: decode.getField(5),
+      lowerTick: decode.getField(6),
+      upperTick: decode.getField(7),
+    );
   }
   factory OsmosisConcentratedLiquidityMsgCreatePositionResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityMsgCreatePositionResponse(
-        positionId: BigintUtils.tryParse(json["position_id"]),
-        amount0: BigintUtils.parse(json["amount0"]),
-        amount1: BigintUtils.parse(json["amount1"]),
-        liquidityCreated: json["liquidity_created"],
-        lowerTick: BigintUtils.tryParse(json["lower_tick"]),
-        upperTick: BigintUtils.tryParse(json["upper_tick"]));
+      positionId: BigintUtils.tryParse(json["position_id"]),
+      amount0: BigintUtils.parse(json["amount0"]),
+      amount1: BigintUtils.parse(json["amount1"]),
+      liquidityCreated: json["liquidity_created"],
+      lowerTick: BigintUtils.tryParse(json["lower_tick"]),
+      upperTick: BigintUtils.tryParse(json["upper_tick"]),
+    );
   }
 
   @override
@@ -57,19 +62,19 @@ class OsmosisConcentratedLiquidityMsgCreatePositionResponse
       "amount1": amount1.toString(),
       "liquidity_created": liquidityCreated,
       "lower_tick": lowerTick?.toString(),
-      "upper_tick": upperTick?.toString()
+      "upper_tick": upperTick?.toString(),
     };
   }
 
   @override
   List get values => [
-        positionId,
-        amount0.toString(),
-        amount1.toString(),
-        liquidityCreated,
-        lowerTick,
-        upperTick
-      ];
+    positionId,
+    amount0.toString(),
+    amount1.toString(),
+    liquidityCreated,
+    lowerTick,
+    upperTick,
+  ];
 
   @override
   TypeUrl get typeUrl =>

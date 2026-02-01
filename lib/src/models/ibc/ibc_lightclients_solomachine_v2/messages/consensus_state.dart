@@ -13,15 +13,20 @@ class IbcSoloMachineV2ConsensusState extends CosmosMessage {
   /// misbehaviour.
   final String? diversifier;
   final BigInt? timestamp;
-  IbcSoloMachineV2ConsensusState(
-      {this.publicKey, this.diversifier, this.timestamp});
+  IbcSoloMachineV2ConsensusState({
+    this.publicKey,
+    this.diversifier,
+    this.timestamp,
+  });
   factory IbcSoloMachineV2ConsensusState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcSoloMachineV2ConsensusState(
-        publicKey:
-            decode.getResult(1)?.to<Any, List<int>>((e) => Any.deserialize(e)),
-        diversifier: decode.getField(2),
-        timestamp: decode.getField(3));
+      publicKey: decode
+          .getResult(1)
+          ?.to<Any, List<int>>((e) => Any.deserialize(e)),
+      diversifier: decode.getField(2),
+      timestamp: decode.getField(3),
+    );
   }
 
   @override
@@ -32,7 +37,7 @@ class IbcSoloMachineV2ConsensusState extends CosmosMessage {
     return {
       "public_key": publicKey?.toJson(),
       "diversifier": diversifier,
-      "timestamp": timestamp?.toString()
+      "timestamp": timestamp?.toString(),
     };
   }
 

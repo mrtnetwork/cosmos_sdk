@@ -7,7 +7,8 @@ class OsmosisProtorevQueryGetProtoRevEnabledRequest extends CosmosMessage
     with QueryMessage<OsmosisProtorevQueryGetProtoRevEnabledResponse> {
   const OsmosisProtorevQueryGetProtoRevEnabledRequest();
   factory OsmosisProtorevQueryGetProtoRevEnabledRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return const OsmosisProtorevQueryGetProtoRevEnabledRequest();
   }
 
@@ -29,7 +30,8 @@ class OsmosisProtorevQueryGetProtoRevEnabledRequest extends CosmosMessage
 
   @override
   OsmosisProtorevQueryGetProtoRevEnabledResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisProtorevQueryGetProtoRevEnabledResponse.fromJson(json);
   }
 

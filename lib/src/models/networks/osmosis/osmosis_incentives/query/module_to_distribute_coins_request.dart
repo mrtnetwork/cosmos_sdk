@@ -6,7 +6,8 @@ class OsmosisIncentiveModuleToDistributeCoinsRequest extends CosmosMessage
     with QueryMessage<OsmosisIncentiveModuleToDistributeCoinsResponse> {
   const OsmosisIncentiveModuleToDistributeCoinsRequest();
   factory OsmosisIncentiveModuleToDistributeCoinsRequest.fromBytes(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return const OsmosisIncentiveModuleToDistributeCoinsRequest();
   }
 
@@ -31,7 +32,8 @@ class OsmosisIncentiveModuleToDistributeCoinsRequest extends CosmosMessage
 
   @override
   OsmosisIncentiveModuleToDistributeCoinsResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisIncentiveModuleToDistributeCoinsResponse.fromJson(json);
   }
 

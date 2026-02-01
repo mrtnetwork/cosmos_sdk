@@ -10,13 +10,17 @@ class OsmosisPoolManagerSwapAmountInRoute extends CosmosMessage {
   factory OsmosisPoolManagerSwapAmountInRoute.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolManagerSwapAmountInRoute(
-        poolId: decode.getField(1), tokenOutDenom: decode.getField(2));
+      poolId: decode.getField(1),
+      tokenOutDenom: decode.getField(2),
+    );
   }
   factory OsmosisPoolManagerSwapAmountInRoute.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisPoolManagerSwapAmountInRoute(
-        poolId: BigintUtils.tryParse(json["pool_id"]),
-        tokenOutDenom: json["token_out_denom"]);
+      poolId: BigintUtils.tryParse(json["pool_id"]),
+      tokenOutDenom: json["token_out_denom"],
+    );
   }
 
   @override

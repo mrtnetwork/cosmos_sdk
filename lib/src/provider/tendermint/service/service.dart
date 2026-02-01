@@ -26,6 +26,7 @@ mixin TendermintServiceProvider
   ///   }
   @override
   Future<TendermintServiceResponse<T>> doRequest<T>(
-      TendermintRequestDetails params,
-      {Duration? timeout});
+    TendermintRequestDetails params, {
+    Duration? timeout,
+  });
 }

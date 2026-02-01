@@ -14,26 +14,30 @@ class OsmosisValSetprefMsgSetValidatorSetPreference
   /// list of {valAddr, weight} to delegate to
   final List<OsmosisValSetprefValidatorPreference> preferences;
 
-  OsmosisValSetprefMsgSetValidatorSetPreference(
-      {this.delegator,
-      required List<OsmosisValSetprefValidatorPreference> preferences})
-      : preferences = preferences.immutable;
+  OsmosisValSetprefMsgSetValidatorSetPreference({
+    this.delegator,
+    required List<OsmosisValSetprefValidatorPreference> preferences,
+  }) : preferences = preferences.immutable;
   factory OsmosisValSetprefMsgSetValidatorSetPreference.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisValSetprefMsgSetValidatorSetPreference(
       delegator: decode.getField(1),
-      preferences: decode
-          .getFields<List<int>>(2)
-          .map((e) => OsmosisValSetprefValidatorPreference.deserialize(e))
-          .toList(),
+      preferences:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => OsmosisValSetprefValidatorPreference.deserialize(e))
+              .toList(),
     );
   }
   factory OsmosisValSetprefMsgSetValidatorSetPreference.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisValSetprefMsgSetValidatorSetPreference(
       delegator: json["delegator"],
-      preferences: (json["preferences"] as List?)
+      preferences:
+          (json["preferences"] as List?)
               ?.map((e) => OsmosisValSetprefValidatorPreference.fromJson(e))
               .toList() ??
           <OsmosisValSetprefValidatorPreference>[],
@@ -47,7 +51,7 @@ class OsmosisValSetprefMsgSetValidatorSetPreference
   Map<String, dynamic> toJson() {
     return {
       "delegator": delegator,
-      "preferences": preferences.map((e) => e.toJson()).toList()
+      "preferences": preferences.map((e) => e.toJson()).toList(),
     };
   }
 
@@ -61,7 +65,8 @@ class OsmosisValSetprefMsgSetValidatorSetPreference
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        OsmosisValSetprefV1beta1Types.msgSetValidatorSetPreferenceResponse);
+      OsmosisValSetprefV1beta1Types.msgSetValidatorSetPreferenceResponse,
+    );
   }
 
   @override

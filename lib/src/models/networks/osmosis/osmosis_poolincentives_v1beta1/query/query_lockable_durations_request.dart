@@ -6,7 +6,8 @@ class OsmosisPoolincentivesQueryLockableDurationsRequest extends CosmosMessage
     with QueryMessage<OsmosisPoolincentivesQueryLockableDurationsResponse> {
   OsmosisPoolincentivesQueryLockableDurationsRequest();
   factory OsmosisPoolincentivesQueryLockableDurationsRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return OsmosisPoolincentivesQueryLockableDurationsRequest();
   }
 
@@ -20,15 +21,18 @@ class OsmosisPoolincentivesQueryLockableDurationsRequest extends CosmosMessage
 
   @override
   OsmosisPoolincentivesQueryLockableDurationsResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisPoolincentivesQueryLockableDurationsResponse.fromJson(json);
   }
 
   @override
   OsmosisPoolincentivesQueryLockableDurationsResponse onResponse(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return OsmosisPoolincentivesQueryLockableDurationsResponse.deserialize(
-        bytes);
+      bytes,
+    );
   }
 
   @override

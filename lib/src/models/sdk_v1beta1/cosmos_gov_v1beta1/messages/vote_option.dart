@@ -28,24 +28,30 @@ class GovVoteOption implements CosmosEnum {
     yes,
     abstain,
     no,
-    noWithVeto
+    noWithVeto,
   ];
 
   static GovVoteOption fromValue(int? value) {
     return values.firstWhere(
       (e) => e.value == value,
-      orElse: () => throw DartCosmosSdkPluginException(
-          "No GovVoteOption element found for the given value.",
-          details: {"value": value}),
+      orElse:
+          () =>
+              throw DartCosmosSdkPluginException(
+                "No GovVoteOption element found for the given value.",
+                details: {"value": value},
+              ),
     );
   }
 
   static GovVoteOption fromName(String? name) {
     return values.firstWhere(
       (e) => e.name == name,
-      orElse: () => throw DartCosmosSdkPluginException(
-          "No GovVoteOption element found for the given value.",
-          details: {"name": name}),
+      orElse:
+          () =>
+              throw DartCosmosSdkPluginException(
+                "No GovVoteOption element found for the given value.",
+                details: {"name": name},
+              ),
     );
   }
 }

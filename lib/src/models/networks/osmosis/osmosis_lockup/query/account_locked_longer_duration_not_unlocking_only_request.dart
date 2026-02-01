@@ -6,17 +6,22 @@ class OsmosisLockupAccountLockedLongerDurationNotUnlockingOnlyRequest
     extends CosmosMessage
     with
         QueryMessage<
-            OsmosisLockupAccountLockedLongerDurationNotUnlockingOnlyResponse> {
+          OsmosisLockupAccountLockedLongerDurationNotUnlockingOnlyResponse
+        > {
   final String owner;
   final ProtobufDuration duration;
-  const OsmosisLockupAccountLockedLongerDurationNotUnlockingOnlyRequest(
-      {required this.owner, required this.duration});
+  const OsmosisLockupAccountLockedLongerDurationNotUnlockingOnlyRequest({
+    required this.owner,
+    required this.duration,
+  });
   factory OsmosisLockupAccountLockedLongerDurationNotUnlockingOnlyRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisLockupAccountLockedLongerDurationNotUnlockingOnlyRequest(
-        owner: decode.getField(1),
-        duration: ProtobufDuration.deserialize(decode.getField(2)));
+      owner: decode.getField(1),
+      duration: ProtobufDuration.deserialize(decode.getField(2)),
+    );
   }
   @override
   List<int> get fieldIds => [1, 2];
@@ -35,16 +40,19 @@ class OsmosisLockupAccountLockedLongerDurationNotUnlockingOnlyRequest
 
   @override
   OsmosisLockupAccountLockedLongerDurationNotUnlockingOnlyResponse onResponse(
-      List<int> bytes) {
-    return OsmosisLockupAccountLockedLongerDurationNotUnlockingOnlyResponse
-        .deserialize(bytes);
+    List<int> bytes,
+  ) {
+    return OsmosisLockupAccountLockedLongerDurationNotUnlockingOnlyResponse.deserialize(
+      bytes,
+    );
   }
 
   @override
   OsmosisLockupAccountLockedLongerDurationNotUnlockingOnlyResponse
-      onJsonResponse(Map<String, dynamic> json) {
-    return OsmosisLockupAccountLockedLongerDurationNotUnlockingOnlyResponse
-        .fromJson(json);
+  onJsonResponse(Map<String, dynamic> json) {
+    return OsmosisLockupAccountLockedLongerDurationNotUnlockingOnlyResponse.fromJson(
+      json,
+    );
   }
 
   @override

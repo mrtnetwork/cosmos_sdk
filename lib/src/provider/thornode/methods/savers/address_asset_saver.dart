@@ -3,10 +3,14 @@ import 'package:cosmos_sdk/src/provider/thornode/core/thorenode.dart';
 import 'package:cosmos_sdk/src/provider/thornode/models/models/asset_saver_information.dart';
 
 /// Returns the saver position given then savers pool and address.
-class ThorNodeRequestAddressAssetSaverPosition extends ThorNodeRequestParam<
-    AssetSaverPositionResponse, Map<String, dynamic>> {
-  ThorNodeRequestAddressAssetSaverPosition(
-      {required this.asset, required this.address, this.height});
+class ThorNodeRequestAddressAssetSaverPosition
+    extends
+        ThorNodeRequestParam<AssetSaverPositionResponse, Map<String, dynamic>> {
+  ThorNodeRequestAddressAssetSaverPosition({
+    required this.asset,
+    required this.address,
+    this.height,
+  });
 
   /// optional block height, defaults to current tip
   final BigInt? height;

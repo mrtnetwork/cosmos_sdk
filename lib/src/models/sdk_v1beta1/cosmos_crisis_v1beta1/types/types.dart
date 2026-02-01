@@ -8,18 +8,22 @@ class CrisisV1beta1 extends TypeUrl {
     "/cosmos.crisis.v1beta1.MsgVerifyInvariant",
   );
   static const CrisisV1beta1 msgVerifyInvariantResponse = CrisisV1beta1._(
-      "/cosmos.crisis.v1beta1.MsgVerifyInvariantResponse",
-      aminoType: "cosmos-sdk/MsgVerifyInvariant");
-  static const CrisisV1beta1 crisisMsgUpdateParams =
-      CrisisV1beta1._("/cosmos.crisis.v1beta1.MsgUpdateParams");
-  static const CrisisV1beta1 crisisMsgUpdateParamsResponse =
-      CrisisV1beta1._("/cosmos.crisis.v1beta1.MsgUpdateParamsResponse");
-  static const CrisisV1beta1 crisisGenesisState =
-      CrisisV1beta1._("/cosmos.crisis.v1beta1.GenesisState");
+    "/cosmos.crisis.v1beta1.MsgVerifyInvariantResponse",
+    aminoType: "cosmos-sdk/MsgVerifyInvariant",
+  );
+  static const CrisisV1beta1 crisisMsgUpdateParams = CrisisV1beta1._(
+    "/cosmos.crisis.v1beta1.MsgUpdateParams",
+  );
+  static const CrisisV1beta1 crisisMsgUpdateParamsResponse = CrisisV1beta1._(
+    "/cosmos.crisis.v1beta1.MsgUpdateParamsResponse",
+  );
+  static const CrisisV1beta1 crisisGenesisState = CrisisV1beta1._(
+    "/cosmos.crisis.v1beta1.GenesisState",
+  );
 
   static const List<TypeUrl> services = [
     crisisMsgUpdateParams,
-    msgVerifyInvariant
+    msgVerifyInvariant,
   ];
   static TypeUrl? findService(String? typeUrl) {
     return services.firstWhereNullable((e) => e.typeUrl == typeUrl);

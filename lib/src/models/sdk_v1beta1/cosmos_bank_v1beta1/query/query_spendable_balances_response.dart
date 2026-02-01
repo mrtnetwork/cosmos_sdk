@@ -17,24 +17,29 @@ class QuerySpendableBalancesResponse extends CosmosMessage {
     return QuerySpendableBalancesResponse(
       balances:
           (json["balances"] as List?)?.map((e) => Coin.fromJson(e)).toList() ??
-              [],
-      pagination: json["pagination"] == null
-          ? null
-          : PageResponse.fromJson(json["pagination"]),
+          [],
+      pagination:
+          json["pagination"] == null
+              ? null
+              : PageResponse.fromJson(json["pagination"]),
     );
   }
-  const QuerySpendableBalancesResponse(
-      {required this.balances, this.pagination});
+  const QuerySpendableBalancesResponse({
+    required this.balances,
+    this.pagination,
+  });
   factory QuerySpendableBalancesResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QuerySpendableBalancesResponse(
-        balances: decode
-            .getFields<List<int>>(1)
-            .map((e) => Coin.deserialize(e))
-            .toList(),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
+      balances:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
+    );
   }
   @override
   List<int> get fieldIds => [1, 2];
@@ -43,7 +48,7 @@ class QuerySpendableBalancesResponse extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "balances": balances.map((e) => e.toJson()).toList(),
-      "pagination": pagination?.toJson()
+      "pagination": pagination?.toJson(),
     };
   }
 

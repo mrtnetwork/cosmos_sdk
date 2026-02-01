@@ -12,8 +12,9 @@ class GasInfo extends CosmosMessage {
   const GasInfo({required this.gasUsed, required this.gasWanted});
   factory GasInfo.fromJson(Map<String, dynamic> json) {
     return GasInfo(
-        gasWanted: BigintUtils.tryParse(json["gas_wanted"]),
-        gasUsed: BigintUtils.parse(json["gas_used"]));
+      gasWanted: BigintUtils.tryParse(json["gas_wanted"]),
+      gasUsed: BigintUtils.parse(json["gas_used"]),
+    );
   }
   factory GasInfo.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);

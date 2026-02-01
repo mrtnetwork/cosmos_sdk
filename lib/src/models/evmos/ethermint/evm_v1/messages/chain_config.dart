@@ -68,26 +68,27 @@ class EvmosEthermintEVMV1ChainConfig extends CosmosMessage {
     );
   }
 
-  EvmosEthermintEVMV1ChainConfig(
-      {required this.homesteadBlock,
-      required this.daoForkBlock,
-      required this.daoForkSupport,
-      required this.eip150Block,
-      required this.eip150Hash,
-      required this.eip155Block,
-      required this.eip158Block,
-      required this.byzantiumBlock,
-      required this.constantinopleBlock,
-      required this.petersburgBlock,
-      required this.istanbulBlock,
-      required this.muirGlacierBlock,
-      required this.berlinBlock,
-      required this.londonBlock,
-      required this.arrowGlacierBlock,
-      required this.grayGlacierBlock,
-      required this.mergeNetsplitBlock,
-      required this.shanghaiBlock,
-      required this.cancunBlock});
+  EvmosEthermintEVMV1ChainConfig({
+    required this.homesteadBlock,
+    required this.daoForkBlock,
+    required this.daoForkSupport,
+    required this.eip150Block,
+    required this.eip150Hash,
+    required this.eip155Block,
+    required this.eip158Block,
+    required this.byzantiumBlock,
+    required this.constantinopleBlock,
+    required this.petersburgBlock,
+    required this.istanbulBlock,
+    required this.muirGlacierBlock,
+    required this.berlinBlock,
+    required this.londonBlock,
+    required this.arrowGlacierBlock,
+    required this.grayGlacierBlock,
+    required this.mergeNetsplitBlock,
+    required this.shanghaiBlock,
+    required this.cancunBlock,
+  });
   factory EvmosEthermintEVMV1ChainConfig.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosEthermintEVMV1ChainConfig(
@@ -114,8 +115,27 @@ class EvmosEthermintEVMV1ChainConfig extends CosmosMessage {
   }
 
   @override
-  List<int> get fieldIds =>
-      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 17, 18, 20, 21, 22, 23];
+  List<int> get fieldIds => [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    17,
+    18,
+    20,
+    21,
+    22,
+    23,
+  ];
 
   @override
   Map<String, dynamic> toJson() {
@@ -147,24 +167,24 @@ class EvmosEthermintEVMV1ChainConfig extends CosmosMessage {
 
   @override
   List get values => [
-        homesteadBlock?.toString(),
-        daoForkBlock?.toString(),
-        daoForkSupport,
-        eip150Block?.toString(),
-        eip150Hash,
-        eip155Block?.toString(),
-        eip158Block?.toString(),
-        byzantiumBlock?.toString(),
-        constantinopleBlock?.toString(),
-        petersburgBlock?.toString(),
-        istanbulBlock?.toString(),
-        muirGlacierBlock?.toString(),
-        berlinBlock?.toString(),
-        londonBlock?.toString(),
-        arrowGlacierBlock?.toString(),
-        grayGlacierBlock?.toString(),
-        mergeNetsplitBlock?.toString(),
-        shanghaiBlock?.toString(),
-        cancunBlock?.toString(),
-      ];
+    homesteadBlock?.toString(),
+    daoForkBlock?.toString(),
+    daoForkSupport,
+    eip150Block?.toString(),
+    eip150Hash,
+    eip155Block?.toString(),
+    eip158Block?.toString(),
+    byzantiumBlock?.toString(),
+    constantinopleBlock?.toString(),
+    petersburgBlock?.toString(),
+    istanbulBlock?.toString(),
+    muirGlacierBlock?.toString(),
+    berlinBlock?.toString(),
+    londonBlock?.toString(),
+    arrowGlacierBlock?.toString(),
+    grayGlacierBlock?.toString(),
+    mergeNetsplitBlock?.toString(),
+    shanghaiBlock?.toString(),
+    cancunBlock?.toString(),
+  ];
 }

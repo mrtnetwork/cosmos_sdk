@@ -17,13 +17,15 @@ class DenomOwner extends CosmosMessage {
   factory DenomOwner.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DenomOwner(
-        address: CosmosBaseAddress(decode.getField(1)),
-        balance: Coin.deserialize(decode.getField(2)));
+      address: CosmosBaseAddress(decode.getField(1)),
+      balance: Coin.deserialize(decode.getField(2)),
+    );
   }
   factory DenomOwner.fromJson(Map<String, dynamic> json) {
     return DenomOwner(
-        address: CosmosBaseAddress(json["address"]),
-        balance: Coin.fromJson(json["balance"]));
+      address: CosmosBaseAddress(json["address"]),
+      balance: Coin.fromJson(json["balance"]),
+    );
   }
 
   @override

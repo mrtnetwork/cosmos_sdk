@@ -22,9 +22,11 @@ class QueryNextSequenceSendResponse extends CosmosMessage {
       proofHeight: IbcClientHeight.fromJson(json["proof_height"]),
     );
   }
-  QueryNextSequenceSendResponse(
-      {this.nextSequenceReceive, List<int>? proof, required this.proofHeight})
-      : proof = BytesUtils.tryToBytes(proof, unmodifiable: true);
+  QueryNextSequenceSendResponse({
+    this.nextSequenceReceive,
+    List<int>? proof,
+    required this.proofHeight,
+  }) : proof = BytesUtils.tryToBytes(proof, unmodifiable: true);
   factory QueryNextSequenceSendResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryNextSequenceSendResponse(
@@ -42,7 +44,7 @@ class QueryNextSequenceSendResponse extends CosmosMessage {
     return {
       "next_sequence_receive": nextSequenceReceive?.toString(),
       "proof": BytesUtils.tryToHexString(proof),
-      "proof_height": proofHeight.toJson()
+      "proof_height": proofHeight.toJson(),
     };
   }
 

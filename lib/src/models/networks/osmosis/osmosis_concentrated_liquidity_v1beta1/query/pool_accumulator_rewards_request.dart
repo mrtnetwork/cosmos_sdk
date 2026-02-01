@@ -6,14 +6,17 @@ class OsmosisConcentratedLiquidityPoolAccumulatorRewardsRequest
     extends CosmosMessage
     with
         QueryMessage<
-            OsmosisConcentratedLiquidityPoolAccumulatorRewardsResponse> {
+          OsmosisConcentratedLiquidityPoolAccumulatorRewardsResponse
+        > {
   final BigInt? poolId;
   OsmosisConcentratedLiquidityPoolAccumulatorRewardsRequest({this.poolId});
   factory OsmosisConcentratedLiquidityPoolAccumulatorRewardsRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityPoolAccumulatorRewardsRequest(
-        poolId: decode.getField(1));
+      poolId: decode.getField(1),
+    );
   }
 
   @override
@@ -36,15 +39,19 @@ class OsmosisConcentratedLiquidityPoolAccumulatorRewardsRequest
 
   @override
   OsmosisConcentratedLiquidityPoolAccumulatorRewardsResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityPoolAccumulatorRewardsResponse.fromJson(
-        json);
+      json,
+    );
   }
 
   @override
   OsmosisConcentratedLiquidityPoolAccumulatorRewardsResponse onResponse(
-      List<int> bytes) {
-    return OsmosisConcentratedLiquidityPoolAccumulatorRewardsResponse
-        .deserialize(bytes);
+    List<int> bytes,
+  ) {
+    return OsmosisConcentratedLiquidityPoolAccumulatorRewardsResponse.deserialize(
+      bytes,
+    );
   }
 }

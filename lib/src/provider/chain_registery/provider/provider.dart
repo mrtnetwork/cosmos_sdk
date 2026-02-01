@@ -9,20 +9,25 @@ class ChainRegistryProvider
 
   ChainRegistryProvider(this.rpc);
 
-  static SERVICERESPONSE _findError<SERVICERESPONSE>(
-      {required BaseServiceRequest request,
-      required BaseServiceResponse<SERVICERESPONSE> response,
-      required ChainRegistryRequestRequestDetails params}) {
+  static SERVICERESPONSE _findError<SERVICERESPONSE>({
+    required BaseServiceRequest request,
+    required BaseServiceResponse<SERVICERESPONSE> response,
+    required ChainRegistryRequestRequestDetails params,
+  }) {
     final r = response.getResult(params);
     return ServiceProviderUtils.parseResponse(object: r, params: params);
   }
 
   @override
   Future<RESULT> request<RESULT, SERVICERESPONSE>(
-      BaseServiceRequest<RESULT, SERVICERESPONSE,
-              ChainRegistryRequestRequestDetails>
-          request,
-      {Duration? timeout}) async {
+    BaseServiceRequest<
+      RESULT,
+      SERVICERESPONSE,
+      ChainRegistryRequestRequestDetails
+    >
+    request, {
+    Duration? timeout,
+  }) async {
     final r = await requestDynamic(request, timeout: timeout);
     return request.onResonse(r);
   }
@@ -31,14 +36,23 @@ class ChainRegistryProvider
 
   @override
   Future<SERVICERESPONSE> requestDynamic<RESULT, SERVICERESPONSE>(
-      BaseServiceRequest<RESULT, SERVICERESPONSE,
-              ChainRegistryRequestRequestDetails>
-          request,
-      {Duration? timeout}) async {
+    BaseServiceRequest<
+      RESULT,
+      SERVICERESPONSE,
+      ChainRegistryRequestRequestDetails
+    >
+    request, {
+    Duration? timeout,
+  }) async {
     final params = request.buildRequest(_id++);
-    final response =
-        await rpc.doRequest<SERVICERESPONSE>(params, timeout: timeout);
+    final response = await rpc.doRequest<SERVICERESPONSE>(
+      params,
+      timeout: timeout,
+    );
     return _findError<SERVICERESPONSE>(
-        params: params, response: response, request: request);
+      params: params,
+      response: response,
+      request: request,
+    );
   }
 }

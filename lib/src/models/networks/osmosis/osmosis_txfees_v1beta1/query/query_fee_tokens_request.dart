@@ -10,7 +10,8 @@ class OsmosisTxfeesQueryFeeTokensRequest extends CosmosMessage
     return const OsmosisTxfeesQueryFeeTokensRequest();
   }
   factory OsmosisTxfeesQueryFeeTokensRequest.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return const OsmosisTxfeesQueryFeeTokensRequest();
   }
 
@@ -30,7 +31,8 @@ class OsmosisTxfeesQueryFeeTokensRequest extends CosmosMessage
 
   @override
   OsmosisTxfeesQueryFeeTokensResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisTxfeesQueryFeeTokensResponse.fromJson(json);
   }
 

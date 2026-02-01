@@ -38,6 +38,7 @@ class CosmWasmV1QueryCodesRequest extends CosmosMessage
   @override
   List<String> get pathParameters => [];
   @override
-  Map<String, String?> get queryParameters =>
-      {...pagination?.queryParameters ?? {}};
+  Map<String, String?> get queryParameters => {
+    ...pagination?.queryParameters ?? {},
+  };
 }

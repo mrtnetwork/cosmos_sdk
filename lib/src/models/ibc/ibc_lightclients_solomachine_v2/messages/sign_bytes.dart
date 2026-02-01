@@ -15,22 +15,26 @@ class IbcSoloMachineV2SignBytes extends CosmosMessage {
 
   /// marshaled data
   final List<int>? data;
-  IbcSoloMachineV2SignBytes(
-      {this.sequence,
-      this.timestamp,
-      this.diversifier,
-      this.dataType,
-      List<int>? data})
-      : data = BytesUtils.tryToBytes(data, unmodifiable: true);
+  IbcSoloMachineV2SignBytes({
+    this.sequence,
+    this.timestamp,
+    this.diversifier,
+    this.dataType,
+    List<int>? data,
+  }) : data = BytesUtils.tryToBytes(data, unmodifiable: true);
   factory IbcSoloMachineV2SignBytes.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcSoloMachineV2SignBytes(
-        sequence: decode.getField(1),
-        timestamp: decode.getField(2),
-        diversifier: decode.getField(3),
-        dataType: decode.getResult(4)?.to<IbcSoloMachineV2DataType, int>(
-            (e) => IbcSoloMachineV2DataType.fromValue(e)),
-        data: decode.getField(5));
+      sequence: decode.getField(1),
+      timestamp: decode.getField(2),
+      diversifier: decode.getField(3),
+      dataType: decode
+          .getResult(4)
+          ?.to<IbcSoloMachineV2DataType, int>(
+            (e) => IbcSoloMachineV2DataType.fromValue(e),
+          ),
+      data: decode.getField(5),
+    );
   }
 
   @override
@@ -43,7 +47,7 @@ class IbcSoloMachineV2SignBytes extends CosmosMessage {
       "timestamp": timestamp?.toString(),
       "diversifier": diversifier?.toString(),
       "data_type": dataType?.value,
-      "data": BytesUtils.tryToHexString(data)
+      "data": BytesUtils.tryToHexString(data),
     };
   }
 

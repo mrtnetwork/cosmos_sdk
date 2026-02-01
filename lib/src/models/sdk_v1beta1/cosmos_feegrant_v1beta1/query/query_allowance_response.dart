@@ -10,16 +10,19 @@ class QueryAllowanceResponse extends CosmosMessage {
   QueryAllowanceResponse({this.allowance});
   factory QueryAllowanceResponse.fromJson(Map<String, dynamic> json) {
     return QueryAllowanceResponse(
-        allowance: json["allowance"] == null
-            ? null
-            : FeeGrant.fromJson(json["allowance"]));
+      allowance:
+          json["allowance"] == null
+              ? null
+              : FeeGrant.fromJson(json["allowance"]),
+    );
   }
   factory QueryAllowanceResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryAllowanceResponse(
-        allowance: decode
-            .getResult(1)
-            ?.to<FeeGrant, List<int>>((e) => FeeGrant.deserialize(e)));
+      allowance: decode
+          .getResult(1)
+          ?.to<FeeGrant, List<int>>((e) => FeeGrant.deserialize(e)),
+    );
   }
 
   @override

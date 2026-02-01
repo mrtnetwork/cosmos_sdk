@@ -10,11 +10,13 @@ class BroadcastTxResponse extends CosmosMessage {
   factory BroadcastTxResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return BroadcastTxResponse(
-        txResponse: TxResponse.deserialize(decode.getField(1)));
+      txResponse: TxResponse.deserialize(decode.getField(1)),
+    );
   }
   factory BroadcastTxResponse.fromJson(Map<String, dynamic> json) {
     return BroadcastTxResponse(
-        txResponse: TxResponse.fromJson(json["tx_response"]));
+      txResponse: TxResponse.fromJson(json["tx_response"]),
+    );
   }
 
   @override

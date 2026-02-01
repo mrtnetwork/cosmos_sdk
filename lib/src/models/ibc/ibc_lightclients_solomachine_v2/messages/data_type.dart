@@ -27,8 +27,10 @@ class IbcSoloMachineV2DataType implements CosmosEnum {
       IbcSoloMachineV2DataType._("packetReceiptAbsence", 7);
   static const IbcSoloMachineV2DataType nextSequenceRecv =
       IbcSoloMachineV2DataType._("nextSequenceRecv", 8);
-  static const IbcSoloMachineV2DataType header =
-      IbcSoloMachineV2DataType._("header", 9);
+  static const IbcSoloMachineV2DataType header = IbcSoloMachineV2DataType._(
+    "header",
+    9,
+  );
   static const List<IbcSoloMachineV2DataType> values = [
     uninitializedUnspecified,
     clientState,
@@ -44,9 +46,12 @@ class IbcSoloMachineV2DataType implements CosmosEnum {
   static IbcSoloMachineV2DataType fromValue(int? value) {
     return values.firstWhere(
       (e) => e.value == value,
-      orElse: () => throw DartCosmosSdkPluginException(
-          "No IbcSoloMachineV2DataType element found for the given value.",
-          details: {"value": value}),
+      orElse:
+          () =>
+              throw DartCosmosSdkPluginException(
+                "No IbcSoloMachineV2DataType element found for the given value.",
+                details: {"value": value},
+              ),
     );
   }
 }

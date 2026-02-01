@@ -9,9 +9,10 @@ class DominoOp extends CosmosMessage {
   factory DominoOp.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DominoOp(
-        key: decode.getField(1),
-        input: decode.getField(2),
-        output: decode.getField(3));
+      key: decode.getField(1),
+      input: decode.getField(2),
+      output: decode.getField(3),
+    );
   }
 
   @override

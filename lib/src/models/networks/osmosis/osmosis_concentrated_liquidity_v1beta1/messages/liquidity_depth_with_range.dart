@@ -8,22 +8,29 @@ class OsmosisConcentratedLiquidityLiquidityDepthWithRange
   final BigInt? lowerTick;
   final BigInt? upperTick;
 
-  OsmosisConcentratedLiquidityLiquidityDepthWithRange(
-      {required this.liquidityAmount, this.lowerTick, this.upperTick});
+  OsmosisConcentratedLiquidityLiquidityDepthWithRange({
+    required this.liquidityAmount,
+    this.lowerTick,
+    this.upperTick,
+  });
   factory OsmosisConcentratedLiquidityLiquidityDepthWithRange.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityLiquidityDepthWithRange(
-        liquidityAmount: decode.getField(1),
-        lowerTick: decode.getField(2),
-        upperTick: decode.getField(3));
+      liquidityAmount: decode.getField(1),
+      lowerTick: decode.getField(2),
+      upperTick: decode.getField(3),
+    );
   }
   factory OsmosisConcentratedLiquidityLiquidityDepthWithRange.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityLiquidityDepthWithRange(
-        liquidityAmount: json["liquidity_amount"],
-        lowerTick: BigintUtils.tryParse(json["lower_tick"]),
-        upperTick: BigintUtils.tryParse(json["upper_tick"]));
+      liquidityAmount: json["liquidity_amount"],
+      lowerTick: BigintUtils.tryParse(json["lower_tick"]),
+      upperTick: BigintUtils.tryParse(json["upper_tick"]),
+    );
   }
 
   @override

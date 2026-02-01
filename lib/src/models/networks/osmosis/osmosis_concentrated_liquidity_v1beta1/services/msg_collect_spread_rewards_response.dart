@@ -9,23 +9,25 @@ class OsmosisConcentratedLiquidityMsgCollectSpreadRewardsResponse
   final List<Coin> collectedSpreadRewards;
 
   OsmosisConcentratedLiquidityMsgCollectSpreadRewardsResponse(
-      List<Coin> collectedSpreadRewards)
-      : collectedSpreadRewards = collectedSpreadRewards.immutable;
+    List<Coin> collectedSpreadRewards,
+  ) : collectedSpreadRewards = collectedSpreadRewards.immutable;
   factory OsmosisConcentratedLiquidityMsgCollectSpreadRewardsResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return OsmosisConcentratedLiquidityMsgCollectSpreadRewardsResponse(decode
-        .getFields<List<int>>(1)
-        .map((e) => Coin.deserialize(e))
-        .toList());
+    return OsmosisConcentratedLiquidityMsgCollectSpreadRewardsResponse(
+      decode.getFields<List<int>>(1).map((e) => Coin.deserialize(e)).toList(),
+    );
   }
   factory OsmosisConcentratedLiquidityMsgCollectSpreadRewardsResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityMsgCollectSpreadRewardsResponse(
-        (json["collected_spread_rewards"] as List?)
-                ?.map((e) => Coin.fromJson(e))
-                .toList() ??
-            <Coin>[]);
+      (json["collected_spread_rewards"] as List?)
+              ?.map((e) => Coin.fromJson(e))
+              .toList() ??
+          <Coin>[],
+    );
   }
 
   @override
@@ -35,7 +37,7 @@ class OsmosisConcentratedLiquidityMsgCollectSpreadRewardsResponse
   Map<String, dynamic> toJson() {
     return {
       "collected_spread_rewards":
-          collectedSpreadRewards.map((e) => e.toJson()).toList()
+          collectedSpreadRewards.map((e) => e.toJson()).toList(),
     };
   }
 

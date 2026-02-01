@@ -4,13 +4,16 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class ThorchainEventPoolBalanceChanged extends CosmosMessage {
   final ThorchainPoolMode poolChange;
   final String? reason;
-  const ThorchainEventPoolBalanceChanged(
-      {required this.poolChange, this.reason});
+  const ThorchainEventPoolBalanceChanged({
+    required this.poolChange,
+    this.reason,
+  });
   factory ThorchainEventPoolBalanceChanged.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainEventPoolBalanceChanged(
-        poolChange: ThorchainPoolMode.deserialize(decode.getField(1)),
-        reason: decode.getField(2));
+      poolChange: ThorchainPoolMode.deserialize(decode.getField(1)),
+      reason: decode.getField(2),
+    );
   }
 
   @override

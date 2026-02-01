@@ -6,16 +6,22 @@ class OsmosisSuperfluidSuperfluidUndelegationsByDelegatorRequest
     extends CosmosMessage
     with
         QueryMessage<
-            OsmosisSuperfluidSuperfluidUndelegationsByDelegatorResponse> {
+          OsmosisSuperfluidSuperfluidUndelegationsByDelegatorResponse
+        > {
   final String delegatorAddress;
   final String? denom;
-  const OsmosisSuperfluidSuperfluidUndelegationsByDelegatorRequest(
-      {required this.delegatorAddress, this.denom});
+  const OsmosisSuperfluidSuperfluidUndelegationsByDelegatorRequest({
+    required this.delegatorAddress,
+    this.denom,
+  });
   factory OsmosisSuperfluidSuperfluidUndelegationsByDelegatorRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidSuperfluidUndelegationsByDelegatorRequest(
-        delegatorAddress: decode.getField(1), denom: decode.getField(2));
+      delegatorAddress: decode.getField(1),
+      denom: decode.getField(2),
+    );
   }
 
   @override
@@ -38,16 +44,20 @@ class OsmosisSuperfluidSuperfluidUndelegationsByDelegatorRequest
 
   @override
   OsmosisSuperfluidSuperfluidUndelegationsByDelegatorResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisSuperfluidSuperfluidUndelegationsByDelegatorResponse.fromJson(
-        json);
+      json,
+    );
   }
 
   @override
   OsmosisSuperfluidSuperfluidUndelegationsByDelegatorResponse onResponse(
-      List<int> bytes) {
-    return OsmosisSuperfluidSuperfluidUndelegationsByDelegatorResponse
-        .deserialize(bytes);
+    List<int> bytes,
+  ) {
+    return OsmosisSuperfluidSuperfluidUndelegationsByDelegatorResponse.deserialize(
+      bytes,
+    );
   }
 
   @override

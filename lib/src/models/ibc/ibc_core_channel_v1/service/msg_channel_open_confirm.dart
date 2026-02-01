@@ -15,29 +15,31 @@ class MsgChannelOpenConfirm extends IbcService<EmptyServiceRequestResponse> {
   final List<int>? proofAck;
   final IbcClientHeight proofHeight;
   final String? signer;
-  MsgChannelOpenConfirm(
-      {this.portId,
-      this.channelId,
-      List<int>? proofAck,
-      required this.proofHeight,
-      this.signer})
-      : proofAck = BytesUtils.tryToBytes(proofAck, unmodifiable: true);
+  MsgChannelOpenConfirm({
+    this.portId,
+    this.channelId,
+    List<int>? proofAck,
+    required this.proofHeight,
+    this.signer,
+  }) : proofAck = BytesUtils.tryToBytes(proofAck, unmodifiable: true);
   factory MsgChannelOpenConfirm.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgChannelOpenConfirm(
-        portId: decode.getField(1),
-        channelId: decode.getField(2),
-        proofAck: decode.getField(3),
-        proofHeight: IbcClientHeight.deserialize(decode.getField(4)),
-        signer: decode.getField(5));
+      portId: decode.getField(1),
+      channelId: decode.getField(2),
+      proofAck: decode.getField(3),
+      proofHeight: IbcClientHeight.deserialize(decode.getField(4)),
+      signer: decode.getField(5),
+    );
   }
   factory MsgChannelOpenConfirm.fromJson(Map<String, dynamic> json) {
     return MsgChannelOpenConfirm(
-        portId: json.as("port_id"),
-        channelId: json.as("channel_id"),
-        proofAck: json.asBytes("proof_ack"),
-        proofHeight: IbcClientHeight.fromJson(json.asMap("proof_height")),
-        signer: json.as("signer"));
+      portId: json.as("port_id"),
+      channelId: json.as("channel_id"),
+      proofAck: json.asBytes("proof_ack"),
+      proofHeight: IbcClientHeight.fromJson(json.asMap("proof_height")),
+      signer: json.as("signer"),
+    );
   }
 
   @override
@@ -50,7 +52,7 @@ class MsgChannelOpenConfirm extends IbcService<EmptyServiceRequestResponse> {
       "channel_id": channelId,
       "proof_ack": BytesUtils.tryToHexString(proofAck),
       "proof_height": proofHeight.toJson(),
-      "signer": signer
+      "signer": signer,
     };
   }
 

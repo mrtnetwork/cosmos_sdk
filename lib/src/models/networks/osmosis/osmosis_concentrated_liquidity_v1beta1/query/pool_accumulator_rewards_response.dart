@@ -9,38 +9,47 @@ class OsmosisConcentratedLiquidityPoolAccumulatorRewardsResponse
   final List<DecCoin> spreadRewardGrowthGlobal;
   final List<OsmosisConcentratedLiquidityUptimeTracker> uptimeGrowthGlobal;
 
-  OsmosisConcentratedLiquidityPoolAccumulatorRewardsResponse(
-      {required List<DecCoin> spreadRewardGrowthGlobal,
-      required List<OsmosisConcentratedLiquidityUptimeTracker>
-          uptimeGrowthGlobal})
-      : spreadRewardGrowthGlobal = spreadRewardGrowthGlobal.immutable,
-        uptimeGrowthGlobal = uptimeGrowthGlobal.immutable;
+  OsmosisConcentratedLiquidityPoolAccumulatorRewardsResponse({
+    required List<DecCoin> spreadRewardGrowthGlobal,
+    required List<OsmosisConcentratedLiquidityUptimeTracker> uptimeGrowthGlobal,
+  }) : spreadRewardGrowthGlobal = spreadRewardGrowthGlobal.immutable,
+       uptimeGrowthGlobal = uptimeGrowthGlobal.immutable;
   factory OsmosisConcentratedLiquidityPoolAccumulatorRewardsResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityPoolAccumulatorRewardsResponse(
-        spreadRewardGrowthGlobal: decode
-            .getFields<List<int>>(1)
-            .map((e) => DecCoin.deserialize(e))
-            .toList(),
-        uptimeGrowthGlobal: decode
-            .getFields<List<int>>(2)
-            .map(
-                (e) => OsmosisConcentratedLiquidityUptimeTracker.deserialize(e))
-            .toList());
+      spreadRewardGrowthGlobal:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => DecCoin.deserialize(e))
+              .toList(),
+      uptimeGrowthGlobal:
+          decode
+              .getFields<List<int>>(2)
+              .map(
+                (e) => OsmosisConcentratedLiquidityUptimeTracker.deserialize(e),
+              )
+              .toList(),
+    );
   }
   factory OsmosisConcentratedLiquidityPoolAccumulatorRewardsResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityPoolAccumulatorRewardsResponse(
-        spreadRewardGrowthGlobal: (json["spread_reward_growth_global"] as List?)
-                ?.map((e) => DecCoin.fromJson(e))
-                .toList() ??
-            <DecCoin>[],
-        uptimeGrowthGlobal: (json["uptime_growth_global"] as List?)
-                ?.map((e) =>
-                    OsmosisConcentratedLiquidityUptimeTracker.fromJson(e))
-                .toList() ??
-            <OsmosisConcentratedLiquidityUptimeTracker>[]);
+      spreadRewardGrowthGlobal:
+          (json["spread_reward_growth_global"] as List?)
+              ?.map((e) => DecCoin.fromJson(e))
+              .toList() ??
+          <DecCoin>[],
+      uptimeGrowthGlobal:
+          (json["uptime_growth_global"] as List?)
+              ?.map(
+                (e) => OsmosisConcentratedLiquidityUptimeTracker.fromJson(e),
+              )
+              .toList() ??
+          <OsmosisConcentratedLiquidityUptimeTracker>[],
+    );
   }
 
   @override
@@ -51,7 +60,8 @@ class OsmosisConcentratedLiquidityPoolAccumulatorRewardsResponse
     return {
       "spread_reward_growth_global":
           spreadRewardGrowthGlobal.map((e) => e.toJson()).toList(),
-      "uptime_growth_global": uptimeGrowthGlobal.map((e) => e.toJson()).toList()
+      "uptime_growth_global":
+          uptimeGrowthGlobal.map((e) => e.toJson()).toList(),
     };
   }
 

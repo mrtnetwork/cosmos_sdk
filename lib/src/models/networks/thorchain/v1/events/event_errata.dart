@@ -6,15 +6,17 @@ class ThorchainEventErrata extends CosmosMessage {
   final String? txId;
   final List<ThorchainPoolMode> pools;
   ThorchainEventErrata({this.txId, required List<ThorchainPoolMode> pools})
-      : pools = pools.immutable;
+    : pools = pools.immutable;
   factory ThorchainEventErrata.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainEventErrata(
-        txId: decode.getField(1),
-        pools: decode
-            .getFields<List<int>>(2)
-            .map((e) => ThorchainPoolMode.deserialize(e))
-            .toList());
+      txId: decode.getField(1),
+      pools:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => ThorchainPoolMode.deserialize(e))
+              .toList(),
+    );
   }
 
   @override

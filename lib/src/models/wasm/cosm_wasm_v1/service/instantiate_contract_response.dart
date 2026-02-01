@@ -16,15 +16,21 @@ class CosmWasmV1MsgInstantiateContractResponse extends CosmosMessage {
     required List<int>? data,
   }) : data = data?.asImmutableBytes;
   factory CosmWasmV1MsgInstantiateContractResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmWasmV1MsgInstantiateContractResponse(
-        address: decode.getField(1), data: decode.getField(2));
+      address: decode.getField(1),
+      data: decode.getField(2),
+    );
   }
   factory CosmWasmV1MsgInstantiateContractResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return CosmWasmV1MsgInstantiateContractResponse(
-        data: json.asBytes("data"), address: json.as("address"));
+      data: json.asBytes("data"),
+      address: json.as("address"),
+    );
   }
 
   @override

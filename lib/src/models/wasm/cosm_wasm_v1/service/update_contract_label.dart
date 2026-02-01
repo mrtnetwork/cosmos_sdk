@@ -15,20 +15,25 @@ class CosmWasmV1UpdateContractLabel
 
   /// Contract is the address of the smart contract
   final String? contract;
-  CosmWasmV1UpdateContractLabel(
-      {required this.sender, required this.newLabel, required this.contract});
+  CosmWasmV1UpdateContractLabel({
+    required this.sender,
+    required this.newLabel,
+    required this.contract,
+  });
   factory CosmWasmV1UpdateContractLabel.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmWasmV1UpdateContractLabel(
-        sender: decode.getField(1),
-        newLabel: decode.getField(2),
-        contract: decode.getField(3));
+      sender: decode.getField(1),
+      newLabel: decode.getField(2),
+      contract: decode.getField(3),
+    );
   }
   factory CosmWasmV1UpdateContractLabel.fromJson(Map<String, dynamic> json) {
     return CosmWasmV1UpdateContractLabel(
-        sender: json.as("sender"),
-        contract: json.as("contract"),
-        newLabel: json.as("new_label"));
+      sender: json.as("sender"),
+      contract: json.as("contract"),
+      newLabel: json.as("new_label"),
+    );
   }
 
   @override
@@ -51,6 +56,7 @@ class CosmWasmV1UpdateContractLabel
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        CosmWasmV1Types.msgUpdateContractLabelResponse);
+      CosmWasmV1Types.msgUpdateContractLabelResponse,
+    );
   }
 }

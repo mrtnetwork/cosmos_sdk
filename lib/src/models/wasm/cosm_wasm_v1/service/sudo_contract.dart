@@ -33,9 +33,10 @@ class CosmWasmV1SudoContract
   }
   factory CosmWasmV1SudoContract.fromJson(Map<String, dynamic> json) {
     return CosmWasmV1SudoContract(
-        authority: json.as("authority"),
-        contract: json.as("contract"),
-        msg: json.asBytes("msg"));
+      authority: json.as("authority"),
+      contract: json.as("contract"),
+      msg: json.asBytes("msg"),
+    );
   }
 
   @override
@@ -46,7 +47,7 @@ class CosmWasmV1SudoContract
     return {
       "authority": authority,
       "contract": contract,
-      "msg": CosmosUtils.tryToBase64(msg)
+      "msg": CosmosUtils.tryToBase64(msg),
     };
   }
 

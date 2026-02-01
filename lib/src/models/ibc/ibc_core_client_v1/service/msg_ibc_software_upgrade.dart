@@ -22,23 +22,31 @@ class MsgIBCSoftwareUpgrade extends IbcService<EmptyServiceRequestResponse> {
 
   /// signer address
   final String? signer;
-  const MsgIBCSoftwareUpgrade(
-      {required this.plan, required this.upgradedClientState, this.signer});
+  const MsgIBCSoftwareUpgrade({
+    required this.plan,
+    required this.upgradedClientState,
+    this.signer,
+  });
 
   factory MsgIBCSoftwareUpgrade.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgIBCSoftwareUpgrade(
-        plan: Plan.deserialize(decode.getField(1)),
-        upgradedClientState:
-            decode.getResult(2)?.to<Any, List<int>>(Any.deserialize),
-        signer: decode.getField(3));
+      plan: Plan.deserialize(decode.getField(1)),
+      upgradedClientState: decode
+          .getResult(2)
+          ?.to<Any, List<int>>(Any.deserialize),
+      signer: decode.getField(3),
+    );
   }
   factory MsgIBCSoftwareUpgrade.fromJson(Map<String, dynamic> json) {
     return MsgIBCSoftwareUpgrade(
-        plan: Plan.fromJson(json.asMap("plan")),
-        upgradedClientState: json.maybeAs<Any, Map<String, dynamic>>(
-            key: "upgraded_client_state", onValue: Any.fromJson),
-        signer: json.as("signer"));
+      plan: Plan.fromJson(json.asMap("plan")),
+      upgradedClientState: json.maybeAs<Any, Map<String, dynamic>>(
+        key: "upgraded_client_state",
+        onValue: Any.fromJson,
+      ),
+      signer: json.as("signer"),
+    );
   }
 
   @override
@@ -49,7 +57,7 @@ class MsgIBCSoftwareUpgrade extends IbcService<EmptyServiceRequestResponse> {
     return {
       "plan": plan.toJson(),
       "upgraded_client_state": upgradedClientState?.toJson(),
-      "signer": signer
+      "signer": signer,
     };
   }
 

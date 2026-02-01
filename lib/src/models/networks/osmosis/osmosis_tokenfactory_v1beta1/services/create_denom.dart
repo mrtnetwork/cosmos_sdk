@@ -5,8 +5,9 @@ import 'package:cosmos_sdk/src/utils/quick.dart';
 
 import 'msg_create_denom_response.dart';
 
-class OsmosisTokenFactoryMsgCreateDenom extends OsmosisTokenFactoryV1Beta1<
-    OsmosisTokenFactoryMsgCreateDenomResponse> {
+class OsmosisTokenFactoryMsgCreateDenom
+    extends
+        OsmosisTokenFactoryV1Beta1<OsmosisTokenFactoryMsgCreateDenomResponse> {
   final String? sender;
 
   /// subdenom can be up to 44 "alphanumeric" characters long.
@@ -15,12 +16,17 @@ class OsmosisTokenFactoryMsgCreateDenom extends OsmosisTokenFactoryV1Beta1<
   factory OsmosisTokenFactoryMsgCreateDenom.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisTokenFactoryMsgCreateDenom(
-        sender: decode.getField(1), subdenom: decode.getField(2));
+      sender: decode.getField(1),
+      subdenom: decode.getField(2),
+    );
   }
   factory OsmosisTokenFactoryMsgCreateDenom.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisTokenFactoryMsgCreateDenom(
-        sender: json.as("sender"), subdenom: json.as("subdenom"));
+      sender: json.as("sender"),
+      subdenom: json.as("subdenom"),
+    );
   }
 
   @override

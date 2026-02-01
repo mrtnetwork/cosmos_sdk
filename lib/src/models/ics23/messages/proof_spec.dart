@@ -20,15 +20,20 @@ class Ics23ProofSpec extends CosmosMessage {
 
   /// min_depth (if > 0) is the minimum number of InnerOps allowed (mainly for fixed-depth tries)
   final int? minDepth;
-  const Ics23ProofSpec(
-      {this.leafSpec, this.innerSpec, this.maxDepth, this.minDepth});
+  const Ics23ProofSpec({
+    this.leafSpec,
+    this.innerSpec,
+    this.maxDepth,
+    this.minDepth,
+  });
   factory Ics23ProofSpec.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Ics23ProofSpec(
-        leafSpec: Ics23LeafOp.deserialize(decode.getField(1)),
-        innerSpec: Ics23InnerSpec.deserialize(decode.getField(2)),
-        maxDepth: decode.getField(3),
-        minDepth: decode.getField(4));
+      leafSpec: Ics23LeafOp.deserialize(decode.getField(1)),
+      innerSpec: Ics23InnerSpec.deserialize(decode.getField(2)),
+      maxDepth: decode.getField(3),
+      minDepth: decode.getField(4),
+    );
   }
 
   @override
@@ -40,7 +45,7 @@ class Ics23ProofSpec extends CosmosMessage {
       "leaf_spec": leafSpec?.toJson(),
       "inner_spec": innerSpec?.toJson(),
       "max_depth": maxDepth,
-      "min_depth": minDepth
+      "min_depth": minDepth,
     };
   }
 

@@ -7,10 +7,12 @@ class ThorchainEventGas extends CosmosMessage {
   ThorchainEventGas(List<ThorchainGasPool> pools) : pools = pools.immutable;
   factory ThorchainEventGas.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return ThorchainEventGas(decode
-        .getFields<List<int>>(1)
-        .map((e) => ThorchainGasPool.deserialize(e))
-        .toList());
+    return ThorchainEventGas(
+      decode
+          .getFields<List<int>>(1)
+          .map((e) => ThorchainGasPool.deserialize(e))
+          .toList(),
+    );
   }
 
   @override

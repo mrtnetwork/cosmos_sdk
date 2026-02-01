@@ -8,53 +8,64 @@ import 'package:blockchain_utils/helper/helper.dart';
 class OsmosisSuperfluidSuperfluidUndelegationsByDelegatorResponse
     extends CosmosMessage {
   final List<OsmosisSuperfluidSuperfluidDelegationRecord>
-      superfluidDelegationRecords;
+  superfluidDelegationRecords;
   final List<Coin> totalUnDelegatedCoins;
   final List<OsmosisLockupSyntheticLock> syntheticLocks;
-  OsmosisSuperfluidSuperfluidUndelegationsByDelegatorResponse(
-      {required List<OsmosisSuperfluidSuperfluidDelegationRecord>
-          superfluidDelegationRecords,
-      required List<Coin> totalUnDelegatedCoins,
-      required List<OsmosisLockupSyntheticLock> syntheticLocks})
-      : superfluidDelegationRecords = superfluidDelegationRecords.immutable,
-        totalUnDelegatedCoins = totalUnDelegatedCoins.immutable,
-        syntheticLocks = syntheticLocks.immutable;
+  OsmosisSuperfluidSuperfluidUndelegationsByDelegatorResponse({
+    required List<OsmosisSuperfluidSuperfluidDelegationRecord>
+    superfluidDelegationRecords,
+    required List<Coin> totalUnDelegatedCoins,
+    required List<OsmosisLockupSyntheticLock> syntheticLocks,
+  }) : superfluidDelegationRecords = superfluidDelegationRecords.immutable,
+       totalUnDelegatedCoins = totalUnDelegatedCoins.immutable,
+       syntheticLocks = syntheticLocks.immutable;
   factory OsmosisSuperfluidSuperfluidUndelegationsByDelegatorResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidSuperfluidUndelegationsByDelegatorResponse(
-      superfluidDelegationRecords: decode
-          .getFields<List<int>>(1)
-          .map(
-              (e) => OsmosisSuperfluidSuperfluidDelegationRecord.deserialize(e))
-          .toList(),
-      totalUnDelegatedCoins: decode
-          .getFields<List<int>>(2)
-          .map((e) => Coin.deserialize(e))
-          .toList(),
-      syntheticLocks: decode
-          .getFields<List<int>>(3)
-          .map((e) => OsmosisLockupSyntheticLock.deserialize(e))
-          .toList(),
+      superfluidDelegationRecords:
+          decode
+              .getFields<List<int>>(1)
+              .map(
+                (e) =>
+                    OsmosisSuperfluidSuperfluidDelegationRecord.deserialize(e),
+              )
+              .toList(),
+      totalUnDelegatedCoins:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
+      syntheticLocks:
+          decode
+              .getFields<List<int>>(3)
+              .map((e) => OsmosisLockupSyntheticLock.deserialize(e))
+              .toList(),
     );
   }
   factory OsmosisSuperfluidSuperfluidUndelegationsByDelegatorResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisSuperfluidSuperfluidUndelegationsByDelegatorResponse(
-        superfluidDelegationRecords:
-            (json["superfluid_delegation_records"] as List?)
-                    ?.map((e) =>
-                        OsmosisSuperfluidSuperfluidDelegationRecord.fromJson(e))
-                    .toList() ??
-                <OsmosisSuperfluidSuperfluidDelegationRecord>[],
-        totalUnDelegatedCoins: (json["total_undelegated_coins"] as List?)
-                ?.map((e) => Coin.fromJson(e))
-                .toList() ??
-            <Coin>[],
-        syntheticLocks: (json["synthetic_locks"] as List?)
-                ?.map((e) => OsmosisLockupSyntheticLock.fromJson(e))
-                .toList() ??
-            <OsmosisLockupSyntheticLock>[]);
+      superfluidDelegationRecords:
+          (json["superfluid_delegation_records"] as List?)
+              ?.map(
+                (e) => OsmosisSuperfluidSuperfluidDelegationRecord.fromJson(e),
+              )
+              .toList() ??
+          <OsmosisSuperfluidSuperfluidDelegationRecord>[],
+      totalUnDelegatedCoins:
+          (json["total_undelegated_coins"] as List?)
+              ?.map((e) => Coin.fromJson(e))
+              .toList() ??
+          <Coin>[],
+      syntheticLocks:
+          (json["synthetic_locks"] as List?)
+              ?.map((e) => OsmosisLockupSyntheticLock.fromJson(e))
+              .toList() ??
+          <OsmosisLockupSyntheticLock>[],
+    );
   }
 
   @override
@@ -67,7 +78,7 @@ class OsmosisSuperfluidSuperfluidUndelegationsByDelegatorResponse
           superfluidDelegationRecords.map((e) => e.toJson()).toList(),
       "total_undelegated_coins":
           totalUnDelegatedCoins.map((e) => e.toJson()).toList(),
-      "synthetic_locks": syntheticLocks.map((e) => e.toJson()).toList()
+      "synthetic_locks": syntheticLocks.map((e) => e.toJson()).toList(),
     };
   }
 
@@ -76,6 +87,9 @@ class OsmosisSuperfluidSuperfluidUndelegationsByDelegatorResponse
       OsmosisSuperfluidTypes.superfluidUndelegationsByDelegatorResponse;
 
   @override
-  List get values =>
-      [superfluidDelegationRecords, totalUnDelegatedCoins, syntheticLocks];
+  List get values => [
+    superfluidDelegationRecords,
+    totalUnDelegatedCoins,
+    syntheticLocks,
+  ];
 }

@@ -18,37 +18,40 @@ class MsgTimeoutOnClose extends IbcService<MsgTimeoutOnCloseResponse> {
   final BigInt? nextSequenceRecv;
   final String? signer;
   final BigInt? counterpartyUpgradeSequence;
-  MsgTimeoutOnClose(
-      {required this.packet,
-      List<int>? proofUnreceived,
-      List<int>? proofClose,
-      required this.proofHeight,
-      this.nextSequenceRecv,
-      this.signer,
-      this.counterpartyUpgradeSequence})
-      : proofUnreceived = BytesUtils.tryToBytes(proofUnreceived),
-        proofClose = BytesUtils.tryToBytes(proofClose, unmodifiable: true);
+  MsgTimeoutOnClose({
+    required this.packet,
+    List<int>? proofUnreceived,
+    List<int>? proofClose,
+    required this.proofHeight,
+    this.nextSequenceRecv,
+    this.signer,
+    this.counterpartyUpgradeSequence,
+  }) : proofUnreceived = BytesUtils.tryToBytes(proofUnreceived),
+       proofClose = BytesUtils.tryToBytes(proofClose, unmodifiable: true);
   factory MsgTimeoutOnClose.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgTimeoutOnClose(
-        packet: IbcChannelPacket.deserialize(decode.getField(1)),
-        proofUnreceived: decode.getField(2),
-        proofClose: decode.getField(3),
-        proofHeight: IbcClientHeight.deserialize(decode.getField(4)),
-        nextSequenceRecv: decode.getField(5),
-        signer: decode.getField(6),
-        counterpartyUpgradeSequence: decode.getField(7));
+      packet: IbcChannelPacket.deserialize(decode.getField(1)),
+      proofUnreceived: decode.getField(2),
+      proofClose: decode.getField(3),
+      proofHeight: IbcClientHeight.deserialize(decode.getField(4)),
+      nextSequenceRecv: decode.getField(5),
+      signer: decode.getField(6),
+      counterpartyUpgradeSequence: decode.getField(7),
+    );
   }
   factory MsgTimeoutOnClose.fromJson(Map<String, dynamic> json) {
     return MsgTimeoutOnClose(
-        packet: IbcChannelPacket.fromJson(json.asMap("packet")),
-        proofUnreceived: json.asBytes("proof_unreceived"),
-        proofClose: json.asBytes("proof_close"),
-        proofHeight: IbcClientHeight.deserialize(json.asMap("proof_height")),
-        nextSequenceRecv: json.asBigInt("next_sequence_recv"),
-        signer: json.as("signer"),
-        counterpartyUpgradeSequence:
-            json.asBigInt("counterparty_upgrade_sequence"));
+      packet: IbcChannelPacket.fromJson(json.asMap("packet")),
+      proofUnreceived: json.asBytes("proof_unreceived"),
+      proofClose: json.asBytes("proof_close"),
+      proofHeight: IbcClientHeight.deserialize(json.asMap("proof_height")),
+      nextSequenceRecv: json.asBigInt("next_sequence_recv"),
+      signer: json.as("signer"),
+      counterpartyUpgradeSequence: json.asBigInt(
+        "counterparty_upgrade_sequence",
+      ),
+    );
   }
 
   @override
@@ -72,14 +75,14 @@ class MsgTimeoutOnClose extends IbcService<MsgTimeoutOnCloseResponse> {
 
   @override
   List get values => [
-        packet,
-        proofUnreceived,
-        proofClose,
-        proofHeight,
-        nextSequenceRecv,
-        signer,
-        counterpartyUpgradeSequence
-      ];
+    packet,
+    proofUnreceived,
+    proofClose,
+    proofHeight,
+    nextSequenceRecv,
+    signer,
+    counterpartyUpgradeSequence,
+  ];
 
   @override
   List<String?> get signers => [signer];

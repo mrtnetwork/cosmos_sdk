@@ -7,15 +7,20 @@ class OsmosisSuperfluidSuperfluidDelegationAmountRequest extends CosmosMessage
   final String? delegatorAddress;
   final String? validatorAddress;
   final String? denom;
-  const OsmosisSuperfluidSuperfluidDelegationAmountRequest(
-      {this.delegatorAddress, this.validatorAddress, this.denom});
+  const OsmosisSuperfluidSuperfluidDelegationAmountRequest({
+    this.delegatorAddress,
+    this.validatorAddress,
+    this.denom,
+  });
   factory OsmosisSuperfluidSuperfluidDelegationAmountRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidSuperfluidDelegationAmountRequest(
-        delegatorAddress: decode.getField(1),
-        validatorAddress: decode.getField(2),
-        denom: decode.getField(3));
+      delegatorAddress: decode.getField(1),
+      validatorAddress: decode.getField(2),
+      denom: decode.getField(3),
+    );
   }
 
   @override
@@ -26,7 +31,7 @@ class OsmosisSuperfluidSuperfluidDelegationAmountRequest extends CosmosMessage
     return {
       "delegator_address": delegatorAddress,
       "validator_address": validatorAddress,
-      "denom": denom
+      "denom": denom,
     };
   }
 
@@ -39,21 +44,24 @@ class OsmosisSuperfluidSuperfluidDelegationAmountRequest extends CosmosMessage
 
   @override
   Map<String, String?> get queryParameters => {
-        "delegator_address": delegatorAddress,
-        "validator_address": validatorAddress,
-        "denom": denom
-      };
+    "delegator_address": delegatorAddress,
+    "validator_address": validatorAddress,
+    "denom": denom,
+  };
 
   @override
   OsmosisSuperfluidSuperfluidDelegationAmountResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisSuperfluidSuperfluidDelegationAmountResponse.fromJson(json);
   }
 
   @override
   OsmosisSuperfluidSuperfluidDelegationAmountResponse onResponse(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return OsmosisSuperfluidSuperfluidDelegationAmountResponse.deserialize(
-        bytes);
+      bytes,
+    );
   }
 }

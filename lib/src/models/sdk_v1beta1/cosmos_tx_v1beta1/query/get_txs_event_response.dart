@@ -22,38 +22,41 @@ class GetTxsEventResponse extends CosmosMessage {
   final BigInt? total;
   factory GetTxsEventResponse.fromJson(Map<String, dynamic> json) {
     return GetTxsEventResponse(
-        txResponses: (json["tx_responses"] as List?)
-                ?.map((e) => TxResponse.fromJson(e))
-                .toList() ??
-            [],
-        txs: (json["txs"] as List?)?.map((e) => Tx.fromJson(e)).toList() ?? [],
-        pagination: json["pagination"] == null
-            ? null
-            : PageResponse.fromJson(json["pagination"]),
-        total: BigintUtils.tryParse(json["total"]));
+      txResponses:
+          (json["tx_responses"] as List?)
+              ?.map((e) => TxResponse.fromJson(e))
+              .toList() ??
+          [],
+      txs: (json["txs"] as List?)?.map((e) => Tx.fromJson(e)).toList() ?? [],
+      pagination:
+          json["pagination"] == null
+              ? null
+              : PageResponse.fromJson(json["pagination"]),
+      total: BigintUtils.tryParse(json["total"]),
+    );
   }
-  GetTxsEventResponse(
-      {required List<Tx> txs,
-      required List<TxResponse> txResponses,
-      this.pagination,
-      this.total})
-      : txs = txs.immutable,
-        txResponses = txResponses.immutable;
+  GetTxsEventResponse({
+    required List<Tx> txs,
+    required List<TxResponse> txResponses,
+    this.pagination,
+    this.total,
+  }) : txs = txs.immutable,
+       txResponses = txResponses.immutable;
   factory GetTxsEventResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GetTxsEventResponse(
-        txs: decode
-            .getFields<List<int>>(1)
-            .map((e) => Tx.deserialize(e))
-            .toList(),
-        txResponses: decode
-            .getFields<List<int>>(2)
-            .map((e) => TxResponse.deserialize(e))
-            .toList(),
-        pagination: decode
-            .getResult(3)
-            ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
-        total: decode.getField(4));
+      txs:
+          decode.getFields<List<int>>(1).map((e) => Tx.deserialize(e)).toList(),
+      txResponses:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => TxResponse.deserialize(e))
+              .toList(),
+      pagination: decode
+          .getResult(3)
+          ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
+      total: decode.getField(4),
+    );
   }
 
   @override
@@ -65,7 +68,7 @@ class GetTxsEventResponse extends CosmosMessage {
       "txs": txs.map((e) => e.toJson()).toList(),
       "tx_responses": txResponses.map((e) => e.toJson()).toList(),
       "pagination": pagination?.toJson(),
-      "total": total?.toString()
+      "total": total?.toString(),
     };
   }
 

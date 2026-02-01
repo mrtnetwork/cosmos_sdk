@@ -5,12 +5,14 @@ class OsmosisPoolManagerTradingPairTakerFeeResponse extends CosmosMessage {
   final String takerFee;
   OsmosisPoolManagerTradingPairTakerFeeResponse(this.takerFee);
   factory OsmosisPoolManagerTradingPairTakerFeeResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolManagerTradingPairTakerFeeResponse(decode.getField(1));
   }
   factory OsmosisPoolManagerTradingPairTakerFeeResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisPoolManagerTradingPairTakerFeeResponse(json["taker_fee"]);
   }
 

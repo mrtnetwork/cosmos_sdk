@@ -4,8 +4,12 @@ import 'package:cosmos_sdk/src/provider/thornode/core/thorenode.dart';
 /// Provide a quote estimate for the provided saver withdraw.
 class ThorNodeRequestSaverWithdrawQuote
     extends ThorNodeRequestParam<Map<String, dynamic>, Map<String, dynamic>> {
-  ThorNodeRequestSaverWithdrawQuote(
-      {this.height, this.asset, this.address, this.withdrawBPS});
+  ThorNodeRequestSaverWithdrawQuote({
+    this.height,
+    this.asset,
+    this.address,
+    this.withdrawBPS,
+  });
 
   /// optional block height, defaults to current tip
   final BigInt? height;
@@ -27,9 +31,9 @@ class ThorNodeRequestSaverWithdrawQuote
 
   @override
   Map<String, String?> get parameters => {
-        "height": height?.toString(),
-        "address": address,
-        "asset": asset?.toString(),
-        "withdraw_bps": withdrawBPS?.toString()
-      };
+    "height": height?.toString(),
+    "address": address,
+    "asset": asset?.toString(),
+    "withdraw_bps": withdrawBPS?.toString(),
+  };
 }

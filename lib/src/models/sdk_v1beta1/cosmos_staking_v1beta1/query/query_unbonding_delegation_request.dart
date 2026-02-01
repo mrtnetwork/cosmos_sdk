@@ -11,8 +11,10 @@ class QueryUnbondingDelegationRequest extends CosmosMessage
 
   /// validator_addr defines the validator address to query for.
   final CosmosBaseAddress validatorAddr;
-  const QueryUnbondingDelegationRequest(
-      {required this.delegatorAddr, required this.validatorAddr});
+  const QueryUnbondingDelegationRequest({
+    required this.delegatorAddr,
+    required this.validatorAddr,
+  });
 
   @override
   List<int> get fieldIds => [1, 2];
@@ -21,7 +23,7 @@ class QueryUnbondingDelegationRequest extends CosmosMessage
   Map<String, dynamic> toJson() {
     return {
       "delegator_addr": delegatorAddr.address,
-      "validator_addr": validatorAddr.address
+      "validator_addr": validatorAddr.address,
     };
   }
 
@@ -41,6 +43,8 @@ class QueryUnbondingDelegationRequest extends CosmosMessage
   }
 
   @override
-  List<String> get pathParameters =>
-      [delegatorAddr.address, validatorAddr.address];
+  List<String> get pathParameters => [
+    delegatorAddr.address,
+    validatorAddr.address,
+  ];
 }

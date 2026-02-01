@@ -8,26 +8,32 @@ import 'package:cosmos_sdk/src/models/sdk_v1beta1/cosmos_staking_v1beta1/types/t
 class RedelegationResponse extends CosmosMessage {
   final Redelegation redelegation;
   final List<RedelegationEntryResponse> entries;
-  const RedelegationResponse(
-      {required this.redelegation, required this.entries});
+  const RedelegationResponse({
+    required this.redelegation,
+    required this.entries,
+  });
 
   factory RedelegationResponse.fromJson(Map<String, dynamic> json) {
     return RedelegationResponse(
-        redelegation: Redelegation.fromJson(json["redelegation"]),
-        entries: (json["entries"] as List?)
-                ?.map((e) => RedelegationEntryResponse.fromJson(e))
-                .toList() ??
-            []);
+      redelegation: Redelegation.fromJson(json["redelegation"]),
+      entries:
+          (json["entries"] as List?)
+              ?.map((e) => RedelegationEntryResponse.fromJson(e))
+              .toList() ??
+          [],
+    );
   }
 
   factory RedelegationResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return RedelegationResponse(
-        redelegation: Redelegation.deserialize(decode.getField(1)),
-        entries: decode
-            .getFields<List<int>>(2)
-            .map((e) => RedelegationEntryResponse.deserialize(e))
-            .toList());
+      redelegation: Redelegation.deserialize(decode.getField(1)),
+      entries:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => RedelegationEntryResponse.deserialize(e))
+              .toList(),
+    );
   }
 
   @override
@@ -37,7 +43,7 @@ class RedelegationResponse extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "redelegation": redelegation.toJson(),
-      "entries": entries.map((e) => e.toJson()).toList()
+      "entries": entries.map((e) => e.toJson()).toList(),
     };
   }
 

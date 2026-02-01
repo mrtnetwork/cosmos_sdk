@@ -7,9 +7,10 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class IbcSoloMachineV2PacketReceiptAbsenceData extends CosmosMessage {
   final List<int>? path;
   IbcSoloMachineV2PacketReceiptAbsenceData({List<int>? path})
-      : path = BytesUtils.tryToBytes(path, unmodifiable: true);
+    : path = BytesUtils.tryToBytes(path, unmodifiable: true);
   factory IbcSoloMachineV2PacketReceiptAbsenceData.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcSoloMachineV2PacketReceiptAbsenceData(path: decode.getField(1));
   }

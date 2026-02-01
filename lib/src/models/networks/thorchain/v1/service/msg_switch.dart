@@ -8,13 +8,14 @@ class ThorchainMsgSwitch extends CosmosMessage {
   final String? destination;
   final List<int>? signer;
   ThorchainMsgSwitch({required this.tx, this.destination, List<int>? signer})
-      : signer = BytesUtils.tryToBytes(signer, unmodifiable: true);
+    : signer = BytesUtils.tryToBytes(signer, unmodifiable: true);
   factory ThorchainMsgSwitch.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainMsgSwitch(
-        tx: ThorchainTx.deserialize(decode.getField(1)),
-        destination: decode.getField(2),
-        signer: decode.getField(3));
+      tx: ThorchainTx.deserialize(decode.getField(1)),
+      destination: decode.getField(2),
+      signer: decode.getField(3),
+    );
   }
 
   @override
@@ -25,7 +26,7 @@ class ThorchainMsgSwitch extends CosmosMessage {
     return {
       "tx": tx.toJson(),
       "destination": destination,
-      "signer": BytesUtils.tryToHexString(signer)
+      "signer": BytesUtils.tryToHexString(signer),
     };
   }
 

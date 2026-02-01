@@ -7,7 +7,7 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 /// EthCallRequest defines EthCall request
 class EvmosEthermintEVMV1EstimateGas extends CosmosMessage
     with QueryMessage<EvmosEthermintEVMV1EstimateGasResponse> {
-// args uses the same json format as the json rpc api.
+  // args uses the same json format as the json rpc api.
   final List<int> args;
   // gas_cap defines the default gas cap to be used
   final BigInt gasCap;
@@ -19,15 +19,16 @@ class EvmosEthermintEVMV1EstimateGas extends CosmosMessage
     required this.gasCap,
     required List<int> proposerAddress,
     required this.chainId,
-  })  : args = args.asImmutableBytes,
-        proposerAddress = args.asImmutableBytes;
+  }) : args = args.asImmutableBytes,
+       proposerAddress = args.asImmutableBytes;
   factory EvmosEthermintEVMV1EstimateGas.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosEthermintEVMV1EstimateGas(
-        args: decode.getField(1),
-        gasCap: decode.getField(2),
-        proposerAddress: decode.getField(3),
-        chainId: decode.getField(4));
+      args: decode.getField(1),
+      gasCap: decode.getField(2),
+      proposerAddress: decode.getField(3),
+      chainId: decode.getField(4),
+    );
   }
 
   @override
@@ -39,7 +40,7 @@ class EvmosEthermintEVMV1EstimateGas extends CosmosMessage
       "args": BytesUtils.toHexString(args),
       "gas_cap": gasCap.toString(),
       "proposer_address": BytesUtils.toHexString(proposerAddress),
-      "chain_id": chainId.toString()
+      "chain_id": chainId.toString(),
     };
   }
 
@@ -51,7 +52,8 @@ class EvmosEthermintEVMV1EstimateGas extends CosmosMessage
 
   @override
   EvmosEthermintEVMV1EstimateGasResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return EvmosEthermintEVMV1EstimateGasResponse.fromJson(json);
   }
 
@@ -62,9 +64,9 @@ class EvmosEthermintEVMV1EstimateGas extends CosmosMessage
 
   @override
   Map<String, String?> get queryParameters => {
-        "args": BytesUtils.toHexString(args),
-        "gas_cap": gasCap.toString(),
-        "proposer_address": BytesUtils.toHexString(proposerAddress),
-        "chain_id": chainId.toString()
-      };
+    "args": BytesUtils.toHexString(args),
+    "gas_cap": gasCap.toString(),
+    "proposer_address": BytesUtils.toHexString(proposerAddress),
+    "chain_id": chainId.toString(),
+  };
 }

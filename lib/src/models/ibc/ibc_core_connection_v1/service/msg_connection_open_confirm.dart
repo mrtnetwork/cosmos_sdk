@@ -13,27 +13,30 @@ class IbcConnectionMsgConnectionOpenConfirm
   final List<int>? proofAck;
   final IbcClientHeight proofHeight;
   final String? signer;
-  IbcConnectionMsgConnectionOpenConfirm(
-      {this.connectionId,
-      List<int>? proofAck,
-      required this.proofHeight,
-      this.signer})
-      : proofAck = BytesUtils.tryToBytes(proofAck);
+  IbcConnectionMsgConnectionOpenConfirm({
+    this.connectionId,
+    List<int>? proofAck,
+    required this.proofHeight,
+    this.signer,
+  }) : proofAck = BytesUtils.tryToBytes(proofAck);
   factory IbcConnectionMsgConnectionOpenConfirm.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcConnectionMsgConnectionOpenConfirm(
-        connectionId: decode.getField(1),
-        proofAck: decode.getField(2),
-        proofHeight: IbcClientHeight.deserialize(decode.getField(3)),
-        signer: decode.getField(4));
+      connectionId: decode.getField(1),
+      proofAck: decode.getField(2),
+      proofHeight: IbcClientHeight.deserialize(decode.getField(3)),
+      signer: decode.getField(4),
+    );
   }
   factory IbcConnectionMsgConnectionOpenConfirm.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return IbcConnectionMsgConnectionOpenConfirm(
-        connectionId: json.as("connection_id"),
-        proofAck: json.asBytes("proof_ack"),
-        proofHeight: IbcClientHeight.fromJson(json.asMap("proof_height")),
-        signer: json.as("signer"));
+      connectionId: json.as("connection_id"),
+      proofAck: json.asBytes("proof_ack"),
+      proofHeight: IbcClientHeight.fromJson(json.asMap("proof_height")),
+      signer: json.as("signer"),
+    );
   }
 
   @override
@@ -45,7 +48,7 @@ class IbcConnectionMsgConnectionOpenConfirm
       "connection_id": connectionId,
       "proof_ack": BytesUtils.tryToHexString(proofAck),
       "proof_height": proofHeight.toJson(),
-      "signer": signer
+      "signer": signer,
     };
   }
 
@@ -59,6 +62,7 @@ class IbcConnectionMsgConnectionOpenConfirm
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        IbcTypes.msgConnectionOpenConfirmResponse);
+      IbcTypes.msgConnectionOpenConfirmResponse,
+    );
   }
 }

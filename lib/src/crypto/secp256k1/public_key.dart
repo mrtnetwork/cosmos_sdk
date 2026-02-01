@@ -16,7 +16,8 @@ class CosmosSecp256K1PublicKey extends CosmosPublicKey {
   factory CosmosSecp256K1PublicKey.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmosSecp256K1PublicKey._(
-        Secp256k1PublicKey.fromBytes(decode.getField(1)));
+      Secp256k1PublicKey.fromBytes(decode.getField(1)),
+    );
   }
   @override
   List<int> toBytes({bool compressed = true}) {

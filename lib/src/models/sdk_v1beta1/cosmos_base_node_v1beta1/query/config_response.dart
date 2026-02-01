@@ -8,11 +8,12 @@ class NodeConfigResponse extends CosmosMessage {
   final String? pruningKeepRecent;
   final String? pruningInterval;
   final BigInt? haltHeight;
-  const NodeConfigResponse(
-      {this.minimumGasPrice,
-      this.pruningKeepRecent,
-      this.pruningInterval,
-      this.haltHeight});
+  const NodeConfigResponse({
+    this.minimumGasPrice,
+    this.pruningKeepRecent,
+    this.pruningInterval,
+    this.haltHeight,
+  });
   factory NodeConfigResponse.fromJson(Map<String, dynamic> json) {
     return NodeConfigResponse(
       minimumGasPrice: json["minimum_gas_price"],
@@ -25,10 +26,11 @@ class NodeConfigResponse extends CosmosMessage {
   factory NodeConfigResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return NodeConfigResponse(
-        minimumGasPrice: decode.getField(1),
-        pruningKeepRecent: decode.getField(2),
-        pruningInterval: decode.getField(3),
-        haltHeight: decode.getField(4));
+      minimumGasPrice: decode.getField(1),
+      pruningKeepRecent: decode.getField(2),
+      pruningInterval: decode.getField(3),
+      haltHeight: decode.getField(4),
+    );
   }
 
   @override
@@ -40,7 +42,7 @@ class NodeConfigResponse extends CosmosMessage {
       "minimum_gas_price": minimumGasPrice,
       "pruning_keep_recent": pruningKeepRecent,
       "pruning_interval": pruningInterval,
-      "halt_height": haltHeight?.toString()
+      "halt_height": haltHeight?.toString(),
     };
   }
 
@@ -48,6 +50,10 @@ class NodeConfigResponse extends CosmosMessage {
   TypeUrl get typeUrl => BaseNodeV1beta1Types.nodeConfigResponse;
 
   @override
-  List get values =>
-      [minimumGasPrice, pruningKeepRecent, pruningInterval, haltHeight];
+  List get values => [
+    minimumGasPrice,
+    pruningKeepRecent,
+    pruningInterval,
+    haltHeight,
+  ];
 }

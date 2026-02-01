@@ -7,8 +7,11 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:blockchain_utils/helper/helper.dart';
 import 'package:cosmos_sdk/src/utils/quick.dart';
 
-class OsmosisPoolManagerMsgSwapExactAmountOut extends OsmosisPoolManagerV1Beta1<
-    OsmosisPoolManagerMsgSwapExactAmountOutResponse> {
+class OsmosisPoolManagerMsgSwapExactAmountOut
+    extends
+        OsmosisPoolManagerV1Beta1<
+          OsmosisPoolManagerMsgSwapExactAmountOutResponse
+        > {
   final String? sender;
   final List<OsmosisPoolManagerSwapAmountOutRoute> routes;
   final BigInt tokenInMaxAmount;
@@ -24,19 +27,22 @@ class OsmosisPoolManagerMsgSwapExactAmountOut extends OsmosisPoolManagerV1Beta1<
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolManagerMsgSwapExactAmountOut(
       sender: decode.getField(1),
-      routes: decode
-          .getFields<List<int>>(2)
-          .map((e) => OsmosisPoolManagerSwapAmountOutRoute.deserialize(e))
-          .toList(),
+      routes:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => OsmosisPoolManagerSwapAmountOutRoute.deserialize(e))
+              .toList(),
       tokenInMaxAmount: BigInt.parse(decode.getField(3)),
       tokenOut: Coin.deserialize(decode.getField(4)),
     );
   }
   factory OsmosisPoolManagerMsgSwapExactAmountOut.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisPoolManagerMsgSwapExactAmountOut(
       sender: json.as("sender"),
-      routes: json
+      routes:
+          json
               .asListOfMap("routes")
               ?.map((e) => OsmosisPoolManagerSwapAmountOutRoute.fromJson(e))
               .toList() ??

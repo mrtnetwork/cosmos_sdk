@@ -6,16 +6,22 @@ class OsmosisSuperfluidEstimateSuperfluidDelegatedAmountByValidatorDenomRequest
     extends CosmosMessage
     with
         QueryMessage<
-            OsmosisSuperfluidEstimateSuperfluidDelegatedAmountByValidatorDenomResponse> {
+          OsmosisSuperfluidEstimateSuperfluidDelegatedAmountByValidatorDenomResponse
+        > {
   final String? validatorAddress;
   final String? denom;
-  const OsmosisSuperfluidEstimateSuperfluidDelegatedAmountByValidatorDenomRequest(
-      {this.validatorAddress, this.denom});
+  const OsmosisSuperfluidEstimateSuperfluidDelegatedAmountByValidatorDenomRequest({
+    this.validatorAddress,
+    this.denom,
+  });
   factory OsmosisSuperfluidEstimateSuperfluidDelegatedAmountByValidatorDenomRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidEstimateSuperfluidDelegatedAmountByValidatorDenomRequest(
-        validatorAddress: decode.getField(1), denom: decode.getField(2));
+      validatorAddress: decode.getField(1),
+      denom: decode.getField(2),
+    );
   }
 
   @override
@@ -27,27 +33,32 @@ class OsmosisSuperfluidEstimateSuperfluidDelegatedAmountByValidatorDenomRequest
   }
 
   @override
-  TypeUrl get typeUrl => OsmosisSuperfluidTypes
-      .estimateSuperfluidDelegatedAmountByValidatorDenomRequest;
+  TypeUrl get typeUrl =>
+      OsmosisSuperfluidTypes
+          .estimateSuperfluidDelegatedAmountByValidatorDenomRequest;
 
   @override
   List get values => [validatorAddress, denom];
 
   @override
-  Map<String, String?> get queryParameters =>
-      {"validator_address": validatorAddress, "denom": denom};
+  Map<String, String?> get queryParameters => {
+    "validator_address": validatorAddress,
+    "denom": denom,
+  };
 
   @override
   OsmosisSuperfluidEstimateSuperfluidDelegatedAmountByValidatorDenomResponse
-      onJsonResponse(Map<String, dynamic> json) {
-    return OsmosisSuperfluidEstimateSuperfluidDelegatedAmountByValidatorDenomResponse
-        .fromJson(json);
+  onJsonResponse(Map<String, dynamic> json) {
+    return OsmosisSuperfluidEstimateSuperfluidDelegatedAmountByValidatorDenomResponse.fromJson(
+      json,
+    );
   }
 
   @override
   OsmosisSuperfluidEstimateSuperfluidDelegatedAmountByValidatorDenomResponse
-      onResponse(List<int> bytes) {
-    return OsmosisSuperfluidEstimateSuperfluidDelegatedAmountByValidatorDenomResponse
-        .deserialize(bytes);
+  onResponse(List<int> bytes) {
+    return OsmosisSuperfluidEstimateSuperfluidDelegatedAmountByValidatorDenomResponse.deserialize(
+      bytes,
+    );
   }
 }

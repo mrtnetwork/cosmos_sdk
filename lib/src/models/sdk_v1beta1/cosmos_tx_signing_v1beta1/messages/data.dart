@@ -9,9 +9,11 @@ class SignatureDescriptorData extends CosmosMessage {
   factory SignatureDescriptorData.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return SignatureDescriptorData(
-        sum: decode.isEmpty
-            ? null
-            : BaseSignatureDescriptorData.deserialize(bytes));
+      sum:
+          decode.isEmpty
+              ? null
+              : BaseSignatureDescriptorData.deserialize(bytes),
+    );
   }
 
   @override

@@ -8,11 +8,12 @@ class OsmosisCosmWasmPoolInstantiateMsg extends CosmosMessage {
   final List<String>? poolAssetDenoms;
 
   OsmosisCosmWasmPoolInstantiateMsg({List<String>? poolAssetDenoms})
-      : poolAssetDenoms = poolAssetDenoms?.emptyAsNull?.immutable;
+    : poolAssetDenoms = poolAssetDenoms?.emptyAsNull?.immutable;
   factory OsmosisCosmWasmPoolInstantiateMsg.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisCosmWasmPoolInstantiateMsg(
-        poolAssetDenoms: decode.getFields<String>(1));
+      poolAssetDenoms: decode.getFields<String>(1),
+    );
   }
 
   @override

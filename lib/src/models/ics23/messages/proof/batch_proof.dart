@@ -10,14 +10,16 @@ import 'base_proof.dart';
 class Ics23BatchProof extends Ics23ProofBase {
   final List<Ics23BatchEntry>? entries;
   Ics23BatchProof({List<Ics23BatchEntry>? entries})
-      : entries = entries?.emptyAsNull?.immutable;
+    : entries = entries?.emptyAsNull?.immutable;
   factory Ics23BatchProof.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Ics23BatchProof(
-        entries: decode
-            .getFields<List<int>>(1)
-            .map((e) => Ics23BatchEntry.deserialize(e))
-            .toList());
+      entries:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => Ics23BatchEntry.deserialize(e))
+              .toList(),
+    );
   }
 
   @override

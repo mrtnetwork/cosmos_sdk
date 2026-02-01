@@ -18,23 +18,29 @@ class QueryChannelClientStateResponse extends CosmosMessage {
 
   factory QueryChannelClientStateResponse.fromJson(Map<String, dynamic> json) {
     return QueryChannelClientStateResponse(
-        proof: CosmosUtils.tryToBytes(json["proof"]),
-        proofHeight: IbcClientHeight.fromJson(json["proof_height"]),
-        identifiedClientState: json["identified_client_state"] == null
-            ? null
-            : IbcClientIdentifiedClientState.fromJson(
-                json["identified_client_state"]));
+      proof: CosmosUtils.tryToBytes(json["proof"]),
+      proofHeight: IbcClientHeight.fromJson(json["proof_height"]),
+      identifiedClientState:
+          json["identified_client_state"] == null
+              ? null
+              : IbcClientIdentifiedClientState.fromJson(
+                json["identified_client_state"],
+              ),
+    );
   }
-  QueryChannelClientStateResponse(
-      {this.identifiedClientState, List<int>? proof, required this.proofHeight})
-      : proof = BytesUtils.tryToBytes(proof, unmodifiable: true);
+  QueryChannelClientStateResponse({
+    this.identifiedClientState,
+    List<int>? proof,
+    required this.proofHeight,
+  }) : proof = BytesUtils.tryToBytes(proof, unmodifiable: true);
   factory QueryChannelClientStateResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryChannelClientStateResponse(
       identifiedClientState: decode
           .getResult(1)
           ?.to<IbcClientIdentifiedClientState, List<int>>(
-              (e) => IbcClientIdentifiedClientState.deserialize(e)),
+            (e) => IbcClientIdentifiedClientState.deserialize(e),
+          ),
       proof: decode.getField(2),
       proofHeight: IbcClientHeight.deserialize(decode.getField(3)),
     );
@@ -48,7 +54,7 @@ class QueryChannelClientStateResponse extends CosmosMessage {
     return {
       "identified_client_state": identifiedClientState?.toJson(),
       "proof": BytesUtils.tryToHexString(proof),
-      "proof_height": proofHeight.toJson()
+      "proof_height": proofHeight.toJson(),
     };
   }
 

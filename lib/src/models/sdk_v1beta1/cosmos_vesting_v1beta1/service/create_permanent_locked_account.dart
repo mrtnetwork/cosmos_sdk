@@ -27,24 +27,27 @@ class MsgCreatePermanentLockedAccount
   factory MsgCreatePermanentLockedAccount.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgCreatePermanentLockedAccount(
-        fromAddress: decode
-            .getResult(1)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        toAddress: decode
-            .getResult(2)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        amount: decode
-            .getFields<List<int>>(3)
-            .map((e) => Coin.deserialize(e))
-            .toList());
+      fromAddress: decode
+          .getResult(1)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      toAddress: decode
+          .getResult(2)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      amount:
+          decode
+              .getFields<List<int>>(3)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
+    );
   }
   factory MsgCreatePermanentLockedAccount.fromJson(Map<String, dynamic> json) {
     return MsgCreatePermanentLockedAccount(
-        fromAddress: json.asAddress("from_address"),
-        toAddress: json.asAddress("to_address"),
-        amount:
-            json.asListOfMap("amount")?.map((e) => Coin.fromJson(e)).toList() ??
-                []);
+      fromAddress: json.asAddress("from_address"),
+      toAddress: json.asAddress("to_address"),
+      amount:
+          json.asListOfMap("amount")?.map((e) => Coin.fromJson(e)).toList() ??
+          [],
+    );
   }
 
   /// Converts this instance of [MsgCreatePermanentLockedAccount] to a JSON object.
@@ -72,6 +75,7 @@ class MsgCreatePermanentLockedAccount
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        VestingV1beta1Types.msgCreatePermanentLockedAccountResponse);
+      VestingV1beta1Types.msgCreatePermanentLockedAccountResponse,
+    );
   }
 }

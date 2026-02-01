@@ -16,15 +16,14 @@ class QueryNFTBalanceRequest extends CosmosMessage
   factory QueryNFTBalanceRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryNFTBalanceRequest(
-        classId: decode.getField(1), owner: decode.getField(2));
+      classId: decode.getField(1),
+      owner: decode.getField(2),
+    );
   }
 
   @override
   Map<String, dynamic> toJson() {
-    return {
-      'class_id': classId,
-      'owner': owner,
-    };
+    return {'class_id': classId, 'owner': owner};
   }
 
   @override

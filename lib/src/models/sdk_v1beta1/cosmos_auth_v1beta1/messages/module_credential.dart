@@ -12,16 +12,20 @@ class ModuleCredential extends CosmosMessage {
   /// adding more keys creates sub-account addresses (passed into address.Derive)
   final List<List<int>> derivationKeys;
 
-  ModuleCredential(
-      {required this.moduleName, required List<List<int>> derivationKeys})
-      : derivationKeys = List<List<int>>.unmodifiable(derivationKeys
-            .map((e) => BytesUtils.toBytes(e, unmodifiable: true))
-            .toList());
+  ModuleCredential({
+    required this.moduleName,
+    required List<List<int>> derivationKeys,
+  }) : derivationKeys = List<List<int>>.unmodifiable(
+         derivationKeys
+             .map((e) => BytesUtils.toBytes(e, unmodifiable: true))
+             .toList(),
+       );
   factory ModuleCredential.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ModuleCredential(
-        moduleName: decode.getField(1),
-        derivationKeys: decode.getFields<List<int>>(2));
+      moduleName: decode.getField(1),
+      derivationKeys: decode.getFields<List<int>>(2),
+    );
   }
 
   @override

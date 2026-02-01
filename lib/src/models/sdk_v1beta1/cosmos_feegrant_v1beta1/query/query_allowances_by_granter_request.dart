@@ -15,17 +15,21 @@ class QueryAllowancesByGranterRequest extends CosmosMessage
   final PageRequest? pagination;
   factory QueryAllowancesByGranterRequest.fromJson(Map<String, dynamic> json) {
     return QueryAllowancesByGranterRequest(
-        granter: CosmosBaseAddress(json["granter"]));
+      granter: CosmosBaseAddress(json["granter"]),
+    );
   }
-  const QueryAllowancesByGranterRequest(
-      {required this.granter, this.pagination});
+  const QueryAllowancesByGranterRequest({
+    required this.granter,
+    this.pagination,
+  });
   factory QueryAllowancesByGranterRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryAllowancesByGranterRequest(
-        granter: CosmosBaseAddress(decode.getField(1)),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)));
+      granter: CosmosBaseAddress(decode.getField(1)),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)),
+    );
   }
   @override
   List<int> get fieldIds => [1, 2];

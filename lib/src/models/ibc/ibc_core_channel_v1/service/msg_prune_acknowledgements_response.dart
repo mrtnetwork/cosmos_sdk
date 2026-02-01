@@ -9,13 +9,16 @@ class MsgPruneAcknowledgementsResponse extends CosmosMessage {
 
   /// Number of sequences left after pruning.
   final BigInt? totalRemainingSequences;
-  const MsgPruneAcknowledgementsResponse(
-      {this.totalPrunedSequences, this.totalRemainingSequences});
+  const MsgPruneAcknowledgementsResponse({
+    this.totalPrunedSequences,
+    this.totalRemainingSequences,
+  });
   factory MsgPruneAcknowledgementsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgPruneAcknowledgementsResponse(
-        totalPrunedSequences: decode.getField(1),
-        totalRemainingSequences: decode.getField(2));
+      totalPrunedSequences: decode.getField(1),
+      totalRemainingSequences: decode.getField(2),
+    );
   }
 
   @override
@@ -25,7 +28,7 @@ class MsgPruneAcknowledgementsResponse extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "total_pruned_sequences": totalPrunedSequences?.toString(),
-      "total_remaining_sequences": totalRemainingSequences?.toString()
+      "total_remaining_sequences": totalRemainingSequences?.toString(),
     };
   }
 

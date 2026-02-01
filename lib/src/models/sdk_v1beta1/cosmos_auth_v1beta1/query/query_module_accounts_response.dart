@@ -9,15 +9,18 @@ class QueryModuleAccountsResponse extends CosmosMessage {
   const QueryModuleAccountsResponse(this.accounts);
   factory QueryModuleAccountsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return QueryModuleAccountsResponse(decode
-        .getFields<List<int>>(1)
-        .map((e) => AnyMessage.deserialize(e))
-        .toList());
+    return QueryModuleAccountsResponse(
+      decode
+          .getFields<List<int>>(1)
+          .map((e) => AnyMessage.deserialize(e))
+          .toList(),
+    );
   }
 
   factory QueryModuleAccountsResponse.fromJson(Map<String, dynamic> json) {
     return QueryModuleAccountsResponse(
-        (json["accounts"] as List).map((e) => AnyMessage.fromJson(e)).toList());
+      (json["accounts"] as List).map((e) => AnyMessage.fromJson(e)).toList(),
+    );
   }
 
   @override

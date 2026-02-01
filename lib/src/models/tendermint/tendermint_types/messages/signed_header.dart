@@ -10,12 +10,13 @@ class SignedHeader extends CosmosMessage {
   factory SignedHeader.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return SignedHeader(
-        header: decode
-            .getResult(1)
-            ?.to<Header, List<int>>((e) => Header.deserialize(e)),
-        commit: decode
-            .getResult(2)
-            ?.to<Commit, List<int>>((e) => Commit.deserialize(e)));
+      header: decode
+          .getResult(1)
+          ?.to<Header, List<int>>((e) => Header.deserialize(e)),
+      commit: decode
+          .getResult(2)
+          ?.to<Commit, List<int>>((e) => Commit.deserialize(e)),
+    );
   }
   @override
   List<int> get fieldIds => [1, 2];

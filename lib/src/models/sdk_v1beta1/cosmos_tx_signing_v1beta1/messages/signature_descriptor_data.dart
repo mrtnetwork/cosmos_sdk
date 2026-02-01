@@ -15,6 +15,7 @@ abstract class BaseSignatureDescriptorData extends CosmosMessage {
       return SignatureDescriptorDataMulti.desrialize(bytes);
     }
     throw const DartCosmosSdkPluginException(
-        "Invalid SignatureDescriptorData bytes.");
+      "Invalid SignatureDescriptorData bytes.",
+    );
   }
 }

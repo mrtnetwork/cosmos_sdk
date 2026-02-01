@@ -11,19 +11,26 @@ class InterchainAccountType implements CosmosEnum {
   const InterchainAccountType._(this.value, this.name);
 
   /// Default zero value enumeration
-  static const InterchainAccountType unspecified =
-      InterchainAccountType._(0, "UNSPECIFIED");
+  static const InterchainAccountType unspecified = InterchainAccountType._(
+    0,
+    "UNSPECIFIED",
+  );
 
   /// Execute a transaction on an interchain accounts host chain
-  static const InterchainAccountType executeTx =
-      InterchainAccountType._(0, "EXECUTE_TX");
+  static const InterchainAccountType executeTx = InterchainAccountType._(
+    0,
+    "EXECUTE_TX",
+  );
   static const List<InterchainAccountType> values = [unspecified, executeTx];
   static InterchainAccountType fromValue(Object? value) {
     return values.firstWhere(
       (e) => e.value == value || e.name == value,
-      orElse: () => throw DartCosmosSdkPluginException(
-          "No InterchainAccountType element found for the given value.",
-          details: {"value": value}),
+      orElse:
+          () =>
+              throw DartCosmosSdkPluginException(
+                "No InterchainAccountType element found for the given value.",
+                details: {"value": value},
+              ),
     );
   }
 }

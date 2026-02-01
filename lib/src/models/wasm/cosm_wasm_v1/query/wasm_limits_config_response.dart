@@ -13,7 +13,8 @@ class CosmWasmV1QueryWasmLimitsConfigResponse extends CosmosMessage {
     return CosmWasmV1QueryWasmLimitsConfigResponse(config: decode.getField(1));
   }
   factory CosmWasmV1QueryWasmLimitsConfigResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return CosmWasmV1QueryWasmLimitsConfigResponse(config: json.as("config"));
   }
 

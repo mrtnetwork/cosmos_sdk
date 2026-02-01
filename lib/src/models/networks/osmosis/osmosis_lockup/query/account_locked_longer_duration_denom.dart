@@ -7,15 +7,20 @@ class OsmosisLockupAccountLockedLongerDurationDenomRequest extends CosmosMessage
   final String owner;
   final ProtobufDuration duration;
   final String? denom;
-  const OsmosisLockupAccountLockedLongerDurationDenomRequest(
-      {required this.owner, required this.duration, this.denom});
+  const OsmosisLockupAccountLockedLongerDurationDenomRequest({
+    required this.owner,
+    required this.duration,
+    this.denom,
+  });
   factory OsmosisLockupAccountLockedLongerDurationDenomRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisLockupAccountLockedLongerDurationDenomRequest(
-        owner: decode.getField(1),
-        duration: ProtobufDuration.deserialize(decode.getField(2)),
-        denom: decode.getField(3));
+      owner: decode.getField(1),
+      duration: ProtobufDuration.deserialize(decode.getField(2)),
+      denom: decode.getField(3),
+    );
   }
   @override
   List<int> get fieldIds => [1, 2, 3];
@@ -34,14 +39,17 @@ class OsmosisLockupAccountLockedLongerDurationDenomRequest extends CosmosMessage
 
   @override
   OsmosisLockupAccountLockedLongerDurationDenomResponse onResponse(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return OsmosisLockupAccountLockedLongerDurationDenomResponse.deserialize(
-        bytes);
+      bytes,
+    );
   }
 
   @override
   OsmosisLockupAccountLockedLongerDurationDenomResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisLockupAccountLockedLongerDurationDenomResponse.fromJson(json);
   }
 

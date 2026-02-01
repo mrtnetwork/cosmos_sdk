@@ -8,23 +8,28 @@ class OsmosisPoolincentivesQueryIncentivizedPoolsResponse
   final List<OsmosisPoolincentivesIncentivizedPool> incentivizedPools;
 
   OsmosisPoolincentivesQueryIncentivizedPoolsResponse(
-      List<OsmosisPoolincentivesIncentivizedPool> incentivizedPools)
-      : incentivizedPools = incentivizedPools.immutable;
+    List<OsmosisPoolincentivesIncentivizedPool> incentivizedPools,
+  ) : incentivizedPools = incentivizedPools.immutable;
   factory OsmosisPoolincentivesQueryIncentivizedPoolsResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return OsmosisPoolincentivesQueryIncentivizedPoolsResponse(decode
-        .getFields<List<int>>(1)
-        .map((e) => OsmosisPoolincentivesIncentivizedPool.deserialize(e))
-        .toList());
+    return OsmosisPoolincentivesQueryIncentivizedPoolsResponse(
+      decode
+          .getFields<List<int>>(1)
+          .map((e) => OsmosisPoolincentivesIncentivizedPool.deserialize(e))
+          .toList(),
+    );
   }
   factory OsmosisPoolincentivesQueryIncentivizedPoolsResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisPoolincentivesQueryIncentivizedPoolsResponse(
-        (json["incentivized_pools"] as List?)
-                ?.map((e) => OsmosisPoolincentivesIncentivizedPool.fromJson(e))
-                .toList() ??
-            <OsmosisPoolincentivesIncentivizedPool>[]);
+      (json["incentivized_pools"] as List?)
+              ?.map((e) => OsmosisPoolincentivesIncentivizedPool.fromJson(e))
+              .toList() ??
+          <OsmosisPoolincentivesIncentivizedPool>[],
+    );
   }
 
   @override
@@ -33,7 +38,7 @@ class OsmosisPoolincentivesQueryIncentivizedPoolsResponse
   @override
   Map<String, dynamic> toJson() {
     return {
-      "incentivized_pools": incentivizedPools.map((e) => e.toJson()).toList()
+      "incentivized_pools": incentivizedPools.map((e) => e.toJson()).toList(),
     };
   }
 

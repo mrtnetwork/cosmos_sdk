@@ -9,11 +9,13 @@ class CosmWasmV1AccessTypeParam extends CosmosMessage {
   factory CosmWasmV1AccessTypeParam.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmWasmV1AccessTypeParam(
-        CosmWasmV1AccessType.fromValue(decode.getField(1)));
+      CosmWasmV1AccessType.fromValue(decode.getField(1)),
+    );
   }
   factory CosmWasmV1AccessTypeParam.fromJson(Map<String, dynamic> json) {
     return CosmWasmV1AccessTypeParam(
-        CosmWasmV1AccessType.fromName(json.as("value")));
+      CosmWasmV1AccessType.fromName(json.as("value")),
+    );
   }
 
   @override

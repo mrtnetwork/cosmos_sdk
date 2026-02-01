@@ -12,26 +12,26 @@ class Period extends CosmosMessage {
   final List<Coin> amount;
 
   /// Constructs a new instance of [Period].
-  Period({
-    this.length,
-    required List<Coin> amount,
-  }) : amount = amount.immutable;
+  Period({this.length, required List<Coin> amount}) : amount = amount.immutable;
 
   factory Period.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Period(
-        amount: decode
-            .getFields<List<int>>(2)
-            .map((e) => Coin.deserialize(e))
-            .toList(),
-        length: decode.getField(1));
+      amount:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
+      length: decode.getField(1),
+    );
   }
   factory Period.fromJson(Map<String, dynamic> json) {
     return Period(
-        amount:
-            json.asListOfMap("amount")?.map((e) => Coin.fromJson(e)).toList() ??
-                [],
-        length: json.as("length"));
+      amount:
+          json.asListOfMap("amount")?.map((e) => Coin.fromJson(e)).toList() ??
+          [],
+      length: json.as("length"),
+    );
   }
 
   /// Converts this instance of [Period] to a JSON object.

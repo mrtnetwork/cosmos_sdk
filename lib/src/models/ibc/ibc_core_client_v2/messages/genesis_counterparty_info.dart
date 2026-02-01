@@ -11,24 +11,30 @@ class IbcClientV2GenesisCounterpartyInfo extends CosmosMessage {
 
   /// ClientId is the ID of the given client.
   final String? clientId;
-  IbcClientV2GenesisCounterpartyInfo(
-      {required this.counterpartyInfo, required this.clientId});
+  IbcClientV2GenesisCounterpartyInfo({
+    required this.counterpartyInfo,
+    required this.clientId,
+  });
   factory IbcClientV2GenesisCounterpartyInfo.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcClientV2GenesisCounterpartyInfo(
-        counterpartyInfo: decode
-            .getResult(2)
-            ?.to<IbcClientV2CounterpartyInfo, List<int>>(
-                IbcClientV2CounterpartyInfo.deserialize),
-        clientId: decode.getField(1));
+      counterpartyInfo: decode
+          .getResult(2)
+          ?.to<IbcClientV2CounterpartyInfo, List<int>>(
+            IbcClientV2CounterpartyInfo.deserialize,
+          ),
+      clientId: decode.getField(1),
+    );
   }
   factory IbcClientV2GenesisCounterpartyInfo.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return IbcClientV2GenesisCounterpartyInfo(
-      counterpartyInfo:
-          json.maybeAs<IbcClientV2CounterpartyInfo, Map<String, dynamic>>(
-              key: "counterparty_info",
-              onValue: IbcClientV2CounterpartyInfo.fromJson),
+      counterpartyInfo: json
+          .maybeAs<IbcClientV2CounterpartyInfo, Map<String, dynamic>>(
+            key: "counterparty_info",
+            onValue: IbcClientV2CounterpartyInfo.fromJson,
+          ),
       clientId: json.as("client_id"),
     );
   }
@@ -40,7 +46,7 @@ class IbcClientV2GenesisCounterpartyInfo extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "counterparty_info": counterpartyInfo?.toJson(),
-      "client_id": clientId
+      "client_id": clientId,
     };
   }
 

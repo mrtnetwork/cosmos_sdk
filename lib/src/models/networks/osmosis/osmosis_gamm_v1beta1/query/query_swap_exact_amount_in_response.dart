@@ -8,15 +8,19 @@ class OsmosisGammQuerySwapExactAmountInResponse extends CosmosMessage {
   OsmosisGammQuerySwapExactAmountInResponse(this.tokenOutAmount);
 
   factory OsmosisGammQuerySwapExactAmountInResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisGammQuerySwapExactAmountInResponse(
-        BigInt.parse(decode.getField(1)));
+      BigInt.parse(decode.getField(1)),
+    );
   }
   factory OsmosisGammQuerySwapExactAmountInResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisGammQuerySwapExactAmountInResponse(
-        BigintUtils.parse(json["token_out_amount"]));
+      BigintUtils.parse(json["token_out_amount"]),
+    );
   }
 
   @override

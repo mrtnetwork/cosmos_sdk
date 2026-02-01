@@ -8,7 +8,8 @@ class OsmosisProtorevQueryGetProtoRevDeveloperAccountRequest
     with QueryMessage<OsmosisProtorevQueryGetProtoRevDeveloperAccountResponse> {
   const OsmosisProtorevQueryGetProtoRevDeveloperAccountRequest();
   factory OsmosisProtorevQueryGetProtoRevDeveloperAccountRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return const OsmosisProtorevQueryGetProtoRevDeveloperAccountRequest();
   }
 
@@ -25,16 +26,20 @@ class OsmosisProtorevQueryGetProtoRevDeveloperAccountRequest
 
   @override
   OsmosisProtorevQueryGetProtoRevDeveloperAccountResponse onResponse(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return OsmosisProtorevQueryGetProtoRevDeveloperAccountResponse.deserialize(
-        bytes);
+      bytes,
+    );
   }
 
   @override
   OsmosisProtorevQueryGetProtoRevDeveloperAccountResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisProtorevQueryGetProtoRevDeveloperAccountResponse.fromJson(
-        json);
+      json,
+    );
   }
 
   @override

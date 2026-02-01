@@ -9,14 +9,14 @@ class DistributionMsgWithdrawValidatorCommissionResponse extends CosmosMessage {
   /// Since: cosmos-sdk 0.46
   final List<Coin> amount;
   DistributionMsgWithdrawValidatorCommissionResponse(List<Coin> amount)
-      : amount = amount.immutable;
+    : amount = amount.immutable;
   factory DistributionMsgWithdrawValidatorCommissionResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return DistributionMsgWithdrawValidatorCommissionResponse(decode
-        .getFields<List<int>>(1)
-        .map((e) => Coin.deserialize(e))
-        .toList());
+    return DistributionMsgWithdrawValidatorCommissionResponse(
+      decode.getFields<List<int>>(1).map((e) => Coin.deserialize(e)).toList(),
+    );
   }
   @override
   List<int> get fieldIds => [1];
@@ -27,8 +27,9 @@ class DistributionMsgWithdrawValidatorCommissionResponse extends CosmosMessage {
   }
 
   @override
-  TypeUrl get typeUrl => DistributionV1beta1Types
-      .distributionMsgWithdrawValidatorCommissionResponse;
+  TypeUrl get typeUrl =>
+      DistributionV1beta1Types
+          .distributionMsgWithdrawValidatorCommissionResponse;
 
   @override
   List get values => [amount];

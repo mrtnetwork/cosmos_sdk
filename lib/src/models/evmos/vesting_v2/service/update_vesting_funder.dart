@@ -7,7 +7,8 @@ import 'package:cosmos_sdk/src/models/evmos/core/service.dart';
 /// MsgUpdateVestingFunder defines a message that updates the funder account of a
 /// ClawbackVestingAccount.
 class EvmosVestingV2MsgUpdateVestingFunder
-    extends EvmosService<EmptyServiceRequestResponse> with AminoMessage {
+    extends EvmosService<EmptyServiceRequestResponse>
+    with AminoMessage {
   /// funder_address is the current funder address of the ClawbackVestingAccount
   final String? funderAddress;
 
@@ -17,8 +18,11 @@ class EvmosVestingV2MsgUpdateVestingFunder
   /// vesting_address is the address of the ClawbackVestingAccount being updated
   final String? vestingAddress;
 
-  const EvmosVestingV2MsgUpdateVestingFunder(
-      {this.funderAddress, this.newFunderAddress, this.vestingAddress});
+  const EvmosVestingV2MsgUpdateVestingFunder({
+    this.funderAddress,
+    this.newFunderAddress,
+    this.vestingAddress,
+  });
 
   factory EvmosVestingV2MsgUpdateVestingFunder.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
@@ -29,7 +33,8 @@ class EvmosVestingV2MsgUpdateVestingFunder
     );
   }
   factory EvmosVestingV2MsgUpdateVestingFunder.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return EvmosVestingV2MsgUpdateVestingFunder(
       funderAddress: json.as("funder_address"),
       newFunderAddress: json.as("new_funder_address"),
@@ -45,7 +50,7 @@ class EvmosVestingV2MsgUpdateVestingFunder
     return {
       "funder_address": funderAddress,
       "new_funder_address": newFunderAddress,
-      "vesting_address": vestingAddress
+      "vesting_address": vestingAddress,
     };
   }
 
@@ -60,6 +65,7 @@ class EvmosVestingV2MsgUpdateVestingFunder
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        EvmosErc20V1Types.msgUpdateVestingFunderResponse);
+      EvmosErc20V1Types.msgUpdateVestingFunderResponse,
+    );
   }
 }

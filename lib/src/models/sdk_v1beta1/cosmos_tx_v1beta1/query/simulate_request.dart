@@ -12,7 +12,7 @@ class SimulateRequest extends CosmosMessage
   /// Since: cosmos-sdk 0.43
   final List<int> txBytes;
   SimulateRequest(List<int> txBytes)
-      : txBytes = BytesUtils.toBytes(txBytes, unmodifiable: true);
+    : txBytes = BytesUtils.toBytes(txBytes, unmodifiable: true);
   factory SimulateRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return SimulateRequest(decode.getField(2));

@@ -13,7 +13,8 @@ class CosmWasmV1QueryBuildAddressResponse extends CosmosMessage {
     return CosmWasmV1QueryBuildAddressResponse(address: decode.getField(1));
   }
   factory CosmWasmV1QueryBuildAddressResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return CosmWasmV1QueryBuildAddressResponse(address: json.as("address"));
   }
 

@@ -13,14 +13,20 @@ class QueryNextSequenceReceiveRequest extends CosmosMessage
   final String channelId;
   factory QueryNextSequenceReceiveRequest.fromJson(Map<String, dynamic> json) {
     return QueryNextSequenceReceiveRequest(
-        portId: json["port_id"], channelId: json["channel_id"]);
+      portId: json["port_id"],
+      channelId: json["channel_id"],
+    );
   }
-  const QueryNextSequenceReceiveRequest(
-      {required this.portId, required this.channelId});
+  const QueryNextSequenceReceiveRequest({
+    required this.portId,
+    required this.channelId,
+  });
   factory QueryNextSequenceReceiveRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryNextSequenceReceiveRequest(
-        portId: decode.getField(1), channelId: decode.getField(2));
+      portId: decode.getField(1),
+      channelId: decode.getField(2),
+    );
   }
 
   @override

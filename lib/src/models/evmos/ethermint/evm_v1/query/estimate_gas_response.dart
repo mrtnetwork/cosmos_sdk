@@ -11,9 +11,11 @@ class EvmosEthermintEVMV1EstimateGasResponse extends CosmosMessage {
     return EvmosEthermintEVMV1EstimateGasResponse(decode.getField(1));
   }
   factory EvmosEthermintEVMV1EstimateGasResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return EvmosEthermintEVMV1EstimateGasResponse(
-        BigintUtils.parse(json["gas"]));
+      BigintUtils.parse(json["gas"]),
+    );
   }
 
   @override

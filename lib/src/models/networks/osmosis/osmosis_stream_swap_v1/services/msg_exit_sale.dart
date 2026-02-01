@@ -17,11 +17,15 @@ class OsmosisStreamSwapMsgExitSale
   factory OsmosisStreamSwapMsgExitSale.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisStreamSwapMsgExitSale(
-        sender: decode.getField(1), saleId: decode.getField(2));
+      sender: decode.getField(1),
+      saleId: decode.getField(2),
+    );
   }
   factory OsmosisStreamSwapMsgExitSale.fromJson(Map<String, dynamic> json) {
     return OsmosisStreamSwapMsgExitSale(
-        sender: json.as("sender"), saleId: json.asBigInt("sale_id"));
+      sender: json.as("sender"),
+      saleId: json.asBigInt("sale_id"),
+    );
   }
 
   @override

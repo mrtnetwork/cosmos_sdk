@@ -10,12 +10,15 @@ class OsmosisTokenFactoryQueryParamsResponse extends CosmosMessage {
   factory OsmosisTokenFactoryQueryParamsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisTokenFactoryQueryParamsResponse(
-        OsmosisTokenFactoryParams.deserialize(decode.getField(1)));
+      OsmosisTokenFactoryParams.deserialize(decode.getField(1)),
+    );
   }
   factory OsmosisTokenFactoryQueryParamsResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisTokenFactoryQueryParamsResponse(
-        OsmosisTokenFactoryParams.fromJson(json["params"]));
+      OsmosisTokenFactoryParams.fromJson(json["params"]),
+    );
   }
 
   @override

@@ -3,8 +3,12 @@ import 'package:cosmos_sdk/src/provider/thornode/core/thorenode.dart';
 import 'package:cosmos_sdk/src/provider/thornode/models/models/asset_information.dart';
 
 /// Returns the pool information for the provided asset
-class ThorNodeRequestAssetPoolInformation extends ThorNodeRequestParam<
-    AssetPoolInformationResponse, Map<String, dynamic>> {
+class ThorNodeRequestAssetPoolInformation
+    extends
+        ThorNodeRequestParam<
+          AssetPoolInformationResponse,
+          Map<String, dynamic>
+        > {
   ThorNodeRequestAssetPoolInformation({required this.asset, this.height});
 
   /// optional block height, defaults to current tip

@@ -6,11 +6,13 @@ class ThorchainMsgNodePauseChain extends CosmosMessage {
   final BigInt? value;
   final List<int>? signer;
   ThorchainMsgNodePauseChain({this.value, List<int>? signer})
-      : signer = BytesUtils.tryToBytes(signer, unmodifiable: true);
+    : signer = BytesUtils.tryToBytes(signer, unmodifiable: true);
   factory ThorchainMsgNodePauseChain.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainMsgNodePauseChain(
-        value: decode.getField(1), signer: decode.getField(2));
+      value: decode.getField(1),
+      signer: decode.getField(2),
+    );
   }
 
   @override
@@ -20,7 +22,7 @@ class ThorchainMsgNodePauseChain extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "value": value?.toString(),
-      "signer": BytesUtils.tryToHexString(signer)
+      "signer": BytesUtils.tryToHexString(signer),
     };
   }
 

@@ -13,54 +13,64 @@ class ThorchainMsgBond extends ThorchainV1Service<EmptyServiceRequestResponse> {
   final CosmosBaseAddress? signer;
   final CosmosBaseAddress? bondProviderAddress;
   final BigInt? operatorFee;
-  ThorchainMsgBond(
-      {required this.txIn,
-      required this.bond,
-      this.bondAddress,
-      this.operatorFee,
-      this.signer,
-      this.bondProviderAddress,
-      this.nodeAddress});
+  ThorchainMsgBond({
+    required this.txIn,
+    required this.bond,
+    this.bondAddress,
+    this.operatorFee,
+    this.signer,
+    this.bondProviderAddress,
+    this.nodeAddress,
+  });
   factory ThorchainMsgBond.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainMsgBond(
-        txIn: ThorchainTx.deserialize(decode.getField(1)),
-        nodeAddress: decode.getResult(2)?.to<CosmosBaseAddress, List<int>>(
-            (e) => CosmosBaseAddress.fromBytes(e)),
-        bond: decode.getField(3),
-        bondAddress: decode.getField(4),
-        signer: decode.getResult(5)?.to<CosmosBaseAddress, List<int>>(
-            (e) => CosmosBaseAddress.fromBytes(e)),
-        bondProviderAddress: decode
-            .getResult(6)
-            ?.to<CosmosBaseAddress, List<int>>(
-                (e) => CosmosBaseAddress.fromBytes(e)),
-        operatorFee: decode.getField(7));
+      txIn: ThorchainTx.deserialize(decode.getField(1)),
+      nodeAddress: decode
+          .getResult(2)
+          ?.to<CosmosBaseAddress, List<int>>(
+            (e) => CosmosBaseAddress.fromBytes(e),
+          ),
+      bond: decode.getField(3),
+      bondAddress: decode.getField(4),
+      signer: decode
+          .getResult(5)
+          ?.to<CosmosBaseAddress, List<int>>(
+            (e) => CosmosBaseAddress.fromBytes(e),
+          ),
+      bondProviderAddress: decode
+          .getResult(6)
+          ?.to<CosmosBaseAddress, List<int>>(
+            (e) => CosmosBaseAddress.fromBytes(e),
+          ),
+      operatorFee: decode.getField(7),
+    );
   }
   factory ThorchainMsgBond.fromJson(Map<String, dynamic> json) {
     return ThorchainMsgBond(
-        txIn: ThorchainTx.fromJson(json.asMap("tx_in")),
-        nodeAddress: json.maybeAs<CosmosBaseAddress, String>(
-          key: "node_address",
-          onValue: (e) {
-            return CosmosBaseAddress.fromBytes(CosmosUtils.toBytes(e));
-          },
-        ),
-        bond: json.as("bond"),
-        bondAddress: json.as("bond_address"),
-        signer: json.maybeAs<CosmosBaseAddress, String>(
-          key: "signer",
-          onValue: (e) {
-            return CosmosBaseAddress.fromBytes(CosmosUtils.toBytes(e));
-          },
-        ),
-        bondProviderAddress: json.maybeAs<CosmosBaseAddress, String>(
-          key: "bond_provider_address",
-          onValue: (e) {
-            return CosmosBaseAddress.fromBytes(CosmosUtils.toBytes(e));
-          },
-        ),
-        operatorFee: json.asBigInt("operator_fee"));
+      txIn: ThorchainTx.fromJson(json.asMap("tx_in")),
+      nodeAddress: json.maybeAs<CosmosBaseAddress, String>(
+        key: "node_address",
+        onValue: (e) {
+          return CosmosBaseAddress.fromBytes(CosmosUtils.toBytes(e));
+        },
+      ),
+      bond: json.as("bond"),
+      bondAddress: json.as("bond_address"),
+      signer: json.maybeAs<CosmosBaseAddress, String>(
+        key: "signer",
+        onValue: (e) {
+          return CosmosBaseAddress.fromBytes(CosmosUtils.toBytes(e));
+        },
+      ),
+      bondProviderAddress: json.maybeAs<CosmosBaseAddress, String>(
+        key: "bond_provider_address",
+        onValue: (e) {
+          return CosmosBaseAddress.fromBytes(CosmosUtils.toBytes(e));
+        },
+      ),
+      operatorFee: json.asBigInt("operator_fee"),
+    );
   }
 
   @override
@@ -75,7 +85,7 @@ class ThorchainMsgBond extends ThorchainV1Service<EmptyServiceRequestResponse> {
       "bond_address": bondAddress,
       "signer": signer?.address,
       "bond_provider_address": bondProviderAddress?.address,
-      "operator_fee": operatorFee?.toString()
+      "operator_fee": operatorFee?.toString(),
     };
   }
 
@@ -84,14 +94,14 @@ class ThorchainMsgBond extends ThorchainV1Service<EmptyServiceRequestResponse> {
 
   @override
   List get values => [
-        txIn,
-        nodeAddress?.toBytes(),
-        bond,
-        bondAddress,
-        signer?.toBytes(),
-        bondProviderAddress?.toBytes(),
-        operatorFee
-      ];
+    txIn,
+    nodeAddress?.toBytes(),
+    bond,
+    bondAddress,
+    signer?.toBytes(),
+    bondProviderAddress?.toBytes(),
+    operatorFee,
+  ];
 
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {

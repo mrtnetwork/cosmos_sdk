@@ -10,20 +10,25 @@ class OsmosisIbchooksMsgEmitIBCAck
   final String? sender;
   final BigInt? packetSequence;
   final String? channel;
-  const OsmosisIbchooksMsgEmitIBCAck(
-      {this.sender, this.packetSequence, this.channel});
+  const OsmosisIbchooksMsgEmitIBCAck({
+    this.sender,
+    this.packetSequence,
+    this.channel,
+  });
   factory OsmosisIbchooksMsgEmitIBCAck.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisIbchooksMsgEmitIBCAck(
-        sender: decode.getField(1),
-        packetSequence: decode.getField(2),
-        channel: decode.getField(3));
+      sender: decode.getField(1),
+      packetSequence: decode.getField(2),
+      channel: decode.getField(3),
+    );
   }
   factory OsmosisIbchooksMsgEmitIBCAck.fromJson(Map<String, dynamic> json) {
     return OsmosisIbchooksMsgEmitIBCAck(
-        sender: json.as("sender"),
-        packetSequence: json.asBigInt("packet_sequence"),
-        channel: json.as("channel"));
+      sender: json.as("sender"),
+      packetSequence: json.asBigInt("packet_sequence"),
+      channel: json.as("channel"),
+    );
   }
 
   @override
@@ -42,7 +47,7 @@ class OsmosisIbchooksMsgEmitIBCAck
     return {
       "sender": sender,
       "packet_sequence": packetSequence?.toString(),
-      "channel": channel
+      "channel": channel,
     };
   }
 

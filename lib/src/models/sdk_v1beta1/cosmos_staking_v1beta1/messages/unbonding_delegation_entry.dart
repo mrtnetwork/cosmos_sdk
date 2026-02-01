@@ -23,13 +23,15 @@ class UnbondingDelegationEntry extends CosmosMessage {
   final BigInt? unbondingOnHoldRefCount;
   factory UnbondingDelegationEntry.fromJson(Map<String, dynamic> json) {
     return UnbondingDelegationEntry(
-        balance: BigintUtils.parse(json["balance"]),
-        completionTime: ProtobufTimestamp.fromString(json["completion_time"]),
-        creationHeight: BigintUtils.tryParse(json["creation_height"]),
-        initialBalance: BigintUtils.parse(json["initial_balance"]),
-        unbondingId: BigintUtils.tryParse(json["unbonding_id"]),
-        unbondingOnHoldRefCount:
-            BigintUtils.tryParse(json["unbonding_on_hold_ref_count"]));
+      balance: BigintUtils.parse(json["balance"]),
+      completionTime: ProtobufTimestamp.fromString(json["completion_time"]),
+      creationHeight: BigintUtils.tryParse(json["creation_height"]),
+      initialBalance: BigintUtils.parse(json["initial_balance"]),
+      unbondingId: BigintUtils.tryParse(json["unbonding_id"]),
+      unbondingOnHoldRefCount: BigintUtils.tryParse(
+        json["unbonding_on_hold_ref_count"],
+      ),
+    );
   }
   const UnbondingDelegationEntry({
     required this.creationHeight,
@@ -42,12 +44,13 @@ class UnbondingDelegationEntry extends CosmosMessage {
   factory UnbondingDelegationEntry.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return UnbondingDelegationEntry(
-        creationHeight: decode.getField(1),
-        completionTime: ProtobufTimestamp.deserialize(decode.getField(2)),
-        initialBalance: BigintUtils.parse(decode.getField<String>(3)),
-        balance: BigintUtils.parse(decode.getField<String>(4)),
-        unbondingId: decode.getField(5),
-        unbondingOnHoldRefCount: decode.getField(6));
+      creationHeight: decode.getField(1),
+      completionTime: ProtobufTimestamp.deserialize(decode.getField(2)),
+      initialBalance: BigintUtils.parse(decode.getField<String>(3)),
+      balance: BigintUtils.parse(decode.getField<String>(4)),
+      unbondingId: decode.getField(5),
+      unbondingOnHoldRefCount: decode.getField(6),
+    );
   }
 
   @override
@@ -70,11 +73,11 @@ class UnbondingDelegationEntry extends CosmosMessage {
 
   @override
   List get values => [
-        creationHeight,
-        completionTime,
-        initialBalance.toString(),
-        balance.toString(),
-        unbondingId,
-        unbondingOnHoldRefCount
-      ];
+    creationHeight,
+    completionTime,
+    initialBalance.toString(),
+    balance.toString(),
+    unbondingId,
+    unbondingOnHoldRefCount,
+  ];
 }

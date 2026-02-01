@@ -21,21 +21,24 @@ class QueryChannelConsensusStateResponse extends CosmosMessage {
   final IbcClientHeight proofHeight;
 
   factory QueryChannelConsensusStateResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return QueryChannelConsensusStateResponse(
-        proof: CosmosUtils.tryToBytes(json["proof"]),
-        proofHeight: IbcClientHeight.fromJson(json["proof_height"]),
-        clientId: json["client_id"],
-        consensusState: json["consensus_state"] == null
-            ? null
-            : AnyMessage.fromJson(json["consensus_state"]));
+      proof: CosmosUtils.tryToBytes(json["proof"]),
+      proofHeight: IbcClientHeight.fromJson(json["proof_height"]),
+      clientId: json["client_id"],
+      consensusState:
+          json["consensus_state"] == null
+              ? null
+              : AnyMessage.fromJson(json["consensus_state"]),
+    );
   }
-  QueryChannelConsensusStateResponse(
-      {this.consensusState,
-      this.clientId,
-      List<int>? proof,
-      required this.proofHeight})
-      : proof = BytesUtils.tryToBytes(proof, unmodifiable: true);
+  QueryChannelConsensusStateResponse({
+    this.consensusState,
+    this.clientId,
+    List<int>? proof,
+    required this.proofHeight,
+  }) : proof = BytesUtils.tryToBytes(proof, unmodifiable: true);
   factory QueryChannelConsensusStateResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryChannelConsensusStateResponse(
@@ -57,7 +60,7 @@ class QueryChannelConsensusStateResponse extends CosmosMessage {
       "consensus_state": consensusState?.toJson(),
       "client_id": clientId,
       "proof": BytesUtils.tryToHexString(proof),
-      "proof_height": proofHeight.toJson()
+      "proof_height": proofHeight.toJson(),
     };
   }
 

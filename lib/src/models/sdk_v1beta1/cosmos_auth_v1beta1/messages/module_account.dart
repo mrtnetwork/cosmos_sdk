@@ -11,22 +11,25 @@ class ModuleAccount extends CosmosBaseAccount {
   final String name;
   final List<String> permissions;
 
-  const ModuleAccount(
-      {required this.baseAccount,
-      required this.name,
-      required this.permissions});
+  const ModuleAccount({
+    required this.baseAccount,
+    required this.name,
+    required this.permissions,
+  });
   factory ModuleAccount.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ModuleAccount(
-        baseAccount: BaseAccount.deserialize(decode.getField(1)),
-        name: decode.getField(2),
-        permissions: decode.getFields<String>(3));
+      baseAccount: BaseAccount.deserialize(decode.getField(1)),
+      name: decode.getField(2),
+      permissions: decode.getFields<String>(3),
+    );
   }
   factory ModuleAccount.fromJson(Map<String, dynamic> json) {
     return ModuleAccount(
-        baseAccount: BaseAccount.fromJson(json["base_account"]),
-        name: json["name"],
-        permissions: (json["permissions"] as List).cast());
+      baseAccount: BaseAccount.fromJson(json["base_account"]),
+      name: json["name"],
+      permissions: (json["permissions"] as List).cast(),
+    );
   }
 
   @override
@@ -37,7 +40,7 @@ class ModuleAccount extends CosmosBaseAccount {
     return {
       "base_account": baseAccount.toJson(),
       "name": name,
-      "permissions": permissions
+      "permissions": permissions,
     };
   }
 

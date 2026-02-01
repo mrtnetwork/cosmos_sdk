@@ -10,18 +10,22 @@ class CosmosProofOps extends CosmosMessage {
   CosmosProofOps({required List<CosmosProofOp> ops}) : ops = ops.immutable;
   factory CosmosProofOps.fromJson(Map<String, dynamic> json) {
     return CosmosProofOps(
-        ops: (json["ops"] as List?)
-                ?.map((e) => CosmosProofOp.fromJson(e))
-                .toList() ??
-            []);
+      ops:
+          (json["ops"] as List?)
+              ?.map((e) => CosmosProofOp.fromJson(e))
+              .toList() ??
+          [],
+    );
   }
   factory CosmosProofOps.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmosProofOps(
-        ops: decode
-            .getFields<List<int>>(1)
-            .map((e) => CosmosProofOp.deserialize(e))
-            .toList());
+      ops:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => CosmosProofOp.deserialize(e))
+              .toList(),
+    );
   }
 
   @override

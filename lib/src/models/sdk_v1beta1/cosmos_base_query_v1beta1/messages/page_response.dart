@@ -19,14 +19,18 @@ class PageResponse extends CosmosMessage {
   factory PageResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return PageResponse(
-        nextKey: decode.getField(1),
-        total: decode.getResult(2)?.cast<BigInt>());
+      nextKey: decode.getField(1),
+      total: decode.getResult(2)?.cast<BigInt>(),
+    );
   }
   factory PageResponse.fromJson(Map<String, dynamic> json) {
     return PageResponse(
-        nextKey: StringUtils.tryEncode(json["next_key"],
-            type: StringEncoding.base64),
-        total: BigInt.tryParse(json["total"] ?? "0"));
+      nextKey: StringUtils.tryEncode(
+        json["next_key"],
+        type: StringEncoding.base64,
+      ),
+      total: BigInt.tryParse(json["total"] ?? "0"),
+    );
   }
 
   @override
@@ -36,7 +40,7 @@ class PageResponse extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "next_key": BytesUtils.tryToHexString(nextKey),
-      "total": total?.toString()
+      "total": total?.toString(),
     };
   }
 

@@ -6,13 +6,14 @@ import 'package:cosmos_sdk/src/provider/tendermint/models/models/ordering.dart';
 /// https://docs.tendermint.com/v0.34/rpc/#/Info/tx_search
 class TendermintRequestTxSearch
     extends TendermintRequest<Map<String, dynamic>, Map<String, dynamic>> {
-  TendermintRequestTxSearch(
-      {required this.query,
-      this.prove,
-      this.page,
-      this.perPage,
-      this.orderBy,
-      this.matchEvents});
+  TendermintRequestTxSearch({
+    required this.query,
+    this.prove,
+    this.page,
+    this.perPage,
+    this.orderBy,
+    this.matchEvents,
+  });
 
   final String query;
 
@@ -45,11 +46,11 @@ class TendermintRequestTxSearch
 
   @override
   Map<String, String?> get parameters => {
-        "query": query,
-        "prove": prove?.toString(),
-        "page": page?.toString(),
-        "per_page": perPage?.toString(),
-        "order_by": orderBy?.name,
-        "match_events": matchEvents?.toString()
-      };
+    "query": query,
+    "prove": prove?.toString(),
+    "page": page?.toString(),
+    "per_page": perPage?.toString(),
+    "order_by": orderBy?.name,
+    "match_events": matchEvents?.toString(),
+  };
 }

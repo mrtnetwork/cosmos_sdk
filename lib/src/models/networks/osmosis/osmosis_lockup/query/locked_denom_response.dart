@@ -9,11 +9,13 @@ class OsmosisLockupLockedDenomResponse extends CosmosMessage {
   factory OsmosisLockupLockedDenomResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisLockupLockedDenomResponse(
-        amount: BigInt.tryParse(decode.getField(1)));
+      amount: BigInt.tryParse(decode.getField(1)),
+    );
   }
   factory OsmosisLockupLockedDenomResponse.fromJson(Map<String, dynamic> json) {
     return OsmosisLockupLockedDenomResponse(
-        amount: BigintUtils.tryParse(json["amount"]));
+      amount: BigintUtils.tryParse(json["amount"]),
+    );
   }
   @override
   List<int> get fieldIds => [1];

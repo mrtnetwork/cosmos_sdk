@@ -3,8 +3,9 @@ import 'package:cosmos_sdk/src/provider/thornode/core/thorenode.dart';
 import 'package:cosmos_sdk/src/provider/thornode/models/models/trade_account.dart';
 
 /// Returns the units and depth of a trade account
-class ThorNodeRequestTradeAccount extends ThorNodeRequestParam<
-    ThorTradeAccountResponse, Map<String, dynamic>> {
+class ThorNodeRequestTradeAccount
+    extends
+        ThorNodeRequestParam<ThorTradeAccountResponse, Map<String, dynamic>> {
   ThorNodeRequestTradeAccount({this.height, required this.address});
 
   /// optional block height, defaults to current tip

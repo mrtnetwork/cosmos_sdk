@@ -10,29 +10,33 @@ class CosmosBlock extends CosmosMessage {
   final BlockData data;
   final EvidenceList evidence;
   final Commit? lastCommit;
-  const CosmosBlock(
-      {required this.header,
-      required this.data,
-      required this.evidence,
-      this.lastCommit});
+  const CosmosBlock({
+    required this.header,
+    required this.data,
+    required this.evidence,
+    this.lastCommit,
+  });
   factory CosmosBlock.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmosBlock(
-        header: Header.deserialize(decode.getField(1)),
-        data: BlockData.deserialize(decode.getField(2)),
-        evidence: EvidenceList.deserialize(decode.getField(3)),
-        lastCommit: decode
-            .getResult(4)
-            ?.to<Commit, List<int>>((e) => Commit.deserialize(e)));
+      header: Header.deserialize(decode.getField(1)),
+      data: BlockData.deserialize(decode.getField(2)),
+      evidence: EvidenceList.deserialize(decode.getField(3)),
+      lastCommit: decode
+          .getResult(4)
+          ?.to<Commit, List<int>>((e) => Commit.deserialize(e)),
+    );
   }
   factory CosmosBlock.fromJson(Map<String, dynamic> json) {
     return CosmosBlock(
-        header: Header.fromJson(json["header"]),
-        data: BlockData.fromJson(json["data"]),
-        evidence: EvidenceList(evidence: []),
-        lastCommit: json["last_commit"] == null
-            ? null
-            : Commit.fromJson(json["last_commit"]));
+      header: Header.fromJson(json["header"]),
+      data: BlockData.fromJson(json["data"]),
+      evidence: EvidenceList(evidence: []),
+      lastCommit:
+          json["last_commit"] == null
+              ? null
+              : Commit.fromJson(json["last_commit"]),
+    );
   }
 
   @override
@@ -44,7 +48,7 @@ class CosmosBlock extends CosmosMessage {
       "header": header.toJson(),
       "data": data.toJson(),
       "evidence": evidence.toJson(),
-      "last_commit": lastCommit?.toJson()
+      "last_commit": lastCommit?.toJson(),
     };
   }
 

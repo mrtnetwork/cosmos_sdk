@@ -12,46 +12,52 @@ class QueryAccountsResponse extends CosmosMessage {
   final PageResponse? pagination;
 
   const QueryAccountsResponse({required this.accounts, this.pagination});
-  factory QueryAccountsResponse.deserialize(List<int> bytes,
-      {bool skipOnFail = false}) {
+  factory QueryAccountsResponse.deserialize(
+    List<int> bytes, {
+    bool skipOnFail = false,
+  }) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryAccountsResponse(
-      accounts: decode
-          .getFields<List<int>>(1)
-          .map((e) => Any.deserialize(e))
-          .map((e) {
-            try {
-              return CosmosBaseAccount.fromAny(e);
-            } catch (e) {
-              if (skipOnFail) {
-                return null;
-              }
-              rethrow;
-            }
-          })
-          .whereType<CosmosBaseAccount>()
-          .toList(),
+      accounts:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => Any.deserialize(e))
+              .map((e) {
+                try {
+                  return CosmosBaseAccount.fromAny(e);
+                } catch (e) {
+                  if (skipOnFail) {
+                    return null;
+                  }
+                  rethrow;
+                }
+              })
+              .whereType<CosmosBaseAccount>()
+              .toList(),
       pagination: decode
           .getResult(2)
           ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
     );
   }
-  factory QueryAccountsResponse.fromJson(Map<String, dynamic> json,
-      {bool skipOnFail = false}) {
+  factory QueryAccountsResponse.fromJson(
+    Map<String, dynamic> json, {
+    bool skipOnFail = false,
+  }) {
     return QueryAccountsResponse(
-      accounts: (json["accounts"] as List)
-          .map((e) {
-            try {
-              return CosmosBaseAccount.fromJson(e);
-            } catch (_) {
-              if (skipOnFail) {
-                return null;
-              }
-              rethrow;
-            }
-          })
-          .whereType<CosmosBaseAccount>()
-          .toList(),
+      accounts:
+          (json["accounts"] as List)
+              .map((e) {
+                try {
+                  return CosmosBaseAccount.fromJson(e);
+                } catch (_) {
+                  if (skipOnFail) {
+                    return null;
+                  }
+                  rethrow;
+                }
+              })
+              .whereType<CosmosBaseAccount>()
+              .toList(),
       pagination: PageResponse.fromJson(json["pagination"]),
     );
   }
@@ -63,7 +69,7 @@ class QueryAccountsResponse extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "accounts": accounts.map((e) => e.toJson()).toList(),
-      "pagination": pagination?.toJson()
+      "pagination": pagination?.toJson(),
     };
   }
 

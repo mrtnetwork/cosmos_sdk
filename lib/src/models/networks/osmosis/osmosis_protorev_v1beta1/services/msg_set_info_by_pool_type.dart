@@ -14,22 +14,29 @@ class OsmosisProtorevMsgSetInfoByPoolType
   /// [infoByPoolType] contains information about the pool types.
   final OsmosisProtorevInfoByPoolType infoByPoolType;
 
-  const OsmosisProtorevMsgSetInfoByPoolType(
-      {this.admin, required this.infoByPoolType});
+  const OsmosisProtorevMsgSetInfoByPoolType({
+    this.admin,
+    required this.infoByPoolType,
+  });
 
   factory OsmosisProtorevMsgSetInfoByPoolType.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisProtorevMsgSetInfoByPoolType(
-        admin: decode.getField(1),
-        infoByPoolType:
-            OsmosisProtorevInfoByPoolType.deserialize(decode.getField(2)));
+      admin: decode.getField(1),
+      infoByPoolType: OsmosisProtorevInfoByPoolType.deserialize(
+        decode.getField(2),
+      ),
+    );
   }
   factory OsmosisProtorevMsgSetInfoByPoolType.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisProtorevMsgSetInfoByPoolType(
-        admin: json.as("admin"),
-        infoByPoolType: OsmosisProtorevInfoByPoolType.fromJson(
-            json.asMap("info_by_pool_type")));
+      admin: json.as("admin"),
+      infoByPoolType: OsmosisProtorevInfoByPoolType.fromJson(
+        json.asMap("info_by_pool_type"),
+      ),
+    );
   }
 
   @override
@@ -49,7 +56,8 @@ class OsmosisProtorevMsgSetInfoByPoolType
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        OsmosisProtorevV1beta1Types.msgSetInfoByPoolTypeResponse);
+      OsmosisProtorevV1beta1Types.msgSetInfoByPoolTypeResponse,
+    );
   }
 
   @override

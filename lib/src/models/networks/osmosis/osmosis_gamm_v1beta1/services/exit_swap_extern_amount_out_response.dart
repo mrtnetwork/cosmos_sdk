@@ -5,10 +5,12 @@ class OsmosisGammMsgExitSwapExternAmountOutResponse extends CosmosMessage {
   final BigInt shareInAmount;
   const OsmosisGammMsgExitSwapExternAmountOutResponse(this.shareInAmount);
   factory OsmosisGammMsgExitSwapExternAmountOutResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisGammMsgExitSwapExternAmountOutResponse(
-        BigInt.parse(decode.getField(1)));
+      BigInt.parse(decode.getField(1)),
+    );
   }
 
   @override

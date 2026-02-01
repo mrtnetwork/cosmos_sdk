@@ -7,11 +7,12 @@ class IbcLightClientsWasmMsgStoreCodeResponse extends CosmosMessage {
   /// checksum is the sha256 hash of the stored code
   final List<int>? checksum;
   IbcLightClientsWasmMsgStoreCodeResponse({List<int>? checksum})
-      : checksum = BytesUtils.tryToBytes(checksum, unmodifiable: true);
+    : checksum = BytesUtils.tryToBytes(checksum, unmodifiable: true);
   factory IbcLightClientsWasmMsgStoreCodeResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcLightClientsWasmMsgStoreCodeResponse(
-        checksum: decode.getField(1));
+      checksum: decode.getField(1),
+    );
   }
 
   @override

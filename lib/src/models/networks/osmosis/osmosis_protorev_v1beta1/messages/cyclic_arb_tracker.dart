@@ -10,28 +10,35 @@ class OsmosisProtorevRouteCyclicArbTracker extends CosmosMessage {
 
   final BigInt? heightAccountingStartsFrom;
 
-  OsmosisProtorevRouteCyclicArbTracker(
-      {required List<Coin> cyclicArb, this.heightAccountingStartsFrom})
-      : cyclicArb = cyclicArb.immutable;
+  OsmosisProtorevRouteCyclicArbTracker({
+    required List<Coin> cyclicArb,
+    this.heightAccountingStartsFrom,
+  }) : cyclicArb = cyclicArb.immutable;
 
   factory OsmosisProtorevRouteCyclicArbTracker.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisProtorevRouteCyclicArbTracker(
-        cyclicArb: decode
-            .getFields<List<int>>(1)
-            .map((e) => Coin.deserialize(e))
-            .toList(),
-        heightAccountingStartsFrom: decode.getField(2));
+      cyclicArb:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
+      heightAccountingStartsFrom: decode.getField(2),
+    );
   }
   factory OsmosisProtorevRouteCyclicArbTracker.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisProtorevRouteCyclicArbTracker(
-        cyclicArb: (json["cyclic_arb"] as List?)
-                ?.map((e) => Coin.fromJson(e))
-                .toList() ??
-            <Coin>[],
-        heightAccountingStartsFrom:
-            BigintUtils.tryParse(json["height_accounting_starts_from"]));
+      cyclicArb:
+          (json["cyclic_arb"] as List?)
+              ?.map((e) => Coin.fromJson(e))
+              .toList() ??
+          <Coin>[],
+      heightAccountingStartsFrom: BigintUtils.tryParse(
+        json["height_accounting_starts_from"],
+      ),
+    );
   }
 
   @override
@@ -41,7 +48,7 @@ class OsmosisProtorevRouteCyclicArbTracker extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "height_accounting_starts_from": heightAccountingStartsFrom?.toString(),
-      "cyclic_arb": cyclicArb.map((e) => e.toJson()).toList()
+      "cyclic_arb": cyclicArb.map((e) => e.toJson()).toList(),
     };
   }
 

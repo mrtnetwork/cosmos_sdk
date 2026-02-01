@@ -29,11 +29,11 @@ class TendermintRequestAbciQuery<Response>
 
   @override
   Map<String, String?> get parameters => {
-        "path": '''"${request.typeUrl.query!}"''',
-        "data": BytesUtils.toHexString(request.toBuffer(), prefix: "0x"),
-        "height": height?.toString(),
-        "prove": prove?.toString()
-      };
+    "path": '''"${request.typeUrl.query!}"''',
+    "data": BytesUtils.toHexString(request.toBuffer(), prefix: "0x"),
+    "height": height?.toString(),
+    "prove": prove?.toString(),
+  };
   @override
   Response onResonse(Map<String, dynamic> result) {
     final response = ABCIResponse.fromJson(result["response"]);

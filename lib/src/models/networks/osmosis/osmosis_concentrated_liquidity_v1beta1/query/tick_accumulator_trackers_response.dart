@@ -9,41 +9,49 @@ class OsmosisConcentratedLiquidityTickAccumulatorTrackersResponse
   final List<DecCoin> spreadRewardGrowthOppositeDirectionOfLastTraversal;
   final List<OsmosisConcentratedLiquidityUptimeTracker> uptimeTrackers;
 
-  OsmosisConcentratedLiquidityTickAccumulatorTrackersResponse(
-      {required List<DecCoin>
-          spreadRewardGrowthOppositeDirectionOfLastTraversal,
-      required List<OsmosisConcentratedLiquidityUptimeTracker> uptimeTrackers})
-      : spreadRewardGrowthOppositeDirectionOfLastTraversal =
-            spreadRewardGrowthOppositeDirectionOfLastTraversal.immutable,
-        uptimeTrackers = uptimeTrackers.immutable;
+  OsmosisConcentratedLiquidityTickAccumulatorTrackersResponse({
+    required List<DecCoin> spreadRewardGrowthOppositeDirectionOfLastTraversal,
+    required List<OsmosisConcentratedLiquidityUptimeTracker> uptimeTrackers,
+  }) : spreadRewardGrowthOppositeDirectionOfLastTraversal =
+           spreadRewardGrowthOppositeDirectionOfLastTraversal.immutable,
+       uptimeTrackers = uptimeTrackers.immutable;
   factory OsmosisConcentratedLiquidityTickAccumulatorTrackersResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityTickAccumulatorTrackersResponse(
-        spreadRewardGrowthOppositeDirectionOfLastTraversal: decode
-            .getFields<List<int>>(1)
-            .map((e) => DecCoin.deserialize(e))
-            .toList(),
-        uptimeTrackers: decode
-            .getFields<List<int>>(2)
-            .map(
-                (e) => OsmosisConcentratedLiquidityUptimeTracker.deserialize(e))
-            .toList());
+      spreadRewardGrowthOppositeDirectionOfLastTraversal:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => DecCoin.deserialize(e))
+              .toList(),
+      uptimeTrackers:
+          decode
+              .getFields<List<int>>(2)
+              .map(
+                (e) => OsmosisConcentratedLiquidityUptimeTracker.deserialize(e),
+              )
+              .toList(),
+    );
   }
   factory OsmosisConcentratedLiquidityTickAccumulatorTrackersResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityTickAccumulatorTrackersResponse(
-        spreadRewardGrowthOppositeDirectionOfLastTraversal:
-            (json["spread_reward_growth_opposite_direction_of_last_traversal"]
-                        as List?)
-                    ?.map((e) => DecCoin.fromJson(e))
-                    .toList() ??
-                <DecCoin>[],
-        uptimeTrackers: (json["uptime_trackers"] as List?)
-                ?.map((e) =>
-                    OsmosisConcentratedLiquidityUptimeTracker.fromJson(e))
-                .toList() ??
-            <OsmosisConcentratedLiquidityUptimeTracker>[]);
+      spreadRewardGrowthOppositeDirectionOfLastTraversal:
+          (json["spread_reward_growth_opposite_direction_of_last_traversal"]
+                  as List?)
+              ?.map((e) => DecCoin.fromJson(e))
+              .toList() ??
+          <DecCoin>[],
+      uptimeTrackers:
+          (json["uptime_trackers"] as List?)
+              ?.map(
+                (e) => OsmosisConcentratedLiquidityUptimeTracker.fromJson(e),
+              )
+              .toList() ??
+          <OsmosisConcentratedLiquidityUptimeTracker>[],
+    );
   }
 
   @override
@@ -56,7 +64,7 @@ class OsmosisConcentratedLiquidityTickAccumulatorTrackersResponse
           spreadRewardGrowthOppositeDirectionOfLastTraversal
               .map((e) => e.toJson())
               .toList(),
-      "uptime_trackers": uptimeTrackers.map((e) => e.toJson()).toList()
+      "uptime_trackers": uptimeTrackers.map((e) => e.toJson()).toList(),
     };
   }
 
@@ -65,6 +73,8 @@ class OsmosisConcentratedLiquidityTickAccumulatorTrackersResponse
       OsmosisConcentratedLiquidityV1beta1Types.tickAccumulatorTrackersResponse;
 
   @override
-  List get values =>
-      [spreadRewardGrowthOppositeDirectionOfLastTraversal, uptimeTrackers];
+  List get values => [
+    spreadRewardGrowthOppositeDirectionOfLastTraversal,
+    uptimeTrackers,
+  ];
 }

@@ -17,7 +17,7 @@ class OsmosisPoolManagerTakerFeeParams extends CosmosMessage {
   /// - community_pool: the percent of the taker fee that gets sent to the
   /// community pool.
   final OsmosisPoolManagerTakerFeeDistributionPercentage
-      osmoTakerFeeDistribution;
+  osmoTakerFeeDistribution;
 
   /// [nonOsmoTakerFeeDistribution] defines the distribution of taker fees
   /// generated in non-OSMO. As of this writing, it has two categories:
@@ -29,7 +29,7 @@ class OsmosisPoolManagerTakerFeeParams extends CosmosMessage {
   /// swapped to the community_pool_denom_to_swap_non_whitelisted_assets_to and
   /// then sent to the community pool as that denom.
   final OsmosisPoolManagerTakerFeeDistributionPercentage
-      nonOsmoTakerFeeDistribution;
+  nonOsmoTakerFeeDistribution;
 
   /// [adminAddresses] is a list of addresses that are allowed to set and remove
   /// custom taker fees for denom pairs. Governance also has the ability to set
@@ -51,42 +51,48 @@ class OsmosisPoolManagerTakerFeeParams extends CosmosMessage {
   /// In the future, we will charge a reduced taker fee instead of no fee at all.
   final List<String>? reducedFeeWhitelist;
 
-  OsmosisPoolManagerTakerFeeParams(
-      {required this.defaultTakerFee,
-      required this.osmoTakerFeeDistribution,
-      required this.nonOsmoTakerFeeDistribution,
-      List<String>? adminAddresses,
-      this.communityPoolDenomToSwapNonWhitelistedAssetsTo,
-      List<String>? reducedFeeWhitelist})
-      : adminAddresses = adminAddresses?.emptyAsNull?.immutable,
-        reducedFeeWhitelist = reducedFeeWhitelist?.emptyAsNull?.immutable;
+  OsmosisPoolManagerTakerFeeParams({
+    required this.defaultTakerFee,
+    required this.osmoTakerFeeDistribution,
+    required this.nonOsmoTakerFeeDistribution,
+    List<String>? adminAddresses,
+    this.communityPoolDenomToSwapNonWhitelistedAssetsTo,
+    List<String>? reducedFeeWhitelist,
+  }) : adminAddresses = adminAddresses?.emptyAsNull?.immutable,
+       reducedFeeWhitelist = reducedFeeWhitelist?.emptyAsNull?.immutable;
   factory OsmosisPoolManagerTakerFeeParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolManagerTakerFeeParams(
-        defaultTakerFee: decode.getField(1),
-        osmoTakerFeeDistribution:
-            OsmosisPoolManagerTakerFeeDistributionPercentage.deserialize(
-                decode.getField(2)),
-        nonOsmoTakerFeeDistribution:
-            OsmosisPoolManagerTakerFeeDistributionPercentage.deserialize(
-                decode.getField(3)),
-        adminAddresses: decode.getFields<String>(4),
-        communityPoolDenomToSwapNonWhitelistedAssetsTo: decode.getField(5),
-        reducedFeeWhitelist: decode.getFields<String>(6));
+      defaultTakerFee: decode.getField(1),
+      osmoTakerFeeDistribution:
+          OsmosisPoolManagerTakerFeeDistributionPercentage.deserialize(
+            decode.getField(2),
+          ),
+      nonOsmoTakerFeeDistribution:
+          OsmosisPoolManagerTakerFeeDistributionPercentage.deserialize(
+            decode.getField(3),
+          ),
+      adminAddresses: decode.getFields<String>(4),
+      communityPoolDenomToSwapNonWhitelistedAssetsTo: decode.getField(5),
+      reducedFeeWhitelist: decode.getFields<String>(6),
+    );
   }
   factory OsmosisPoolManagerTakerFeeParams.fromJson(Map<String, dynamic> json) {
     return OsmosisPoolManagerTakerFeeParams(
-        defaultTakerFee: json["default_taker_fee"],
-        osmoTakerFeeDistribution:
-            OsmosisPoolManagerTakerFeeDistributionPercentage.fromJson(
-                json["osmo_taker_fee_distribution"]),
-        nonOsmoTakerFeeDistribution:
-            OsmosisPoolManagerTakerFeeDistributionPercentage.fromJson(
-                json["non_osmo_taker_fee_distribution"]),
-        adminAddresses: (json["admin_addresses"] as List?)?.cast(),
-        communityPoolDenomToSwapNonWhitelistedAssetsTo:
-            json["community_pool_denom_to_swap_non_whitelisted_assets_to"],
-        reducedFeeWhitelist: (json["reduced_fee_whitelist"] as List?)?.cast());
+      defaultTakerFee: json["default_taker_fee"],
+      osmoTakerFeeDistribution:
+          OsmosisPoolManagerTakerFeeDistributionPercentage.fromJson(
+            json["osmo_taker_fee_distribution"],
+          ),
+      nonOsmoTakerFeeDistribution:
+          OsmosisPoolManagerTakerFeeDistributionPercentage.fromJson(
+            json["non_osmo_taker_fee_distribution"],
+          ),
+      adminAddresses: (json["admin_addresses"] as List?)?.cast(),
+      communityPoolDenomToSwapNonWhitelistedAssetsTo:
+          json["community_pool_denom_to_swap_non_whitelisted_assets_to"],
+      reducedFeeWhitelist: (json["reduced_fee_whitelist"] as List?)?.cast(),
+    );
   }
 
   @override
@@ -101,7 +107,7 @@ class OsmosisPoolManagerTakerFeeParams extends CosmosMessage {
       "admin_addresses": adminAddresses,
       "community_pool_denom_to_swap_non_whitelisted_assets_to":
           communityPoolDenomToSwapNonWhitelistedAssetsTo,
-      "reduced_fee_whitelist": reducedFeeWhitelist
+      "reduced_fee_whitelist": reducedFeeWhitelist,
     };
   }
 
@@ -110,11 +116,11 @@ class OsmosisPoolManagerTakerFeeParams extends CosmosMessage {
 
   @override
   List get values => [
-        defaultTakerFee,
-        osmoTakerFeeDistribution,
-        nonOsmoTakerFeeDistribution,
-        adminAddresses,
-        communityPoolDenomToSwapNonWhitelistedAssetsTo,
-        reducedFeeWhitelist
-      ];
+    defaultTakerFee,
+    osmoTakerFeeDistribution,
+    nonOsmoTakerFeeDistribution,
+    adminAddresses,
+    communityPoolDenomToSwapNonWhitelistedAssetsTo,
+    reducedFeeWhitelist,
+  ];
 }

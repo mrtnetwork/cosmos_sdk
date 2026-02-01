@@ -30,7 +30,8 @@ class OsmosisSuperfluidQueryParamsRequest extends CosmosMessage
 
   @override
   OsmosisSuperfluidQueryParamsResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisSuperfluidQueryParamsResponse.fromJson(json);
   }
 

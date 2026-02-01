@@ -11,8 +11,10 @@ class IbcChannelState implements CosmosEnum {
   const IbcChannelState(this.name, this.value);
 
   /// Default State
-  static const IbcChannelState uninitializedUnspecified =
-      IbcChannelState("STATE_UNINITIALIZED_UNSPECIFIED", 0);
+  static const IbcChannelState uninitializedUnspecified = IbcChannelState(
+    "STATE_UNINITIALIZED_UNSPECIFIED",
+    0,
+  );
 
   /// A channel has just started the opening handshake.
   static const IbcChannelState init = IbcChannelState("STATE_INIT", 1);
@@ -32,8 +34,10 @@ class IbcChannelState implements CosmosEnum {
   static const IbcChannelState flushing = IbcChannelState("STATE_FLUSHING", 5);
 
   /// A channel has just completed flushing any in-flight packets.
-  static const IbcChannelState flushComplete =
-      IbcChannelState("STATE_FLUSHCOMPLETE", 6);
+  static const IbcChannelState flushComplete = IbcChannelState(
+    "STATE_FLUSHCOMPLETE",
+    6,
+  );
   static const List<IbcChannelState> values = [
     uninitializedUnspecified,
     init,
@@ -41,14 +45,17 @@ class IbcChannelState implements CosmosEnum {
     open,
     closed,
     flushComplete,
-    flushComplete
+    flushComplete,
   ];
   static IbcChannelState fromValue(Object? value) {
     return values.firstWhere(
       (element) => element.value == value || element.name == value,
-      orElse: () => throw DartCosmosSdkPluginException(
-          "No matching element found for the given value.",
-          details: {"value": value}),
+      orElse:
+          () =>
+              throw DartCosmosSdkPluginException(
+                "No matching element found for the given value.",
+                details: {"value": value},
+              ),
     );
   }
 

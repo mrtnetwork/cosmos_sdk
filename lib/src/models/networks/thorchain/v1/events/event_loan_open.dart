@@ -9,24 +9,26 @@ class ThorchainEventLoanOpen extends CosmosMessage {
   final String? owner;
   final ThorchainAsset targetAsset;
   final String? txId;
-  const ThorchainEventLoanOpen(
-      {required this.collateralDeposited,
-      required this.collateralAsset,
-      required this.collateralizationRatio,
-      required this.debtIssued,
-      this.owner,
-      required this.targetAsset,
-      this.txId});
+  const ThorchainEventLoanOpen({
+    required this.collateralDeposited,
+    required this.collateralAsset,
+    required this.collateralizationRatio,
+    required this.debtIssued,
+    this.owner,
+    required this.targetAsset,
+    this.txId,
+  });
   factory ThorchainEventLoanOpen.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainEventLoanOpen(
-        collateralDeposited: BigInt.parse(decode.getField(1)),
-        collateralAsset: ThorchainAsset.deserialize(decode.getField(2)),
-        collateralizationRatio: BigInt.parse(decode.getField(3)),
-        debtIssued: BigInt.parse(decode.getField(4)),
-        owner: decode.getField(5),
-        targetAsset: ThorchainAsset.deserialize(decode.getField(6)),
-        txId: decode.getField(7));
+      collateralDeposited: BigInt.parse(decode.getField(1)),
+      collateralAsset: ThorchainAsset.deserialize(decode.getField(2)),
+      collateralizationRatio: BigInt.parse(decode.getField(3)),
+      debtIssued: BigInt.parse(decode.getField(4)),
+      owner: decode.getField(5),
+      targetAsset: ThorchainAsset.deserialize(decode.getField(6)),
+      txId: decode.getField(7),
+    );
   }
 
   @override
@@ -41,7 +43,7 @@ class ThorchainEventLoanOpen extends CosmosMessage {
       "debt_issued": debtIssued.toString(),
       "owner": owner,
       "target_asset": targetAsset.toJson(),
-      "tx_id": txId
+      "tx_id": txId,
     };
   }
 
@@ -50,12 +52,12 @@ class ThorchainEventLoanOpen extends CosmosMessage {
 
   @override
   List get values => [
-        collateralDeposited.toString(),
-        collateralAsset,
-        collateralizationRatio.toString(),
-        debtIssued.toString(),
-        owner,
-        targetAsset,
-        txId
-      ];
+    collateralDeposited.toString(),
+    collateralAsset,
+    collateralizationRatio.toString(),
+    debtIssued.toString(),
+    owner,
+    targetAsset,
+    txId,
+  ];
 }

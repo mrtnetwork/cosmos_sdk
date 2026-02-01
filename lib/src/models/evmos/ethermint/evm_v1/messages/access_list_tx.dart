@@ -40,40 +40,42 @@ class EvmosEthermintEVMV1AccessListTx extends CosmosMessage {
 
   /// s define the signature value
   final List<int> s;
-  EvmosEthermintEVMV1AccessListTx(
-      {required this.chainId,
-      required this.nonce,
-      required this.gasPrice,
-      required this.gas,
-      required this.to,
-      required this.value,
-      required List<int>? data,
-      required List<EvmosEthermintEVMV1AccessTuple>? accesses,
-      required List<int> v,
-      required List<int> r,
-      required List<int> s})
-      : data = data?.asImmutableBytes,
-        v = v.asImmutableBytes,
-        r = r.asImmutableBytes,
-        s = s.asImmutableBytes,
-        accesses = accesses?.immutable;
+  EvmosEthermintEVMV1AccessListTx({
+    required this.chainId,
+    required this.nonce,
+    required this.gasPrice,
+    required this.gas,
+    required this.to,
+    required this.value,
+    required List<int>? data,
+    required List<EvmosEthermintEVMV1AccessTuple>? accesses,
+    required List<int> v,
+    required List<int> r,
+    required List<int> s,
+  }) : data = data?.asImmutableBytes,
+       v = v.asImmutableBytes,
+       r = r.asImmutableBytes,
+       s = s.asImmutableBytes,
+       accesses = accesses?.immutable;
   factory EvmosEthermintEVMV1AccessListTx.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosEthermintEVMV1AccessListTx(
-        chainId: decode.getField(1),
-        nonce: decode.getField(2),
-        gasPrice: decode.getField(3),
-        gas: decode.getField(4),
-        to: decode.getField(5),
-        value: decode.getField(6),
-        data: decode.getField(7),
-        accesses: decode
-            .getFields<List<int>>(8)
-            .map((e) => EvmosEthermintEVMV1AccessTuple.deserialize(e))
-            .toList(),
-        v: decode.getField(9),
-        r: decode.getField(10),
-        s: decode.getField(11));
+      chainId: decode.getField(1),
+      nonce: decode.getField(2),
+      gasPrice: decode.getField(3),
+      gas: decode.getField(4),
+      to: decode.getField(5),
+      value: decode.getField(6),
+      data: decode.getField(7),
+      accesses:
+          decode
+              .getFields<List<int>>(8)
+              .map((e) => EvmosEthermintEVMV1AccessTuple.deserialize(e))
+              .toList(),
+      v: decode.getField(9),
+      r: decode.getField(10),
+      s: decode.getField(11),
+    );
   }
 
   factory EvmosEthermintEVMV1AccessListTx.fromJson(Map<String, dynamic> json) {
@@ -85,10 +87,11 @@ class EvmosEthermintEVMV1AccessListTx extends CosmosMessage {
       to: json.as("to"),
       value: json.as("value"),
       data: json.asBytes("data"),
-      accesses: json
-          .asListOfMap("accesses")
-          ?.map(EvmosEthermintEVMV1AccessTuple.fromJson)
-          .toList(),
+      accesses:
+          json
+              .asListOfMap("accesses")
+              ?.map(EvmosEthermintEVMV1AccessTuple.fromJson)
+              .toList(),
       v: json.asBytes("v", throwOnNull: true)!,
       r: json.asBytes("r", throwOnNull: true)!,
       s: json.asBytes("s", throwOnNull: true)!,
@@ -119,16 +122,16 @@ class EvmosEthermintEVMV1AccessListTx extends CosmosMessage {
 
   @override
   List get values => [
-        chainId,
-        nonce,
-        gasPrice,
-        gas,
-        to,
-        value,
-        data,
-        accesses?.emptyAsNull,
-        v,
-        r,
-        s
-      ];
+    chainId,
+    nonce,
+    gasPrice,
+    gas,
+    to,
+    value,
+    data,
+    accesses?.emptyAsNull,
+    v,
+    r,
+    s,
+  ];
 }

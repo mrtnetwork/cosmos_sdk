@@ -7,13 +7,14 @@ class ThorchainMsgRagnarok extends CosmosMessage {
   final BigInt? blockHeight;
   final List<int>? signer;
   ThorchainMsgRagnarok({required this.tx, this.blockHeight, List<int>? signer})
-      : signer = BytesUtils.tryToBytes(signer, unmodifiable: true);
+    : signer = BytesUtils.tryToBytes(signer, unmodifiable: true);
   factory ThorchainMsgRagnarok.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainMsgRagnarok(
-        tx: ThorchainObservedTx.deserialize(decode.getField(1)),
-        blockHeight: decode.getField(2),
-        signer: decode.getField(3));
+      tx: ThorchainObservedTx.deserialize(decode.getField(1)),
+      blockHeight: decode.getField(2),
+      signer: decode.getField(3),
+    );
   }
 
   @override
@@ -24,7 +25,7 @@ class ThorchainMsgRagnarok extends CosmosMessage {
     return {
       "tx": tx.toJson(),
       "block_height": blockHeight?.toString(),
-      "signer": BytesUtils.tryToHexString(signer)
+      "signer": BytesUtils.tryToHexString(signer),
     };
   }
 

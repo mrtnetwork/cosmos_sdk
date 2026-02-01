@@ -31,7 +31,8 @@ class OsmosisSuperfluidAssetMultiplierRequest extends CosmosMessage
 
   @override
   OsmosisSuperfluidAssetMultiplierResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisSuperfluidAssetMultiplierResponse.fromJson(json);
   }
 

@@ -12,8 +12,10 @@ class QueryDelegatorValidatorsRequest extends CosmosMessage
 
   /// pagination defines an optional pagination for the request.
   final PageRequest? pagination;
-  const QueryDelegatorValidatorsRequest(
-      {required this.delegatorAddr, this.pagination});
+  const QueryDelegatorValidatorsRequest({
+    required this.delegatorAddr,
+    this.pagination,
+  });
 
   @override
   List<int> get fieldIds => [1, 2];
@@ -22,7 +24,7 @@ class QueryDelegatorValidatorsRequest extends CosmosMessage
   Map<String, dynamic> toJson() {
     return {
       "delegator_addr": delegatorAddr.address,
-      "pagination": pagination?.toJson()
+      "pagination": pagination?.toJson(),
     };
   }
 

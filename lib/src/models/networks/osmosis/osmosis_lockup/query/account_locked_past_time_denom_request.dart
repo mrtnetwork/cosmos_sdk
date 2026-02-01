@@ -7,15 +7,20 @@ class OsmosisLockupAccountLockedPastTimeDenomRequest extends CosmosMessage
   final String owner;
   final ProtobufTimestamp timestamp;
   final String? denom;
-  const OsmosisLockupAccountLockedPastTimeDenomRequest(
-      {required this.owner, required this.timestamp, this.denom});
+  const OsmosisLockupAccountLockedPastTimeDenomRequest({
+    required this.owner,
+    required this.timestamp,
+    this.denom,
+  });
   factory OsmosisLockupAccountLockedPastTimeDenomRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisLockupAccountLockedPastTimeDenomRequest(
-        owner: decode.getField(1),
-        timestamp: ProtobufTimestamp.deserialize(decode.getField(2)),
-        denom: decode.getField(3));
+      owner: decode.getField(1),
+      timestamp: ProtobufTimestamp.deserialize(decode.getField(2)),
+      denom: decode.getField(3),
+    );
   }
   @override
   List<int> get fieldIds => [1, 2, 3];
@@ -38,13 +43,16 @@ class OsmosisLockupAccountLockedPastTimeDenomRequest extends CosmosMessage
 
   @override
   OsmosisLockupAccountLockedPastTimeDenomResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisLockupAccountLockedPastTimeDenomResponse.fromJson(json);
   }
 
   @override
-  Map<String, String?> get queryParameters =>
-      {"denom": denom, "timestamp": timestamp.toString()};
+  Map<String, String?> get queryParameters => {
+    "denom": denom,
+    "timestamp": timestamp.toString(),
+  };
 
   @override
   List<String> get pathParameters => [owner];

@@ -16,15 +16,17 @@ class MsgChannelOpenInit extends IbcService<MsgChannelOpenInitResponse> {
   factory MsgChannelOpenInit.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgChannelOpenInit(
-        portId: decode.getField(1),
-        channel: IbcChannelChannel.deserialize(decode.getField(2)),
-        signer: decode.getField(3));
+      portId: decode.getField(1),
+      channel: IbcChannelChannel.deserialize(decode.getField(2)),
+      signer: decode.getField(3),
+    );
   }
   factory MsgChannelOpenInit.fromJson(Map<String, dynamic> json) {
     return MsgChannelOpenInit(
-        portId: json.as("port_id"),
-        channel: IbcChannelChannel.fromJson(json.asMap("channel")),
-        signer: json.as("signer"));
+      portId: json.as("port_id"),
+      channel: IbcChannelChannel.fromJson(json.asMap("channel")),
+      signer: json.as("signer"),
+    );
   }
 
   @override

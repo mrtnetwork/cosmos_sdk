@@ -20,10 +20,13 @@ class IbcLightClientsWasmMsgMigrateContract
 
   /// the json encoded message to be passed to the contract on migration
   final List<int>? msg;
-  IbcLightClientsWasmMsgMigrateContract(
-      {this.signer, this.clientId, List<int>? checksum, List<int>? msg})
-      : checksum = BytesUtils.tryToBytes(checksum, unmodifiable: true),
-        msg = BytesUtils.tryToBytes(msg, unmodifiable: true);
+  IbcLightClientsWasmMsgMigrateContract({
+    this.signer,
+    this.clientId,
+    List<int>? checksum,
+    List<int>? msg,
+  }) : checksum = BytesUtils.tryToBytes(checksum, unmodifiable: true),
+       msg = BytesUtils.tryToBytes(msg, unmodifiable: true);
   factory IbcLightClientsWasmMsgMigrateContract.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcLightClientsWasmMsgMigrateContract(
@@ -34,7 +37,8 @@ class IbcLightClientsWasmMsgMigrateContract
     );
   }
   factory IbcLightClientsWasmMsgMigrateContract.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return IbcLightClientsWasmMsgMigrateContract(
       signer: json.as("signer"),
       clientId: json.as("client_id"),
@@ -52,7 +56,7 @@ class IbcLightClientsWasmMsgMigrateContract
       "signer": signer,
       "client_id": clientId,
       "checksum": BytesUtils.tryToHexString(checksum),
-      "msg": BytesUtils.tryToHexString(msg)
+      "msg": BytesUtils.tryToHexString(msg),
     };
   }
 
@@ -68,6 +72,7 @@ class IbcLightClientsWasmMsgMigrateContract
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        IbcTypes.ibcLightClientsWasmMsgMigrateContractResponse);
+      IbcTypes.ibcLightClientsWasmMsgMigrateContractResponse,
+    );
   }
 }

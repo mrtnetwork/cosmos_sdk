@@ -8,18 +8,22 @@ class InjectiveTypesV1beta1EthAccount extends CosmosBaseAccount {
   @override
   final BaseAccount baseAccount;
   final String codeHash;
-  const InjectiveTypesV1beta1EthAccount(
-      {required this.baseAccount, required this.codeHash});
+  const InjectiveTypesV1beta1EthAccount({
+    required this.baseAccount,
+    required this.codeHash,
+  });
   factory InjectiveTypesV1beta1EthAccount.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return InjectiveTypesV1beta1EthAccount(
-        baseAccount: BaseAccount.deserialize(decode.getField(1)),
-        codeHash: CosmosUtils.toBase64(decode.getField(2)));
+      baseAccount: BaseAccount.deserialize(decode.getField(1)),
+      codeHash: CosmosUtils.toBase64(decode.getField(2)),
+    );
   }
   factory InjectiveTypesV1beta1EthAccount.fromJson(Map<String, dynamic> json) {
     return InjectiveTypesV1beta1EthAccount(
-        baseAccount: BaseAccount.fromJson(json["base_account"]),
-        codeHash: json["code_hash"]);
+      baseAccount: BaseAccount.fromJson(json["base_account"]),
+      codeHash: json["code_hash"],
+    );
   }
 
   @override

@@ -8,7 +8,7 @@ import 'package:cosmos_sdk/src/utils/utils.dart';
 class TxEncodeAminoResponse extends CosmosMessage {
   final List<int> aminoBinary;
   TxEncodeAminoResponse({required List<int> aminoBinary})
-      : aminoBinary = BytesUtils.toBytes(aminoBinary, unmodifiable: true);
+    : aminoBinary = BytesUtils.toBytes(aminoBinary, unmodifiable: true);
   factory TxEncodeAminoResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return TxEncodeAminoResponse(aminoBinary: decode.getField(1));
@@ -16,7 +16,8 @@ class TxEncodeAminoResponse extends CosmosMessage {
 
   factory TxEncodeAminoResponse.fromJson(Map<String, dynamic> json) {
     return TxEncodeAminoResponse(
-        aminoBinary: CosmosUtils.toBytes(json["amino_binary"]));
+      aminoBinary: CosmosUtils.toBytes(json["amino_binary"]),
+    );
   }
 
   @override

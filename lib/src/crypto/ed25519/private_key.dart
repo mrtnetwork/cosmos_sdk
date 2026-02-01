@@ -16,7 +16,8 @@ class CosmosED25519PrivateKey extends CosmosPrivateKey {
   factory CosmosED25519PrivateKey.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmosED25519PrivateKey._(
-        Ed25519PrivateKey.fromBytes(decode.getField(1)));
+      Ed25519PrivateKey.fromBytes(decode.getField(1)),
+    );
   }
   factory CosmosED25519PrivateKey.fromHex(String keyHex) {
     return CosmosED25519PrivateKey.fromBytes(BytesUtils.fromHexString(keyHex));

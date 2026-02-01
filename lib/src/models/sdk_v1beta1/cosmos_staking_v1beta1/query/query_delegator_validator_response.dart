@@ -10,11 +10,13 @@ class QueryDelegatorValidatorResponse extends CosmosMessage {
   factory QueryDelegatorValidatorResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryDelegatorValidatorResponse(
-        StakingValidator.deserialize(decode.getField(1)));
+      StakingValidator.deserialize(decode.getField(1)),
+    );
   }
   factory QueryDelegatorValidatorResponse.fromJson(Map<String, dynamic> json) {
     return QueryDelegatorValidatorResponse(
-        StakingValidator.fromJson(json["validator"]));
+      StakingValidator.fromJson(json["validator"]),
+    );
   }
   @override
   List<int> get fieldIds => [1];

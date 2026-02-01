@@ -11,7 +11,8 @@ class EvmosEthermintEVMV1QueryBalanceResponse extends CosmosMessage {
     return EvmosEthermintEVMV1QueryBalanceResponse(decode.getField(1));
   }
   factory EvmosEthermintEVMV1QueryBalanceResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return EvmosEthermintEVMV1QueryBalanceResponse(json["balance"]);
   }
 

@@ -6,7 +6,8 @@ import 'package:cosmos_sdk/src/utils/quick.dart';
 
 /// MsgConvertVestingAccount defines a message that enables converting a vesting account to an eth account
 class EvmosVestingV2MsgConvertVestingAccount
-    extends EvmosService<EmptyServiceRequestResponse> with AminoMessage {
+    extends EvmosService<EmptyServiceRequestResponse>
+    with AminoMessage {
   /// vestingAddress is the address of the vesting account to convert
   final String? vestingAddress;
 
@@ -19,9 +20,11 @@ class EvmosVestingV2MsgConvertVestingAccount
     );
   }
   factory EvmosVestingV2MsgConvertVestingAccount.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return EvmosVestingV2MsgConvertVestingAccount(
-        vestingAddress: json.as("vesting_address"));
+      vestingAddress: json.as("vesting_address"),
+    );
   }
 
   @override
@@ -43,6 +46,7 @@ class EvmosVestingV2MsgConvertVestingAccount
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        EvmosErc20V1Types.msgConvertVestingAccountResponse);
+      EvmosErc20V1Types.msgConvertVestingAccountResponse,
+    );
   }
 }

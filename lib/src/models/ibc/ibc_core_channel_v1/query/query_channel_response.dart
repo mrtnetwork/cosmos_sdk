@@ -18,20 +18,27 @@ class QueryChannelResponse extends CosmosMessage {
   final IbcClientHeight proofHeight;
   factory QueryChannelResponse.fromJson(Map<String, dynamic> json) {
     return QueryChannelResponse(
-        channel: json["channel"] == null
-            ? null
-            : IbcChannelChannel.fromJson(json["channel"]),
-        proof: CosmosUtils.tryToBytes(json["proof"]),
-        proofHeight: IbcClientHeight.fromJson(json["proof_height"]));
+      channel:
+          json["channel"] == null
+              ? null
+              : IbcChannelChannel.fromJson(json["channel"]),
+      proof: CosmosUtils.tryToBytes(json["proof"]),
+      proofHeight: IbcClientHeight.fromJson(json["proof_height"]),
+    );
   }
-  QueryChannelResponse(
-      {this.channel, List<int>? proof, required this.proofHeight})
-      : proof = BytesUtils.tryToBytes(proof, unmodifiable: true);
+  QueryChannelResponse({
+    this.channel,
+    List<int>? proof,
+    required this.proofHeight,
+  }) : proof = BytesUtils.tryToBytes(proof, unmodifiable: true);
   factory QueryChannelResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryChannelResponse(
-      channel: decode.getResult(1)?.to<IbcChannelChannel, List<int>>(
-          (e) => IbcChannelChannel.deserialize(e)),
+      channel: decode
+          .getResult(1)
+          ?.to<IbcChannelChannel, List<int>>(
+            (e) => IbcChannelChannel.deserialize(e),
+          ),
       proof: decode.getField(2),
       proofHeight: IbcClientHeight.deserialize(decode.getField(3)),
     );
@@ -45,7 +52,7 @@ class QueryChannelResponse extends CosmosMessage {
     return {
       "channel": channel?.toJson(),
       "proof": BytesUtils.tryToHexString(proof),
-      "proof_height": proofHeight.toJson()
+      "proof_height": proofHeight.toJson(),
     };
   }
 

@@ -6,22 +6,27 @@ class OsmosisPoolincentivesIncentivizedPool extends CosmosMessage {
   final BigInt? poolId;
   final ProtobufDuration lockableDuration;
   final BigInt? gaugeId;
-  OsmosisPoolincentivesIncentivizedPool(
-      {this.poolId, required this.lockableDuration, this.gaugeId});
+  OsmosisPoolincentivesIncentivizedPool({
+    this.poolId,
+    required this.lockableDuration,
+    this.gaugeId,
+  });
   factory OsmosisPoolincentivesIncentivizedPool.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolincentivesIncentivizedPool(
-        poolId: decode.getField(1),
-        lockableDuration: ProtobufDuration.deserialize(decode.getField(2)),
-        gaugeId: decode.getField(3));
+      poolId: decode.getField(1),
+      lockableDuration: ProtobufDuration.deserialize(decode.getField(2)),
+      gaugeId: decode.getField(3),
+    );
   }
   factory OsmosisPoolincentivesIncentivizedPool.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisPoolincentivesIncentivizedPool(
-        poolId: BigintUtils.tryParse(json["pool_id"]),
-        lockableDuration:
-            ProtobufDuration.fromString(json["lockable_duration"]),
-        gaugeId: BigintUtils.tryParse(json["gauge_id"]));
+      poolId: BigintUtils.tryParse(json["pool_id"]),
+      lockableDuration: ProtobufDuration.fromString(json["lockable_duration"]),
+      gaugeId: BigintUtils.tryParse(json["gauge_id"]),
+    );
   }
 
   @override
@@ -32,7 +37,7 @@ class OsmosisPoolincentivesIncentivizedPool extends CosmosMessage {
     return {
       "pool_id": poolId?.toString(),
       "lockable_duration": lockableDuration.toJson(),
-      "gauge_id": gaugeId?.toString()
+      "gauge_id": gaugeId?.toString(),
     };
   }
 

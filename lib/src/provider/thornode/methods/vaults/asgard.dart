@@ -3,8 +3,12 @@ import 'package:cosmos_sdk/src/provider/thornode/core/thorenode.dart';
 import 'package:cosmos_sdk/src/provider/thornode/models/models/vault_info.dart';
 
 /// Returns current asgard vaults.
-class ThorNodeRequestCurrentAsgardVaults extends ThorNodeRequestParam<
-    List<ThorVaultInfoResponse>, List<Map<String, dynamic>>> {
+class ThorNodeRequestCurrentAsgardVaults
+    extends
+        ThorNodeRequestParam<
+          List<ThorVaultInfoResponse>,
+          List<Map<String, dynamic>>
+        > {
   ThorNodeRequestCurrentAsgardVaults({this.height});
 
   /// optional block height, defaults to current tip

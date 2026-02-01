@@ -23,8 +23,8 @@ class ThorNodeRequestSaverDepositQuote
 
   @override
   Map<String, String?> get parameters => {
-        "height": height?.toString(),
-        "amount": amount?.toString(),
-        "asset": asset?.toString(),
-      };
+    "height": height?.toString(),
+    "amount": amount?.toString(),
+    "asset": asset?.toString(),
+  };
 }

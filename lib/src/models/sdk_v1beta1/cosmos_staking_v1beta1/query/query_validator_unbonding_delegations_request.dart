@@ -12,8 +12,10 @@ class QueryValidatorUnbondingDelegationsRequest extends CosmosMessage
 
   /// pagination defines an optional pagination for the request.
   final PageRequest? pagination;
-  const QueryValidatorUnbondingDelegationsRequest(
-      {required this.validatorAddr, this.pagination});
+  const QueryValidatorUnbondingDelegationsRequest({
+    required this.validatorAddr,
+    this.pagination,
+  });
 
   @override
   List<int> get fieldIds => [1, 2];
@@ -22,7 +24,7 @@ class QueryValidatorUnbondingDelegationsRequest extends CosmosMessage
   Map<String, dynamic> toJson() {
     return {
       "validator_addr": validatorAddr.address,
-      "pagination": pagination?.toJson()
+      "pagination": pagination?.toJson(),
     };
   }
 
@@ -40,7 +42,8 @@ class QueryValidatorUnbondingDelegationsRequest extends CosmosMessage
 
   @override
   QueryValidatorUnbondingDelegationsResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return QueryValidatorUnbondingDelegationsResponse.fromJson(json);
   }
 

@@ -2,8 +2,9 @@ import 'package:cosmos_sdk/src/provider/chain_registery/core/core.dart';
 import 'package:cosmos_sdk/src/provider/chain_registery/models/models.dart';
 import 'package:cosmos_sdk/src/provider/chain_registery/utility/utility.dart';
 
-class ChainRegistryRequestPingPubChains extends ChainRegistryRequest<
-    List<PingPubChain>, List<Map<String, dynamic>>> {
+class ChainRegistryRequestPingPubChains
+    extends
+        ChainRegistryRequest<List<PingPubChain>, List<Map<String, dynamic>>> {
   final ChainRegistryChainType chainType;
   ChainRegistryRequestPingPubChains(this.chainType);
 

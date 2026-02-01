@@ -4,10 +4,16 @@ import 'package:cosmos_sdk/src/provider/thornode/models/models/asset_liquidity_p
 
 /// Returns the liquidity provider information for an address and asset.
 class ThorNodeRequestAddressAssetLiquidityProviderInformation
-    extends ThorNodeRequestParam<AssetLiquidityProviderInformationResponse,
-        Map<String, dynamic>> {
-  ThorNodeRequestAddressAssetLiquidityProviderInformation(
-      {required this.asset, required this.address, this.height});
+    extends
+        ThorNodeRequestParam<
+          AssetLiquidityProviderInformationResponse,
+          Map<String, dynamic>
+        > {
+  ThorNodeRequestAddressAssetLiquidityProviderInformation({
+    required this.asset,
+    required this.address,
+    this.height,
+  });
 
   /// optional block height, defaults to current tip
   final BigInt? height;
@@ -28,7 +34,8 @@ class ThorNodeRequestAddressAssetLiquidityProviderInformation
 
   @override
   AssetLiquidityProviderInformationResponse onResonse(
-      Map<String, dynamic> result) {
+    Map<String, dynamic> result,
+  ) {
     return AssetLiquidityProviderInformationResponse.fromJson(result);
   }
 }

@@ -6,11 +6,13 @@ class ThorchainMsgSetVersion extends CosmosMessage {
   final String? version;
   final List<int>? signer;
   ThorchainMsgSetVersion({this.version, List<int>? signer})
-      : signer = BytesUtils.tryToBytes(signer, unmodifiable: true);
+    : signer = BytesUtils.tryToBytes(signer, unmodifiable: true);
   factory ThorchainMsgSetVersion.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainMsgSetVersion(
-        version: decode.getField(1), signer: decode.getField(2));
+      version: decode.getField(1),
+      signer: decode.getField(2),
+    );
   }
 
   @override

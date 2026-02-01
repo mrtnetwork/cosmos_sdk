@@ -7,7 +7,8 @@ class OsmosisSuperfluidQueryUnpoolWhitelistRequest extends CosmosMessage
     with QueryMessage<OsmosisSuperfluidQueryUnpoolWhitelistResponse> {
   const OsmosisSuperfluidQueryUnpoolWhitelistRequest();
   factory OsmosisSuperfluidQueryUnpoolWhitelistRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return const OsmosisSuperfluidQueryUnpoolWhitelistRequest();
   }
 
@@ -30,7 +31,8 @@ class OsmosisSuperfluidQueryUnpoolWhitelistRequest extends CosmosMessage
 
   @override
   OsmosisSuperfluidQueryUnpoolWhitelistResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisSuperfluidQueryUnpoolWhitelistResponse.fromJson(json);
   }
 

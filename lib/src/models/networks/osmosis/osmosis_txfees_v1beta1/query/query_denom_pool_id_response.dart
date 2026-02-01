@@ -10,9 +10,11 @@ class OsmosisTxfeesQueryDenomPoolIdResponse extends CosmosMessage {
     return OsmosisTxfeesQueryDenomPoolIdResponse(poolID: decode.getField(1));
   }
   factory OsmosisTxfeesQueryDenomPoolIdResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisTxfeesQueryDenomPoolIdResponse(
-        poolID: BigintUtils.tryParse(json["poolID"]));
+      poolID: BigintUtils.tryParse(json["poolID"]),
+    );
   }
 
   @override

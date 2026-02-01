@@ -16,7 +16,9 @@ class OsmosisMintWeightedAddress extends CosmosMessage {
   }
   factory OsmosisMintWeightedAddress.fromJson(Map<String, dynamic> json) {
     return OsmosisMintWeightedAddress(
-        weight: json["weight"], address: json["address"]);
+      weight: json["weight"],
+      address: json["address"],
+    );
   }
 
   @override

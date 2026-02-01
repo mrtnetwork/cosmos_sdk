@@ -19,21 +19,24 @@ class ThorchainMsgSend extends ThorchainV1Service<EmptyServiceRequestResponse> {
     return ThorchainMsgSend(
       fromAddress: CosmosBaseAddress.fromBytes(decode.getField(1)),
       toAddress: CosmosBaseAddress.fromBytes(decode.getField(2)),
-      amount: decode
-          .getFields<List<int>>(3)
-          .map((e) => Coin.deserialize(e))
-          .toList(),
+      amount:
+          decode
+              .getFields<List<int>>(3)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
     );
   }
   factory ThorchainMsgSend.fromJson(Map<String, dynamic> json) {
     return ThorchainMsgSend(
       fromAddress: CosmosBaseAddress.fromBytes(
-          json.asBytes("from_address", throwOnNull: true)!),
+        json.asBytes("from_address", throwOnNull: true)!,
+      ),
       toAddress: CosmosBaseAddress.fromBytes(
-          json.asBytes("to_address", throwOnNull: true)!),
+        json.asBytes("to_address", throwOnNull: true)!,
+      ),
       amount:
           json.asListOfMap("amount")?.map((e) => Coin.fromJson(e)).toList() ??
-              [],
+          [],
     );
   }
 
@@ -45,7 +48,7 @@ class ThorchainMsgSend extends ThorchainV1Service<EmptyServiceRequestResponse> {
     return {
       "from_address": fromAddress.address,
       "to_address": toAddress.address,
-      "amount": amount.map((e) => e.toJson()).toList()
+      "amount": amount.map((e) => e.toJson()).toList(),
     };
   }
 

@@ -9,19 +9,26 @@ class OsmosisCosmWasmContractInfoByPoolIdResponse extends CosmosMessage {
 
   /// [codeId] is the code id of the requested pool id
   final BigInt? codeId;
-  OsmosisCosmWasmContractInfoByPoolIdResponse(
-      {this.contractAddress, this.codeId});
+  OsmosisCosmWasmContractInfoByPoolIdResponse({
+    this.contractAddress,
+    this.codeId,
+  });
   factory OsmosisCosmWasmContractInfoByPoolIdResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisCosmWasmContractInfoByPoolIdResponse(
-        contractAddress: decode.getField(1), codeId: decode.getField(2));
+      contractAddress: decode.getField(1),
+      codeId: decode.getField(2),
+    );
   }
   factory OsmosisCosmWasmContractInfoByPoolIdResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisCosmWasmContractInfoByPoolIdResponse(
-        codeId: BigintUtils.tryParse(json["code_id"]),
-        contractAddress: json["contract_address"]);
+      codeId: BigintUtils.tryParse(json["code_id"]),
+      contractAddress: json["contract_address"],
+    );
   }
 
   @override

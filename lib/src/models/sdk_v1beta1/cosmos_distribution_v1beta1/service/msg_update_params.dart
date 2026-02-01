@@ -56,6 +56,7 @@ class DistributionMsgUpdateParams
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        DistributionV1beta1Types.distributionMsgUpdateParamsResponse);
+      DistributionV1beta1Types.distributionMsgUpdateParamsResponse,
+    );
   }
 }

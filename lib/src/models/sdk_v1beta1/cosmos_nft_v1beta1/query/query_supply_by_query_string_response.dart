@@ -12,9 +12,11 @@ class QueryNFTSupplyByQueryStringResponse extends CosmosMessage {
     return QueryNFTSupplyByQueryStringResponse(amount: decode.getField(1));
   }
   factory QueryNFTSupplyByQueryStringResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return QueryNFTSupplyByQueryStringResponse(
-        amount: BigintUtils.tryParse(json["amount"]));
+      amount: BigintUtils.tryParse(json["amount"]),
+    );
   }
 
   @override

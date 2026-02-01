@@ -17,7 +17,8 @@ class IbcTransferV2QueryDenomResponse extends CosmosMessage {
   factory IbcTransferV2QueryDenomResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcTransferV2QueryDenomResponse(
-        denom: IbcTransferV2Denom.deserialize(decode.getField(1)));
+      denom: IbcTransferV2Denom.deserialize(decode.getField(1)),
+    );
   }
 
   @override

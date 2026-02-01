@@ -18,26 +18,28 @@ class GetBlockByHeightResponse extends CosmosMessage {
   const GetBlockByHeightResponse({this.blockID, this.block, this.sdkBlock});
   factory GetBlockByHeightResponse.fromJson(Map<String, dynamic> json) {
     return GetBlockByHeightResponse(
-        block: json["block"] == null ? null : Block.fromJson(json["block"]),
-        blockID: json["block_id"] == null
-            ? null
-            : BlockID.fromJson(json["block_id"]),
-        sdkBlock: json["sdk_block"] == null
-            ? null
-            : CosmosBlock.fromJson(json["sdk_block"]));
+      block: json["block"] == null ? null : Block.fromJson(json["block"]),
+      blockID:
+          json["block_id"] == null ? null : BlockID.fromJson(json["block_id"]),
+      sdkBlock:
+          json["sdk_block"] == null
+              ? null
+              : CosmosBlock.fromJson(json["sdk_block"]),
+    );
   }
   factory GetBlockByHeightResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GetBlockByHeightResponse(
-        blockID: decode
-            .getResult(1)
-            ?.to<BlockID, List<int>>((e) => BlockID.deserialize(e)),
-        block: decode
-            .getResult(2)
-            ?.to<Block, List<int>>((e) => Block.deserialize(e)),
-        sdkBlock: decode
-            .getResult(3)
-            ?.to<CosmosBlock, List<int>>((e) => CosmosBlock.deserialize(e)));
+      blockID: decode
+          .getResult(1)
+          ?.to<BlockID, List<int>>((e) => BlockID.deserialize(e)),
+      block: decode
+          .getResult(2)
+          ?.to<Block, List<int>>((e) => Block.deserialize(e)),
+      sdkBlock: decode
+          .getResult(3)
+          ?.to<CosmosBlock, List<int>>((e) => CosmosBlock.deserialize(e)),
+    );
   }
 
   @override
@@ -48,7 +50,7 @@ class GetBlockByHeightResponse extends CosmosMessage {
     return {
       "block_id": blockID?.toJson(),
       "block": block?.toJson(),
-      "sdk_block": sdkBlock?.toJson()
+      "sdk_block": sdkBlock?.toJson(),
     };
   }
 

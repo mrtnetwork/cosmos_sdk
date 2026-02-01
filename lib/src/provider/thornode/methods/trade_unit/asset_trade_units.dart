@@ -3,8 +3,12 @@ import 'package:cosmos_sdk/src/provider/thornode/core/thorenode.dart';
 import 'package:cosmos_sdk/src/provider/thornode/models/models/asset_trade_info.dart';
 
 /// Returns the total units and depth for each trade asset
-class ThorNodeRequestTradeUnits extends ThorNodeRequestParam<
-    List<AssetTradeInfoResponse>, List<Map<String, dynamic>>> {
+class ThorNodeRequestTradeUnits
+    extends
+        ThorNodeRequestParam<
+          List<AssetTradeInfoResponse>,
+          List<Map<String, dynamic>>
+        > {
   ThorNodeRequestTradeUnits({this.height});
 
   /// optional block height, defaults to current tip

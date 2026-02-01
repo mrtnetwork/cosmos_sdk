@@ -8,7 +8,8 @@ class MsgBeginRedelegateResponse extends CosmosMessage {
   factory MsgBeginRedelegateResponse.fromBytes(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgBeginRedelegateResponse(
-        ProtobufTimestamp.fromDateTime(decode.getField(1)));
+      ProtobufTimestamp.fromDateTime(decode.getField(1)),
+    );
   }
 
   @override

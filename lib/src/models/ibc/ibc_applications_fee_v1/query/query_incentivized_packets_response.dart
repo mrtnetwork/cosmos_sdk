@@ -11,33 +11,37 @@ class QueryIncentivizedPacketsResponse extends CosmosMessage {
 
   /// pagination defines the pagination in the response.
   final PageResponse? pagination;
-  QueryIncentivizedPacketsResponse(
-      {required List<IbcFeeIdentifiedPacketFees> incentivizedPackets,
-      this.pagination})
-      : incentivizedPackets = incentivizedPackets.immutable;
+  QueryIncentivizedPacketsResponse({
+    required List<IbcFeeIdentifiedPacketFees> incentivizedPackets,
+    this.pagination,
+  }) : incentivizedPackets = incentivizedPackets.immutable;
 
   factory QueryIncentivizedPacketsResponse.fromJson(Map<String, dynamic> json) {
     return QueryIncentivizedPacketsResponse(
-      incentivizedPackets: (json["incentivized_packets"] as List?)
+      incentivizedPackets:
+          (json["incentivized_packets"] as List?)
               ?.map((e) => IbcFeeIdentifiedPacketFees.fromJson(e))
               .toList() ??
           [],
-      pagination: json["pagination"] == null
-          ? null
-          : PageResponse.fromJson(json["pagination"]),
+      pagination:
+          json["pagination"] == null
+              ? null
+              : PageResponse.fromJson(json["pagination"]),
     );
   }
 
   factory QueryIncentivizedPacketsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryIncentivizedPacketsResponse(
-        incentivizedPackets: decode
-            .getFields<List<int>>(1)
-            .map((e) => IbcFeeIdentifiedPacketFees.deserialize(e))
-            .toList(),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
+      incentivizedPackets:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => IbcFeeIdentifiedPacketFees.deserialize(e))
+              .toList(),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
+    );
   }
 
   @override
@@ -48,7 +52,7 @@ class QueryIncentivizedPacketsResponse extends CosmosMessage {
     return {
       "incentivized_packets":
           incentivizedPackets.map((e) => e.toJson()).toList(),
-      "pagination": pagination?.toJson()
+      "pagination": pagination?.toJson(),
     };
   }
 

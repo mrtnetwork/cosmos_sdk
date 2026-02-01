@@ -7,7 +7,8 @@ class EvmosEthermintFeeMarketV1QueryBlockGasRequest extends CosmosMessage
     with QueryMessage<EvmosEthermintFeeMarketV1QueryBlockGasResponse> {
   const EvmosEthermintFeeMarketV1QueryBlockGasRequest();
   factory EvmosEthermintFeeMarketV1QueryBlockGasRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return EvmosEthermintFeeMarketV1QueryBlockGasRequest();
   }
 
@@ -32,7 +33,8 @@ class EvmosEthermintFeeMarketV1QueryBlockGasRequest extends CosmosMessage
 
   @override
   EvmosEthermintFeeMarketV1QueryBlockGasResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return EvmosEthermintFeeMarketV1QueryBlockGasResponse.fromJson(json);
   }
 }

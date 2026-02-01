@@ -14,26 +14,29 @@ class IbcConnectionGenesisState extends CosmosMessage {
   /// the sequence for the next generated connection identifier
   final BigInt? nextConnectionSequence;
   final IbcConnectionParams params;
-  IbcConnectionGenesisState(
-      {required List<IbcConnectionIdentifiedConnection> connections,
-      required List<IbcConnectConnectionPaths> clientConnectionPaths,
-      this.nextConnectionSequence,
-      required this.params})
-      : connections = connections.immutable,
-        clientConnectionPaths = clientConnectionPaths.immutable;
+  IbcConnectionGenesisState({
+    required List<IbcConnectionIdentifiedConnection> connections,
+    required List<IbcConnectConnectionPaths> clientConnectionPaths,
+    this.nextConnectionSequence,
+    required this.params,
+  }) : connections = connections.immutable,
+       clientConnectionPaths = clientConnectionPaths.immutable;
   factory IbcConnectionGenesisState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcConnectionGenesisState(
-        connections: decode
-            .getFields<List<int>>(1)
-            .map((e) => IbcConnectionIdentifiedConnection.deserialize(e))
-            .toList(),
-        clientConnectionPaths: decode
-            .getFields<List<int>>(2)
-            .map((e) => IbcConnectConnectionPaths.deserialize(e))
-            .toList(),
-        nextConnectionSequence: decode.getField(3),
-        params: IbcConnectionParams.deserialize(decode.getField(4)));
+      connections:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => IbcConnectionIdentifiedConnection.deserialize(e))
+              .toList(),
+      clientConnectionPaths:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => IbcConnectConnectionPaths.deserialize(e))
+              .toList(),
+      nextConnectionSequence: decode.getField(3),
+      params: IbcConnectionParams.deserialize(decode.getField(4)),
+    );
   }
 
   @override
@@ -46,7 +49,7 @@ class IbcConnectionGenesisState extends CosmosMessage {
       "client_connection_paths":
           clientConnectionPaths.map((e) => e.toJson()).toList(),
       "next_connection_sequence": nextConnectionSequence?.toString(),
-      "params": params.toJson()
+      "params": params.toJson(),
     };
   }
 
@@ -54,6 +57,10 @@ class IbcConnectionGenesisState extends CosmosMessage {
   TypeUrl get typeUrl => IbcTypes.ibcConnectionGenesisState;
 
   @override
-  List get values =>
-      [connections, clientConnectionPaths, nextConnectionSequence, params];
+  List get values => [
+    connections,
+    clientConnectionPaths,
+    nextConnectionSequence,
+    params,
+  ];
 }

@@ -7,16 +7,20 @@ class ThorchainErrataTxVoter extends CosmosMessage {
   final String? chain;
   final BigInt? blockHeight;
   final List<String>? signers;
-  ThorchainErrataTxVoter(
-      {this.txId, this.chain, this.blockHeight, List<String>? signers})
-      : signers = signers?.emptyAsNull?.immutable;
+  ThorchainErrataTxVoter({
+    this.txId,
+    this.chain,
+    this.blockHeight,
+    List<String>? signers,
+  }) : signers = signers?.emptyAsNull?.immutable;
   factory ThorchainErrataTxVoter.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainErrataTxVoter(
-        txId: decode.getField(1),
-        chain: decode.getField(2),
-        blockHeight: decode.getField(3),
-        signers: decode.getFields<String>(4));
+      txId: decode.getField(1),
+      chain: decode.getField(2),
+      blockHeight: decode.getField(3),
+      signers: decode.getFields<String>(4),
+    );
   }
 
   @override
@@ -28,7 +32,7 @@ class ThorchainErrataTxVoter extends CosmosMessage {
       "tx_id": txId,
       "chain": chain,
       "block_height": blockHeight?.toString(),
-      "signers": signers
+      "signers": signers,
     };
   }
 

@@ -14,20 +14,25 @@ class OsmosisStreamSwapMsgSubscribe extends OsmosisStreamSwapV1<ProtobufEmpty> {
   /// number of sale.token_in staked by a user.
   final BigInt amount;
 
-  OsmosisStreamSwapMsgSubscribe(
-      {this.sender, this.saleId, required this.amount});
+  OsmosisStreamSwapMsgSubscribe({
+    this.sender,
+    this.saleId,
+    required this.amount,
+  });
   factory OsmosisStreamSwapMsgSubscribe.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisStreamSwapMsgSubscribe(
-        sender: decode.getField(1),
-        saleId: decode.getField(2),
-        amount: BigInt.parse(decode.getField(3)));
+      sender: decode.getField(1),
+      saleId: decode.getField(2),
+      amount: BigInt.parse(decode.getField(3)),
+    );
   }
   factory OsmosisStreamSwapMsgSubscribe.fromJson(Map<String, dynamic> json) {
     return OsmosisStreamSwapMsgSubscribe(
-        sender: json.as("sender"),
-        saleId: json.asBigInt("sale_id"),
-        amount: json.asBigInt("amount"));
+      sender: json.as("sender"),
+      saleId: json.asBigInt("sale_id"),
+      amount: json.asBigInt("amount"),
+    );
   }
 
   @override
@@ -38,7 +43,7 @@ class OsmosisStreamSwapMsgSubscribe extends OsmosisStreamSwapV1<ProtobufEmpty> {
     return {
       "sender": sender,
       "sale_id": saleId?.toString(),
-      "amount": amount.toString()
+      "amount": amount.toString(),
     };
   }
 

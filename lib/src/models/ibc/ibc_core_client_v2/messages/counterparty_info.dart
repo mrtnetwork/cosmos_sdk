@@ -11,22 +11,25 @@ class IbcClientV2CounterpartyInfo extends CosmosMessage {
 
   /// client identifier is the identifier used to send packet messages to our client
   final String? clientId;
-  IbcClientV2CounterpartyInfo(
-      {required List<List<int>>? merklePrefix, required this.clientId})
-      : merklePrefix =
-            merklePrefix?.map((e) => e.asImmutableBytes).toImutableList;
+  IbcClientV2CounterpartyInfo({
+    required List<List<int>>? merklePrefix,
+    required this.clientId,
+  }) : merklePrefix =
+           merklePrefix?.map((e) => e.asImmutableBytes).toImutableList;
   factory IbcClientV2CounterpartyInfo.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcClientV2CounterpartyInfo(
-        merklePrefix: decode.getFields<List<int>>(1),
-        clientId: decode.getField(2));
+      merklePrefix: decode.getFields<List<int>>(1),
+      clientId: decode.getField(2),
+    );
   }
   factory IbcClientV2CounterpartyInfo.fromJson(Map<String, dynamic> json) {
     return IbcClientV2CounterpartyInfo(
-      merklePrefix: json
-          .asListOfString("merkle_prefix")
-          ?.map((e) => CosmosUtils.toBytes(e))
-          .toList(),
+      merklePrefix:
+          json
+              .asListOfString("merkle_prefix")
+              ?.map((e) => CosmosUtils.toBytes(e))
+              .toList(),
       clientId: json.as("client_id"),
     );
   }
@@ -39,7 +42,7 @@ class IbcClientV2CounterpartyInfo extends CosmosMessage {
     return {
       "merkle_prefix":
           merklePrefix?.map((e) => CosmosUtils.tryToBase64(e)).toList(),
-      "client_id": clientId
+      "client_id": clientId,
     };
   }
 

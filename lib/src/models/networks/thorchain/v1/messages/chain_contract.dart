@@ -8,7 +8,9 @@ class ThorchainChainContract extends CosmosMessage {
   factory ThorchainChainContract.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainChainContract(
-        chain: decode.getField(1), router: decode.getField(2));
+      chain: decode.getField(1),
+      router: decode.getField(2),
+    );
   }
 
   @override

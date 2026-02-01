@@ -17,12 +17,15 @@ class OsmosisGammPoolAsset extends CosmosMessage {
   factory OsmosisGammPoolAsset.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisGammPoolAsset(
-        token: Coin.deserialize(decode.getField(1)),
-        weight: decode.getField(2));
+      token: Coin.deserialize(decode.getField(1)),
+      weight: decode.getField(2),
+    );
   }
   factory OsmosisGammPoolAsset.fromJson(Map<String, dynamic> json) {
     return OsmosisGammPoolAsset(
-        token: Coin.fromJson(json["token"]), weight: json["weight"]);
+      token: Coin.fromJson(json["token"]),
+      weight: json["weight"],
+    );
   }
 
   @override

@@ -5,21 +5,27 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:cosmos_sdk/src/utils/quick.dart';
 
 class CCTPV1MsgUpdateAttesterManager
-    extends CCTPV1Service<EmptyServiceRequestResponse> with AminoMessage {
+    extends CCTPV1Service<EmptyServiceRequestResponse>
+    with AminoMessage {
   final String from;
   final String newAttesterManager;
-  const CCTPV1MsgUpdateAttesterManager(
-      {required this.from, required this.newAttesterManager});
+  const CCTPV1MsgUpdateAttesterManager({
+    required this.from,
+    required this.newAttesterManager,
+  });
 
   factory CCTPV1MsgUpdateAttesterManager.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CCTPV1MsgUpdateAttesterManager(
-        from: decode.getField(1), newAttesterManager: decode.getField(2));
+      from: decode.getField(1),
+      newAttesterManager: decode.getField(2),
+    );
   }
   factory CCTPV1MsgUpdateAttesterManager.fromJson(Map<String, dynamic> json) {
     return CCTPV1MsgUpdateAttesterManager(
-        from: json.as("from"),
-        newAttesterManager: json.as("new_attester_manager"));
+      from: json.as("from"),
+      newAttesterManager: json.as("new_attester_manager"),
+    );
   }
 
   @override
@@ -41,6 +47,7 @@ class CCTPV1MsgUpdateAttesterManager
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        CCTPV1Types.msgUpdateAttesterManagerResponse);
+      CCTPV1Types.msgUpdateAttesterManagerResponse,
+    );
   }
 }

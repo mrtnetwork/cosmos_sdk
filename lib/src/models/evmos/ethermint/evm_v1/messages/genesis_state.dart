@@ -11,16 +11,20 @@ class EvmosEthermintEVMV1GenesisState extends CosmosMessage {
   /// params defines all the parameters of the module.
   final EvmosEthermintEVMV1Params params;
 
-  EvmosEthermintEVMV1GenesisState(
-      {required this.accounts, required this.params});
+  EvmosEthermintEVMV1GenesisState({
+    required this.accounts,
+    required this.params,
+  });
   factory EvmosEthermintEVMV1GenesisState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosEthermintEVMV1GenesisState(
-        accounts: decode
-            .getFields<List<int>>(1)
-            .map((e) => EvmosEthermintEVMV1GenesisAccount.deserialize(e))
-            .toList(),
-        params: EvmosEthermintEVMV1Params.deserialize(decode.getField(2)));
+      accounts:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => EvmosEthermintEVMV1GenesisAccount.deserialize(e))
+              .toList(),
+      params: EvmosEthermintEVMV1Params.deserialize(decode.getField(2)),
+    );
   }
 
   @override
@@ -30,7 +34,7 @@ class EvmosEthermintEVMV1GenesisState extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "accounts": accounts.map((e) => e.toJson()).toList(),
-      "params": params.toJson()
+      "params": params.toJson(),
     };
   }
 

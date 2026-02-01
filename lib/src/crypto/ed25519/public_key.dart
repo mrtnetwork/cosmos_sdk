@@ -16,7 +16,8 @@ class CosmosED25519PublicKey extends CosmosPublicKey {
   factory CosmosED25519PublicKey.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmosED25519PublicKey._(
-        Ed25519PublicKey.fromBytes(decode.getField(1)));
+      Ed25519PublicKey.fromBytes(decode.getField(1)),
+    );
   }
 
   @override

@@ -20,11 +20,12 @@ class Description extends CosmosMessage {
 
   factory Description.fromJson(Map<String, dynamic> json) {
     return Description(
-        details: json["details"],
-        identity: json["identity"],
-        moniker: json["moniker"],
-        securityContact: json["security_contact"],
-        website: json["website"]);
+      details: json["details"],
+      identity: json["identity"],
+      moniker: json["moniker"],
+      securityContact: json["security_contact"],
+      website: json["website"],
+    );
   }
 
   const Description({
@@ -37,11 +38,12 @@ class Description extends CosmosMessage {
   factory Description.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Description(
-        moniker: decode.getField(1),
-        identity: decode.getField(2),
-        website: decode.getField(3),
-        securityContact: decode.getField(4),
-        details: decode.getField(5));
+      moniker: decode.getField(1),
+      identity: decode.getField(2),
+      website: decode.getField(3),
+      securityContact: decode.getField(4),
+      details: decode.getField(5),
+    );
   }
 
   @override

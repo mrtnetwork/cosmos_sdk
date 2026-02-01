@@ -17,54 +17,63 @@ class ThorchainVault extends CosmosMessage {
   final List<BigInt>? pendingTxBlockHeights;
   final List<ThorchainChainContract> routers;
   final List<String>? frozen;
-  ThorchainVault(
-      {this.blockHeight,
-      this.pubKey,
-      required List<ThorchainCoin> coins,
-      this.type,
-      this.status,
-      this.statusSince,
-      List<String>? membership,
-      List<String>? chains,
-      this.inboundTxCount,
-      this.outboundTxCount,
-      List<BigInt>? pendingTxBlockHeights,
-      required List<ThorchainChainContract> routers,
-      List<String>? frozen})
-      : coins = coins.immutable,
-        membership = membership?.emptyAsNull?.immutable,
-        chains = chains?.emptyAsNull?.immutable,
-        pendingTxBlockHeights = pendingTxBlockHeights?.emptyAsNull?.immutable,
-        routers = routers.immutable,
-        frozen = frozen?.emptyAsNull?.immutable;
+  ThorchainVault({
+    this.blockHeight,
+    this.pubKey,
+    required List<ThorchainCoin> coins,
+    this.type,
+    this.status,
+    this.statusSince,
+    List<String>? membership,
+    List<String>? chains,
+    this.inboundTxCount,
+    this.outboundTxCount,
+    List<BigInt>? pendingTxBlockHeights,
+    required List<ThorchainChainContract> routers,
+    List<String>? frozen,
+  }) : coins = coins.immutable,
+       membership = membership?.emptyAsNull?.immutable,
+       chains = chains?.emptyAsNull?.immutable,
+       pendingTxBlockHeights = pendingTxBlockHeights?.emptyAsNull?.immutable,
+       routers = routers.immutable,
+       frozen = frozen?.emptyAsNull?.immutable;
   factory ThorchainVault.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainVault(
-        blockHeight: decode.getField(1),
-        pubKey: decode.getField(2),
-        coins: decode
-            .getFields<List<int>>(3)
-            .map((e) => ThorchainCoin.deserialize(e))
-            .toList(),
-        type: decode.getResult(4)?.to<ThorchainVaultType, int>(
-            (e) => ThorchainVaultType.fromValue(e)),
-        status: decode.getResult(5)?.to<ThorchainVaultStatus, int>(
-            (e) => ThorchainVaultStatus.fromValue(e)),
-        statusSince: decode.getField(6),
-        membership: decode.getFields<String>(7),
-        chains: decode.getFields<String>(8),
-        inboundTxCount: decode.getField(9),
-        outboundTxCount: decode.getField(10),
-        pendingTxBlockHeights: decode
-                .getResult<ProtocolBufferDecoderResult?>(11)
-                ?.to<List<BigInt>, List<int>>(
-                    (e) => e.map((e) => BigintUtils.parse(e)).toList()) ??
-            <BigInt>[],
-        routers: decode
-            .getFields<List<int>>(22)
-            .map((e) => ThorchainChainContract.deserialize(e))
-            .toList(),
-        frozen: decode.getFields<String>(23));
+      blockHeight: decode.getField(1),
+      pubKey: decode.getField(2),
+      coins:
+          decode
+              .getFields<List<int>>(3)
+              .map((e) => ThorchainCoin.deserialize(e))
+              .toList(),
+      type: decode
+          .getResult(4)
+          ?.to<ThorchainVaultType, int>((e) => ThorchainVaultType.fromValue(e)),
+      status: decode
+          .getResult(5)
+          ?.to<ThorchainVaultStatus, int>(
+            (e) => ThorchainVaultStatus.fromValue(e),
+          ),
+      statusSince: decode.getField(6),
+      membership: decode.getFields<String>(7),
+      chains: decode.getFields<String>(8),
+      inboundTxCount: decode.getField(9),
+      outboundTxCount: decode.getField(10),
+      pendingTxBlockHeights:
+          decode
+              .getResult<ProtocolBufferDecoderResult?>(11)
+              ?.to<List<BigInt>, List<int>>(
+                (e) => e.map((e) => BigintUtils.parse(e)).toList(),
+              ) ??
+          <BigInt>[],
+      routers:
+          decode
+              .getFields<List<int>>(22)
+              .map((e) => ThorchainChainContract.deserialize(e))
+              .toList(),
+      frozen: decode.getFields<String>(23),
+    );
   }
 
   @override
@@ -86,7 +95,7 @@ class ThorchainVault extends CosmosMessage {
       "pending_tx_block_heights":
           pendingTxBlockHeights?.map((e) => e.toString()).toList(),
       "routers": routers.map((e) => e.toJson()).toList(),
-      "frozen": frozen
+      "frozen": frozen,
     };
   }
 
@@ -95,18 +104,18 @@ class ThorchainVault extends CosmosMessage {
 
   @override
   List get values => [
-        blockHeight,
-        pubKey,
-        coins,
-        type?.value,
-        status?.value,
-        statusSince,
-        membership,
-        chains,
-        inboundTxCount,
-        outboundTxCount,
-        pendingTxBlockHeights,
-        routers,
-        frozen
-      ];
+    blockHeight,
+    pubKey,
+    coins,
+    type?.value,
+    status?.value,
+    statusSince,
+    membership,
+    chains,
+    inboundTxCount,
+    outboundTxCount,
+    pendingTxBlockHeights,
+    routers,
+    frozen,
+  ];
 }

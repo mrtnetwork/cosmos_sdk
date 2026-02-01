@@ -9,18 +9,22 @@ class QueryDelegationResponse extends CosmosMessage {
   const QueryDelegationResponse({this.delegationResponse});
   factory QueryDelegationResponse.fromJson(Map<String, dynamic> json) {
     return QueryDelegationResponse(
-        delegationResponse: (json["delegation_response"] == null
-            ? null
-            : DelegationResponse.fromJson(json["delegation_response"])));
+      delegationResponse:
+          (json["delegation_response"] == null
+              ? null
+              : DelegationResponse.fromJson(json["delegation_response"])),
+    );
   }
 
   factory QueryDelegationResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryDelegationResponse(
-        delegationResponse: decode
-            .getResult(1)
-            ?.to<DelegationResponse, List<int>>(
-                (e) => DelegationResponse.deserialize(e)));
+      delegationResponse: decode
+          .getResult(1)
+          ?.to<DelegationResponse, List<int>>(
+            (e) => DelegationResponse.deserialize(e),
+          ),
+    );
   }
 
   @override

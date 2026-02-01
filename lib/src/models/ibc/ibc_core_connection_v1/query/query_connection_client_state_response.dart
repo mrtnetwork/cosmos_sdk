@@ -16,26 +16,34 @@ class IbcConnectionQueryConnectionClientStateResponse extends CosmosMessage {
   /// height at which the proof was retrieved
   final IbcClientHeight proofHeight;
   factory IbcConnectionQueryConnectionClientStateResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return IbcConnectionQueryConnectionClientStateResponse(
-        proofHeight: IbcClientHeight.fromJson(json["proof_height"]),
-        identifiedClientState: json["identified_client_state"] == null
-            ? null
-            : IbcClientIdentifiedClientState.fromJson(
-                json["identified_client_state"]),
-        proof: CosmosUtils.tryToBytes(json["proof"]));
+      proofHeight: IbcClientHeight.fromJson(json["proof_height"]),
+      identifiedClientState:
+          json["identified_client_state"] == null
+              ? null
+              : IbcClientIdentifiedClientState.fromJson(
+                json["identified_client_state"],
+              ),
+      proof: CosmosUtils.tryToBytes(json["proof"]),
+    );
   }
-  IbcConnectionQueryConnectionClientStateResponse(
-      {this.identifiedClientState, List<int>? proof, required this.proofHeight})
-      : proof = BytesUtils.tryToBytes(proof);
+  IbcConnectionQueryConnectionClientStateResponse({
+    this.identifiedClientState,
+    List<int>? proof,
+    required this.proofHeight,
+  }) : proof = BytesUtils.tryToBytes(proof);
   factory IbcConnectionQueryConnectionClientStateResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcConnectionQueryConnectionClientStateResponse(
       identifiedClientState: decode
           .getResult(1)
           ?.to<IbcClientIdentifiedClientState, List<int>>(
-              (e) => IbcClientIdentifiedClientState.deserialize(e)),
+            (e) => IbcClientIdentifiedClientState.deserialize(e),
+          ),
       proof: decode.getField(2),
       proofHeight: IbcClientHeight.deserialize(decode.getField(3)),
     );
@@ -49,7 +57,7 @@ class IbcConnectionQueryConnectionClientStateResponse extends CosmosMessage {
     return {
       "identified_client_state": identifiedClientState?.toJson(),
       "proof": BytesUtils.tryToHexString(proof),
-      "proof_height": proofHeight.toJson()
+      "proof_height": proofHeight.toJson(),
     };
   }
 

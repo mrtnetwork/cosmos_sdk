@@ -39,23 +39,25 @@ class StakingParams extends CosmosMessage {
   factory StakingParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return StakingParams(
-        unbondingTime: ProtobufDuration.deserialize(decode.getField(1)),
-        maxValidators: decode.getField(2),
-        maxEntries: decode.getField(3),
-        historicalEntries: decode.getField(4),
-        bondDenom: decode.getField(5),
-        minCommissionRate: decode.getField(6),
-        keyRotationFee: Coin.deserialize(decode.getField(7)));
+      unbondingTime: ProtobufDuration.deserialize(decode.getField(1)),
+      maxValidators: decode.getField(2),
+      maxEntries: decode.getField(3),
+      historicalEntries: decode.getField(4),
+      bondDenom: decode.getField(5),
+      minCommissionRate: decode.getField(6),
+      keyRotationFee: Coin.deserialize(decode.getField(7)),
+    );
   }
   factory StakingParams.fromJson(Map<String, dynamic> json) {
     return StakingParams(
-        unbondingTime: ProtobufDuration.fromString(json.as("unbonding_time")),
-        maxValidators: json.asInt("max_validators"),
-        maxEntries: json.asInt("max_entries"),
-        historicalEntries: json.asInt("historical_entries"),
-        bondDenom: json.as("bond_denom"),
-        minCommissionRate: json.as("min_commission_rate"),
-        keyRotationFee: Coin.fromJson(json.asMap("key_rotation_fee")));
+      unbondingTime: ProtobufDuration.fromString(json.as("unbonding_time")),
+      maxValidators: json.asInt("max_validators"),
+      maxEntries: json.asInt("max_entries"),
+      historicalEntries: json.asInt("historical_entries"),
+      bondDenom: json.as("bond_denom"),
+      minCommissionRate: json.as("min_commission_rate"),
+      keyRotationFee: Coin.fromJson(json.asMap("key_rotation_fee")),
+    );
   }
 
   @override
@@ -79,12 +81,12 @@ class StakingParams extends CosmosMessage {
 
   @override
   List get values => [
-        unbondingTime,
-        maxValidators,
-        maxEntries,
-        historicalEntries,
-        bondDenom,
-        minCommissionRate,
-        keyRotationFee
-      ];
+    unbondingTime,
+    maxValidators,
+    maxEntries,
+    historicalEntries,
+    bondDenom,
+    minCommissionRate,
+    keyRotationFee,
+  ];
 }

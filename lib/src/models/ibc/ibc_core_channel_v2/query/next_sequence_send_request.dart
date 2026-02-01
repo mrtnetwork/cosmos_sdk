@@ -31,7 +31,8 @@ class IbcChannelV2QueryNextSequenceSend extends CosmosMessage
 
   @override
   IbcChannelV2QueryNextSequenceSendResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return IbcChannelV2QueryNextSequenceSendResponse.fromJson(json);
   }
 

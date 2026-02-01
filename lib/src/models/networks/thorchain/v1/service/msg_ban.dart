@@ -12,25 +12,33 @@ class ThorchainMsgBan extends ThorchainV1Service<EmptyServiceRequestResponse> {
   factory ThorchainMsgBan.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainMsgBan(
-        nodeAddress: decode.getResult(2)?.to<CosmosBaseAddress, List<int>>(
-            (e) => CosmosBaseAddress.fromBytes(e)),
-        signer: decode.getResult(3)?.to<CosmosBaseAddress, List<int>>(
-            (e) => CosmosBaseAddress.fromBytes(e)));
+      nodeAddress: decode
+          .getResult(2)
+          ?.to<CosmosBaseAddress, List<int>>(
+            (e) => CosmosBaseAddress.fromBytes(e),
+          ),
+      signer: decode
+          .getResult(3)
+          ?.to<CosmosBaseAddress, List<int>>(
+            (e) => CosmosBaseAddress.fromBytes(e),
+          ),
+    );
   }
   factory ThorchainMsgBan.fromJson(Map<String, dynamic> json) {
     return ThorchainMsgBan(
-        nodeAddress: json.maybeAs<CosmosBaseAddress, String>(
-          key: "node_address",
-          onValue: (e) {
-            return CosmosBaseAddress.fromBytes(CosmosUtils.toBytes(e));
-          },
-        ),
-        signer: json.maybeAs<CosmosBaseAddress, String>(
-          key: "signer",
-          onValue: (e) {
-            return CosmosBaseAddress.fromBytes(CosmosUtils.toBytes(e));
-          },
-        ));
+      nodeAddress: json.maybeAs<CosmosBaseAddress, String>(
+        key: "node_address",
+        onValue: (e) {
+          return CosmosBaseAddress.fromBytes(CosmosUtils.toBytes(e));
+        },
+      ),
+      signer: json.maybeAs<CosmosBaseAddress, String>(
+        key: "signer",
+        onValue: (e) {
+          return CosmosBaseAddress.fromBytes(CosmosUtils.toBytes(e));
+        },
+      ),
+    );
   }
   @override
   List<int> get fieldIds => [2, 3];

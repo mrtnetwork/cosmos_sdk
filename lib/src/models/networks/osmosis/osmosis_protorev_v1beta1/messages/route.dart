@@ -14,26 +14,31 @@ class OsmosisProtorevRoute extends CosmosMessage {
   /// binary search
   final String? stepSize;
 
-  OsmosisProtorevRoute(
-      {required List<OsmosisProtorevTrade> trades, this.stepSize})
-      : trades = trades.immutable;
+  OsmosisProtorevRoute({
+    required List<OsmosisProtorevTrade> trades,
+    this.stepSize,
+  }) : trades = trades.immutable;
 
   factory OsmosisProtorevRoute.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisProtorevRoute(
-        trades: decode
-            .getFields<List<int>>(1)
-            .map((e) => OsmosisProtorevTrade.deserialize(e))
-            .toList(),
-        stepSize: decode.getField(2));
+      trades:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => OsmosisProtorevTrade.deserialize(e))
+              .toList(),
+      stepSize: decode.getField(2),
+    );
   }
   factory OsmosisProtorevRoute.fromJson(Map<String, dynamic> json) {
     return OsmosisProtorevRoute(
-        trades: (json["trades"] as List?)
-                ?.map((e) => OsmosisProtorevTrade.fromJson(e))
-                .toList() ??
-            <OsmosisProtorevTrade>[],
-        stepSize: json["step_size"]);
+      trades:
+          (json["trades"] as List?)
+              ?.map((e) => OsmosisProtorevTrade.fromJson(e))
+              .toList() ??
+          <OsmosisProtorevTrade>[],
+      stepSize: json["step_size"],
+    );
   }
 
   @override
@@ -43,7 +48,7 @@ class OsmosisProtorevRoute extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "trades": trades.map((e) => e.toJson()).toList(),
-      "step_size": stepSize
+      "step_size": stepSize,
     };
   }
 

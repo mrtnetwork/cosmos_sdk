@@ -14,7 +14,8 @@ class DerivedAssetPoolInformationResponse {
   });
 
   factory DerivedAssetPoolInformationResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return DerivedAssetPoolInformationResponse(
       asset: json['asset'],
       status: json['status'],

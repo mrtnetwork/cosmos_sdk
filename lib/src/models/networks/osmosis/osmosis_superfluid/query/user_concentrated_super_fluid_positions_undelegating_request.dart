@@ -6,15 +6,19 @@ class OsmosisSuperfluidUserConcentratedSuperfluidPositionsUndelegatingRequest
     extends CosmosMessage
     with
         QueryMessage<
-            OsmosisSuperfluidUserConcentratedSuperfluidPositionsUndelegatingResponse> {
+          OsmosisSuperfluidUserConcentratedSuperfluidPositionsUndelegatingResponse
+        > {
   final String delegatorAddress;
-  const OsmosisSuperfluidUserConcentratedSuperfluidPositionsUndelegatingRequest(
-      {required this.delegatorAddress});
+  const OsmosisSuperfluidUserConcentratedSuperfluidPositionsUndelegatingRequest({
+    required this.delegatorAddress,
+  });
   factory OsmosisSuperfluidUserConcentratedSuperfluidPositionsUndelegatingRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidUserConcentratedSuperfluidPositionsUndelegatingRequest(
-        delegatorAddress: decode.getField(1));
+      delegatorAddress: decode.getField(1),
+    );
   }
 
   @override
@@ -26,8 +30,9 @@ class OsmosisSuperfluidUserConcentratedSuperfluidPositionsUndelegatingRequest
   }
 
   @override
-  TypeUrl get typeUrl => OsmosisSuperfluidTypes
-      .userConcentratedSuperfluidPositionsUndelegatingRequest;
+  TypeUrl get typeUrl =>
+      OsmosisSuperfluidTypes
+          .userConcentratedSuperfluidPositionsUndelegatingRequest;
 
   @override
   List get values => [delegatorAddress];
@@ -37,16 +42,18 @@ class OsmosisSuperfluidUserConcentratedSuperfluidPositionsUndelegatingRequest
 
   @override
   OsmosisSuperfluidUserConcentratedSuperfluidPositionsUndelegatingResponse
-      onJsonResponse(Map<String, dynamic> json) {
-    return OsmosisSuperfluidUserConcentratedSuperfluidPositionsUndelegatingResponse
-        .fromJson(json);
+  onJsonResponse(Map<String, dynamic> json) {
+    return OsmosisSuperfluidUserConcentratedSuperfluidPositionsUndelegatingResponse.fromJson(
+      json,
+    );
   }
 
   @override
   OsmosisSuperfluidUserConcentratedSuperfluidPositionsUndelegatingResponse
-      onResponse(List<int> bytes) {
-    return OsmosisSuperfluidUserConcentratedSuperfluidPositionsUndelegatingResponse
-        .deserialize(bytes);
+  onResponse(List<int> bytes) {
+    return OsmosisSuperfluidUserConcentratedSuperfluidPositionsUndelegatingResponse.deserialize(
+      bytes,
+    );
   }
 
   @override

@@ -9,12 +9,14 @@ class QueryModuleAccountByNameResponse extends CosmosMessage {
   factory QueryModuleAccountByNameResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryModuleAccountByNameResponse(
-        AnyMessage.deserialize(decode.getField(1)));
+      AnyMessage.deserialize(decode.getField(1)),
+    );
   }
 
   factory QueryModuleAccountByNameResponse.fromJson(Map<String, dynamic> json) {
     return QueryModuleAccountByNameResponse(
-        AnyMessage.fromJson(json["account"]));
+      AnyMessage.fromJson(json["account"]),
+    );
   }
 
   @override

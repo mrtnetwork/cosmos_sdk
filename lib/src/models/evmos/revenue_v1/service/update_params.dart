@@ -7,7 +7,8 @@ import 'package:cosmos_sdk/src/models/evmos/core/service.dart';
 
 /// MsgUpdateParams defines a Msg for updating the x/revenue module parameters.
 class EvmosRevenueV1MsgUpdateParams
-    extends EvmosService<EmptyServiceRequestResponse> with AminoMessage {
+    extends EvmosService<EmptyServiceRequestResponse>
+    with AminoMessage {
   /// authority is the address of the governance account.
   final String? authority;
 
@@ -20,15 +21,22 @@ class EvmosRevenueV1MsgUpdateParams
   factory EvmosRevenueV1MsgUpdateParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosRevenueV1MsgUpdateParams(
-        authority: decode.getField(1),
-        params: decode.getResult(2)?.to<EvmosRevenueV1Params, List<int>>(
-            EvmosRevenueV1Params.deserialize));
+      authority: decode.getField(1),
+      params: decode
+          .getResult(2)
+          ?.to<EvmosRevenueV1Params, List<int>>(
+            EvmosRevenueV1Params.deserialize,
+          ),
+    );
   }
   factory EvmosRevenueV1MsgUpdateParams.fromJson(Map<String, dynamic> json) {
     return EvmosRevenueV1MsgUpdateParams(
-        authority: json.as("authority"),
-        params: json.maybeAs(
-            key: "params", onValue: EvmosRevenueV1Params.fromJson));
+      authority: json.as("authority"),
+      params: json.maybeAs(
+        key: "params",
+        onValue: EvmosRevenueV1Params.fromJson,
+      ),
+    );
   }
 
   @override
@@ -36,10 +44,7 @@ class EvmosRevenueV1MsgUpdateParams
 
   @override
   Map<String, dynamic> toJson() {
-    return {
-      "authority": authority,
-      "params": params?.toJson(),
-    };
+    return {"authority": authority, "params": params?.toJson()};
   }
 
   @override
@@ -53,6 +58,7 @@ class EvmosRevenueV1MsgUpdateParams
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        EvmosErc20V1Types.revenueMsgUpdateParamsResponse);
+      EvmosErc20V1Types.revenueMsgUpdateParamsResponse,
+    );
   }
 }

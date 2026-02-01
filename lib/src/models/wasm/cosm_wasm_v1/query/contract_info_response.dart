@@ -9,25 +9,31 @@ class CosmWasmV1QueryContractInfoResponse extends CosmosMessage {
   /// address is the address of the contract
   final String? address;
   final CosmWasmV1ContractInfo? contractInfo;
-  const CosmWasmV1QueryContractInfoResponse(
-      {required this.address, required this.contractInfo});
+  const CosmWasmV1QueryContractInfoResponse({
+    required this.address,
+    required this.contractInfo,
+  });
   factory CosmWasmV1QueryContractInfoResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmWasmV1QueryContractInfoResponse(
-        address: decode.getField(1),
-        contractInfo: decode
-            .getResult(2)
-            ?.to<CosmWasmV1ContractInfo, List<int>>(
-                (e) => CosmWasmV1ContractInfo.deserialize(e)));
+      address: decode.getField(1),
+      contractInfo: decode
+          .getResult(2)
+          ?.to<CosmWasmV1ContractInfo, List<int>>(
+            (e) => CosmWasmV1ContractInfo.deserialize(e),
+          ),
+    );
   }
   factory CosmWasmV1QueryContractInfoResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return CosmWasmV1QueryContractInfoResponse(
-        address: json.as("address"),
-        contractInfo:
-            json.maybeAs<CosmWasmV1ContractInfo, Map<String, dynamic>>(
-                key: "contract_info",
-                onValue: (e) => CosmWasmV1ContractInfo.fromJson(e)));
+      address: json.as("address"),
+      contractInfo: json.maybeAs<CosmWasmV1ContractInfo, Map<String, dynamic>>(
+        key: "contract_info",
+        onValue: (e) => CosmWasmV1ContractInfo.fromJson(e),
+      ),
+    );
   }
 
   @override

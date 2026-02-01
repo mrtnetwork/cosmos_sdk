@@ -10,21 +10,24 @@ class OsmosisPoolincentivesUpdatePoolIncentivesProposal extends CosmosMessage {
   final String? title;
   final String? description;
   final List<OsmosisPoolincentivesDistrRecord> records;
-  OsmosisPoolincentivesUpdatePoolIncentivesProposal(
-      {this.title,
-      required this.description,
-      required List<OsmosisPoolincentivesDistrRecord> records})
-      : records = records.immutable;
+  OsmosisPoolincentivesUpdatePoolIncentivesProposal({
+    this.title,
+    required this.description,
+    required List<OsmosisPoolincentivesDistrRecord> records,
+  }) : records = records.immutable;
   factory OsmosisPoolincentivesUpdatePoolIncentivesProposal.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolincentivesUpdatePoolIncentivesProposal(
-        title: decode.getField(1),
-        description: decode.getField(2),
-        records: decode
-            .getFields<List<int>>(3)
-            .map((e) => OsmosisPoolincentivesDistrRecord.deserialize(e))
-            .toList());
+      title: decode.getField(1),
+      description: decode.getField(2),
+      records:
+          decode
+              .getFields<List<int>>(3)
+              .map((e) => OsmosisPoolincentivesDistrRecord.deserialize(e))
+              .toList(),
+    );
   }
 
   @override
@@ -35,7 +38,7 @@ class OsmosisPoolincentivesUpdatePoolIncentivesProposal extends CosmosMessage {
     return {
       "title": title,
       "description": description,
-      "records": records.map((e) => e.toJson()).toList()
+      "records": records.map((e) => e.toJson()).toList(),
     };
   }
 

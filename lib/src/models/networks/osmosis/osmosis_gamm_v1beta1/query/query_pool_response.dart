@@ -9,13 +9,15 @@ class OsmosisGammQueryPoolResponse extends CosmosMessage {
   factory OsmosisGammQueryPoolResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisGammQueryPoolResponse(
-        pool: decode
-            .getResult(1)
-            ?.to<AnyMessage, List<int>>((e) => AnyMessage.deserialize(e)));
+      pool: decode
+          .getResult(1)
+          ?.to<AnyMessage, List<int>>((e) => AnyMessage.deserialize(e)),
+    );
   }
   factory OsmosisGammQueryPoolResponse.fromJson(Map<String, dynamic> json) {
     return OsmosisGammQueryPoolResponse(
-        pool: json["pool"] == null ? null : AnyMessage.fromJson(json["pool"]));
+      pool: json["pool"] == null ? null : AnyMessage.fromJson(json["pool"]),
+    );
   }
 
   @override

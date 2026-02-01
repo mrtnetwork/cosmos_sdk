@@ -7,12 +7,16 @@ class QueryInterchainAccountRequest extends CosmosMessage
     with QueryMessage<QueryInterchainAccountResponse> {
   final String owner;
   final String connectionId;
-  const QueryInterchainAccountRequest(
-      {required this.owner, required this.connectionId});
+  const QueryInterchainAccountRequest({
+    required this.owner,
+    required this.connectionId,
+  });
   factory QueryInterchainAccountRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryInterchainAccountRequest(
-        owner: decode.getField(1), connectionId: decode.getField(2));
+      owner: decode.getField(1),
+      connectionId: decode.getField(2),
+    );
   }
 
   @override

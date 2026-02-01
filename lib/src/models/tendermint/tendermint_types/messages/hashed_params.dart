@@ -11,7 +11,9 @@ class HashedParams extends CosmosMessage {
   factory HashedParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return HashedParams(
-        blockMaxBytes: decode.getField(1), blockMaxGas: decode.getField(2));
+      blockMaxBytes: decode.getField(1),
+      blockMaxGas: decode.getField(2),
+    );
   }
 
   @override
@@ -21,7 +23,7 @@ class HashedParams extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "block_max_bytes": blockMaxBytes?.toString(),
-      "block_max_gas": blockMaxGas?.toString()
+      "block_max_gas": blockMaxGas?.toString(),
     };
   }
 

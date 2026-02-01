@@ -9,22 +9,25 @@ import 'package:blockchain_utils/helper/helper.dart';
 class DistributionValidatorAccumulatedCommission extends CosmosMessage {
   final List<DecCoin> commission;
   DistributionValidatorAccumulatedCommission(List<DecCoin> commission)
-      : commission = commission.immutable;
+    : commission = commission.immutable;
   factory DistributionValidatorAccumulatedCommission.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return DistributionValidatorAccumulatedCommission(
-        (json["commission"] as List?)
-                ?.map((e) => DecCoin.fromJson(e))
-                .toList() ??
-            []);
+      (json["commission"] as List?)?.map((e) => DecCoin.fromJson(e)).toList() ??
+          [],
+    );
   }
   factory DistributionValidatorAccumulatedCommission.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return DistributionValidatorAccumulatedCommission(decode
-        .getFields<List<int>>(1)
-        .map((e) => DecCoin.deserialize(e))
-        .toList());
+    return DistributionValidatorAccumulatedCommission(
+      decode
+          .getFields<List<int>>(1)
+          .map((e) => DecCoin.deserialize(e))
+          .toList(),
+    );
   }
 
   @override

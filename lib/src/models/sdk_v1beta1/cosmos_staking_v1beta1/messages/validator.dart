@@ -58,27 +58,32 @@ class StakingValidator extends CosmosMessage {
   final List<BigInt>? unbondingIds;
   factory StakingValidator.fromJson(Map<String, dynamic> json) {
     return StakingValidator(
-        commission: Commission.fromJson(json["commission"]),
-        delegatorShares: json["delegator_shares"],
-        description: Description.fromJson(json["description"]),
-        minSelfDelegation: BigintUtils.parse(json["min_self_delegation"]),
-        tokens: BigintUtils.parse(json["tokens"]),
-        unbondingTime: ProtobufTimestamp.fromString(json[""]),
-        consensusPubkey: json["consensus_pubkey"] == null
-            ? null
-            : AnyMessage.fromJson(json["consensus_pubkey"]),
-        jailed: json["jailed"],
-        operatorAddress: json["operator_address"] == null
-            ? null
-            : CosmosBaseAddress("operator_address"),
-        status:
-            json["status"] == null ? null : BondStatus.fromName(json["status"]),
-        unbondingHeight: BigintUtils.tryParse(json["unbonding_height"]),
-        unbondingIds: (json["unbonding_ids"] as List?)
-            ?.map((e) => BigintUtils.parse(e))
-            .toList(),
-        unbondingOnHoldRefCount:
-            BigintUtils.tryParse(json["unbonding_on_hold_ref_count"]));
+      commission: Commission.fromJson(json["commission"]),
+      delegatorShares: json["delegator_shares"],
+      description: Description.fromJson(json["description"]),
+      minSelfDelegation: BigintUtils.parse(json["min_self_delegation"]),
+      tokens: BigintUtils.parse(json["tokens"]),
+      unbondingTime: ProtobufTimestamp.fromString(json[""]),
+      consensusPubkey:
+          json["consensus_pubkey"] == null
+              ? null
+              : AnyMessage.fromJson(json["consensus_pubkey"]),
+      jailed: json["jailed"],
+      operatorAddress:
+          json["operator_address"] == null
+              ? null
+              : CosmosBaseAddress("operator_address"),
+      status:
+          json["status"] == null ? null : BondStatus.fromName(json["status"]),
+      unbondingHeight: BigintUtils.tryParse(json["unbonding_height"]),
+      unbondingIds:
+          (json["unbonding_ids"] as List?)
+              ?.map((e) => BigintUtils.parse(e))
+              .toList(),
+      unbondingOnHoldRefCount: BigintUtils.tryParse(
+        json["unbonding_on_hold_ref_count"],
+      ),
+    );
   }
 
   StakingValidator({
@@ -100,25 +105,26 @@ class StakingValidator extends CosmosMessage {
   factory StakingValidator.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return StakingValidator(
-        operatorAddress: decode
-            .getResult(1)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        consensusPubkey: decode
-            .getResult(2)
-            ?.to<AnyMessage, List<int>>((e) => AnyMessage.deserialize(e)),
-        jailed: decode.getField(3),
-        status: decode
-            .getResult(4)
-            ?.to<BondStatus, int>((e) => BondStatus.fromValue(e)),
-        tokens: BigintUtils.parse(decode.getField<String>(5)),
-        delegatorShares: decode.getField(6),
-        description: Description.deserialize(decode.getField(7)),
-        unbondingHeight: decode.getField(8),
-        unbondingTime: ProtobufTimestamp.deserialize(decode.getField(9)),
-        commission: Commission.deserialize(decode.getField(10)),
-        minSelfDelegation: BigintUtils.parse(decode.getField<String>(11)),
-        unbondingOnHoldRefCount: decode.getField(12),
-        unbondingIds: decode.getFields<BigInt>(13));
+      operatorAddress: decode
+          .getResult(1)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      consensusPubkey: decode
+          .getResult(2)
+          ?.to<AnyMessage, List<int>>((e) => AnyMessage.deserialize(e)),
+      jailed: decode.getField(3),
+      status: decode
+          .getResult(4)
+          ?.to<BondStatus, int>((e) => BondStatus.fromValue(e)),
+      tokens: BigintUtils.parse(decode.getField<String>(5)),
+      delegatorShares: decode.getField(6),
+      description: Description.deserialize(decode.getField(7)),
+      unbondingHeight: decode.getField(8),
+      unbondingTime: ProtobufTimestamp.deserialize(decode.getField(9)),
+      commission: Commission.deserialize(decode.getField(10)),
+      minSelfDelegation: BigintUtils.parse(decode.getField<String>(11)),
+      unbondingOnHoldRefCount: decode.getField(12),
+      unbondingIds: decode.getFields<BigInt>(13),
+    );
   }
 
   @override
@@ -148,18 +154,18 @@ class StakingValidator extends CosmosMessage {
 
   @override
   List get values => [
-        operatorAddress?.address,
-        consensusPubkey,
-        jailed,
-        status?.value,
-        tokens.toString(),
-        delegatorShares,
-        description,
-        unbondingHeight?.toString(),
-        unbondingTime,
-        commission,
-        minSelfDelegation.toString(),
-        unbondingOnHoldRefCount,
-        unbondingIds
-      ];
+    operatorAddress?.address,
+    consensusPubkey,
+    jailed,
+    status?.value,
+    tokens.toString(),
+    delegatorShares,
+    description,
+    unbondingHeight?.toString(),
+    unbondingTime,
+    commission,
+    minSelfDelegation.toString(),
+    unbondingOnHoldRefCount,
+    unbondingIds,
+  ];
 }

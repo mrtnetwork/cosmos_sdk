@@ -15,7 +15,9 @@ class QueryPayeeRequest extends CosmosMessage
   factory QueryPayeeRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryPayeeRequest(
-        channelId: decode.getField(1), relayer: decode.getField(2));
+      channelId: decode.getField(1),
+      relayer: decode.getField(2),
+    );
   }
 
   @override

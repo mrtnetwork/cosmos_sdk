@@ -10,13 +10,20 @@ class IbcChannelV2MsgTimeoutResponse extends CosmosMessage {
   factory IbcChannelV2MsgTimeoutResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcChannelV2MsgTimeoutResponse(
-        result: decode.getResult(1)?.to<IbcChannelV2ResponseResultType, int>(
-            IbcChannelV2ResponseResultType.fromValue));
+      result: decode
+          .getResult(1)
+          ?.to<IbcChannelV2ResponseResultType, int>(
+            IbcChannelV2ResponseResultType.fromValue,
+          ),
+    );
   }
   factory IbcChannelV2MsgTimeoutResponse.fromJson(Map<String, dynamic> json) {
     return IbcChannelV2MsgTimeoutResponse(
-        result: json.maybeAs<IbcChannelV2ResponseResultType, int>(
-            key: "result", onValue: IbcChannelV2ResponseResultType.fromValue));
+      result: json.maybeAs<IbcChannelV2ResponseResultType, int>(
+        key: "result",
+        onValue: IbcChannelV2ResponseResultType.fromValue,
+      ),
+    );
   }
   @override
   List<int> get fieldIds => [1];

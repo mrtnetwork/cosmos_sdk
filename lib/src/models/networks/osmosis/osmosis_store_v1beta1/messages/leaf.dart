@@ -8,8 +8,12 @@ class OsmosisStoreLeaf extends CosmosMessage {
   factory OsmosisStoreLeaf.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisStoreLeaf(
-        leaf: decode.getResult(1)?.to<OsmosisStoreChild, List<int>>(
-            (e) => OsmosisStoreChild.deserialize(e)));
+      leaf: decode
+          .getResult(1)
+          ?.to<OsmosisStoreChild, List<int>>(
+            (e) => OsmosisStoreChild.deserialize(e),
+          ),
+    );
   }
 
   @override

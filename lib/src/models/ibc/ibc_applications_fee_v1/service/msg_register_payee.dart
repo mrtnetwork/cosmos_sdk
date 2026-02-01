@@ -17,22 +17,28 @@ class MsgRegisterPayee extends IbcService<EmptyServiceRequestResponse> {
 
   /// the payee address
   final String? payee;
-  const MsgRegisterPayee(
-      {this.portId, this.channelId, this.relayer, this.payee});
+  const MsgRegisterPayee({
+    this.portId,
+    this.channelId,
+    this.relayer,
+    this.payee,
+  });
   factory MsgRegisterPayee.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgRegisterPayee(
-        portId: decode.getField(1),
-        channelId: decode.getField(2),
-        relayer: decode.getField(3),
-        payee: decode.getField(4));
+      portId: decode.getField(1),
+      channelId: decode.getField(2),
+      relayer: decode.getField(3),
+      payee: decode.getField(4),
+    );
   }
   factory MsgRegisterPayee.fromJson(Map<String, dynamic> json) {
     return MsgRegisterPayee(
-        portId: json.as("port_id"),
-        channelId: json.as("channel_id"),
-        relayer: json.as("relayer"),
-        payee: json.as("payee"));
+      portId: json.as("port_id"),
+      channelId: json.as("channel_id"),
+      relayer: json.as("relayer"),
+      payee: json.as("payee"),
+    );
   }
 
   @override
@@ -44,7 +50,7 @@ class MsgRegisterPayee extends IbcService<EmptyServiceRequestResponse> {
       "port_id": portId,
       "channel_id": channelId,
       "relayer": relayer,
-      "payee": payee
+      "payee": payee,
     };
   }
 

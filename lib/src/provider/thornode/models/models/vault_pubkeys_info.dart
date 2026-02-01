@@ -10,21 +10,24 @@ class ThorVaultPubkeysInfoResponse {
     required List<VaultPubKeyInfo> asgard,
     required List<VaultPubKeyInfo> yggdrasil,
     required List<VaultPubKeyInfo> inactive,
-  })  : asgard = asgard.immutable,
-        yggdrasil = yggdrasil.immutable,
-        inactive = inactive.immutable;
+  }) : asgard = asgard.immutable,
+       yggdrasil = yggdrasil.immutable,
+       inactive = inactive.immutable;
 
   factory ThorVaultPubkeysInfoResponse.fromJson(Map<String, dynamic> json) {
     return ThorVaultPubkeysInfoResponse(
-      asgard: (json['asgard'] as List<dynamic>)
-          .map((categoryJson) => VaultPubKeyInfo.fromJson(categoryJson))
-          .toList(),
-      yggdrasil: (json['yggdrasil'] as List<dynamic>)
-          .map((categoryJson) => VaultPubKeyInfo.fromJson(categoryJson))
-          .toList(),
-      inactive: (json['inactive'] as List<dynamic>)
-          .map((categoryJson) => VaultPubKeyInfo.fromJson(categoryJson))
-          .toList(),
+      asgard:
+          (json['asgard'] as List<dynamic>)
+              .map((categoryJson) => VaultPubKeyInfo.fromJson(categoryJson))
+              .toList(),
+      yggdrasil:
+          (json['yggdrasil'] as List<dynamic>)
+              .map((categoryJson) => VaultPubKeyInfo.fromJson(categoryJson))
+              .toList(),
+      inactive:
+          (json['inactive'] as List<dynamic>)
+              .map((categoryJson) => VaultPubKeyInfo.fromJson(categoryJson))
+              .toList(),
     );
   }
 

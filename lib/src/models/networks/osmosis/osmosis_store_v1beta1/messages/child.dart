@@ -6,11 +6,13 @@ class OsmosisStoreChild extends CosmosMessage {
   final List<int>? index;
   final String accumulation;
   OsmosisStoreChild({required this.accumulation, List<int>? index})
-      : index = BytesUtils.tryToBytes(index);
+    : index = BytesUtils.tryToBytes(index);
   factory OsmosisStoreChild.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisStoreChild(
-        accumulation: decode.getField(2), index: decode.getField(1));
+      accumulation: decode.getField(2),
+      index: decode.getField(1),
+    );
   }
 
   @override
@@ -20,7 +22,7 @@ class OsmosisStoreChild extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "index": BytesUtils.tryToHexString(index),
-      "accumulation": accumulation
+      "accumulation": accumulation,
     };
   }
 

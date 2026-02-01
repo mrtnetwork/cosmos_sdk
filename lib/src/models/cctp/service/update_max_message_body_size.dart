@@ -5,21 +5,29 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:cosmos_sdk/src/utils/quick.dart';
 
 class CCTPV1MsgUpdateMaxMessageBodySize
-    extends CCTPV1Service<EmptyServiceRequestResponse> with AminoMessage {
+    extends CCTPV1Service<EmptyServiceRequestResponse>
+    with AminoMessage {
   final String from;
   final BigInt messageSize;
-  const CCTPV1MsgUpdateMaxMessageBodySize(
-      {required this.from, required this.messageSize});
+  const CCTPV1MsgUpdateMaxMessageBodySize({
+    required this.from,
+    required this.messageSize,
+  });
 
   factory CCTPV1MsgUpdateMaxMessageBodySize.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CCTPV1MsgUpdateMaxMessageBodySize(
-        from: decode.getField(1), messageSize: decode.getField(2));
+      from: decode.getField(1),
+      messageSize: decode.getField(2),
+    );
   }
   factory CCTPV1MsgUpdateMaxMessageBodySize.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return CCTPV1MsgUpdateMaxMessageBodySize(
-        from: json.as("from"), messageSize: json.asBigInt("message_size"));
+      from: json.as("from"),
+      messageSize: json.asBigInt("message_size"),
+    );
   }
 
   @override
@@ -41,6 +49,7 @@ class CCTPV1MsgUpdateMaxMessageBodySize
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        CCTPV1Types.msgUpdateMaxMessageBodySizeResponse);
+      CCTPV1Types.msgUpdateMaxMessageBodySizeResponse,
+    );
   }
 }

@@ -20,13 +20,15 @@ class MsgPayPacketFeeAsync extends IbcService<EmptyServiceRequestResponse> {
   factory MsgPayPacketFeeAsync.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgPayPacketFeeAsync(
-        packetId: IbcChannelPacketId.deserialize(decode.getField(1)),
-        packetFee: IbcFeePacketFee.deserialize(decode.getField(2)));
+      packetId: IbcChannelPacketId.deserialize(decode.getField(1)),
+      packetFee: IbcFeePacketFee.deserialize(decode.getField(2)),
+    );
   }
   factory MsgPayPacketFeeAsync.fromJson(Map<String, dynamic> json) {
     return MsgPayPacketFeeAsync(
-        packetId: IbcChannelPacketId.fromJson(json.asMap("packet_id")),
-        packetFee: IbcFeePacketFee.fromJson(json.asMap("packet_fee")));
+      packetId: IbcChannelPacketId.fromJson(json.asMap("packet_id")),
+      packetFee: IbcFeePacketFee.fromJson(json.asMap("packet_fee")),
+    );
   }
 
   @override

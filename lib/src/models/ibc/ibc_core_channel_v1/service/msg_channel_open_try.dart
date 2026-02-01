@@ -23,15 +23,15 @@ class MsgChannelOpenTry extends IbcService<MsgChannelOpenTryResponse> {
   final List<int>? proofInit;
   final IbcClientHeight height;
   final String? signer;
-  MsgChannelOpenTry(
-      {this.portId,
-      this.previousChannelId,
-      required this.channel,
-      this.counterpartyVersion,
-      List<int>? proofInit,
-      required this.height,
-      this.signer})
-      : proofInit = BytesUtils.tryToBytes(proofInit, unmodifiable: true);
+  MsgChannelOpenTry({
+    this.portId,
+    this.previousChannelId,
+    required this.channel,
+    this.counterpartyVersion,
+    List<int>? proofInit,
+    required this.height,
+    this.signer,
+  }) : proofInit = BytesUtils.tryToBytes(proofInit, unmodifiable: true);
   factory MsgChannelOpenTry.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgChannelOpenTry(
@@ -77,14 +77,14 @@ class MsgChannelOpenTry extends IbcService<MsgChannelOpenTryResponse> {
 
   @override
   List get values => [
-        portId,
-        previousChannelId,
-        channel,
-        counterpartyVersion,
-        proofInit,
-        height,
-        signer
-      ];
+    portId,
+    previousChannelId,
+    channel,
+    counterpartyVersion,
+    proofInit,
+    height,
+    signer,
+  ];
 
   @override
   List<String?> get signers => [signer];

@@ -9,8 +9,12 @@ class MsgChannelUpgradeAckResponse extends CosmosMessage {
   factory MsgChannelUpgradeAckResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgChannelUpgradeAckResponse(
-        result: decode.getResult(1)?.to<IbcChannelResponseResultType, int>(
-            (e) => IbcChannelResponseResultType.fromValue(e)));
+      result: decode
+          .getResult(1)
+          ?.to<IbcChannelResponseResultType, int>(
+            (e) => IbcChannelResponseResultType.fromValue(e),
+          ),
+    );
   }
 
   @override

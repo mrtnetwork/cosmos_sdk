@@ -14,14 +14,17 @@ class IbcTransaferParams extends CosmosMessage {
   final bool? receiveEnabled;
   factory IbcTransaferParams.fromJson(Map<String, dynamic> json) {
     return IbcTransaferParams(
-        receiveEnabled: json["receive_enabled"],
-        sendEnabled: json["send_enabled"]);
+      receiveEnabled: json["receive_enabled"],
+      sendEnabled: json["send_enabled"],
+    );
   }
   const IbcTransaferParams({this.sendEnabled, this.receiveEnabled});
   factory IbcTransaferParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcTransaferParams(
-        sendEnabled: decode.getField(1), receiveEnabled: decode.getField(2));
+      sendEnabled: decode.getField(1),
+      receiveEnabled: decode.getField(2),
+    );
   }
 
   @override

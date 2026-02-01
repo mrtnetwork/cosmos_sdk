@@ -10,34 +10,43 @@ class C4eChiainContinuousVestingAccount extends CosmosBaseAccount {
   final BaseVestingAccount? baseVestingAccount;
   final BigInt? startTime;
   final List<C4eChiainContinuousVestingPeriod>? vestingPeriods;
-  const C4eChiainContinuousVestingAccount(
-      {this.baseVestingAccount, this.startTime, this.vestingPeriods});
+  const C4eChiainContinuousVestingAccount({
+    this.baseVestingAccount,
+    this.startTime,
+    this.vestingPeriods,
+  });
 
   factory C4eChiainContinuousVestingAccount.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return C4eChiainContinuousVestingAccount(
-        baseVestingAccount: decode
-            .getResult(1)
-            ?.to<BaseVestingAccount, List<int>>(
-                (e) => BaseVestingAccount.deserialize(e)),
-        startTime: decode.getField(2),
-        vestingPeriods: decode
-            .getFields<List<int>>(3)
-            .map((e) => C4eChiainContinuousVestingPeriod.deserialize(e))
-            .toList());
+      baseVestingAccount: decode
+          .getResult(1)
+          ?.to<BaseVestingAccount, List<int>>(
+            (e) => BaseVestingAccount.deserialize(e),
+          ),
+      startTime: decode.getField(2),
+      vestingPeriods:
+          decode
+              .getFields<List<int>>(3)
+              .map((e) => C4eChiainContinuousVestingPeriod.deserialize(e))
+              .toList(),
+    );
   }
   factory C4eChiainContinuousVestingAccount.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return C4eChiainContinuousVestingAccount(
-      baseVestingAccount:
-          json.valueTo<BaseVestingAccount, Map<String, dynamic>>(
-              key: "base_vesting_account",
-              parse: (e) => BaseVestingAccount.fromJson(e)),
+      baseVestingAccount: json
+          .valueTo<BaseVestingAccount, Map<String, dynamic>>(
+            key: "base_vesting_account",
+            parse: (e) => BaseVestingAccount.fromJson(e),
+          ),
       startTime: json.valueAsBigInt("start_time"),
-      vestingPeriods: json
-          .valueAsList<List<Map<String, dynamic>>?>("key")
-          ?.map((e) => C4eChiainContinuousVestingPeriod.fromJson(e))
-          .toList(),
+      vestingPeriods:
+          json
+              .valueAsList<List<Map<String, dynamic>>?>("key")
+              ?.map((e) => C4eChiainContinuousVestingPeriod.fromJson(e))
+              .toList(),
     );
   }
   @override
@@ -45,7 +54,7 @@ class C4eChiainContinuousVestingAccount extends CosmosBaseAccount {
     return {
       'base_vesting_account': baseVestingAccount?.toJson(),
       'start_time': startTime?.toString(),
-      'vesting_periods': vestingPeriods?.map((e) => e.toJson()).toList()
+      'vesting_periods': vestingPeriods?.map((e) => e.toJson()).toList(),
     };
   }
 

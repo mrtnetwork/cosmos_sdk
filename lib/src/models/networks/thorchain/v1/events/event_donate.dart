@@ -8,8 +8,9 @@ class ThorchainEventDonate extends CosmosMessage {
   factory ThorchainEventDonate.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainEventDonate(
-        pool: ThorchainAsset.deserialize(decode.getField(1)),
-        tx: ThorchainTx.deserialize(decode.getField(2)));
+      pool: ThorchainAsset.deserialize(decode.getField(1)),
+      tx: ThorchainTx.deserialize(decode.getField(2)),
+    );
   }
 
   @override

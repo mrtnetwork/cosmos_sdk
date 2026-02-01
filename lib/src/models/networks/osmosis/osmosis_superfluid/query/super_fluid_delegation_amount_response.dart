@@ -7,20 +7,22 @@ class OsmosisSuperfluidSuperfluidDelegationAmountResponse
     extends CosmosMessage {
   final List<Coin> amount;
   OsmosisSuperfluidSuperfluidDelegationAmountResponse(List<Coin> amount)
-      : amount = amount.immutable;
+    : amount = amount.immutable;
   factory OsmosisSuperfluidSuperfluidDelegationAmountResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return OsmosisSuperfluidSuperfluidDelegationAmountResponse(decode
-        .getFields<List<int>>(1)
-        .map((e) => Coin.deserialize(e))
-        .toList());
+    return OsmosisSuperfluidSuperfluidDelegationAmountResponse(
+      decode.getFields<List<int>>(1).map((e) => Coin.deserialize(e)).toList(),
+    );
   }
   factory OsmosisSuperfluidSuperfluidDelegationAmountResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisSuperfluidSuperfluidDelegationAmountResponse(
-        (json["amount"] as List?)?.map((e) => Coin.fromJson(e)).toList() ??
-            <Coin>[]);
+      (json["amount"] as List?)?.map((e) => Coin.fromJson(e)).toList() ??
+          <Coin>[],
+    );
   }
 
   @override

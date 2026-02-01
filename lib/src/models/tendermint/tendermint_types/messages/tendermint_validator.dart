@@ -8,19 +8,20 @@ class TendermintValidator extends CosmosMessage {
   final TendermintPublicKey pubkey;
   final BigInt? votingPower;
   final BigInt? proposerPriority;
-  TendermintValidator(
-      {List<int>? address,
-      required this.pubkey,
-      this.votingPower,
-      this.proposerPriority})
-      : address = BytesUtils.tryToBytes(address);
+  TendermintValidator({
+    List<int>? address,
+    required this.pubkey,
+    this.votingPower,
+    this.proposerPriority,
+  }) : address = BytesUtils.tryToBytes(address);
   factory TendermintValidator.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return TendermintValidator(
-        address: decode.getField(1),
-        pubkey: TendermintPublicKey.deserialize(decode.getField(2)),
-        proposerPriority: decode.getField(4),
-        votingPower: decode.getField(3));
+      address: decode.getField(1),
+      pubkey: TendermintPublicKey.deserialize(decode.getField(2)),
+      proposerPriority: decode.getField(4),
+      votingPower: decode.getField(3),
+    );
   }
 
   @override
@@ -32,7 +33,7 @@ class TendermintValidator extends CosmosMessage {
       "address": BytesUtils.tryToHexString(address),
       "pub_key": pubkey.toJson(),
       "voting_power": votingPower?.toString(),
-      "proposer_priority": proposerPriority?.toString()
+      "proposer_priority": proposerPriority?.toString(),
     };
   }
 

@@ -16,27 +16,30 @@ class QueryPacketCommitmentsResponse extends CosmosMessage {
   final IbcClientHeight height;
   factory QueryPacketCommitmentsResponse.fromJson(Map<String, dynamic> json) {
     return QueryPacketCommitmentsResponse(
-      commitments: (json["commitments"] as List?)
-          ?.map((e) => IbcChannelPacketState.fromJson(e))
-          .toList(),
+      commitments:
+          (json["commitments"] as List?)
+              ?.map((e) => IbcChannelPacketState.fromJson(e))
+              .toList(),
       height: IbcClientHeight.fromJson(json["height"]),
-      pagination: json["pagination"] == null
-          ? null
-          : PageResponse.fromJson(json["pagination"]),
+      pagination:
+          json["pagination"] == null
+              ? null
+              : PageResponse.fromJson(json["pagination"]),
     );
   }
-  QueryPacketCommitmentsResponse(
-      {List<IbcChannelPacketState>? commitments,
-      this.pagination,
-      required this.height})
-      : commitments = commitments?.emptyAsNull?.immutable;
+  QueryPacketCommitmentsResponse({
+    List<IbcChannelPacketState>? commitments,
+    this.pagination,
+    required this.height,
+  }) : commitments = commitments?.emptyAsNull?.immutable;
   factory QueryPacketCommitmentsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryPacketCommitmentsResponse(
-      commitments: decode
-          .getFields<List<int>>(1)
-          .map((e) => IbcChannelPacketState.deserialize(e))
-          .toList(),
+      commitments:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => IbcChannelPacketState.deserialize(e))
+              .toList(),
       pagination: decode
           .getResult(2)
           ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
@@ -52,7 +55,7 @@ class QueryPacketCommitmentsResponse extends CosmosMessage {
     return {
       "commitments": commitments?.map((e) => e.toJson()).toList(),
       "pagination": pagination?.toJson(),
-      "height": height.toJson()
+      "height": height.toJson(),
     };
   }
 

@@ -23,22 +23,24 @@ class IbcInterchainAccount extends CosmosMessage {
 
   /// tx_type defines the type of transactions the interchain account can execute
   final String? txType;
-  const IbcInterchainAccount(
-      {this.version,
-      this.controllerConnectionId,
-      this.hostConnectionId,
-      this.address,
-      this.encoding,
-      this.txType});
+  const IbcInterchainAccount({
+    this.version,
+    this.controllerConnectionId,
+    this.hostConnectionId,
+    this.address,
+    this.encoding,
+    this.txType,
+  });
   factory IbcInterchainAccount.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcInterchainAccount(
-        version: decode.getField(1),
-        controllerConnectionId: decode.getField(2),
-        hostConnectionId: decode.getField(3),
-        address: decode.getField(4),
-        encoding: decode.getField(5),
-        txType: decode.getField(6));
+      version: decode.getField(1),
+      controllerConnectionId: decode.getField(2),
+      hostConnectionId: decode.getField(3),
+      address: decode.getField(4),
+      encoding: decode.getField(5),
+      txType: decode.getField(6),
+    );
   }
 
   @override
@@ -52,7 +54,7 @@ class IbcInterchainAccount extends CosmosMessage {
       "host_connection_id": hostConnectionId,
       "address": address,
       "encoding": encoding,
-      "tx_type": txType
+      "tx_type": txType,
     };
   }
 
@@ -61,11 +63,11 @@ class IbcInterchainAccount extends CosmosMessage {
 
   @override
   List get values => [
-        version,
-        controllerConnectionId,
-        hostConnectionId,
-        address,
-        encoding,
-        txType
-      ];
+    version,
+    controllerConnectionId,
+    hostConnectionId,
+    address,
+    encoding,
+    txType,
+  ];
 }

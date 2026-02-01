@@ -8,13 +8,14 @@ import 'package:cosmos_sdk/src/utils/utils.dart';
 class CosmWasmV1QueryRawContractStateResponse extends CosmosMessage {
   final List<int>? data;
   CosmWasmV1QueryRawContractStateResponse({required List<int>? data})
-      : data = data?.asImmutableBytes;
+    : data = data?.asImmutableBytes;
   factory CosmWasmV1QueryRawContractStateResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmWasmV1QueryRawContractStateResponse(data: decode.getField(1));
   }
   factory CosmWasmV1QueryRawContractStateResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return CosmWasmV1QueryRawContractStateResponse(data: json.asBytes("data"));
   }
 

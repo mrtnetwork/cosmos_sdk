@@ -6,13 +6,18 @@ class OsmosisSuperfluidMsgCreateFullRangePositionAndSuperfluidDelegateResponse
   final BigInt? lockId;
   final BigInt? positionId;
 
-  OsmosisSuperfluidMsgCreateFullRangePositionAndSuperfluidDelegateResponse(
-      {this.lockId, this.positionId});
+  OsmosisSuperfluidMsgCreateFullRangePositionAndSuperfluidDelegateResponse({
+    this.lockId,
+    this.positionId,
+  });
   factory OsmosisSuperfluidMsgCreateFullRangePositionAndSuperfluidDelegateResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidMsgCreateFullRangePositionAndSuperfluidDelegateResponse(
-        lockId: decode.getField(1), positionId: decode.getField(2));
+      lockId: decode.getField(1),
+      positionId: decode.getField(2),
+    );
   }
 
   @override
@@ -24,8 +29,9 @@ class OsmosisSuperfluidMsgCreateFullRangePositionAndSuperfluidDelegateResponse
   }
 
   @override
-  TypeUrl get typeUrl => OsmosisSuperfluidTypes
-      .msgCreateFullRangePositionAndSuperfluidDelegateResponse;
+  TypeUrl get typeUrl =>
+      OsmosisSuperfluidTypes
+          .msgCreateFullRangePositionAndSuperfluidDelegateResponse;
 
   @override
   List get values => [lockId, positionId];

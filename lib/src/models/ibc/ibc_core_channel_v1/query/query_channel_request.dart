@@ -13,13 +13,17 @@ class QueryChannelRequest extends CosmosMessage
   final String channelId;
   factory QueryChannelRequest.fromJson(Map<String, dynamic> json) {
     return QueryChannelRequest(
-        channelId: json["channel_id"], portId: json["port_id"]);
+      channelId: json["channel_id"],
+      portId: json["port_id"],
+    );
   }
   const QueryChannelRequest({required this.portId, required this.channelId});
   factory QueryChannelRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryChannelRequest(
-        portId: decode.getField(1), channelId: decode.getField(2));
+      portId: decode.getField(1),
+      channelId: decode.getField(2),
+    );
   }
 
   @override

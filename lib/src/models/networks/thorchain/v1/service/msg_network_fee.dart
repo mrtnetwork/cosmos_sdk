@@ -8,21 +8,22 @@ class ThorchainMsgNetworkFee extends CosmosMessage {
   final BigInt? transactionSize;
   final BigInt? transactionFeeRate;
   final List<int>? signer;
-  ThorchainMsgNetworkFee(
-      {this.blockHeight,
-      this.chain,
-      this.transactionSize,
-      this.transactionFeeRate,
-      List<int>? signer})
-      : signer = BytesUtils.tryToBytes(signer, unmodifiable: true);
+  ThorchainMsgNetworkFee({
+    this.blockHeight,
+    this.chain,
+    this.transactionSize,
+    this.transactionFeeRate,
+    List<int>? signer,
+  }) : signer = BytesUtils.tryToBytes(signer, unmodifiable: true);
   factory ThorchainMsgNetworkFee.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainMsgNetworkFee(
-        blockHeight: decode.getField(1),
-        chain: decode.getField(2),
-        transactionSize: decode.getField(3),
-        transactionFeeRate: decode.getField(4),
-        signer: decode.getField(5));
+      blockHeight: decode.getField(1),
+      chain: decode.getField(2),
+      transactionSize: decode.getField(3),
+      transactionFeeRate: decode.getField(4),
+      signer: decode.getField(5),
+    );
   }
 
   @override
@@ -43,6 +44,11 @@ class ThorchainMsgNetworkFee extends CosmosMessage {
   TypeUrl get typeUrl => ThorchainV1Types.msgNetworkFee;
 
   @override
-  List get values =>
-      [blockHeight, chain, transactionSize, transactionFeeRate, signer];
+  List get values => [
+    blockHeight,
+    chain,
+    transactionSize,
+    transactionFeeRate,
+    signer,
+  ];
 }

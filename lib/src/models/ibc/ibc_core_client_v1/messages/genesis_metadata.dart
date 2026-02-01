@@ -12,12 +12,14 @@ class IbcClientGenesisMetadata extends CosmosMessage {
   /// metadata value
   final List<int>? value;
   IbcClientGenesisMetadata({List<int>? key, List<int>? value})
-      : key = BytesUtils.tryToBytes(key, unmodifiable: true),
-        value = BytesUtils.tryToBytes(value, unmodifiable: true);
+    : key = BytesUtils.tryToBytes(key, unmodifiable: true),
+      value = BytesUtils.tryToBytes(value, unmodifiable: true);
   factory IbcClientGenesisMetadata.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcClientGenesisMetadata(
-        key: decode.getField(1), value: decode.getField(2));
+      key: decode.getField(1),
+      value: decode.getField(2),
+    );
   }
 
   @override
@@ -27,7 +29,7 @@ class IbcClientGenesisMetadata extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "key": BytesUtils.tryToHexString(key),
-      "value": BytesUtils.tryToHexString(value)
+      "value": BytesUtils.tryToHexString(value),
     };
   }
 

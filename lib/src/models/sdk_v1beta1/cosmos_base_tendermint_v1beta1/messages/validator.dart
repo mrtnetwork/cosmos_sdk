@@ -10,26 +10,33 @@ class CosmosTendermintValidator extends CosmosMessage {
   final Any? pubKey;
   final BigInt? votingPower;
   final BigInt? proposerPriority;
-  const CosmosTendermintValidator(
-      {this.address, this.pubKey, this.votingPower, this.proposerPriority});
+  const CosmosTendermintValidator({
+    this.address,
+    this.pubKey,
+    this.votingPower,
+    this.proposerPriority,
+  });
   factory CosmosTendermintValidator.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmosTendermintValidator(
-        address: decode
-            .getResult(1)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        pubKey:
-            decode.getResult(2)?.to<Any, List<int>>((e) => Any.deserialize(e)),
-        votingPower: decode.getField(3),
-        proposerPriority: decode.getField(4));
+      address: decode
+          .getResult(1)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      pubKey: decode
+          .getResult(2)
+          ?.to<Any, List<int>>((e) => Any.deserialize(e)),
+      votingPower: decode.getField(3),
+      proposerPriority: decode.getField(4),
+    );
   }
   factory CosmosTendermintValidator.fromJson(Map<String, dynamic> json) {
     return CosmosTendermintValidator(
-        address:
-            json["address"] == null ? null : CosmosBaseAddress(json["address"]),
-        pubKey: json["pub_key"] == null ? null : Any.fromJson(json["pub_key"]),
-        votingPower: BigintUtils.tryParse(json["voting_power"]),
-        proposerPriority: BigintUtils.tryParse(json["proposer_priority"]));
+      address:
+          json["address"] == null ? null : CosmosBaseAddress(json["address"]),
+      pubKey: json["pub_key"] == null ? null : Any.fromJson(json["pub_key"]),
+      votingPower: BigintUtils.tryParse(json["voting_power"]),
+      proposerPriority: BigintUtils.tryParse(json["proposer_priority"]),
+    );
   }
   @override
   List<int> get fieldIds => [1, 2, 3, 4];
@@ -40,7 +47,7 @@ class CosmosTendermintValidator extends CosmosMessage {
       "address": address?.address,
       "pub_key": pubKey?.toJson(),
       "voting_power": votingPower?.toString(),
-      "proposer_priority": proposerPriority?.toString()
+      "proposer_priority": proposerPriority?.toString(),
     };
   }
 

@@ -10,31 +10,39 @@ class OsmosisConcentratedLiquidityUserPositionsResponse extends CosmosMessage {
   /// pagination defines the pagination in the response.
   final PageResponse? pagination;
 
-  OsmosisConcentratedLiquidityUserPositionsResponse(
-      {required List<FullPositionBreakdown> positions, this.pagination})
-      : positions = positions.immutable;
+  OsmosisConcentratedLiquidityUserPositionsResponse({
+    required List<FullPositionBreakdown> positions,
+    this.pagination,
+  }) : positions = positions.immutable;
   factory OsmosisConcentratedLiquidityUserPositionsResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityUserPositionsResponse(
-        positions: decode
-            .getFields<List<int>>(1)
-            .map((e) => FullPositionBreakdown.deserialize(e))
-            .toList(),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
+      positions:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => FullPositionBreakdown.deserialize(e))
+              .toList(),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
+    );
   }
   factory OsmosisConcentratedLiquidityUserPositionsResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityUserPositionsResponse(
-        positions: (json["positions"] as List?)
-                ?.map((e) => FullPositionBreakdown.fromJson(e))
-                .toList() ??
-            <FullPositionBreakdown>[],
-        pagination: json["pagination"] == null
-            ? null
-            : PageResponse.fromJson(json["pagination"]));
+      positions:
+          (json["positions"] as List?)
+              ?.map((e) => FullPositionBreakdown.fromJson(e))
+              .toList() ??
+          <FullPositionBreakdown>[],
+      pagination:
+          json["pagination"] == null
+              ? null
+              : PageResponse.fromJson(json["pagination"]),
+    );
   }
 
   @override
@@ -44,7 +52,7 @@ class OsmosisConcentratedLiquidityUserPositionsResponse extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "positions": positions.map((e) => e.toJson()).toList(),
-      "pagination": pagination?.toJson()
+      "pagination": pagination?.toJson(),
     };
   }
 

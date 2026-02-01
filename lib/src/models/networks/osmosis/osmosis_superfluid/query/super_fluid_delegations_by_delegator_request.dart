@@ -6,15 +6,19 @@ class OsmosisSuperfluidSuperfluidDelegationsByDelegatorRequest
     extends CosmosMessage
     with
         QueryMessage<
-            OsmosisSuperfluidSuperfluidDelegationsByDelegatorResponse> {
+          OsmosisSuperfluidSuperfluidDelegationsByDelegatorResponse
+        > {
   final String delegatorAddress;
-  const OsmosisSuperfluidSuperfluidDelegationsByDelegatorRequest(
-      {required this.delegatorAddress});
+  const OsmosisSuperfluidSuperfluidDelegationsByDelegatorRequest({
+    required this.delegatorAddress,
+  });
   factory OsmosisSuperfluidSuperfluidDelegationsByDelegatorRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidSuperfluidDelegationsByDelegatorRequest(
-        delegatorAddress: decode.getField(1));
+      delegatorAddress: decode.getField(1),
+    );
   }
 
   @override
@@ -37,16 +41,20 @@ class OsmosisSuperfluidSuperfluidDelegationsByDelegatorRequest
 
   @override
   OsmosisSuperfluidSuperfluidDelegationsByDelegatorResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisSuperfluidSuperfluidDelegationsByDelegatorResponse.fromJson(
-        json);
+      json,
+    );
   }
 
   @override
   OsmosisSuperfluidSuperfluidDelegationsByDelegatorResponse onResponse(
-      List<int> bytes) {
-    return OsmosisSuperfluidSuperfluidDelegationsByDelegatorResponse
-        .deserialize(bytes);
+    List<int> bytes,
+  ) {
+    return OsmosisSuperfluidSuperfluidDelegationsByDelegatorResponse.deserialize(
+      bytes,
+    );
   }
 
   @override

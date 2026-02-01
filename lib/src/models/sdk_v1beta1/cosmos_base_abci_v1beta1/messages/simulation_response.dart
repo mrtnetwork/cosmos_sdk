@@ -12,8 +12,9 @@ class SimulationResponse extends CosmosMessage {
   factory SimulationResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return SimulationResponse(
-        gasInfo: GasInfo.deserialize(decode.getField(1)),
-        result: Result.deserialize(decode.getField(2)));
+      gasInfo: GasInfo.deserialize(decode.getField(1)),
+      result: Result.deserialize(decode.getField(2)),
+    );
   }
 
   @override

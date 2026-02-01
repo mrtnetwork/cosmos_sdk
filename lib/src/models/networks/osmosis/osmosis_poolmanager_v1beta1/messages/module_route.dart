@@ -12,8 +12,11 @@ class OsmosisPoolManagerModuleRoute extends CosmosMessage {
   factory OsmosisPoolManagerModuleRoute.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolManagerModuleRoute(
-      poolType: decode.getResult(1)?.to<OsmosisPoolManagerPoolType, int>(
-          (e) => OsmosisPoolManagerPoolType.fromValue(e)),
+      poolType: decode
+          .getResult(1)
+          ?.to<OsmosisPoolManagerPoolType, int>(
+            (e) => OsmosisPoolManagerPoolType.fromValue(e),
+          ),
       poolId: decode.getField(2),
     );
   }

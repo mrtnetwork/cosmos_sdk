@@ -10,8 +10,10 @@ class IbcConnectionParams extends CosmosMessage {
   final BigInt? maxExpectedTimePerBlock;
   factory IbcConnectionParams.fromJson(Map<String, dynamic> json) {
     return IbcConnectionParams(
-        maxExpectedTimePerBlock:
-            BigintUtils.tryParse(json["max_expected_time_per_block"]));
+      maxExpectedTimePerBlock: BigintUtils.tryParse(
+        json["max_expected_time_per_block"],
+      ),
+    );
   }
   const IbcConnectionParams({this.maxExpectedTimePerBlock});
   factory IbcConnectionParams.deserialize(List<int> bytes) {
@@ -24,9 +26,7 @@ class IbcConnectionParams extends CosmosMessage {
 
   @override
   Map<String, dynamic> toJson() {
-    return {
-      "max_expected_time_per_block": maxExpectedTimePerBlock?.toString(),
-    };
+    return {"max_expected_time_per_block": maxExpectedTimePerBlock?.toString()};
   }
 
   @override

@@ -6,10 +6,12 @@ class OsmosisPoolManagerMsgSetDenomPairTakerFeeResponse extends CosmosMessage {
 
   OsmosisPoolManagerMsgSetDenomPairTakerFeeResponse(this.success);
   factory OsmosisPoolManagerMsgSetDenomPairTakerFeeResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolManagerMsgSetDenomPairTakerFeeResponse(
-        decode.getField(1));
+      decode.getField(1),
+    );
   }
 
   @override

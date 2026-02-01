@@ -9,13 +9,16 @@ class DistributionQueryValidatorCommissionRequest extends CosmosMessage
     with QueryMessage<DistributionQueryValidatorCommissionResponse> {
   /// validator_address defines the validator address to query for.
   final CosmosBaseAddress validatorAddress;
-  const DistributionQueryValidatorCommissionRequest(
-      {required this.validatorAddress});
+  const DistributionQueryValidatorCommissionRequest({
+    required this.validatorAddress,
+  });
   factory DistributionQueryValidatorCommissionRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionQueryValidatorCommissionRequest(
-        validatorAddress: CosmosBaseAddress(decode.getField(1)));
+      validatorAddress: CosmosBaseAddress(decode.getField(1)),
+    );
   }
 
   @override
@@ -40,7 +43,8 @@ class DistributionQueryValidatorCommissionRequest extends CosmosMessage
 
   @override
   DistributionQueryValidatorCommissionResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return DistributionQueryValidatorCommissionResponse.fromJson(json);
   }
 

@@ -15,16 +15,21 @@ class BasicAllowance extends CosmosMessage {
   /// expiration specifies an optional time when this allowance expires
   final ProtobufTimestamp? expiration;
   BasicAllowance({required List<Coin> spendLimit, this.expiration})
-      : spendLimit = spendLimit.immutable;
+    : spendLimit = spendLimit.immutable;
   factory BasicAllowance.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return BasicAllowance(
-        spendLimit: decode
-            .getFields<List<int>>(1)
-            .map((e) => Coin.deserialize(e))
-            .toList(),
-        expiration: decode.getResult(2)?.to<ProtobufTimestamp, List<int>>(
-            (e) => ProtobufTimestamp.deserialize(e)));
+      spendLimit:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
+      expiration: decode
+          .getResult(2)
+          ?.to<ProtobufTimestamp, List<int>>(
+            (e) => ProtobufTimestamp.deserialize(e),
+          ),
+    );
   }
 
   @override
@@ -34,7 +39,7 @@ class BasicAllowance extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "spend_limit": spendLimit.map((e) => e.toJson()).toList(),
-      "expiration": expiration?.toJson()
+      "expiration": expiration?.toJson(),
     };
   }
 

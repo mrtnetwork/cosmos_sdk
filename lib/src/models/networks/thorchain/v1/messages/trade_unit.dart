@@ -5,8 +5,11 @@ class ThorchainTradeUnit extends CosmosMessage {
   final ThorchainAsset asset;
   final BigInt units;
   final BigInt depth;
-  const ThorchainTradeUnit(
-      {required this.asset, required this.units, required this.depth});
+  const ThorchainTradeUnit({
+    required this.asset,
+    required this.units,
+    required this.depth,
+  });
   factory ThorchainTradeUnit.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainTradeUnit(
@@ -24,7 +27,7 @@ class ThorchainTradeUnit extends CosmosMessage {
     return {
       "asset": asset.toJson(),
       "units": units.toString(),
-      "depth": depth.toString()
+      "depth": depth.toString(),
     };
   }
 

@@ -6,15 +6,21 @@ import 'down_time.dart';
 class OsmosisDowntimeDetectorGenesisDowntimeEntry extends CosmosMessage {
   final OsmosisDowntimeDetectorDowntime? duration;
   final ProtobufTimestamp lastDowntime;
-  const OsmosisDowntimeDetectorGenesisDowntimeEntry(
-      {this.duration, required this.lastDowntime});
+  const OsmosisDowntimeDetectorGenesisDowntimeEntry({
+    this.duration,
+    required this.lastDowntime,
+  });
   factory OsmosisDowntimeDetectorGenesisDowntimeEntry.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisDowntimeDetectorGenesisDowntimeEntry(
       lastDowntime: ProtobufTimestamp.fromString(decode.getField(2)),
-      duration: decode.getResult(1)?.to<OsmosisDowntimeDetectorDowntime, int>(
-          (e) => OsmosisDowntimeDetectorDowntime.fromValue(e)),
+      duration: decode
+          .getResult(1)
+          ?.to<OsmosisDowntimeDetectorDowntime, int>(
+            (e) => OsmosisDowntimeDetectorDowntime.fromValue(e),
+          ),
     );
   }
 

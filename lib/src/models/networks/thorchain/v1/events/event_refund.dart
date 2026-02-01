@@ -6,8 +6,12 @@ class ThorchainEventRefund extends CosmosMessage {
   final String? reason;
   final ThorchainTx inTx;
   final ThorchainFee fee;
-  const ThorchainEventRefund(
-      {this.code, this.reason, required this.inTx, required this.fee});
+  const ThorchainEventRefund({
+    this.code,
+    this.reason,
+    required this.inTx,
+    required this.fee,
+  });
   factory ThorchainEventRefund.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainEventRefund(
@@ -27,7 +31,7 @@ class ThorchainEventRefund extends CosmosMessage {
       "code": code,
       "reason": reason,
       "in_tx": inTx.toJson(),
-      "fee": fee.toJson()
+      "fee": fee.toJson(),
     };
   }
 

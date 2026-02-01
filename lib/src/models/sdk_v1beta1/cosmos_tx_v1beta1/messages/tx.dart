@@ -21,26 +21,31 @@ class Tx extends CosmosMessage {
 
   factory Tx.fromJson(Map<String, dynamic> json) {
     return Tx(
-        body: TXBody.fromJson(json["body"]),
-        authInfo: AuthInfo.fromJson(json["auth_info"]),
-        signatures: (json["signatures"] as List?)
-                ?.map((e) => CosmosUtils.toBytes(e))
-                .toList() ??
-            []);
+      body: TXBody.fromJson(json["body"]),
+      authInfo: AuthInfo.fromJson(json["auth_info"]),
+      signatures:
+          (json["signatures"] as List?)
+              ?.map((e) => CosmosUtils.toBytes(e))
+              .toList() ??
+          [],
+    );
   }
-  Tx(
-      {required this.body,
-      required this.authInfo,
-      required List<List<int>> signatures})
-      : signatures = List<List<int>>.unmodifiable(signatures
-            .map((e) => BytesUtils.toBytes(e, unmodifiable: true))
-            .toList());
+  Tx({
+    required this.body,
+    required this.authInfo,
+    required List<List<int>> signatures,
+  }) : signatures = List<List<int>>.unmodifiable(
+         signatures
+             .map((e) => BytesUtils.toBytes(e, unmodifiable: true))
+             .toList(),
+       );
   factory Tx.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Tx(
-        body: TXBody.deserialize(decode.getField(1)),
-        authInfo: AuthInfo.deserialize(decode.getField(2)),
-        signatures: decode.getFields<List<int>>(3));
+      body: TXBody.deserialize(decode.getField(1)),
+      authInfo: AuthInfo.deserialize(decode.getField(2)),
+      signatures: decode.getFields<List<int>>(3),
+    );
   }
 
   @override
@@ -51,7 +56,7 @@ class Tx extends CosmosMessage {
     return {
       "body": body.toJson(),
       "auth_info": authInfo.toJson(),
-      "signatures": signatures.map((e) => CosmosUtils.toBase64(e)).toList()
+      "signatures": signatures.map((e) => CosmosUtils.toBase64(e)).toList(),
     };
   }
 

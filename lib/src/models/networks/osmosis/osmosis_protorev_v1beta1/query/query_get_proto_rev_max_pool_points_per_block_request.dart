@@ -7,10 +7,12 @@ class OsmosisProtorevQueryGetProtoRevMaxPoolPointsPerBlockRequest
     extends CosmosMessage
     with
         QueryMessage<
-            OsmosisProtorevQueryGetProtoRevMaxPoolPointsPerBlockResponse> {
+          OsmosisProtorevQueryGetProtoRevMaxPoolPointsPerBlockResponse
+        > {
   const OsmosisProtorevQueryGetProtoRevMaxPoolPointsPerBlockRequest();
   factory OsmosisProtorevQueryGetProtoRevMaxPoolPointsPerBlockRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return const OsmosisProtorevQueryGetProtoRevMaxPoolPointsPerBlockRequest();
   }
 
@@ -27,16 +29,20 @@ class OsmosisProtorevQueryGetProtoRevMaxPoolPointsPerBlockRequest
 
   @override
   OsmosisProtorevQueryGetProtoRevMaxPoolPointsPerBlockResponse onResponse(
-      List<int> bytes) {
-    return OsmosisProtorevQueryGetProtoRevMaxPoolPointsPerBlockResponse
-        .deserialize(bytes);
+    List<int> bytes,
+  ) {
+    return OsmosisProtorevQueryGetProtoRevMaxPoolPointsPerBlockResponse.deserialize(
+      bytes,
+    );
   }
 
   @override
   OsmosisProtorevQueryGetProtoRevMaxPoolPointsPerBlockResponse onJsonResponse(
-      Map<String, dynamic> json) {
-    return OsmosisProtorevQueryGetProtoRevMaxPoolPointsPerBlockResponse
-        .fromJson(json);
+    Map<String, dynamic> json,
+  ) {
+    return OsmosisProtorevQueryGetProtoRevMaxPoolPointsPerBlockResponse.fromJson(
+      json,
+    );
   }
 
   @override

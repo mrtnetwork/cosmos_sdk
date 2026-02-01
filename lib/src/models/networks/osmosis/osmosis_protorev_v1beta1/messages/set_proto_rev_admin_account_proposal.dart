@@ -8,16 +8,21 @@ class OsmosisProtorevSetProtoRevAdminAccountProposal extends CosmosMessage {
   final String? title;
   final String? description;
   final String? account;
-  OsmosisProtorevSetProtoRevAdminAccountProposal(
-      {this.title, this.description, this.account});
+  OsmosisProtorevSetProtoRevAdminAccountProposal({
+    this.title,
+    this.description,
+    this.account,
+  });
 
   factory OsmosisProtorevSetProtoRevAdminAccountProposal.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisProtorevSetProtoRevAdminAccountProposal(
-        title: decode.getField(1),
-        description: decode.getField(2),
-        account: decode.getField(3));
+      title: decode.getField(1),
+      description: decode.getField(2),
+      account: decode.getField(3),
+    );
   }
 
   @override

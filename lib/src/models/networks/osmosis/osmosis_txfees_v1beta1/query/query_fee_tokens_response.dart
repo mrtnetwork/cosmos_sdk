@@ -12,15 +12,19 @@ class OsmosisTxfeesQueryFeeTokensResponse extends CosmosMessage {
   factory OsmosisTxfeesQueryFeeTokensResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisTxfeesQueryFeeTokensResponse(
-        feetokens: decode
-            .getFields<List<int>>(1)
-            .map((e) => OsmosisTxfeesFeeToken.deserialize(e))
-            .toList());
+      feetokens:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => OsmosisTxfeesFeeToken.deserialize(e))
+              .toList(),
+    );
   }
   factory OsmosisTxfeesQueryFeeTokensResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisTxfeesQueryFeeTokensResponse(
-      feetokens: (json["fee_tokens"] as List?)
+      feetokens:
+          (json["fee_tokens"] as List?)
               ?.map((e) => OsmosisTxfeesFeeToken.fromJson(e))
               .toList() ??
           <OsmosisTxfeesFeeToken>[],

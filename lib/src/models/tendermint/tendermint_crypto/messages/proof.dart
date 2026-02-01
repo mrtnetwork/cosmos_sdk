@@ -9,19 +9,22 @@ class Proof extends CosmosMessage {
   final List<int>? leafHash;
   final List<List<int>>? aunts;
   Proof({this.total, this.index, List<int>? leafHash, List<List<int>>? aunts})
-      : leafHash = BytesUtils.tryToBytes(leafHash, unmodifiable: true),
-        aunts = aunts == null
-            ? null
-            : List<List<int>>.unmodifiable(
-                aunts.map((e) => BytesUtils.tryToBytes(e)));
+    : leafHash = BytesUtils.tryToBytes(leafHash, unmodifiable: true),
+      aunts =
+          aunts == null
+              ? null
+              : List<List<int>>.unmodifiable(
+                aunts.map((e) => BytesUtils.tryToBytes(e)),
+              );
 
   factory Proof.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Proof(
-        total: decode.getField(1),
-        index: decode.getField(2),
-        leafHash: decode.getField(3),
-        aunts: decode.getFields<List<int>>(4));
+      total: decode.getField(1),
+      index: decode.getField(2),
+      leafHash: decode.getField(3),
+      aunts: decode.getFields<List<int>>(4),
+    );
   }
 
   @override
@@ -33,7 +36,7 @@ class Proof extends CosmosMessage {
       "total": total?.toString(),
       "index": index?.toString(),
       "leaf_hash": BytesUtils.tryToHexString(leafHash),
-      "aunts": aunts?.map((e) => BytesUtils.toHexString(e))
+      "aunts": aunts?.map((e) => BytesUtils.toHexString(e)),
     };
   }
 

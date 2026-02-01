@@ -27,26 +27,28 @@ class CheckTxResponse {
     this.mempoolError,
     this.priority,
     this.sender,
-  })  : events = events.immutable,
-        data = BytesUtils.tryToBytes(data, unmodifiable: true);
+  }) : events = events.immutable,
+       data = BytesUtils.tryToBytes(data, unmodifiable: true);
 
   factory CheckTxResponse.fromJson(Map<String, dynamic> json) {
     final String log = json["log"] ?? '';
     return CheckTxResponse(
-        events: (json["events"] as List?)
-                ?.map((e) => EventResponse.fromJson(e))
-                .toList() ??
-            <EventResponse>[],
-        gasWanted: BigintUtils.parse(json["gas_wanted"]),
-        gasUsed: BigintUtils.parse(json["gas_used"]),
-        code: IntUtils.tryParse(json["code"]),
-        data: StringUtils.tryEncode(json["data"], type: StringEncoding.base64),
-        log: log.trim().isEmpty ? null : log,
-        info: json["info"],
-        codespace: json["codespace"],
-        sender: json["sender"],
-        priority: BigintUtils.tryParse(json["priority"]),
-        mempoolError: json["mempool_error"]);
+      events:
+          (json["events"] as List?)
+              ?.map((e) => EventResponse.fromJson(e))
+              .toList() ??
+          <EventResponse>[],
+      gasWanted: BigintUtils.parse(json["gas_wanted"]),
+      gasUsed: BigintUtils.parse(json["gas_used"]),
+      code: IntUtils.tryParse(json["code"]),
+      data: StringUtils.tryEncode(json["data"], type: StringEncoding.base64),
+      log: log.trim().isEmpty ? null : log,
+      info: json["info"],
+      codespace: json["codespace"],
+      sender: json["sender"],
+      priority: BigintUtils.tryParse(json["priority"]),
+      mempoolError: json["mempool_error"],
+    );
   }
   Map<String, dynamic> toJson() {
     return {

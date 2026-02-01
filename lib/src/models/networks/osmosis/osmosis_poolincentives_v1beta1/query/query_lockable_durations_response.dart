@@ -7,23 +7,28 @@ class OsmosisPoolincentivesQueryLockableDurationsResponse
   final List<ProtobufDuration> lockableDurations;
 
   OsmosisPoolincentivesQueryLockableDurationsResponse(
-      List<ProtobufDuration> lockableDurations)
-      : lockableDurations = lockableDurations.immutable;
+    List<ProtobufDuration> lockableDurations,
+  ) : lockableDurations = lockableDurations.immutable;
   factory OsmosisPoolincentivesQueryLockableDurationsResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
-    return OsmosisPoolincentivesQueryLockableDurationsResponse(decode
-        .getFields<List<int>>(1)
-        .map((e) => ProtobufDuration.deserialize(e))
-        .toList());
+    return OsmosisPoolincentivesQueryLockableDurationsResponse(
+      decode
+          .getFields<List<int>>(1)
+          .map((e) => ProtobufDuration.deserialize(e))
+          .toList(),
+    );
   }
   factory OsmosisPoolincentivesQueryLockableDurationsResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisPoolincentivesQueryLockableDurationsResponse(
-        (json["lockable_durations"] as List?)
-                ?.map((e) => ProtobufDuration.fromString(e))
-                .toList() ??
-            <ProtobufDuration>[]);
+      (json["lockable_durations"] as List?)
+              ?.map((e) => ProtobufDuration.fromString(e))
+              .toList() ??
+          <ProtobufDuration>[],
+    );
   }
 
   @override
@@ -32,7 +37,7 @@ class OsmosisPoolincentivesQueryLockableDurationsResponse
   @override
   Map<String, dynamic> toJson() {
     return {
-      "lockable_durations": lockableDurations.map((e) => e.toJson()).toList()
+      "lockable_durations": lockableDurations.map((e) => e.toJson()).toList(),
     };
   }
 

@@ -15,38 +15,41 @@ class ThorchainEventStreamingSwap extends CosmosMessage {
   final ThorchainCoin outCoin;
   final List<BigInt>? failedSwaps;
   final List<String>? failedSwapReasons;
-  ThorchainEventStreamingSwap(
-      {this.txId,
-      this.interval,
-      this.quantity,
-      this.count,
-      this.lastHeight,
-      required this.tradeTarget,
-      required this.deposit,
-      required this.inCoin,
-      required this.outCoin,
-      List<BigInt>? failedSwaps,
-      List<String>? failedSwapReasonss})
-      : failedSwapReasons = failedSwapReasonss?.emptyAsNull?.immutable,
-        failedSwaps = failedSwaps?.emptyAsNull?.immutable;
+  ThorchainEventStreamingSwap({
+    this.txId,
+    this.interval,
+    this.quantity,
+    this.count,
+    this.lastHeight,
+    required this.tradeTarget,
+    required this.deposit,
+    required this.inCoin,
+    required this.outCoin,
+    List<BigInt>? failedSwaps,
+    List<String>? failedSwapReasonss,
+  }) : failedSwapReasons = failedSwapReasonss?.emptyAsNull?.immutable,
+       failedSwaps = failedSwaps?.emptyAsNull?.immutable;
   factory ThorchainEventStreamingSwap.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainEventStreamingSwap(
-        txId: decode.getField(1),
-        interval: decode.getField(2),
-        quantity: decode.getField(3),
-        count: decode.getField(4),
-        lastHeight: decode.getField(5),
-        tradeTarget: BigintUtils.parse(decode.getField<String>(6)),
-        deposit: ThorchainCoin.deserialize(decode.getField(7)),
-        inCoin: ThorchainCoin.deserialize(decode.getField(8)),
-        outCoin: ThorchainCoin.deserialize(decode.getField(9)),
-        failedSwaps: decode
-                .getResult<ProtocolBufferDecoderResult?>(10)
-                ?.to<List<BigInt>, List<int>>(
-                    (e) => e.map((e) => BigintUtils.parse(e)).toList()) ??
-            <BigInt>[],
-        failedSwapReasonss: decode.getFields<String>(11));
+      txId: decode.getField(1),
+      interval: decode.getField(2),
+      quantity: decode.getField(3),
+      count: decode.getField(4),
+      lastHeight: decode.getField(5),
+      tradeTarget: BigintUtils.parse(decode.getField<String>(6)),
+      deposit: ThorchainCoin.deserialize(decode.getField(7)),
+      inCoin: ThorchainCoin.deserialize(decode.getField(8)),
+      outCoin: ThorchainCoin.deserialize(decode.getField(9)),
+      failedSwaps:
+          decode
+              .getResult<ProtocolBufferDecoderResult?>(10)
+              ?.to<List<BigInt>, List<int>>(
+                (e) => e.map((e) => BigintUtils.parse(e)).toList(),
+              ) ??
+          <BigInt>[],
+      failedSwapReasonss: decode.getFields<String>(11),
+    );
   }
 
   @override
@@ -65,7 +68,7 @@ class ThorchainEventStreamingSwap extends CosmosMessage {
       "in": inCoin.toJson(),
       "out": outCoin.toJson(),
       "failed_swaps": failedSwaps?.map((e) => e.toString()).toList(),
-      "failed_swap_reasons": failedSwapReasons
+      "failed_swap_reasons": failedSwapReasons,
     };
   }
 
@@ -74,16 +77,16 @@ class ThorchainEventStreamingSwap extends CosmosMessage {
 
   @override
   List get values => [
-        txId,
-        interval,
-        quantity,
-        count,
-        lastHeight,
-        tradeTarget.toString(),
-        deposit,
-        inCoin,
-        outCoin,
-        failedSwaps,
-        failedSwapReasons
-      ];
+    txId,
+    interval,
+    quantity,
+    count,
+    lastHeight,
+    tradeTarget.toString(),
+    deposit,
+    inCoin,
+    outCoin,
+    failedSwaps,
+    failedSwapReasons,
+  ];
 }

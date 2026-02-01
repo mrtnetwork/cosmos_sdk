@@ -10,10 +10,9 @@ class CapabilityOwners extends CosmosMessage {
   CapabilityOwners(List<Owner> owners) : owners = owners.immutable;
   factory CapabilityOwners.deserialize(List<int> bytes) {
     final deocde = CosmosProtocolBuffer.decode(bytes);
-    return CapabilityOwners(deocde
-        .getFields<List<int>>(1)
-        .map((e) => Owner.deserialize(e))
-        .toList());
+    return CapabilityOwners(
+      deocde.getFields<List<int>>(1).map((e) => Owner.deserialize(e)).toList(),
+    );
   }
 
   @override

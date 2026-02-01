@@ -13,24 +13,29 @@ class OsmosisConcentratedLiquidityIncentiveRecordBody extends CosmosMessage {
   /// start_time is the time when the incentive starts distributing
   final ProtobufTimestamp startTime;
 
-  OsmosisConcentratedLiquidityIncentiveRecordBody(
-      {required this.remainingCoin,
-      required this.emissionRate,
-      required this.startTime});
+  OsmosisConcentratedLiquidityIncentiveRecordBody({
+    required this.remainingCoin,
+    required this.emissionRate,
+    required this.startTime,
+  });
   factory OsmosisConcentratedLiquidityIncentiveRecordBody.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityIncentiveRecordBody(
-        remainingCoin: DecCoin.deserialize(decode.getField(1)),
-        emissionRate: decode.getField(2),
-        startTime: ProtobufTimestamp.deserialize(decode.getField(3)));
+      remainingCoin: DecCoin.deserialize(decode.getField(1)),
+      emissionRate: decode.getField(2),
+      startTime: ProtobufTimestamp.deserialize(decode.getField(3)),
+    );
   }
   factory OsmosisConcentratedLiquidityIncentiveRecordBody.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityIncentiveRecordBody(
-        remainingCoin: DecCoin.fromJson(json["remaining_coin"]),
-        emissionRate: json["emission_rate"],
-        startTime: ProtobufTimestamp.fromString(json["start_time"]));
+      remainingCoin: DecCoin.fromJson(json["remaining_coin"]),
+      emissionRate: json["emission_rate"],
+      startTime: ProtobufTimestamp.fromString(json["start_time"]),
+    );
   }
 
   @override
@@ -41,7 +46,7 @@ class OsmosisConcentratedLiquidityIncentiveRecordBody extends CosmosMessage {
     return {
       "remaining_coin": remainingCoin.toJson(),
       "emission_rate": emissionRate,
-      "start_time": startTime.toJson()
+      "start_time": startTime.toJson(),
     };
   }
 

@@ -13,7 +13,8 @@ class GovQueryTallyResultResponse extends CosmosMessage {
   factory GovQueryTallyResultResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GovQueryTallyResultResponse(
-        GovTallyResult.deserialize(decode.getField(1)));
+      GovTallyResult.deserialize(decode.getField(1)),
+    );
   }
 
   @override

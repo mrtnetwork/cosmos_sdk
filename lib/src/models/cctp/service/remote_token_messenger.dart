@@ -6,25 +6,31 @@ import 'package:cosmos_sdk/src/utils/quick.dart';
 import 'package:cosmos_sdk/src/utils/utils.dart';
 
 class CCTPV1MsgAddRemoteTokenMessenger
-    extends CCTPV1Service<EmptyServiceRequestResponse> with AminoMessage {
+    extends CCTPV1Service<EmptyServiceRequestResponse>
+    with AminoMessage {
   final String? from;
   final int? domainId;
   final List<int>? address;
-  const CCTPV1MsgAddRemoteTokenMessenger(
-      {required this.from, required this.domainId, required this.address});
+  const CCTPV1MsgAddRemoteTokenMessenger({
+    required this.from,
+    required this.domainId,
+    required this.address,
+  });
 
   factory CCTPV1MsgAddRemoteTokenMessenger.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CCTPV1MsgAddRemoteTokenMessenger(
-        address: decode.getField(3),
-        domainId: decode.getField(2),
-        from: decode.getField(1));
+      address: decode.getField(3),
+      domainId: decode.getField(2),
+      from: decode.getField(1),
+    );
   }
   factory CCTPV1MsgAddRemoteTokenMessenger.fromJson(Map<String, dynamic> json) {
     return CCTPV1MsgAddRemoteTokenMessenger(
-        from: json.as("from"),
-        address: json.asBytes("address"),
-        domainId: json.as("domain_id"));
+      from: json.as("from"),
+      address: json.asBytes("address"),
+      domainId: json.as("domain_id"),
+    );
   }
 
   @override
@@ -35,7 +41,7 @@ class CCTPV1MsgAddRemoteTokenMessenger
     return {
       "from": from,
       "address": CosmosUtils.tryToBase64(address),
-      "domain_id": domainId
+      "domain_id": domainId,
     };
   }
 
@@ -50,6 +56,7 @@ class CCTPV1MsgAddRemoteTokenMessenger
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        CCTPV1Types.msgAddRemoteTokenMessengerResponse);
+      CCTPV1Types.msgAddRemoteTokenMessengerResponse,
+    );
   }
 }

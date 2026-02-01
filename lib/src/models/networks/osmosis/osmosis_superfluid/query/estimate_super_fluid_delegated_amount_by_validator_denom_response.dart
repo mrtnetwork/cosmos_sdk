@@ -7,24 +7,25 @@ class OsmosisSuperfluidEstimateSuperfluidDelegatedAmountByValidatorDenomResponse
     extends CosmosMessage {
   final List<Coin> totalDelegatedCoins;
   OsmosisSuperfluidEstimateSuperfluidDelegatedAmountByValidatorDenomResponse(
-      List<Coin> totalDelegatedCoins)
-      : totalDelegatedCoins = totalDelegatedCoins.immutable;
+    List<Coin> totalDelegatedCoins,
+  ) : totalDelegatedCoins = totalDelegatedCoins.immutable;
   factory OsmosisSuperfluidEstimateSuperfluidDelegatedAmountByValidatorDenomResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidEstimateSuperfluidDelegatedAmountByValidatorDenomResponse(
-        decode
-            .getFields<List<int>>(1)
-            .map((e) => Coin.deserialize(e))
-            .toList());
+      decode.getFields<List<int>>(1).map((e) => Coin.deserialize(e)).toList(),
+    );
   }
   factory OsmosisSuperfluidEstimateSuperfluidDelegatedAmountByValidatorDenomResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisSuperfluidEstimateSuperfluidDelegatedAmountByValidatorDenomResponse(
-        (json["total_delegated_coins"] as List?)
-                ?.map((e) => Coin.fromJson(e))
-                .toList() ??
-            <Coin>[]);
+      (json["total_delegated_coins"] as List?)
+              ?.map((e) => Coin.fromJson(e))
+              .toList() ??
+          <Coin>[],
+    );
   }
 
   @override
@@ -34,13 +35,14 @@ class OsmosisSuperfluidEstimateSuperfluidDelegatedAmountByValidatorDenomResponse
   Map<String, dynamic> toJson() {
     return {
       "total_delegated_coins":
-          totalDelegatedCoins.map((e) => e.toJson()).toList()
+          totalDelegatedCoins.map((e) => e.toJson()).toList(),
     };
   }
 
   @override
-  TypeUrl get typeUrl => OsmosisSuperfluidTypes
-      .estimateSuperfluidDelegatedAmountByValidatorDenomResponse;
+  TypeUrl get typeUrl =>
+      OsmosisSuperfluidTypes
+          .estimateSuperfluidDelegatedAmountByValidatorDenomResponse;
 
   @override
   List get values => [totalDelegatedCoins];

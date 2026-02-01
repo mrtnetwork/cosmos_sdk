@@ -12,24 +12,29 @@ class IbcChannelV2QueryUnreceivedPacketsResponse extends CosmosMessage {
   /// query block height
   final IbcClientHeight height;
   factory IbcChannelV2QueryUnreceivedPacketsResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return IbcChannelV2QueryUnreceivedPacketsResponse(
-      sequences: json
-          .as<List?>("sequences")
-          ?.map((e) => BigintUtils.parse(e))
-          .toList(),
+      sequences:
+          json
+              .as<List?>("sequences")
+              ?.map((e) => BigintUtils.parse(e))
+              .toList(),
       height: IbcClientHeight.fromJson(json.asMap("height")),
     );
   }
-  IbcChannelV2QueryUnreceivedPacketsResponse(
-      {List<BigInt>? sequences, required this.height})
-      : sequences = sequences?.immutable;
+  IbcChannelV2QueryUnreceivedPacketsResponse({
+    List<BigInt>? sequences,
+    required this.height,
+  }) : sequences = sequences?.immutable;
   factory IbcChannelV2QueryUnreceivedPacketsResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcChannelV2QueryUnreceivedPacketsResponse(
-        sequences: decode.getFields<BigInt>(1),
-        height: IbcClientHeight.deserialize(decode.getField(2)));
+      sequences: decode.getFields<BigInt>(1),
+      height: IbcClientHeight.deserialize(decode.getField(2)),
+    );
   }
 
   @override
@@ -39,7 +44,7 @@ class IbcChannelV2QueryUnreceivedPacketsResponse extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "sequences": sequences?.map((e) => e.toString()).toList(),
-      "height": height.toJson()
+      "height": height.toJson(),
     };
   }
 

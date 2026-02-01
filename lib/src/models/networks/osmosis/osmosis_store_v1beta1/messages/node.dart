@@ -6,14 +6,16 @@ import 'child.dart';
 class OsmosisStoreNode extends CosmosMessage {
   final List<OsmosisStoreChild>? children;
   OsmosisStoreNode({List<OsmosisStoreChild>? children})
-      : children = children?.emptyAsNull?.immutable;
+    : children = children?.emptyAsNull?.immutable;
   factory OsmosisStoreNode.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisStoreNode(
-        children: decode
-            .getFields<List<int>>(1)
-            .map((e) => OsmosisStoreChild.deserialize(e))
-            .toList());
+      children:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => OsmosisStoreChild.deserialize(e))
+              .toList(),
+    );
   }
 
   @override

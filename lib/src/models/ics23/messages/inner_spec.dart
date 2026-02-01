@@ -23,26 +23,27 @@ class Ics23InnerSpec extends CosmosMessage {
 
   /// hash is the algorithm that must be used for each InnerOp
   final Ics23HashOp? hash;
-  Ics23InnerSpec(
-      {List<int>? childOrder,
-      this.childSize,
-      this.minPrefixLength,
-      this.maxPrefixLength,
-      List<int>? emptyChild,
-      this.hash})
-      : childOrder = childOrder?.emptyAsNull?.immutable,
-        emptyChild = BytesUtils.tryToBytes(emptyChild, unmodifiable: true);
+  Ics23InnerSpec({
+    List<int>? childOrder,
+    this.childSize,
+    this.minPrefixLength,
+    this.maxPrefixLength,
+    List<int>? emptyChild,
+    this.hash,
+  }) : childOrder = childOrder?.emptyAsNull?.immutable,
+       emptyChild = BytesUtils.tryToBytes(emptyChild, unmodifiable: true);
   factory Ics23InnerSpec.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Ics23InnerSpec(
-        childOrder: decode.getField(1),
-        childSize: decode.getField(2),
-        minPrefixLength: decode.getField(3),
-        maxPrefixLength: decode.getField(4),
-        emptyChild: decode.getField(5),
-        hash: decode
-            .getResult(6)
-            ?.to<Ics23HashOp, int>((e) => Ics23HashOp.fromValue(e)));
+      childOrder: decode.getField(1),
+      childSize: decode.getField(2),
+      minPrefixLength: decode.getField(3),
+      maxPrefixLength: decode.getField(4),
+      emptyChild: decode.getField(5),
+      hash: decode
+          .getResult(6)
+          ?.to<Ics23HashOp, int>((e) => Ics23HashOp.fromValue(e)),
+    );
   }
 
   @override
@@ -56,7 +57,7 @@ class Ics23InnerSpec extends CosmosMessage {
       "min_prefix_length": minPrefixLength,
       "max_prefix_length": maxPrefixLength,
       "empty_child": BytesUtils.tryToHexString(emptyChild),
-      "hash": hash?.value
+      "hash": hash?.value,
     };
   }
 
@@ -65,11 +66,11 @@ class Ics23InnerSpec extends CosmosMessage {
 
   @override
   List get values => [
-        childOrder?.map((e) => BigInt.from(e)).toList(),
-        childSize,
-        minPrefixLength,
-        maxPrefixLength,
-        emptyChild,
-        hash?.value
-      ];
+    childOrder?.map((e) => BigInt.from(e)).toList(),
+    childSize,
+    minPrefixLength,
+    maxPrefixLength,
+    emptyChild,
+    hash?.value,
+  ];
 }

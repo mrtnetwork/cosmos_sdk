@@ -21,9 +21,11 @@ class QueryUpgradeErrorResponse extends CosmosMessage {
       proofHeight: IbcClientHeight.fromJson(json["proof_height"]),
     );
   }
-  QueryUpgradeErrorResponse(
-      {required this.errorReceipt, List<int>? proof, required this.proofHeight})
-      : proof = BytesUtils.tryToBytes(proof, unmodifiable: true);
+  QueryUpgradeErrorResponse({
+    required this.errorReceipt,
+    List<int>? proof,
+    required this.proofHeight,
+  }) : proof = BytesUtils.tryToBytes(proof, unmodifiable: true);
   factory QueryUpgradeErrorResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryUpgradeErrorResponse(
@@ -41,7 +43,7 @@ class QueryUpgradeErrorResponse extends CosmosMessage {
     return {
       "error_receipt": errorReceipt.toJson(),
       "proof": BytesUtils.tryToHexString(proof),
-      "proof_height": proofHeight.toJson()
+      "proof_height": proofHeight.toJson(),
     };
   }
 

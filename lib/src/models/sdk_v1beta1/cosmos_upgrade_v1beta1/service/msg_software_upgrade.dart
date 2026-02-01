@@ -15,31 +15,27 @@ class MsgSoftwareUpgrade
   /// plan is the upgrade plan.
   final Plan plan;
 
-  const MsgSoftwareUpgrade({
-    this.authority,
-    required this.plan,
-  });
+  const MsgSoftwareUpgrade({this.authority, required this.plan});
   factory MsgSoftwareUpgrade.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgSoftwareUpgrade(
-        plan: Plan.deserialize(decode.getField(2)),
-        authority: decode
-            .getResult(1)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)));
+      plan: Plan.deserialize(decode.getField(2)),
+      authority: decode
+          .getResult(1)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+    );
   }
   factory MsgSoftwareUpgrade.fromJson(Map<String, dynamic> json) {
     return MsgSoftwareUpgrade(
-        plan: Plan.fromJson(json.asMap("plan")),
-        authority: json.asAddress("authority"));
+      plan: Plan.fromJson(json.asMap("plan")),
+      authority: json.asAddress("authority"),
+    );
   }
 
   /// Converts the message to a JSON-serializable map.
   @override
   Map<String, dynamic> toJson() {
-    return {
-      'authority': authority?.address,
-      'plan': plan.toJson(),
-    };
+    return {'authority': authority?.address, 'plan': plan.toJson()};
   }
 
   @override
@@ -56,6 +52,7 @@ class MsgSoftwareUpgrade
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        UpgradeV1beta1Types.msgSoftwareUpgradeResponse);
+      UpgradeV1beta1Types.msgSoftwareUpgradeResponse,
+    );
   }
 }

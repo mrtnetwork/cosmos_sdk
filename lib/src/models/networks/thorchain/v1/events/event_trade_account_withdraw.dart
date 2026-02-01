@@ -7,20 +7,22 @@ class ThorchainEventTradeAccountWithdraw extends CosmosMessage {
   final String? assetAddress;
   final String? runeAddress;
   final String? txId;
-  const ThorchainEventTradeAccountWithdraw(
-      {required this.amount,
-      required this.asset,
-      this.assetAddress,
-      this.runeAddress,
-      this.txId});
+  const ThorchainEventTradeAccountWithdraw({
+    required this.amount,
+    required this.asset,
+    this.assetAddress,
+    this.runeAddress,
+    this.txId,
+  });
   factory ThorchainEventTradeAccountWithdraw.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainEventTradeAccountWithdraw(
-        amount: BigInt.parse(decode.getField(1)),
-        asset: ThorchainAsset.deserialize(decode.getField(2)),
-        assetAddress: decode.getField(3),
-        runeAddress: decode.getField(4),
-        txId: decode.getField(5));
+      amount: BigInt.parse(decode.getField(1)),
+      asset: ThorchainAsset.deserialize(decode.getField(2)),
+      assetAddress: decode.getField(3),
+      runeAddress: decode.getField(4),
+      txId: decode.getField(5),
+    );
   }
 
   @override
@@ -33,7 +35,7 @@ class ThorchainEventTradeAccountWithdraw extends CosmosMessage {
       "asset": asset.toJson(),
       "asset_address": assetAddress,
       "rune_address": runeAddress,
-      "tx_id": txId
+      "tx_id": txId,
     };
   }
 
@@ -41,6 +43,11 @@ class ThorchainEventTradeAccountWithdraw extends CosmosMessage {
   TypeUrl get typeUrl => ThorchainV1Types.eventTradeAccountWithdraw;
 
   @override
-  List get values =>
-      [amount.toString(), asset, assetAddress, runeAddress, txId];
+  List get values => [
+    amount.toString(),
+    asset,
+    assetAddress,
+    runeAddress,
+    txId,
+  ];
 }

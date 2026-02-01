@@ -13,12 +13,14 @@ class CosmosSecp256K1PrivateKey extends CosmosPrivateKey {
   }
   factory CosmosSecp256K1PrivateKey.fromHex(String keyHex) {
     return CosmosSecp256K1PrivateKey.fromBytes(
-        BytesUtils.fromHexString(keyHex));
+      BytesUtils.fromHexString(keyHex),
+    );
   }
   factory CosmosSecp256K1PrivateKey.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmosSecp256K1PrivateKey._(
-        Secp256k1PrivateKey.fromBytes(decode.getField(1)));
+      Secp256k1PrivateKey.fromBytes(decode.getField(1)),
+    );
   }
   @override
   CosmosSecp256K1PublicKey toPublicKey() =>

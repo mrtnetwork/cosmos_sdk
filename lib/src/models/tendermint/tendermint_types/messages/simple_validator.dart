@@ -10,9 +10,13 @@ class SimpleValidator extends CosmosMessage {
   factory SimpleValidator.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return SimpleValidator(
-        pubKey: decode.getResult(1)?.to<TendermintPublicKey, List<int>>(
-            (e) => TendermintPublicKey.deserialize(e)),
-        votingPower: decode.getField(2));
+      pubKey: decode
+          .getResult(1)
+          ?.to<TendermintPublicKey, List<int>>(
+            (e) => TendermintPublicKey.deserialize(e),
+          ),
+      votingPower: decode.getField(2),
+    );
   }
 
   @override

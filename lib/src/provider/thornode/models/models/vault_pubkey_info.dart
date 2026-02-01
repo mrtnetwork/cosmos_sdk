@@ -13,9 +13,12 @@ class VaultPubKeyInfo {
   factory VaultPubKeyInfo.fromJson(Map<String, dynamic> json) {
     return VaultPubKeyInfo(
       pubKey: json['pub_key'],
-      routers: (json['routers'] as List<dynamic>)
-          .map((routerJson) => ThorChainContractResponse.fromJson(routerJson))
-          .toList(),
+      routers:
+          (json['routers'] as List<dynamic>)
+              .map(
+                (routerJson) => ThorChainContractResponse.fromJson(routerJson),
+              )
+              .toList(),
     );
   }
 

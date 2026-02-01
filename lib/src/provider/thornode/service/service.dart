@@ -20,6 +20,8 @@ mixin ThorNodeServiceProvider
   //   return params.toResponse(response.bodyBytes, response.statusCode);
   // }
   @override
-  Future<BaseServiceResponse<T>> doRequest<T>(ThorNodeRequestDetails params,
-      {Duration? timeout});
+  Future<BaseServiceResponse<T>> doRequest<T>(
+    ThorNodeRequestDetails params, {
+    Duration? timeout,
+  });
 }

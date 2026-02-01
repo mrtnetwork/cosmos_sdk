@@ -11,14 +11,18 @@ class DistributionDelegatorStartingInfo extends CosmosMessage {
   final BigInt? previousPeriod;
   final String stake;
   final BigInt height;
-  DistributionDelegatorStartingInfo(
-      {this.previousPeriod, required this.stake, required this.height});
+  DistributionDelegatorStartingInfo({
+    this.previousPeriod,
+    required this.stake,
+    required this.height,
+  });
   factory DistributionDelegatorStartingInfo.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionDelegatorStartingInfo(
-        previousPeriod: decode.getField(1),
-        height: decode.getField(3),
-        stake: decode.getField(2));
+      previousPeriod: decode.getField(1),
+      height: decode.getField(3),
+      stake: decode.getField(2),
+    );
   }
 
   @override
@@ -29,7 +33,7 @@ class DistributionDelegatorStartingInfo extends CosmosMessage {
     return {
       "previous_period": previousPeriod?.toString(),
       "stake": stake,
-      "height": height.toString()
+      "height": height.toString(),
     };
   }
 

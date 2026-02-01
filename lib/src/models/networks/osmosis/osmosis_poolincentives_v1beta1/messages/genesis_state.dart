@@ -13,28 +13,31 @@ class OsmosisPoolincentivesGenesisState extends CosmosMessage {
   final OsmosisPoolincentivesDistrInfo? distrInfo;
   final OsmosisPoolincentivesPoolToGauges? poolToGauges;
 
-  OsmosisPoolincentivesGenesisState(
-      {required this.params,
-      required List<ProtobufDuration> lockableDurations,
-      this.distrInfo,
-      this.poolToGauges})
-      : lockableDurations = lockableDurations.immutable;
+  OsmosisPoolincentivesGenesisState({
+    required this.params,
+    required List<ProtobufDuration> lockableDurations,
+    this.distrInfo,
+    this.poolToGauges,
+  }) : lockableDurations = lockableDurations.immutable;
   factory OsmosisPoolincentivesGenesisState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolincentivesGenesisState(
       params: OsmosisPoolincentivesParams.deserialize(decode.getField(1)),
-      lockableDurations: decode
-          .getFields<List<int>>(2)
-          .map((e) => ProtobufDuration.deserialize(e))
-          .toList(),
+      lockableDurations:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => ProtobufDuration.deserialize(e))
+              .toList(),
       distrInfo: decode
           .getResult(3)
           ?.to<OsmosisPoolincentivesDistrInfo, List<int>>(
-              (e) => OsmosisPoolincentivesDistrInfo.deserialize(e)),
+            (e) => OsmosisPoolincentivesDistrInfo.deserialize(e),
+          ),
       poolToGauges: decode
           .getResult(4)
           ?.to<OsmosisPoolincentivesPoolToGauges, List<int>>(
-              (e) => OsmosisPoolincentivesPoolToGauges.deserialize(e)),
+            (e) => OsmosisPoolincentivesPoolToGauges.deserialize(e),
+          ),
     );
   }
 
@@ -47,7 +50,7 @@ class OsmosisPoolincentivesGenesisState extends CosmosMessage {
       "params": params.toJson(),
       "lockable_durations": lockableDurations.map((e) => e.toJson()).toList(),
       "distr_info": distrInfo?.toJson(),
-      "pool_to_gauges": poolToGauges?.toJson()
+      "pool_to_gauges": poolToGauges?.toJson(),
     };
   }
 

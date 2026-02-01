@@ -9,7 +9,7 @@ class TxEncodeResponse extends CosmosMessage {
   /// tx_bytes is the encoded transaction bytes.
   final List<int> txBytes;
   TxEncodeResponse({required List<int> txBytes})
-      : txBytes = BytesUtils.toBytes(txBytes, unmodifiable: true);
+    : txBytes = BytesUtils.toBytes(txBytes, unmodifiable: true);
   factory TxEncodeResponse.fromJson(Map<String, dynamic> json) {
     return TxEncodeResponse(txBytes: CosmosUtils.toBytes(json["tx_bytes"]));
   }

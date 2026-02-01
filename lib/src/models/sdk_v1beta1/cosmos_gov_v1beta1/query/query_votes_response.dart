@@ -16,24 +16,27 @@ class GovQueryVotesResponse extends CosmosMessage {
     return GovQueryVotesResponse(
       votes:
           (json["votes"] as List?)?.map((e) => GovVote.fromJson(e)).toList() ??
-              [],
-      pagination: json["pagination"] == null
-          ? null
-          : PageResponse.fromJson(json["pagination"]),
+          [],
+      pagination:
+          json["pagination"] == null
+              ? null
+              : PageResponse.fromJson(json["pagination"]),
     );
   }
   GovQueryVotesResponse({required List<GovVote> votes, this.pagination})
-      : votes = votes.immutable;
+    : votes = votes.immutable;
   factory GovQueryVotesResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return GovQueryVotesResponse(
-        votes: decode
-            .getFields<List<int>>(1)
-            .map((e) => GovVote.deserialize(e))
-            .toList(),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
+      votes:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => GovVote.deserialize(e))
+              .toList(),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
+    );
   }
 
   @override
@@ -43,7 +46,7 @@ class GovQueryVotesResponse extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "votes": votes.map((e) => e.toJson()).toList(),
-      "pagination": pagination?.toJson()
+      "pagination": pagination?.toJson(),
     };
   }
 

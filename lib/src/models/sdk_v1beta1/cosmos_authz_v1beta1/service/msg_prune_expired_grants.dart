@@ -16,14 +16,18 @@ class AuthzMsgPruneExpiredGrants
   factory AuthzMsgPruneExpiredGrants.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return AuthzMsgPruneExpiredGrants(
-        pruner: decode
-            .getResult(1)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)));
+      pruner: decode
+          .getResult(1)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+    );
   }
   factory AuthzMsgPruneExpiredGrants.fromJson(Map<String, dynamic> json) {
     return AuthzMsgPruneExpiredGrants(
-        pruner: json.maybeAs<CosmosBaseAddress, String>(
-            key: "pruner", onValue: (e) => CosmosBaseAddress(e)));
+      pruner: json.maybeAs<CosmosBaseAddress, String>(
+        key: "pruner",
+        onValue: (e) => CosmosBaseAddress(e),
+      ),
+    );
   }
   @override
   List<int> get fieldIds => [1];
@@ -45,6 +49,7 @@ class AuthzMsgPruneExpiredGrants
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        AuthzV1beta1Types.authzMsgPruneExpiredGrantsResponse);
+      AuthzV1beta1Types.authzMsgPruneExpiredGrantsResponse,
+    );
   }
 }

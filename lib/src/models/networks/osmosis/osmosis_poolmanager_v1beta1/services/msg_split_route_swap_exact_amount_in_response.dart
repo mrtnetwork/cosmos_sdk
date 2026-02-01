@@ -7,10 +7,12 @@ class OsmosisPoolManagerMsgSplitRouteSwapExactAmountInResponse
 
   OsmosisPoolManagerMsgSplitRouteSwapExactAmountInResponse(this.tokenOutAmount);
   factory OsmosisPoolManagerMsgSplitRouteSwapExactAmountInResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolManagerMsgSplitRouteSwapExactAmountInResponse(
-        BigInt.parse(decode.getField(1)));
+      BigInt.parse(decode.getField(1)),
+    );
   }
 
   @override

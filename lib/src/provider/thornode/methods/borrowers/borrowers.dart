@@ -3,8 +3,12 @@ import 'package:cosmos_sdk/src/provider/thornode/core/thorenode.dart';
 import 'package:cosmos_sdk/src/provider/thornode/models/models/borrower_information.dart';
 
 /// Returns all borrowers for the given pool.
-class ThorNodeRequestAssetBorrowersInformation extends ThorNodeRequestParam<
-    List<AssetBorrowerPositionResponse>, List<Map<String, dynamic>>> {
+class ThorNodeRequestAssetBorrowersInformation
+    extends
+        ThorNodeRequestParam<
+          List<AssetBorrowerPositionResponse>,
+          List<Map<String, dynamic>>
+        > {
   ThorNodeRequestAssetBorrowersInformation({required this.asset, this.height});
 
   /// optional block height, defaults to current tip
@@ -24,7 +28,8 @@ class ThorNodeRequestAssetBorrowersInformation extends ThorNodeRequestParam<
 
   @override
   List<AssetBorrowerPositionResponse> onResonse(
-      List<Map<String, dynamic>> result) {
+    List<Map<String, dynamic>> result,
+  ) {
     return result
         .map((e) => AssetBorrowerPositionResponse.fromJson(e))
         .toList();

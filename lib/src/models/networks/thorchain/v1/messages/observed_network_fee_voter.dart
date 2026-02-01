@@ -9,23 +9,24 @@ class ThorchainObservedNetworkFeeVoter extends CosmosMessage {
   final List<String>? signers;
   final BigInt? feeRate;
   final BigInt? transactionSize;
-  ThorchainObservedNetworkFeeVoter(
-      {this.blockHeight,
-      this.reportBlockHeight,
-      this.chain,
-      List<String>? signers,
-      this.feeRate,
-      this.transactionSize})
-      : signers = signers?.emptyAsNull?.immutable;
+  ThorchainObservedNetworkFeeVoter({
+    this.blockHeight,
+    this.reportBlockHeight,
+    this.chain,
+    List<String>? signers,
+    this.feeRate,
+    this.transactionSize,
+  }) : signers = signers?.emptyAsNull?.immutable;
   factory ThorchainObservedNetworkFeeVoter.deserialized(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainObservedNetworkFeeVoter(
-        blockHeight: decode.getField(1),
-        reportBlockHeight: decode.getField(2),
-        chain: decode.getField(3),
-        signers: decode.getFields<String>(4),
-        feeRate: decode.getField(5),
-        transactionSize: decode.getField(6));
+      blockHeight: decode.getField(1),
+      reportBlockHeight: decode.getField(2),
+      chain: decode.getField(3),
+      signers: decode.getFields<String>(4),
+      feeRate: decode.getField(5),
+      transactionSize: decode.getField(6),
+    );
   }
 
   @override
@@ -39,7 +40,7 @@ class ThorchainObservedNetworkFeeVoter extends CosmosMessage {
       "chain": chain,
       "signers": signers,
       "fee_rate": feeRate?.toString(),
-      "transaction_size": transactionSize?.toString()
+      "transaction_size": transactionSize?.toString(),
     };
   }
 
@@ -48,11 +49,11 @@ class ThorchainObservedNetworkFeeVoter extends CosmosMessage {
 
   @override
   List get values => [
-        blockHeight,
-        reportBlockHeight,
-        chain,
-        signers,
-        feeRate,
-        transactionSize
-      ];
+    blockHeight,
+    reportBlockHeight,
+    chain,
+    signers,
+    feeRate,
+    transactionSize,
+  ];
 }

@@ -6,18 +6,21 @@ import 'package:blockchain_utils/helper/helper.dart';
 class ThorchainMsgObservedTxOut extends CosmosMessage {
   final List<ThorchainObservedTx> txs;
   final List<int>? signer;
-  ThorchainMsgObservedTxOut(
-      {required List<ThorchainObservedTx> txs, List<int>? signer})
-      : txs = txs.immutable,
-        signer = BytesUtils.tryToBytes(signer, unmodifiable: true);
+  ThorchainMsgObservedTxOut({
+    required List<ThorchainObservedTx> txs,
+    List<int>? signer,
+  }) : txs = txs.immutable,
+       signer = BytesUtils.tryToBytes(signer, unmodifiable: true);
   factory ThorchainMsgObservedTxOut.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainMsgObservedTxOut(
-        txs: decode
-            .getFields<List<int>>(1)
-            .map((e) => ThorchainObservedTx.deserialize(e))
-            .toList(),
-        signer: decode.getField(2));
+      txs:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => ThorchainObservedTx.deserialize(e))
+              .toList(),
+      signer: decode.getField(2),
+    );
   }
 
   @override
@@ -27,7 +30,7 @@ class ThorchainMsgObservedTxOut extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "txs": txs.map((e) => e.toJson()).toList(),
-      "signer": BytesUtils.tryToHexString(signer)
+      "signer": BytesUtils.tryToHexString(signer),
     };
   }
 

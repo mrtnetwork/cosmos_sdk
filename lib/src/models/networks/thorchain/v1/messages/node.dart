@@ -7,15 +7,18 @@ class ThorchainNode extends CosmosMessage {
   final List<int>? blameData;
   final List<int>? blameSignature;
   ThorchainNode({this.pubkey, List<int>? blameData, List<int>? blameSignature})
-      : blameData = BytesUtils.tryToBytes(blameData, unmodifiable: true),
-        blameSignature =
-            BytesUtils.tryToBytes(blameSignature, unmodifiable: true);
+    : blameData = BytesUtils.tryToBytes(blameData, unmodifiable: true),
+      blameSignature = BytesUtils.tryToBytes(
+        blameSignature,
+        unmodifiable: true,
+      );
   factory ThorchainNode.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainNode(
-        pubkey: decode.getField(1),
-        blameData: decode.getField(2),
-        blameSignature: decode.getField(3));
+      pubkey: decode.getField(1),
+      blameData: decode.getField(2),
+      blameSignature: decode.getField(3),
+    );
   }
 
   @override
@@ -26,7 +29,7 @@ class ThorchainNode extends CosmosMessage {
     return {
       "pubkey": pubkey,
       "blame_data": BytesUtils.tryToHexString(blameData),
-      "blame_signature": BytesUtils.tryToHexString(blameSignature)
+      "blame_signature": BytesUtils.tryToHexString(blameSignature),
     };
   }
 

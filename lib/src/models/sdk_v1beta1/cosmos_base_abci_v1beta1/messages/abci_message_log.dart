@@ -13,27 +13,31 @@ class ABCIMessageLog extends CosmosMessage {
   // execution.
   final List<StringEvent> events;
   ABCIMessageLog({this.msgIndex, this.log, required List<StringEvent> events})
-      : events = events.immutable;
+    : events = events.immutable;
 
   factory ABCIMessageLog.fromJson(Map<String, dynamic> json) {
     return ABCIMessageLog(
-        msgIndex: IntUtils.tryParse(json["msg_index"]),
-        log: json["log"],
-        events: (json["events"] as List?)
-                ?.map((e) => StringEvent.fromJson(e))
-                .toList() ??
-            []);
+      msgIndex: IntUtils.tryParse(json["msg_index"]),
+      log: json["log"],
+      events:
+          (json["events"] as List?)
+              ?.map((e) => StringEvent.fromJson(e))
+              .toList() ??
+          [],
+    );
   }
 
   factory ABCIMessageLog.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ABCIMessageLog(
-        msgIndex: decode.getField(1),
-        log: decode.getField(2),
-        events: decode
-            .getFields<List<int>>(3)
-            .map((e) => StringEvent.deserialize(e))
-            .toList());
+      msgIndex: decode.getField(1),
+      log: decode.getField(2),
+      events:
+          decode
+              .getFields<List<int>>(3)
+              .map((e) => StringEvent.deserialize(e))
+              .toList(),
+    );
   }
 
   @override

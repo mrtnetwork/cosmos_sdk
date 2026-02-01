@@ -18,19 +18,24 @@ class OsmosisIncentiveRewardsEstRequest extends CosmosMessage
   /// Lower limit is current epoch
   final BigInt? endEpoch;
 
-  OsmosisIncentiveRewardsEstRequest(
-      {required this.owner, List<BigInt>? lockIds, this.endEpoch})
-      : lockIds = lockIds?.emptyAsNull?.immutable;
+  OsmosisIncentiveRewardsEstRequest({
+    required this.owner,
+    List<BigInt>? lockIds,
+    this.endEpoch,
+  }) : lockIds = lockIds?.emptyAsNull?.immutable;
   factory OsmosisIncentiveRewardsEstRequest.fromBytes(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisIncentiveRewardsEstRequest(
-        owner: decode.getField(1),
-        lockIds: decode
-                .getResult<ProtocolBufferDecoderResult?>(2)
-                ?.to<List<BigInt>, List<int>>(
-                    (e) => e.map((e) => BigintUtils.parse(e)).toList()) ??
-            <BigInt>[],
-        endEpoch: decode.getField(3));
+      owner: decode.getField(1),
+      lockIds:
+          decode
+              .getResult<ProtocolBufferDecoderResult?>(2)
+              ?.to<List<BigInt>, List<int>>(
+                (e) => e.map((e) => BigintUtils.parse(e)).toList(),
+              ) ??
+          <BigInt>[],
+      endEpoch: decode.getField(3),
+    );
   }
 
   @override
@@ -46,7 +51,7 @@ class OsmosisIncentiveRewardsEstRequest extends CosmosMessage
     return {
       "owner": owner,
       "lock_ids": lockIds?.map((e) => e.toString()).toList(),
-      "end_epoch": endEpoch?.toString()
+      "end_epoch": endEpoch?.toString(),
     };
   }
 

@@ -8,15 +8,19 @@ class OsmosisProtorevQueryGetProtoRevPoolResponse extends CosmosMessage {
   final BigInt? poolId;
   const OsmosisProtorevQueryGetProtoRevPoolResponse({this.poolId});
   factory OsmosisProtorevQueryGetProtoRevPoolResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisProtorevQueryGetProtoRevPoolResponse(
-        poolId: decode.getField(1));
+      poolId: decode.getField(1),
+    );
   }
   factory OsmosisProtorevQueryGetProtoRevPoolResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisProtorevQueryGetProtoRevPoolResponse(
-        poolId: BigintUtils.tryParse(json["pool_id"]));
+      poolId: BigintUtils.tryParse(json["pool_id"]),
+    );
   }
 
   @override

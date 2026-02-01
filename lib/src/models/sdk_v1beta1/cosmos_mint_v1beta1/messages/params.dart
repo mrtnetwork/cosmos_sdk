@@ -23,12 +23,13 @@ class MintParams extends CosmosMessage {
   final BigInt? blocksPerYear;
   factory MintParams.fromJson(Map<String, dynamic> json) {
     return MintParams(
-        inflationRateChange: json.as("inflation_rate_change"),
-        inflationMax: json.as("inflation_max"),
-        inflationMin: json.as("inflation_min"),
-        goalBonded: json.as("goal_bonded"),
-        blocksPerYear: json.asBigInt("blocks_per_year"),
-        mintDenom: json.as("mint_denom"));
+      inflationRateChange: json.as("inflation_rate_change"),
+      inflationMax: json.as("inflation_max"),
+      inflationMin: json.as("inflation_min"),
+      goalBonded: json.as("goal_bonded"),
+      blocksPerYear: json.asBigInt("blocks_per_year"),
+      mintDenom: json.as("mint_denom"),
+    );
   }
   const MintParams({
     this.mintDenom,
@@ -41,12 +42,13 @@ class MintParams extends CosmosMessage {
   factory MintParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MintParams(
-        mintDenom: decode.getField(1),
-        inflationRateChange: decode.getField(2),
-        inflationMax: decode.getField(3),
-        inflationMin: decode.getField(4),
-        goalBonded: decode.getField(5),
-        blocksPerYear: decode.getField(6));
+      mintDenom: decode.getField(1),
+      inflationRateChange: decode.getField(2),
+      inflationMax: decode.getField(3),
+      inflationMin: decode.getField(4),
+      goalBonded: decode.getField(5),
+      blocksPerYear: decode.getField(6),
+    );
   }
 
   @override
@@ -69,11 +71,11 @@ class MintParams extends CosmosMessage {
 
   @override
   List get values => [
-        mintDenom,
-        inflationRateChange,
-        inflationMax,
-        inflationMin,
-        goalBonded,
-        blocksPerYear
-      ];
+    mintDenom,
+    inflationRateChange,
+    inflationMax,
+    inflationMin,
+    goalBonded,
+    blocksPerYear,
+  ];
 }

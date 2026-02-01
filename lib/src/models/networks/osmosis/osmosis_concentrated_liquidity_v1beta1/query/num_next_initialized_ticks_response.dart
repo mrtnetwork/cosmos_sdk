@@ -16,27 +16,36 @@ class OsmosisConcentratedLiquidityNumNextInitializedTicksResponse
     required this.currentLiquidity,
   }) : liquidityDepths = liquidityDepths.immutable;
   factory OsmosisConcentratedLiquidityNumNextInitializedTicksResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityNumNextInitializedTicksResponse(
-        liquidityDepths: decode
-            .getFields<List<int>>(1)
-            .map((e) =>
-                OsmosisConcentratedLiquidityTickLiquidityNet.deserialize(e))
-            .toList(),
-        currentTick: decode.getField(2),
-        currentLiquidity: decode.getField(3));
+      liquidityDepths:
+          decode
+              .getFields<List<int>>(1)
+              .map(
+                (e) =>
+                    OsmosisConcentratedLiquidityTickLiquidityNet.deserialize(e),
+              )
+              .toList(),
+      currentTick: decode.getField(2),
+      currentLiquidity: decode.getField(3),
+    );
   }
   factory OsmosisConcentratedLiquidityNumNextInitializedTicksResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityNumNextInitializedTicksResponse(
-        liquidityDepths: (json["liquidity_depths"] as List?)
-                ?.map((e) =>
-                    OsmosisConcentratedLiquidityTickLiquidityNet.fromJson(e))
-                .toList() ??
-            <OsmosisConcentratedLiquidityTickLiquidityNet>[],
-        currentTick: BigintUtils.tryParse(json["current_tick"]),
-        currentLiquidity: json["current_liquidity"]);
+      liquidityDepths:
+          (json["liquidity_depths"] as List?)
+              ?.map(
+                (e) => OsmosisConcentratedLiquidityTickLiquidityNet.fromJson(e),
+              )
+              .toList() ??
+          <OsmosisConcentratedLiquidityTickLiquidityNet>[],
+      currentTick: BigintUtils.tryParse(json["current_tick"]),
+      currentLiquidity: json["current_liquidity"],
+    );
   }
 
   @override
@@ -47,7 +56,7 @@ class OsmosisConcentratedLiquidityNumNextInitializedTicksResponse
     return {
       "liquidity_depths": liquidityDepths.map((e) => e.toJson()).toList(),
       "current_tick": currentTick?.toString(),
-      "current_liquidity": currentLiquidity
+      "current_liquidity": currentLiquidity,
     };
   }
 

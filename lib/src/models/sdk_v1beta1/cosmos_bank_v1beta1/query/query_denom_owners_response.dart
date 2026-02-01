@@ -15,24 +15,29 @@ class QueryDenomOwnersResponse extends CosmosMessage {
   const QueryDenomOwnersResponse({required this.denomOwners, this.pagination});
   factory QueryDenomOwnersResponse.fromJson(Map<String, dynamic> json) {
     return QueryDenomOwnersResponse(
-        denomOwners: (json["denom_owners"] as List)
-            .map((e) => DenomOwner.fromJson(e))
-            .toList(),
-        pagination: json["pagination"] == null
-            ? null
-            : PageResponse.fromJson(json["pagination"]));
+      denomOwners:
+          (json["denom_owners"] as List)
+              .map((e) => DenomOwner.fromJson(e))
+              .toList(),
+      pagination:
+          json["pagination"] == null
+              ? null
+              : PageResponse.fromJson(json["pagination"]),
+    );
   }
 
   factory QueryDenomOwnersResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryDenomOwnersResponse(
-        denomOwners: decode
-            .getFields<List<int>>(1)
-            .map((e) => DenomOwner.deserialize(e))
-            .toList(),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
+      denomOwners:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => DenomOwner.deserialize(e))
+              .toList(),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
+    );
   }
   @override
   List<int> get fieldIds => [1, 2];
@@ -41,7 +46,7 @@ class QueryDenomOwnersResponse extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "denom_owners": denomOwners.map((e) => e.toJson()).toList(),
-      "pagination": pagination?.toJson()
+      "pagination": pagination?.toJson(),
     };
   }
 

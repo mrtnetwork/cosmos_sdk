@@ -3,8 +3,9 @@ import 'package:cosmos_sdk/src/provider/thornode/core/thorenode.dart';
 import 'package:cosmos_sdk/src/provider/thornode/models/models/network.dart';
 
 /// Returns network overview statistics.
-class ThorNodeRequestNetworkStatistics extends ThorNodeRequestParam<
-    ThorNetworkStaticsResponse, Map<String, dynamic>> {
+class ThorNodeRequestNetworkStatistics
+    extends
+        ThorNodeRequestParam<ThorNetworkStaticsResponse, Map<String, dynamic>> {
   ThorNodeRequestNetworkStatistics({this.height});
 
   /// optional block height, defaults to current tip

@@ -12,7 +12,7 @@ class ABCIQueryRequest extends CosmosMessage
   final BigInt? height;
   final bool? prove;
   ABCIQueryRequest({List<int>? data, this.path, this.height, this.prove})
-      : data = BytesUtils.tryToBytes(data, unmodifiable: true);
+    : data = BytesUtils.tryToBytes(data, unmodifiable: true);
 
   @override
   List<int> get fieldIds => [1, 2, 3, 4];
@@ -23,7 +23,7 @@ class ABCIQueryRequest extends CosmosMessage
       "data": BytesUtils.tryToHexString(data),
       "path": path,
       "height": height?.toString(),
-      "prove": prove
+      "prove": prove,
     };
   }
 

@@ -9,13 +9,16 @@ class IbcSoloMachineV2ChannelStateData extends CosmosMessage {
   final List<int>? path;
   final IbcChannelChannel? channel;
   IbcSoloMachineV2ChannelStateData({List<int>? path, required this.channel})
-      : path = BytesUtils.tryToBytes(path, unmodifiable: true);
+    : path = BytesUtils.tryToBytes(path, unmodifiable: true);
   factory IbcSoloMachineV2ChannelStateData.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcSoloMachineV2ChannelStateData(
       path: decode.getField(1),
-      channel: decode.getResult(2)?.to<IbcChannelChannel, List<int>>(
-          (e) => IbcChannelChannel.deserialize(e)),
+      channel: decode
+          .getResult(2)
+          ?.to<IbcChannelChannel, List<int>>(
+            (e) => IbcChannelChannel.deserialize(e),
+          ),
     );
   }
 
@@ -26,7 +29,7 @@ class IbcSoloMachineV2ChannelStateData extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "path": BytesUtils.tryToHexString(path),
-      "channel": channel?.toJson()
+      "channel": channel?.toJson(),
     };
   }
 

@@ -8,16 +8,23 @@ class EventAttribute extends CosmosMessage {
   final bool? index;
   factory EventAttribute.fromJson(Map<String, dynamic> json) {
     return EventAttribute(
-        index: json["index"], key: json["key"], value: json["value"]);
+      index: json["index"],
+      key: json["key"],
+      value: json["value"],
+    );
   }
-  const EventAttribute(
-      {required this.key, required this.value, required this.index});
+  const EventAttribute({
+    required this.key,
+    required this.value,
+    required this.index,
+  });
   factory EventAttribute.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EventAttribute(
-        key: decode.getField(1),
-        value: decode.getField(2),
-        index: decode.getField(3));
+      key: decode.getField(1),
+      value: decode.getField(2),
+      index: decode.getField(3),
+    );
   }
 
   @override

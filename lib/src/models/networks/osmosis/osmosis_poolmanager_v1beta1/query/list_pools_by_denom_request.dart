@@ -7,7 +7,8 @@ class OsmosisPoolManagerListPoolsByDenomRequest extends CosmosMessage
   final String? denom;
   const OsmosisPoolManagerListPoolsByDenomRequest({this.denom});
   factory OsmosisPoolManagerListPoolsByDenomRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolManagerListPoolsByDenomRequest(denom: decode.getField(1));
   }
@@ -16,7 +17,8 @@ class OsmosisPoolManagerListPoolsByDenomRequest extends CosmosMessage
 
   @override
   OsmosisPoolManagerListPoolsByDenomResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisPoolManagerListPoolsByDenomResponse.fromJson(json);
   }
 

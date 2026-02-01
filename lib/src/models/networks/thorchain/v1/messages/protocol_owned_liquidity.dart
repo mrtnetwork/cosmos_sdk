@@ -4,8 +4,10 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 class ThorchainProtocolOwnedLiquidity extends CosmosMessage {
   final BigInt runeDeposited;
   final BigInt runeWithdrawn;
-  ThorchainProtocolOwnedLiquidity(
-      {required this.runeDeposited, required this.runeWithdrawn});
+  ThorchainProtocolOwnedLiquidity({
+    required this.runeDeposited,
+    required this.runeWithdrawn,
+  });
   factory ThorchainProtocolOwnedLiquidity.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainProtocolOwnedLiquidity(
@@ -21,7 +23,7 @@ class ThorchainProtocolOwnedLiquidity extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "rune_deposited": runeDeposited.toString(),
-      "rune_withdrawn": runeWithdrawn.toString()
+      "rune_withdrawn": runeWithdrawn.toString(),
     };
   }
 

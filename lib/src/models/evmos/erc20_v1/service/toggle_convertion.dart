@@ -7,7 +7,8 @@ import 'package:cosmos_sdk/src/utils/quick.dart';
 /// MsgToggleConversion is the Msg/MsgToggleConversion request type for toggling
 /// an Erc20 contract conversion capability.
 class EvmosErc20V1MsgToggleConversion
-    extends EvmosService<EmptyServiceRequestResponse> with AminoMessage {
+    extends EvmosService<EmptyServiceRequestResponse>
+    with AminoMessage {
   /// authority is the address of the governance account
   final String? authority;
 
@@ -15,17 +16,23 @@ class EvmosErc20V1MsgToggleConversion
   /// Cosmos base denomination
   final String? token;
 
-  const EvmosErc20V1MsgToggleConversion(
-      {required this.authority, required this.token});
+  const EvmosErc20V1MsgToggleConversion({
+    required this.authority,
+    required this.token,
+  });
 
   factory EvmosErc20V1MsgToggleConversion.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosErc20V1MsgToggleConversion(
-        authority: decode.getField(1), token: decode.getField(2));
+      authority: decode.getField(1),
+      token: decode.getField(2),
+    );
   }
   factory EvmosErc20V1MsgToggleConversion.fromJson(Map<String, dynamic> json) {
     return EvmosErc20V1MsgToggleConversion(
-        authority: json.as("authority"), token: json.as("token"));
+      authority: json.as("authority"),
+      token: json.as("token"),
+    );
   }
 
   @override
@@ -47,6 +54,7 @@ class EvmosErc20V1MsgToggleConversion
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        EvmosErc20V1Types.msgToggleConversionResponse);
+      EvmosErc20V1Types.msgToggleConversionResponse,
+    );
   }
 }

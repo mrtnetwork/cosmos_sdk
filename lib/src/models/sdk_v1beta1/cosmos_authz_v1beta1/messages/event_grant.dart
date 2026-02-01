@@ -19,13 +19,14 @@ class AuthzEventGrant extends CosmosMessage {
   factory AuthzEventGrant.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return AuthzEventGrant(
-        msgTypeUrl: decode.getField(2),
-        granter: decode
-            .getResult(3)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        grantee: decode
-            .getResult(4)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)));
+      msgTypeUrl: decode.getField(2),
+      granter: decode
+          .getResult(3)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      grantee: decode
+          .getResult(4)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+    );
   }
 
   @override
@@ -36,7 +37,7 @@ class AuthzEventGrant extends CosmosMessage {
     return {
       "msg_type_url": msgTypeUrl,
       "granter": granter?.address,
-      "grantee": grantee?.address
+      "grantee": grantee?.address,
     };
   }
 

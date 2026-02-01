@@ -15,26 +15,32 @@ class EvmosErc20V1Params extends CosmosMessage {
   /// dynamic_precompiles defines the slice of hex addresses of the
   /// active precompiles that are used to interact with Bank coins as ERC20s
   final List<String>? dynamicPrecompiles;
-  EvmosErc20V1Params(
-      {required this.enableErc20,
-      List<String>? nativePrecompiles,
-      List<String>? dynamicPrecompiles})
-      : nativePrecompiles = nativePrecompiles?.immutable,
-        dynamicPrecompiles = dynamicPrecompiles?.immutable;
+  EvmosErc20V1Params({
+    required this.enableErc20,
+    List<String>? nativePrecompiles,
+    List<String>? dynamicPrecompiles,
+  }) : nativePrecompiles = nativePrecompiles?.immutable,
+       dynamicPrecompiles = dynamicPrecompiles?.immutable;
   factory EvmosErc20V1Params.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosErc20V1Params(
-        enableErc20: decode.getField(1),
-        nativePrecompiles: decode.getFields<String>(3),
-        dynamicPrecompiles: decode.getFields<String>(4));
+      enableErc20: decode.getField(1),
+      nativePrecompiles: decode.getFields<String>(3),
+      dynamicPrecompiles: decode.getFields<String>(4),
+    );
   }
   factory EvmosErc20V1Params.fromJson(Map<String, dynamic> json) {
     return EvmosErc20V1Params(
-        enableErc20: json.as("enable_erc20"),
-        nativePrecompiles:
-            json.asListOfString("native_precompiles", throwOnNull: false),
-        dynamicPrecompiles:
-            json.asListOfString("dynamic_precompiles", throwOnNull: false));
+      enableErc20: json.as("enable_erc20"),
+      nativePrecompiles: json.asListOfString(
+        "native_precompiles",
+        throwOnNull: false,
+      ),
+      dynamicPrecompiles: json.asListOfString(
+        "dynamic_precompiles",
+        throwOnNull: false,
+      ),
+    );
   }
   @override
   List get values => [enableErc20, nativePrecompiles, dynamicPrecompiles];
@@ -49,7 +55,7 @@ class EvmosErc20V1Params extends CosmosMessage {
     return {
       "enable_erc20": enableErc20,
       "native_precompiles": nativePrecompiles,
-      "dynamic_precompiles": dynamicPrecompiles
+      "dynamic_precompiles": dynamicPrecompiles,
     };
   }
 }

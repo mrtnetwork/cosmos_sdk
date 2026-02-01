@@ -12,11 +12,13 @@ class MsgRedeemTokensForSharesResponse extends CosmosMessage {
   factory MsgRedeemTokensForSharesResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgRedeemTokensForSharesResponse(
-        Coin.deserialize(decode.getField(1)));
+      Coin.deserialize(decode.getField(1)),
+    );
   }
   factory MsgRedeemTokensForSharesResponse.fromJson(Map<String, dynamic> json) {
     return MsgRedeemTokensForSharesResponse(
-        Coin.fromJson(json.asMap("amount")));
+      Coin.fromJson(json.asMap("amount")),
+    );
   }
 
   @override

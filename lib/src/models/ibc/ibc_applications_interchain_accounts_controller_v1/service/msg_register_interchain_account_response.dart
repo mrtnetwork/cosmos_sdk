@@ -9,7 +9,9 @@ class MsgRegisterInterchainAccountResponse extends CosmosMessage {
   factory MsgRegisterInterchainAccountResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgRegisterInterchainAccountResponse(
-        channelId: decode.getField(1), portId: decode.getField(2));
+      channelId: decode.getField(1),
+      portId: decode.getField(2),
+    );
   }
 
   @override

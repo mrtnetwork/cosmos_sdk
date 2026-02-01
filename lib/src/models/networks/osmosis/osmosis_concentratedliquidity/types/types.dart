@@ -5,5 +5,6 @@ class OsmosisConcentratedLiquidityTypes extends TypeUrl {
 
   static const OsmosisConcentratedLiquidityTypes params =
       OsmosisConcentratedLiquidityTypes._(
-          "/osmosis.concentratedliquidity.Params");
+        "/osmosis.concentratedliquidity.Params",
+      );
 }

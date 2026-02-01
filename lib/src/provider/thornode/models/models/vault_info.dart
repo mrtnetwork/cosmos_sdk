@@ -33,21 +33,22 @@ class ThorVaultInfoResponse {
     required List<ThorChainContractResponse> routers,
     required List<ThorVaultAddressInfoResponse> addresses,
     required List<String> frozen,
-  })  : coins = coins.immutable,
-        membership = membership.immutable,
-        chains = chains.immutable,
-        routers = routers.immutable,
-        addresses = addresses.immutable,
-        frozen = frozen.immutable,
-        pendingTxBlockHeights = pendingTxBlockHeights.immutable;
+  }) : coins = coins.immutable,
+       membership = membership.immutable,
+       chains = chains.immutable,
+       routers = routers.immutable,
+       addresses = addresses.immutable,
+       frozen = frozen.immutable,
+       pendingTxBlockHeights = pendingTxBlockHeights.immutable;
 
   factory ThorVaultInfoResponse.fromJson(Map<String, dynamic> json) {
     return ThorVaultInfoResponse(
       blockHeight: json['block_height'],
       pubKey: json['pub_key'],
-      coins: (json['coins'] as List<dynamic>)
-          .map((coinJson) => ThorCoinResponse.fromJson(coinJson))
-          .toList(),
+      coins:
+          (json['coins'] as List<dynamic>)
+              .map((coinJson) => ThorCoinResponse.fromJson(coinJson))
+              .toList(),
       type: json['type'],
       status: json['status'],
       statusSince: json['status_since'],
@@ -55,15 +56,22 @@ class ThorVaultInfoResponse {
       chains: List<String>.from(json['chains']),
       inboundTxCount: json['inbound_tx_count'],
       outboundTxCount: json['outbound_tx_count'],
-      pendingTxBlockHeights:
-          List<int>.from(json['pending_tx_block_heights'] ?? []),
-      routers: (json['routers'] as List<dynamic>)
-          .map((routerJson) => ThorChainContractResponse.fromJson(routerJson))
-          .toList(),
-      addresses: (json['addresses'] as List<dynamic>)
-          .map((addressJson) =>
-              ThorVaultAddressInfoResponse.fromJson(addressJson))
-          .toList(),
+      pendingTxBlockHeights: List<int>.from(
+        json['pending_tx_block_heights'] ?? [],
+      ),
+      routers:
+          (json['routers'] as List<dynamic>)
+              .map(
+                (routerJson) => ThorChainContractResponse.fromJson(routerJson),
+              )
+              .toList(),
+      addresses:
+          (json['addresses'] as List<dynamic>)
+              .map(
+                (addressJson) =>
+                    ThorVaultAddressInfoResponse.fromJson(addressJson),
+              )
+              .toList(),
       frozen: List<String>.from(json['frozen'] ?? []),
     );
   }
@@ -110,10 +118,7 @@ class ThorVaultAddressInfoResponse {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'chain': chain,
-      'address': address,
-    };
+    return {'chain': chain, 'address': address};
   }
 
   @override

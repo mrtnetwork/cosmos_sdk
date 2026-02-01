@@ -16,21 +16,24 @@ class QueryUnreceivedAcksRequest extends CosmosMessage
 
   // list of acknowledgement sequences
   final List<BigInt> packetAckSequences;
-  QueryUnreceivedAcksRequest(
-      {required this.portId,
-      required this.channelId,
-      required List<BigInt> packetAckSequences})
-      : packetAckSequences = packetAckSequences.immutable;
+  QueryUnreceivedAcksRequest({
+    required this.portId,
+    required this.channelId,
+    required List<BigInt> packetAckSequences,
+  }) : packetAckSequences = packetAckSequences.immutable;
   factory QueryUnreceivedAcksRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryUnreceivedAcksRequest(
-        portId: decode.getField(1),
-        channelId: decode.getField(2),
-        packetAckSequences: decode
-                .getResult<ProtocolBufferDecoderResult?>(3)
-                ?.to<List<BigInt>, List<int>>(
-                    (e) => e.map((e) => BigintUtils.parse(e)).toList()) ??
-            <BigInt>[]);
+      portId: decode.getField(1),
+      channelId: decode.getField(2),
+      packetAckSequences:
+          decode
+              .getResult<ProtocolBufferDecoderResult?>(3)
+              ?.to<List<BigInt>, List<int>>(
+                (e) => e.map((e) => BigintUtils.parse(e)).toList(),
+              ) ??
+          <BigInt>[],
+    );
   }
 
   @override
@@ -42,7 +45,7 @@ class QueryUnreceivedAcksRequest extends CosmosMessage
       "port_id": portId,
       "channel_id": channelId,
       "packet_ack_sequences":
-          packetAckSequences.map((e) => e.toString()).toList()
+          packetAckSequences.map((e) => e.toString()).toList(),
     };
   }
 
@@ -62,6 +65,9 @@ class QueryUnreceivedAcksRequest extends CosmosMessage
   }
 
   @override
-  List<String> get pathParameters =>
-      [channelId, portId, packetAckSequences.join(",")];
+  List<String> get pathParameters => [
+    channelId,
+    portId,
+    packetAckSequences.join(","),
+  ];
 }

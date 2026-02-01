@@ -10,35 +10,42 @@ class OsmosisConcentratedLiquidityLiquidityNetInDirectionResponse
   final BigInt? currentTick;
   final String currentLiquidity;
   final String currentSqrtPrice;
-  OsmosisConcentratedLiquidityLiquidityNetInDirectionResponse(
-      {required List<OsmosisConcentratedLiquidityTickLiquidityNet>
-          liquidityDepths,
-      this.currentTick,
-      required this.currentLiquidity,
-      required this.currentSqrtPrice})
-      : liquidityDepths = liquidityDepths.immutable;
+  OsmosisConcentratedLiquidityLiquidityNetInDirectionResponse({
+    required List<OsmosisConcentratedLiquidityTickLiquidityNet> liquidityDepths,
+    this.currentTick,
+    required this.currentLiquidity,
+    required this.currentSqrtPrice,
+  }) : liquidityDepths = liquidityDepths.immutable;
   factory OsmosisConcentratedLiquidityLiquidityNetInDirectionResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityLiquidityNetInDirectionResponse(
-        liquidityDepths: decode
-            .getFields<List<int>>(1)
-            .map((e) =>
-                OsmosisConcentratedLiquidityTickLiquidityNet.deserialize(e))
-            .toList(),
-        currentTick: decode.getField(2),
-        currentLiquidity: decode.getField(3),
-        currentSqrtPrice: decode.getField(4));
+      liquidityDepths:
+          decode
+              .getFields<List<int>>(1)
+              .map(
+                (e) =>
+                    OsmosisConcentratedLiquidityTickLiquidityNet.deserialize(e),
+              )
+              .toList(),
+      currentTick: decode.getField(2),
+      currentLiquidity: decode.getField(3),
+      currentSqrtPrice: decode.getField(4),
+    );
   }
   factory OsmosisConcentratedLiquidityLiquidityNetInDirectionResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityLiquidityNetInDirectionResponse(
       currentLiquidity: json["current_liquidity"],
       currentSqrtPrice: json["current_sqrt_price"],
       currentTick: BigintUtils.tryParse(json["current_tick"]),
-      liquidityDepths: (json["liquidity_depths"] as List?)
-              ?.map((e) =>
-                  OsmosisConcentratedLiquidityTickLiquidityNet.fromJson(e))
+      liquidityDepths:
+          (json["liquidity_depths"] as List?)
+              ?.map(
+                (e) => OsmosisConcentratedLiquidityTickLiquidityNet.fromJson(e),
+              )
               .toList() ??
           <OsmosisConcentratedLiquidityTickLiquidityNet>[],
     );
@@ -53,7 +60,7 @@ class OsmosisConcentratedLiquidityLiquidityNetInDirectionResponse
       "liquidity_depths": liquidityDepths.map((e) => e.toJson()).toList(),
       "current_tick": currentTick?.toString(),
       "current_liquidity": currentLiquidity,
-      "current_sqrt_price": currentSqrtPrice
+      "current_sqrt_price": currentSqrtPrice,
     };
   }
 
@@ -62,6 +69,10 @@ class OsmosisConcentratedLiquidityLiquidityNetInDirectionResponse
       OsmosisConcentratedLiquidityV1beta1Types.liquidityNetInDirectionResponse;
 
   @override
-  List get values =>
-      [liquidityDepths, currentTick, currentLiquidity, currentSqrtPrice];
+  List get values => [
+    liquidityDepths,
+    currentTick,
+    currentLiquidity,
+    currentSqrtPrice,
+  ];
 }

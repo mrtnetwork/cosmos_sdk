@@ -6,17 +6,18 @@ class OsmosisConcentratedLiquidityLiquidityPerTickRangeRequest
     extends CosmosMessage
     with
         QueryMessage<
-            OsmosisConcentratedLiquidityLiquidityPerTickRangeResponse> {
+          OsmosisConcentratedLiquidityLiquidityPerTickRangeResponse
+        > {
   final BigInt? poolId;
 
-  OsmosisConcentratedLiquidityLiquidityPerTickRangeRequest({
-    this.poolId,
-  });
+  OsmosisConcentratedLiquidityLiquidityPerTickRangeRequest({this.poolId});
   factory OsmosisConcentratedLiquidityLiquidityPerTickRangeRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityLiquidityPerTickRangeRequest(
-        poolId: decode.getField(1));
+      poolId: decode.getField(1),
+    );
   }
 
   @override
@@ -27,9 +28,7 @@ class OsmosisConcentratedLiquidityLiquidityPerTickRangeRequest
 
   @override
   Map<String, dynamic> toJson() {
-    return {
-      "pool_id": poolId?.toString(),
-    };
+    return {"pool_id": poolId?.toString()};
   }
 
   @override
@@ -41,15 +40,19 @@ class OsmosisConcentratedLiquidityLiquidityPerTickRangeRequest
 
   @override
   OsmosisConcentratedLiquidityLiquidityPerTickRangeResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityLiquidityPerTickRangeResponse.fromJson(
-        json);
+      json,
+    );
   }
 
   @override
   OsmosisConcentratedLiquidityLiquidityPerTickRangeResponse onResponse(
-      List<int> bytes) {
-    return OsmosisConcentratedLiquidityLiquidityPerTickRangeResponse
-        .deserialize(bytes);
+    List<int> bytes,
+  ) {
+    return OsmosisConcentratedLiquidityLiquidityPerTickRangeResponse.deserialize(
+      bytes,
+    );
   }
 }

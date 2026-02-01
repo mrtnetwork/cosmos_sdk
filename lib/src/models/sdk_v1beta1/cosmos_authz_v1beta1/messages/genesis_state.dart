@@ -8,14 +8,16 @@ import 'package:blockchain_utils/helper/helper.dart';
 class AuthzGenesisState extends CosmosMessage {
   final List<AuthzGenericAuthorization> authorization;
   AuthzGenesisState({required List<AuthzGenericAuthorization> authorization})
-      : authorization = authorization.immutable;
+    : authorization = authorization.immutable;
   factory AuthzGenesisState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return AuthzGenesisState(
-        authorization: decode
-            .getFields<List<int>>(1)
-            .map((e) => AuthzGenericAuthorization.deserialize(e))
-            .toList());
+      authorization:
+          decode
+              .getFields<List<int>>(1)
+              .map((e) => AuthzGenericAuthorization.deserialize(e))
+              .toList(),
+    );
   }
 
   @override
@@ -23,9 +25,7 @@ class AuthzGenesisState extends CosmosMessage {
 
   @override
   Map<String, dynamic> toJson() {
-    return {
-      "authorization": authorization.map((e) => e.toJson()).toList(),
-    };
+    return {"authorization": authorization.map((e) => e.toJson()).toList()};
   }
 
   @override

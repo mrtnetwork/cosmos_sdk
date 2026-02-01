@@ -5,8 +5,11 @@ class ThorchainEventBond extends CosmosMessage {
   final BigInt amount;
   final ThorchainBondType? bondType;
   final ThorchainTx txIn;
-  const ThorchainEventBond(
-      {required this.amount, this.bondType, required this.txIn});
+  const ThorchainEventBond({
+    required this.amount,
+    this.bondType,
+    required this.txIn,
+  });
   factory ThorchainEventBond.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainEventBond(
@@ -26,7 +29,7 @@ class ThorchainEventBond extends CosmosMessage {
     return {
       "amount": amount.toString(),
       "bond_type": bondType?.value,
-      "tx_in": txIn.toJson()
+      "tx_in": txIn.toJson(),
     };
   }
 

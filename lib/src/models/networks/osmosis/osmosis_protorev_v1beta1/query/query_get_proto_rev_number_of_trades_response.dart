@@ -8,17 +8,22 @@ class OsmosisProtorevQueryGetProtoRevNumberOfTradesResponse
   /// [numberOfTrades] is the number of trades the module has executed
   final BigInt numberOfTrades;
   const OsmosisProtorevQueryGetProtoRevNumberOfTradesResponse(
-      this.numberOfTrades);
+    this.numberOfTrades,
+  );
   factory OsmosisProtorevQueryGetProtoRevNumberOfTradesResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisProtorevQueryGetProtoRevNumberOfTradesResponse(
-        BigInt.parse(decode.getField(1)));
+      BigInt.parse(decode.getField(1)),
+    );
   }
   factory OsmosisProtorevQueryGetProtoRevNumberOfTradesResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisProtorevQueryGetProtoRevNumberOfTradesResponse(
-        BigintUtils.parse(json["number_of_trades"]));
+      BigintUtils.parse(json["number_of_trades"]),
+    );
   }
 
   @override

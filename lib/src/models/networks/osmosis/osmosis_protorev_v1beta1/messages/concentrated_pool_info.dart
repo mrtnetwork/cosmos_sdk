@@ -10,19 +10,25 @@ class OsmosisProtorevConcentratedPoolInfo extends CosmosMessage {
   /// The maximum number of ticks we can move when rebalancing
   final BigInt? maxTicksCrossed;
 
-  const OsmosisProtorevConcentratedPoolInfo(
-      {this.weight, this.maxTicksCrossed});
+  const OsmosisProtorevConcentratedPoolInfo({
+    this.weight,
+    this.maxTicksCrossed,
+  });
 
   factory OsmosisProtorevConcentratedPoolInfo.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisProtorevConcentratedPoolInfo(
-        weight: decode.getField(1), maxTicksCrossed: decode.getField(2));
+      weight: decode.getField(1),
+      maxTicksCrossed: decode.getField(2),
+    );
   }
   factory OsmosisProtorevConcentratedPoolInfo.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisProtorevConcentratedPoolInfo(
-        weight: BigintUtils.tryParse(json["weight"]),
-        maxTicksCrossed: BigintUtils.tryParse(json["max_ticks_crossed"]));
+      weight: BigintUtils.tryParse(json["weight"]),
+      maxTicksCrossed: BigintUtils.tryParse(json["max_ticks_crossed"]),
+    );
   }
 
   @override
@@ -32,7 +38,7 @@ class OsmosisProtorevConcentratedPoolInfo extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "weight": weight?.toString(),
-      "max_ticks_crossed": maxTicksCrossed?.toString()
+      "max_ticks_crossed": maxTicksCrossed?.toString(),
     };
   }
 

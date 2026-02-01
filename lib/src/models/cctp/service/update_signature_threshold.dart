@@ -5,21 +5,29 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:cosmos_sdk/src/utils/quick.dart';
 
 class CCTPV1MsgUpdateSignatureThreshold
-    extends CCTPV1Service<EmptyServiceRequestResponse> with AminoMessage {
+    extends CCTPV1Service<EmptyServiceRequestResponse>
+    with AminoMessage {
   final String from;
   final int amount;
-  const CCTPV1MsgUpdateSignatureThreshold(
-      {required this.from, required this.amount});
+  const CCTPV1MsgUpdateSignatureThreshold({
+    required this.from,
+    required this.amount,
+  });
 
   factory CCTPV1MsgUpdateSignatureThreshold.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CCTPV1MsgUpdateSignatureThreshold(
-        from: decode.getField(1), amount: decode.getField(2));
+      from: decode.getField(1),
+      amount: decode.getField(2),
+    );
   }
   factory CCTPV1MsgUpdateSignatureThreshold.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return CCTPV1MsgUpdateSignatureThreshold(
-        from: json.as("from"), amount: json.as("amount"));
+      from: json.as("from"),
+      amount: json.as("amount"),
+    );
   }
 
   @override
@@ -41,6 +49,7 @@ class CCTPV1MsgUpdateSignatureThreshold
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        CCTPV1Types.msgUpdateSignatureThresholdResponse);
+      CCTPV1Types.msgUpdateSignatureThresholdResponse,
+    );
   }
 }

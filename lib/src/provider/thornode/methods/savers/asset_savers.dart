@@ -3,8 +3,12 @@ import 'package:cosmos_sdk/src/provider/thornode/core/thorenode.dart';
 import 'package:cosmos_sdk/src/provider/thornode/models/models/asset_saver_information.dart';
 
 /// Returns all savers for the savers pool.
-class ThorNodeRequestAssetSaversPosition extends ThorNodeRequestParam<
-    List<AssetSaverPositionResponse>, List<Map<String, dynamic>>> {
+class ThorNodeRequestAssetSaversPosition
+    extends
+        ThorNodeRequestParam<
+          List<AssetSaverPositionResponse>,
+          List<Map<String, dynamic>>
+        > {
   ThorNodeRequestAssetSaversPosition({required this.asset, this.height});
 
   /// optional block height, defaults to current tip
@@ -24,7 +28,8 @@ class ThorNodeRequestAssetSaversPosition extends ThorNodeRequestParam<
 
   @override
   List<AssetSaverPositionResponse> onResonse(
-      List<Map<String, dynamic>> result) {
+    List<Map<String, dynamic>> result,
+  ) {
     return result.map((e) => AssetSaverPositionResponse.fromJson(e)).toList();
   }
 }

@@ -14,20 +14,20 @@ class ThorchainObservedTx extends CosmosMessage {
   final String? aggregator;
   final String? aggregatorTarget;
   final String aggregatorTargetLimit;
-  ThorchainObservedTx(
-      {required this.tx,
-      this.status,
-      List<String>? outHashes,
-      this.blockHeight,
-      List<String>? signers,
-      this.observedPubKey,
-      this.keysignMs,
-      this.finaliseHeight,
-      this.aggregator,
-      this.aggregatorTarget,
-      required this.aggregatorTargetLimit})
-      : outHashes = outHashes?.emptyAsNull?.immutable,
-        signers = outHashes?.emptyAsNull?.immutable;
+  ThorchainObservedTx({
+    required this.tx,
+    this.status,
+    List<String>? outHashes,
+    this.blockHeight,
+    List<String>? signers,
+    this.observedPubKey,
+    this.keysignMs,
+    this.finaliseHeight,
+    this.aggregator,
+    this.aggregatorTarget,
+    required this.aggregatorTargetLimit,
+  }) : outHashes = outHashes?.emptyAsNull?.immutable,
+       signers = outHashes?.emptyAsNull?.immutable;
   factory ThorchainObservedTx.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainObservedTx(
@@ -63,7 +63,7 @@ class ThorchainObservedTx extends CosmosMessage {
       "finalise_height": finaliseHeight?.toString(),
       "aggregator": aggregator,
       "aggregator_target": aggregatorTarget,
-      "aggregator_target_limit": aggregatorTargetLimit
+      "aggregator_target_limit": aggregatorTargetLimit,
     };
   }
 
@@ -72,16 +72,16 @@ class ThorchainObservedTx extends CosmosMessage {
 
   @override
   List get values => [
-        tx,
-        status?.value,
-        outHashes,
-        blockHeight,
-        signers,
-        observedPubKey,
-        keysignMs,
-        finaliseHeight,
-        aggregator,
-        aggregatorTarget,
-        aggregatorTargetLimit
-      ];
+    tx,
+    status?.value,
+    outHashes,
+    blockHeight,
+    signers,
+    observedPubKey,
+    keysignMs,
+    finaliseHeight,
+    aggregator,
+    aggregatorTarget,
+    aggregatorTargetLimit,
+  ];
 }

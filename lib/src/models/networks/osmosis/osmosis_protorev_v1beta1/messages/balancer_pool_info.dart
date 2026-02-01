@@ -15,7 +15,8 @@ class OsmosisProtorevBalancerPoolInfo extends CosmosMessage {
   }
   factory OsmosisProtorevBalancerPoolInfo.fromJson(Map<String, dynamic> json) {
     return OsmosisProtorevBalancerPoolInfo(
-        weight: BigintUtils.tryParse(json["weight"]));
+      weight: BigintUtils.tryParse(json["weight"]),
+    );
   }
 
   @override

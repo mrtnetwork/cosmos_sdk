@@ -10,22 +10,28 @@ class EvmosEthermintEVMV1QueryAccountResponse extends CosmosMessage {
   final String codeHash;
   // nonce is the account's sequence number.
   final BigInt nonce;
-  const EvmosEthermintEVMV1QueryAccountResponse(
-      {required this.balance, required this.codeHash, required this.nonce});
+  const EvmosEthermintEVMV1QueryAccountResponse({
+    required this.balance,
+    required this.codeHash,
+    required this.nonce,
+  });
 
   factory EvmosEthermintEVMV1QueryAccountResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return EvmosEthermintEVMV1QueryAccountResponse(
-        balance: json["balance"],
-        codeHash: json["code_hash"],
-        nonce: BigintUtils.parse(json["nonce"]));
+      balance: json["balance"],
+      codeHash: json["code_hash"],
+      nonce: BigintUtils.parse(json["nonce"]),
+    );
   }
   factory EvmosEthermintEVMV1QueryAccountResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosEthermintEVMV1QueryAccountResponse(
-        balance: decode.getField(1),
-        codeHash: decode.getField(2),
-        nonce: decode.getField(3));
+      balance: decode.getField(1),
+      codeHash: decode.getField(2),
+      nonce: decode.getField(3),
+    );
   }
 
   @override

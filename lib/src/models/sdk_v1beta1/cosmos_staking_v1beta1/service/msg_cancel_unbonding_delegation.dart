@@ -24,21 +24,23 @@ class MsgCancelUnbondingDelegation
   factory MsgCancelUnbondingDelegation.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgCancelUnbondingDelegation(
-        delegatorAddress: decode
-            .getResult(1)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        validatorAddress: decode
-            .getResult(2)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        amount: Coin.deserialize(decode.getField(3)),
-        creationHeight: decode.getField(4));
+      delegatorAddress: decode
+          .getResult(1)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      validatorAddress: decode
+          .getResult(2)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      amount: Coin.deserialize(decode.getField(3)),
+      creationHeight: decode.getField(4),
+    );
   }
   factory MsgCancelUnbondingDelegation.fromJson(Map<String, dynamic> json) {
     return MsgCancelUnbondingDelegation(
-        delegatorAddress: json.asAddress("delegator_address"),
-        validatorAddress: json.asAddress("validator_address"),
-        amount: Coin.fromJson(json.asMap("amount")),
-        creationHeight: json.asBigInt("creation_height"));
+      delegatorAddress: json.asAddress("delegator_address"),
+      validatorAddress: json.asAddress("validator_address"),
+      amount: Coin.fromJson(json.asMap("amount")),
+      creationHeight: json.asBigInt("creation_height"),
+    );
   }
 
   @override
@@ -59,11 +61,11 @@ class MsgCancelUnbondingDelegation
 
   @override
   List get values => [
-        delegatorAddress?.address,
-        validatorAddress?.address,
-        amount,
-        creationHeight
-      ];
+    delegatorAddress?.address,
+    validatorAddress?.address,
+    amount,
+    creationHeight,
+  ];
 
   @override
   List<String?> get signers => [delegatorAddress?.address];
@@ -71,6 +73,7 @@ class MsgCancelUnbondingDelegation
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        StakingV1beta1Types.msgCancelUnbondingDelegationResponse);
+      StakingV1beta1Types.msgCancelUnbondingDelegationResponse,
+    );
   }
 }

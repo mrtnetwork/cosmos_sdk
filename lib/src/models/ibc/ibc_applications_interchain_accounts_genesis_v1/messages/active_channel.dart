@@ -8,18 +8,20 @@ class ActiveChannel extends CosmosMessage {
   final String? portId;
   final String? channelId;
   final bool? isMiddlewareEnabled;
-  const ActiveChannel(
-      {this.connectionId,
-      this.portId,
-      this.channelId,
-      this.isMiddlewareEnabled});
+  const ActiveChannel({
+    this.connectionId,
+    this.portId,
+    this.channelId,
+    this.isMiddlewareEnabled,
+  });
   factory ActiveChannel.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ActiveChannel(
-        connectionId: decode.getField(1),
-        portId: decode.getField(2),
-        channelId: decode.getField(3),
-        isMiddlewareEnabled: decode.getField(4));
+      connectionId: decode.getField(1),
+      portId: decode.getField(2),
+      channelId: decode.getField(3),
+      isMiddlewareEnabled: decode.getField(4),
+    );
   }
 
   @override
@@ -31,7 +33,7 @@ class ActiveChannel extends CosmosMessage {
       "connection_id": connectionId,
       "port_id": portId,
       "channel_id": channelId,
-      "is_middleware_enabled": isMiddlewareEnabled
+      "is_middleware_enabled": isMiddlewareEnabled,
     };
   }
 

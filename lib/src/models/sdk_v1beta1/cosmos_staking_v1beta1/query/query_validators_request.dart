@@ -16,10 +16,11 @@ class QueryValidatorsRequest extends CosmosMessage
   factory QueryValidatorsRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryValidatorsRequest(
-        status: decode.getField(1),
-        pagination: decode
-            .getResult(1)
-            ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)));
+      status: decode.getField(1),
+      pagination: decode
+          .getResult(1)
+          ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)),
+    );
   }
 
   @override
@@ -47,6 +48,8 @@ class QueryValidatorsRequest extends CosmosMessage
   }
 
   @override
-  Map<String, String?> get queryParameters =>
-      {...pagination?.queryParameters ?? {}, "status": status};
+  Map<String, String?> get queryParameters => {
+    ...pagination?.queryParameters ?? {},
+    "status": status,
+  };
 }

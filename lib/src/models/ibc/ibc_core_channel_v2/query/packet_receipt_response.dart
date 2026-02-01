@@ -16,22 +16,26 @@ class IbcChannelV2QueryPacketReceiptResponse extends CosmosMessage {
   /// height at which the proof was retrieved
   final IbcClientHeight proofHeight;
   factory IbcChannelV2QueryPacketReceiptResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return IbcChannelV2QueryPacketReceiptResponse(
       received: json.as("received"),
       proof: json.asBytes("proof"),
       proofHeight: IbcClientHeight.fromJson(json.asMap("proof_height")),
     );
   }
-  IbcChannelV2QueryPacketReceiptResponse(
-      {this.received, List<int>? proof, required this.proofHeight})
-      : proof = proof?.asImmutableBytes;
+  IbcChannelV2QueryPacketReceiptResponse({
+    this.received,
+    List<int>? proof,
+    required this.proofHeight,
+  }) : proof = proof?.asImmutableBytes;
   factory IbcChannelV2QueryPacketReceiptResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcChannelV2QueryPacketReceiptResponse(
-        received: decode.getField(1),
-        proof: decode.getField(2),
-        proofHeight: IbcClientHeight.deserialize(decode.getField(3)));
+      received: decode.getField(1),
+      proof: decode.getField(2),
+      proofHeight: IbcClientHeight.deserialize(decode.getField(3)),
+    );
   }
 
   @override
@@ -42,7 +46,7 @@ class IbcChannelV2QueryPacketReceiptResponse extends CosmosMessage {
     return {
       "received": received,
       "proof": CosmosUtils.tryToBase64(proof),
-      "proof_height": proofHeight.toJson()
+      "proof_height": proofHeight.toJson(),
     };
   }
 

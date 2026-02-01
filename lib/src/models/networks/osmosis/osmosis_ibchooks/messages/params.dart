@@ -5,7 +5,7 @@ import 'package:blockchain_utils/helper/helper.dart';
 class OsmosisIbchooksParams extends CosmosMessage {
   final List<String> allowedSsyncAckContracts;
   OsmosisIbchooksParams(List<String> allowedSsyncAckContracts)
-      : allowedSsyncAckContracts = allowedSsyncAckContracts.immutable;
+    : allowedSsyncAckContracts = allowedSsyncAckContracts.immutable;
   factory OsmosisIbchooksParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisIbchooksParams(decode.getFields<String>(1));

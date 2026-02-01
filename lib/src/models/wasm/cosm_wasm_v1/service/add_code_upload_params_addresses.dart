@@ -19,13 +19,17 @@ class CosmWasmV1AddCodeUploadParamsAddresses
   factory CosmWasmV1AddCodeUploadParamsAddresses.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmWasmV1AddCodeUploadParamsAddresses(
-        authority: decode.getField(1), addresses: decode.getFields<String>(2));
+      authority: decode.getField(1),
+      addresses: decode.getFields<String>(2),
+    );
   }
   factory CosmWasmV1AddCodeUploadParamsAddresses.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return CosmWasmV1AddCodeUploadParamsAddresses(
-        authority: json.as("authority"),
-        addresses: json.asListOfString("addresses"));
+      authority: json.as("authority"),
+      addresses: json.asListOfString("addresses"),
+    );
   }
 
   @override
@@ -49,6 +53,7 @@ class CosmWasmV1AddCodeUploadParamsAddresses
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        CosmWasmV1Types.msgAddCodeUploadParamsAddressesResponse);
+      CosmWasmV1Types.msgAddCodeUploadParamsAddressesResponse,
+    );
   }
 }

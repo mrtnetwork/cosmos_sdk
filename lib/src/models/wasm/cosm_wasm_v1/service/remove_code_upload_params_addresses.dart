@@ -17,16 +17,21 @@ class CosmWasmV1RemoveCodeUploadParamsAddresses
     required List<String>? addresses,
   }) : addresses = addresses?.immutable;
   factory CosmWasmV1RemoveCodeUploadParamsAddresses.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CosmWasmV1RemoveCodeUploadParamsAddresses(
-        authority: decode.getField(1), addresses: decode.getFields<String>(2));
+      authority: decode.getField(1),
+      addresses: decode.getFields<String>(2),
+    );
   }
   factory CosmWasmV1RemoveCodeUploadParamsAddresses.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return CosmWasmV1RemoveCodeUploadParamsAddresses(
-        authority: json.as("authority"),
-        addresses: json.asListOfString("addresses"));
+      authority: json.as("authority"),
+      addresses: json.asListOfString("addresses"),
+    );
   }
 
   @override
@@ -50,6 +55,7 @@ class CosmWasmV1RemoveCodeUploadParamsAddresses
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        CosmWasmV1Types.msgRemoveCodeUploadParamsAddressesResponse);
+      CosmWasmV1Types.msgRemoveCodeUploadParamsAddressesResponse,
+    );
   }
 }

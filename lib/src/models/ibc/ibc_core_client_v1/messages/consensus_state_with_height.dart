@@ -13,19 +13,22 @@ class ConsensusStateWithHeight extends CosmosMessage {
   final AnyMessage? consensusState;
   factory ConsensusStateWithHeight.fromJson(Map<String, dynamic> json) {
     return ConsensusStateWithHeight(
-        height: IbcClientHeight.fromJson(json["height"]),
-        consensusState: json["consensus_state"] == null
-            ? null
-            : AnyMessage.fromJson(json["consensus_state"]));
+      height: IbcClientHeight.fromJson(json["height"]),
+      consensusState:
+          json["consensus_state"] == null
+              ? null
+              : AnyMessage.fromJson(json["consensus_state"]),
+    );
   }
   const ConsensusStateWithHeight({required this.height, this.consensusState});
   factory ConsensusStateWithHeight.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ConsensusStateWithHeight(
-        height: IbcClientHeight.deserialize(decode.getField(1)),
-        consensusState: decode
-            .getResult(2)
-            ?.to<AnyMessage, List<int>>((e) => AnyMessage.deserialize(e)));
+      height: IbcClientHeight.deserialize(decode.getField(1)),
+      consensusState: decode
+          .getResult(2)
+          ?.to<AnyMessage, List<int>>((e) => AnyMessage.deserialize(e)),
+    );
   }
 
   @override
@@ -35,7 +38,7 @@ class ConsensusStateWithHeight extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "height": height.toJson(),
-      "consensus_state": consensusState?.toJson()
+      "consensus_state": consensusState?.toJson(),
     };
   }
 

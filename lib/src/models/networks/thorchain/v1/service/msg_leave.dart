@@ -6,16 +6,19 @@ class ThorchainMsgLeave extends CosmosMessage {
   final ThorchainTx tx;
   final List<int>? nodeAddress;
   final List<int>? signer;
-  ThorchainMsgLeave(
-      {required this.tx, List<int>? nodeAddress, List<int>? signer})
-      : nodeAddress = BytesUtils.tryToBytes(nodeAddress, unmodifiable: true),
-        signer = BytesUtils.tryToBytes(signer, unmodifiable: true);
+  ThorchainMsgLeave({
+    required this.tx,
+    List<int>? nodeAddress,
+    List<int>? signer,
+  }) : nodeAddress = BytesUtils.tryToBytes(nodeAddress, unmodifiable: true),
+       signer = BytesUtils.tryToBytes(signer, unmodifiable: true);
   factory ThorchainMsgLeave.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainMsgLeave(
-        tx: ThorchainTx.deserialize(decode.getField(1)),
-        nodeAddress: decode.getField(2),
-        signer: decode.getField(3));
+      tx: ThorchainTx.deserialize(decode.getField(1)),
+      nodeAddress: decode.getField(2),
+      signer: decode.getField(3),
+    );
   }
 
   @override
@@ -26,7 +29,7 @@ class ThorchainMsgLeave extends CosmosMessage {
     return {
       "tx": tx.toJson(),
       "node_address": BytesUtils.tryToHexString(nodeAddress),
-      "signer": BytesUtils.tryToHexString(signer)
+      "signer": BytesUtils.tryToHexString(signer),
     };
   }
 

@@ -5,8 +5,11 @@ class ThorchainEventFee extends CosmosMessage {
   final String? txId;
   final ThorchainFee fee;
   final BigInt synthUnits;
-  const ThorchainEventFee(
-      {this.txId, required this.fee, required this.synthUnits});
+  const ThorchainEventFee({
+    this.txId,
+    required this.fee,
+    required this.synthUnits,
+  });
   factory ThorchainEventFee.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainEventFee(
@@ -24,7 +27,7 @@ class ThorchainEventFee extends CosmosMessage {
     return {
       "tx_id": txId,
       "fee": fee.toJson(),
-      "synth_units": synthUnits.toString()
+      "synth_units": synthUnits.toString(),
     };
   }
 

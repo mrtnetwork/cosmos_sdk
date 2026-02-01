@@ -15,9 +15,12 @@ class ProtocolBufferDecoder {
         case 2:
           final decodeLength = _decodeVarint(bytes.sublist(index));
           index += decodeLength.consumed;
-          results.add(ProtocolBufferDecoderResult(
+          results.add(
+            ProtocolBufferDecoderResult(
               tagNumber: fieldId,
-              value: bytes.sublist(index, index + decodeLength.value)));
+              value: bytes.sublist(index, index + decodeLength.value),
+            ),
+          );
           index += decodeLength.value;
           continue;
 
@@ -25,7 +28,9 @@ class ProtocolBufferDecoder {
           final decodeInt = _decodeInt(bytes.sublist(index));
           index += decodeInt.consumed;
           final result = ProtocolBufferDecoderResult(
-              tagNumber: fieldId, value: decodeInt.value);
+            tagNumber: fieldId,
+            value: decodeInt.value,
+          );
           results.add(result);
           continue;
         default:
@@ -90,8 +95,10 @@ class ProtocolBufferDecoder {
 }
 
 class ProtocolBufferDecoderResult<T> {
-  const ProtocolBufferDecoderResult(
-      {required this.tagNumber, required this.value});
+  const ProtocolBufferDecoderResult({
+    required this.tagNumber,
+    required this.value,
+  });
   final int tagNumber;
   final T value;
   @override
@@ -130,8 +137,10 @@ extension QuickProtocolBufferResults on List<ProtocolBufferDecoderResult> {
         final defaultValue = _getDefault<T>();
         if (defaultValue != null) return defaultValue as T;
       }
-      throw DartCosmosSdkPluginException("field id does not exist.",
-          details: {"fieldIds": map((e) => e.tagNumber).join(", "), "id": tag});
+      throw DartCosmosSdkPluginException(
+        "field id does not exist.",
+        details: {"fieldIds": map((e) => e.tagNumber).join(", "), "id": tag},
+      );
     }
   }
 
@@ -148,16 +157,20 @@ extension QuickProtocolBufferResults on List<ProtocolBufferDecoderResult> {
       return result as T;
     } on StateError {
       if (null is T) return null as T;
-      throw DartCosmosSdkPluginException("field id does not exist.",
-          details: {"fieldIds": map((e) => e.tagNumber).join(", "), "id": id});
+      throw DartCosmosSdkPluginException(
+        "field id does not exist.",
+        details: {"fieldIds": map((e) => e.tagNumber).join(", "), "id": id},
+      );
     }
   }
 
   List<T> getFields<T>(int tag, {bool allowNull = true}) {
     final result = where((element) => element.tagNumber == tag);
     if (result.isEmpty && !allowNull) {
-      throw DartCosmosSdkPluginException("field id does not exist.",
-          details: {"fieldIds": map((e) => e.tagNumber).join(", "), "id": tag});
+      throw DartCosmosSdkPluginException(
+        "field id does not exist.",
+        details: {"fieldIds": map((e) => e.tagNumber).join(", "), "id": tag},
+      );
     }
     // if (dynamic is T) {
 
@@ -191,8 +204,10 @@ extension QuickProtocolBufferResult on ProtocolBufferDecoderResult {
       if (_isTypeBigInt<T>()) return BigintUtils.parse(value) as T;
       if (_isTypeInt<T>()) return IntUtils.parse(value) as T;
     } catch (_) {}
-    throw DartCosmosSdkPluginException("Invalid type.",
-        details: {"type": "$T", "Excepted": value.runtimeType.toString()});
+    throw DartCosmosSdkPluginException(
+      "Invalid type.",
+      details: {"type": "$T", "Excepted": value.runtimeType.toString()},
+    );
   }
 
   T get<T>() {
@@ -206,14 +221,18 @@ extension QuickProtocolBufferResult on ProtocolBufferDecoderResult {
         return BigInt.from(value) as T;
       } else if (false is T) {
         if (value != 0 && value != 1) {
-          throw DartCosmosSdkPluginException("Invalid boolean value.",
-              details: {"value": value});
+          throw DartCosmosSdkPluginException(
+            "Invalid boolean value.",
+            details: {"value": value},
+          );
         }
         return (value == 1 ? true : false) as T;
       }
     }
-    throw DartCosmosSdkPluginException("Invalid type.",
-        details: {"type": "$T", "Excepted": value.runtimeType.toString()});
+    throw DartCosmosSdkPluginException(
+      "Invalid type.",
+      details: {"type": "$T", "Excepted": value.runtimeType.toString()},
+    );
   }
 
   T cast<T>() {
@@ -223,8 +242,10 @@ extension QuickProtocolBufferResult on ProtocolBufferDecoderResult {
         return BigInt.from(value) as T;
       } else if (T == bool) {
         if (value != 0 && value != 1) {
-          throw DartCosmosSdkPluginException("Invalid boolean value.",
-              details: {"value": value});
+          throw DartCosmosSdkPluginException(
+            "Invalid boolean value.",
+            details: {"value": value},
+          );
         }
         return (value == 1 ? true : false) as T;
       }
@@ -236,11 +257,14 @@ extension QuickProtocolBufferResult on ProtocolBufferDecoderResult {
     if (value is List<int> && T == String) {
       return StringUtils.decode(value) as T;
     }
-    throw DartCosmosSdkPluginException("cannot cast value.", details: {
-      "Type": "$T",
-      "Excepted": value.runtimeType.toString(),
-      "value": value
-    });
+    throw DartCosmosSdkPluginException(
+      "cannot cast value.",
+      details: {
+        "Type": "$T",
+        "Excepted": value.runtimeType.toString(),
+        "value": value,
+      },
+    );
   }
 
   E to<E, T>(E Function(T e) toe) {

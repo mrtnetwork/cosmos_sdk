@@ -9,17 +9,21 @@ class DistributionQueryValidatorCommissionResponse extends CosmosMessage {
   final DistributionValidatorAccumulatedCommission commission;
   const DistributionQueryValidatorCommissionResponse(this.commission);
   factory DistributionQueryValidatorCommissionResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return DistributionQueryValidatorCommissionResponse(
-        DistributionValidatorAccumulatedCommission.fromJson(
-            json["commission"]));
+      DistributionValidatorAccumulatedCommission.fromJson(json["commission"]),
+    );
   }
   factory DistributionQueryValidatorCommissionResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionQueryValidatorCommissionResponse(
-        DistributionValidatorAccumulatedCommission.deserialize(
-            decode.getField(1)));
+      DistributionValidatorAccumulatedCommission.deserialize(
+        decode.getField(1),
+      ),
+    );
   }
 
   @override

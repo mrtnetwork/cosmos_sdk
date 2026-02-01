@@ -20,22 +20,28 @@ class AuthzExec extends AuthzV1Beta1Service<AuthzMsgExecResponse> {
   factory AuthzExec.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return AuthzExec(
-        grantee: decode
-            .getResult(1)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        msgs: decode
-            .getFields<List<int>>(2)
-            .map((e) => Any.deserialize(e))
-            .toList());
+      grantee: decode
+          .getResult(1)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      msgs:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => Any.deserialize(e))
+              .toList(),
+    );
   }
   factory AuthzExec.fromJson(Map<String, dynamic> json) {
     return AuthzExec(
-        grantee: json.maybeAs<CosmosBaseAddress, String>(
-            key: "grantee", onValue: (e) => CosmosBaseAddress(e)),
-        msgs: json
-            .asListOfMap("msgs", throwOnNull: false)!
-            .map((e) => Any.fromJson(e))
-            .toList());
+      grantee: json.maybeAs<CosmosBaseAddress, String>(
+        key: "grantee",
+        onValue: (e) => CosmosBaseAddress(e),
+      ),
+      msgs:
+          json
+              .asListOfMap("msgs", throwOnNull: false)!
+              .map((e) => Any.fromJson(e))
+              .toList(),
+    );
   }
 
   @override
@@ -45,7 +51,7 @@ class AuthzExec extends AuthzV1Beta1Service<AuthzMsgExecResponse> {
   Map<String, dynamic> toJson() {
     return {
       "grantee": grantee?.address,
-      "msgs": msgs.map((e) => e.toJson()).toList()
+      "msgs": msgs.map((e) => e.toJson()).toList(),
     };
   }
 

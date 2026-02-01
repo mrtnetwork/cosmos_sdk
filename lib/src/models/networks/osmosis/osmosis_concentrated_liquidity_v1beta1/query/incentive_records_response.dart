@@ -11,35 +11,44 @@ class OsmosisConcentratedLiquidityIncentiveRecordsResponse
   /// pagination defines the pagination in the response.
   final PageResponse? pagination;
 
-  OsmosisConcentratedLiquidityIncentiveRecordsResponse(
-      {required List<OsmosisConcentratedLiquidityIncentiveRecord>
-          incentiveRecords,
-      this.pagination})
-      : incentiveRecords = incentiveRecords.immutable;
+  OsmosisConcentratedLiquidityIncentiveRecordsResponse({
+    required List<OsmosisConcentratedLiquidityIncentiveRecord> incentiveRecords,
+    this.pagination,
+  }) : incentiveRecords = incentiveRecords.immutable;
   factory OsmosisConcentratedLiquidityIncentiveRecordsResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityIncentiveRecordsResponse(
-        incentiveRecords: decode
-            .getFields<List<int>>(1)
-            .map((e) =>
-                OsmosisConcentratedLiquidityIncentiveRecord.deserialize(e))
-            .toList(),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)));
+      incentiveRecords:
+          decode
+              .getFields<List<int>>(1)
+              .map(
+                (e) =>
+                    OsmosisConcentratedLiquidityIncentiveRecord.deserialize(e),
+              )
+              .toList(),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageResponse, List<int>>((e) => PageResponse.deserialize(e)),
+    );
   }
   factory OsmosisConcentratedLiquidityIncentiveRecordsResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityIncentiveRecordsResponse(
-        incentiveRecords: (json["incentive_records"] as List?)
-                ?.map((e) =>
-                    OsmosisConcentratedLiquidityIncentiveRecord.fromJson(e))
-                .toList() ??
-            <OsmosisConcentratedLiquidityIncentiveRecord>[],
-        pagination: json["pagination"] == null
-            ? null
-            : PageResponse.fromJson(json["pagination"]));
+      incentiveRecords:
+          (json["incentive_records"] as List?)
+              ?.map(
+                (e) => OsmosisConcentratedLiquidityIncentiveRecord.fromJson(e),
+              )
+              .toList() ??
+          <OsmosisConcentratedLiquidityIncentiveRecord>[],
+      pagination:
+          json["pagination"] == null
+              ? null
+              : PageResponse.fromJson(json["pagination"]),
+    );
   }
 
   @override
@@ -49,7 +58,7 @@ class OsmosisConcentratedLiquidityIncentiveRecordsResponse
   Map<String, dynamic> toJson() {
     return {
       "incentive_records": incentiveRecords.map((e) => e.toJson()).toList(),
-      "pagination": pagination?.toJson()
+      "pagination": pagination?.toJson(),
     };
   }
 

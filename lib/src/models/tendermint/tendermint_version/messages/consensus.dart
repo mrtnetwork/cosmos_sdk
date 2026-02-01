@@ -13,8 +13,9 @@ class Consensus extends CosmosMessage {
   }
   factory Consensus.fromJson(Map<String, dynamic> json) {
     return Consensus(
-        app: BigInt.tryParse(json["app"] ?? ""),
-        block: BigInt.tryParse(json["block"] ?? ""));
+      app: BigInt.tryParse(json["app"] ?? ""),
+      block: BigInt.tryParse(json["block"] ?? ""),
+    );
   }
 
   @override

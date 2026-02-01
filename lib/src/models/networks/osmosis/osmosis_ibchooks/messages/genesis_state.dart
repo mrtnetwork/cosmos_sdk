@@ -9,7 +9,8 @@ class OsmosisIbchooksGenesisState extends CosmosMessage {
   factory OsmosisIbchooksGenesisState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisIbchooksGenesisState(
-        OsmosisIbchooksParams.deserialize(decode.getField(1)));
+      OsmosisIbchooksParams.deserialize(decode.getField(1)),
+    );
   }
 
   @override

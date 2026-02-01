@@ -9,15 +9,20 @@ class OsmosisStreamSwapUserPositionKV extends CosmosMessage {
   final BigInt? saleId;
   final OsmosisStreamSwapUserPosition userPosition;
 
-  const OsmosisStreamSwapUserPositionKV(
-      {this.accAddress, this.saleId, required this.userPosition});
+  const OsmosisStreamSwapUserPositionKV({
+    this.accAddress,
+    this.saleId,
+    required this.userPosition,
+  });
   factory OsmosisStreamSwapUserPositionKV.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisStreamSwapUserPositionKV(
-        accAddress: decode.getField(1),
-        saleId: decode.getField(2),
-        userPosition:
-            OsmosisStreamSwapUserPosition.deserialize(decode.getField(3)));
+      accAddress: decode.getField(1),
+      saleId: decode.getField(2),
+      userPosition: OsmosisStreamSwapUserPosition.deserialize(
+        decode.getField(3),
+      ),
+    );
   }
 
   @override
@@ -28,7 +33,7 @@ class OsmosisStreamSwapUserPositionKV extends CosmosMessage {
     return {
       "acc_address": accAddress,
       "sale_id": saleId?.toString(),
-      "user_position": userPosition.toJson()
+      "user_position": userPosition.toJson(),
     };
   }
 

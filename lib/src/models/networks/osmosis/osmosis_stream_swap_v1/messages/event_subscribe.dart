@@ -9,9 +9,10 @@ class OsmosisStreamSwapEventSubscribe extends CosmosMessage {
   factory OsmosisStreamSwapEventSubscribe.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisStreamSwapEventSubscribe(
-        sender: decode.getField(1),
-        saleId: decode.getField(2),
-        amount: decode.getField(3));
+      sender: decode.getField(1),
+      saleId: decode.getField(2),
+      amount: decode.getField(3),
+    );
   }
 
   @override

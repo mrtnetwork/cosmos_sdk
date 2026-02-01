@@ -15,32 +15,38 @@ class DistributionMsgDepositValidatorRewardsPool
   final CosmosBaseAddress? depositor;
   final CosmosBaseAddress? validatorAddress;
   final List<Coin> amount;
-  DistributionMsgDepositValidatorRewardsPool(
-      {this.depositor, this.validatorAddress, required List<Coin> amount})
-      : amount = amount.immutable;
+  DistributionMsgDepositValidatorRewardsPool({
+    this.depositor,
+    this.validatorAddress,
+    required List<Coin> amount,
+  }) : amount = amount.immutable;
   factory DistributionMsgDepositValidatorRewardsPool.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionMsgDepositValidatorRewardsPool(
-        depositor: decode
-            .getResult(1)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        validatorAddress: decode
-            .getResult(2)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        amount: decode
-            .getFields<List<int>>(3)
-            .map((e) => Coin.deserialize(e))
-            .toList());
+      depositor: decode
+          .getResult(1)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      validatorAddress: decode
+          .getResult(2)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      amount:
+          decode
+              .getFields<List<int>>(3)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
+    );
   }
   factory DistributionMsgDepositValidatorRewardsPool.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return DistributionMsgDepositValidatorRewardsPool(
       depositor: json.asAddress("depositor"),
       validatorAddress: json.asAddress("validator_address"),
       amount:
           json.asListOfMap("amount")?.map((e) => Coin.fromJson(e)).toList() ??
-              [],
+          [],
     );
   }
 
@@ -52,7 +58,7 @@ class DistributionMsgDepositValidatorRewardsPool
     return {
       "depositor": depositor?.address,
       "validator_address": validatorAddress?.address,
-      "amount": amount.map((e) => e.toJson()).toList()
+      "amount": amount.map((e) => e.toJson()).toList(),
     };
   }
 
@@ -67,7 +73,9 @@ class DistributionMsgDepositValidatorRewardsPool
 
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
-    return EmptyServiceRequestResponse(DistributionV1beta1Types
-        .distributionMsgDepositValidatorRewardsPoolResponse);
+    return EmptyServiceRequestResponse(
+      DistributionV1beta1Types
+          .distributionMsgDepositValidatorRewardsPoolResponse,
+    );
   }
 }

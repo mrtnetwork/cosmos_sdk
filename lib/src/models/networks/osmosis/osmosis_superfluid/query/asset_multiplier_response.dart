@@ -4,27 +4,34 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 
 class OsmosisSuperfluidAssetMultiplierResponse extends CosmosMessage {
   final OsmosisSuperfluidOsmoEquivalentMultiplierRecord?
-      osmoEquivalentMultiplier;
-  const OsmosisSuperfluidAssetMultiplierResponse(
-      {this.osmoEquivalentMultiplier});
+  osmoEquivalentMultiplier;
+  const OsmosisSuperfluidAssetMultiplierResponse({
+    this.osmoEquivalentMultiplier,
+  });
   factory OsmosisSuperfluidAssetMultiplierResponse.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidAssetMultiplierResponse(
-        osmoEquivalentMultiplier: decode
-            .getResult(1)
-            ?.to<OsmosisSuperfluidOsmoEquivalentMultiplierRecord, List<int>>(
-                (e) =>
-                    OsmosisSuperfluidOsmoEquivalentMultiplierRecord.deserialize(
-                        e)));
+      osmoEquivalentMultiplier: decode
+          .getResult(1)
+          ?.to<OsmosisSuperfluidOsmoEquivalentMultiplierRecord, List<int>>(
+            (e) =>
+                OsmosisSuperfluidOsmoEquivalentMultiplierRecord.deserialize(e),
+          ),
+    );
   }
   factory OsmosisSuperfluidAssetMultiplierResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisSuperfluidAssetMultiplierResponse(
-        osmoEquivalentMultiplier: json["osmo_equivalent_multiplier"] == null
-            ? null
-            : OsmosisSuperfluidOsmoEquivalentMultiplierRecord(
-                multiplier: json["osmo_equivalent_multiplier"]));
+      osmoEquivalentMultiplier:
+          json["osmo_equivalent_multiplier"] == null
+              ? null
+              : OsmosisSuperfluidOsmoEquivalentMultiplierRecord(
+                multiplier: json["osmo_equivalent_multiplier"],
+              ),
+    );
   }
 
   @override

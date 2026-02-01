@@ -71,9 +71,11 @@ class ThorTxDetailsResponse {
       fromAddress: json['from_address'],
       toAddress: json['to_address'],
       coins: List<ThorCoinResponse>.from(
-          json['coins'].map((x) => ThorCoinResponse.fromJson(x))),
+        json['coins'].map((x) => ThorCoinResponse.fromJson(x)),
+      ),
       gas: List<ThorCoinResponse>.from(
-          json['gas'].map((x) => ThorCoinResponse.fromJson(x))),
+        json['gas'].map((x) => ThorCoinResponse.fromJson(x)),
+      ),
       memo: json['memo'],
     );
   }
@@ -95,10 +97,7 @@ class ThorKeysignMetric {
   final String txId;
   final dynamic nodeTssTimes;
 
-  const ThorKeysignMetric({
-    required this.txId,
-    required this.nodeTssTimes,
-  });
+  const ThorKeysignMetric({required this.txId, required this.nodeTssTimes});
 
   factory ThorKeysignMetric.fromJson(Map<String, dynamic> json) {
     return ThorKeysignMetric(
@@ -108,10 +107,7 @@ class ThorKeysignMetric {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'tx_id': txId,
-      'node_tss_times': nodeTssTimes,
-    };
+    return {'tx_id': txId, 'node_tss_times': nodeTssTimes};
   }
 }
 

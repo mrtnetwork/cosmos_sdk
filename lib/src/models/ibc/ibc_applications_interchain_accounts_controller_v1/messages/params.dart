@@ -8,15 +8,18 @@ class InterchainAccountsControllerParams extends CosmosMessage {
   final bool? controllerEnabled;
   const InterchainAccountsControllerParams({this.controllerEnabled});
   factory InterchainAccountsControllerParams.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return InterchainAccountsControllerParams(
-        controllerEnabled: json["controller_enabled"]);
+      controllerEnabled: json["controller_enabled"],
+    );
   }
 
   factory InterchainAccountsControllerParams.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return InterchainAccountsControllerParams(
-        controllerEnabled: decode.getField(1));
+      controllerEnabled: decode.getField(1),
+    );
   }
 
   @override

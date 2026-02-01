@@ -7,13 +7,16 @@ class OsmosisSuperfluidQueryTotalDelegationByDelegatorRequest
     with
         QueryMessage<OsmosisSuperfluidQueryTotalDelegationByDelegatorResponse> {
   final String delegatorAddress;
-  const OsmosisSuperfluidQueryTotalDelegationByDelegatorRequest(
-      {required this.delegatorAddress});
+  const OsmosisSuperfluidQueryTotalDelegationByDelegatorRequest({
+    required this.delegatorAddress,
+  });
   factory OsmosisSuperfluidQueryTotalDelegationByDelegatorRequest.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisSuperfluidQueryTotalDelegationByDelegatorRequest(
-        delegatorAddress: decode.getField(1));
+      delegatorAddress: decode.getField(1),
+    );
   }
 
   @override
@@ -36,16 +39,20 @@ class OsmosisSuperfluidQueryTotalDelegationByDelegatorRequest
 
   @override
   OsmosisSuperfluidQueryTotalDelegationByDelegatorResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisSuperfluidQueryTotalDelegationByDelegatorResponse.fromJson(
-        json);
+      json,
+    );
   }
 
   @override
   OsmosisSuperfluidQueryTotalDelegationByDelegatorResponse onResponse(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return OsmosisSuperfluidQueryTotalDelegationByDelegatorResponse.deserialize(
-        bytes);
+      bytes,
+    );
   }
 
   @override

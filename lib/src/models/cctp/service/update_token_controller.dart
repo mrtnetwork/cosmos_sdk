@@ -5,21 +5,27 @@ import 'package:cosmos_sdk/src/protobuf/protobuf.dart';
 import 'package:cosmos_sdk/src/utils/quick.dart';
 
 class CCTPV1MsgUpdateTokenController
-    extends CCTPV1Service<EmptyServiceRequestResponse> with AminoMessage {
+    extends CCTPV1Service<EmptyServiceRequestResponse>
+    with AminoMessage {
   final String from;
   final String newTokenController;
-  const CCTPV1MsgUpdateTokenController(
-      {required this.from, required this.newTokenController});
+  const CCTPV1MsgUpdateTokenController({
+    required this.from,
+    required this.newTokenController,
+  });
 
   factory CCTPV1MsgUpdateTokenController.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return CCTPV1MsgUpdateTokenController(
-        from: decode.getField(1), newTokenController: decode.getField(2));
+      from: decode.getField(1),
+      newTokenController: decode.getField(2),
+    );
   }
   factory CCTPV1MsgUpdateTokenController.fromJson(Map<String, dynamic> json) {
     return CCTPV1MsgUpdateTokenController(
-        from: json.as("from"),
-        newTokenController: json.as("new_token_controller"));
+      from: json.as("from"),
+      newTokenController: json.as("new_token_controller"),
+    );
   }
 
   @override
@@ -41,6 +47,7 @@ class CCTPV1MsgUpdateTokenController
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        CCTPV1Types.msgUpdateTokenControllerResponse);
+      CCTPV1Types.msgUpdateTokenControllerResponse,
+    );
   }
 }

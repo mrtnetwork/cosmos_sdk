@@ -11,27 +11,28 @@ class ThorchainEventWithdraw extends CosmosMessage {
   final BigInt emitAsset;
   final BigInt emitRune;
   final BigInt impLossProtection;
-  ThorchainEventWithdraw(
-      {required this.pool,
-      required this.providerUnits,
-      this.basisPoints,
-      required List<int> asymmetry,
-      required this.inTx,
-      required this.emitAsset,
-      required this.emitRune,
-      required this.impLossProtection})
-      : asymmetry = BytesUtils.toBytes(asymmetry, unmodifiable: true);
+  ThorchainEventWithdraw({
+    required this.pool,
+    required this.providerUnits,
+    this.basisPoints,
+    required List<int> asymmetry,
+    required this.inTx,
+    required this.emitAsset,
+    required this.emitRune,
+    required this.impLossProtection,
+  }) : asymmetry = BytesUtils.toBytes(asymmetry, unmodifiable: true);
   factory ThorchainEventWithdraw.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainEventWithdraw(
-        pool: ThorchainAsset.deserialize(decode.getField(1)),
-        providerUnits: BigInt.parse(decode.getField(2)),
-        basisPoints: decode.getField(3),
-        asymmetry: decode.getField(4),
-        inTx: ThorchainTx.deserialize(decode.getField(5)),
-        emitAsset: BigInt.parse(decode.getField(6)),
-        emitRune: BigInt.parse(decode.getField(7)),
-        impLossProtection: BigInt.parse(decode.getField(8)));
+      pool: ThorchainAsset.deserialize(decode.getField(1)),
+      providerUnits: BigInt.parse(decode.getField(2)),
+      basisPoints: decode.getField(3),
+      asymmetry: decode.getField(4),
+      inTx: ThorchainTx.deserialize(decode.getField(5)),
+      emitAsset: BigInt.parse(decode.getField(6)),
+      emitRune: BigInt.parse(decode.getField(7)),
+      impLossProtection: BigInt.parse(decode.getField(8)),
+    );
   }
 
   @override
@@ -47,7 +48,7 @@ class ThorchainEventWithdraw extends CosmosMessage {
       "in_tx": inTx.toJson(),
       "emit_asset": emitAsset.toString(),
       "emit_rune": emitRune.toString(),
-      "imp_loss_protection": impLossProtection.toString()
+      "imp_loss_protection": impLossProtection.toString(),
     };
   }
 
@@ -56,13 +57,13 @@ class ThorchainEventWithdraw extends CosmosMessage {
 
   @override
   List get values => [
-        pool,
-        providerUnits.toString(),
-        basisPoints,
-        asymmetry,
-        inTx,
-        emitAsset.toString(),
-        emitRune.toString(),
-        impLossProtection.toString()
-      ];
+    pool,
+    providerUnits.toString(),
+    basisPoints,
+    asymmetry,
+    inTx,
+    emitAsset.toString(),
+    emitRune.toString(),
+    impLossProtection.toString(),
+  ];
 }

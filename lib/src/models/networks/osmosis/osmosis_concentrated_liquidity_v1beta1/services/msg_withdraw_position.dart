@@ -5,28 +5,37 @@ import 'package:cosmos_sdk/src/utils/quick.dart';
 import 'msg_withdraw_position_response.dart';
 
 class OsmosisConcentratedLiquidityMsgWithdrawPosition
-    extends OsmosisConcentratedLiquidityV1Beta1<
-        OsmosisConcentratedLiquidityMsgWithdrawPositionResponse> {
+    extends
+        OsmosisConcentratedLiquidityV1Beta1<
+          OsmosisConcentratedLiquidityMsgWithdrawPositionResponse
+        > {
   final BigInt? positionId;
   final String? sender;
   final String liquidityAmount;
 
-  OsmosisConcentratedLiquidityMsgWithdrawPosition(
-      {this.positionId, this.sender, required this.liquidityAmount});
+  OsmosisConcentratedLiquidityMsgWithdrawPosition({
+    this.positionId,
+    this.sender,
+    required this.liquidityAmount,
+  });
   factory OsmosisConcentratedLiquidityMsgWithdrawPosition.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisConcentratedLiquidityMsgWithdrawPosition(
-        positionId: decode.getField(1),
-        sender: decode.getField(2),
-        liquidityAmount: decode.getField(3));
+      positionId: decode.getField(1),
+      sender: decode.getField(2),
+      liquidityAmount: decode.getField(3),
+    );
   }
   factory OsmosisConcentratedLiquidityMsgWithdrawPosition.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisConcentratedLiquidityMsgWithdrawPosition(
-        positionId: json.asBigInt("position_id"),
-        sender: json.as("sender"),
-        liquidityAmount: json.as("liquidity_amount"));
+      positionId: json.asBigInt("position_id"),
+      sender: json.as("sender"),
+      liquidityAmount: json.as("liquidity_amount"),
+    );
   }
   @override
   List<int> get fieldIds => [1, 2, 3];
@@ -36,7 +45,7 @@ class OsmosisConcentratedLiquidityMsgWithdrawPosition
     return {
       "position_id": positionId?.toString(),
       "sender": sender,
-      "liquidity_amount": liquidityAmount
+      "liquidity_amount": liquidityAmount,
     };
   }
 
@@ -49,9 +58,11 @@ class OsmosisConcentratedLiquidityMsgWithdrawPosition
 
   @override
   OsmosisConcentratedLiquidityMsgWithdrawPositionResponse onResponse(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return OsmosisConcentratedLiquidityMsgWithdrawPositionResponse.deserialize(
-        bytes);
+      bytes,
+    );
   }
 
   @override

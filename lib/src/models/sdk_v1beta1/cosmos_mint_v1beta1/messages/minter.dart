@@ -10,23 +10,19 @@ class Minter extends CosmosMessage {
   /// current annual expected provisions
   final String annualProvisions;
 
-  const Minter({
-    required this.inflation,
-    required this.annualProvisions,
-  });
+  const Minter({required this.inflation, required this.annualProvisions});
 
   factory Minter.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Minter(
-        inflation: decode.getField(1), annualProvisions: decode.getField(2));
+      inflation: decode.getField(1),
+      annualProvisions: decode.getField(2),
+    );
   }
 
   @override
   Map<String, dynamic> toJson() {
-    return {
-      'inflation': inflation,
-      'annual_provisions': annualProvisions,
-    };
+    return {'inflation': inflation, 'annual_provisions': annualProvisions};
   }
 
   @override

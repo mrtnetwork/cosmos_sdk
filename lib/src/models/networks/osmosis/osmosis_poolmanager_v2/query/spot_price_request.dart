@@ -9,14 +9,18 @@ class OsmosisPoolManagerV2SpotPriceRequest extends CosmosMessage
   final String? baseAssetDenom;
   final String? quoteAssetDenom;
 
-  const OsmosisPoolManagerV2SpotPriceRequest(
-      {required this.poolId, this.baseAssetDenom, this.quoteAssetDenom});
+  const OsmosisPoolManagerV2SpotPriceRequest({
+    required this.poolId,
+    this.baseAssetDenom,
+    this.quoteAssetDenom,
+  });
   factory OsmosisPoolManagerV2SpotPriceRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return OsmosisPoolManagerV2SpotPriceRequest(
-        poolId: decode.getField(1),
-        baseAssetDenom: decode.getField(2),
-        quoteAssetDenom: decode.getField(3));
+      poolId: decode.getField(1),
+      baseAssetDenom: decode.getField(2),
+      quoteAssetDenom: decode.getField(3),
+    );
   }
 
   @override
@@ -24,7 +28,8 @@ class OsmosisPoolManagerV2SpotPriceRequest extends CosmosMessage
 
   @override
   OsmosisPoolManagerV2SpotPriceResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return OsmosisPoolManagerV2SpotPriceResponse.fromJson(json);
   }
 
@@ -35,16 +40,16 @@ class OsmosisPoolManagerV2SpotPriceRequest extends CosmosMessage
 
   @override
   Map<String, String?> get queryParameters => {
-        "base_asset_denom": baseAssetDenom,
-        "quote_asset_denom": quoteAssetDenom
-      };
+    "base_asset_denom": baseAssetDenom,
+    "quote_asset_denom": quoteAssetDenom,
+  };
 
   @override
   Map<String, dynamic> toJson() {
     return {
       "pool_id": poolId.toString(),
       "base_asset_denom": baseAssetDenom,
-      "quote_asset_denom": quoteAssetDenom
+      "quote_asset_denom": quoteAssetDenom,
     };
   }
 

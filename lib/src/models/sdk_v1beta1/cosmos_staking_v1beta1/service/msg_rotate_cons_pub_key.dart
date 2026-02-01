@@ -19,17 +19,22 @@ class MsgRotateConsPubKey
   factory MsgRotateConsPubKey.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgRotateConsPubKey(
-        validatorAddress: decode
-            .getResult(1)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
-        newPubkey:
-            decode.getResult(2)?.to<Any, List<int>>((e) => Any.deserialize(e)));
+      validatorAddress: decode
+          .getResult(1)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+      newPubkey: decode
+          .getResult(2)
+          ?.to<Any, List<int>>((e) => Any.deserialize(e)),
+    );
   }
   factory MsgRotateConsPubKey.fromJson(Map<String, dynamic> json) {
     return MsgRotateConsPubKey(
-        validatorAddress: json.asAddress("validator_address"),
-        newPubkey: json.maybeAs<Any, Map<String, dynamic>>(
-            key: "new_pubkey", onValue: (e) => Any.fromJson(e)));
+      validatorAddress: json.asAddress("validator_address"),
+      newPubkey: json.maybeAs<Any, Map<String, dynamic>>(
+        key: "new_pubkey",
+        onValue: (e) => Any.fromJson(e),
+      ),
+    );
   }
 
   @override
@@ -54,6 +59,7 @@ class MsgRotateConsPubKey
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        StakingV1beta1Types.msgRotateConsPubKeyResponse);
+      StakingV1beta1Types.msgRotateConsPubKeyResponse,
+    );
   }
 }

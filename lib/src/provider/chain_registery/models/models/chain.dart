@@ -11,16 +11,16 @@ class CCRPeer {
   CCRPeer({required this.id, required this.address, this.provider});
 
   factory CCRPeer.fromJson(Map<String, dynamic> json) => CCRPeer(
-        id: json['id'],
-        address: json['address'],
-        provider: json['provider'],
-      );
+    id: json['id'],
+    address: json['address'],
+    provider: json['provider'],
+  );
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'address': address,
-        'provider': provider,
-      };
+    'id': id,
+    'address': address,
+    'provider': provider,
+  };
 }
 
 class CCREndpoint {
@@ -31,16 +31,14 @@ class CCREndpoint {
   CCREndpoint({required this.address, this.provider, this.archive});
 
   factory CCREndpoint.fromJson(Map<String, dynamic> json) => CCREndpoint(
-        address: json['address'],
-        provider: json['provider'],
-        archive: json['archive'],
-      );
+    address: json['address'],
+    provider: json['provider'],
+    archive: json['archive'],
+  );
 
-  Map<String, dynamic> toJson() => {
-        'address': address,
-        'provider': provider,
-        'archive': archive,
-      }..removeWhere((k, v) => v == null);
+  Map<String, dynamic> toJson() =>
+      {'address': address, 'provider': provider, 'archive': archive}
+        ..removeWhere((k, v) => v == null);
 }
 
 class CCRExplorer {
@@ -72,25 +70,27 @@ class CCRExplorer {
   });
 
   factory CCRExplorer.fromJson(Map<String, dynamic> json) => CCRExplorer(
-        kind: json['kind'],
-        url: json['url'],
-        txPage: (json['tx_page'] as String?)?.replaceAll(r"${txHash}", "#txId"),
-        accountPage: (json['account_page'] as String?)
-            ?.replaceAll(r"${accountAddress}", "#address"),
-        // validatorPage: json['validator_page'],
-        // proposalPage: json['proposal_page'],
-        // blockPage: json['block_page'],
-      );
+    kind: json['kind'],
+    url: json['url'],
+    txPage: (json['tx_page'] as String?)?.replaceAll(r"${txHash}", "#txId"),
+    accountPage: (json['account_page'] as String?)?.replaceAll(
+      r"${accountAddress}",
+      "#address",
+    ),
+    // validatorPage: json['validator_page'],
+    // proposalPage: json['proposal_page'],
+    // blockPage: json['block_page'],
+  );
 
   Map<String, dynamic> toJson() => {
-        'kind': kind,
-        'url': url,
-        'tx_page': txPage,
-        'account_page': accountPage,
-        'validator_page': validatorPage,
-        'proposal_page': proposalPage,
-        'block_page': blockPage,
-      };
+    'kind': kind,
+    'url': url,
+    'tx_page': txPage,
+    'account_page': accountPage,
+    'validator_page': validatorPage,
+    'proposal_page': proposalPage,
+    'block_page': blockPage,
+  };
 }
 
 class CCRFeeToken {
@@ -111,24 +111,25 @@ class CCRFeeToken {
   });
 
   factory CCRFeeToken.fromJson(Map<String, dynamic> json) => CCRFeeToken(
-        denom: json['denom'],
-        fixedMinGasPrice: (json['fixed_min_gas_price'] as num?)?.toDouble(),
-        lowGasPrice: (json['low_gas_price'] as num?)?.toDouble(),
-        averageGasPrice: (json['average_gas_price'] as num?)?.toDouble(),
-        highGasPrice: (json['high_gas_price'] as num?)?.toDouble(),
-        gasCosts: json['gas_costs'] != null
+    denom: json['denom'],
+    fixedMinGasPrice: (json['fixed_min_gas_price'] as num?)?.toDouble(),
+    lowGasPrice: (json['low_gas_price'] as num?)?.toDouble(),
+    averageGasPrice: (json['average_gas_price'] as num?)?.toDouble(),
+    highGasPrice: (json['high_gas_price'] as num?)?.toDouble(),
+    gasCosts:
+        json['gas_costs'] != null
             ? CCRGasCosts.fromJson(json['gas_costs'])
             : null,
-      );
+  );
 
   Map<String, dynamic> toJson() => {
-        'denom': denom,
-        'fixed_min_gas_price': fixedMinGasPrice,
-        'low_gas_price': lowGasPrice,
-        'average_gas_price': averageGasPrice,
-        'high_gas_price': highGasPrice,
-        'gas_costs': gasCosts?.toJson(),
-      }..removeWhere((k, v) => v == null);
+    'denom': denom,
+    'fixed_min_gas_price': fixedMinGasPrice,
+    'low_gas_price': lowGasPrice,
+    'average_gas_price': averageGasPrice,
+    'high_gas_price': highGasPrice,
+    'gas_costs': gasCosts?.toJson(),
+  }..removeWhere((k, v) => v == null);
 }
 
 class CCRGasCosts {
@@ -138,14 +139,14 @@ class CCRGasCosts {
   CCRGasCosts({this.cosmosSend, this.ibcTransfer});
 
   factory CCRGasCosts.fromJson(Map<String, dynamic> json) => CCRGasCosts(
-        cosmosSend: (json['cosmos_send'] as num?)?.toDouble(),
-        ibcTransfer: (json['ibc_transfer'] as num?)?.toDouble(),
-      );
+    cosmosSend: (json['cosmos_send'] as num?)?.toDouble(),
+    ibcTransfer: (json['ibc_transfer'] as num?)?.toDouble(),
+  );
 
   Map<String, dynamic> toJson() => {
-        'cosmos_send': cosmosSend,
-        'ibc_transfer': ibcTransfer,
-      };
+    'cosmos_send': cosmosSend,
+    'ibc_transfer': ibcTransfer,
+  };
 }
 
 class CCRLockDuration {
@@ -155,44 +156,38 @@ class CCRLockDuration {
   CCRLockDuration({this.blocks, this.time});
 
   factory CCRLockDuration.fromJson(Map<String, dynamic> json) =>
-      CCRLockDuration(
-        blocks: json['blocks'] as int?,
-        time: json['time'],
-      );
+      CCRLockDuration(blocks: json['blocks'] as int?, time: json['time']);
 
-  Map<String, dynamic> toJson() => {
-        'blocks': blocks,
-        'time': time,
-      };
+  Map<String, dynamic> toJson() => {'blocks': blocks, 'time': time};
 }
 
 class CCRStaking {
   final List<CCRStakingToken> stakingTokens;
   final CCRLockDuration? lockDuration;
 
-  CCRStaking({
-    required this.stakingTokens,
-    this.lockDuration,
-  });
+  CCRStaking({required this.stakingTokens, this.lockDuration});
 
   factory CCRStaking.fromJson(Map<String, dynamic> json) {
     final List<CCRStakingToken> stakingTokensList =
         (json['staking_tokens'] as List?)
-                ?.map((token) => CCRStakingToken.fromJson(token))
-                .toList() ??
-            [];
+            ?.map((token) => CCRStakingToken.fromJson(token))
+            .toList() ??
+        [];
 
-    final CCRLockDuration? lockDuration = json['lock_duration'] != null
-        ? CCRLockDuration.fromJson(json['lock_duration'])
-        : null;
+    final CCRLockDuration? lockDuration =
+        json['lock_duration'] != null
+            ? CCRLockDuration.fromJson(json['lock_duration'])
+            : null;
     return CCRStaking(
-        stakingTokens: stakingTokensList, lockDuration: lockDuration);
+      stakingTokens: stakingTokensList,
+      lockDuration: lockDuration,
+    );
   }
 
   Map<String, dynamic> toJson() => {
-        'staking_tokens': stakingTokens.map((token) => token.toJson()).toList(),
-        'lock_duration': lockDuration?.toJson(),
-      };
+    'staking_tokens': stakingTokens.map((token) => token.toJson()).toList(),
+    'lock_duration': lockDuration?.toJson(),
+  };
 }
 
 class CCRStakingToken {
@@ -201,13 +196,9 @@ class CCRStakingToken {
   CCRStakingToken({required this.denom});
 
   factory CCRStakingToken.fromJson(Map<String, dynamic> json) =>
-      CCRStakingToken(
-        denom: json['denom'],
-      );
+      CCRStakingToken(denom: json['denom']);
 
-  Map<String, dynamic> toJson() => {
-        'denom': denom,
-      };
+  Map<String, dynamic> toJson() => {'denom': denom};
 }
 
 class CCRSdk {
@@ -219,18 +210,18 @@ class CCRSdk {
   CCRSdk({required this.type, this.version, this.repo, this.tag});
 
   factory CCRSdk.fromJson(Map<String, dynamic> json) => CCRSdk(
-        type: json['type'],
-        version: json['version'],
-        repo: json['repo'],
-        tag: json['tag'],
-      );
+    type: json['type'],
+    version: json['version'],
+    repo: json['repo'],
+    tag: json['tag'],
+  );
 
   Map<String, dynamic> toJson() => {
-        'type': type,
-        'version': version,
-        'repo': repo,
-        'tag': tag,
-      };
+    'type': type,
+    'version': version,
+    'repo': repo,
+    'tag': tag,
+  };
 }
 
 class CCRIbc {
@@ -249,20 +240,20 @@ class CCRIbc {
   });
 
   factory CCRIbc.fromJson(Map<String, dynamic> json) => CCRIbc(
-        type: json['type'],
-        version: json['version'],
-        repo: json['repo'],
-        tag: json['tag'],
-        icsEnabled: (json['ics_enabled'] as List?)?.cast(),
-      );
+    type: json['type'],
+    version: json['version'],
+    repo: json['repo'],
+    tag: json['tag'],
+    icsEnabled: (json['ics_enabled'] as List?)?.cast(),
+  );
 
   Map<String, dynamic> toJson() => {
-        'type': type,
-        'version': version,
-        'repo': repo,
-        'tag': tag,
-        'ics_enabled': icsEnabled,
-      };
+    'type': type,
+    'version': version,
+    'repo': repo,
+    'tag': tag,
+    'ics_enabled': icsEnabled,
+  };
 }
 
 class CCRCosmwasm {
@@ -275,20 +266,20 @@ class CCRCosmwasm {
   CCRCosmwasm({this.version, this.repo, this.tag, this.enabled, this.path});
 
   factory CCRCosmwasm.fromJson(Map<String, dynamic> json) => CCRCosmwasm(
-        version: json['version'],
-        repo: json['repo'],
-        tag: json['tag'],
-        enabled: json['enabled'],
-        path: json['path'],
-      );
+    version: json['version'],
+    repo: json['repo'],
+    tag: json['tag'],
+    enabled: json['enabled'],
+    path: json['path'],
+  );
 
   Map<String, dynamic> toJson() => {
-        'version': version,
-        'repo': repo,
-        'tag': tag,
-        'enabled': enabled,
-        'path': path,
-      };
+    'version': version,
+    'repo': repo,
+    'tag': tag,
+    'enabled': enabled,
+    'path': path,
+  };
 }
 
 class CCRConsensus {
@@ -300,18 +291,18 @@ class CCRConsensus {
   CCRConsensus({required this.type, this.version, this.repo, this.tag});
 
   factory CCRConsensus.fromJson(Map<String, dynamic> json) => CCRConsensus(
-        type: json['type'],
-        version: json['version'],
-        repo: json['repo'],
-        tag: json['tag'],
-      );
+    type: json['type'],
+    version: json['version'],
+    repo: json['repo'],
+    tag: json['tag'],
+  );
 
   Map<String, dynamic> toJson() => {
-        'type': type,
-        'version': version,
-        'repo': repo,
-        'tag': tag,
-      };
+    'type': type,
+    'version': version,
+    'repo': repo,
+    'tag': tag,
+  };
 }
 
 class CCRLanguage {
@@ -323,18 +314,18 @@ class CCRLanguage {
   CCRLanguage({required this.type, this.version, this.repo, this.tag});
 
   factory CCRLanguage.fromJson(Map<String, dynamic> json) => CCRLanguage(
-        type: json['type'],
-        version: json['version'],
-        repo: json['repo'],
-        tag: json['tag'],
-      );
+    type: json['type'],
+    version: json['version'],
+    repo: json['repo'],
+    tag: json['tag'],
+  );
 
   Map<String, dynamic> toJson() => {
-        'type': type,
-        'version': version,
-        'repo': repo,
-        'tag': tag,
-      };
+    'type': type,
+    'version': version,
+    'repo': repo,
+    'tag': tag,
+  };
 }
 
 class CCRBinaries {
@@ -355,22 +346,22 @@ class CCRBinaries {
   });
 
   factory CCRBinaries.fromJson(Map<String, dynamic> json) => CCRBinaries(
-        linuxAmd64: json['linux/amd64'],
-        linuxArm64: json['linux/arm64'],
-        darwinAmd64: json['darwin/amd64'],
-        darwinArm64: json['darwin/arm64'],
-        windowsAmd64: json['windows/amd64'],
-        windowsArm64: json['windows/arm64'],
-      );
+    linuxAmd64: json['linux/amd64'],
+    linuxArm64: json['linux/arm64'],
+    darwinAmd64: json['darwin/amd64'],
+    darwinArm64: json['darwin/arm64'],
+    windowsAmd64: json['windows/amd64'],
+    windowsArm64: json['windows/arm64'],
+  );
 
   Map<String, dynamic> toJson() => {
-        'linux/amd64': linuxAmd64,
-        'linux/arm64': linuxArm64,
-        'darwin/amd64': darwinAmd64,
-        'darwin/arm64': darwinArm64,
-        'windows/amd64': windowsAmd64,
-        'windows/arm64': windowsArm64,
-      };
+    'linux/amd64': linuxAmd64,
+    'linux/arm64': linuxArm64,
+    'darwin/amd64': darwinAmd64,
+    'darwin/arm64': darwinArm64,
+    'windows/amd64': windowsAmd64,
+    'windows/arm64': windowsArm64,
+  };
 }
 
 class CCRPointer {
@@ -379,15 +370,13 @@ class CCRPointer {
 
   CCRPointer({required this.chainName, this.baseDenom});
 
-  factory CCRPointer.fromJson(Map<String, dynamic> json) => CCRPointer(
-        chainName: json['chain_name'],
-        baseDenom: json['base_denom'],
-      );
+  factory CCRPointer.fromJson(Map<String, dynamic> json) =>
+      CCRPointer(chainName: json['chain_name'], baseDenom: json['base_denom']);
 
   Map<String, dynamic> toJson() => {
-        'chain_name': chainName,
-        'base_denom': baseDenom,
-      };
+    'chain_name': chainName,
+    'base_denom': baseDenom,
+  };
 }
 
 class CCRBech32Config {
@@ -418,13 +407,13 @@ class CCRBech32Config {
       );
 
   Map<String, dynamic> toJson() => {
-        'bech32PrefixAccAddr': bech32PrefixAccAddr,
-        'bech32PrefixAccPub': bech32PrefixAccPub,
-        'bech32PrefixValAddr': bech32PrefixValAddr,
-        'bech32PrefixValPub': bech32PrefixValPub,
-        'bech32PrefixConsAddr': bech32PrefixConsAddr,
-        'bech32PrefixConsPub': bech32PrefixConsPub,
-      };
+    'bech32PrefixAccAddr': bech32PrefixAccAddr,
+    'bech32PrefixAccPub': bech32PrefixAccPub,
+    'bech32PrefixValAddr': bech32PrefixValAddr,
+    'bech32PrefixValPub': bech32PrefixValPub,
+    'bech32PrefixConsAddr': bech32PrefixConsAddr,
+    'bech32PrefixConsPub': bech32PrefixConsPub,
+  };
 }
 
 class CCRFees {
@@ -433,7 +422,8 @@ class CCRFees {
   CCRFees({required this.feeTokens});
 
   factory CCRFees.fromJson(Map<String, dynamic> json) {
-    final tokens = (json['fee_tokens'] as List?)
+    final tokens =
+        (json['fee_tokens'] as List?)
             ?.map((e) => CCRFeeToken.fromJson(e))
             .toList() ??
         [];
@@ -441,8 +431,8 @@ class CCRFees {
   }
 
   Map<String, dynamic> toJson() => {
-        'fee_tokens': feeTokens.map((token) => token.toJson()).toList(),
-      };
+    'fee_tokens': feeTokens.map((token) => token.toJson()).toList(),
+  };
 }
 
 class CCRGenesis {
@@ -450,11 +440,7 @@ class CCRGenesis {
   final String genesisUrl;
   final String? icsCcvUrl;
 
-  CCRGenesis({
-    this.name,
-    required this.genesisUrl,
-    this.icsCcvUrl,
-  });
+  CCRGenesis({this.name, required this.genesisUrl, this.icsCcvUrl});
 
   factory CCRGenesis.fromJson(Map<String, dynamic> json) {
     return CCRGenesis(
@@ -465,10 +451,10 @@ class CCRGenesis {
   }
 
   Map<String, dynamic> toJson() => {
-        'name': name,
-        'genesis_url': genesisUrl,
-        'ics_ccv_url': icsCcvUrl,
-      };
+    'name': name,
+    'genesis_url': genesisUrl,
+    'ics_ccv_url': icsCcvUrl,
+  };
 }
 
 class CCRCodebase {
@@ -515,23 +501,27 @@ class CCRCodebase {
       gitRepo: json['git_repo'],
       recommendedVersion: json['recommended_version'],
       compatibleVersions: List<String>.from(json['compatible_versions'] ?? []),
-      language: json['language'] != null
-          ? CCRLanguage.fromJson(json['language'])
-          : null,
-      binaries: json['binaries'] != null
-          ? CCRBinaries.fromJson(json['binaries'])
-          : null,
+      language:
+          json['language'] != null
+              ? CCRLanguage.fromJson(json['language'])
+              : null,
+      binaries:
+          json['binaries'] != null
+              ? CCRBinaries.fromJson(json['binaries'])
+              : null,
       cosmosSdkVersion: json['cosmos_sdk_version'],
       sdk: json['sdk'] != null ? CCRSdk.fromJson(json['sdk']) : null,
-      consensus: json['consensus'] != null
-          ? CCRConsensus.fromJson(json['consensus'])
-          : null,
+      consensus:
+          json['consensus'] != null
+              ? CCRConsensus.fromJson(json['consensus'])
+              : null,
       cosmwasmVersion: json['cosmwasm_version'],
       cosmwasmEnabled: json['cosmwasm_enabled'],
       cosmwasmPath: json['cosmwasm_path'],
-      cosmwasm: json['cosmwasm'] != null
-          ? CCRCosmwasm.fromJson(json['cosmwasm'])
-          : null,
+      cosmwasm:
+          json['cosmwasm'] != null
+              ? CCRCosmwasm.fromJson(json['cosmwasm'])
+              : null,
       ibc: json['ibc'] != null ? CCRIbc.fromJson(json['ibc']) : null,
       genesis:
           json['genesis'] != null ? CCRGenesis.fromJson(json['genesis']) : null,
@@ -540,22 +530,22 @@ class CCRCodebase {
   }
 
   Map<String, dynamic> toJson() => {
-        'git_repo': gitRepo,
-        'recommended_version': recommendedVersion,
-        'compatible_versions': compatibleVersions,
-        'language': language?.toJson(),
-        'binaries': binaries?.toJson(),
-        'cosmos_sdk_version': cosmosSdkVersion,
-        'sdk': sdk?.toJson(),
-        'consensus': consensus?.toJson(),
-        'cosmwasm_version': cosmwasmVersion,
-        'cosmwasm_enabled': cosmwasmEnabled,
-        'cosmwasm_path': cosmwasmPath,
-        'cosmwasm': cosmwasm?.toJson(),
-        'ibc': ibc?.toJson(),
-        'genesis': genesis?.toJson(),
-        'versions': versions?.map((e) => e.toJson()).toList(),
-      };
+    'git_repo': gitRepo,
+    'recommended_version': recommendedVersion,
+    'compatible_versions': compatibleVersions,
+    'language': language?.toJson(),
+    'binaries': binaries?.toJson(),
+    'cosmos_sdk_version': cosmosSdkVersion,
+    'sdk': sdk?.toJson(),
+    'consensus': consensus?.toJson(),
+    'cosmwasm_version': cosmwasmVersion,
+    'cosmwasm_enabled': cosmwasmEnabled,
+    'cosmwasm_path': cosmwasmPath,
+    'cosmwasm': cosmwasm?.toJson(),
+    'ibc': ibc?.toJson(),
+    'genesis': genesis?.toJson(),
+    'versions': versions?.map((e) => e.toJson()).toList(),
+  };
 }
 
 class CCRVersionInfo {
@@ -580,81 +570,86 @@ class CCRVersionInfo {
   final String? ibcGoVersion;
   final List<String>? icsEnabled;
 
-  CCRVersionInfo(
-      {required this.name,
-      this.tag,
-      this.height,
-      this.proposal,
-      this.previousVersionName,
-      this.nextVersionName,
-      this.recommendedVersion,
-      this.compatibleVersions,
-      this.language,
-      this.cosmosSdkVersion,
-      this.sdk,
-      this.consensus,
-      this.cosmwasmVersion,
-      this.cosmwasmEnabled,
-      this.cosmwasmPath,
-      this.cosmwasm,
-      this.ibc,
-      this.binaries,
-      this.ibcGoVersion,
-      this.icsEnabled});
+  CCRVersionInfo({
+    required this.name,
+    this.tag,
+    this.height,
+    this.proposal,
+    this.previousVersionName,
+    this.nextVersionName,
+    this.recommendedVersion,
+    this.compatibleVersions,
+    this.language,
+    this.cosmosSdkVersion,
+    this.sdk,
+    this.consensus,
+    this.cosmwasmVersion,
+    this.cosmwasmEnabled,
+    this.cosmwasmPath,
+    this.cosmwasm,
+    this.ibc,
+    this.binaries,
+    this.ibcGoVersion,
+    this.icsEnabled,
+  });
 
   factory CCRVersionInfo.fromJson(Map<String, dynamic> json) {
     return CCRVersionInfo(
-        name: json['name'],
-        tag: json['tag'],
-        height: json['height'] as int?,
-        proposal: json['proposal'] as int?,
-        previousVersionName: json['previous_version_name'],
-        nextVersionName: json['next_version_name'],
-        recommendedVersion: json['recommended_version'],
-        compatibleVersions:
-            List<String>.from(json['compatible_versions'] ?? []),
-        language: json['language'] != null
-            ? CCRLanguage.fromJson(json['language'])
-            : null,
-        cosmosSdkVersion: json['cosmos_sdk_version'],
-        sdk: json['sdk'] != null ? CCRSdk.fromJson(json['sdk']) : null,
-        consensus: json['consensus'] != null
-            ? CCRConsensus.fromJson(json['consensus'])
-            : null,
-        cosmwasmVersion: json['cosmwasm_version'],
-        cosmwasmEnabled: json['cosmwasm_enabled'],
-        cosmwasmPath: json['cosmwasm_path'],
-        cosmwasm: json['cosmwasm'] != null
-            ? CCRCosmwasm.fromJson(json['cosmwasm'])
-            : null,
-        ibc: json['ibc'] != null ? CCRIbc.fromJson(json['ibc']) : null,
-        binaries: json['binaries'] != null
-            ? CCRBinaries.fromJson(json['binaries'])
-            : null,
-        icsEnabled: (json["ics_enabled"] as List?)?.cast(),
-        ibcGoVersion: json["ibc_go_version"]);
+      name: json['name'],
+      tag: json['tag'],
+      height: json['height'] as int?,
+      proposal: json['proposal'] as int?,
+      previousVersionName: json['previous_version_name'],
+      nextVersionName: json['next_version_name'],
+      recommendedVersion: json['recommended_version'],
+      compatibleVersions: List<String>.from(json['compatible_versions'] ?? []),
+      language:
+          json['language'] != null
+              ? CCRLanguage.fromJson(json['language'])
+              : null,
+      cosmosSdkVersion: json['cosmos_sdk_version'],
+      sdk: json['sdk'] != null ? CCRSdk.fromJson(json['sdk']) : null,
+      consensus:
+          json['consensus'] != null
+              ? CCRConsensus.fromJson(json['consensus'])
+              : null,
+      cosmwasmVersion: json['cosmwasm_version'],
+      cosmwasmEnabled: json['cosmwasm_enabled'],
+      cosmwasmPath: json['cosmwasm_path'],
+      cosmwasm:
+          json['cosmwasm'] != null
+              ? CCRCosmwasm.fromJson(json['cosmwasm'])
+              : null,
+      ibc: json['ibc'] != null ? CCRIbc.fromJson(json['ibc']) : null,
+      binaries:
+          json['binaries'] != null
+              ? CCRBinaries.fromJson(json['binaries'])
+              : null,
+      icsEnabled: (json["ics_enabled"] as List?)?.cast(),
+      ibcGoVersion: json["ibc_go_version"],
+    );
   }
 
   Map<String, dynamic> toJson() => {
-        'name': name,
-        'tag': tag,
-        'height': height,
-        'proposal': proposal,
-        'previous_version_name': previousVersionName,
-        'next_version_name': nextVersionName,
-        'recommended_version': recommendedVersion,
-        'compatible_versions': compatibleVersions,
-        'language': language?.toJson(),
-        'cosmos_sdk_version': cosmosSdkVersion,
-        'sdk': sdk?.toJson(),
-        'consensus': consensus?.toJson(),
-        'cosmwasm_version': cosmwasmVersion,
-        'cosmwasm_enabled': cosmwasmEnabled,
-        'cosmwasm_path': cosmwasmPath,
-        'cosmwasm': cosmwasm?.toJson(),
-        'ibc': ibc?.toJson(),
-        'binaries': binaries?.toJson(),
-      };
+    'name': name,
+    'tag': tag,
+    'height': height,
+    'proposal': proposal,
+    'previous_version_name': previousVersionName,
+    'next_version_name': nextVersionName,
+    'recommended_version': recommendedVersion,
+    'compatible_versions': compatibleVersions,
+    'language': language?.toJson(),
+    'cosmos_sdk_version': cosmosSdkVersion,
+    'sdk': sdk?.toJson(),
+    'consensus': consensus?.toJson(),
+    'cosmwasm_version': cosmwasmVersion,
+    'cosmwasm_enabled': cosmwasmEnabled,
+    'cosmwasm_path': cosmwasmPath,
+    'cosmwasm': cosmwasm?.toJson(),
+    'ibc': ibc?.toJson(),
+    'binaries': binaries?.toJson(),
+  };
 }
 
 class CCRLogoURIs {
@@ -664,16 +659,10 @@ class CCRLogoURIs {
   CCRLogoURIs({this.png, this.svg});
 
   factory CCRLogoURIs.fromJson(Map<String, dynamic> json) {
-    return CCRLogoURIs(
-      png: json['png'],
-      svg: json['svg'],
-    );
+    return CCRLogoURIs(png: json['png'], svg: json['svg']);
   }
 
-  Map<String, dynamic> toJson() => {
-        'png': png,
-        'svg': svg,
-      };
+  Map<String, dynamic> toJson() => {'png': png, 'svg': svg};
 }
 
 class CCRTheme {
@@ -702,12 +691,12 @@ class CCRTheme {
   }
 
   Map<String, dynamic> toJson() => {
-        'primary_color_hex': primaryColorHex,
-        'background_color_hex': backgroundColorHex,
-        'circle': circle,
-        'dark_mode': darkMode,
-        'monochrome': monochrome,
-      };
+    'primary_color_hex': primaryColorHex,
+    'background_color_hex': backgroundColorHex,
+    'circle': circle,
+    'dark_mode': darkMode,
+    'monochrome': monochrome,
+  };
 }
 
 class CCRImageResource {
@@ -716,18 +705,14 @@ class CCRImageResource {
   final String? svg;
   final CCRTheme? theme;
 
-  CCRImageResource({
-    this.imageSync,
-    this.png,
-    this.svg,
-    this.theme,
-  });
+  CCRImageResource({this.imageSync, this.png, this.svg, this.theme});
 
   factory CCRImageResource.fromJson(Map<String, dynamic> json) {
     return CCRImageResource(
-      imageSync: json['image_sync'] != null
-          ? CCRPointer.fromJson(json['image_sync'])
-          : null,
+      imageSync:
+          json['image_sync'] != null
+              ? CCRPointer.fromJson(json['image_sync'])
+              : null,
       png: json['png'],
       svg: json['svg'],
       theme: json['theme'] != null ? CCRTheme.fromJson(json['theme']) : null,
@@ -735,11 +720,11 @@ class CCRImageResource {
   }
 
   Map<String, dynamic> toJson() => {
-        'image_sync': imageSync?.toJson(),
-        'png': png,
-        'svg': svg,
-        'theme': theme?.toJson(),
-      };
+    'image_sync': imageSync?.toJson(),
+    'png': png,
+    'svg': svg,
+    'theme': theme?.toJson(),
+  };
 }
 
 class CCRChain {
@@ -806,81 +791,88 @@ class CCRChain {
   });
 
   factory CCRChain.fromJson(Map<String, dynamic> json) => CCRChain(
-      schema: json['\$schema'],
-      chainName: json['chain_name'],
-      chainType: json['chain_type'],
-      chainId: json['chain_id'],
-      preForkChainName: json['pre_fork_chain_name'],
-      prettyName: json['pretty_name'],
-      website: json['website'],
-      status: json['status'],
-      networkType: json['network_type'],
-      bech32Prefix: json['bech32_prefix'],
-      bech32Config: json['bech32_config'] != null
-          ? CCRBech32Config.fromJson(json['bech32_config'])
-          : null,
-      daemonName: json['daemon_name'],
-      nodeHome: json['node_home'],
-      keyAlgos: (json['key_algos'] as List?)?.cast() ?? [],
-      slip44: json['slip44'] as int?,
-      alternativeSlip44s:
-          (json['alternative_slip44s'] as List?)?.map((e) => e as int).toList(),
-      fees: CCRFees.fromJson(json['fees'] ?? {}),
-      staking: CCRStaking.fromJson(json['staking'] ?? {}),
-      codebase: json['codebase'] != null
-          ? CCRCodebase.fromJson(json['codebase'])
-          : null,
-      images: (json['images'] as List?)
-          ?.map((e) => CCRImageResource.fromJson(e))
-          .toList(),
-      logoURIs: json['logo_URIs'] != null
-          ? CCRLogoURIs.fromJson(json['logo_URIs'])
-          : null,
-      description: json['description'],
-      peers: json['peers'] != null ? CCRPeers.fromJson(json['peers']) : null,
-      apis: CCRApis.fromJson(json['apis'] ?? {}),
-      bestApis: CCRApis.fromJson(json['best_apis'] ?? {}),
-      explorers: (json['explorers'] as List?)
-              ?.map((e) => CCRExplorer.fromJson(e))
-              .toList() ??
-          [],
-      keywords: (json['keywords'] as List?)?.cast(),
-      extraCodecs: (json['extra_codecs'] as List?)?.cast(),
-      assets: (json['assets'] as List?)
-          ?.map((e) => CosmosDirectoryAsset.fromJson(e))
-          .toList());
+    schema: json['\$schema'],
+    chainName: json['chain_name'],
+    chainType: json['chain_type'],
+    chainId: json['chain_id'],
+    preForkChainName: json['pre_fork_chain_name'],
+    prettyName: json['pretty_name'],
+    website: json['website'],
+    status: json['status'],
+    networkType: json['network_type'],
+    bech32Prefix: json['bech32_prefix'],
+    bech32Config:
+        json['bech32_config'] != null
+            ? CCRBech32Config.fromJson(json['bech32_config'])
+            : null,
+    daemonName: json['daemon_name'],
+    nodeHome: json['node_home'],
+    keyAlgos: (json['key_algos'] as List?)?.cast() ?? [],
+    slip44: json['slip44'] as int?,
+    alternativeSlip44s:
+        (json['alternative_slip44s'] as List?)?.map((e) => e as int).toList(),
+    fees: CCRFees.fromJson(json['fees'] ?? {}),
+    staking: CCRStaking.fromJson(json['staking'] ?? {}),
+    codebase:
+        json['codebase'] != null
+            ? CCRCodebase.fromJson(json['codebase'])
+            : null,
+    images:
+        (json['images'] as List?)
+            ?.map((e) => CCRImageResource.fromJson(e))
+            .toList(),
+    logoURIs:
+        json['logo_URIs'] != null
+            ? CCRLogoURIs.fromJson(json['logo_URIs'])
+            : null,
+    description: json['description'],
+    peers: json['peers'] != null ? CCRPeers.fromJson(json['peers']) : null,
+    apis: CCRApis.fromJson(json['apis'] ?? {}),
+    bestApis: CCRApis.fromJson(json['best_apis'] ?? {}),
+    explorers:
+        (json['explorers'] as List?)
+            ?.map((e) => CCRExplorer.fromJson(e))
+            .toList() ??
+        [],
+    keywords: (json['keywords'] as List?)?.cast(),
+    extraCodecs: (json['extra_codecs'] as List?)?.cast(),
+    assets:
+        (json['assets'] as List?)
+            ?.map((e) => CosmosDirectoryAsset.fromJson(e))
+            .toList(),
+  );
 
   Map<String, dynamic> toJson() => {
-        // '\$schema': schema,
-        'chain_name': chainName,
-        'chain_type': chainType,
-        'chain_id': chainId,
-        'pre_fork_chain_name': preForkChainName,
-        'pretty_name': prettyName,
-        'website': website,
-        'status': status,
-        'network_type': networkType,
-        'bech32_prefix': bech32Prefix,
-        'bech32_config': bech32Config?.toJson(),
-        'daemon_name': daemonName,
-        // 'node_home': nodeHome,
-        'key_algos': keyAlgos,
-        'slip44': slip44,
-        'alternative_slip44s': alternativeSlip44s,
-        'fees': fees.toJson(),
-        'staking': staking.toJson(),
-        'codebase': codebase?.toJson(),
-        'images': images?.map((e) => e.toJson()).toList(),
-        'logo_URIs': logoURIs?.toJson(),
-        'description': description,
-        'peers': peers?.toJson(),
-        'apis': apis.toJson(),
-        'explorers': explorers.map((e) => e.toJson()).toList(),
-        'keywords': keywords,
-        'extra_codecs': extraCodecs,
-        "assets": assets?.map((e) => e.toJson()).toList(),
-        "best_apis": bestApis.toJson()
-      };
+    // '\$schema': schema,
+    'chain_name': chainName,
+    'chain_type': chainType,
+    'chain_id': chainId,
+    'pre_fork_chain_name': preForkChainName,
+    'pretty_name': prettyName,
+    'website': website,
+    'status': status,
+    'network_type': networkType,
+    'bech32_prefix': bech32Prefix,
+    'bech32_config': bech32Config?.toJson(),
+    'daemon_name': daemonName,
+    // 'node_home': nodeHome,
+    'key_algos': keyAlgos,
+    'slip44': slip44,
+    'alternative_slip44s': alternativeSlip44s,
+    'fees': fees.toJson(),
+    'staking': staking.toJson(),
+    'codebase': codebase?.toJson(),
+    'images': images?.map((e) => e.toJson()).toList(),
+    'logo_URIs': logoURIs?.toJson(),
+    'description': description,
+    'peers': peers?.toJson(),
+    'apis': apis.toJson(),
+    'explorers': explorers.map((e) => e.toJson()).toList(),
+    'keywords': keywords,
+    'extra_codecs': extraCodecs,
+    "assets": assets?.map((e) => e.toJson()).toList(),
+    "best_apis": bestApis.toJson(),
+  };
 
   List<CosmosKeysAlgs> supportKeyAlgos() {
     if (keyAlgos.isEmpty) return CosmosKeysAlgs.supportedAlgs;
@@ -899,16 +891,17 @@ class CCRPeers {
   factory CCRPeers.fromJson(Map<String, dynamic> json) {
     return CCRPeers(
       seeds: (json['seeds'] as List?)?.map((e) => CCRPeer.fromJson(e)).toList(),
-      persistentPeers: (json['persistent_peers'] as List?)
-          ?.map((e) => CCRPeer.fromJson(e))
-          .toList(),
+      persistentPeers:
+          (json['persistent_peers'] as List?)
+              ?.map((e) => CCRPeer.fromJson(e))
+              .toList(),
     );
   }
 
   Map<String, dynamic> toJson() => {
-        'seeds': seeds?.map((e) => e.toJson()).toList(),
-        'persistent_peers': persistentPeers?.map((e) => e.toJson()).toList(),
-      };
+    'seeds': seeds?.map((e) => e.toJson()).toList(),
+    'persistent_peers': persistentPeers?.map((e) => e.toJson()).toList(),
+  };
 }
 
 class CCRApis {
@@ -930,27 +923,33 @@ class CCRApis {
 
   factory CCRApis.fromJson(Map<String, dynamic> json) {
     return CCRApis(
-      rpc: (json['rpc'] as List?)
+      rpc:
+          (json['rpc'] as List?)
               ?.map((e) => CCREndpoint.fromJson(e))
               .toList() ??
           [],
-      rest: (json['rest'] as List?)
+      rest:
+          (json['rest'] as List?)
               ?.map((e) => CCREndpoint.fromJson(e))
               .toList() ??
           [],
-      grpc: (json['grpc'] as List?)
+      grpc:
+          (json['grpc'] as List?)
               ?.map((e) => CCREndpoint.fromJson(e))
               .toList() ??
           [],
-      wss: (json['wss'] as List?)
+      wss:
+          (json['wss'] as List?)
               ?.map((e) => CCREndpoint.fromJson(e))
               .toList() ??
           [],
-      grpcWeb: (json['grpc-web'] as List?)
+      grpcWeb:
+          (json['grpc-web'] as List?)
               ?.map((e) => CCREndpoint.fromJson(e))
               .toList() ??
           [],
-      evmHttpJsonRpc: (json['evm-http-jsonrpc'] as List?)
+      evmHttpJsonRpc:
+          (json['evm-http-jsonrpc'] as List?)
               ?.map((e) => CCREndpoint.fromJson(e))
               .toList() ??
           [],
@@ -958,13 +957,13 @@ class CCRApis {
   }
 
   Map<String, List<Map<String, dynamic>>> toJson() => {
-        'rpc': rpc.map((e) => e.toJson()).toList(),
-        'rest': rest.map((e) => e.toJson()).toList(),
-        'grpc': grpc.map((e) => e.toJson()).toList(),
-        'wss': wss.map((e) => e.toJson()).toList(),
-        'grpc-web': grpcWeb.map((e) => e.toJson()).toList(),
-        'evm-http-jsonrpc': evmHttpJsonRpc.map((e) => e.toJson()).toList(),
-      }..removeWhere((k, v) => v.isEmpty);
+    'rpc': rpc.map((e) => e.toJson()).toList(),
+    'rest': rest.map((e) => e.toJson()).toList(),
+    'grpc': grpc.map((e) => e.toJson()).toList(),
+    'wss': wss.map((e) => e.toJson()).toList(),
+    'grpc-web': grpcWeb.map((e) => e.toJson()).toList(),
+    'evm-http-jsonrpc': evmHttpJsonRpc.map((e) => e.toJson()).toList(),
+  }..removeWhere((k, v) => v.isEmpty);
 }
 
 class CosmosDirectoryAsset {
@@ -979,36 +978,37 @@ class CosmosDirectoryAsset {
   final CCRLogoUris? logoURIs;
   final String? coingeckoId;
 
-  CosmosDirectoryAsset(
-      {this.description,
-      required this.denomUnits,
-      required this.base,
-      required this.name,
-      required this.display,
-      required this.symbol,
-      this.logoURIs,
-      required this.decimals,
-      required this.denom,
-      this.coingeckoId});
+  CosmosDirectoryAsset({
+    this.description,
+    required this.denomUnits,
+    required this.base,
+    required this.name,
+    required this.display,
+    required this.symbol,
+    this.logoURIs,
+    required this.decimals,
+    required this.denom,
+    this.coingeckoId,
+  });
 
   // From JSON factory constructor
   factory CosmosDirectoryAsset.fromJson(Map<String, dynamic> json) {
     return CosmosDirectoryAsset(
-        description: json.as("description"),
-        denomUnits: json
-            .asListOfMap("denom_units")!
-            .map(CCRDenomUnit.fromJson)
-            .toList(),
-        base: CCRDenomUnit.fromJson(json.asMap("base")),
-        name: json.as("name"),
-        display: json.maybeAs(key: "display", onValue: CCRDenomUnit.fromJson),
-        symbol: json.as("symbol"),
-        logoURIs: json['logo_URIs'] != null
-            ? CCRLogoUris.fromJson(json['logo_URIs'])
-            : null,
-        decimals: json.as("decimals"),
-        denom: json.as("denom"),
-        coingeckoId: json.as("coingecko_id"));
+      description: json.as("description"),
+      denomUnits:
+          json.asListOfMap("denom_units")!.map(CCRDenomUnit.fromJson).toList(),
+      base: CCRDenomUnit.fromJson(json.asMap("base")),
+      name: json.as("name"),
+      display: json.maybeAs(key: "display", onValue: CCRDenomUnit.fromJson),
+      symbol: json.as("symbol"),
+      logoURIs:
+          json['logo_URIs'] != null
+              ? CCRLogoUris.fromJson(json['logo_URIs'])
+              : null,
+      decimals: json.as("decimals"),
+      denom: json.as("denom"),
+      coingeckoId: json.as("coingecko_id"),
+    );
   }
 
   // To JSON method
@@ -1022,7 +1022,7 @@ class CosmosDirectoryAsset {
       'symbol': symbol,
       'logo_URIs': logoURIs?.toJson(),
       "dicimals": decimals,
-      "coingecko_id": coingeckoId
+      "coingecko_id": coingeckoId,
     };
   }
 }

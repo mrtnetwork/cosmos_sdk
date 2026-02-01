@@ -16,27 +16,31 @@ class InterchainAccountsHostModuleQuerySafe
 
   /// requests defines the module safe queries to execute.
   final List<InterchainAccountsHostQueryRequest>? requests;
-  InterchainAccountsHostModuleQuerySafe(
-      {this.signer, List<InterchainAccountsHostQueryRequest>? requests})
-      : requests = requests?.emptyAsNull?.immutable;
+  InterchainAccountsHostModuleQuerySafe({
+    this.signer,
+    List<InterchainAccountsHostQueryRequest>? requests,
+  }) : requests = requests?.emptyAsNull?.immutable;
   factory InterchainAccountsHostModuleQuerySafe.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return InterchainAccountsHostModuleQuerySafe(
       signer: decode.getField(1),
-      requests: decode
-          .getFields<List<int>>(2)
-          .map((e) => InterchainAccountsHostQueryRequest.deserialize(bytes))
-          .toList(),
+      requests:
+          decode
+              .getFields<List<int>>(2)
+              .map((e) => InterchainAccountsHostQueryRequest.deserialize(bytes))
+              .toList(),
     );
   }
   factory InterchainAccountsHostModuleQuerySafe.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return InterchainAccountsHostModuleQuerySafe(
       signer: json.as("signer"),
-      requests: json
-          .asListOfMap("requests")
-          ?.map((e) => InterchainAccountsHostQueryRequest.fromJson(e))
-          .toList(),
+      requests:
+          json
+              .asListOfMap("requests")
+              ?.map((e) => InterchainAccountsHostQueryRequest.fromJson(e))
+              .toList(),
     );
   }
 
@@ -47,7 +51,7 @@ class InterchainAccountsHostModuleQuerySafe
   Map<String, dynamic> toJson() {
     return {
       "signer": signer,
-      "requests": requests?.map((e) => e.toJson()).toList()
+      "requests": requests?.map((e) => e.toJson()).toList(),
     };
   }
 

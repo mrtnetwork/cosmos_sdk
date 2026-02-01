@@ -10,29 +10,31 @@ class ThorchainSolvencyVoter extends CosmosMessage {
   final BigInt? height;
   final BigInt? consensusBlockHeight;
   final List<String>? signers;
-  ThorchainSolvencyVoter(
-      {this.id,
-      this.chain,
-      this.pubKey,
-      required List<Coin> coins,
-      this.height,
-      this.consensusBlockHeight,
-      List<String>? signers})
-      : coins = coins.immutable,
-        signers = signers?.emptyAsNull?.immutable;
+  ThorchainSolvencyVoter({
+    this.id,
+    this.chain,
+    this.pubKey,
+    required List<Coin> coins,
+    this.height,
+    this.consensusBlockHeight,
+    List<String>? signers,
+  }) : coins = coins.immutable,
+       signers = signers?.emptyAsNull?.immutable;
   factory ThorchainSolvencyVoter.deserialized(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainSolvencyVoter(
-        id: decode.getField(1),
-        chain: decode.getField(2),
-        pubKey: decode.getField(3),
-        coins: decode
-            .getFields<List<int>>(4)
-            .map((e) => Coin.deserialize(e))
-            .toList(),
-        height: decode.getField(5),
-        consensusBlockHeight: decode.getField(6),
-        signers: decode.getFields<String>(7));
+      id: decode.getField(1),
+      chain: decode.getField(2),
+      pubKey: decode.getField(3),
+      coins:
+          decode
+              .getFields<List<int>>(4)
+              .map((e) => Coin.deserialize(e))
+              .toList(),
+      height: decode.getField(5),
+      consensusBlockHeight: decode.getField(6),
+      signers: decode.getFields<String>(7),
+    );
   }
 
   @override
@@ -47,7 +49,7 @@ class ThorchainSolvencyVoter extends CosmosMessage {
       "coins": coins.map((e) => e.toJson()).toList(),
       "height": height?.toString(),
       "consensus_block_height": consensusBlockHeight?.toString(),
-      "signers": signers
+      "signers": signers,
     };
   }
 
@@ -55,6 +57,13 @@ class ThorchainSolvencyVoter extends CosmosMessage {
   TypeUrl get typeUrl => ThorchainV1Types.solvencyVoter;
 
   @override
-  List get values =>
-      [id, chain, pubKey, coins, height, consensusBlockHeight, signers];
+  List get values => [
+    id,
+    chain,
+    pubKey,
+    coins,
+    height,
+    consensusBlockHeight,
+    signers,
+  ];
 }

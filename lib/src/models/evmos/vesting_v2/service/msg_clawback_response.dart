@@ -16,9 +16,11 @@ class EvmosVestingV2MsgClawbackResponse extends CosmosMessage {
     );
   }
   factory EvmosVestingV2MsgClawbackResponse.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return EvmosVestingV2MsgClawbackResponse(
-        coins: json.asListOfMap("coins")?.map(Coin.fromJson).toList());
+      coins: json.asListOfMap("coins")?.map(Coin.fromJson).toList(),
+    );
   }
 
   @override

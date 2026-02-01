@@ -9,23 +9,29 @@ import 'msg_withdraw_validator_commission_response.dart';
 
 /// MsgWithdrawValidatorCommission withdraws the full commission to the validator address.
 class DistributionMsgWithdrawValidatorCommission
-    extends DistributionV1Beta1Service<
-        DistributionMsgWithdrawValidatorCommissionResponse>
+    extends
+        DistributionV1Beta1Service<
+          DistributionMsgWithdrawValidatorCommissionResponse
+        >
     with AminoMessage<DistributionMsgWithdrawValidatorCommissionResponse> {
   final CosmosBaseAddress? validatorAddress;
   const DistributionMsgWithdrawValidatorCommission({this.validatorAddress});
   factory DistributionMsgWithdrawValidatorCommission.deserialize(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return DistributionMsgWithdrawValidatorCommission(
-        validatorAddress: decode
-            .getResult(1)
-            ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)));
+      validatorAddress: decode
+          .getResult(1)
+          ?.to<CosmosBaseAddress, String>((e) => CosmosBaseAddress(e)),
+    );
   }
   factory DistributionMsgWithdrawValidatorCommission.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return DistributionMsgWithdrawValidatorCommission(
-        validatorAddress: json.asAddress("validator_address"));
+      validatorAddress: json.asAddress("validator_address"),
+    );
   }
 
   @override
@@ -48,8 +54,10 @@ class DistributionMsgWithdrawValidatorCommission
 
   @override
   DistributionMsgWithdrawValidatorCommissionResponse onResponse(
-      List<int> bytes) {
+    List<int> bytes,
+  ) {
     return DistributionMsgWithdrawValidatorCommissionResponse.deserialize(
-        bytes);
+      bytes,
+    );
   }
 }

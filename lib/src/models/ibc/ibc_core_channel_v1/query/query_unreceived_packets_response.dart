@@ -13,24 +13,29 @@ class QueryUnreceivedPacketsResponse extends CosmosMessage {
   final IbcClientHeight height;
   factory QueryUnreceivedPacketsResponse.fromJson(Map<String, dynamic> json) {
     return QueryUnreceivedPacketsResponse(
-      sequences: (json["sequences"] as List?)
-          ?.map((e) => BigintUtils.parse(e))
-          .toList(),
+      sequences:
+          (json["sequences"] as List?)
+              ?.map((e) => BigintUtils.parse(e))
+              .toList(),
       height: IbcClientHeight.fromJson(json["height"]),
     );
   }
-  QueryUnreceivedPacketsResponse(
-      {List<BigInt>? sequences, required this.height})
-      : sequences = sequences?.emptyAsNull?.immutable;
+  QueryUnreceivedPacketsResponse({
+    List<BigInt>? sequences,
+    required this.height,
+  }) : sequences = sequences?.emptyAsNull?.immutable;
   factory QueryUnreceivedPacketsResponse.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryUnreceivedPacketsResponse(
-        sequences: decode
-                .getResult<ProtocolBufferDecoderResult?>(1)
-                ?.to<List<BigInt>, List<int>>(
-                    (e) => e.map((e) => BigintUtils.parse(e)).toList()) ??
-            <BigInt>[],
-        height: IbcClientHeight.deserialize(decode.getField(2)));
+      sequences:
+          decode
+              .getResult<ProtocolBufferDecoderResult?>(1)
+              ?.to<List<BigInt>, List<int>>(
+                (e) => e.map((e) => BigintUtils.parse(e)).toList(),
+              ) ??
+          <BigInt>[],
+      height: IbcClientHeight.deserialize(decode.getField(2)),
+    );
   }
 
   @override
@@ -40,7 +45,7 @@ class QueryUnreceivedPacketsResponse extends CosmosMessage {
   Map<String, dynamic> toJson() {
     return {
       "sequences": sequences?.map((e) => e.toString()),
-      "height": height.toJson()
+      "height": height.toJson(),
     };
   }
 

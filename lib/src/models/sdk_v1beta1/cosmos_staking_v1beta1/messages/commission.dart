@@ -12,15 +12,17 @@ class Commission extends CosmosMessage {
 
   factory Commission.fromJson(Map<String, dynamic> json) {
     return Commission(
-        commissionRates: CommissionRates.fromJson(json["commission_rates"]),
-        updateTime: ProtobufTimestamp.fromString(json["update_time"]));
+      commissionRates: CommissionRates.fromJson(json["commission_rates"]),
+      updateTime: ProtobufTimestamp.fromString(json["update_time"]),
+    );
   }
   const Commission({required this.commissionRates, required this.updateTime});
   factory Commission.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return Commission(
-        commissionRates: CommissionRates.deserialize(decode.getField(1)),
-        updateTime: ProtobufTimestamp.deserialize(decode.getField(2)));
+      commissionRates: CommissionRates.deserialize(decode.getField(1)),
+      updateTime: ProtobufTimestamp.deserialize(decode.getField(2)),
+    );
   }
 
   @override

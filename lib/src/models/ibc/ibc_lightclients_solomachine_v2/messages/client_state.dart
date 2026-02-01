@@ -15,21 +15,24 @@ class IbcSoloMachineV2ClientState extends CosmosMessage {
   /// when set to true, will allow governance to update a solo machine client.
   /// The client will be unfrozen if it is frozen.
   final bool? allowUpdateAfterProposal;
-  const IbcSoloMachineV2ClientState(
-      {this.sequence,
-      this.isFrozen,
-      this.consensusState,
-      this.allowUpdateAfterProposal});
+  const IbcSoloMachineV2ClientState({
+    this.sequence,
+    this.isFrozen,
+    this.consensusState,
+    this.allowUpdateAfterProposal,
+  });
   factory IbcSoloMachineV2ClientState.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return IbcSoloMachineV2ClientState(
-        sequence: decode.getField(1),
-        isFrozen: decode.getField(2),
-        consensusState: decode
-            .getResult(3)
-            ?.to<IbcSoloMachineV2ConsensusState, List<int>>(
-                (e) => IbcSoloMachineV2ConsensusState.deserialize(e)),
-        allowUpdateAfterProposal: decode.getField(4));
+      sequence: decode.getField(1),
+      isFrozen: decode.getField(2),
+      consensusState: decode
+          .getResult(3)
+          ?.to<IbcSoloMachineV2ConsensusState, List<int>>(
+            (e) => IbcSoloMachineV2ConsensusState.deserialize(e),
+          ),
+      allowUpdateAfterProposal: decode.getField(4),
+    );
   }
 
   @override
@@ -41,7 +44,7 @@ class IbcSoloMachineV2ClientState extends CosmosMessage {
       "sequence": sequence?.toString(),
       "is_frozen": isFrozen,
       "consensus_state": consensusState?.toJson(),
-      "allow_update_after_proposal": allowUpdateAfterProposal
+      "allow_update_after_proposal": allowUpdateAfterProposal,
     };
   }
 
@@ -49,6 +52,10 @@ class IbcSoloMachineV2ClientState extends CosmosMessage {
   TypeUrl get typeUrl => IbcTypes.soloMachineV2ClientState;
 
   @override
-  List get values =>
-      [sequence, isFrozen, consensusState, allowUpdateAfterProposal];
+  List get values => [
+    sequence,
+    isFrozen,
+    consensusState,
+    allowUpdateAfterProposal,
+  ];
 }

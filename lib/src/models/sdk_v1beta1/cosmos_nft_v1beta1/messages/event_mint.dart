@@ -16,18 +16,15 @@ class EventMint extends CosmosMessage {
   factory EventMint.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EventMint(
-        classId: decode.getField(1),
-        id: decode.getField(2),
-        owner: decode.getField(3));
+      classId: decode.getField(1),
+      id: decode.getField(2),
+      owner: decode.getField(3),
+    );
   }
 
   @override
   Map<String, dynamic> toJson() {
-    return {
-      'class_id': classId,
-      'id': id,
-      'owner': owner,
-    };
+    return {'class_id': classId, 'id': id, 'owner': owner};
   }
 
   @override

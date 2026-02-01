@@ -15,20 +15,20 @@ class ThorchainStreamingSwap extends CosmosMessage {
   final BigInt outValue;
   final List<BigInt>? failedSwaps;
   final List<String>? failedSwapReasons;
-  ThorchainStreamingSwap(
-      {this.txId,
-      this.interval,
-      this.quantity,
-      this.count,
-      this.lastHeight,
-      required this.tradeTarget,
-      required this.deposit,
-      required this.inValue,
-      required this.outValue,
-      List<BigInt>? failedSwaps,
-      List<String>? failedSwapReasons})
-      : failedSwaps = failedSwaps?.emptyAsNull?.immutable,
-        failedSwapReasons = failedSwapReasons?.emptyAsNull?.immutable;
+  ThorchainStreamingSwap({
+    this.txId,
+    this.interval,
+    this.quantity,
+    this.count,
+    this.lastHeight,
+    required this.tradeTarget,
+    required this.deposit,
+    required this.inValue,
+    required this.outValue,
+    List<BigInt>? failedSwaps,
+    List<String>? failedSwapReasons,
+  }) : failedSwaps = failedSwaps?.emptyAsNull?.immutable,
+       failedSwapReasons = failedSwapReasons?.emptyAsNull?.immutable;
   factory ThorchainStreamingSwap.deserialized(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return ThorchainStreamingSwap(
@@ -41,10 +41,12 @@ class ThorchainStreamingSwap extends CosmosMessage {
       deposit: BigInt.parse(decode.getField(7)),
       inValue: BigInt.parse(decode.getField(8)),
       outValue: BigInt.parse(decode.getField(9)),
-      failedSwaps: decode
+      failedSwaps:
+          decode
               .getResult<ProtocolBufferDecoderResult?>(10)
               ?.to<List<BigInt>, List<int>>(
-                  (e) => e.map((e) => BigintUtils.parse(e)).toList()) ??
+                (e) => e.map((e) => BigintUtils.parse(e)).toList(),
+              ) ??
           <BigInt>[],
       failedSwapReasons: decode.getField(11),
     );
@@ -66,7 +68,7 @@ class ThorchainStreamingSwap extends CosmosMessage {
       "in": inValue.toString(),
       "out": outValue.toString(),
       "failed_swaps": failedSwaps?.map((e) => e.toString()).toList(),
-      "failed_swap_reasons": failedSwapReasons
+      "failed_swap_reasons": failedSwapReasons,
     };
   }
 
@@ -75,16 +77,16 @@ class ThorchainStreamingSwap extends CosmosMessage {
 
   @override
   List get values => [
-        txId,
-        interval,
-        quantity,
-        count,
-        lastHeight,
-        tradeTarget.toString(),
-        deposit.toString(),
-        inValue.toString(),
-        outValue.toString(),
-        failedSwaps,
-        failedSwapReasons
-      ];
+    txId,
+    interval,
+    quantity,
+    count,
+    lastHeight,
+    tradeTarget.toString(),
+    deposit.toString(),
+    inValue.toString(),
+    outValue.toString(),
+    failedSwaps,
+    failedSwapReasons,
+  ];
 }

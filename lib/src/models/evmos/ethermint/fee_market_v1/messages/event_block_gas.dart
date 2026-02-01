@@ -7,12 +7,16 @@ class EvmosEthermintFeeMarketV1EventBlockGas extends CosmosMessage {
   final String height;
   // sender of the message
   final String amount;
-  const EvmosEthermintFeeMarketV1EventBlockGas(
-      {required this.height, required this.amount});
+  const EvmosEthermintFeeMarketV1EventBlockGas({
+    required this.height,
+    required this.amount,
+  });
   factory EvmosEthermintFeeMarketV1EventBlockGas.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return EvmosEthermintFeeMarketV1EventBlockGas(
-        height: decode.getField(1), amount: decode.getField(2));
+      height: decode.getField(1),
+      amount: decode.getField(2),
+    );
   }
 
   @override

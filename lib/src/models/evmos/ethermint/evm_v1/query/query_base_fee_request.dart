@@ -31,7 +31,8 @@ class EvmosEthermintEVMV1QueryBaseFeeRequest extends CosmosMessage
 
   @override
   EvmosEthermintEVMV1QueryBaseFeeResponse onJsonResponse(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return EvmosEthermintEVMV1QueryBaseFeeResponse.fromJson(json);
   }
 }

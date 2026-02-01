@@ -12,24 +12,28 @@ class AuthzQueryGranteeGrantsRequest extends CosmosMessage
 
   /// pagination defines an pagination for the request.
   final PageRequest? pagination;
-  const AuthzQueryGranteeGrantsRequest(
-      {required this.grantee, this.pagination});
+  const AuthzQueryGranteeGrantsRequest({
+    required this.grantee,
+    this.pagination,
+  });
 
   factory AuthzQueryGranteeGrantsRequest.fromJson(Map<String, dynamic> json) {
     return AuthzQueryGranteeGrantsRequest(
       grantee: CosmosBaseAddress(json["grantee"]),
-      pagination: json["pagination"] == null
-          ? null
-          : PageRequest.fromJson(json["pagination"]),
+      pagination:
+          json["pagination"] == null
+              ? null
+              : PageRequest.fromJson(json["pagination"]),
     );
   }
   factory AuthzQueryGranteeGrantsRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return AuthzQueryGranteeGrantsRequest(
-        grantee: CosmosBaseAddress(decode.getField(1)),
-        pagination: decode
-            .getResult(2)
-            ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)));
+      grantee: CosmosBaseAddress(decode.getField(1)),
+      pagination: decode
+          .getResult(2)
+          ?.to<PageRequest, List<int>>((e) => PageRequest.deserialize(e)),
+    );
   }
 
   @override

@@ -37,40 +37,45 @@ class MsgTransfer extends IbcService<MsgTransferResponse>
 
   /// optional memo
   final String? memo;
-  const MsgTransfer(
-      {this.sourcePort,
-      this.sourceChannel,
-      required this.token,
-      this.sender,
-      this.receiver,
-      this.timeoutHeight,
-      this.timeoutTimestamp,
-      this.memo});
+  const MsgTransfer({
+    this.sourcePort,
+    this.sourceChannel,
+    required this.token,
+    this.sender,
+    this.receiver,
+    this.timeoutHeight,
+    this.timeoutTimestamp,
+    this.memo,
+  });
   factory MsgTransfer.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgTransfer(
-        sourcePort: decode.getField(1),
-        sourceChannel: decode.getField(2),
-        token: Coin.deserialize(decode.getField(3)),
-        sender: decode.getField(4),
-        receiver: decode.getField(5),
-        timeoutHeight: decode
-            .getResult(6)
-            ?.to<IbcClientHeight, List<int>>(IbcClientHeight.deserialize),
-        timeoutTimestamp: decode.getField(7),
-        memo: decode.getField(8));
+      sourcePort: decode.getField(1),
+      sourceChannel: decode.getField(2),
+      token: Coin.deserialize(decode.getField(3)),
+      sender: decode.getField(4),
+      receiver: decode.getField(5),
+      timeoutHeight: decode
+          .getResult(6)
+          ?.to<IbcClientHeight, List<int>>(IbcClientHeight.deserialize),
+      timeoutTimestamp: decode.getField(7),
+      memo: decode.getField(8),
+    );
   }
   factory MsgTransfer.fromJson(Map<String, dynamic> json) {
     return MsgTransfer(
-        sourcePort: json.as("source_port"),
-        sourceChannel: json.as("source_channel"),
-        token: Coin.fromJson(json.asMap("token")),
-        sender: json.as("sender"),
-        receiver: json.as("receiver"),
-        timeoutHeight: json.maybeAs<IbcClientHeight, Map<String, dynamic>>(
-            key: "timeout_height", onValue: IbcClientHeight.fromJson),
-        timeoutTimestamp: json.asBigInt("timeout_timestamp"),
-        memo: json.as("memo"));
+      sourcePort: json.as("source_port"),
+      sourceChannel: json.as("source_channel"),
+      token: Coin.fromJson(json.asMap("token")),
+      sender: json.as("sender"),
+      receiver: json.as("receiver"),
+      timeoutHeight: json.maybeAs<IbcClientHeight, Map<String, dynamic>>(
+        key: "timeout_height",
+        onValue: IbcClientHeight.fromJson,
+      ),
+      timeoutTimestamp: json.asBigInt("timeout_timestamp"),
+      memo: json.as("memo"),
+    );
   }
 
   @override
@@ -87,7 +92,7 @@ class MsgTransfer extends IbcService<MsgTransferResponse>
       "timeout_height":
           amino ? (timeoutHeight?.toJson() ?? {}) : timeoutHeight?.toJson(),
       "timeout_timestamp": timeoutTimestamp?.toString(),
-      if (!amino) "memo": memo
+      if (!amino) "memo": memo,
     };
   }
 
@@ -95,7 +100,7 @@ class MsgTransfer extends IbcService<MsgTransferResponse>
   Map<String, dynamic> toAminoJson() {
     return {
       "type": typeUrl.aminoType!,
-      "value": toJson(amino: true)..removeWhere((k, v) => v == null)
+      "value": toJson(amino: true)..removeWhere((k, v) => v == null),
     };
   }
 
@@ -104,15 +109,15 @@ class MsgTransfer extends IbcService<MsgTransferResponse>
 
   @override
   List get values => [
-        sourcePort,
-        sourceChannel,
-        token,
-        sender,
-        receiver,
-        timeoutHeight,
-        timeoutTimestamp,
-        memo
-      ];
+    sourcePort,
+    sourceChannel,
+    token,
+    sender,
+    receiver,
+    timeoutHeight,
+    timeoutTimestamp,
+    memo,
+  ];
 
   @override
   List<String?> get signers => [sender];

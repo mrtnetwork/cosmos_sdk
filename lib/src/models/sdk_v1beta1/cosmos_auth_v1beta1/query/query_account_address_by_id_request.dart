@@ -18,12 +18,16 @@ class QueryAccountAddressByIDRequest extends CosmosMessage
   ///
   /// Since: cosmos-sdk 0.47
   final BigInt accountId;
-  const QueryAccountAddressByIDRequest(
-      {required this.id, required this.accountId});
+  const QueryAccountAddressByIDRequest({
+    required this.id,
+    required this.accountId,
+  });
   factory QueryAccountAddressByIDRequest.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return QueryAccountAddressByIDRequest(
-        accountId: decode.getField(2), id: decode.getField(1));
+      accountId: decode.getField(2),
+      id: decode.getField(1),
+    );
   }
 
   @override

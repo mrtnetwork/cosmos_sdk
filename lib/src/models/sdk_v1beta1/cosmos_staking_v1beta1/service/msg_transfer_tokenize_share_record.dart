@@ -13,22 +13,25 @@ class MsgTransferTokenizeShareRecord
   final String? sender;
   final String? newOwner;
 
-  const MsgTransferTokenizeShareRecord(
-      {required this.tokenizeShareRecordId,
-      required this.sender,
-      required this.newOwner});
+  const MsgTransferTokenizeShareRecord({
+    required this.tokenizeShareRecordId,
+    required this.sender,
+    required this.newOwner,
+  });
   factory MsgTransferTokenizeShareRecord.deserialize(List<int> bytes) {
     final decode = CosmosProtocolBuffer.decode(bytes);
     return MsgTransferTokenizeShareRecord(
-        tokenizeShareRecordId: decode.getField(1),
-        sender: decode.getField(2),
-        newOwner: decode.getField(3));
+      tokenizeShareRecordId: decode.getField(1),
+      sender: decode.getField(2),
+      newOwner: decode.getField(3),
+    );
   }
   factory MsgTransferTokenizeShareRecord.fromJson(Map<String, dynamic> json) {
     return MsgTransferTokenizeShareRecord(
-        tokenizeShareRecordId: json.asBigInt("tokenize_share_record_id"),
-        sender: json.as("sender"),
-        newOwner: json.as("new_owner"));
+      tokenizeShareRecordId: json.asBigInt("tokenize_share_record_id"),
+      sender: json.as("sender"),
+      newOwner: json.as("new_owner"),
+    );
   }
 
   @override
@@ -52,7 +55,8 @@ class MsgTransferTokenizeShareRecord
   @override
   EmptyServiceRequestResponse onResponse(List<int> bytes) {
     return EmptyServiceRequestResponse(
-        StakingV1beta1Types.msgTransferTokenizeShareRecordResponse);
+      StakingV1beta1Types.msgTransferTokenizeShareRecordResponse,
+    );
   }
 
   @override
