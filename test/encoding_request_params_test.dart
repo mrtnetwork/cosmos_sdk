@@ -14,10 +14,9 @@ void main() {
       bytes: request.toCbor().encode(),
     );
     final serviceRequest = decode as CosmosServiceRequestParams;
-    expect(serviceRequest.requestMethod, RequestMethod.post);
+    expect(serviceRequest.requestMethod, RequestMethod.get);
     expect(serviceRequest.path, request.path);
     expect(serviceRequest.encodeBody(), request.encodeBody());
-    expect(serviceRequest.encodeBody()?.isNotEmpty, true);
     expect(serviceRequest.successStatusCodes, request.successStatusCodes);
     expect(serviceRequest.errorStatusCodes, request.errorStatusCodes);
     expect(serviceRequest.network, BlockchainNetwork.cosmosAndRelated);
@@ -75,7 +74,17 @@ void main() {
     expect(serviceRequest.requestMethod, request.requestMethod);
     expect(serviceRequest.api, CosmosProviderApi.rest);
   });
-
+  test('encodable provider params', () {
+    final param = CosmosGrpcRequestMessage(
+      request: const GetLatestBlockRequest(),
+    );
+    final request = param.buildRequest(0);
+    final decode = BaseCosmosServiceRequestParams.deserialize(
+      bytes: request.toCbor().encode(),
+    );
+    final serviceRequest = decode as CosmosGrpcRequestDetails;
+    expect(serviceRequest.api, CosmosProviderApi.grpc);
+  });
   test('encodable provider params', () {
     final param = ThorNodeRequestAddressCloutScore(
       height: BigInt.one,

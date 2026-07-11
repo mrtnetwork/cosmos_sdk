@@ -82,17 +82,17 @@ import 'package:cosmos_sdk/proto_messages/cosmos/base/v1beta1/src/coin.dart';
 
 ## CosmosMessageRegistry
 
-`CosmosMessageRegistry` registers protobuf message types by their `typeUrl`.
+`CosmosMessageRegistry` maps protobuf message types to their corresponding `typeUrl`.
 
 It enables decoding Cosmos messages from:
 
-- Protobuf binary
-- JSON
-- Amino JSON
+* Protobuf binary
+* JSON
+* Amino JSON
 
-This is useful when working with `google.protobuf.Any` or dynamically decoding unknown transaction messages.
+This is useful when working with `google.protobuf.Any` or dynamically decoding transaction messages when the concrete type is not known in advance.
 
-> Registering every message type increases your application's binary size, so only use the registry if dynamic decoding is required.
+> **Note:** Referencing `CosmosMessageRegistry` causes all registered message types to be retained in your application, which increases the final binary size. If you don't need dynamic message decoding, avoid using this class and decode message types directly instead.
 
 ---
 
