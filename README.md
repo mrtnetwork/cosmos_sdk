@@ -114,7 +114,7 @@ Create, sign, and broadcast:
 - Direct (Protobuf) transactions
 - Amino transactions
 
-See the transaction examples: **[link]**
+See the transaction examples: **[example](https://github.com/mrtnetwork/cosmos_sdk/tree/main/example/lib/transfer)**
 
 ### Providers
 
@@ -124,7 +124,7 @@ The library supports:
 - REST
 - gRPC
 
-See the provider documentation: **[link]**
+See the provider documentation: **[link](https://github.com/mrtnetwork/cosmos_sdk/tree/main/example/lib/clinet)**
 
 ---
 
