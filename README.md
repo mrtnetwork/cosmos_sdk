@@ -2,8 +2,6 @@
 
 A comprehensive Dart library for interacting with **Cosmos SDK** and **Cosmos EVM** networks. Create, sign, encode, decode, and broadcast transactions using **RPC**, **REST**, or **gRPC** with support for multiple cryptographic algorithms and Protocol Buffers.
 
-> **Status:** Beta — APIs may change before the first stable release.
-
 ---
 
 > ## ⚠️ Breaking Changes (v4.0.0)
