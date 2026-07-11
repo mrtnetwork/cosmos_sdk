@@ -1,0 +1,116 @@
+
+
+syntax = "proto3";
+package cosmos.evm.vm.v1;
+
+import "amino/amino.proto";
+import "cosmos/evm/vm/v1/evm.proto";
+import "cosmos/msg/v1/msg.proto";
+import "cosmos_proto/cosmos.proto";
+import "gogoproto/gogo.proto";
+import "google/api/annotations.proto";
+
+option go_package = "github.com/cosmos/evm/x/vm/types";
+
+// Msg defines the evm Msg service.
+service Msg {
+  option (cosmos.msg.v1.service) = true;
+  // EthereumTx defines a method submitting Ethereum transactions.
+  rpc EthereumTx(MsgEthereumTx) returns (MsgEthereumTxResponse) {
+    option (google.api.http).post = "/cosmos/evm/vm/v1/ethereum_tx";
+  };
+  // UpdateParams defined a governance operation for updating the x/vm module
+  // parameters. The authority is hard-coded to the Cosmos SDK x/gov module
+  // account
+  rpc UpdateParams(MsgUpdateParams) returns (MsgUpdateParamsResponse);
+
+  // RegisterPreinstalls defines a governance operation for directly registering
+  // preinstalled contracts in the EVM. The authority is the same as is used for
+  // Params updates.
+  rpc RegisterPreinstalls(MsgRegisterPreinstalls)
+      returns (MsgRegisterPreinstallsResponse);
+}
+
+// MsgEthereumTx encapsulates an Ethereum transaction as an SDK message.
+message MsgEthereumTx {
+  option (amino.name) = "cosmos/evm/MsgEthereumTx";
+
+  option (gogoproto.goproto_getters) = false;
+
+  reserved 1, 2, 3, 4;
+
+  // from is the bytes of ethereum signer address. This address value is checked
+  // against the address derived from the signature (V, R, S) using the
+  // secp256k1 elliptic curve
+  bytes from = 5;
+  // raw is the raw ethereum transaction
+  bytes raw = 6
+      [ (gogoproto.customtype) = "EthereumTx", (gogoproto.nullable) = false ];
+}
+
+// ExtensionOptionsEthereumTx is an extension option for ethereum transactions
+message ExtensionOptionsEthereumTx {
+  option (gogoproto.goproto_getters) = false;
+}
+
+// MsgEthereumTxResponse defines the Msg/EthereumTx response type.
+message MsgEthereumTxResponse {
+  option (gogoproto.goproto_getters) = false;
+
+  // hash of the ethereum transaction in hex format. This hash differs from the
+  // CometBFT sha256 hash of the transaction bytes. See
+  // https://github.com/tendermint/tendermint/issues/6539 for reference
+  string hash = 1;
+  // logs contains the transaction hash and the proto-compatible ethereum
+  // logs.
+  repeated Log logs = 2;
+  // ret is the returned data from evm function (result or data supplied with
+  // revert opcode)
+  bytes ret = 3;
+  // vm_error is the error returned by vm execution
+  string vm_error = 4;
+  // gas_used specifies how much gas was consumed by the transaction
+  uint64 gas_used = 5;
+  // max_used_gas specifies the gas consumed by the transaction, not including
+  // refunds
+  uint64 max_used_gas = 6;
+  // include the block hash for json-rpc to use
+  bytes block_hash = 7;
+  // include the block timestamp for json-rpc to use
+  uint64 block_timestamp = 8;
+}
+
+// MsgUpdateParams defines a Msg for updating the x/vm module parameters.
+message MsgUpdateParams {
+  option (amino.name) = "cosmos/evm/x/vm/MsgUpdateParams";
+  option (cosmos.msg.v1.signer) = "authority";
+
+  // authority is the address of the governance account.
+  string authority = 1 [ (cosmos_proto.scalar) = "cosmos.AddressString" ];
+
+  // params defines the x/vm parameters to update.
+  // NOTE: All parameters must be supplied.
+  Params params = 2
+      [ (gogoproto.nullable) = false, (amino.dont_omitempty) = true ];
+}
+
+// MsgUpdateParamsResponse defines the response structure for executing a
+// MsgUpdateParams message.
+message MsgUpdateParamsResponse {}
+
+// MsgRegisterPreinstalls defines a Msg for creating preinstalls in evm state.
+message MsgRegisterPreinstalls {
+  option (amino.name) = "cosmos/evm/x/vm/MsgRegisterPreinstalls";
+  option (cosmos.msg.v1.signer) = "authority";
+
+  // authority is the address of the governance account.
+  string authority = 1 [ (cosmos_proto.scalar) = "cosmos.AddressString" ];
+
+  // preinstalls defines the preinstalls to create.
+  repeated Preinstall preinstalls = 2
+      [ (gogoproto.nullable) = false, (amino.dont_omitempty) = true ];
+}
+
+// MsgRegisterPreinstallsResponse defines the response structure for executing a
+// MsgRegisterPreinstalls message.
+message MsgRegisterPreinstallsResponse {}

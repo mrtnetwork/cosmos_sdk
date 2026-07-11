@@ -1,0 +1,12 @@
+syntax = "proto3";
+package chain4energy.c4echain.cfeminter;
+
+import "gogoproto/gogo.proto";
+
+option go_package = "github.com/chain4energy/c4e-chain/x/cfeminter/types";
+
+message EventMint {
+  string bonded_ratio = 1;
+  string inflation = 2; 
+  string amount = 3;
+}

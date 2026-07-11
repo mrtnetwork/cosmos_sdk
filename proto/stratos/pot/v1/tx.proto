@@ -1,0 +1,196 @@
+syntax = "proto3";
+package stratos.pot.v1;
+
+import "gogoproto/gogo.proto";
+import "cosmos_proto/cosmos.proto";
+import "amino/amino.proto";
+import "cosmos/msg/v1/msg.proto";
+import "cosmos/base/v1beta1/coin.proto";
+import "stratos/pot/v1/pot.proto";
+
+option (gogoproto.equal_all) = true;
+option go_package = "github.com/stratosnet/stratos-chain/x/pot/types";
+
+// Msg defines the pot Msg service.
+service Msg {
+  option (cosmos.msg.v1.service) = true;
+
+  rpc HandleMsgVolumeReport(MsgVolumeReport) returns (MsgVolumeReportResponse);
+  rpc HandleMsgWithdraw(MsgWithdraw) returns (MsgWithdrawResponse);
+  rpc HandleMsgFoundationDeposit(MsgFoundationDeposit) returns (MsgFoundationDepositResponse);
+  rpc HandleMsgSlashingResourceNode(MsgSlashingResourceNode) returns (MsgSlashingResourceNodeResponse);
+
+  // UpdateParams defined a governance operation for updating the x/pot module parameters.
+  // The authority is hard-coded to the Cosmos SDK x/gov module account
+  rpc UpdateParams(MsgUpdateParams) returns (MsgUpdateParamsResponse);
+}
+
+// MsgVolumeReport encapsulates an VolumeReport transaction as an SDK message.
+message MsgVolumeReport {
+  option (cosmos.msg.v1.signer) = "reporter_owner";
+  option (amino.name) = "stratos/MsgVolumeReport";
+
+  repeated SingleWalletVolume wallet_volumes = 1 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true,
+    (gogoproto.jsontag) = "wallet_volumes",
+    (gogoproto.moretags) = "yaml:\"wallet_volumes\""
+  ];
+  string            reporter = 2 [
+    (cosmos_proto.scalar) = "cosmos.AddressString",
+    (gogoproto.jsontag) = "reporter",
+    (gogoproto.moretags) = "yaml:\"reporter\""
+  ];
+  string                   epoch        = 3 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true,
+    (gogoproto.jsontag) = "epoch",
+    (gogoproto.moretags) = "yaml:\"epoch\"",
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int"
+  ];
+  string                   report_reference = 4 [
+    (gogoproto.jsontag) = "report_reference",
+    (gogoproto.moretags) = "yaml:\"report_reference\""
+  ];
+  string                   reporter_owner = 5 [
+    (cosmos_proto.scalar) = "cosmos.AddressString",
+    (gogoproto.jsontag) = "reporter_owner",
+    (gogoproto.moretags) = "yaml:\"reporter_owner\""
+  ];
+  BLSSignatureInfo         BLS_signature = 6 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true,
+    (gogoproto.jsontag) = "bls_signature",
+    (gogoproto.moretags) = "yaml:\"bls_signature\""
+  ];
+}
+// MsgVolumeReportResponse defines the MsgVolumeReport response type
+message MsgVolumeReportResponse {}
+
+// MsgWithdraw encapsulates an withdraw transaction as an SDK message.
+message MsgWithdraw {
+  option (cosmos.msg.v1.signer) = "wallet_address";
+  option (amino.name) = "stratos/MsgWithdraw";
+
+  repeated cosmos.base.v1beta1.Coin amount = 1 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true,
+    (gogoproto.jsontag) = "amount",
+    (gogoproto.moretags) = "yaml:\"amount\"",
+    (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"
+  ];
+  string                         wallet_address = 2 [
+    (cosmos_proto.scalar) = "cosmos.AddressString",
+    (gogoproto.jsontag) = "wallet_address",
+    (gogoproto.moretags) = "yaml:\"wallet_address\""
+  ];
+  string                         target_address = 3 [
+    (cosmos_proto.scalar) = "cosmos.AddressString",
+    (gogoproto.jsontag) = "target_address",
+    (gogoproto.moretags) = "yaml:\"target_address\""
+  ];
+}
+// MsgWithdrawResponse defines the Msg/MsgWithdraw response type.
+message MsgWithdrawResponse {}
+
+// MsgFoundationDeposit - encapsulates an FoundationDeposit transaction as an SDK message
+message MsgFoundationDeposit {
+  option (cosmos.msg.v1.signer) = "from";
+  option (amino.name) = "stratos/MsgFoundationDeposit";
+
+  repeated cosmos.base.v1beta1.Coin amount = 1 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true,
+    (gogoproto.jsontag)  = "amount",
+    (gogoproto.moretags) = "yaml:\"amount\"",
+    (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"
+  ];
+  string                        from = 2 [
+    (cosmos_proto.scalar) = "cosmos.AddressString",
+    (gogoproto.jsontag) = "from",
+    (gogoproto.moretags) = "yaml:\"from\""
+  ];
+}
+// MsgFoundationDepositResponse defines the MsgFoundationDeposit response type
+message MsgFoundationDepositResponse {}
+
+
+// MsgRemoveMetaNode - encapsulates an MsgRemoveMetaNode transaction as an SDK message
+message MsgSlashingResourceNode {
+  option (cosmos.msg.v1.signer) = "reporter_owner";
+  option (amino.name) = "stratos/MsgSlashingResourceNode";
+
+  repeated string reporters = 1 [
+    (cosmos_proto.scalar) = "cosmos.AddressString",
+    (gogoproto.jsontag) = "reporters",
+    (gogoproto.moretags) = "yaml:\"reporters\""
+  ];
+  repeated string reporter_owner = 2 [
+    (cosmos_proto.scalar) = "cosmos.AddressString",
+    (gogoproto.jsontag) = "reporter_owner",
+    (gogoproto.moretags) = "yaml:\"reporter_owner\""
+  ];
+  string network_address = 3 [
+    (cosmos_proto.scalar) = "cosmos.AddressString",
+    (gogoproto.jsontag) = "network_address",
+    (gogoproto.moretags) = "yaml:\"network_address\""
+  ];
+  string wallet_address = 4 [
+    (cosmos_proto.scalar) = "cosmos.AddressString",
+    (gogoproto.jsontag) = "wallet_address",
+    (gogoproto.moretags) = "yaml:\"wallet_address\""
+  ];
+  string                   slashing        = 5 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true,
+    (gogoproto.jsontag)  = "slashing",
+    (gogoproto.moretags) = "yaml:\"slashing\"",
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int"
+  ];
+  bool suspend = 6 [
+    (gogoproto.jsontag) = "suspend",
+    (gogoproto.moretags) = "yaml:\"suspend\""
+  ];
+}
+// MsgSlashingResourceNodeResponse defines the Msg/MsgSlashingResourceNode response type.
+message MsgSlashingResourceNodeResponse {}
+
+message BLSSignatureInfo {
+  repeated bytes  pub_keys = 1 [
+    (gogoproto.jsontag) = "pub_keys",
+    (gogoproto.moretags) = "yaml:\"pub_keys\""
+  ];
+  bytes           signature = 2 [
+    (gogoproto.jsontag) = "signature",
+    (gogoproto.moretags) = "yaml:\"signature\""
+  ];
+  bytes           txData = 3 [
+    (gogoproto.jsontag) = "tx_data",
+    (gogoproto.moretags) = "yaml:\"tx_data\""
+  ];
+}
+
+// MsgUpdateParams defines a Msg for updating the x/pot module parameters.
+message MsgUpdateParams {
+  option (cosmos.msg.v1.signer) = "authority";
+  option (amino.name) = "stratos/x/pot/MsgUpdateParams";
+
+  // authority is the address of the governance account.
+  string authority = 1 [
+    (cosmos_proto.scalar) = "cosmos.AddressString"
+  ];
+
+  // params defines the x/pot parameters to update.
+  // NOTE: All parameters must be supplied.
+  Params params = 2 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+}
+
+// MsgUpdateParamsResponse defines the response structure for executing a
+// MsgUpdateParams message.
+message MsgUpdateParamsResponse {}
+

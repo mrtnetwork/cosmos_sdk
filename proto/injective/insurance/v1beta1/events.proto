@@ -1,0 +1,53 @@
+syntax = "proto3";
+package injective.insurance.v1beta1;
+
+import "gogoproto/gogo.proto";
+import "cosmos/base/v1beta1/coin.proto";
+import "injective/insurance/v1beta1/insurance.proto";
+
+option go_package = "github.com/InjectiveLabs/injective-core/injective-chain/modules/insurance/types";
+
+message EventInsuranceFundUpdate { InsuranceFund fund = 1; }
+
+message EventRequestRedemption { RedemptionSchedule schedule = 1; }
+
+message EventWithdrawRedemption {
+  // redemption schedule triggered withdraw
+  RedemptionSchedule schedule = 1;
+  // redeem coin amount in base_currency
+  cosmos.base.v1beta1.Coin redeem_coin = 2 [ (gogoproto.nullable) = false ];
+}
+
+message EventWithdrawRedemptionFailed {
+  // redemption schedule that failed to withdraw
+  RedemptionSchedule schedule = 1;
+  // error produced while processing the redemption withdrawal
+  string withdraw_err = 2;
+}
+
+message EventUnderwrite {
+  // address of the underwriter
+  string underwriter = 1;
+  // marketId of insurance fund for the redemption
+  string marketId = 2;
+  // deposit coin amount
+  cosmos.base.v1beta1.Coin deposit = 3 [ (gogoproto.nullable) = false ];
+  // share coin amount
+  cosmos.base.v1beta1.Coin shares = 4 [ (gogoproto.nullable) = false ];
+}
+
+message EventInsuranceWithdraw {
+  string market_id = 1;
+  string market_ticker = 2;
+  cosmos.base.v1beta1.Coin withdrawal = 3 [ (gogoproto.nullable) = false ];
+}
+
+message EventSetVoucher {
+  // The bech32 address of the voucher holder.
+  string addr = 1;
+  // The new voucher amount. A zero coin signals voucher deletion.
+  cosmos.base.v1beta1.Coin voucher = 2 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Coin",
+    (gogoproto.nullable) = false
+  ];
+}

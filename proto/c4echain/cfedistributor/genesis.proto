@@ -1,0 +1,19 @@
+syntax = "proto3";
+package chain4energy.c4echain.cfedistributor;
+
+import "gogoproto/gogo.proto";
+import "chain4energy/c4echain/cfedistributor/params.proto";
+import "chain4energy/c4echain/cfedistributor/sub_distributor.proto";
+
+// this line is used by starport scaffolding # genesis/proto/import
+
+option go_package = "github.com/chain4energy/c4e-chain/x/cfedistributor/types";
+
+// GenesisState defines the cfedistributor module's genesis state.
+message GenesisState {
+  Params params = 1 [
+    (gogoproto.nullable) = false
+  ];
+  // this line is used by starport scaffolding # genesis/proto/state
+  repeated State states =  2;
+}

@@ -1,0 +1,29 @@
+syntax = "proto3";
+package types;
+
+option go_package = "gitlab.com/thorchain/thornode/v3/x/thorchain/types";
+
+import "gogoproto/gogo.proto";
+
+option (gogoproto.marshaler_all) = true;
+
+message QueryLimitSwapsSummaryRequest {
+  string height = 1;
+  string source_asset = 2;
+  string target_asset = 3;
+}
+
+message AssetPairSummary {
+  string source_asset = 1;
+  string target_asset = 2;
+  uint64 count = 3;
+  string total_value_usd = 4;
+}
+
+message QueryLimitSwapsSummaryResponse {
+  uint64 total_limit_swaps = 1;
+  string total_value_usd = 2;
+  repeated AssetPairSummary asset_pairs = 3;
+  int64 oldest_swap_blocks = 4;
+  int64 average_age_blocks = 5;
+}

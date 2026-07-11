@@ -1,0 +1,22 @@
+syntax = "proto3";
+package types;
+
+option go_package = "gitlab.com/thorchain/thornode/v3/x/thorchain/types";
+
+import "types/type_oracle_price.proto";
+import "gogoproto/gogo.proto";
+
+option (gogoproto.marshaler_all) = true;
+
+// query single price
+message QueryOraclePriceRequest {
+  string height = 1;
+  string symbol = 2;
+}
+
+message QueryOraclePriceResponse { OraclePrice price = 1; }
+
+// query all prices
+message QueryOraclePricesRequest { string height = 1; }
+
+message QueryOraclePricesResponse { repeated OraclePrice prices = 1; }

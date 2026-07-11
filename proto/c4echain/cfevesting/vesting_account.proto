@@ -1,0 +1,44 @@
+syntax = "proto3";
+package chain4energy.c4echain.cfevesting;
+
+import "gogoproto/gogo.proto";
+import "cosmos/vesting/v1beta1/vesting.proto";
+import "cosmos/base/v1beta1/coin.proto";
+
+option go_package = "github.com/chain4energy/c4e-chain/x/cfevesting/types";
+
+message VestingAccountTrace {
+  uint64 id = 1;
+  string address = 2;
+  repeated uint64 periods_to_trace = 3;
+  bool genesis = 4;
+  bool from_genesis_pool = 5;
+  bool from_genesis_account = 6;
+}
+
+//ContinuousVestingPeriod defines a length of time and amount of coins that will vest.
+message ContinuousVestingPeriod {
+  option (gogoproto.goproto_stringer) = false;
+
+  int64 start_time = 1;
+  int64 end_time = 2;
+  repeated cosmos.base.v1beta1.Coin amount = 3 [
+    (gogoproto.nullable) = false,
+    (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"
+  ];
+}
+
+// PeriodicContinuousVestingAccount implements the VestingAccount interface. It
+// periodically vests by unlocking coins during each specified period.
+message PeriodicContinuousVestingAccount {
+  option (gogoproto.goproto_getters)  = false;
+  option (gogoproto.goproto_stringer) = false;
+
+  cosmos.vesting.v1beta1.BaseVestingAccount base_vesting_account = 1 [
+    (gogoproto.embed) = true
+  ];
+  int64 start_time = 2;
+  repeated ContinuousVestingPeriod vesting_periods = 3 [
+    (gogoproto.nullable) = false
+  ];
+}

@@ -1,0 +1,63 @@
+syntax = "proto3";
+package injective.oracle.v1beta1;
+
+import "injective/oracle/v1beta1/oracle.proto";
+import "gogoproto/gogo.proto";
+
+option go_package = "github.com/InjectiveLabs/injective-core/injective-chain/modules/oracle/types";
+
+// GenesisState defines the oracle module's genesis state.
+message GenesisState {
+  // params defines all the parameters of related to oracle.
+  Params params = 1 [ (gogoproto.nullable) = false ];
+
+  repeated string band_relayers = 2 [ deprecated = true ];
+
+  repeated BandPriceState band_price_states = 3 [ deprecated = true ];
+
+  repeated PriceFeedState price_feed_price_states = 4;
+
+  repeated CoinbasePriceState coinbase_price_states = 5;
+
+  repeated BandPriceState band_ibc_price_states = 6 [ deprecated = true ];
+
+  repeated BandOracleRequest band_ibc_oracle_requests = 7 [ deprecated = true ];
+
+  BandIBCParams band_ibc_params = 8
+      [ (gogoproto.nullable) = false, deprecated = true ];
+
+  uint64 band_ibc_latest_client_id = 9 [ deprecated = true ];
+
+  repeated CalldataRecord calldata_records = 10 [ deprecated = true ];
+
+  uint64 band_ibc_latest_request_id = 11 [ deprecated = true ];
+
+  repeated ChainlinkPriceState chainlink_price_states = 12
+      [ deprecated = true ];
+
+  repeated PriceRecords historical_price_records = 13;
+
+  repeated ProviderState provider_states = 14;
+
+  repeated PythPriceState pyth_price_states = 15;
+
+  repeated StorkPriceState stork_price_states = 16;
+
+  repeated string stork_publishers = 17;
+
+  repeated ChainlinkDataStreamsPriceState chainlink_data_streams_price_states =
+      18;
+
+  // pyth_pro_price_states defines the persisted PythPro feed price states at
+  // genesis.
+  repeated PythProPriceState pyth_pro_price_states = 19;
+
+  // seda_fast_price_states defines the persisted SEDA Fast feed price states
+  // at genesis, keyed by feed_id (hex-encoded execInputs).
+  repeated SedaFastPriceState seda_fast_price_states = 20;
+}
+
+message CalldataRecord {
+  uint64 client_id = 1;
+  bytes calldata = 2;
+}

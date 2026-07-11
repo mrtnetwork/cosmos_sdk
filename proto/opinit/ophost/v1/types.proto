@@ -1,0 +1,173 @@
+syntax = "proto3";
+package opinit.ophost.v1;
+
+import "amino/amino.proto";
+import "cosmos/base/v1beta1/coin.proto";
+import "cosmos_proto/cosmos.proto";
+import "gogoproto/gogo.proto";
+import "google/protobuf/any.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/initia-labs/OPinit/x/ophost/types";
+option (gogoproto.equal_all) = true;
+option (gogoproto.goproto_getters_all) = false;
+
+// Params defines the set of ophost parameters.
+message Params {
+  option (amino.name) = "ophost/Params";
+  option (gogoproto.equal) = true;
+  option (gogoproto.goproto_stringer) = false;
+
+  // The amount to be paid by l2 creator.
+  repeated cosmos.base.v1beta1.Coin registration_fee = 1 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true,
+    (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"
+  ];
+}
+
+// BridgeConfig defines the set of bridge config.
+message BridgeConfig {
+  // The address of the challenger.
+  string challenger = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  // The address of the proposer.
+  string proposer = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  // The information about batch submission.
+  BatchInfo batch_info = 3 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+  // The time interval at which checkpoints must be submitted.
+  // NOTE: this param is currently not used, but will be used for challenge in future.
+  google.protobuf.Duration submission_interval = 4 [
+    (gogoproto.stdduration) = true,
+    (gogoproto.jsontag) = "submission_interval,omitempty",
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+  // The minimum time duration that must elapse before a withdrawal can be finalized.
+  google.protobuf.Duration finalization_period = 5 [
+    (gogoproto.stdduration) = true,
+    (gogoproto.jsontag) = "finalization_period,omitempty",
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+  // The the first l2 block will be recorded on l1.
+  uint64 submission_start_height = 6;
+
+  // oracle_enabled is a flag to enable oracle.
+  bool oracle_enabled = 7;
+
+  // Normally it is IBC channelID for permissioned IBC relayer.
+  // DEPRECATED: This field is deprecated and kept for backward compatibility.
+  // Use channel_id instead.
+  bytes metadata = 8;
+
+  // bridge_disabled is a flag to disable the bridge.
+  bool bridge_disabled = 9;
+
+  // bridge_disabled_at is the timestamp when the bridge is disabled.
+  google.protobuf.Timestamp bridge_disabled_at = 10 [
+    (gogoproto.stdtime) = true,
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+
+  // attestor_set is the set of attestors.
+  repeated Attestor attestor_set = 11 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+
+  // channel_id is the IBC channel ID for the opinit port, used for relaying attestor set updates and oracle data to L2.
+  string channel_id = 12;
+}
+
+// BatchInfo defines the set of batch information.
+message BatchInfo {
+  // ChainType defines the type of chain.
+  enum ChainType {
+    // Unspecified chain type.
+    UNSPECIFIED = 0;
+    // The chain type of the initia chain.
+    INITIA = 1;
+    // The chain type of the celestia chain.
+    CELESTIA = 2;
+  }
+
+  // The address of the batch submitter.
+  string submitter = 1;
+
+  // The target chain type.
+  ChainType chain_type = 2;
+}
+
+// TokenPair defines l1 and l2 token pair
+message TokenPair {
+  string l1_denom = 1;
+  string l2_denom = 2;
+}
+
+// Output is a l2 block submitted by proposer.
+message Output {
+  // Hash of the l2 output.
+  bytes output_root = 1;
+  // The l1 block number that the output root was submitted in.
+  uint64 l1_block_number = 2;
+  // Timestamp of the l1 block that the output root was submitted in.
+  google.protobuf.Timestamp l1_block_time = 3 [
+    (gogoproto.stdtime) = true,
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+  // The l2 block number that the output root was submitted in.
+  uint64 l2_block_number = 4;
+}
+
+// BatchInfoWithOutput defines the batch information with output.
+message BatchInfoWithOutput {
+  BatchInfo batch_info = 1 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+  Output output = 2 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+}
+
+// MigrationInfo defines the information for migration.
+message MigrationInfo {
+  // BridgeID is the id of the bridge.
+  uint64 bridge_id = 1;
+  // IBC ChannelID is the channel id of the ibc.
+  string ibc_channel_id = 2;
+  // IBC PortID is the port id of the ibc.
+  string ibc_port_id = 3;
+  // L1Denom is the denom of the l1.
+  string l1_denom = 4;
+}
+
+// Attestor defines an attestor in the bridge.
+message Attestor {
+  option (amino.name) = "ophost/Attestor";
+
+  // The validator operator address of the attestor.
+  string operator_address = 1 [(cosmos_proto.scalar) = "cosmos.ValidatorAddressString"];
+  // The consensus pubkey of the attestor.
+  google.protobuf.Any consensus_pubkey = 2 [(cosmos_proto.accepts_interface) = "cosmos.crypto.PubKey"];
+  // The moniker of the attestor.
+  string moniker = 3;
+}
+
+// OraclePriceHash defines the hash of all oracle prices for a bridge.
+// This is computed and stored in EndBlock to enable batched oracle price relaying.
+message OraclePriceHash {
+  // hash is the hash of all oracle prices for the bridge.
+  bytes hash = 1;
+  // l1_block_height is the L1 block height at which this hash was computed.
+  uint64 l1_block_height = 2;
+  // l1_block_time is the L1 block timestamp when this hash was computed, in unix nanoseconds.
+  int64 l1_block_time = 3;
+}

@@ -1,0 +1,48 @@
+syntax = "proto3";
+package chain4energy.c4echain.cfevesting;
+
+import "gogoproto/gogo.proto";
+import "google/protobuf/timestamp.proto";
+import "cosmos/base/v1beta1/coin.proto";
+
+option go_package = "github.com/chain4energy/c4e-chain/x/cfevesting/types";
+
+message AccountVestingPools {
+  string owner = 1;
+  repeated VestingPool vesting_pools = 2; 
+}
+
+message VestingPool {
+  string name = 1;
+  string vesting_type = 2;
+  google.protobuf.Timestamp lock_start = 3 [
+    (gogoproto.nullable) = false,
+    (gogoproto.stdtime) = true
+  ];
+  google.protobuf.Timestamp lock_end = 4 [
+    (gogoproto.nullable) = false,
+    (gogoproto.stdtime) = true
+  ];
+  string initially_locked = 5 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+  string withdrawn = 6 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+  string sent = 7 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+  bool genesis_pool = 8;
+  repeated VestingPoolReservation reservations = 9;
+}
+
+message VestingPoolReservation {
+  uint64 id = 1;
+  string amount = 2 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+}

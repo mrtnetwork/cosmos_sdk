@@ -1,0 +1,59 @@
+syntax = "proto3";
+package chain4energy.c4echain.cfedistributor;
+
+import "gogoproto/gogo.proto";
+import "cosmos/base/v1beta1/coin.proto";
+// this line is used by starport scaffolding # genesis/proto/import
+
+option go_package = "github.com/chain4energy/c4e-chain/x/cfedistributor/types";
+
+message State {
+  Account account = 1 [
+    (gogoproto.nullable) = true
+  ];
+  bool burn = 2;
+  repeated cosmos.base.v1beta1.DecCoin remains = 3 [
+    (gogoproto.moretags) = "yaml:\"remains\"",
+    (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.DecCoins",
+    (gogoproto.nullable) = false
+  ];
+}
+
+message SubDistributor {
+  string name = 1;
+  repeated Account sources = 2;
+  Destinations destinations = 3 [
+    (gogoproto.nullable) = false
+  ];
+}
+
+message Destinations {
+  Account primary_share = 1 [
+    (gogoproto.nullable) = false
+  ];
+  string burn_share = 2 [
+    (gogoproto.moretags)   = "yaml:\"burn_share\"",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable)   = false
+  ];
+  repeated DestinationShare shares = 3 [
+    (gogoproto.nullable) = true
+  ];
+}
+
+message DestinationShare {
+  string name = 1;
+  string share = 2 [
+    (gogoproto.moretags)   = "yaml:\"share\"",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable)   = false
+  ];
+  Account destination = 3 [
+    (gogoproto.nullable) = false
+  ];
+}
+
+message Account {
+  string id = 1;
+  string type = 2;
+}

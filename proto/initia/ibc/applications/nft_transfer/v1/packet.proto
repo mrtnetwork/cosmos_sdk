@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package ibc.applications.nft_transfer.v1;
+
+option go_package = "github.com/initia-labs/initia/x/ibc/nft-transfer/types";
+
+// NonFungibleTokenPacketData defines a struct for the packet payload
+// See NonFungibleTokenPacketData spec:
+// https://github.com/cosmos/ibc/tree/main/spec/app/ics-721-nft-transfer
+message NonFungibleTokenPacketData {
+  // collection id == extension struct tag
+  string class_id = 1;
+  // collection url
+  string class_uri = 2;
+  // collection data
+  string class_data = 3;
+  // nft token ids
+  repeated string token_ids = 4;
+  // nft token uris
+  repeated string token_uris = 5;
+  // nft token data array
+  repeated string token_data = 6;
+  // sender of nft
+  string sender = 7;
+  // receiver of nft
+  string receiver = 8;
+  // optional memo field for future use
+  string memo = 9;
+}

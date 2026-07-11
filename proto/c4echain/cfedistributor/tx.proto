@@ -1,0 +1,63 @@
+syntax = "proto3";
+package chain4energy.c4echain.cfedistributor;
+
+import "cosmos/msg/v1/msg.proto";
+import "gogoproto/gogo.proto";
+import "cosmos_proto/cosmos.proto";
+import "chain4energy/c4echain/cfedistributor/sub_distributor.proto";
+// this line is used by starport scaffolding # proto/tx/import
+
+option go_package = "github.com/chain4energy/c4e-chain/x/cfedistributor/types";
+
+// Msg defines the Msg service.
+service Msg {
+  // this line is used by starport scaffolding # proto/tx/rpc
+  rpc UpdateParams(MsgUpdateParams) returns (MsgUpdateParamsResponse);
+  rpc UpdateSubDistributorParam(MsgUpdateSubDistributorParam) returns (MsgUpdateSubDistributorParamResponse);
+  rpc UpdateSubDistributorDestinationShareParam(MsgUpdateSubDistributorDestinationShareParam) returns (MsgUpdateSubDistributorDestinationShareParamResponse);
+  rpc UpdateSubDistributorBurnShareParam(MsgUpdateSubDistributorBurnShareParam) returns (MsgUpdateSubDistributorBurnShareParamResponse);
+}
+
+message MsgUpdateParams {
+  // authority is the address of the governance account.
+  string authority = 1;
+
+  repeated SubDistributor sub_distributors = 2 [
+    (gogoproto.nullable) = false
+  ];
+}
+
+message MsgUpdateParamsResponse {}
+
+message MsgUpdateSubDistributorParam {
+  // authority is the address of the governance account.
+  string authority = 1;
+  SubDistributor sub_distributor = 2;
+}
+
+message MsgUpdateSubDistributorParamResponse {}
+
+message MsgUpdateSubDistributorDestinationShareParam {
+  string authority = 1;
+  string sub_distributor_name = 2;
+  string destination_name = 3;
+  string share = 4 [
+    (gogoproto.moretags)   = "yaml:\"share\"",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable)   = false
+  ];
+}
+
+message MsgUpdateSubDistributorDestinationShareParamResponse{}
+
+message  MsgUpdateSubDistributorBurnShareParam {
+  string authority = 1;
+  string sub_distributor_name = 2;
+  string burn_share = 3 [
+    (gogoproto.moretags)   = "yaml:\"burn_share\"",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable)   = false
+  ];
+}
+
+message MsgUpdateSubDistributorBurnShareParamResponse{}

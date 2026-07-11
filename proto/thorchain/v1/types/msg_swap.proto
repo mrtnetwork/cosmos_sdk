@@ -1,0 +1,83 @@
+syntax = "proto3";
+package types;
+
+option go_package = "gitlab.com/thorchain/thornode/v3/x/thorchain/types";
+
+import "common/common.proto";
+import "gogoproto/gogo.proto";
+
+enum SwapType {
+  market = 0;
+  limit = 1;
+}
+
+enum SwapVersion {
+  v1 = 0;
+  v2 = 1;
+}
+
+message SwapState {
+  uint64 interval = 1;
+  uint64 quantity = 2;
+  uint64 ttl = 3;
+  uint64 count = 4;
+  int64 last_height = 5;
+  string deposit = 6 [
+    (gogoproto.customtype) = "cosmossdk.io/math.Uint",
+    (gogoproto.nullable) = false
+  ];
+  string withdrawn = 7 [
+    (gogoproto.customtype) = "cosmossdk.io/math.Uint",
+    (gogoproto.nullable) = false
+  ];
+  string in = 8 [
+    (gogoproto.customtype) = "cosmossdk.io/math.Uint",
+    (gogoproto.nullable) = false
+  ];
+  string out = 9 [
+    (gogoproto.customtype) = "cosmossdk.io/math.Uint",
+    (gogoproto.nullable) = false
+  ];
+  repeated uint64 failed_swaps = 10;
+  repeated string failed_swap_reasons = 11;
+}
+
+message MsgSwap {
+  common.Tx tx = 1 [ (gogoproto.nullable) = false, (gogoproto.jsontag) = "tx" ];
+  common.Asset target_asset = 2 [
+    (gogoproto.nullable) = false,
+    (gogoproto.jsontag) = "target_asset",
+    (gogoproto.customtype) = "gitlab.com/thorchain/thornode/v3/common.Asset"
+  ];
+  string destination = 3
+      [ (gogoproto.casttype) =
+            "gitlab.com/thorchain/thornode/v3/common.Address" ];
+  string trade_target = 4 [
+    (gogoproto.customtype) = "cosmossdk.io/math.Uint",
+    (gogoproto.nullable) = false,
+    (gogoproto.jsontag) = "trade_target"
+  ];
+  string affiliate_address = 5
+      [ (gogoproto.casttype) =
+            "gitlab.com/thorchain/thornode/v3/common.Address" ];
+  string affiliate_basis_points = 6 [
+    (gogoproto.customtype) = "cosmossdk.io/math.Uint",
+    (gogoproto.nullable) = false,
+    (gogoproto.jsontag) = "affiliate_basis_points"
+  ];
+  bytes signer = 7 [ (gogoproto.casttype) =
+                         "github.com/cosmos/cosmos-sdk/types.AccAddress" ];
+  string aggregator = 8;
+  string aggregator_target_address = 9;
+  string aggregator_target_limit = 10 [
+    (gogoproto.customtype) = "cosmossdk.io/math.Uint",
+    (gogoproto.nullable) = true
+  ];
+  SwapType swap_type = 11;
+  uint64 stream_quantity = 12;
+  uint64 stream_interval = 13;
+  int64 initial_block_height = 14;
+  SwapState state = 15;
+  SwapVersion version = 16;
+  uint32 index = 17;
+}

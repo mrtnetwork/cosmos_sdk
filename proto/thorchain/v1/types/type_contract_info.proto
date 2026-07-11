@@ -1,0 +1,12 @@
+syntax = "proto3";
+package types;
+
+option go_package = "gitlab.com/thorchain/thornode/v3/x/thorchain/types";
+
+import "gogoproto/gogo.proto";
+
+message ContractInfo {
+  string address = 1;
+  string contract = 2;
+  string version = 3;
+}

@@ -1,0 +1,32 @@
+syntax = "proto3";
+package chain4energy.c4echain.cfeclaim;
+
+import "gogoproto/gogo.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/chain4energy/c4e-chain/x/cfeclaim/types";
+
+message Mission {
+  uint64 id = 1;
+  uint64 campaign_id = 2;
+  string name = 3;
+  string description = 4;
+  MissionType missionType = 5;
+  string weight = 6 [
+    (gogoproto.nullable) = false,
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec"
+  ];
+  google.protobuf.Timestamp claim_start_date = 7 [
+    (gogoproto.nullable) = true,
+    (gogoproto.stdtime) = true
+  ];
+}
+
+enum MissionType {
+  MISSION_TYPE_UNSPECIFIED = 0;
+  INITIAL_CLAIM = 1;
+  DELEGATE = 2;
+  VOTE = 3;
+  CLAIM = 4;
+  TO_DEFINE = 5;
+}

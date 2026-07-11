@@ -1,0 +1,22 @@
+syntax = "proto3";
+package thorchain.denom.v1;
+
+import "gogoproto/gogo.proto";
+import "google/api/annotations.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
+
+option go_package = "gitlab.com/thorchain/thornode/v3/x/denom/types";
+
+// Query defines the gRPC querier service.
+service Query {
+  rpc DenomAdmin(QueryDenomAdminRequest) returns (QueryDenomAdminResponse) {
+    option (google.api.http).get = "/denoms/{denom}/admin";
+  }
+}
+
+message QueryDenomAdminRequest {
+  string denom = 1 [ (gogoproto.moretags) = "yaml:\"denom\"" ];
+}
+message QueryDenomAdminResponse {
+  string admin = 1 [ (gogoproto.moretags) = "yaml:\"denom\"" ];
+}

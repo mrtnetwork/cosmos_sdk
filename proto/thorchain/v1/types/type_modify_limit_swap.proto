@@ -1,0 +1,18 @@
+syntax = "proto3";
+package types;
+
+option go_package = "gitlab.com/thorchain/thornode/v3/x/thorchain/types";
+
+import "common/common.proto";
+import "gogoproto/gogo.proto";
+
+message ModifyLimitSwap {
+  string from = 1 [ (gogoproto.casttype) =
+                        "gitlab.com/thorchain/thornode/v3/common.Address" ];
+  common.Coin source = 2 [ (gogoproto.nullable) = false ];
+  common.Coin target = 3 [ (gogoproto.nullable) = false ];
+  string modified_target_amount = 4 [
+    (gogoproto.customtype) = "cosmossdk.io/math.Uint",
+    (gogoproto.nullable) = false
+  ];
+}

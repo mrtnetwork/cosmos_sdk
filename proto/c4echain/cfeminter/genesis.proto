@@ -1,0 +1,21 @@
+syntax = "proto3";
+package chain4energy.c4echain.cfeminter;
+
+import "gogoproto/gogo.proto";
+import "chain4energy/c4echain/cfeminter/params.proto";
+import "chain4energy/c4echain/cfeminter/minter.proto";
+// this line is used by starport scaffolding # genesis/proto/import
+
+option go_package = "github.com/chain4energy/c4e-chain/x/cfeminter/types";
+
+// GenesisState defines the cfeminter module's genesis state.
+message GenesisState {
+  Params params = 1 [
+    (gogoproto.nullable) = false
+  ];
+  // this line is used by starport scaffolding # genesis/proto/state
+  MinterState minter_state = 2  [
+    (gogoproto.nullable) = false
+  ];
+  repeated MinterState state_history = 3;
+}

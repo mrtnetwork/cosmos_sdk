@@ -1,6 +1,6 @@
 name: cosmos_sdk
 description: Engage seamlessly with a Cosmos SDK-based network (cosmos hub, osmosis, thor, kujira and etc ... ), enabling the creation, signing, and transmission of transactions. (Beta version)
-version: 3.1.0
+version: 4.0.0
 homepage: "https://github.com/mrtnetwork/cosmos_sdk"
 repository: "https://github.com/mrtnetwork/cosmos_sdk"
 Author: mrhaydari.t@gmail.com
@@ -15,9 +15,7 @@ environment:
   sdk: '>=3.7.0 <4.0.0'
 # Add regular dependencies here.
 dependencies:
-  blockchain_utils: ^6.0.0
-  # blockchain_utils:
-  #   path: ../blockchain_utils
+  blockchain_utils: ^7.0.0
 
     
 
@@ -26,7 +24,10 @@ dev_dependencies:
   test: ^1.26.3
   flutter_lints: ^6.0.0
   http: ^1.2.0
-
+  onchain_proto:
+    git:
+      url: https://github.com/mrtnetwork/onchain_proto.git
+      ref: main 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -35,7 +36,7 @@ flutter:
 
   # To add assets to your package, add an assets section, like this:
   assets:
-    - assets/chains.json
+    - assets/chains.bin
   
   # For details regarding assets in packages, see
   # https://flutter.dev/assets-and-images/#from-packages

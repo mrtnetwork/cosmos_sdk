@@ -1,0 +1,474 @@
+syntax = "proto3";
+package opinit.opchild.v1;
+
+import "amino/amino.proto";
+import "cosmos/base/v1beta1/coin.proto";
+import "cosmos/msg/v1/msg.proto";
+import "cosmos_proto/cosmos.proto";
+import "gogoproto/gogo.proto";
+import "google/protobuf/any.proto";
+import "opinit/opchild/v1/types.proto";
+
+option go_package = "github.com/initia-labs/OPinit/x/opchild/types";
+option (gogoproto.goproto_getters_all) = false;
+
+// Msg defines the rollup Msg service.
+service Msg {
+  option (cosmos.msg.v1.service) = true;
+
+  ////////////////////////////
+  // Validator Messages
+
+  // ExecuteMessages defines a rpc handler method for MsgExecuteMessages.
+  rpc ExecuteMessages(MsgExecuteMessages) returns (MsgExecuteMessagesResponse);
+
+  ////////////////////////////
+  // Bridge Executor Messages
+
+  // SetBridgeInfo defines a rpc handler method for MsgSetBridgeInfo.
+  rpc SetBridgeInfo(MsgSetBridgeInfo) returns (MsgSetBridgeInfoResponse);
+
+  // FinalizeTokenDeposit defines a rpc handler method for MsgFinalizeTokenDeposit.
+  rpc FinalizeTokenDeposit(MsgFinalizeTokenDeposit) returns (MsgFinalizeTokenDepositResponse);
+
+  ////////////////////////////
+  // Relayer Messages
+
+  // RelayOracleData defines a rpc handler method for MsgRelayOracleData.
+  rpc RelayOracleData(MsgRelayOracleData) returns (MsgRelayOracleDataResponse);
+
+  ////////////////////////////
+  // User Messages
+
+  // InitiateTokenWithdrawal defines a user facing l2 => l1 token transfer interface.
+  rpc InitiateTokenWithdrawal(MsgInitiateTokenWithdrawal) returns (MsgInitiateTokenWithdrawalResponse);
+
+  ////////////////////////////
+  // Authority Messages
+
+  // UpdateSequencer defines a rpc handler method for MsgUpdateSequencer.
+  rpc UpdateSequencer(MsgUpdateSequencer) returns (MsgUpdateSequencerResponse);
+
+  // AddFeeWhitelistAddresses defines an authorized operation for adding addresses to x/opchild fee whitelist.
+  rpc AddFeeWhitelistAddresses(MsgAddFeeWhitelistAddresses) returns (MsgAddFeeWhitelistAddressesResponse);
+
+  // RemoveFeeWhitelistAddresses defines an authorized operation for removing addresses from x/opchild
+  // fee whitelist.
+  rpc RemoveFeeWhitelistAddresses(MsgRemoveFeeWhitelistAddresses) returns (MsgRemoveFeeWhitelistAddressesResponse);
+
+  // AddBridgeExecutor defines an authorized operation for adding addresses to x/opchild bridge executors
+  rpc AddBridgeExecutor(MsgAddBridgeExecutor) returns (MsgAddBridgeExecutorResponse);
+
+  // RemoveBridgeExecutor defines an authorized operation for removing addresses from x/opchild
+  // bridge executors.
+  rpc RemoveBridgeExecutor(MsgRemoveBridgeExecutor) returns (MsgRemoveBridgeExecutorResponse);
+
+  // UpdateMinGasPrices defines an authorized operation for updating the min gas prices parameter
+  rpc UpdateMinGasPrices(MsgUpdateMinGasPrices) returns (MsgUpdateMinGasPricesResponse);
+
+  // UpdateAdmin defines an authorized operation for updating the x/opchild admin
+  rpc UpdateAdmin(MsgUpdateAdmin) returns (MsgUpdateAdminResponse);
+
+  // UpdateParams defines an operation for updating the
+  // x/opchild module parameters.
+  rpc UpdateParams(MsgUpdateParams) returns (MsgUpdateParamsResponse);
+
+  // SpendFeePool defines an operation that spend fee pool to a recipient.
+  rpc SpendFeePool(MsgSpendFeePool) returns (MsgSpendFeePoolResponse);
+
+  // UpdateOracle defines an operation that update oracle prices.
+  rpc UpdateOracle(MsgUpdateOracle) returns (MsgUpdateOracleResponse);
+
+  // RegisterMigrationInfo defines an operation that register the migration information.
+  rpc RegisterMigrationInfo(MsgRegisterMigrationInfo) returns (MsgRegisterMigrationInfoResponse);
+
+  // MigrateToken defines an operation that migrate the origin OP token to registered IBC token.
+  rpc MigrateToken(MsgMigrateToken) returns (MsgMigrateTokenResponse);
+}
+
+///////////////////////////
+// Validator Messages
+
+// MsgExecuteMessages is a message to execute the given
+// authority messages with validator permission.
+message MsgExecuteMessages {
+  option (cosmos.msg.v1.signer) = "sender";
+  option (amino.name) = "opchild/MsgExecuteMessages";
+
+  // Sender is the that actor that signed a messages
+  string sender = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+
+  // messages are the arbitrary messages to be executed.
+  repeated google.protobuf.Any messages = 2;
+}
+
+// MsgExecuteMessagesResponse returns MsgExecuteMessages message result data
+message MsgExecuteMessagesResponse {}
+
+/////////////////////////////
+// Bridge Executor messages
+
+// MsgSetBridgeInfo is a message to set the registered bridge information.
+message MsgSetBridgeInfo {
+  option (cosmos.msg.v1.signer) = "sender";
+  option (amino.name) = "opchild/MsgSetBridgeInfo";
+
+  // the sender address
+  string sender = 1 [
+    (gogoproto.moretags) = "yaml:\"sender\"",
+    (cosmos_proto.scalar) = "cosmos.AddressString"
+  ];
+
+  // bridge_info is the bridge information to be set.
+  BridgeInfo bridge_info = 2 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+}
+
+// MsgSetBridgeInfoResponse returns set bridge info result data
+message MsgSetBridgeInfoResponse {}
+
+// MsgFinalizeTokenDeposit is a message to submit deposit funds from upper layer
+message MsgFinalizeTokenDeposit {
+  option (cosmos.msg.v1.signer) = "sender";
+  option (amino.name) = "opchild/MsgFinalizeTokenDeposit";
+
+  // the sender address
+  string sender = 1 [
+    (gogoproto.moretags) = "yaml:\"sender\"",
+    (cosmos_proto.scalar) = "cosmos.AddressString"
+  ];
+
+  // from is l1 sender address
+  string from = 2;
+
+  // to is l2 recipient address
+  string to = 3 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+
+  // amount is the coin amount to deposit.
+  cosmos.base.v1beta1.Coin amount = 4 [
+    (gogoproto.moretags) = "yaml:\"amount\"",
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+
+  // sequence is the sequence number of l1 bridge
+  uint64 sequence = 5;
+
+  // height is the height of l1 which is including the deposit message
+  uint64 height = 6;
+
+  // base_denom is the l1 denomination of the sent coin.
+  string base_denom = 7;
+
+  /// data is a extra bytes for hooks.
+  bytes data = 8 [
+    (gogoproto.nullable) = true,
+    (amino.dont_omitempty) = true
+  ];
+}
+
+// MsgFinalizeTokenDepositResponse returns deposit result data
+message MsgFinalizeTokenDepositResponse {
+  ResponseResultType result = 1;
+}
+
+///////////////////////////
+// Relayer Messages
+
+// MsgRelayOracleData is a message for relayers to submit oracle data from L1 along with proof.
+message MsgRelayOracleData {
+  option (cosmos.msg.v1.signer) = "sender";
+  option (amino.name) = "opchild/MsgRelayOracleData";
+
+  // sender is the relayer address submitting the oracle data.
+  string sender = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+
+  // oracle_data contains the oracle price update data with proof.
+  OracleData oracle_data = 2 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+}
+
+// MsgRelayOracleDataResponse returns relay oracle data result
+message MsgRelayOracleDataResponse {}
+
+// MsgInitiateTokenWithdrawal is a message to withdraw a new token from L2 to L1.
+message MsgInitiateTokenWithdrawal {
+  option (cosmos.msg.v1.signer) = "sender";
+  option (amino.name) = "opchild/MsgInitiateTokenWithdrawal";
+
+  // the l2 sender address
+  string sender = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+
+  // to is l1 recipient address
+  string to = 2;
+
+  // amount is the coin amount to withdraw.
+  cosmos.base.v1beta1.Coin amount = 4 [
+    (gogoproto.moretags) = "yaml:\"amount\"",
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+}
+
+// MsgInitiateTokenWithdrawalResponse returns create token result data
+message MsgInitiateTokenWithdrawalResponse {
+  // l2 sequence number
+  uint64 sequence = 1;
+}
+
+///////////////////////////
+// Authority Messages
+
+// MsgUpdateSequencer is a message to update the sequencer role in validator set
+// by removing the old sequencer and adding a new one.
+message MsgUpdateSequencer {
+  option (cosmos.msg.v1.signer) = "authority";
+  option (amino.name) = "opchild/MsgUpdateSequencer";
+
+  // authority is the address that controls the module
+  // (defaults to x/opchild unless overwritten).
+  string authority = 1 [
+    (gogoproto.moretags) = "yaml:\"authority\"",
+    (cosmos_proto.scalar) = "cosmos.AddressString"
+  ];
+
+  string moniker = 2;
+  string sequencer_address = 3 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  google.protobuf.Any pubkey = 4 [(cosmos_proto.accepts_interface) = "cosmos.crypto.PubKey"];
+}
+
+// MsgUpdateSequencerResponse returns update sequencer result data
+message MsgUpdateSequencerResponse {}
+
+// MsgAddFeeWhitelistAddresses is a message to add addresses to the x/opchild fee whitelist
+message MsgAddFeeWhitelistAddresses {
+  option (cosmos.msg.v1.signer) = "authority";
+  option (amino.name) = "opchild/MsgAddFeeWhitelistAddresses";
+
+  // authority is the address that controls the module
+  // (defaults to x/opchild unless overwritten).
+  string authority = 1 [
+    (gogoproto.moretags) = "yaml:\"authority\"",
+    (cosmos_proto.scalar) = "cosmos.AddressString"
+  ];
+
+  repeated string addresses = 2 [(gogoproto.moretags) = "yaml:\"addresses\""];
+}
+
+// MsgAddFeeWhitelistAddressesResponse returns the addition result data
+message MsgAddFeeWhitelistAddressesResponse {}
+
+// MsgRemoveFeeWhitelistAddresses is a message to remove addresses from the x/opchild fee whitelist
+message MsgRemoveFeeWhitelistAddresses {
+  option (cosmos.msg.v1.signer) = "authority";
+  option (amino.name) = "opchild/MsgRemoveFeeWhitelistAddresses";
+
+  // authority is the address that controls the module
+  // (defaults to x/opchild unless overwritten).
+  string authority = 1 [
+    (gogoproto.moretags) = "yaml:\"authority\"",
+    (cosmos_proto.scalar) = "cosmos.AddressString"
+  ];
+
+  repeated string addresses = 2 [(gogoproto.moretags) = "yaml:\"addresses\""];
+}
+
+// MsgRemoveFeeWhitelistAddressesResponse returns the removal result data
+message MsgRemoveFeeWhitelistAddressesResponse {}
+
+// MsgAddBridgeExecutor is a message to add addresses to the x/opchild bridge executors
+message MsgAddBridgeExecutor {
+  option (cosmos.msg.v1.signer) = "authority";
+  option (amino.name) = "opchild/MsgAddBridgeExecutor";
+
+  // authority is the address that controls the module
+  // (defaults to x/opchild unless overwritten).
+  string authority = 1 [
+    (gogoproto.moretags) = "yaml:\"authority\"",
+    (cosmos_proto.scalar) = "cosmos.AddressString"
+  ];
+
+  repeated string addresses = 2 [(gogoproto.moretags) = "yaml:\"addresses\""];
+}
+
+// MsgAddBridgeExecutorResponse returns the addition result data
+message MsgAddBridgeExecutorResponse {}
+
+// MsgRemoveBridgeExecutor is a message to remove addresses from the x/opchild bridge executors
+message MsgRemoveBridgeExecutor {
+  option (cosmos.msg.v1.signer) = "authority";
+  option (amino.name) = "opchild/MsgRemoveBridgeExecutor";
+
+  // authority is the address that controls the module
+  // (defaults to x/opchild unless overwritten).
+  string authority = 1 [
+    (gogoproto.moretags) = "yaml:\"authority\"",
+    (cosmos_proto.scalar) = "cosmos.AddressString"
+  ];
+
+  repeated string addresses = 2 [(gogoproto.moretags) = "yaml:\"addresses\""];
+}
+
+// MsgRemoveBridgeExecutorResponse returns the removal result data
+message MsgRemoveBridgeExecutorResponse {}
+
+// MsgUpdateMinGasPrices is a message to update the min gas prices parameter
+message MsgUpdateMinGasPrices {
+  option (cosmos.msg.v1.signer) = "authority";
+  option (amino.name) = "opchild/MsgUpdateMinGasPrices";
+
+  // authority is the address that controls the module
+  // (defaults to x/opchild unless overwritten).
+  string authority = 1 [
+    (gogoproto.moretags) = "yaml:\"authority\"",
+    (cosmos_proto.scalar) = "cosmos.AddressString"
+  ];
+
+  repeated cosmos.base.v1beta1.DecCoin min_gas_prices = 2 [
+    (gogoproto.moretags) = "yaml:\"min_gas_prices\"",
+    (gogoproto.nullable) = false,
+    (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.DecCoins"
+  ];
+}
+
+// MsgUpdateMinGasPricesResponse returns the update result data
+message MsgUpdateMinGasPricesResponse {}
+
+// MsgUpdateAdmin is a message to update the opchild admin address
+message MsgUpdateAdmin {
+  option (cosmos.msg.v1.signer) = "authority";
+  option (amino.name) = "opchild/MsgUpdateAdmin";
+
+  // authority is the address that controls the module
+  // (defaults to x/opchild unless overwritten).
+  string authority = 1 [
+    (gogoproto.moretags) = "yaml:\"authority\"",
+    (cosmos_proto.scalar) = "cosmos.AddressString"
+  ];
+
+  string new_admin = 2 [
+    (gogoproto.moretags) = "yaml:\"new_admin\"",
+    (cosmos_proto.scalar) = "cosmos.AddressString"
+  ];
+}
+
+// MsgUpdateAdminResponse returns the update result data
+message MsgUpdateAdminResponse {}
+
+// MsgUpdateParams is a message to update parameters
+message MsgUpdateParams {
+  option (cosmos.msg.v1.signer) = "authority";
+  option (amino.name) = "opchild/MsgUpdateParams";
+
+  // authority is the address that controls the module
+  // (defaults to x/opchild unless overwritten).
+  string authority = 1 [
+    (gogoproto.moretags) = "yaml:\"authority\"",
+    (cosmos_proto.scalar) = "cosmos.AddressString"
+  ];
+
+  // params are the arbitrary parameters to be updated.
+  Params params = 2;
+}
+
+// MsgUpdateParamsResponse returns parameter update result data
+message MsgUpdateParamsResponse {}
+
+// MsgSpendFeePool is a message to withdraw collected fees from the module
+// account to the recipient address.
+message MsgSpendFeePool {
+  option (cosmos.msg.v1.signer) = "authority";
+  option (amino.name) = "opchild/MsgSpendFeePool";
+
+  // authority is the address that controls the module
+  // (defaults to x/opchild unless overwritten).
+  string authority = 1 [
+    (gogoproto.moretags) = "yaml:\"authority\"",
+    (cosmos_proto.scalar) = "cosmos.AddressString"
+  ];
+
+  // recipient is address to receive the coins.
+  string recipient = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+
+  // the coin amount to spend.
+  repeated cosmos.base.v1beta1.Coin amount = 3 [
+    (gogoproto.moretags) = "yaml:\"amount\"",
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true,
+    (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"
+  ];
+}
+
+// MsgSpendFeePoolResponse returns deposit result data
+message MsgSpendFeePoolResponse {}
+
+// MsgUpdateOracle is a message to update oracle prices which contains L1 extended commits for oracle.
+message MsgUpdateOracle {
+  option (cosmos.msg.v1.signer) = "sender";
+  option (amino.name) = "opchild/MsgUpdateOracle";
+
+  // the sender address
+  string sender = 1 [
+    (gogoproto.moretags) = "yaml:\"sender\"",
+    (cosmos_proto.scalar) = "cosmos.AddressString"
+  ];
+
+  // height is the height of l1 which is including the oracle message
+  uint64 height = 2 [(amino.dont_omitempty) = true];
+
+  /// data is oracle votes bytes.
+  bytes data = 3 [
+    (gogoproto.nullable) = true,
+    (amino.dont_omitempty) = true
+  ];
+}
+
+// MsgUpdateOracleResponse returns oracle update result data
+message MsgUpdateOracleResponse {}
+
+// MsgRegisterMigrationInfo is a message to register the migration information.
+message MsgRegisterMigrationInfo {
+  option (cosmos.msg.v1.signer) = "authority";
+  option (amino.name) = "opchild/MsgRegisterMigrationInfo";
+
+  // the authority address
+  string authority = 1 [
+    (gogoproto.moretags) = "yaml:\"authority\"",
+    (cosmos_proto.scalar) = "cosmos.AddressString"
+  ];
+
+  // migration_info is the migration information to be registered.
+  MigrationInfo migration_info = 2 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+}
+
+// MsgRegisterMigrationInfoResponse returns the registration result data
+message MsgRegisterMigrationInfoResponse {}
+
+// MsgMigrateToken is a message to migrate the origin OP token to registered IBC token.
+message MsgMigrateToken {
+  option (cosmos.msg.v1.signer) = "sender";
+  option (amino.name) = "opchild/MsgMigrateToken";
+
+  // the sender address
+  string sender = 1 [
+    (gogoproto.moretags) = "yaml:\"sender\"",
+    (cosmos_proto.scalar) = "cosmos.AddressString"
+  ];
+
+  // amount is the coin amount to migrate.
+  cosmos.base.v1beta1.Coin amount = 2 [
+    (gogoproto.moretags) = "yaml:\"amount\"",
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+}
+
+// MsgMigrateTokenResponse returns the migration result data
+message MsgMigrateTokenResponse {}

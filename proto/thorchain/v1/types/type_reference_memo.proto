@@ -1,0 +1,25 @@
+
+syntax = "proto3";
+package types;
+
+option go_package = "gitlab.com/thorchain/thornode/v3/x/thorchain/types";
+
+import "common/common.proto";
+import "gogoproto/gogo.proto";
+
+message ReferenceMemo {
+  common.Asset asset = 1 [
+    (gogoproto.nullable) = false,
+    (gogoproto.customtype) = "gitlab.com/thorchain/thornode/v3/common.Asset"
+  ];
+  string memo = 2;
+  string reference = 3;
+  int64 height = 4;
+  string registration_hash = 5
+      [ (gogoproto.casttype) = "gitlab.com/thorchain/thornode/v3/common.TxID" ];
+  bytes registered_by = 6
+      [ (gogoproto.casttype) =
+            "github.com/cosmos/cosmos-sdk/types.AccAddress" ];
+  repeated string used_by_txs = 7
+      [ (gogoproto.casttype) = "gitlab.com/thorchain/thornode/v3/common.TxID" ];
+}

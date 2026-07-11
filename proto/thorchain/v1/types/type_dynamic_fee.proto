@@ -1,0 +1,42 @@
+syntax = "proto3";
+package types;
+
+option go_package = "gitlab.com/thorchain/thornode/v3/x/thorchain/types";
+
+import "gogoproto/gogo.proto";
+
+message DynamicFeeEpochRecord {
+  uint64 epoch = 1;
+  string volume_tor = 2 [
+    (gogoproto.customtype) = "cosmossdk.io/math.Uint",
+    (gogoproto.nullable) = false
+  ];
+  string fees_tor = 3 [
+    (gogoproto.customtype) = "cosmossdk.io/math.Uint",
+    (gogoproto.nullable) = false
+  ];
+  uint64 bps_at_close = 4;
+}
+
+message DynamicFeeRecord {
+  string thorname = 1;
+  string pair_asset_a = 2;
+  string pair_asset_b = 3;
+  uint64 dynamic_bps = 4;
+  uint64 last_active_epoch = 5;
+  repeated DynamicFeeEpochRecord history = 6 [ (gogoproto.nullable) = false ];
+}
+
+message DynamicFeeAccumulator {
+  string thorname = 1;
+  string pair_asset_a = 2;
+  string pair_asset_b = 3;
+  string volume_tor = 4 [
+    (gogoproto.customtype) = "cosmossdk.io/math.Uint",
+    (gogoproto.nullable) = false
+  ];
+  string fees_tor = 5 [
+    (gogoproto.customtype) = "cosmossdk.io/math.Uint",
+    (gogoproto.nullable) = false
+  ];
+}

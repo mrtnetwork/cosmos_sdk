@@ -1,0 +1,404 @@
+syntax = "proto3";
+package stratos.register.v1;
+
+import "gogoproto/gogo.proto";
+import "cosmos_proto/cosmos.proto";
+import "amino/amino.proto";
+import "cosmos/msg/v1/msg.proto";
+import "cosmos/base/v1beta1/coin.proto";
+import "google/protobuf/any.proto";
+import "stratos/register/v1/register.proto";
+
+option (gogoproto.equal_all) = true;
+option go_package = "github.com/stratosnet/stratos-chain/x/register/types";
+
+// Msg defines the register module Msg service.
+service Msg {
+  option (cosmos.msg.v1.service) = true;
+
+  // CreateResourceNode defines a method for creating a new resource node.
+  rpc HandleMsgCreateResourceNode(MsgCreateResourceNode) returns (MsgCreateResourceNodeResponse);
+  rpc HandleMsgRemoveResourceNode(MsgRemoveResourceNode) returns (MsgRemoveResourceNodeResponse);
+  rpc HandleMsgUpdateResourceNode(MsgUpdateResourceNode) returns (MsgUpdateResourceNodeResponse);
+  rpc HandleMsgUpdateResourceNodeDeposit(MsgUpdateResourceNodeDeposit) returns (MsgUpdateResourceNodeDepositResponse);
+  rpc HandleMsgUpdateEffectiveDeposit(MsgUpdateEffectiveDeposit) returns (MsgUpdateEffectiveDepositResponse);
+
+  rpc HandleMsgCreateMetaNode(MsgCreateMetaNode) returns (MsgCreateMetaNodeResponse);
+  rpc HandleMsgRemoveMetaNode(MsgRemoveMetaNode) returns (MsgRemoveMetaNodeResponse);
+  rpc HandleMsgUpdateMetaNode(MsgUpdateMetaNode) returns (MsgUpdateMetaNodeResponse);
+  rpc HandleMsgUpdateMetaNodeDeposit(MsgUpdateMetaNodeDeposit) returns (MsgUpdateMetaNodeDepositResponse);
+  rpc HandleMsgMetaNodeRegistrationVote(MsgMetaNodeRegistrationVote) returns (MsgMetaNodeRegistrationVoteResponse);
+  rpc HandleMsgKickMetaNodeVote(MsgKickMetaNodeVote) returns (MsgKickMetaNodeVoteResponse);
+
+  // UpdateParams defined a governance operation for updating the x/register module parameters.
+  // The authority is hard-coded to the Cosmos SDK x/gov module account
+  rpc UpdateParams(MsgUpdateParams) returns (MsgUpdateParamsResponse);
+}
+
+// MsgCreateResourceNode encapsulates an MsgCreateResourceNodeTx transaction as an SDK message.
+message MsgCreateResourceNode {
+  option (cosmos.msg.v1.signer) = "owner_address";
+  option (amino.name) = "stratos/MsgCreateResourceNode";
+
+  string                        network_address = 1 [
+    (cosmos_proto.scalar) = "cosmos.AddressString",
+    (gogoproto.jsontag) = "network_address",
+    (gogoproto.moretags) = "yaml:\"network_address\""
+  ];
+  google.protobuf.Any           pubkey = 2 [
+    (cosmos_proto.accepts_interface) = "cosmos.crypto.PubKey",
+    (gogoproto.jsontag) = "pubkey",
+    (gogoproto.moretags) = "yaml:\"pubkey\""
+  ];
+  cosmos.base.v1beta1.Coin      value = 3 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true,
+    (gogoproto.jsontag) = "value",
+    (gogoproto.moretags) = "yaml:\"value\""
+  ];
+  string                        owner_address = 4 [
+    (cosmos_proto.scalar) = "cosmos.AddressString",
+    (gogoproto.jsontag) = "owner_address",
+    (gogoproto.moretags) = "yaml:\"owner_address\""
+  ];
+  string                        beneficiary_address = 5 [
+    (cosmos_proto.scalar) = "cosmos.AddressString",
+    (gogoproto.jsontag) = "beneficiary_address",
+    (gogoproto.moretags) = "yaml:\"beneficiary_address\""
+  ];
+  Description                   description = 6 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true,
+    (gogoproto.jsontag) = "description",
+    (gogoproto.moretags) = "yaml:\"description\""
+  ];
+  uint32                        node_type = 7 [
+    (gogoproto.jsontag) = "node_type",
+    (gogoproto.moretags) = "yaml:\"node_type\""
+  ];
+}
+
+// MsgCreateResourceNodeResponse defines the CreateResourceNodeTx response type
+message MsgCreateResourceNodeResponse {}
+
+// MsgCreateMetaNode encapsulates an MsgCreateMetaNodeTx transaction as an SDK message.
+message MsgCreateMetaNode {
+  option (cosmos.msg.v1.signer) = "owner_address";
+  option (amino.name) = "stratos/MsgCreateMetaNode";
+
+  string                        network_address = 1 [
+    (cosmos_proto.scalar) = "cosmos.AddressString",
+    (gogoproto.jsontag) = "network_address",
+    (gogoproto.moretags) = "yaml:\"network_address\""
+  ];
+  google.protobuf.Any           pubkey = 2 [
+    (cosmos_proto.accepts_interface) = "cosmos.crypto.PubKey",
+    (gogoproto.jsontag) = "pubkey",
+    (gogoproto.moretags) = "yaml:\"pubkey\""
+  ];
+  cosmos.base.v1beta1.Coin      value = 3 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true,
+    (gogoproto.jsontag) = "value",
+    (gogoproto.moretags) = "yaml:\"value\""
+  ];
+  string                        owner_address = 4 [
+    (cosmos_proto.scalar) = "cosmos.AddressString",
+    (gogoproto.jsontag) = "owner_address",
+    (gogoproto.moretags) = "yaml:\"owner_address\""
+  ];
+  string                        beneficiary_address = 5 [
+    (cosmos_proto.scalar) = "cosmos.AddressString",
+    (gogoproto.jsontag) = "beneficiary_address",
+    (gogoproto.moretags) = "yaml:\"beneficiary_address\""
+  ];
+  Description                   description = 6 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true,
+    (gogoproto.jsontag) = "description",
+    (gogoproto.moretags) = "yaml:\"description\""
+  ];
+}
+
+
+// MsgCreateMetaNodeResponse defines the CreateMetaNode response type
+message MsgCreateMetaNodeResponse {}
+
+// MsgRemoveResourceNode - encapsulates an RemoveResourceNode transaction as an SDK message
+message MsgRemoveResourceNode {
+  option (cosmos.msg.v1.signer) = "owner_address";
+  option (amino.name) = "stratos/MsgRemoveResourceNode";
+
+  string                   resource_node_address = 1 [
+    (cosmos_proto.scalar) = "cosmos.AddressString",
+    (gogoproto.jsontag) = "resource_node_address",
+    (gogoproto.moretags) = "yaml:\"resource_node_address\""
+  ];
+  string                   owner_address = 2 [
+    (cosmos_proto.scalar) = "cosmos.AddressString",
+    (gogoproto.jsontag) = "owner_address",
+    (gogoproto.moretags) = "yaml:\"owner_address\""
+  ];
+}
+
+// MsgRemoveResourceNodeResponse defines the Msg/RemoveResourceNode response type.
+message MsgRemoveResourceNodeResponse {}
+
+// MsgRemoveMetaNode - encapsulates an MsgRemoveMetaNode transaction as an SDK message
+message MsgRemoveMetaNode {
+  option (cosmos.msg.v1.signer) = "owner_address";
+  option (amino.name) = "stratos/MsgRemoveMetaNode";
+
+  string                   meta_node_address = 1 [
+    (cosmos_proto.scalar) = "cosmos.AddressString",
+    (gogoproto.jsontag) = "meta_node_address",
+    (gogoproto.moretags) = "yaml:\"meta_node_address\""
+  ];
+  string                   owner_address = 2 [
+    (cosmos_proto.scalar) = "cosmos.AddressString",
+    (gogoproto.jsontag) = "owner_address",
+    (gogoproto.moretags) = "yaml:\"owner_address\""
+  ];
+}
+
+// MsgRemoveMetaNodeResponse defines the Msg/RemoveMetaNode response type.
+message MsgRemoveMetaNodeResponse {}
+
+
+// MsgUpdateResourceNode defines a SDK message for updating an existing resource node.
+message MsgUpdateResourceNode {
+  option (cosmos.msg.v1.signer) = "owner_address";
+  option (amino.name) = "stratos/MsgUpdateResourceNode";
+
+  Description description = 1 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true,
+    (gogoproto.jsontag) = "description",
+    (gogoproto.moretags) = "yaml:\"description\""
+  ];
+  string      beneficiary_address = 2 [
+    (cosmos_proto.scalar) = "cosmos.AddressString",
+    (gogoproto.jsontag) = "beneficiary_address",
+    (gogoproto.moretags) = "yaml:\"beneficiary_address\""
+  ];
+  string      network_address = 3 [
+    (cosmos_proto.scalar) = "cosmos.AddressString",
+    (gogoproto.jsontag) = "network_address",
+    (gogoproto.moretags) = "yaml:\"network_address\""
+  ];
+  string      owner_address = 4 [
+    (cosmos_proto.scalar) = "cosmos.AddressString",
+    (gogoproto.jsontag) = "owner_address",
+    (gogoproto.moretags) = "yaml:\"owner_address\""
+  ];
+  uint32      node_type = 5 [
+    (gogoproto.jsontag) = "node_type",
+    (gogoproto.moretags) = "yaml:\"node_type\""
+  ];
+}
+
+// MsgUpdateResourceNodeResponse defines the Msg/UpdateResourceNode response type.
+message MsgUpdateResourceNodeResponse {}
+
+
+// MsgUpdateMetaNode defines a SDK message for updating an existing meta node.
+message MsgUpdateMetaNode {
+  option (cosmos.msg.v1.signer) = "owner_address";
+  option (amino.name) = "stratos/MsgUpdateMetaNode";
+
+  Description description = 1 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true,
+    (gogoproto.jsontag) = "description",
+    (gogoproto.moretags) = "yaml:\"description\""
+  ];
+  string      beneficiary_address = 2 [
+    (cosmos_proto.scalar) = "cosmos.AddressString",
+    (gogoproto.jsontag) = "beneficiary_address",
+    (gogoproto.moretags) = "yaml:\"beneficiary_address\""
+  ];
+  string      network_address = 3 [
+    (cosmos_proto.scalar) = "cosmos.AddressString",
+    (gogoproto.jsontag) = "network_address",
+    (gogoproto.moretags) = "yaml:\"network_address\""
+  ];
+  string      owner_address = 4 [
+    (cosmos_proto.scalar) = "cosmos.AddressString",
+    (gogoproto.jsontag) = "owner_address",
+    (gogoproto.moretags) = "yaml:\"owner_address\""
+  ];
+}
+
+// MsgUpdateMetaNodeResponse defines the Msg/UpdateMetaNode response type.
+message MsgUpdateMetaNodeResponse {}
+
+
+// MsgUpdateResourceNodeDeposit defines a SDK message for updating the deposit of an existing resource node.
+message MsgUpdateResourceNodeDeposit {
+  option (cosmos.msg.v1.signer) = "owner_address";
+  option (amino.name) = "stratos/MsgUpdateResourceNodeDeposit";
+
+  string                      network_address = 1 [
+    (cosmos_proto.scalar) = "cosmos.AddressString",
+    (gogoproto.jsontag) = "network_address",
+    (gogoproto.moretags) = "yaml:\"network_address\""
+  ];
+  string                      owner_address = 2 [
+    (cosmos_proto.scalar) = "cosmos.AddressString",
+    (gogoproto.jsontag) = "owner_address",
+    (gogoproto.moretags) = "yaml:\"owner_address\""
+  ];
+  cosmos.base.v1beta1.Coin    deposit_delta = 3 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true,
+    (gogoproto.jsontag) = "deposit_delta",
+    (gogoproto.moretags) = "yaml:\"deposit_delta\""
+  ];
+}
+
+// MsgUpdateResourceNodeDepositResponse defines the Msg/UpdateResourceNodeDeposit response type.
+message MsgUpdateResourceNodeDepositResponse {}
+
+// MsgUpdateEffectiveDeposit defines a SDK message for updating the effective deposit of an existing resource node.
+message MsgUpdateEffectiveDeposit {
+  option (cosmos.msg.v1.signer) = "reporter_owner";
+  option (amino.name) = "stratos/MsgUpdateEffectiveDeposit";
+
+  repeated string           reporters = 1 [
+    (cosmos_proto.scalar) = "cosmos.AddressString",
+    (gogoproto.jsontag) = "reporters",
+    (gogoproto.moretags) = "yaml:\"reporters\""
+  ];
+  repeated string           reporter_owner = 2 [
+    (cosmos_proto.scalar) = "cosmos.AddressString",
+    (gogoproto.jsontag) = "reporter_owner",
+    (gogoproto.moretags) = "yaml:\"reporter_owner\""
+  ];
+  string                    network_address = 3 [
+    (cosmos_proto.scalar) = "cosmos.AddressString",
+    (gogoproto.jsontag) = "network_address",
+    (gogoproto.moretags) = "yaml:\"network_address\""
+  ];
+  string                    effective_tokens = 4 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true,
+    (gogoproto.jsontag) = "effective_tokens",
+    (gogoproto.moretags) = "yaml:\"effective_tokens\"",
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int"
+  ];
+}
+
+// MsgUpdateEffectiveDepositResponse defines the Msg/UpdateEffectiveDeposit response type.
+message MsgUpdateEffectiveDepositResponse {}
+
+
+// MsgUpdateMetaNodeDeposit defines a SDK message for updating the deposit of an existing meta node.
+message MsgUpdateMetaNodeDeposit {
+  option (cosmos.msg.v1.signer) = "owner_address";
+  option (amino.name) = "stratos/MsgUpdateMetaNodeDeposit";
+
+  string                      network_address = 1 [
+    (cosmos_proto.scalar) = "cosmos.AddressString",
+    (gogoproto.jsontag) = "network_address",
+    (gogoproto.moretags) = "yaml:\"network_address\""
+  ];
+  string                      owner_address = 2 [
+    (cosmos_proto.scalar) = "cosmos.AddressString",
+    (gogoproto.jsontag) = "owner_address",
+    (gogoproto.moretags) = "yaml:\"owner_address\""
+  ];
+  cosmos.base.v1beta1.Coin    deposit_delta = 3 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true,
+    (gogoproto.jsontag) = "deposit_delta",
+    (gogoproto.moretags) = "yaml:\"deposit_delta\""
+  ];
+}
+
+// MsgUpdateMetaNodeDepositResponse defines the Msg/UpdateMetaNodeDeposit response type.
+message MsgUpdateMetaNodeDepositResponse {}
+
+// MsgMetaNodeRegistrationVote defines a SDK message for registration vote of an existing meta node.
+message MsgMetaNodeRegistrationVote {
+  option (cosmos.msg.v1.signer) = "voter_owner_address";
+  option (amino.name) = "stratos/MsgMetaNodeRegistrationVote";
+
+  string           candidate_network_address = 1 [
+    (cosmos_proto.scalar) = "cosmos.AddressString",
+    (gogoproto.jsontag) = "candidate_network_address",
+    (gogoproto.moretags) = "yaml:\"candidate_network_address\""
+  ]; // node address of meta node
+  string           candidate_owner_address = 2 [
+    (cosmos_proto.scalar) = "cosmos.AddressString",
+    (gogoproto.jsontag) = "candidate_owner_address",
+    (gogoproto.moretags) = "yaml:\"candidate_owner_address\""
+  ]; // owner address of meta node
+  bool             opinion                     = 3 [
+    (gogoproto.jsontag) = "opinion",
+    (gogoproto.moretags) = "yaml:\"opinion\""
+  ];
+  string           voter_network_address       = 4 [
+    (cosmos_proto.scalar) = "cosmos.AddressString",
+    (gogoproto.jsontag) = "voter_network_address",
+    (gogoproto.moretags) = "yaml:\"voter_network_address\""
+  ]; // address of voter (other existed meta node)
+  string           voter_owner_address = 5 [
+    (cosmos_proto.scalar) = "cosmos.AddressString",
+    (gogoproto.jsontag) = "voter_owner_address",
+    (gogoproto.moretags) = "yaml:\"voter_owner_address\""
+  ];  // address of owner of the voter (other existed meta node)
+}
+
+// MsgMetaNodeRegistrationVoteResponse defines the Msg/MetaNodeRegistrationVote response type.
+message MsgMetaNodeRegistrationVoteResponse {}
+
+message MsgKickMetaNodeVote {
+  option (cosmos.msg.v1.signer) = "voter_owner_address";
+  option (amino.name) = "stratos/MsgKickMetaNodeVote";
+
+  string           target_network_address = 1 [
+    (cosmos_proto.scalar) = "cosmos.AddressString",
+    (gogoproto.jsontag) = "target_network_address",
+    (gogoproto.moretags) = "yaml:\"target_network_address\""
+  ];
+  bool             opinion = 2 [
+    (gogoproto.jsontag) = "opinion",
+    (gogoproto.moretags) = "yaml:\"opinion\""
+  ];
+  string           voter_network_address = 3 [
+    (cosmos_proto.scalar) = "cosmos.AddressString",
+    (gogoproto.jsontag) = "voter_network_address",
+    (gogoproto.moretags) = "yaml:\"voter_network_address\""
+  ];
+  string           voter_owner_address = 4 [
+    (cosmos_proto.scalar) = "cosmos.AddressString",
+    (gogoproto.jsontag) = "voter_owner_address",
+    (gogoproto.moretags) = "yaml:\"voter_owner_address\""
+  ];
+}
+
+message MsgKickMetaNodeVoteResponse {}
+
+// MsgUpdateParams defines a Msg for updating the x/register module parameters.
+message MsgUpdateParams {
+  option (cosmos.msg.v1.signer) = "authority";
+  option (amino.name) = "stratos/x/register/MsgUpdateParams";
+
+  // authority is the address of the governance account.
+  string authority = 1 [
+    (cosmos_proto.scalar) = "cosmos.AddressString"
+  ];
+
+  // params defines the x/register parameters to update.
+  // NOTE: All parameters must be supplied.
+  Params params = 2 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+}
+
+// MsgUpdateParamsResponse defines the response structure for executing a
+// MsgUpdateParams message.
+message MsgUpdateParamsResponse {}
+

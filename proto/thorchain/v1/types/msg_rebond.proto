@@ -1,0 +1,23 @@
+syntax = "proto3";
+package types;
+
+option go_package = "gitlab.com/thorchain/thornode/v3/x/thorchain/types";
+
+import "common/common.proto";
+import "gogoproto/gogo.proto";
+
+message MsgReBond {
+  common.Tx tx_in = 1 [ (gogoproto.nullable) = false ];
+  bytes node_address = 2
+      [ (gogoproto.casttype) =
+            "github.com/cosmos/cosmos-sdk/types.AccAddress" ];
+  bytes new_bond_provider_address = 3
+      [ (gogoproto.casttype) =
+            "github.com/cosmos/cosmos-sdk/types.AccAddress" ];
+  string amount = 4 [
+    (gogoproto.customtype) = "cosmossdk.io/math.Uint",
+    (gogoproto.nullable) = false
+  ];
+  bytes signer = 5 [ (gogoproto.casttype) =
+                         "github.com/cosmos/cosmos-sdk/types.AccAddress" ];
+}

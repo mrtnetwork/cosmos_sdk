@@ -1,0 +1,16 @@
+syntax = "proto3";
+package types;
+
+option go_package = "gitlab.com/thorchain/thornode/v3/x/thorchain/types";
+
+import "gogoproto/gogo.proto";
+
+option (gogoproto.marshaler_all) = true;
+
+message QueryEip712TypedDataRequest {
+  bytes sign_bytes = 1 [ (gogoproto.jsontag) = "sign_bytes" ];
+}
+
+message QueryEip712TypedDataResponse {
+  string typed_data = 1 [ (gogoproto.jsontag) = "typed_data" ];
+}

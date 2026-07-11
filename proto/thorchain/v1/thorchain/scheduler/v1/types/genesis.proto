@@ -1,0 +1,14 @@
+syntax = "proto3";
+package thorchain.scheduler.v1;
+
+import "gogoproto/gogo.proto";
+import "thorchain/scheduler/v1/types/scheduler.proto";
+
+option go_package = "gitlab.com/thorchain/thornode/v3/x/scheduler/types";
+
+message GenesisState {
+  repeated Schedule schedules = 1 [
+    (gogoproto.nullable) = false,
+    (gogoproto.moretags) = "yaml:\"contracts\""
+  ];
+}

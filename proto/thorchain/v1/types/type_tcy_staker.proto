@@ -1,0 +1,17 @@
+syntax = "proto3";
+package types;
+
+option go_package = "gitlab.com/thorchain/thornode/v3/x/thorchain/types";
+option (gogoproto.goproto_getters_all) = false;
+
+import "gogoproto/gogo.proto";
+import "common/common.proto";
+
+message TCYStaker {
+  string address = 1 [ (gogoproto.casttype) =
+                           "gitlab.com/thorchain/thornode/v3/common.Address" ];
+  string amount = 2 [
+    (gogoproto.customtype) = "cosmossdk.io/math.Uint",
+    (gogoproto.nullable) = false
+  ];
+}

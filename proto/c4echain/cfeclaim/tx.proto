@@ -1,0 +1,161 @@
+syntax = "proto3";
+package chain4energy.c4echain.cfeclaim;
+
+import "gogoproto/gogo.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "chain4energy/c4echain/cfeclaim/campaign.proto";
+import "chain4energy/c4echain/cfeclaim/mission.proto";
+import "chain4energy/c4echain/cfeclaim/claim_record.proto";
+import "cosmos/base/v1beta1/coin.proto";
+// this line is used by starport scaffolding # proto/tx/import
+
+option go_package = "github.com/chain4energy/c4e-chain/x/cfeclaim/types";
+
+// Msg defines the Msg service.
+service Msg {
+  rpc Claim(MsgClaim) returns (MsgClaimResponse);
+  rpc InitialClaim(MsgInitialClaim) returns (MsgInitialClaimResponse);
+  rpc CreateCampaign(MsgCreateCampaign) returns (MsgCreateCampaignResponse);
+  rpc AddMission(MsgAddMission) returns (MsgAddMissionResponse);
+  rpc AddClaimRecords(MsgAddClaimRecords) returns (MsgAddClaimRecordsResponse);
+  rpc DeleteClaimRecord(MsgDeleteClaimRecord) returns (MsgDeleteClaimRecordResponse);
+  rpc CloseCampaign(MsgCloseCampaign) returns (MsgCloseCampaignResponse);
+  rpc EnableCampaign(MsgEnableCampaign) returns (MsgEnableCampaignResponse);
+  rpc RemoveCampaign(MsgRemoveCampaign) returns (MsgRemoveCampaignResponse);
+  // this line is used by starport scaffolding # proto/tx/rpc
+}
+
+message MsgClaim {
+  string claimer = 1;
+  uint64 campaign_id = 2;
+  uint64 mission_id = 3;
+}
+
+message MsgClaimResponse {
+  repeated cosmos.base.v1beta1.Coin amount = 1 [
+    (gogoproto.nullable) = false,
+    (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"
+  ];
+}
+
+message MsgInitialClaim {
+  string claimer = 1;
+  uint64 campaign_id = 2;
+  string destination_address = 3;
+}
+
+message MsgInitialClaimResponse {
+  repeated cosmos.base.v1beta1.Coin amount = 1 [
+    (gogoproto.nullable) = false,
+    (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"
+  ];
+}
+
+message MsgCreateCampaign {
+  string owner = 1;
+  string name = 2;
+  string description = 3;
+  CampaignType campaign_type = 4;
+  bool removable_claim_records = 5;
+  string feegrant_amount = 6 [
+    (gogoproto.nullable) = true,
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int"
+  ];
+  string initial_claim_free_amount = 7 [
+    (gogoproto.nullable) = true,
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int"
+  ];
+  string free = 8 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = true
+  ];
+  google.protobuf.Timestamp start_time = 9 [
+    (gogoproto.nullable) = true,
+    (gogoproto.stdtime) = true
+  ];
+  google.protobuf.Timestamp end_time = 10 [
+    (gogoproto.nullable) = true,
+    (gogoproto.stdtime) = true
+  ];
+  google.protobuf.Duration lockup_period = 11 [
+    (gogoproto.nullable) = true,
+    (gogoproto.stdduration) = true
+  ];
+  google.protobuf.Duration vesting_period = 12 [
+    (gogoproto.nullable) = true,
+    (gogoproto.stdduration) = true
+  ];
+  string vesting_pool_name = 13;
+}
+
+message MsgCreateCampaignResponse {
+  uint64 campaign_id = 1;
+}
+
+message MsgAddMission {
+  string owner = 1;
+  uint64 campaign_id = 2;
+  string name = 3;
+  string description = 4;
+  MissionType mission_type = 5;
+  string weight = 6 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = true
+  ];
+  google.protobuf.Timestamp claim_start_date = 7 [
+    (gogoproto.nullable) = true,
+    (gogoproto.stdtime) = true
+  ];
+}
+
+message MsgAddMissionResponse {
+  uint64 mission_id = 1;
+}
+
+message MsgAddClaimRecords {
+  string owner = 1;
+  uint64 campaign_id = 2;
+  repeated ClaimRecordEntry claim_record_entries = 3;
+}
+
+message MsgAddClaimRecordsResponse {}
+
+message MsgDeleteClaimRecord {
+  string owner = 1;
+  uint64 campaign_id = 2;
+  string user_address = 3;
+}
+
+message MsgDeleteClaimRecordResponse {}
+
+message MsgCloseCampaign {
+  string owner = 1;
+  uint64 campaign_id = 2;
+}
+
+message MsgCloseCampaignResponse {}
+
+message MsgEnableCampaign {
+  string owner = 1;
+  uint64 campaign_id = 2;
+  google.protobuf.Timestamp start_time = 3 [
+    (gogoproto.nullable) = true,
+    (gogoproto.stdtime) = true
+  ];
+  google.protobuf.Timestamp end_time = 4 [
+    (gogoproto.nullable) = true,
+    (gogoproto.stdtime) = true
+  ];
+}
+
+message MsgEnableCampaignResponse {}
+
+message MsgRemoveCampaign {
+  string owner = 1;
+  uint64 campaign_id = 2;
+}
+
+message MsgRemoveCampaignResponse {}
+
+// this line is used by starport scaffolding # proto/tx/message

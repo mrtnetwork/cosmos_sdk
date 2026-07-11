@@ -1,0 +1,19 @@
+syntax = "proto3";
+package chain4energy.c4echain.cfeminter;
+
+import "gogoproto/gogo.proto";
+import "google/protobuf/timestamp.proto";
+import "chain4energy/c4echain/cfeminter/minter.proto";
+
+option go_package = "github.com/chain4energy/c4e-chain/x/cfeminter/types";
+
+// Params defines the parameters for the module.
+message Params {
+  option (gogoproto.goproto_stringer) = false;
+  string mint_denom = 1;
+  google.protobuf.Timestamp start_time = 2 [
+    (gogoproto.nullable) = false,
+    (gogoproto.stdtime) = true
+  ];
+  repeated Minter minters = 3;
+}

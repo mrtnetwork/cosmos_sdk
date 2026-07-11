@@ -1,0 +1,16 @@
+syntax = "proto3";
+package types;
+
+option go_package = "gitlab.com/thorchain/thornode/v3/x/thorchain/types";
+
+import "common/common.proto";
+import "gogoproto/gogo.proto";
+
+message MsgOperatorRotate {
+  bytes signer = 1 [ (gogoproto.casttype) =
+                         "github.com/cosmos/cosmos-sdk/types.AccAddress" ];
+  bytes operator_address = 2
+      [ (gogoproto.casttype) =
+            "github.com/cosmos/cosmos-sdk/types.AccAddress" ];
+  common.Coin coin = 3 [ (gogoproto.nullable) = false ];
+}

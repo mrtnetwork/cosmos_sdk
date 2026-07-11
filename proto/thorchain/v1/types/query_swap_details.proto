@@ -1,0 +1,20 @@
+syntax = "proto3";
+package types;
+
+option go_package = "gitlab.com/thorchain/thornode/v3/x/thorchain/types";
+
+import "gogoproto/gogo.proto";
+import "types/msg_swap.proto";
+
+option (gogoproto.marshaler_all) = true;
+
+message QuerySwapDetailsRequest {
+  string tx_id = 1;
+  string height = 2;
+}
+
+message QuerySwapDetailsResponse {
+  MsgSwap swap = 1;
+  string status = 2;
+  string queue_type = 3;
+}

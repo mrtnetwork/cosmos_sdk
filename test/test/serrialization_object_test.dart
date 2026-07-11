@@ -1,9 +1,11 @@
 import 'package:blockchain_utils/blockchain_utils.dart';
 import 'package:cosmos_sdk/cosmos_sdk.dart';
+import 'package:cosmos_sdk/proto_messages/cosmos/auth/v1beta1/src/query.dart';
+import 'package:cosmos_sdk/proto_messages/cosmos/bank/v1beta1/src/query.dart'
+    hide QueryParamsResponse;
 import 'package:test/test.dart';
 
 void main() {
-  // _queryAccountsResponse();
   _queryParamResponse();
   _metadata();
   _spendableBalanceByDenom();
@@ -25,7 +27,7 @@ void querySupply() {
     final supply = QueryTotalSupplyResponse.deserialize(
       BytesUtils.fromHexString(dataHex),
     );
-    expect(supply.toHex, dataHex);
+    expect(BytesUtils.toHexString(supply.toBuffer()), dataHex);
   });
 }
 
@@ -36,18 +38,18 @@ void _spendableBalanceByDenom() {
         "0a2d636f736d6f733168746737646d68656c617a64736d75776d396e67746730747065383230303675716477396e6a12057561746f6d",
       ),
     );
+    expect(request.address, "cosmos1htg7dmhelazdsmuwm9ngtg0tpe82006uqdw9nj");
     expect(
-      request.address.address,
-      "cosmos1htg7dmhelazdsmuwm9ngtg0tpe82006uqdw9nj",
-    );
-    expect(
-      request.toHex,
+      BytesUtils.toHexString(request.toBuffer()),
       "0a2d636f736d6f733168746737646d68656c617a64736d75776d396e67746730747065383230303675716477396e6a12057561746f6d",
     );
     final respone = QuerySpendableBalancesResponse.deserialize(
       BytesUtils.fromHexString("0a100a057561746f6d120733303030303030"),
     );
-    expect(respone.toHex, "0a100a057561746f6d120733303030303030");
+    expect(
+      BytesUtils.toHexString(respone.toBuffer()),
+      "0a100a057561746f6d120733303030303030",
+    );
   });
 }
 
@@ -62,7 +64,7 @@ void _supplyOf() {
         "0a190a057561746f6d121031363734333931393135393538363538",
       ),
     );
-    expect(response.amount.amount, BigInt.parse("1674391915958658"));
+    expect(response.amount?.amount, "1674391915958658");
   });
 }
 
@@ -71,7 +73,7 @@ void _queryParamResponse() {
     final response = QueryParamsResponse.deserialize(
       BytesUtils.fromHexString("0a021001"),
     );
-    expect(response.toHex, "0a021001");
+    expect(BytesUtils.toHexString(response.toBuffer()), "0a021001");
   });
 }
 
@@ -79,16 +81,16 @@ void _metadata() {
   test("metadataResponse", () {
     const String metadataHex =
         "0a85010a2b546865206e6174697665207374616b696e6720746f6b656e206f662074686520436f736d6f73204875622e12120a057561746f6d1a096d6963726f61746f6d12140a056d61746f6d10031a096d696c6c6961746f6d12080a0461746f6d10061a057561746f6d220461746f6d2a0f436f736d6f73204875622041746f6d320441544f4d";
-    final respone = QueryDenomMetadataResponse.deserialize(
+    final response = QueryDenomMetadataResponse.deserialize(
       BytesUtils.fromHexString(metadataHex),
     );
-    expect(respone.metadata.base, "uatom");
-    expect(respone.metadata.name, "Cosmos Hub Atom");
+    expect(response.metadata?.base, "uatom");
+    expect(response.metadata?.name, "Cosmos Hub Atom");
     expect(
-      respone.metadata.description,
+      response.metadata?.description,
       "The native staking token of the Cosmos Hub.",
     );
-    expect(respone.toHex, metadataHex);
+    expect(BytesUtils.toHexString(response.toBuffer()), metadataHex);
   });
 }
 
@@ -99,43 +101,51 @@ void _addressBytesToString() {
         "0a2d636f736d6f733168746737646d68656c617a64736d75776d396e67746730747065383230303675716477396e6a",
       ),
     );
+
     expect(
       request.addressString,
       "cosmos1htg7dmhelazdsmuwm9ngtg0tpe82006uqdw9nj",
     );
     expect(
-      request.toHex,
+      BytesUtils.toHexString(request.toBuffer()),
       "0a2d636f736d6f733168746737646d68656c617a64736d75776d396e67746730747065383230303675716477396e6a",
     );
   });
 }
 
 void _addressStringToBytes() {
-  test("addresBytesToString", () {
+  test("addresStringToBytes", () {
     final response = AddressStringToBytesResponse.deserialize(
       BytesUtils.fromHexString("0a14bad1e6eef9ff44d86f8ed96685a1eb0e4ea7bf5c"),
     );
     expect(
-      CosmosBaseAddress.fromBytes(response.addressBytes).address,
+      CosmosBaseAddress.fromBytes(response.addressBytes!).address,
       "cosmos1htg7dmhelazdsmuwm9ngtg0tpe82006uqdw9nj",
     );
-    expect(response.toHex, "0a14bad1e6eef9ff44d86f8ed96685a1eb0e4ea7bf5c");
+    expect(
+      BytesUtils.toHexString(response.toBuffer()),
+      "0a14bad1e6eef9ff44d86f8ed96685a1eb0e4ea7bf5c",
+    );
   });
 }
 
 void _queryAccountInfoResponse() {
   test("Query account info response", () {
-    final respone = QueryAccountInfoResponse.deserialize(
+    final response = QueryAccountInfoResponse.deserialize(
       BytesUtils.fromHexString(
         "0a330a2d636f736d6f733168746737646d68656c617a64736d75776d396e67746730747065383230303675716477396e6a18e3ce2d",
       ),
     );
+    {
+      final decode = QueryAccountInfoResponse.deserialize(response.toBuffer());
+      expect(decode.toBuffer(), response.toBuffer());
+    }
     expect(
-      respone.toHex,
+      BytesUtils.toHexString(response.toBuffer()),
       "0a330a2d636f736d6f733168746737646d68656c617a64736d75776d396e67746730747065383230303675716477396e6a18e3ce2d",
     );
     expect(
-      respone.info.address.address,
+      response.info?.address,
       "cosmos1htg7dmhelazdsmuwm9ngtg0tpe82006uqdw9nj",
     );
   });
@@ -143,11 +153,11 @@ void _queryAccountInfoResponse() {
 
 void _bech32PrefixResponse() {
   test("bech32PrefixResponse", () {
-    final re = Bech32PrefixResponse.deserialize(
+    final response = Bech32PrefixResponse.deserialize(
       BytesUtils.fromHexString("0a06636f736d6f73"),
     );
-    expect(re.toHex, "0a06636f736d6f73");
-    expect(re.bech32Prefix, "cosmos");
+    expect(BytesUtils.toHexString(response.toBuffer()), "0a06636f736d6f73");
+    expect(response.bech32Prefix, "cosmos");
   });
 }
 
@@ -155,39 +165,44 @@ void _moudleAccounts() {
   test("moudle Accounts", () {
     const responseHex =
         "0a80010a222f636f736d6f732e617574682e763162657461312e4d6f64756c654163636f756e74125a0a330a2d636f736d6f7331666c343876736e6d73647a637638357135643271347a35616a64686138797533346d6630656818e0c4011212626f6e6465645f746f6b656e735f706f6f6c1a066275726e65721a077374616b696e670a720a222f636f736d6f732e617574682e763162657461312e4d6f64756c654163636f756e74124c0a330a2d636f736d6f73316170306d6836787a666e38393433757272383471366165377a666e61723438616d3265726864188fd82d1215636f6e73756d65725f726577617264735f706f6f6c0a700a222f636f736d6f732e617574682e763162657461312e4d6f64756c654163636f756e74124a0a330a2d636f736d6f73316a7636357333677271663676366a6c33647034743663397439726b3939636438386c7975666c18dfc401120c646973747269627574696f6e1a0562617369630a710a222f636f736d6f732e617574682e763162657461312e4d6f64756c654163636f756e74124b0a330a2d636f736d6f73313778706676616b6d32616d67393632796c73366638347a336b656c6c3863356c73657271746118ddc401120d6665655f636f6c6c6563746f721a0562617369630a680a222f636f736d6f732e617574682e763162657461312e4d6f64756c654163636f756e7412420a330a2d636f736d6f73313064303779323635676d6d757674347a30773961773838306a6e73723730306a367a6e396b6e18dec4011203676f761a066275726e65720a6f0a222f636f736d6f732e617574682e763162657461312e4d6f64756c654163636f756e7412490a330a2d636f736d6f7331766c7468676178323363613973796b377867617a333437786d66346e756e656638676b6876731890d82d1212696e746572636861696e6163636f756e74730a690a222f636f736d6f732e617574682e763162657461312e4d6f64756c654163636f756e7412430a330a2d636f736d6f73316d33683330776c767366386c6c7275787470756b64767379306b6d326b756d3867333863387118e2c40112046d696e741a066d696e7465720a84010a222f636f736d6f732e617574682e763162657461312e4d6f64756c654163636f756e74125e0a330a2d636f736d6f73317479676d733378686873337976343837706878336477346139356a6e3774376c706d3437307218e1c40112166e6f745f626f6e6465645f746f6b656e735f706f6f6c1a066275726e65721a077374616b696e670a750a222f636f736d6f732e617574682e763162657461312e4d6f64756c654163636f756e74124f0a330a2d636f736d6f7331796c3668646a686d6b663337363339373330676666616e707a6e647a64706d68776c6b66687218a19d0b12087472616e736665721a066d696e7465721a066275726e6572";
-    final resp = QueryModuleAccountsResponse.deserialize(
+    final response = QueryModuleAccountsResponse.deserialize(
       BytesUtils.fromHexString(responseHex),
     );
-    for (final i in resp.accounts) {
-      expect(i.typeUrl.typeUrl, "/cosmos.auth.v1beta1.ModuleAccount");
+    for (final i in response.accounts) {
+      expect(i.typeUrl, "/cosmos.auth.v1beta1.ModuleAccount");
     }
-    expect(resp.toHex, responseHex);
+    expect(BytesUtils.toHexString(response.toBuffer()), responseHex);
   });
 }
 
 void _authParamsResponse() {
   test("Auth params response", () {
-    final resp = AuthQueryParamsResponse.deserialize(
+    final response = QueryParamsResponse.deserialize(
       BytesUtils.fromHexString("0a0d0880041007180a20ce0428e807"),
     );
-    expect(resp.toHex, "0a0d0880041007180a20ce0428e807");
+    expect(
+      BytesUtils.toHexString(response.toBuffer()),
+      "0a0d0880041007180a20ce0428e807",
+    );
   });
 }
 
 void _queryAccountAddressById() {
   test("Query account address by id", () {
-    final resp = QueryAccountAddressByIDResponse.deserialize(
+    final response = QueryAccountAddressByIDResponse.deserialize(
       BytesUtils.fromHexString(
         "0a2d636f736d6f733168746737646d68656c617a64736d75776d396e67746730747065383230303675716477396e6a",
       ),
     );
+    {
+      final decode = QueryAccountAddressByIDResponse.deserialize(
+        response.toBuffer(),
+      );
+      expect(decode.toBuffer(), response.toBuffer());
+    }
     expect(
-      resp.accountAddress.address,
+      response.accountAddress,
       "cosmos1htg7dmhelazdsmuwm9ngtg0tpe82006uqdw9nj",
-    );
-    expect(
-      resp.toHex,
-      "0a2d636f736d6f733168746737646d68656c617a64736d75776d396e67746730747065383230303675716477396e6a",
     );
   });
 }

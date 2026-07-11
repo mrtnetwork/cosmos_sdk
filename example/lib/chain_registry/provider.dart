@@ -2,7 +2,7 @@ import 'package:blockchain_utils/service/service.dart';
 import 'package:cosmos_sdk/cosmos_sdk.dart';
 import 'package:http/http.dart' as http;
 
-class ChainRegistryHTTPProvider implements ChainRegistryServiceProvider {
+class ChainRegistryHTTPProvider with ChainRegistryServiceProvider {
   ChainRegistryHTTPProvider(
       {this.url = CCRConst.chainRegisteryUri,
       http.Client? client,
@@ -14,12 +14,13 @@ class ChainRegistryHTTPProvider implements ChainRegistryServiceProvider {
   final Duration defaultRequestTimeout;
 
   @override
-  Future<BaseServiceResponse<T>> doRequest<T>(
+  Future<BaseServiceResponse> doRequest(
       ChainRegistryRequestRequestDetails params,
       {Duration? timeout}) async {
-    final uri = params.toUri(url);
+    final uri = params.encodeUrl(url);
     final response = await client.get(uri,
         headers: {...params.headers}).timeout(timeout ?? defaultRequestTimeout);
-    return params.parseResponse(response.bodyBytes, response.statusCode);
+    return params.toResponse(response.bodyBytes,
+        statusCode: response.statusCode);
   }
 }

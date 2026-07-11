@@ -1,0 +1,50 @@
+syntax = "proto3";
+package chain4energy.c4echain.cfevesting;
+
+import "gogoproto/gogo.proto";
+import "chain4energy/c4echain/cfevesting/params.proto";
+import "chain4energy/c4echain/cfevesting/account_vesting_pool.proto";
+import "chain4energy/c4echain/cfevesting/vesting_account.proto";
+
+// this line is used by starport scaffolding # genesis/proto/import
+
+option go_package = "github.com/chain4energy/c4e-chain/x/cfevesting/types";
+
+// GenesisState defines the cfevesting module's genesis state.
+message GenesisState {
+  Params params = 1 [
+    (gogoproto.nullable) = false
+  ];
+  repeated GenesisVestingType vesting_types = 2 [
+    (gogoproto.nullable) = false,
+    (gogoproto.moretags) = "yaml:\"vesting_types\""
+  ];
+  repeated AccountVestingPools account_vesting_pools = 3 [
+    (gogoproto.moretags) = "yaml:\"account_vesting_pools\""
+  ];
+  repeated VestingAccountTrace vesting_account_traces = 4 [
+    (gogoproto.nullable) = false
+  ];
+  uint64 vesting_account_trace_count = 5;
+  // this line is used by starport scaffolding # genesis/proto/state
+}
+
+message GenesisVestingType {
+  // vesting type name
+  string name = 1; 
+  // period of locked coins from vesting start
+  int64 lockup_period = 2; 
+  string lockup_period_unit = 3; 
+  // period of veesting coins from lockup period end
+  int64 vesting_period = 4; 
+  string vesting_period_unit = 5;
+  string free = 6 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+  // units to select:
+  // days
+  // hours
+  // minutes
+  // seconds
+}

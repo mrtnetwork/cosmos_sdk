@@ -1,0 +1,32 @@
+syntax = "proto3";
+package chain4energy.c4echain.cfeclaim;
+
+import "gogoproto/gogo.proto";
+import "cosmos/base/v1beta1/coin.proto";
+
+option go_package = "github.com/chain4energy/c4e-chain/x/cfeclaim/types";
+
+message UserEntry {
+  string address = 1;
+  repeated ClaimRecord claim_records = 3;
+}
+
+message ClaimRecord {
+  uint64 campaign_id = 1;
+  string address = 2;
+  repeated cosmos.base.v1beta1.Coin amount = 3 [
+    (gogoproto.nullable) = false,
+    (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"
+  ];
+  repeated uint64 completed_missions = 4;
+  repeated uint64 claimed_missions = 5;
+}
+
+message ClaimRecordEntry {
+  uint64 campaign_id = 1;
+  string user_entry_address = 2;
+  repeated cosmos.base.v1beta1.Coin amount = 3 [
+    (gogoproto.nullable) = false,
+    (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"
+  ];
+}

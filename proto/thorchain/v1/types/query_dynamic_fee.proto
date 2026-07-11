@@ -1,0 +1,65 @@
+syntax = "proto3";
+package types;
+
+option go_package = "gitlab.com/thorchain/thornode/v3/x/thorchain/types";
+
+import "gogoproto/gogo.proto";
+
+option (gogoproto.marshaler_all) = true;
+
+message QueryDynamicL1FeesRequest { string height = 1; }
+
+message DynamicL1FeeEntry {
+  string thorname = 1;
+  string pair = 2;
+  uint64 dynamic_bps = 3;
+  int64 whitelist_state = 4;
+  uint64 last_active_epoch = 5;
+  string latest_fees_tor = 6;
+}
+
+message QueryDynamicL1FeesResponse {
+  repeated DynamicL1FeeEntry entries = 1 [ (gogoproto.nullable) = false ];
+}
+
+message QueryDynamicL1FeesByThornameRequest {
+  string thorname = 1;
+  string height = 2;
+}
+
+message DynamicL1FeePairDetail {
+  string pair = 1;
+  uint64 dynamic_bps = 2;
+  uint64 last_active_epoch = 3;
+  repeated DynamicL1FeeHistoryEntry history = 4
+      [ (gogoproto.nullable) = false ];
+}
+
+message DynamicL1FeeHistoryEntry {
+  uint64 epoch = 1;
+  string volume_tor = 2;
+  string fees_tor = 3;
+  uint64 bps_at_close = 4;
+}
+
+message QueryDynamicL1FeesByThornameResponse {
+  string thorname = 1;
+  int64 whitelist_state = 2;
+  repeated DynamicL1FeePairDetail pairs = 3 [ (gogoproto.nullable) = false ];
+}
+
+message QueryDynamicL1FeesCurrentRequest { string height = 1; }
+
+message DynamicL1FeeCurrentEntry {
+  string thorname = 1;
+  string pair = 2;
+  string volume_tor = 3;
+  string fees_tor = 4;
+  uint64 epoch = 5;
+}
+
+message QueryDynamicL1FeesCurrentResponse {
+  uint64 epoch = 1;
+  repeated DynamicL1FeeCurrentEntry entries = 2
+      [ (gogoproto.nullable) = false ];
+}

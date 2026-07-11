@@ -1,0 +1,228 @@
+syntax = "proto3";
+package stratos.register.v1;
+
+import "gogoproto/gogo.proto";
+import "google/protobuf/any.proto";
+import "google/protobuf/timestamp.proto";
+import "google/api/annotations.proto";
+import "cosmos_proto/cosmos.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
+import "cosmos/base/v1beta1/coin.proto";
+import "cosmos/staking/v1beta1/staking.proto";
+
+import "stratos/register/v1/register.proto";
+
+option go_package = "github.com/stratosnet/stratos-chain/x/register/types";
+
+// Query defines the gRPC querier service.
+service Query {
+  // ResourceNode queries ResourceNode info for given ResourceNode address.
+  rpc ResourceNode(QueryResourceNodeRequest) returns (QueryResourceNodeResponse) {
+    option (google.api.http).get = "/stratos/register/v1/resource_node/{network_addr}";
+  }
+
+  // MetaNode queries MetaNode info for given MetaNode address.
+  rpc MetaNode(QueryMetaNodeRequest) returns (QueryMetaNodeResponse) {
+    option (google.api.http).get = "/stratos/register/v1/meta_node/{network_addr}";
+  }
+
+  // Params queries Register module Params info.
+  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
+    option (google.api.http).get = "/stratos/register/v1/params";
+  }
+
+  // DepositByNode queries all deposit info for given node network address.
+  rpc DepositByNode(QueryDepositByNodeRequest) returns (QueryDepositByNodeResponse) {
+    option (google.api.http).get = "/stratos/register/v1/deposit_by_node/{network_addr}/{query_type}";
+  }
+
+  // DepositByOwner queries all deposit info for given owner address.
+  rpc DepositByOwner(QueryDepositByOwnerRequest) returns (QueryDepositByOwnerResponse) {
+    option (google.api.http).get = "/stratos/register/v1/deposit_by_owner/{owner_addr}";
+  }
+
+  // DepositTotal queries all deposit info.
+  rpc DepositTotal(QueryDepositTotalRequest) returns (QueryDepositTotalResponse) {
+    option (google.api.http).get = "/stratos/register/v1/deposit_total";
+  }
+
+  // BondedResourceNodeCount queries total number of ResourceNodes.
+  rpc BondedResourceNodeCount(QueryBondedResourceNodeCountRequest) returns (QueryBondedResourceNodeCountResponse) {
+    option (google.api.http).get = "/stratos/register/v1/resource_node_count";
+  }
+
+  // BondedMetaNodeCount queries total number of MetaNodes.
+  rpc BondedMetaNodeCount(QueryBondedMetaNodeCountRequest) returns (QueryBondedMetaNodeCountResponse) {
+    option (google.api.http).get = "/stratos/register/v1/meta_node_count";
+  }
+
+  // RemainingOzoneLimit returns the current remaining ozone limit.
+  rpc RemainingOzoneLimit(QueryRemainingOzoneLimitRequest) returns (QueryRemainingOzoneLimitResponse) {
+    option (google.api.http).get = "/stratos/register/v1/remaining_ozone_limit";
+  }
+}
+
+// QueryResourceNodeRequest is request type for the Query/ResourceNode RPC method
+message QueryResourceNodeRequest {
+  // network_addr defines the node network address to query for.
+  string network_addr = 1;
+}
+
+// QueryResourceNodeResponse is response type for the Query/ResourceNode RPC method
+message QueryResourceNodeResponse {
+  // node defines the the resourceNode info.
+  ResourceNode node = 1;
+}
+
+// QueryMetaNodeRequest is request type for the Query/MetaNode RPC method
+message QueryMetaNodeRequest {
+  // network_addr defines the node network address to query for.
+  string network_addr = 1;
+}
+
+// QueryMetaNodeResponse is response type for the Query/MetaNode RPC method
+message QueryMetaNodeResponse {
+  // node defines the the meta info.
+  MetaNode node = 1;
+}
+
+// QueryDepositByNodeRequest is request type for the Query/DepositByNode RPC method
+message QueryDepositByNodeRequest {
+  // network_addr defines the node network address to query for.
+  string network_addr = 1;
+  uint32  query_type = 2;
+}
+
+// QueryDepositByNodeResponse is response type for the Query/DepositByNode RPC method
+message QueryDepositByNodeResponse {
+  // deposit_info defines the the deposit info of the node.
+  DepositInfo deposit_info = 1;
+}
+
+// QueryDepositByOwnerRequest is request type for the Query/DepositByOwner RPC method
+message QueryDepositByOwnerRequest {
+  // owner_addr defines the owner address to query for.
+  string              owner_addr = 1;
+  // pagination defines an optional pagination for the request.
+  cosmos.base.query.v1beta1.PageRequest pagination = 2;
+}
+
+// QueryDepositByOwnerResponse is response type for the Query/DepositByOwner RPC method
+message QueryDepositByOwnerResponse {
+  // deposit_infos defines the the node deposit info of this owner.
+  repeated DepositInfo deposit_infos = 1;
+  // pagination defines an optional pagination for the request.
+  cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+// QueryDepositTotalRequest is request type for the Query/DepositTotal RPC method
+message QueryDepositTotalRequest {}
+
+// QueryDepositTotalResponse is response type for the Query/DepositTotal RPC method
+message QueryDepositTotalResponse {
+  cosmos.base.v1beta1.Coin resource_nodes_total_deposit = 1;
+  cosmos.base.v1beta1.Coin meta_nodes_total_deposit = 2;
+  cosmos.base.v1beta1.Coin total_bonded_deposit = 3;
+  cosmos.base.v1beta1.Coin total_unbonded_deposit = 4;
+  cosmos.base.v1beta1.Coin total_unbonding_deposit = 5;
+}
+
+// QueryParamsRequest is request type for the Query/Params RPC method.
+message QueryParamsRequest {}
+
+// QueryParamsResponse is response type for the Query/Params RPC method.
+message QueryParamsResponse {
+  // params holds all the parameters of this module.
+  Params params = 1;
+}
+
+// QueryBondedResourceNodeCountRequest is request type for the Query/BondedResourceNodeCount RPC method.
+message QueryBondedResourceNodeCountRequest {}
+
+// QueryBondedResourceNodeCountResponse is response type for the Query/BondedResourceNodeCount RPC method.
+message QueryBondedResourceNodeCountResponse {
+  // number holds the total number of resource nodes.
+  uint64 number = 1;
+}
+
+// QueryBondedMetaNodeCountRequest is request type for the Query/MetaNodeNumber RPC method.
+message QueryBondedMetaNodeCountRequest {}
+
+// QueryBondedMetaNodeCountResponse is response type for the Query/MetaNodeNumber RPC method.
+message QueryBondedMetaNodeCountResponse {
+  // number holds the total number of meta nodes.
+  uint64 number = 1;
+}
+
+// QueryRemainingOzoneLimitRequest is request type for the Query/RemainingOzoneLimit RPC method.
+message QueryRemainingOzoneLimitRequest {}
+
+// QueryRemainingOzoneLimitResponse is response type for the Query/RemainingOzoneLimit RPC method.
+message QueryRemainingOzoneLimitResponse {
+  string ozone_limit = 1 [
+    (gogoproto.nullable) = false,
+    (gogoproto.jsontag) = "ozone_limit",
+    (gogoproto.moretags) = "yaml:\"ozone_limit\"",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int"
+  ];
+}
+
+message DepositInfo {
+  string                              network_address = 1 [
+    (gogoproto.jsontag) = "network_address",
+    (gogoproto.moretags) = "yaml:\"network_address\""
+  ];
+  google.protobuf.Any                 pubkey = 2 [
+    (cosmos_proto.accepts_interface) = "cosmos.crypto.PubKey",
+    (gogoproto.jsontag) = "pubkey",
+    (gogoproto.moretags) = "yaml:\"pubkey\""
+  ];
+  bool                                suspend = 3 [
+    (gogoproto.jsontag) = "suspend",
+    (gogoproto.moretags) = "yaml:\"suspend\""
+  ];
+  cosmos.staking.v1beta1.BondStatus   status = 4 [
+    (gogoproto.jsontag) = "status",
+    (gogoproto.moretags) = "yaml:\"status\""];
+  string                              tokens = 5 [
+    (gogoproto.nullable) = false,
+    (gogoproto.jsontag) = "tokens",
+    (gogoproto.moretags) = "yaml:\"tokens\"",
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int"
+  ];
+  string                              owner_address = 6 [
+    (gogoproto.jsontag) = "owner_address",
+    (gogoproto.moretags) = "yaml:\"owner_address\""
+  ];
+  Description                         description = 7 [
+    (gogoproto.nullable) = false,
+    (gogoproto.jsontag) = "description",
+    (gogoproto.moretags) = "yaml:\"description\""
+  ];
+  google.protobuf.Timestamp           creation_time = 8 [
+    (gogoproto.nullable) = false,
+    (gogoproto.stdtime) = true,
+    (gogoproto.jsontag) = "creation_time",
+    (gogoproto.moretags) = "yaml:\"creation_time\""
+  ];
+  uint32                              node_type = 9 [
+    (gogoproto.jsontag) = "node_type",
+    (gogoproto.moretags) = "yaml:\"node_type\""
+  ];
+  cosmos.base.v1beta1.Coin            bonded_deposit = 10 [
+    (gogoproto.nullable) = false,
+    (gogoproto.jsontag) = "bonded_deposit",
+    (gogoproto.moretags) = "yaml:\"bonded_deposit\""
+  ];
+  cosmos.base.v1beta1.Coin            un_bonding_deposit = 11 [
+    (gogoproto.nullable) = false,
+    (gogoproto.jsontag) = "un_bonding_deposit",
+    (gogoproto.moretags) = "yaml:\"un_bonding_deposit\""
+  ];
+  cosmos.base.v1beta1.Coin            un_bonded_deposit = 12 [
+    (gogoproto.nullable) = false,
+    (gogoproto.jsontag) = "un_bonded_deposit",
+    (gogoproto.moretags) = "yaml:\"un_bonded_deposit\""
+  ];
+}

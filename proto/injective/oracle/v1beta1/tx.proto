@@ -1,0 +1,252 @@
+syntax = "proto3";
+package injective.oracle.v1beta1;
+
+import "gogoproto/gogo.proto";
+import "injective/oracle/v1beta1/oracle.proto";
+import "cosmos/msg/v1/msg.proto";
+import "cosmos_proto/cosmos.proto";
+import "amino/amino.proto";
+
+option go_package = "github.com/InjectiveLabs/injective-core/injective-chain/modules/oracle/types";
+
+// Msg defines the oracle Msg service.
+service Msg {
+  option (cosmos.msg.v1.service) = true;
+
+  // RelayProviderPrice defines a method for relaying a price for a
+  // provider-based oracle
+  rpc RelayProviderPrices(MsgRelayProviderPrices)
+      returns (MsgRelayProviderPricesResponse);
+
+  // RelayPriceFeedPrice defines a method for relaying a price for a price
+  // feeder-based oracle
+  rpc RelayPriceFeedPrice(MsgRelayPriceFeedPrice)
+      returns (MsgRelayPriceFeedPriceResponse);
+
+  // RelayCoinbaseMessages defines a method for relaying price messages from
+  // Coinbase API
+  rpc RelayCoinbaseMessages(MsgRelayCoinbaseMessages)
+      returns (MsgRelayCoinbaseMessagesResponse);
+
+  // RelayStorkMessage defines a method for relaying price message from
+  // Stork API
+  rpc RelayStorkMessage(MsgRelayStorkPrices)
+      returns (MsgRelayStorkPricesResponse);
+
+  // RelayPythPrices defines a method for relaying rates from the Pyth contract
+  rpc RelayPythPrices(MsgRelayPythPrices) returns (MsgRelayPythPricesResponse);
+
+  // RelayChainlinkPrices defines a method for relaying rates from Chainlink
+  // Data Streams
+  rpc RelayChainlinkPrices(MsgRelayChainlinkPrices)
+      returns (MsgRelayChainlinkPricesResponse);
+
+  // RelayPythProPrices defines a method for relaying price updates from the
+  // Pyth Pro (Lazer) service, verified via the PythLazer EVM contract.
+  rpc RelayPythProPrices(MsgRelayPythProPrices)
+      returns (MsgRelayPythProPricesResponse);
+
+  // RelaySedaFastPrices defines a method for relaying price updates from the
+  // SEDA Fast WebSocket stream. Each update carries the raw JSON envelope
+  // received from SEDA Fast; the chain verifies the secp256k1 signature and
+  // decodes the price on-chain.
+  rpc RelaySedaFastPrices(MsgRelaySedaFastPrices)
+      returns (MsgRelaySedaFastPricesResponse);
+
+  //  UpdateParams enables updating oracle module's params via governance
+  rpc UpdateParams(MsgUpdateParams) returns (MsgUpdateParamsResponse);
+}
+
+// MsgRelayProviderPrice defines a SDK message for setting a price through the
+// provider oracle.
+message MsgRelayProviderPrices {
+  option (amino.name) = "oracle/MsgRelayProviderPrices";
+  option (gogoproto.equal) = false;
+  option (gogoproto.goproto_getters) = false;
+  option (cosmos.msg.v1.signer) = "sender";
+
+  string sender = 1;
+  string provider = 2;
+  repeated string symbols = 3;
+  repeated string prices = 4 [
+    (gogoproto.customtype) = "cosmossdk.io/math.LegacyDec",
+    (gogoproto.nullable) = false
+  ];
+}
+
+message MsgRelayProviderPricesResponse {}
+
+// MsgRelayPriceFeedPrice defines a SDK message for setting a price through the
+// pricefeed oracle.
+message MsgRelayPriceFeedPrice {
+  option (amino.name) = "oracle/MsgRelayPriceFeedPrice";
+  option (gogoproto.equal) = false;
+  option (gogoproto.goproto_getters) = false;
+  option (cosmos.msg.v1.signer) = "sender";
+
+  string sender = 1;
+
+  repeated string base = 2;
+  repeated string quote = 3;
+
+  // price defines the price of the oracle base and quote
+  repeated string price = 4 [
+    (gogoproto.customtype) = "cosmossdk.io/math.LegacyDec",
+    (gogoproto.nullable) = false
+  ];
+}
+
+message MsgRelayPriceFeedPriceResponse {}
+
+// Deprecated: Band oracle support was removed. This message is kept for
+// backward compatibility to decode historical transactions.
+message MsgRelayBandRates {
+  option deprecated = true;
+
+  option (amino.name) = "oracle/MsgRelayBandRates";
+  option (cosmos.msg.v1.signer) = "relayer";
+
+  string relayer = 1;
+  repeated string symbols = 2;
+  repeated uint64 rates = 3;
+  repeated uint64 resolve_times = 4;
+  repeated uint64 requestIDs = 5;
+}
+
+// Deprecated: Band oracle support was removed. This message is kept for
+// backward compatibility to decode historical transactions.
+message MsgRelayBandRatesResponse { option deprecated = true; }
+
+// MsgRelayCoinbaseMessages defines a SDK message for relaying price messages
+// from Coinbase API.
+message MsgRelayCoinbaseMessages {
+  option (amino.name) = "oracle/MsgRelayCoinbaseMessages";
+  option (gogoproto.equal) = false;
+  option (gogoproto.goproto_getters) = false;
+  option (cosmos.msg.v1.signer) = "sender";
+
+  string sender = 1;
+
+  repeated bytes messages = 2;
+  repeated bytes signatures = 3;
+}
+
+message MsgRelayCoinbaseMessagesResponse {}
+
+// MsgRelayStorkPrices defines a SDK message for relaying price message
+// from Stork API.
+message MsgRelayStorkPrices {
+  option (gogoproto.equal) = false;
+  option (gogoproto.goproto_getters) = false;
+  option (cosmos.msg.v1.signer) = "sender";
+
+  string sender = 1;
+  repeated AssetPair asset_pairs = 2;
+}
+
+message MsgRelayStorkPricesResponse {}
+
+// Deprecated: BandIBC oracle support was removed. This message is kept for
+// backward compatibility to decode historical transactions.
+message MsgRequestBandIBCRates {
+  option deprecated = true;
+
+  option (amino.name) = "oracle/MsgRequestBandIBCRates";
+  option (gogoproto.equal) = false;
+  option (gogoproto.goproto_getters) = false;
+  option (cosmos.msg.v1.signer) = "sender";
+
+  string sender = 1;
+  uint64 request_id = 2;
+}
+
+// Deprecated: BandIBC oracle support was removed. This message is kept for
+// backward compatibility to decode historical transactions.
+message MsgRequestBandIBCRatesResponse { option deprecated = true; }
+
+// MsgRelayPythPrices defines a SDK message for updating Pyth prices
+message MsgRelayPythPrices {
+  option (amino.name) = "oracle/MsgRelayPythPrices";
+  option (gogoproto.equal) = false;
+  option (gogoproto.goproto_getters) = false;
+  option (cosmos.msg.v1.signer) = "sender";
+
+  string sender = 1;
+  repeated PriceAttestation price_attestations = 2;
+}
+
+// MsgRelayPythPricesResponse defines the Msg/RelayPythPrices response type.
+message MsgRelayPythPricesResponse {}
+
+// MsgRelayChainlinkPrices defines a SDK message for updating Chainlink Data
+// Streams prices
+message MsgRelayChainlinkPrices {
+  option (amino.name) = "oracle/MsgRelayChainlinkPrices";
+  option (gogoproto.equal) = false;
+  option (gogoproto.goproto_getters) = false;
+  option (cosmos.msg.v1.signer) = "sender";
+
+  string sender = 1;
+  repeated ChainlinkReport reports = 2;
+}
+
+// MsgRelayChainlinkPricesResponse defines the Msg/RelayChainlinkPrices response
+// type.
+message MsgRelayChainlinkPricesResponse {}
+
+// MsgRelayPythProPrices defines a SDK message for relaying Pyth Pro (Lazer)
+// price update blobs. Each update is an opaque bytes blob received from the
+// Pyth Lazer WebSocket and verified on-chain via the PythLazer EVM contract.
+message MsgRelayPythProPrices {
+  option (amino.name) = "oracle/MsgRelayPythProPrices";
+  option (gogoproto.equal) = false;
+  option (gogoproto.goproto_getters) = false;
+  option (cosmos.msg.v1.signer) = "sender";
+
+  // sender is the relayer address broadcasting the update. Any address may
+  // relay; security is enforced by the PythLazer EVM contract.
+  string sender = 1;
+  // updates contains one or more Pyth Lazer update blobs; each blob is passed
+  // to a single verifyUpdate EVM call.
+  repeated bytes updates = 2;
+}
+
+// MsgRelayPythProPricesResponse defines the Msg/RelayPythProPrices response
+// type.
+message MsgRelayPythProPricesResponse {}
+
+// MsgRelaySedaFastPrices defines a SDK message for relaying SEDA Fast price
+// update envelopes. Each update is the raw UTF-8 JSON of the top-level
+// "result" field of a feed.result / feed.execute WebSocket message (or a
+// POST /execute REST response). The chain parses the JSON, verifies the
+// secp256k1 signature, and decodes the price on-chain.
+// Individual entry size is capped at 8 KiB; at most 64 entries per Msg.
+message MsgRelaySedaFastPrices {
+  option (amino.name) = "oracle/MsgRelaySedaFastPrices";
+  option (gogoproto.equal) = false;
+  option (gogoproto.goproto_getters) = false;
+  option (cosmos.msg.v1.signer) = "sender";
+
+  string sender = 1;
+  // updates contains one or more SEDA Fast result JSON envelopes.
+  repeated bytes updates = 2;
+}
+
+// MsgRelaySedaFastPricesResponse defines the Msg/RelaySedaFastPrices response
+// type.
+message MsgRelaySedaFastPricesResponse {}
+
+message MsgUpdateParams {
+  option (amino.name) = "oracle/MsgUpdateParams";
+  option (cosmos.msg.v1.signer) = "authority";
+
+  // authority is the address of the governance account.
+  string authority = 1 [ (cosmos_proto.scalar) = "cosmos.AddressString" ];
+
+  // params defines the oracle parameters to update.
+  //
+  // NOTE: All parameters must be supplied.
+  Params params = 2 [ (gogoproto.nullable) = false ];
+}
+
+message MsgUpdateParamsResponse {}

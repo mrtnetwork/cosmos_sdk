@@ -1,0 +1,11 @@
+syntax = "proto3";
+package types;
+
+option go_package = "gitlab.com/thorchain/thornode/v3/x/thorchain/types";
+
+import "gogoproto/gogo.proto";
+
+message OraclePrice {
+  string symbol = 1;
+  string price = 2;
+}

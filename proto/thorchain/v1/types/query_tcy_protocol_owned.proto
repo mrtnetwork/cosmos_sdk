@@ -1,0 +1,14 @@
+syntax = "proto3";
+package types;
+
+option go_package = "gitlab.com/thorchain/thornode/v3/x/thorchain/types";
+
+import "gogoproto/gogo.proto";
+
+option (gogoproto.marshaler_all) = true;
+
+message QueryTCYProtocolOwnedRequest { string height = 1; }
+
+message QueryTCYProtocolOwnedResponse {
+  string amount = 1 [ (gogoproto.jsontag) = "amount" ];
+}

@@ -1,0 +1,24 @@
+syntax = "proto3";
+package bifrost.p2p.messages;
+
+option go_package = "gitlab.com/thorchain/thornode/v3/bifrost/p2p/messages";
+
+message JoinPartyRequest {
+  string ID = 1; // the unique hash id
+}
+
+message JoinPartyLeaderComm {
+  enum ResponseType {
+    Unknown = 0;
+    Success = 1;
+    Timeout = 2;
+    LeaderNotReady = 3;
+    UnknownPeer = 4;
+  }
+  string ID = 1;         // unique hash id
+  string MsgType = 2;    // unique hash id
+  ResponseType type = 3; // result
+  repeated string PeerIDs =
+      4; // if Success , this will be the list of peers to form the ceremony, if
+         // fail , this will be the peers that are available
+}

@@ -1,0 +1,21 @@
+syntax = "proto3";
+package thorchain.denom.v1;
+
+import "gogoproto/gogo.proto";
+
+option go_package = "gitlab.com/thorchain/thornode/v3/x/denom/types";
+
+// GenesisState defines the denom module's genesis state.
+message GenesisState {
+  repeated GenesisDenom admins = 1 [
+    (gogoproto.moretags) = "yaml:\"admins\"",
+    (gogoproto.nullable) = false
+  ];
+}
+
+message GenesisDenom {
+  option (gogoproto.equal) = true;
+
+  string denom = 1 [ (gogoproto.moretags) = "yaml:\"denom\"" ];
+  string admin = 2 [ (gogoproto.moretags) = "yaml:\"admin\"" ];
+}

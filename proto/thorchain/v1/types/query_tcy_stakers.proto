@@ -1,0 +1,25 @@
+syntax = "proto3";
+package types;
+
+option go_package = "gitlab.com/thorchain/thornode/v3/x/thorchain/types";
+
+import "gogoproto/gogo.proto";
+
+option (gogoproto.marshaler_all) = true;
+
+message QueryTCYStakerRequest {
+  string address = 1;
+  string height = 2;
+}
+
+// Can we replace this with TCYStaker proto? Check json fields...
+message QueryTCYStakerResponse {
+  string address = 1;
+  string amount = 2 [ (gogoproto.jsontag) = "amount" ];
+}
+
+message QueryTCYStakersRequest { string height = 1; }
+
+message QueryTCYStakersResponse {
+  repeated QueryTCYStakerResponse tcy_stakers = 1;
+}

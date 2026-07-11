@@ -1,0 +1,52 @@
+syntax = "proto3";
+package chain4energy.c4echain.cfedistributor;
+
+import "gogoproto/gogo.proto";
+import "google/api/annotations.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
+import "cosmos/base/v1beta1/coin.proto";
+import "chain4energy/c4echain/cfedistributor/params.proto";
+import "chain4energy/c4echain/cfedistributor/sub_distributor.proto";
+
+// this line is used by starport scaffolding # 1
+
+option go_package = "github.com/chain4energy/c4e-chain/x/cfedistributor/types";
+
+// Query defines the gRPC querier service.
+service Query {
+  // Parameters queries the parameters of the module.
+  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
+    option (google.api.http).get = "/c4e/distributor/v1beta1/params";
+  }
+  // Queries a list of States items.
+	rpc States(QueryStatesRequest) returns (QueryStatesResponse) {
+		option (google.api.http).get = "/c4e/distributor/v1beta1/states";
+	}
+
+// this line is used by starport scaffolding # 2
+}
+
+// QueryParamsRequest is request type for the Query/Params RPC method.
+message QueryParamsRequest {}
+
+// QueryParamsResponse is response type for the Query/Params RPC method.
+message QueryParamsResponse {
+  // params holds all the parameters of this module.
+  Params params = 1 [
+    (gogoproto.nullable) = false
+  ];
+}
+
+message QueryStatesRequest {
+}
+
+message QueryStatesResponse {
+  repeated State states =  1 [
+    (gogoproto.nullable) = false
+  ];
+  repeated cosmos.base.v1beta1.Coin coins_on_distributor_account = 2 [
+    (gogoproto.nullable) = false
+  ];
+}
+
+// this line is used by starport scaffolding # 3

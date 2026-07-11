@@ -1,0 +1,74 @@
+syntax = "proto3";
+package types;
+
+option go_package = "gitlab.com/thorchain/thornode/v3/x/thorchain/types";
+
+import "common/common.proto";
+import "gogoproto/gogo.proto";
+import "types/type_reference_memo.proto";
+
+option (gogoproto.marshaler_all) = true;
+
+message QueryReferenceMemoRequest {
+  string height = 1;
+  string asset = 2;
+  string reference = 3;
+}
+
+message QueryReferenceMemoResponse {
+  common.Asset asset = 1 [
+    (gogoproto.nullable) = false,
+    (gogoproto.customtype) = "gitlab.com/thorchain/thornode/v3/common.Asset"
+  ];
+  string memo = 2;
+  string reference = 3;
+  int64 height = 4 [ (gogoproto.jsontag) = "height" ];
+  string registration_hash = 5
+      [ (gogoproto.casttype) = "gitlab.com/thorchain/thornode/v3/common.TxID" ];
+  bytes registered_by = 6
+      [ (gogoproto.casttype) =
+            "github.com/cosmos/cosmos-sdk/types.AccAddress" ];
+  repeated string used_by_txs = 7
+      [ (gogoproto.casttype) = "gitlab.com/thorchain/thornode/v3/common.TxID" ];
+}
+
+message QueryReferenceMemoByHashRequest {
+  string height = 1;
+  string hash = 2;
+}
+
+message QueryReferenceMemoByHashResponse {
+  common.Asset asset = 1 [
+    (gogoproto.nullable) = false,
+    (gogoproto.customtype) = "gitlab.com/thorchain/thornode/v3/common.Asset"
+  ];
+  string memo = 2;
+  string reference = 3;
+  int64 height = 4 [ (gogoproto.jsontag) = "height" ];
+  string registration_hash = 5
+      [ (gogoproto.casttype) = "gitlab.com/thorchain/thornode/v3/common.TxID" ];
+  bytes registered_by = 6
+      [ (gogoproto.casttype) =
+            "github.com/cosmos/cosmos-sdk/types.AccAddress" ];
+  repeated string used_by_txs = 7
+      [ (gogoproto.casttype) = "gitlab.com/thorchain/thornode/v3/common.TxID" ];
+}
+
+message QueryReferenceMemoPreflightRequest {
+  string height = 1;
+  string asset = 2;
+  string amount = 3; // The transaction amount in base units
+}
+
+message QueryReferenceMemoPreflightResponse {
+  string reference =
+      1; // The reference ID that would be generated from the amount
+  bool available = 2; // Whether this reference is currently available
+  int64 expires_at =
+      3; // Block height when current registration expires (0 if available)
+  int64 usage_count = 4; // Number of times the reference has been used
+  int64 max_use = 5;     // Maximum allowed uses (0 = unlimited)
+  bool can_register =
+      6; // Whether a new registration would succeed for this reference
+  string memo = 7; // Current memo associated with this reference (if any)
+}

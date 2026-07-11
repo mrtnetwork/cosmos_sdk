@@ -1,0 +1,131 @@
+syntax = "proto3";
+package chain4energy.c4echain.cfevesting;
+
+import "gogoproto/gogo.proto";
+import "google/api/annotations.proto";
+import "cosmos/base/v1beta1/coin.proto";
+import "google/protobuf/timestamp.proto";
+import "chain4energy/c4echain/cfevesting/genesis.proto";
+import "chain4energy/c4echain/cfevesting/params.proto";
+import "chain4energy/c4echain/cfevesting/account_vesting_pool.proto";
+
+// this line is used by starport scaffolding # 1
+
+option go_package = "github.com/chain4energy/c4e-chain/x/cfevesting/types";
+
+// Query defines the gRPC querier service.
+service Query {
+  // Parameters queries the parameters of the module.
+  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
+    option (google.api.http).get = "/c4e/vesting/v1beta1/params";
+  }
+  // Queries a list of VestingType items.
+	rpc VestingType(QueryVestingTypeRequest) returns (QueryVestingTypeResponse) {
+		option (google.api.http).get = "/c4e/vesting/v1beta1/vesting_type";
+	}
+
+// Queries a list of Vesting items.
+	rpc VestingPools(QueryVestingPoolsRequest) returns (QueryVestingPoolsResponse) {
+		option (google.api.http).get = "/c4e/vesting/v1beta1/vesting_pools/{owner}";
+	}
+
+// Queries a summary of the entire vesting.
+	rpc VestingsSummary(QueryVestingsSummaryRequest) returns (QueryVestingsSummaryResponse) {
+		option (google.api.http).get = "/c4e/vesting/v1beta1/summary";
+	}
+
+// this line is used by starport scaffolding # 2
+
+  // Queries a list of GenesisVestingsSummary items.
+  rpc GenesisVestingsSummary(QueryGenesisVestingsSummaryRequest) returns (QueryGenesisVestingsSummaryResponse) {
+    option (google.api.http).get = "/c4e/vesting/v1beta1/genesis_summary";
+  }
+}
+
+// QueryParamsRequest is request type for the Query/Params RPC method.
+message QueryParamsRequest {}
+
+// QueryParamsResponse is response type for the Query/Params RPC method.
+message QueryParamsResponse {
+  // params holds all the parameters of this module.
+  Params params = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryVestingTypeRequest {}
+
+message QueryVestingTypeResponse {
+  repeated GenesisVestingType vesting_types = 2 [
+    (gogoproto.nullable) = false, (gogoproto.moretags) = "yaml:\"vesting_types\""
+  ];
+}
+
+message QueryVestingPoolsRequest {
+  string owner = 1;
+}
+
+message QueryVestingPoolsResponse {
+  repeated VestingPoolInfo vesting_pools = 2; 
+}
+
+message VestingPoolInfo {
+  string name = 1;
+  string vesting_type = 2;
+  google.protobuf.Timestamp lock_start = 3 [
+    (gogoproto.nullable) = false,
+    (gogoproto.stdtime) = true
+  ];
+  google.protobuf.Timestamp lock_end = 4 [
+    (gogoproto.nullable) = false,
+    (gogoproto.stdtime) = true
+  ];
+  string withdrawable = 5;
+  cosmos.base.v1beta1.Coin initially_locked = 6;
+  string currently_locked = 7;
+  string sent_amount = 8;
+  repeated VestingPoolReservation reservations = 9;
+}
+
+message QueryVestingsSummaryRequest {}
+
+message QueryVestingsSummaryResponse {
+  string vesting_all_amount = 1 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+  string vesting_in_pools_amount = 2 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+  string vesting_in_accounts_amount = 3 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+  string delegated_vesting_amount = 4 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+}
+
+
+// this line is used by starport scaffolding # 3
+message QueryGenesisVestingsSummaryRequest {}
+
+message QueryGenesisVestingsSummaryResponse {
+  string vesting_all_amount = 1 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+  string vesting_in_pools_amount = 2 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+  string vesting_in_accounts_amount = 3 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+  string delegated_vesting_amount = 4 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int",
+    (gogoproto.nullable) = false
+  ];
+}
+

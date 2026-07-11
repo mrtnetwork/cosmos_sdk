@@ -1,10 +1,10 @@
-/// Experience effortless interaction with a Cosmos SDK-based network in Dart,
-/// facilitating the seamless creation, signing, and transmission of transactions. (Beta version)
 library;
 
-export 'src/address/address.dart';
-export 'src/crypto/crypto.dart';
-export 'src/models/models.dart';
-export 'src/protobuf/protobuf.dart';
-export 'src/provider/provider.dart';
-export 'src/exception/exception.dart';
+export 'sdk/account/account.dart';
+export 'sdk/address/address.dart';
+export 'sdk/amino/amino.dart';
+export 'sdk/crypto/crypto.dart';
+export 'sdk/exception/exception.dart';
+export 'sdk/serialization/serialization.dart';
+export 'sdk/provider/provider.dart';
+export 'sdk/types/bech32_config.dart';

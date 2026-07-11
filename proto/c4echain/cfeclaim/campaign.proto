@@ -1,0 +1,65 @@
+syntax = "proto3";
+package chain4energy.c4echain.cfeclaim;
+
+import "gogoproto/gogo.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/duration.proto";
+import "cosmos/base/v1beta1/coin.proto";
+
+option go_package = "github.com/chain4energy/c4e-chain/x/cfeclaim/types";
+
+message Campaign {
+  uint64 id = 1;
+  string owner = 2;
+  string name = 3;
+  string description = 4;
+  CampaignType campaignType = 5;
+  bool removable_claim_records = 6;
+  string feegrant_amount = 7 [
+    (gogoproto.nullable) = false,
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int"
+  ];
+  string initial_claim_free_amount = 8 [
+    (gogoproto.nullable) = false,
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int"
+  ];
+  string free = 9 [
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+  bool enabled = 10;
+  google.protobuf.Timestamp start_time = 11 [
+    (gogoproto.nullable) = false,
+    (gogoproto.stdtime) = true
+  ];
+  google.protobuf.Timestamp end_time = 12 [
+    (gogoproto.nullable) = false,
+    (gogoproto.stdtime) = true
+  ];
+  // period of locked coins from claim
+  google.protobuf.Duration lockup_period = 13 [
+    (gogoproto.nullable) = false,
+    (gogoproto.stdduration) = true
+  ];
+  // period of vesting coins after lockup period
+  google.protobuf.Duration vesting_period = 14 [
+    (gogoproto.nullable) = false,
+    (gogoproto.stdduration) = true
+  ];
+  string vestingPoolName = 15;
+  repeated cosmos.base.v1beta1.Coin campaign_total_amount = 16 [
+    (gogoproto.nullable) = false,
+    (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"
+  ];
+  repeated cosmos.base.v1beta1.Coin campaign_current_amount = 17 [
+    (gogoproto.nullable) = false,
+    (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"
+  ];
+}
+
+enum CampaignType {
+  CAMPAIGN_TYPE_UNSPECIFIED = 0;
+  DEFAULT = 1;  // campaign must be enabled to add new claim records
+  VESTING_POOL = 2; // campaign don't have to be enabled (started) to add new claim records and it is
+                    // possible to set new start time and end time at MsgEnableCampaign
+}

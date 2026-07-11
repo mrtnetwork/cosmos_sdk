@@ -1,0 +1,52 @@
+syntax = "proto3";
+package types;
+
+import "common/common.proto";
+
+option go_package = "gitlab.com/thorchain/thornode/v3/x/thorchain/ebifrost";
+
+// Create service with RPC method to send tx in quorum to thorchain
+service LocalhostBifrost {
+  rpc SendQuorumTx(common.QuorumTx) returns (SendQuorumTxResult);
+
+  rpc SendQuorumNetworkFee(common.QuorumNetworkFee)
+      returns (SendQuorumNetworkFeeResult);
+
+  rpc SendQuorumSolvency(common.QuorumSolvency)
+      returns (SendQuorumSolvencyResult);
+
+  rpc SendQuorumErrataTx(common.QuorumErrataTx)
+      returns (SendQuorumErrataTxResult);
+
+  rpc SendQuorumPriceFeedBatch(common.QuorumPriceFeedBatch)
+      returns (SendQuorumPriceFeedBatchResult);
+
+  // Server streaming for notifications
+  rpc SubscribeToEvents(SubscribeRequest) returns (stream EventNotification);
+}
+
+// SendQuorumTxResult is the empty return type
+message SendQuorumTxResult {}
+
+message SubscribeRequest {
+  // Optional fields to filter what events to subscribe to
+  repeated string event_types = 1;
+}
+
+message EventNotification {
+  string event_type = 1;
+  bytes payload = 2;
+  int64 timestamp = 3;
+}
+
+// SendQuorumNetworkFeeResult is the empty return type
+message SendQuorumNetworkFeeResult {}
+
+// SendQuorumSolvencyResult is the empty return type
+message SendQuorumSolvencyResult {}
+
+// SendQuorumErrataTxResult is the empty return type
+message SendQuorumErrataTxResult {}
+
+// SendQuorumPriceFeedBatchResult is the empty return type
+message SendQuorumPriceFeedBatchResult {}

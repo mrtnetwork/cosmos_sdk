@@ -1,0 +1,104 @@
+syntax = "proto3";
+package stratos.sds.v1;
+
+import "gogoproto/gogo.proto";
+import "cosmos_proto/cosmos.proto";
+import "google/api/annotations.proto";
+import "cosmos/base/v1beta1/coin.proto";
+import "stratos/sds/v1/sds.proto";
+
+option go_package = "github.com/stratosnet/stratos-chain/x/sds/types";
+
+// Query defines the gRPC querier service.
+service Query {
+  // Query uploaded file info by hash
+  rpc Fileupload(QueryFileUploadRequest) returns (QueryFileUploadResponse) {
+    option (google.api.http).get = "/stratos/sds/v1/file_upload/{file_hash}";
+  }
+
+  rpc SimPrepay(QuerySimPrepayRequest) returns (QuerySimPrepayResponse){
+    option (google.api.http).get = "/stratos/sds/v1/sim_prepay/{amount}";
+  }
+
+  rpc NozPrice(QueryNozPriceRequest) returns (QueryNozPriceResponse) {
+    option (google.api.http).get = "/stratos/sds/v1/noz_price";
+  }
+
+  rpc NozSupply(QueryNozSupplyRequest) returns (QueryNozSupplyResponse) {
+    option (google.api.http).get = "/stratos/sds/v1/noz_supply";
+  }
+
+  // Params queries SDS module Params info.
+  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
+    option (google.api.http).get = "/stratos/sds/v1/params";
+  }
+
+}
+// QueryFileuploadRequest is request type for the Query/Fileupload RPC method
+message QueryFileUploadRequest {
+  // network_addr defines the node network address to query for.
+  string file_hash = 1;
+}
+
+// QueryFileuploadResponse is response type for the Query/Fileupload RPC method
+message QueryFileUploadResponse {
+  FileInfo file_info = 1;
+}
+
+message QuerySimPrepayRequest {
+  string amount = 1;
+}
+
+message QuerySimPrepayResponse {
+  string noz = 1 [
+    (gogoproto.nullable) = false,
+    (gogoproto.jsontag) = "noz",
+    (gogoproto.moretags) = "yaml:\"noz\"",
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int"
+  ];
+}
+
+message QueryNozPriceRequest {}
+
+message QueryNozPriceResponse {
+  string price = 1 [
+    (gogoproto.jsontag) = "price",
+    (gogoproto.moretags) = "yaml:\"price\"",
+    (cosmos_proto.scalar) = "cosmos.Dec",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+}
+
+message QueryNozSupplyRequest {}
+
+message QueryNozSupplyResponse {
+  string remaining = 1 [
+    (gogoproto.nullable) = false,
+    (gogoproto.jsontag) = "remaining",
+    (gogoproto.moretags) = "yaml:\"remaining\"",
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int"
+  ];
+  string total = 2 [
+    (gogoproto.nullable) = false,
+    (gogoproto.jsontag) = "total",
+    (gogoproto.moretags) = "yaml:\"total\"",
+    (cosmos_proto.scalar) = "cosmos.Int",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int"
+  ];
+}
+
+// QueryParamsRequest is request type for the Query/Params RPC method.
+message QueryParamsRequest {}
+
+// QueryParamsResponse is response type for the Query/Params RPC method.
+message QueryParamsResponse {
+  // params holds all the parameters of this module.
+  Params params = 1;
+}
+
+
+
+

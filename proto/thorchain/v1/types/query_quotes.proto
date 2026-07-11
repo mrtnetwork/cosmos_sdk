@@ -1,0 +1,162 @@
+syntax = "proto3";
+package types;
+
+option go_package = "gitlab.com/thorchain/thornode/v3/x/thorchain/types";
+
+import "gogoproto/gogo.proto";
+
+option (gogoproto.marshaler_all) = true;
+
+message QueryQuoteSwapRequest {
+  string from_asset = 1;
+  string to_asset = 2;
+  string amount = 3;
+  string streaming_interval = 4;
+  string streaming_quantity = 5;
+  string destination = 6;
+  string tolerance_bps = 7;
+  string refund_address = 8;
+  string affiliate = 9;
+  string affiliate_bps = 10;
+  string height = 11;
+  string liquidity_tolerance_bps = 12;
+  bool extended = 13;
+}
+
+message QueryQuoteSwapResponse {
+  // the inbound address for the transaction on the source chain
+  string inbound_address = 1;
+  // the approximate number of source chain blocks required before processing
+  int64 inbound_confirmation_blocks = 2;
+  // the approximate seconds for block confirmations required before processing
+  int64 inbound_confirmation_seconds = 3;
+  // the number of thorchain blocks the outbound will be delayed
+  int64 outbound_delay_blocks = 4
+      [ (gogoproto.jsontag) = "outbound_delay_blocks" ];
+  // the approximate seconds for the outbound delay before it will be sent
+  int64 outbound_delay_seconds = 5
+      [ (gogoproto.jsontag) = "outbound_delay_seconds" ];
+  QuoteFees fees = 6 [ (gogoproto.jsontag) = "fees" ];
+  // the EVM chain router contract address
+  string router = 7;
+  // expiration timestamp in unix seconds
+  int64 expiry = 8 [ (gogoproto.jsontag) = "expiry" ];
+  // static warning message
+  string warning = 9 [ (gogoproto.jsontag) = "warning" ];
+  // chain specific quote notes
+  string notes = 10 [ (gogoproto.jsontag) = "notes" ];
+  // Defines the minimum transaction size for the chain in base units (sats,
+  // wei, uatom). Transactions with asset amounts lower than the dust_threshold
+  // are ignored.
+  string dust_threshold = 11;
+  // The recommended minimum inbound amount for this transaction type & inbound
+  // asset. Sending less than this amount could result in failed refunds.
+  string recommended_min_amount_in = 12;
+  // the recommended gas rate to use for the inbound to ensure timely
+  // confirmation
+  string recommended_gas_rate = 13;
+  // the units of the recommended gas rate
+  string gas_rate_units = 14;
+  // generated memo for the swap
+  string memo = 15;
+  // the amount of the target asset the user can expect to receive after fees
+  string expected_amount_out = 16
+      [ (gogoproto.jsontag) = "expected_amount_out" ];
+  // the amount of the target asset the user can expect to receive after fees
+  int64 max_streaming_quantity = 17
+      [ (gogoproto.jsontag) = "max_streaming_quantity" ];
+  // the number of blocks the streaming swap will execute over
+  int64 streaming_swap_blocks = 18
+      [ (gogoproto.jsontag) = "streaming_swap_blocks" ];
+  // approx the number of seconds the streaming swap will execute over
+  int64 streaming_swap_seconds = 19;
+  // total number of seconds a swap is expected to take (inbound conf +
+  // streaming swap + outbound delay)
+  int64 total_swap_seconds = 20;
+  // List of outputs needed (additional to deposit and change return). Meant for
+  // wallets to easily construct transactions with more than 80bytes
+  repeated Vout vout = 21;
+}
+
+message QuoteFees {
+  // the target asset used for all fees
+  string asset = 1 [ (gogoproto.jsontag) = "asset" ];
+  // affiliate fee in the target asset
+  string affiliate = 2;
+  // outbound fee in the target asset
+  string outbound = 3;
+  // liquidity fees paid to pools in the target asset
+  string liquidity = 4 [ (gogoproto.jsontag) = "liquidity" ];
+  // total fees in the target asset
+  string total = 5 [ (gogoproto.jsontag) = "total" ];
+  // the swap slippage in basis points
+  int64 slippage_bps = 6 [ (gogoproto.jsontag) = "slippage_bps" ];
+  // total basis points in fees relative to amount out
+  int64 total_bps = 7 [ (gogoproto.jsontag) = "total_bps" ];
+}
+
+message Vout {
+  // type of content, either "op_return" or "address"
+  string type = 1 [ (gogoproto.jsontag) = "type" ];
+  // l1 address or hex encoded memo
+  string data = 2 [ (gogoproto.jsontag) = "data" ];
+  // sats to send, depends on dust limit per chain, 0 for op_return
+  int64 amount = 3 [ (gogoproto.jsontag) = "amount" ];
+}
+
+// Request for limit order quote
+message QueryQuoteLimitRequest {
+  // source asset
+  string from_asset = 1 [ (gogoproto.jsontag) = "from_asset" ];
+  // destination asset
+  string to_asset = 2 [ (gogoproto.jsontag) = "to_asset" ];
+  // amount to swap (in source asset base units)
+  string amount = 3 [ (gogoproto.jsontag) = "amount" ];
+  // destination address
+  string destination = 4 [ (gogoproto.jsontag) = "destination" ];
+  // target output amount (in target asset base units) - REQUIRED for limit
+  // orders
+  string target_out = 5 [ (gogoproto.jsontag) = "target_out" ];
+  // custom TTL in blocks for limit orders
+  string custom_ttl = 6 [ (gogoproto.jsontag) = "custom_ttl" ];
+  // number of sub-swaps
+  string streaming_quantity = 7 [ (gogoproto.jsontag) = "streaming_quantity" ];
+  // affiliate address
+  string affiliate = 8 [ (gogoproto.jsontag) = "affiliate" ];
+  // affiliate basis points (0-10000)
+  string affiliate_bps = 9 [ (gogoproto.jsontag) = "affiliate_bps" ];
+  // refund address
+  string refund_address = 10 [ (gogoproto.jsontag) = "refund_address" ];
+}
+
+// Response for limit order quote
+message QueryQuoteLimitResponse {
+  // expected amount out (same as target_out for limit orders)
+  string expected_amount_out = 1
+      [ (gogoproto.jsontag) = "expected_amount_out" ];
+  // fees breakdown
+  QuoteFees fees = 2 [ (gogoproto.jsontag) = "fees" ];
+  // inbound address to send funds to
+  string inbound_address = 3 [ (gogoproto.jsontag) = "inbound_address" ];
+  // memo to include in transaction
+  string memo = 4 [ (gogoproto.jsontag) = "memo" ];
+  // order expiry block height
+  int64 order_expiry_block = 5 [ (gogoproto.jsontag) = "order_expiry_block" ];
+  // order expiry timestamp (unix)
+  int64 order_expiry_timestamp = 6
+      [ (gogoproto.jsontag) = "order_expiry_timestamp" ];
+  // recommended minimum amount in
+  string recommended_min_amount_in = 7
+      [ (gogoproto.jsontag) = "recommended_min_amount_in" ];
+  // router address for EVM chains
+  string router = 8 [ (gogoproto.jsontag) = "router" ];
+  // dust threshold for source chain
+  string dust_threshold = 9 [ (gogoproto.jsontag) = "dust_threshold" ];
+  // notes about the swap
+  string notes = 10 [ (gogoproto.jsontag) = "notes" ];
+  // the recommended gas rate to use for the inbound to ensure timely
+  // confirmation
+  string recommended_gas_rate = 11;
+  // the units of the recommended gas rate
+  string gas_rate_units = 12;
+}

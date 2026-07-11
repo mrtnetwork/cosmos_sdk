@@ -1,0 +1,33 @@
+syntax = "proto3";
+package thorchain.scheduler.v1;
+
+import "gogoproto/gogo.proto";
+import "cosmos/msg/v1/msg.proto";
+import "amino/amino.proto";
+
+option go_package = "gitlab.com/thorchain/thornode/v3/x/scheduler/types";
+
+// Msg defines the Msg service.
+service Msg {
+  option (cosmos.msg.v1.service) = true;
+
+  rpc ScheduleExecuteContract(MsgScheduleExecuteContract)
+      returns (MsgScheduleExecuteContractResponse);
+}
+
+// MsgScheduleExecuteContract is the sdk.Msg type for allowing a scheduled
+// execution of a contract
+message MsgScheduleExecuteContract {
+  option (cosmos.msg.v1.signer) = "sender";
+
+  string sender = 1 [ (gogoproto.moretags) = "yaml:\"sender\"" ];
+  uint64 after = 2 [ (gogoproto.moretags) = "yaml:\"after\"" ];
+  bytes msg = 3 [
+    (gogoproto.moretags) = "yaml:\"msg\"",
+    (amino.encoding) = "inline_json"
+  ];
+}
+
+// MsgScheduleExecuteContractResponse is the return value of
+// MsgScheduleExecuteContract
+message MsgScheduleExecuteContractResponse {}

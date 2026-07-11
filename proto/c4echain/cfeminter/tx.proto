@@ -1,0 +1,55 @@
+syntax = "proto3";
+package chain4energy.c4echain.cfeminter;
+
+import "cosmos/msg/v1/msg.proto";
+import "cosmos_proto/cosmos.proto";
+import "chain4energy/c4echain/cfeminter/params.proto";
+import "chain4energy/c4echain/cfeminter/minter.proto";
+import "google/protobuf/timestamp.proto";
+import "gogoproto/gogo.proto";
+import "cosmos/base/v1beta1/coin.proto";
+
+// this line is used by starport scaffolding # proto/tx/import
+
+option go_package = "github.com/chain4energy/c4e-chain/x/cfeminter/types";
+
+// Msg defines the Msg service.
+service Msg {
+  // this line is used by starport scaffolding # proto/tx/rpc
+  rpc Burn(MsgBurn) returns (MsgBurnResponse);
+  rpc UpdateMintersParams(MsgUpdateMintersParams) returns (MsgUpdateMintersParamsResponse);
+  rpc UpdateParams(MsgUpdateParams) returns (MsgUpdateParamsResponse);
+}
+
+message MsgBurn {
+  string address = 1;
+  repeated cosmos.base.v1beta1.Coin amount = 2 [
+    (gogoproto.nullable) = false,
+    (gogoproto.castrepeated) = "github.com/cosmos/cosmos-sdk/types.Coins"
+  ];
+}
+
+message MsgBurnResponse {}
+
+message MsgUpdateParams {
+  string authority = 1;
+  string mint_denom = 2;
+  google.protobuf.Timestamp start_time = 3 [
+    (gogoproto.nullable) = false,
+    (gogoproto.stdtime) = true
+  ];
+  repeated Minter minters = 4;
+}
+
+message MsgUpdateParamsResponse {}
+
+message MsgUpdateMintersParams {
+  string authority = 1;
+  google.protobuf.Timestamp start_time = 2 [
+    (gogoproto.nullable) = false,
+    (gogoproto.stdtime) = true
+  ];
+  repeated Minter minters = 3;
+}
+
+message MsgUpdateMintersParamsResponse{}

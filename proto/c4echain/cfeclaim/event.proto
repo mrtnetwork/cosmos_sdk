@@ -1,0 +1,116 @@
+syntax = "proto3";
+package chain4energy.c4echain.cfeclaim;
+
+import "chain4energy/c4echain/cfeclaim/campaign.proto";
+import "gogoproto/gogo.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "chain4energy/c4echain/cfeclaim/mission.proto";
+
+option go_package = "github.com/chain4energy/c4e-chain/x/cfeclaim/types";
+
+message EventNewCampaign {
+    uint64 id = 1;
+    string owner = 2;
+    string name = 3;
+    string description = 4;
+    CampaignType campaign_type = 5;
+    bool removable_claim_records = 6;
+    string feegrant_amount = 7 [
+        (gogoproto.nullable) = false,
+        (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int"
+    ];
+    string initial_claim_free_amount = 8 [
+        (gogoproto.nullable) = false,
+        (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Int"
+    ];
+    string free = 9 [
+        (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+        (gogoproto.nullable) = false
+    ];
+    bool enabled = 10;
+    google.protobuf.Timestamp start_time = 11 [
+        (gogoproto.nullable) = false,
+        (gogoproto.stdtime) = true
+    ];
+    google.protobuf.Timestamp end_time = 12 [
+        (gogoproto.nullable) = false,
+        (gogoproto.stdtime) = true
+    ];
+    google.protobuf.Duration lockup_period = 13 [
+        (gogoproto.nullable) = false,
+        (gogoproto.stdduration) = true
+    ];
+    google.protobuf.Duration vesting_period = 14 [
+        (gogoproto.nullable) = false,
+        (gogoproto.stdduration) = true
+    ];
+    string vesting_poolName = 15;
+}
+
+message EventCloseCampaign {
+    string owner = 1;
+    uint64 campaign_id = 2;
+    string campaign_close_action = 3;
+}
+
+message EventRemoveCampaign {
+    string owner = 1;
+    uint64 campaign_id = 2;
+}
+
+message EventEnableCampaign {
+    string owner = 1;
+    uint64 campaign_id = 2;
+}
+
+message EventAddMission {
+    uint64 id = 1;
+    string owner = 2;
+    uint64 campaign_id = 3;
+    string name = 4;
+    string description = 5;
+    MissionType mission_type = 6;
+    string weight = 7 [
+        (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+        (gogoproto.nullable) = false
+    ];
+    google.protobuf.Timestamp claim_start_date = 8 [
+        (gogoproto.nullable) = true,
+        (gogoproto.stdtime) = true
+    ];
+}
+
+message EventClaim {
+    string claimer = 1;
+    uint64 campaign_id = 2;
+    uint64 mission_id = 3;
+    string amount = 4;
+}
+
+message EventInitialClaim {
+    string claimer = 1;
+    uint64 campaign_id = 2;
+    string address_to_claim = 3;
+    string amount = 4;
+}
+
+message EventAddClaimRecords {
+    string owner = 1;
+    uint64 campaign_id = 2;
+    string claim_records_total_amount = 3;
+    int64 claim_records_number = 4;
+}
+
+message EventDeleteClaimRecord {
+    string owner = 1;
+    uint64 campaign_id = 2;
+    string userAddress = 3;
+    string claim_record_amount = 4;
+}
+
+message EventCompleteMission {
+    uint64 campaign_id = 1;
+    uint64 mission_id = 2;
+    string user_address = 3;
+}

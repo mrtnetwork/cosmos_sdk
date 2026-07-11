@@ -1,0 +1,43 @@
+syntax = "proto3";
+package types;
+
+option go_package = "gitlab.com/thorchain/thornode/v3/x/thorchain/types";
+option (gogoproto.goproto_getters_all) = false;
+
+import "types/type_blame.proto";
+import "types/type_keygen.proto";
+import "gogoproto/gogo.proto";
+import "amino/amino.proto";
+
+message MsgTssPool {
+  option (amino.name) = "thorchain/TssPool";
+
+  string id = 1 [ (gogoproto.customname) = "ID" ];
+  string pool_pub_key = 2
+      [ (gogoproto.casttype) =
+            "gitlab.com/thorchain/thornode/v3/common.PubKey" ];
+  KeygenType keygen_type = 3
+      [ (gogoproto.casttype) = "KeygenType", (amino.encoding) = "keygen_type" ];
+  repeated string pub_keys = 4;
+  int64 height = 5;
+  repeated Blame blame = 6 [ (gogoproto.nullable) = false ];
+  repeated string chains = 7;
+  bytes signer = 8 [
+    (gogoproto.casttype) = "github.com/cosmos/cosmos-sdk/types.AccAddress",
+    (amino.encoding) = "bech32"
+  ];
+  int64 keygen_time = 9;
+  bytes keyshares_backup = 10;
+  bytes secp256k1_signature = 11;
+  string pool_pub_key_eddsa = 12 [
+    (gogoproto.casttype) = "gitlab.com/thorchain/thornode/v3/common.PubKey",
+    (gogoproto.nullable) = true
+  ];
+  bytes keyshares_backup_eddsa = 13 [ (gogoproto.nullable) = true ];
+  bytes keyshares_backup_frost = 14 [ (gogoproto.nullable) = true ];
+  string pool_pub_key_frost = 15 [
+    (gogoproto.casttype) = "gitlab.com/thorchain/thornode/v3/common.PubKey",
+    (gogoproto.nullable) = true
+  ];
+  int64 observed_monero_height = 16;
+}

@@ -1,0 +1,26 @@
+syntax = "proto3";
+package types;
+
+option go_package = "gitlab.com/thorchain/thornode/v3/x/thorchain/types";
+
+import "gogoproto/gogo.proto";
+
+option (gogoproto.marshaler_all) = true;
+
+message QueryTCYClaimerRequest {
+  string address = 1;
+  string height = 2;
+}
+
+// Can we replace this with TCYClaimer proto? Check json fields...
+message QueryTCYClaimerResponse { repeated QueryTCYClaimer tcy_claimer = 1; }
+
+message QueryTCYClaimer {
+  string asset = 1 [ (gogoproto.jsontag) = "asset" ];
+  string l1_address = 2;
+  string amount = 3 [ (gogoproto.jsontag) = "amount" ];
+}
+
+message QueryTCYClaimersRequest { string height = 1; }
+
+message QueryTCYClaimersResponse { repeated QueryTCYClaimer tcy_claimers = 1; }

@@ -1,0 +1,18 @@
+syntax = "proto3";
+package types;
+
+option go_package = "gitlab.com/thorchain/thornode/v3/x/thorchain/types";
+
+import "gogoproto/gogo.proto";
+
+option (gogoproto.marshaler_all) = true;
+
+message LockedSupply { int64 reserve = 1 [ (gogoproto.jsontag) = "reserve" ]; }
+
+message QuerySupplyRequest { string height = 1; }
+
+message QuerySupplyResponse {
+  int64 circulating = 1 [ (gogoproto.jsontag) = "circulating" ];
+  LockedSupply locked = 2 [ (gogoproto.jsontag) = "locked,omitempty" ];
+  int64 total = 3 [ (gogoproto.jsontag) = "total" ];
+}

@@ -1,0 +1,35 @@
+syntax = "proto3";
+package types;
+
+option go_package = "gitlab.com/thorchain/thornode/v3/x/thorchain/types";
+
+option (gogoproto.goproto_stringer_all) = false;
+option (gogoproto.stringer_all) = false;
+option (gogoproto.goproto_getters_all) = false;
+
+import "common/common.proto";
+import "gogoproto/gogo.proto";
+
+message Volume {
+  common.Asset asset = 1 [
+    (gogoproto.nullable) = false,
+    (gogoproto.customtype) = "gitlab.com/thorchain/thornode/v3/common.Asset"
+  ];
+  string total_rune = 2 [
+    (gogoproto.customtype) = "cosmossdk.io/math.Uint",
+    (gogoproto.nullable) = false
+  ];
+  string total_asset = 3 [
+    (gogoproto.customtype) = "cosmossdk.io/math.Uint",
+    (gogoproto.nullable) = false
+  ];
+  string change_rune = 4 [
+    (gogoproto.customtype) = "cosmossdk.io/math.Uint",
+    (gogoproto.nullable) = false
+  ];
+  string change_asset = 5 [
+    (gogoproto.customtype) = "cosmossdk.io/math.Uint",
+    (gogoproto.nullable) = false
+  ];
+  int64 last_bucket = 6;
+}

@@ -1,0 +1,25 @@
+syntax = "proto3";
+package types;
+
+option go_package = "gitlab.com/thorchain/thornode/v3/x/thorchain/types";
+
+import "gogoproto/gogo.proto";
+import "types/msg_swap.proto";
+import "types/query_limit_swaps.proto";
+
+option (gogoproto.marshaler_all) = true;
+
+message QuerySwapQueueRequest { string height = 1; }
+
+message QuerySwapQueueResponse { repeated MsgSwap swap_queue = 1; }
+
+message QuerySwapQueuePaginatedRequest {
+  string height = 1;
+  uint64 offset = 2;
+  uint64 limit = 3;
+}
+
+message QuerySwapQueuePaginatedResponse {
+  repeated MsgSwap swap_queue = 1;
+  PaginationMeta pagination = 2;
+}
