@@ -59,7 +59,7 @@ Need support for a Cosmos SDK chain that isn't included?
 3. Run:
 
 ```bash
-dart run proto/build.dart
+dart run proto/builder.dart
 ```
 
 The generated Dart files will be placed under `proto_messages/`, preserving the original protobuf package structure.
@@ -122,7 +122,7 @@ The library supports:
 - REST
 - gRPC
 
-See the provider documentation: **[link](https://github.com/mrtnetwork/cosmos_sdk/tree/main/example/lib/clinet)**
+See the provider documentation: **[example](https://github.com/mrtnetwork/cosmos_sdk/tree/main/example/lib/clinet)**
 
 ---
 
