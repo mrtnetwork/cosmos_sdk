@@ -18,11 +18,11 @@ import "package:cosmos_sdk/proto_messages/cosmos/base/v1beta1/src/coin.dart"
 /// the two weights, but more types may be added in the future.
 /// When these parameters are set, the weight w(t) for pool time `t` is the
 /// following:
-/// t <= start_time: w(t) = initial_pool_weights
-/// start_time < t <= start_time + duration:
+/// t &lt;= start_time: w(t) = initial_pool_weights
+/// start_time &lt; t &lt;= start_time + duration:
 /// w(t) = initial_pool_weights + (t - start_time) *
 /// (target_pool_weights - initial_pool_weights) / (duration)
-/// t > start_time + duration: w(t) = target_pool_weights
+/// t &gt; start_time + duration: w(t) = target_pool_weights
 class SmoothWeightChangeParams extends CosmosProtoMessage {
   /// The start time for beginning the weight change.
   /// If a parameter change / pool instantiation leaves this blank,
@@ -35,14 +35,14 @@ class SmoothWeightChangeParams extends CosmosProtoMessage {
   /// The initial pool weights. These are copied from the pool's settings
   /// at the time of weight change instantiation.
   /// The amount PoolAsset.token.amount field is ignored if present,
-  /// future type refactorings should just have a type with the denom & weight
+  /// future type refactorings should just have a type with the denom &amp; weight
   /// here.
   final List<PoolAsset> initialPoolWeights;
 
   /// The target pool weights. The pool weights will change linearly with respect
   /// to time between start_time, and start_time + duration. The amount
   /// PoolAsset.token.amount field is ignored if present, future type
-  /// refactorings should just have a type with the denom & weight here.
+  /// refactorings should just have a type with the denom &amp; weight here.
   final List<PoolAsset> targetPoolWeights;
 
   const SmoothWeightChangeParams({

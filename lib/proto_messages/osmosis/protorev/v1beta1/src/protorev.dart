@@ -91,7 +91,7 @@ class TokenPairArbRoutes extends CosmosProtoMessage {
 class Route extends CosmosProtoMessage {
   /// The pool IDs that are traversed in the directed cyclic graph (traversed
   /// left
-  /// -> right)
+  /// -&gt; right)
   final List<Trade> trades;
 
   /// The step size that will be used to find the optimal swap amount in the

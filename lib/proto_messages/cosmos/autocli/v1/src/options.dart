@@ -219,6 +219,7 @@ class RpcCommandOptions extends CosmosProtoMessage {
   /// rpc method.
   final String? use;
 
+  /// long is the long message shown in the 'help &lt;this-command&gt;' output.
   final String? long;
 
   /// short is the short description shown in the 'help' output.

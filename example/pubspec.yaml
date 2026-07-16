@@ -39,7 +39,7 @@ dependencies:
     path: ../
   http: ^1.2.0
   grpc: ^5.1.0
-  blockchain_utils: ^7.0.0
+  blockchain_utils: ^7.1.0
   
 
 dev_dependencies:

@@ -440,7 +440,7 @@ class ChainConfig extends CosmosProtoMessage {
   /// splitter
   final String? mergeNetsplitBlock;
 
-  /// DEPRECATED: shanghai_block & cancun_block - switched from block to
+  /// DEPRECATED: shanghai_block &amp; cancun_block - switched from block to
   /// timestamp
   /// chain_id is the id of the chain (EIP-155)
   final BigInt? chainId;

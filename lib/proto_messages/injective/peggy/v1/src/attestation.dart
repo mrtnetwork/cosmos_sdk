@@ -11,7 +11,7 @@ import "package:cosmos_sdk/sdk/serialization/buffer/any.dart"
 /// fired These event nonces must be relayed in order. This is a correctness
 /// issue, if relaying out of order transaction replay attacks become possible
 /// OBSERVED:
-/// Observed indicates that >67% of validators have attested to the event,
+/// Observed indicates that &gt;67% of validators have attested to the event,
 /// and that the event should be executed by the peggy state machine
 ///
 /// The actual content of the claims is passed in with the transaction making the

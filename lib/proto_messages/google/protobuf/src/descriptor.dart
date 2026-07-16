@@ -1886,7 +1886,7 @@ class FieldDescriptorProto extends CosmosProtoMessage {
   /// For numeric types, contains the original text representation of the value.
   /// For booleans, "true" or "false".
   /// For strings, contains the default text contents (not escaped in any way).
-  /// For bytes, contains the C escaped value.  All bytes >= 128 are escaped.
+  /// For bytes, contains the C escaped value.  All bytes &gt;= 128 are escaped.
   final String? defaultValue;
 
   /// If set, gives the index of a oneof in the containing type's oneof_decl
@@ -3062,6 +3062,7 @@ class MessageOptions extends CosmosProtoMessage {
   /// maps field.
   ///
   /// For maps fields:
+  /// map&lt;KeyType, ValueType&gt; map_field = 1;
   /// The parsed descriptor looks like:
   /// message MapFieldEntry {
   /// option map_entry = true;

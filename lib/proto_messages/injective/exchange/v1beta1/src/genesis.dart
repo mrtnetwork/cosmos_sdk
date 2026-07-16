@@ -1668,7 +1668,7 @@ class DerivativeOrderBook extends CosmosProtoMessage {
       DefaultCosmosProtoTypeUrl.injectiveExchangeV1beta1DerivativeOrderBook;
 }
 
-/// Orderbook containing limit & market conditional orders
+/// Orderbook containing limit &amp; market conditional orders
 class ConditionalDerivativeOrderBook extends CosmosProtoMessage {
   final String? marketId;
 

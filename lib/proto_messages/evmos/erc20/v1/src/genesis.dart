@@ -4,7 +4,7 @@ import 'package:cosmos_sdk/sdk/serialization/serialization.dart';
 
 /// Params defines the erc20 module params
 class Params extends CosmosProtoMessage {
-  /// enable_erc20 is the parameter to enable the conversion of Cosmos coins <--> ERC20 tokens.
+  /// enable_erc20 is the parameter to enable the conversion of Cosmos coins &lt;--&gt; ERC20 tokens.
   final bool? enableErc20;
 
   /// enable_evm_hook is now depecrated

@@ -18,9 +18,9 @@ class MsgPublish extends CosmosProtoMessage
   /// UpgradePolicy defines upgrade rules which will be applied
   /// at next publish message.
   /// Upgrades in the direction of enhancing security are permitted.
-  /// `ARBITRARY` => `COMPATIBLE`
-  /// `ARBITRARY` => `IMMUTABLE`
-  /// `COMPATIBLE` => `IMMUTABLE`
+  /// `ARBITRARY` =&gt; `COMPATIBLE`
+  /// `ARBITRARY` =&gt; `IMMUTABLE`
+  /// `COMPATIBLE` =&gt; `IMMUTABLE`
   /// but reverse ways are not allowed (ignored).
   final initia_move_v1_types.UpgradePolicy? upgradePolicy;
 
@@ -836,9 +836,9 @@ class MsgGovPublish extends CosmosProtoMessage
   /// UpgradePolicy defines upgrade rules which will be applied
   /// at next publish message.
   /// Upgrades in the direction of enhancing security are permitted.
-  /// `ARBITRARY` => `COMPATIBLE`
-  /// `ARBITRARY` => `IMMUTABLE`
-  /// `COMPATIBLE` => `IMMUTABLE`
+  /// `ARBITRARY` =&gt; `COMPATIBLE`
+  /// `ARBITRARY` =&gt; `IMMUTABLE`
+  /// `COMPATIBLE` =&gt; `IMMUTABLE`
   /// but reverse ways are not allowed (ignored).
   final initia_move_v1_types.UpgradePolicy? upgradePolicy;
 

@@ -13,7 +13,7 @@ class Params extends CosmosProtoMessage {
   final String? releaseRate;
 
   /// The dilution rate of release rate.
-  /// if `(block.timestamp - last_dilute_timestamp) < dilution_period`:
+  /// if `(block.timestamp - last_dilute_timestamp) &lt; dilution_period`:
   /// `release_rate -= (release_rate * dilution_rate)`
   /// `last_dilution_timestamp = block.timestamp`
   final String? dilutionRate;

@@ -12,10 +12,17 @@ class CCRPeer {
 
   CCRPeer({required this.id, required this.address, this.provider});
 
-  factory CCRPeer.fromJson(Map<String, dynamic> json) =>
-      CCRPeer(id: json['id'], address: json['address'], provider: json['provider']);
+  factory CCRPeer.fromJson(Map<String, dynamic> json) => CCRPeer(
+    id: json['id'],
+    address: json['address'],
+    provider: json['provider'],
+  );
 
-  Map<String, dynamic> toJson() => {'id': id, 'address': address, 'provider': provider};
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'address': address,
+    'provider': provider,
+  };
 }
 
 class CCREndpoint {
@@ -113,7 +120,10 @@ class CCRFeeToken {
     lowGasPrice: (json['low_gas_price'] as num?)?.toDouble(),
     averageGasPrice: (json['average_gas_price'] as num?)?.toDouble(),
     highGasPrice: (json['high_gas_price'] as num?)?.toDouble(),
-    gasCosts: json['gas_costs'] != null ? CCRGasCosts.fromJson(json['gas_costs']) : null,
+    gasCosts:
+        json['gas_costs'] != null
+            ? CCRGasCosts.fromJson(json['gas_costs'])
+            : null,
   );
 
   Map<String, dynamic> toJson() => {
@@ -172,7 +182,10 @@ class CCRStaking {
         json['lock_duration'] != null
             ? CCRLockDuration.fromJson(json['lock_duration'])
             : null;
-    return CCRStaking(stakingTokens: stakingTokensList, lockDuration: lockDuration);
+    return CCRStaking(
+      stakingTokens: stakingTokensList,
+      lockDuration: lockDuration,
+    );
   }
 
   Map<String, dynamic> toJson() => {
@@ -222,7 +235,13 @@ class CCRIbc {
   final String? tag;
   final List<String>? icsEnabled;
 
-  CCRIbc({required this.type, this.version, this.repo, this.tag, this.icsEnabled});
+  CCRIbc({
+    required this.type,
+    this.version,
+    this.repo,
+    this.tag,
+    this.icsEnabled,
+  });
 
   factory CCRIbc.fromJson(Map<String, dynamic> json) => CCRIbc(
     type: json['type'],
@@ -358,7 +377,10 @@ class CCRPointer {
   factory CCRPointer.fromJson(Map<String, dynamic> json) =>
       CCRPointer(chainName: json['chain_name'], baseDenom: json['base_denom']);
 
-  Map<String, dynamic> toJson() => {'chain_name': chainName, 'base_denom': baseDenom};
+  Map<String, dynamic> toJson() => {
+    'chain_name': chainName,
+    'base_denom': baseDenom,
+  };
 }
 
 class CCRBech32Config {
@@ -378,14 +400,15 @@ class CCRBech32Config {
     this.bech32PrefixConsPub,
   });
 
-  factory CCRBech32Config.fromJson(Map<String, dynamic> json) => CCRBech32Config(
-    bech32PrefixAccAddr: json['bech32PrefixAccAddr'],
-    bech32PrefixAccPub: json['bech32PrefixAccPub'],
-    bech32PrefixValAddr: json['bech32PrefixValAddr'],
-    bech32PrefixValPub: json['bech32PrefixValPub'],
-    bech32PrefixConsAddr: json['bech32PrefixConsAddr'],
-    bech32PrefixConsPub: json['bech32PrefixConsPub'],
-  );
+  factory CCRBech32Config.fromJson(Map<String, dynamic> json) =>
+      CCRBech32Config(
+        bech32PrefixAccAddr: json['bech32PrefixAccAddr'],
+        bech32PrefixAccPub: json['bech32PrefixAccPub'],
+        bech32PrefixValAddr: json['bech32PrefixValAddr'],
+        bech32PrefixValPub: json['bech32PrefixValPub'],
+        bech32PrefixConsAddr: json['bech32PrefixConsAddr'],
+        bech32PrefixConsPub: json['bech32PrefixConsPub'],
+      );
 
   Map<String, dynamic> toJson() => {
     'bech32PrefixAccAddr': bech32PrefixAccAddr,
@@ -404,7 +427,10 @@ class CCRFees {
 
   factory CCRFees.fromJson(Map<String, dynamic> json) {
     final tokens =
-        (json['fee_tokens'] as List?)?.map((e) => CCRFeeToken.fromJson(e)).toList() ?? [];
+        (json['fee_tokens'] as List?)
+            ?.map((e) => CCRFeeToken.fromJson(e))
+            .toList() ??
+        [];
     return CCRFees(feeTokens: tokens);
   }
 
@@ -479,18 +505,30 @@ class CCRCodebase {
       gitRepo: json['git_repo'],
       recommendedVersion: json['recommended_version'],
       compatibleVersions: List<String>.from(json['compatible_versions'] ?? []),
-      language: json['language'] != null ? CCRLanguage.fromJson(json['language']) : null,
-      binaries: json['binaries'] != null ? CCRBinaries.fromJson(json['binaries']) : null,
+      language:
+          json['language'] != null
+              ? CCRLanguage.fromJson(json['language'])
+              : null,
+      binaries:
+          json['binaries'] != null
+              ? CCRBinaries.fromJson(json['binaries'])
+              : null,
       cosmosSdkVersion: json['cosmos_sdk_version'],
       sdk: json['sdk'] != null ? CCRSdk.fromJson(json['sdk']) : null,
       consensus:
-          json['consensus'] != null ? CCRConsensus.fromJson(json['consensus']) : null,
+          json['consensus'] != null
+              ? CCRConsensus.fromJson(json['consensus'])
+              : null,
       cosmwasmVersion: json['cosmwasm_version'],
       cosmwasmEnabled: json['cosmwasm_enabled'],
       cosmwasmPath: json['cosmwasm_path'],
-      cosmwasm: json['cosmwasm'] != null ? CCRCosmwasm.fromJson(json['cosmwasm']) : null,
+      cosmwasm:
+          json['cosmwasm'] != null
+              ? CCRCosmwasm.fromJson(json['cosmwasm'])
+              : null,
       ibc: json['ibc'] != null ? CCRIbc.fromJson(json['ibc']) : null,
-      genesis: json['genesis'] != null ? CCRGenesis.fromJson(json['genesis']) : null,
+      genesis:
+          json['genesis'] != null ? CCRGenesis.fromJson(json['genesis']) : null,
       versions: versionsList,
     );
   }
@@ -569,17 +607,28 @@ class CCRVersionInfo {
       nextVersionName: json['next_version_name'],
       recommendedVersion: json['recommended_version'],
       compatibleVersions: List<String>.from(json['compatible_versions'] ?? []),
-      language: json['language'] != null ? CCRLanguage.fromJson(json['language']) : null,
+      language:
+          json['language'] != null
+              ? CCRLanguage.fromJson(json['language'])
+              : null,
       cosmosSdkVersion: json['cosmos_sdk_version'],
       sdk: json['sdk'] != null ? CCRSdk.fromJson(json['sdk']) : null,
       consensus:
-          json['consensus'] != null ? CCRConsensus.fromJson(json['consensus']) : null,
+          json['consensus'] != null
+              ? CCRConsensus.fromJson(json['consensus'])
+              : null,
       cosmwasmVersion: json['cosmwasm_version'],
       cosmwasmEnabled: json['cosmwasm_enabled'],
       cosmwasmPath: json['cosmwasm_path'],
-      cosmwasm: json['cosmwasm'] != null ? CCRCosmwasm.fromJson(json['cosmwasm']) : null,
+      cosmwasm:
+          json['cosmwasm'] != null
+              ? CCRCosmwasm.fromJson(json['cosmwasm'])
+              : null,
       ibc: json['ibc'] != null ? CCRIbc.fromJson(json['ibc']) : null,
-      binaries: json['binaries'] != null ? CCRBinaries.fromJson(json['binaries']) : null,
+      binaries:
+          json['binaries'] != null
+              ? CCRBinaries.fromJson(json['binaries'])
+              : null,
       icsEnabled: (json["ics_enabled"] as List?)?.cast(),
       ibcGoVersion: json["ibc_go_version"],
     );
@@ -665,7 +714,9 @@ class CCRImageResource {
   factory CCRImageResource.fromJson(Map<String, dynamic> json) {
     return CCRImageResource(
       imageSync:
-          json['image_sync'] != null ? CCRPointer.fromJson(json['image_sync']) : null,
+          json['image_sync'] != null
+              ? CCRPointer.fromJson(json['image_sync'])
+              : null,
       png: json['png'],
       svg: json['svg'],
       theme: json['theme'] != null ? CCRTheme.fromJson(json['theme']) : null,
@@ -766,19 +817,33 @@ class CCRChain {
         (json['alternative_slip44s'] as List?)?.map((e) => e as int).toList(),
     fees: CCRFees.fromJson(json['fees'] ?? {}),
     staking: CCRStaking.fromJson(json['staking'] ?? {}),
-    codebase: json['codebase'] != null ? CCRCodebase.fromJson(json['codebase']) : null,
-    images: (json['images'] as List?)?.map((e) => CCRImageResource.fromJson(e)).toList(),
-    logoURIs: json['logo_URIs'] != null ? CCRLogoURIs.fromJson(json['logo_URIs']) : null,
+    codebase:
+        json['codebase'] != null
+            ? CCRCodebase.fromJson(json['codebase'])
+            : null,
+    images:
+        (json['images'] as List?)
+            ?.map((e) => CCRImageResource.fromJson(e))
+            .toList(),
+    logoURIs:
+        json['logo_URIs'] != null
+            ? CCRLogoURIs.fromJson(json['logo_URIs'])
+            : null,
     description: json['description'],
     peers: json['peers'] != null ? CCRPeers.fromJson(json['peers']) : null,
     apis: CCRApis.fromJson(json['apis'] ?? {}),
     bestApis: CCRApis.fromJson(json['best_apis'] ?? {}),
     explorers:
-        (json['explorers'] as List?)?.map((e) => CCRExplorer.fromJson(e)).toList() ?? [],
+        (json['explorers'] as List?)
+            ?.map((e) => CCRExplorer.fromJson(e))
+            .toList() ??
+        [],
     keywords: (json['keywords'] as List?)?.cast(),
     extraCodecs: (json['extra_codecs'] as List?)?.cast(),
     assets:
-        (json['assets'] as List?)?.map((e) => CosmosDirectoryAsset.fromJson(e)).toList(),
+        (json['assets'] as List?)
+            ?.map((e) => CosmosDirectoryAsset.fromJson(e))
+            .toList(),
   );
 
   Map<String, dynamic> toJson() => {
@@ -813,7 +878,9 @@ class CCRChain {
 
   List<CosmosKeysAlgs> supportKeyAlgos() {
     if (keyAlgos.isEmpty) return CosmosKeysAlgs.supportedAlgs;
-    return CosmosKeysAlgs.supportedAlgs.where((e) => keyAlgos.contains(e.name)).toList();
+    return CosmosKeysAlgs.supportedAlgs
+        .where((e) => keyAlgos.contains(e.name))
+        .toList();
   }
 }
 
@@ -827,7 +894,9 @@ class CCRPeers {
     return CCRPeers(
       seeds: (json['seeds'] as List?)?.map((e) => CCRPeer.fromJson(e)).toList(),
       persistentPeers:
-          (json['persistent_peers'] as List?)?.map((e) => CCRPeer.fromJson(e)).toList(),
+          (json['persistent_peers'] as List?)
+              ?.map((e) => CCRPeer.fromJson(e))
+              .toList(),
     );
   }
 
@@ -856,12 +925,31 @@ class CCRApis {
 
   factory CCRApis.fromJson(Map<String, dynamic> json) {
     return CCRApis(
-      rpc: (json['rpc'] as List?)?.map((e) => CCREndpoint.fromJson(e)).toList() ?? [],
-      rest: (json['rest'] as List?)?.map((e) => CCREndpoint.fromJson(e)).toList() ?? [],
-      grpc: (json['grpc'] as List?)?.map((e) => CCREndpoint.fromJson(e)).toList() ?? [],
-      wss: (json['wss'] as List?)?.map((e) => CCREndpoint.fromJson(e)).toList() ?? [],
+      rpc:
+          (json['rpc'] as List?)
+              ?.map((e) => CCREndpoint.fromJson(e))
+              .toList() ??
+          [],
+      rest:
+          (json['rest'] as List?)
+              ?.map((e) => CCREndpoint.fromJson(e))
+              .toList() ??
+          [],
+      grpc:
+          (json['grpc'] as List?)
+              ?.map((e) => CCREndpoint.fromJson(e))
+              .toList() ??
+          [],
+      wss:
+          (json['wss'] as List?)
+              ?.map((e) => CCREndpoint.fromJson(e))
+              .toList() ??
+          [],
       grpcWeb:
-          (json['grpc-web'] as List?)?.map((e) => CCREndpoint.fromJson(e)).toList() ?? [],
+          (json['grpc-web'] as List?)
+              ?.map((e) => CCREndpoint.fromJson(e))
+              .toList() ??
+          [],
       evmHttpJsonRpc:
           (json['evm-http-jsonrpc'] as List?)
               ?.map((e) => CCREndpoint.fromJson(e))
@@ -923,7 +1011,9 @@ class CosmosDirectoryAsset {
               .valueEnsureAsList<Map<String, dynamic>>("denom_units")
               .map(CCRDenomUnit.fromJson)
               .toList(),
-      base: CCRDenomUnit.fromJson(json.valueEnsureAsMap<String, dynamic>("base")),
+      base: CCRDenomUnit.fromJson(
+        json.valueEnsureAsMap<String, dynamic>("base"),
+      ),
       name: json.valueAs("name"),
       display: json.valueTo<CCRDenomUnit?, Map<String, dynamic>>(
         key: "display",
@@ -931,7 +1021,9 @@ class CosmosDirectoryAsset {
       ),
       symbol: json.valueAs("symbol"),
       logoURIs:
-          json['logo_URIs'] != null ? CCRLogoUris.fromJson(json['logo_URIs']) : null,
+          json['logo_URIs'] != null
+              ? CCRLogoUris.fromJson(json['logo_URIs'])
+              : null,
       decimals: json.valueAs("decimals"),
       denom: json.valueAs("denom"),
       coingeckoId: json.valueAs("coingecko_id"),

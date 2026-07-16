@@ -56,7 +56,7 @@ import 'package:cosmos_sdk/sdk/serialization/serialization.dart';
 /// Example 2: Compute Timestamp from POSIX `gettimeofday()`.
 ///
 /// struct timeval tv;
-/// gettimeofday(&tv, NULL);
+/// gettimeofday(&amp;tv, NULL);
 ///
 /// Timestamp timestamp;
 /// timestamp.set_seconds(tv.tv_sec);
@@ -65,8 +65,8 @@ import 'package:cosmos_sdk/sdk/serialization/serialization.dart';
 /// Example 3: Compute Timestamp from Win32 `GetSystemTimeAsFileTime()`.
 ///
 /// FILETIME ft;
-/// GetSystemTimeAsFileTime(&ft);
-/// UINT64 ticks = (((UINT64)ft.dwHighDateTime) << 32) | ft.dwLowDateTime;
+/// GetSystemTimeAsFileTime(&amp;ft);
+/// UINT64 ticks = (((UINT64)ft.dwHighDateTime) &lt;&lt; 32) | ft.dwLowDateTime;
 ///
 /// // A Windows tick is 100 nanoseconds. Windows epoch 1601-01-01T00:00:00Z
 /// // is 11644473600 seconds before Unix epoch 1970-01-01T00:00:00Z.

@@ -6333,14 +6333,14 @@ class QueryCrossMarginPoolSnapshotResponse extends CosmosProtoMessage {
   final String? feeReserveTotal;
 
   /// Order Lock Requirement = IM_with_orders + entry_loss + fee_reserve.
-  /// Orders may be cancelled if equity_admission < order_lock_requirement.
+  /// Orders may be cancelled if equity_admission &lt; order_lock_requirement.
   final String? orderLockRequirement;
 
   /// The positive uPnL haircut rate applied (e.g., 0.5 = 50%).
   final String? positiveUpnlHaircutRate;
 
   /// Health factor = equity_liquidation / maintenance_margin_total.
-  /// When < 1, the account is liquidatable. When < 1.5, the account is in a
+  /// When &lt; 1, the account is liquidatable. When &lt; 1.5, the account is in a
   /// warning state. Empty if maintenance_margin_total is zero (no positions).
   final String? healthFactor;
 

@@ -42,7 +42,7 @@ class MsgCreateGauge extends CosmosProtoMessage
   /// "NoLock" with all other fields of the "QueryCondition.LockQueryType" struct
   /// unset, including "QueryCondition.Denom". However, note that, internally,
   /// the empty string in "QueryCondition.Denom" ends up being overwritten with
-  /// incentivestypes.NoLockExternalGaugeDenom(<'pool-id>) so that the gauges
+  /// incentivestypes.NoLockExternalGaugeDenom(&lt;pool-id&gt;) so that the gauges
   /// associated with a pool can be queried by this prefix if needed.
   final BigInt? poolId;
 

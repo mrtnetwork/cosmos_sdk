@@ -2,7 +2,7 @@ import 'package:blockchain_utils/blockchain_utils.dart';
 import 'package:cosmos_sdk/proto_messages/types.dart';
 import 'package:cosmos_sdk/sdk/serialization/serialization.dart';
 
-/// TokenPair defines an association of bank denom <-> EVM token (erc20 contract
+/// TokenPair defines an association of bank denom &lt;-&gt; EVM token (erc20 contract
 /// address)
 class TokenPair extends CosmosProtoMessage {
   final String? bankDenom;

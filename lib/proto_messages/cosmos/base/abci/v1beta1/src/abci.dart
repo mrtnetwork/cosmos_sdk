@@ -43,7 +43,7 @@ class TxResponse extends CosmosProtoMessage {
   /// The request transaction bytes.
   final google_protobuf_any.Any? tx;
 
-  /// Time of the previous block. For heights > 1, it's the weighted median of
+  /// Time of the previous block. For heights &gt; 1, it's the weighted median of
   /// the timestamps of the valid votes in the block.LastCommit. For height == 1,
   /// it's genesis time.
   final String? timestamp;

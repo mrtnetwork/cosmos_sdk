@@ -163,10 +163,10 @@ class QueryTokenPricesRequest extends CosmosProtoMessage
 
 /// TokenPriceResponse adds human readable info on to of TokenPrice
 class TokenPriceResponse extends CosmosProtoMessage {
-  /// If IBC token, base denom unwrapped (e.g. ibc/... -> uatom)
+  /// If IBC token, base denom unwrapped (e.g. ibc/... -&gt; uatom)
   final String? baseDenomUnwrapped;
 
-  /// If IBC token, Quote denom unwrapped (e.g. ibc/... -> uatom)
+  /// If IBC token, Quote denom unwrapped (e.g. ibc/... -&gt; uatom)
   final String? quoteDenomUnwrapped;
 
   /// The token price object with the remaining price metadata

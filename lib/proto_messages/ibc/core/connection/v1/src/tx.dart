@@ -190,7 +190,7 @@ class MsgConnectionOpenTry extends CosmosProtoMessage
 
   final ibc_core_client_v1_client.Height? proofHeight;
 
-  /// proof of the initialization the connection on Chain A: `UNINITIALIZED ->
+  /// proof of the initialization the connection on Chain A: `UNINITIALIZED -&gt;
   /// INIT`
   final List<int>? proofInit;
 
@@ -517,7 +517,7 @@ class MsgConnectionOpenAck extends CosmosProtoMessage
 
   final ibc_core_client_v1_client.Height? proofHeight;
 
-  /// proof of the initialization the connection on Chain B: `UNINITIALIZED ->
+  /// proof of the initialization the connection on Chain B: `UNINITIALIZED -&gt;
   /// TRYOPEN`
   final List<int>? proofTry;
 
@@ -791,7 +791,7 @@ class MsgConnectionOpenConfirm extends CosmosProtoMessage
     with ICosmosProtoServiceMessage<MsgConnectionOpenConfirmResponse> {
   final String? connectionId;
 
-  /// proof for the change of the connection state on Chain A: `INIT -> OPEN`
+  /// proof for the change of the connection state on Chain A: `INIT -&gt; OPEN`
   final List<int>? proofAck;
 
   final ibc_core_client_v1_client.Height? proofHeight;

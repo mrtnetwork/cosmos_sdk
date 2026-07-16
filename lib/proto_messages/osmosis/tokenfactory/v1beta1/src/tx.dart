@@ -12,7 +12,7 @@ import "package:cosmos_sdk/proto_messages/cosmos/bank/v1beta1/src/bank.dart"
 /// must be unique and cannot be reused.
 ///
 /// The resulting denom created is defined as
-/// <'factory/{creatorAddress}/{subdenom}>. The resulting denom's admin is
+/// &lt;factory/{creatorAddress}/{subdenom}&gt;. The resulting denom's admin is
 /// originally set to be the creator, but this can be changed later. The token
 /// denom does not indicate the current admin.
 class MsgCreateDenom extends CosmosProtoMessage

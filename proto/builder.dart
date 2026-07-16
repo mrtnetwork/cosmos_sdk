@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:io';
 import 'package:blockchain_utils/blockchain_utils.dart';
 import 'package:onchain_proto/onchain_proto.dart';
@@ -77,7 +79,7 @@ class CosmosPackageRegisteryBuilder {
     );
     buf.writeln('    );');
     buf.writeln('  }');
-
+    buf.writeln('@override');
     buf.writeln(' String getServiceUrl() {');
     buf.writeln('    final serviceUrl = this.serviceUrl;');
     buf.writeln(
@@ -85,7 +87,7 @@ class CosmosPackageRegisteryBuilder {
     );
     buf.writeln('return serviceUrl;');
     buf.writeln('  }');
-
+    buf.writeln('@override');
     buf.writeln(' String getAminoType() {');
     buf.writeln('    final aminoType = this.aminoType;');
     buf.writeln(
@@ -150,10 +152,7 @@ class CosmosPackageRegisteryBuilder {
         }
       }
     }
-
-    buf.writeln("default: break;");
     buf.writeln("}");
-    buf.writeln("return null;");
     buf.writeln("}");
     buf.writeln("}");
     final fBuf = StringBuffer();
@@ -217,5 +216,29 @@ class CosmosProtoPackagesBuilder {
 
 void main() {
   final compiler = CosmosProtoPackagesBuilder();
+  print("Compiling...");
   compiler.compile();
+  _cleanUpImports();
+}
+
+void _cleanUpImports() {
+  print("Clean up imports...");
+  _process(args: ["fix", "--apply", "--code=unused_import"]);
+  print("Format dart code...");
+  _process(args: ["format", "."]);
+}
+
+void _process({
+  String command = "dart",
+  List<String> args = const ["fix", "--apply", "--code=unused_import"],
+  String? workingDirectory,
+}) {
+  final process = Process.runSync(
+    command,
+    args,
+    runInShell: Platform.isWindows,
+    workingDirectory: workingDirectory,
+  );
+  final exitCode = process.exitCode;
+  assert(exitCode == 0, "Dart fix failed with exit code $exitCode");
 }

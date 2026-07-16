@@ -226,7 +226,7 @@ class QueryQuoteSwapResponse extends CosmosProtoMessage {
   /// are ignored.
   final String? dustThreshold;
 
-  /// The recommended minimum inbound amount for this transaction type & inbound
+  /// The recommended minimum inbound amount for this transaction type &amp; inbound
   /// asset. Sending less than this amount could result in failed refunds.
   final String? recommendedMinAmountIn;
 

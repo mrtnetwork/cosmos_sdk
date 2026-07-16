@@ -1,4 +1,5 @@
-import 'package:blockchain_utils/bip/bip/conf/core/coin_conf.dart' show ChainType;
+import 'package:blockchain_utils/bip/bip/conf/core/coin_conf.dart'
+    show ChainType;
 import 'package:blockchain_utils/cbor/cbor.dart';
 import 'package:blockchain_utils/helper/extensions/extensions.dart';
 import 'package:blockchain_utils/utils/json/extension/json.dart';
@@ -160,7 +161,10 @@ class CosmosSdkChainChains with CborTagSerializable {
   @override
   SerializationIdentifier get serializationIdentifier =>
       CosmosSerializationIdentifiers.defaultTag;
-  factory CosmosSdkChainChains.deserialize({List<int>? bytes, CborObject? obj}) {
+  factory CosmosSdkChainChains.deserialize({
+    List<int>? bytes,
+    CborObject? obj,
+  }) {
     final values = CborTagSerializable.decodeTaggedValue(
       identifier: CosmosSerializationIdentifiers.defaultTag,
       cborBytes: bytes,
@@ -182,8 +186,12 @@ class CosmosSdkChainChains with CborTagSerializable {
 
   @override
   List<CborObject<Object?>?> get serializationItems => [
-    CborTagSerializable.listFromDynamic(mainnet.map((e) => e.toCbor()).toList()),
-    CborTagSerializable.listFromDynamic(testnet.map((e) => e.toCbor()).toList()),
+    CborTagSerializable.listFromDynamic(
+      mainnet.map((e) => e.toCbor()).toList(),
+    ),
+    CborTagSerializable.listFromDynamic(
+      testnet.map((e) => e.toCbor()).toList(),
+    ),
   ];
 }
 
@@ -218,7 +226,10 @@ class CosmosSdkChain with CborTagSerializable {
       slip44: values.rawValueAt(4),
       explorers: CosmosSkdExplorer.deserialize(obj: values.objectAt(5)),
       bestApis:
-          values.listAt<CborTagValue>(6).map((e) => CCRApi.deserialize(obj: e)).toList(),
+          values
+              .listAt<CborTagValue>(6)
+              .map((e) => CCRApi.deserialize(obj: e))
+              .toList(),
       native: CosmosSdkAsset.deserialize(obj: values.objectAt(7)),
       chainId: values.rawValueAt(8),
       type: ChainType.fromValue(values.rawValueAt(9)),
@@ -248,7 +259,9 @@ class CosmosSdkChain with CborTagSerializable {
     bech32Prefix.toCbor(),
     slip44.toCbor(),
     explorers.toCbor(),
-    CborTagSerializable.listFromDynamic(bestApis.map((e) => e.toCbor()).toList()),
+    CborTagSerializable.listFromDynamic(
+      bestApis.map((e) => e.toCbor()).toList(),
+    ),
     native.toCbor(),
     chainId.toCbor(),
     type.value.toCbor(),
@@ -256,7 +269,9 @@ class CosmosSdkChain with CborTagSerializable {
     CborTagSerializable.listFromDynamic(
       supportedAlgs.map((e) => e.value.toCbor()).toList(),
     ),
-    CborTagSerializable.listFromDynamic(ibcChannels.map((e) => e.toCbor()).toList()),
+    CborTagSerializable.listFromDynamic(
+      ibcChannels.map((e) => e.toCbor()).toList(),
+    ),
   ];
   CosmosSdkChain({
     required this.name,
@@ -299,7 +314,9 @@ class CosmosSdkChain with CborTagSerializable {
       path: json.valueAs("path"),
       chainName: json.valueAs("chain_name"),
       chainId: json.valueAs("chain_id"),
-      native: CosmosSdkAsset.fromJson(json.valueEnsureAsMap<String, dynamic>("native")),
+      native: CosmosSdkAsset.fromJson(
+        json.valueEnsureAsMap<String, dynamic>("native"),
+      ),
       bech32Prefix: json.valueAs("bech32_prefix"),
       slip44: json.valueAs("slip44"),
       explorers: CosmosSkdExplorer.fromJson(
@@ -457,5 +474,8 @@ class CCRApi with CborTagSerializable {
       CosmosSerializationIdentifiers.defaultTag;
 
   @override
-  List<CborObject<Object?>?> get serializationItems => [url.toCbor(), api.value.toCbor()];
+  List<CborObject<Object?>?> get serializationItems => [
+    url.toCbor(),
+    api.value.toCbor(),
+  ];
 }

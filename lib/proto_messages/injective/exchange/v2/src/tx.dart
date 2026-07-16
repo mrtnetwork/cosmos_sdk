@@ -803,7 +803,7 @@ class MsgUpdateSubaccountRiskProfile extends CosmosProtoMessage
   /// the subaccount ID to update the risk profile for
   final String? subaccountId;
 
-  /// the requested risk profile (subject to eligibility & safety gates)
+  /// the requested risk profile (subject to eligibility &amp; safety gates)
   final injective_exchange_v2_exchange.SubaccountRiskProfile? riskProfile;
 
   const MsgUpdateSubaccountRiskProfile({

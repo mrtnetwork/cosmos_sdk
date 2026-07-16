@@ -12,6 +12,11 @@ import "package:cosmos_sdk/proto_messages/injective/tokenfactory/v1beta1/src/par
 /// method. It allows an account to create a new denom. It requires a sender
 /// address and a sub denomination. The (sender_address, sub_denomination) tuple
 /// must be unique and cannot be re-used.
+///
+/// The resulting denom created is defined as
+/// &lt;factory/{creatorAddress}/{subdenom}&gt;. The resulting denom's admin is
+/// originally set to be the creator, but this can be changed later. The token
+/// denom does not indicate the current admin.
 class MsgCreateDenom extends CosmosProtoMessage
     with
         ICosmosProtoServiceMessage<MsgCreateDenomResponse>,

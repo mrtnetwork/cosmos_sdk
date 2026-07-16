@@ -163,8 +163,8 @@ class MsgDelegateToValidatorSet extends CosmosProtoMessage
   final String? delegator;
 
   /// the amount of tokens the user is trying to delegate.
-  /// For ex: delegate 10osmo with validator-set {ValA -> 0.5, ValB -> 0.3, ValC
-  /// -> 0.2} our staking logic would attempt to delegate 5osmo to A , 3osmo to
+  /// For ex: delegate 10osmo with validator-set {ValA -&gt; 0.5, ValB -&gt; 0.3, ValC
+  /// -&gt; 0.2} our staking logic would attempt to delegate 5osmo to A , 3osmo to
   /// B, 2osmo to C.
   final cosmos_base_v1beta1_coin.Coin? coin;
 
@@ -286,9 +286,9 @@ class MsgUndelegateFromValidatorSet extends CosmosProtoMessage
   final String? delegator;
 
   /// the amount the user wants to undelegate
-  /// For ex: Undelegate 10osmo with validator-set {ValA -> 0.5, ValB -> 0.3,
+  /// For ex: Undelegate 10osmo with validator-set {ValA -&gt; 0.5, ValB -&gt; 0.3,
   /// ValC
-  /// -> 0.2} our undelegate logic would attempt to undelegate 5osmo from A ,
+  /// -&gt; 0.2} our undelegate logic would attempt to undelegate 5osmo from A ,
   /// 3osmo from B, 2osmo from C
   final cosmos_base_v1beta1_coin.Coin? coin;
 
@@ -412,10 +412,10 @@ class MsgUndelegateFromRebalancedValidatorSet extends CosmosProtoMessage
   final String? delegator;
 
   /// the amount the user wants to undelegate
-  /// For ex: Undelegate 50 osmo with validator-set {ValA -> 0.5, ValB -> 0.5}
+  /// For ex: Undelegate 50 osmo with validator-set {ValA -&gt; 0.5, ValB -&gt; 0.5}
   /// Our undelegate logic would first check the current delegation balance.
   /// If the user has 90 osmo delegated to ValA and 10 osmo delegated to ValB,
-  /// the rebalanced validator set would be {ValA -> 0.9, ValB -> 0.1}
+  /// the rebalanced validator set would be {ValA -&gt; 0.9, ValB -&gt; 0.1}
   /// So now the 45 osmo would be undelegated from ValA and 5 osmo would be
   /// undelegated from ValB.
   final cosmos_base_v1beta1_coin.Coin? coin;
@@ -791,7 +791,7 @@ class MsgWithdrawDelegationRewardsResponse extends CosmosProtoMessage {
 }
 
 /// MsgDelegateBondedTokens breaks bonded lockup (by ID) of osmo, of
-/// length <= 2 weeks and takes all that osmo and delegates according to
+/// length &lt;= 2 weeks and takes all that osmo and delegates according to
 /// delegator's current validator set preference.
 class MsgDelegateBondedTokens extends CosmosProtoMessage
     with

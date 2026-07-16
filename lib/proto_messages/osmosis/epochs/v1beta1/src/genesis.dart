@@ -37,7 +37,7 @@ class EpochInfo extends CosmosProtoMessage {
   ///
   /// NOTE! The current_epoch_start_time may diverge significantly from the
   /// wall-clock time the epoch began at. Wall-clock time of epoch start may be
-  /// >> current_epoch_start_time. Suppose current_epoch_start_time = 10,
+  /// &gt;&gt; current_epoch_start_time. Suppose current_epoch_start_time = 10,
   /// duration = 5. Suppose the chain goes offline at t=14, and comes back online
   /// at t=30, and produces blocks at every successive time. (t=31, 32, etc.)
   /// * The t=30 block will start the epoch for (10, 15]
