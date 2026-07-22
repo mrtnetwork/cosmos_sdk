@@ -1,3 +1,6 @@
+## 4.1.0
+- Fix thornode parsing provider models.
+
 ## 4.0.0
 
 ### ⚠️ Breaking Changes

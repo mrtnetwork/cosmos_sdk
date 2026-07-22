@@ -8,10 +8,10 @@ class AssetPoolInformationResponse {
   final String? balanceRune;
   final String poolUnits;
   final String lpUnits;
-  final String synthUnits;
-  final String synthSupply;
-  final String saversDepth;
-  final String saversUnits;
+  final String? synthUnits;
+  final String? synthSupply;
+  final String? saversDepth;
+  final String? saversUnits;
   final bool synthMintPaused;
   final String? synthSupplyRemaining;
   final String? loanCollateral;

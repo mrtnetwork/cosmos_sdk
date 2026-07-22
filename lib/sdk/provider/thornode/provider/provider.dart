@@ -28,6 +28,21 @@ class ThorNodeProvider<SERVICE extends IServiceProvider>
         relatedNetwork: BlockchainNetwork.cosmosAndRelated,
       );
     }
+    final Map<String, dynamic> res = params.tryEncodingResponse(
+      response,
+      encoding: ServiceReponseEncoding.map,
+    );
+    if (res.hasValue("error")) {
+      throw RPCError(
+        message: res.valueAsString("error") ?? ServiceConst.defaultError,
+        request: params.toJson(),
+        jsonRpcErrpr: res,
+        relatedNetwork: BlockchainNetwork.cosmosAndRelated,
+      );
+    }
+    if (params.responseEncoding == ServiceReponseEncoding.map) {
+      return ServiceProviderUtils.toResponse(object: res, params: params);
+    }
     return params.toEncodingResponse(response);
   }
 
