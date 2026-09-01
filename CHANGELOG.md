@@ -1,3 +1,6 @@
+## 4.1.1
+- Fix ED25519 address generation.
+
 ## 4.1.0
 - Fix thornode parsing provider models.
 

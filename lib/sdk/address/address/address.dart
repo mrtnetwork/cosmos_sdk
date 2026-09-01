@@ -1,10 +1,13 @@
+import 'package:blockchain_utils/bip/address/addr_key_validator.dart';
 import 'package:blockchain_utils/bip/address/atom_addr.dart';
 import 'package:blockchain_utils/cbor/cbor.dart';
+import 'package:blockchain_utils/crypto/quick_crypto.dart';
 import 'package:blockchain_utils/networks/types/address.dart';
 import 'package:blockchain_utils/networks/types/network.dart';
 import 'package:blockchain_utils/utils/utils.dart';
 import 'package:cosmos_sdk/sdk/address/address/address_const.dart';
 import 'package:cosmos_sdk/sdk/crypto/crypto.dart';
+import 'package:cosmos_sdk/sdk/exception/exception.dart';
 
 /// This class represents a base address in the Cosmos network.
 class CosmosBaseAddress with Equality, CborTagSerializable implements IAddress {
@@ -50,9 +53,15 @@ class CosmosBaseAddress with Equality, CborTagSerializable implements IAddress {
     String hrp = CosmosAddrConst.accHRP,
   }) {
     final addressBytes = switch (algorithm) {
-      CosmosKeysAlgs.ed25519 => AtomAddressUtils.ed25519PubkeyToAddress(
-        pubkeyBytes,
-      ),
+      CosmosKeysAlgs.ed25519 => () {
+        final pubkey = AddrKeyValidator.validateAndGetEd25519Key(pubkeyBytes);
+        if (pubkey.compressed.length != 33) {
+          throw DartCosmosSdkPluginException("Invalid public key bytes.");
+        }
+        return QuickCrypto.sha256Hash(
+          pubkey.compressed.sublist(1),
+        ).sublist(0, 20);
+      }(),
       CosmosKeysAlgs.secp256k1 => AtomAddressUtils.secp256k1PubKeyToAddress(
         pubkeyBytes,
       ),
