@@ -60,7 +60,7 @@ class TendermintRequestBroadcastAbciQuery
     "prove": prove?.toString(),
   };
   @override
-  TendermintABCIQueryResponseResult onResonse(Map<String, dynamic> result) {
+  TendermintABCIQueryResponseResult onResponse(Map<String, dynamic> result) {
     return TendermintABCIQueryResponseResult.fromJson(result);
   }
 }

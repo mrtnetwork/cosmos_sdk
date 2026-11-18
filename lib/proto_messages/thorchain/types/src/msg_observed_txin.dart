@@ -12,9 +12,10 @@ class MsgObservedTxIn extends CosmosProtoMessage
         ICosmosProtoAminoMessage {
   final List<common_common.ObservedTx> txs;
 
-  final List<int>? signer;
+  final BuBytes? signer;
 
-  const MsgObservedTxIn({this.txs = const [], this.signer});
+  MsgObservedTxIn({this.txs = const [], List<int>? signer})
+    : signer = signer?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -43,34 +44,39 @@ class MsgObservedTxIn extends CosmosProtoMessage
   List<Object?> get protoValues => [txs, signer];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'txs': txs.map((e) => e.toJson()).toList(),
-      'signer': switch (signer) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'txs': txs.map((e) => config.encodeMessage(e)).toList(),
+      'signer': config.encodeBinary(signer),
     };
   }
 
-  factory MsgObservedTxIn.fromJson(Map<String, dynamic> json) {
+  factory MsgObservedTxIn.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgObservedTxIn(
       txs:
-          (json.valueEnsureAsList<dynamic>('txs', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'txs',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  common_common.ObservedTx,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => common_common.ObservedTx.fromJson(v)),
+                (e) => JsonParser.valueTo<common_common.ObservedTx, Object>(
+                  value: e,
+                  parse:
+                      (v) => common_common.ObservedTx.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
-      signer: json.valueAsBytes<List<int>?>(
-        'signer',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      signer: config.decodeBinary<List<int>?>(
+        json.valueAs('signer', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }

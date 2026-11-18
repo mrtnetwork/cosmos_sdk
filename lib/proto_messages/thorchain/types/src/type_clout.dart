@@ -53,33 +53,47 @@ class SwapperClout extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'address': address,
       'score': score,
       'reclaimed': reclaimed,
       'spent': spent,
-      'last_spent_height': lastSpentHeight?.toString(),
-      'last_reclaim_height': lastReclaimHeight?.toString(),
+      'last_spent_height': config.encodeBigint(lastSpentHeight),
+      'last_reclaim_height': config.encodeBigint(lastReclaimHeight),
     };
   }
 
-  factory SwapperClout.fromJson(Map<String, dynamic> json) {
+  factory SwapperClout.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SwapperClout(
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
-      score: json.valueAsString<String?>('score', acceptCamelCase: true),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      score: json.valueAsString<String?>(
+        'score',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       reclaimed: json.valueAsString<String?>(
         'reclaimed',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      spent: json.valueAsString<String?>('spent', acceptCamelCase: true),
+      spent: json.valueAsString<String?>(
+        'spent',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       lastSpentHeight: json.valueAsBigInt<BigInt?>(
         'last_spent_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       lastReclaimHeight: json.valueAsBigInt<BigInt?>(
         'last_reclaim_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

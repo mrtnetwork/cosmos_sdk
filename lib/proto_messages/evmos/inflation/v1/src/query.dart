@@ -32,11 +32,16 @@ class QueryPeriodRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryPeriodRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryPeriodRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryPeriodRequest();
   }
 
@@ -80,13 +85,21 @@ class QueryPeriodResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [period];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'period': period?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'period': config.encodeBigint(period)};
   }
 
-  factory QueryPeriodResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryPeriodResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryPeriodResponse(
-      period: json.valueAsBigInt<BigInt?>('period', acceptCamelCase: true),
+      period: json.valueAsBigInt<BigInt?>(
+        'period',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -127,11 +140,16 @@ class QueryEpochMintProvisionRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryEpochMintProvisionRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryEpochMintProvisionRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryEpochMintProvisionRequest();
   }
 
@@ -183,17 +201,26 @@ class QueryEpochMintProvisionResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [epochMintProvision];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'epoch_mint_provision': epochMintProvision?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'epoch_mint_provision': config.encodeMessage(epochMintProvision)};
   }
 
-  factory QueryEpochMintProvisionResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryEpochMintProvisionResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryEpochMintProvisionResponse(
       epochMintProvision: json
-          .valueTo<cosmos_base_v1beta1_coin.DecCoin?, Map<String, dynamic>>(
+          .valueTo<cosmos_base_v1beta1_coin.DecCoin?, Object>(
             key: 'epoch_mint_provision',
-            parse: (v) => cosmos_base_v1beta1_coin.DecCoin.fromJson(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => cosmos_base_v1beta1_coin.DecCoin.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
     );
   }
@@ -240,11 +267,16 @@ class QuerySkippedEpochsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QuerySkippedEpochsRequest.fromJson(Map<String, dynamic> json) {
+  factory QuerySkippedEpochsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QuerySkippedEpochsRequest();
   }
 
@@ -289,15 +321,20 @@ class QuerySkippedEpochsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [skippedEpochs];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'skipped_epochs': skippedEpochs?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'skipped_epochs': config.encodeBigint(skippedEpochs)};
   }
 
-  factory QuerySkippedEpochsResponse.fromJson(Map<String, dynamic> json) {
+  factory QuerySkippedEpochsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QuerySkippedEpochsResponse(
       skippedEpochs: json.valueAsBigInt<BigInt?>(
         'skipped_epochs',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -341,11 +378,16 @@ class QueryCirculatingSupplyRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryCirculatingSupplyRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryCirculatingSupplyRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryCirculatingSupplyRequest();
   }
 
@@ -397,17 +439,26 @@ class QueryCirculatingSupplyResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [circulatingSupply];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'circulating_supply': circulatingSupply?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'circulating_supply': config.encodeMessage(circulatingSupply)};
   }
 
-  factory QueryCirculatingSupplyResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryCirculatingSupplyResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryCirculatingSupplyResponse(
       circulatingSupply: json
-          .valueTo<cosmos_base_v1beta1_coin.DecCoin?, Map<String, dynamic>>(
+          .valueTo<cosmos_base_v1beta1_coin.DecCoin?, Object>(
             key: 'circulating_supply',
-            parse: (v) => cosmos_base_v1beta1_coin.DecCoin.fromJson(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => cosmos_base_v1beta1_coin.DecCoin.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
     );
   }
@@ -454,11 +505,16 @@ class QueryInflationRateRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryInflationRateRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryInflationRateRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryInflationRateRequest();
   }
 
@@ -508,15 +564,20 @@ class QueryInflationRateResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [inflationRate];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'inflation_rate': inflationRate};
   }
 
-  factory QueryInflationRateResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryInflationRateResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryInflationRateResponse(
       inflationRate: json.valueAsString<String?>(
         'inflation_rate',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -559,11 +620,16 @@ class QueryParamsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryParamsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsRequest();
   }
 
@@ -612,18 +678,26 @@ class QueryParamsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [params];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'params': params?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'params': config.encodeMessage(params)};
   }
 
-  factory QueryParamsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsResponse(
-      params: json
-          .valueTo<evmos_inflation_v1_genesis.Params?, Map<String, dynamic>>(
-            key: 'params',
-            parse: (v) => evmos_inflation_v1_genesis.Params.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      params: json.valueTo<evmos_inflation_v1_genesis.Params?, Object>(
+        key: 'params',
+        parse:
+            (v) => evmos_inflation_v1_genesis.Params.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

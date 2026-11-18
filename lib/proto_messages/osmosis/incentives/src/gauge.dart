@@ -96,70 +96,95 @@ class Gauge extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'id': id?.toString(),
+      'id': config.encodeBigint(id),
       'is_perpetual': isPerpetual,
-      'distribute_to': distributeTo?.toJson(),
-      'coins': coins.map((e) => e.toJson()).toList(),
+      'distribute_to': config.encodeMessage(distributeTo),
+      'coins': coins.map((e) => config.encodeMessage(e)).toList(),
       'start_time': startTime?.toRfc3339(),
-      'num_epochs_paid_over': numEpochsPaidOver?.toString(),
-      'filled_epochs': filledEpochs?.toString(),
-      'distributed_coins': distributedCoins.map((e) => e.toJson()).toList(),
+      'num_epochs_paid_over': config.encodeBigint(numEpochsPaidOver),
+      'filled_epochs': config.encodeBigint(filledEpochs),
+      'distributed_coins':
+          distributedCoins.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory Gauge.fromJson(Map<String, dynamic> json) {
+  factory Gauge.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Gauge(
-      id: json.valueAsBigInt<BigInt?>('id', acceptCamelCase: true),
+      id: json.valueAsBigInt<BigInt?>(
+        'id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       isPerpetual: json.valueAsBool<bool?>(
         'is_perpetual',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      distributeTo: json
-          .valueTo<osmosis_lockup_lock.QueryCondition?, Map<String, dynamic>>(
-            key: 'distribute_to',
-            parse: (v) => osmosis_lockup_lock.QueryCondition.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      distributeTo: json.valueTo<osmosis_lockup_lock.QueryCondition?, Object>(
+        key: 'distribute_to',
+        parse:
+            (v) => osmosis_lockup_lock.QueryCondition.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       coins:
-          (json.valueEnsureAsList<dynamic>('coins', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'coins',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
-      startTime: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      startTime: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'start_time',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       numEpochsPaidOver: json.valueAsBigInt<BigInt?>(
         'num_epochs_paid_over',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       filledEpochs: json.valueAsBigInt<BigInt?>(
         'filled_epochs',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       distributedCoins:
           (json.valueEnsureAsList<dynamic>(
                 'distributed_coins',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );

@@ -27,20 +27,32 @@ enum OrderType implements ProtoEnumVariant {
 
   /// Looks up a value by its proto wire int. Throws if not found.
   static OrderType fromValue(int? value) {
+    value ??= 0;
     return OrderType.values.firstWhere(
       (e) => e.value == value,
       orElse:
-          () => throw ItemNotFoundException(name: "OrderType", value: value),
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching OrderType found for the given value. $value",
+                details: {"name": "OrderType", "value": value?.toString()},
+              ),
     );
   }
 
   /// Looks up a value by wire int, Dart enum name, or original proto
   /// name (whichever [value] happens to be). Throws if not found.
   static OrderType from(Object? value) {
+    value ??= 0;
     return OrderType.values.firstWhere(
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
-          () => throw ItemNotFoundException(name: "OrderType", value: value),
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching OrderType found for the given value. $value",
+                details: {"name": "OrderType", "value": value?.toString()},
+              ),
     );
   }
 }
@@ -65,13 +77,18 @@ enum AtomicMarketOrderAccessLevel implements ProtoEnumVariant {
 
   /// Looks up a value by its proto wire int. Throws if not found.
   static AtomicMarketOrderAccessLevel fromValue(int? value) {
+    value ??= 0;
     return AtomicMarketOrderAccessLevel.values.firstWhere(
       (e) => e.value == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "AtomicMarketOrderAccessLevel",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching AtomicMarketOrderAccessLevel found for the given value. $value",
+                details: {
+                  "name": "AtomicMarketOrderAccessLevel",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -79,13 +96,18 @@ enum AtomicMarketOrderAccessLevel implements ProtoEnumVariant {
   /// Looks up a value by wire int, Dart enum name, or original proto
   /// name (whichever [value] happens to be). Throws if not found.
   static AtomicMarketOrderAccessLevel from(Object? value) {
+    value ??= 0;
     return AtomicMarketOrderAccessLevel.values.firstWhere(
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "AtomicMarketOrderAccessLevel",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching AtomicMarketOrderAccessLevel found for the given value. $value",
+                details: {
+                  "name": "AtomicMarketOrderAccessLevel",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -142,7 +164,9 @@ class OrderInfo extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'subaccount_id': subaccountId,
       'fee_recipient': feeRecipient,
@@ -152,19 +176,31 @@ class OrderInfo extends CosmosProtoMessage {
     };
   }
 
-  factory OrderInfo.fromJson(Map<String, dynamic> json) {
+  factory OrderInfo.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return OrderInfo(
       subaccountId: json.valueAsString<String?>(
         'subaccount_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       feeRecipient: json.valueAsString<String?>(
         'fee_recipient',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      price: json.valueAsString<String?>('price', acceptCamelCase: true),
-      quantity: json.valueAsString<String?>('quantity', acceptCamelCase: true),
-      cid: json.valueAsString<String?>('cid', acceptCamelCase: true),
+      price: json.valueAsString<String?>(
+        'price',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      quantity: json.valueAsString<String?>(
+        'quantity',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      cid: json.valueAsString<String?>(
+        'cid',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -236,23 +272,31 @@ class SpotOrder extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'market_id': marketId,
-      'order_info': orderInfo?.toJson(),
-      'order_type': orderType?.protoName,
+      'order_info': config.encodeMessage(orderInfo),
+      'order_type': config.encodeEnum(orderType),
       'trigger_price': triggerPrice,
-      'expiration_block': expirationBlock?.toString(),
+      'expiration_block': config.encodeBigint(expirationBlock),
     };
   }
 
-  factory SpotOrder.fromJson(Map<String, dynamic> json) {
+  factory SpotOrder.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SpotOrder(
-      marketId: json.valueAsString<String?>('market_id', acceptCamelCase: true),
-      orderInfo: json.valueTo<OrderInfo?, Map<String, dynamic>>(
+      marketId: json.valueAsString<String?>(
+        'market_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      orderInfo: json.valueTo<OrderInfo?, Object>(
         key: 'order_info',
-        parse: (v) => OrderInfo.fromJson(v),
-        acceptCamelCase: true,
+        parse: (v) => OrderInfo.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       orderType: json.valueTo<OrderType?, Object?>(
         key: 'order_type',
@@ -260,11 +304,11 @@ class SpotOrder extends CosmosProtoMessage {
       ),
       triggerPrice: json.valueAsString<String?>(
         'trigger_price',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       expirationBlock: json.valueAsBigInt<BigInt?>(
         'expiration_block',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -303,19 +347,19 @@ class SpotLimitOrder extends CosmosProtoMessage {
   final String? triggerPrice;
 
   /// order hash
-  final List<int>? orderHash;
+  final BuBytes? orderHash;
 
   /// expiration block is the block number at which the order will expire
   final BigInt? expirationBlock;
 
-  const SpotLimitOrder({
+  SpotLimitOrder({
     this.orderInfo,
     this.orderType,
     this.fillable,
     this.triggerPrice,
-    this.orderHash,
+    List<int>? orderHash,
     this.expirationBlock,
-  });
+  }) : orderHash = orderHash?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -346,47 +390,47 @@ class SpotLimitOrder extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'order_info': orderInfo?.toJson(),
-      'order_type': orderType?.protoName,
+      'order_info': config.encodeMessage(orderInfo),
+      'order_type': config.encodeEnum(orderType),
       'fillable': fillable,
       'trigger_price': triggerPrice,
-      'order_hash': switch (orderHash) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'expiration_block': expirationBlock?.toString(),
+      'order_hash': config.encodeBinary(orderHash),
+      'expiration_block': config.encodeBigint(expirationBlock),
     };
   }
 
-  factory SpotLimitOrder.fromJson(Map<String, dynamic> json) {
+  factory SpotLimitOrder.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SpotLimitOrder(
-      orderInfo: json.valueTo<OrderInfo?, Map<String, dynamic>>(
+      orderInfo: json.valueTo<OrderInfo?, Object>(
         key: 'order_info',
-        parse: (v) => OrderInfo.fromJson(v),
-        acceptCamelCase: true,
+        parse: (v) => OrderInfo.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       orderType: json.valueTo<OrderType?, Object?>(
         key: 'order_type',
         parse: (v) => OrderType.from(v),
       ),
-      fillable: json.valueAsString<String?>('fillable', acceptCamelCase: true),
+      fillable: json.valueAsString<String?>(
+        'fillable',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       triggerPrice: json.valueAsString<String?>(
         'trigger_price',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      orderHash: json.valueAsBytes<List<int>?>(
-        'order_hash',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      orderHash: config.decodeBinary<List<int>?>(
+        json.valueAs('order_hash', normalizeKeyLookup: config.normalizeKeys),
       ),
       expirationBlock: json.valueAsBigInt<BigInt?>(
         'expiration_block',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -469,37 +513,48 @@ class DerivativeOrder extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'market_id': marketId,
-      'order_info': orderInfo?.toJson(),
-      'order_type': orderType?.protoName,
+      'order_info': config.encodeMessage(orderInfo),
+      'order_type': config.encodeEnum(orderType),
       'margin': margin,
       'trigger_price': triggerPrice,
-      'expiration_block': expirationBlock?.toString(),
+      'expiration_block': config.encodeBigint(expirationBlock),
     };
   }
 
-  factory DerivativeOrder.fromJson(Map<String, dynamic> json) {
+  factory DerivativeOrder.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return DerivativeOrder(
-      marketId: json.valueAsString<String?>('market_id', acceptCamelCase: true),
-      orderInfo: json.valueTo<OrderInfo?, Map<String, dynamic>>(
+      marketId: json.valueAsString<String?>(
+        'market_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      orderInfo: json.valueTo<OrderInfo?, Object>(
         key: 'order_info',
-        parse: (v) => OrderInfo.fromJson(v),
-        acceptCamelCase: true,
+        parse: (v) => OrderInfo.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       orderType: json.valueTo<OrderType?, Object?>(
         key: 'order_type',
         parse: (v) => OrderType.from(v),
       ),
-      margin: json.valueAsString<String?>('margin', acceptCamelCase: true),
+      margin: json.valueAsString<String?>(
+        'margin',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       triggerPrice: json.valueAsString<String?>(
         'trigger_price',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       expirationBlock: json.valueAsBigInt<BigInt?>(
         'expiration_block',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -539,16 +594,16 @@ class DerivativeMarketOrder extends CosmosProtoMessage {
   /// trigger_price is the trigger price used by stop/take orders
   final String? triggerPrice;
 
-  final List<int>? orderHash;
+  final BuBytes? orderHash;
 
-  const DerivativeMarketOrder({
+  DerivativeMarketOrder({
     this.orderInfo,
     this.orderType,
     this.margin,
     this.marginHold,
     this.triggerPrice,
-    this.orderHash,
-  });
+    List<int>? orderHash,
+  }) : orderHash = orderHash?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -579,47 +634,47 @@ class DerivativeMarketOrder extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'order_info': orderInfo?.toJson(),
-      'order_type': orderType?.protoName,
+      'order_info': config.encodeMessage(orderInfo),
+      'order_type': config.encodeEnum(orderType),
       'margin': margin,
       'margin_hold': marginHold,
       'trigger_price': triggerPrice,
-      'order_hash': switch (orderHash) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'order_hash': config.encodeBinary(orderHash),
     };
   }
 
-  factory DerivativeMarketOrder.fromJson(Map<String, dynamic> json) {
+  factory DerivativeMarketOrder.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return DerivativeMarketOrder(
-      orderInfo: json.valueTo<OrderInfo?, Map<String, dynamic>>(
+      orderInfo: json.valueTo<OrderInfo?, Object>(
         key: 'order_info',
-        parse: (v) => OrderInfo.fromJson(v),
-        acceptCamelCase: true,
+        parse: (v) => OrderInfo.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       orderType: json.valueTo<OrderType?, Object?>(
         key: 'order_type',
         parse: (v) => OrderType.from(v),
       ),
-      margin: json.valueAsString<String?>('margin', acceptCamelCase: true),
+      margin: json.valueAsString<String?>(
+        'margin',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       marginHold: json.valueAsString<String?>(
         'margin_hold',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       triggerPrice: json.valueAsString<String?>(
         'trigger_price',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      orderHash: json.valueAsBytes<List<int>?>(
-        'order_hash',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      orderHash: config.decodeBinary<List<int>?>(
+        json.valueAs('order_hash', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }
@@ -661,20 +716,20 @@ class DerivativeLimitOrder extends CosmosProtoMessage {
   /// trigger_price is the trigger price used by stop/take orders
   final String? triggerPrice;
 
-  final List<int>? orderHash;
+  final BuBytes? orderHash;
 
   /// expiration block is the block number at which the order will expire
   final BigInt? expirationBlock;
 
-  const DerivativeLimitOrder({
+  DerivativeLimitOrder({
     this.orderInfo,
     this.orderType,
     this.margin,
     this.fillable,
     this.triggerPrice,
-    this.orderHash,
+    List<int>? orderHash,
     this.expirationBlock,
-  });
+  }) : orderHash = orderHash?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -707,49 +762,52 @@ class DerivativeLimitOrder extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'order_info': orderInfo?.toJson(),
-      'order_type': orderType?.protoName,
+      'order_info': config.encodeMessage(orderInfo),
+      'order_type': config.encodeEnum(orderType),
       'margin': margin,
       'fillable': fillable,
       'trigger_price': triggerPrice,
-      'order_hash': switch (orderHash) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'expiration_block': expirationBlock?.toString(),
+      'order_hash': config.encodeBinary(orderHash),
+      'expiration_block': config.encodeBigint(expirationBlock),
     };
   }
 
-  factory DerivativeLimitOrder.fromJson(Map<String, dynamic> json) {
+  factory DerivativeLimitOrder.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return DerivativeLimitOrder(
-      orderInfo: json.valueTo<OrderInfo?, Map<String, dynamic>>(
+      orderInfo: json.valueTo<OrderInfo?, Object>(
         key: 'order_info',
-        parse: (v) => OrderInfo.fromJson(v),
-        acceptCamelCase: true,
+        parse: (v) => OrderInfo.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       orderType: json.valueTo<OrderType?, Object?>(
         key: 'order_type',
         parse: (v) => OrderType.from(v),
       ),
-      margin: json.valueAsString<String?>('margin', acceptCamelCase: true),
-      fillable: json.valueAsString<String?>('fillable', acceptCamelCase: true),
+      margin: json.valueAsString<String?>(
+        'margin',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      fillable: json.valueAsString<String?>(
+        'fillable',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       triggerPrice: json.valueAsString<String?>(
         'trigger_price',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      orderHash: json.valueAsBytes<List<int>?>(
-        'order_hash',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      orderHash: config.decodeBinary<List<int>?>(
+        json.valueAs('order_hash', normalizeKeyLookup: config.normalizeKeys),
       ),
       expirationBlock: json.valueAsBigInt<BigInt?>(
         'expiration_block',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

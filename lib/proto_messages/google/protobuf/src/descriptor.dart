@@ -55,7 +55,13 @@ enum Edition implements ProtoEnumVariant {
   static Edition fromValue(int? value) {
     return Edition.values.firstWhere(
       (e) => e.value == value,
-      orElse: () => throw ItemNotFoundException(name: "Edition", value: value),
+      orElse:
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching Edition found for the given value. $value",
+                details: {"name": "Edition", "value": value?.toString()},
+              ),
     );
   }
 
@@ -64,7 +70,13 @@ enum Edition implements ProtoEnumVariant {
   static Edition from(Object? value) {
     return Edition.values.firstWhere(
       (e) => e.value == value || e.name == value || e.protoName == value,
-      orElse: () => throw ItemNotFoundException(name: "Edition", value: value),
+      orElse:
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching Edition found for the given value. $value",
+                details: {"name": "Edition", "value": value?.toString()},
+              ),
     );
   }
 }
@@ -91,9 +103,13 @@ enum ExtensionRangeOptionsVerificationState implements ProtoEnumVariant {
       (e) => e.value == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "ExtensionRangeOptionsVerificationState",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching ExtensionRangeOptionsVerificationState found for the given value. $value",
+                details: {
+                  "name": "ExtensionRangeOptionsVerificationState",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -105,9 +121,13 @@ enum ExtensionRangeOptionsVerificationState implements ProtoEnumVariant {
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "ExtensionRangeOptionsVerificationState",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching ExtensionRangeOptionsVerificationState found for the given value. $value",
+                details: {
+                  "name": "ExtensionRangeOptionsVerificationState",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -168,9 +188,13 @@ enum FieldDescriptorProtoType implements ProtoEnumVariant {
       (e) => e.value == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "FieldDescriptorProtoType",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching FieldDescriptorProtoType found for the given value. $value",
+                details: {
+                  "name": "FieldDescriptorProtoType",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -182,9 +206,13 @@ enum FieldDescriptorProtoType implements ProtoEnumVariant {
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "FieldDescriptorProtoType",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching FieldDescriptorProtoType found for the given value. $value",
+                details: {
+                  "name": "FieldDescriptorProtoType",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -217,9 +245,13 @@ enum FieldDescriptorProtoLabel implements ProtoEnumVariant {
       (e) => e.value == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "FieldDescriptorProtoLabel",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching FieldDescriptorProtoLabel found for the given value. $value",
+                details: {
+                  "name": "FieldDescriptorProtoLabel",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -231,9 +263,13 @@ enum FieldDescriptorProtoLabel implements ProtoEnumVariant {
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "FieldDescriptorProtoLabel",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching FieldDescriptorProtoLabel found for the given value. $value",
+                details: {
+                  "name": "FieldDescriptorProtoLabel",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -266,9 +302,13 @@ enum FileOptionsOptimizeMode implements ProtoEnumVariant {
       (e) => e.value == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "FileOptionsOptimizeMode",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching FileOptionsOptimizeMode found for the given value. $value",
+                details: {
+                  "name": "FileOptionsOptimizeMode",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -280,9 +320,13 @@ enum FileOptionsOptimizeMode implements ProtoEnumVariant {
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "FileOptionsOptimizeMode",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching FileOptionsOptimizeMode found for the given value. $value",
+                details: {
+                  "name": "FileOptionsOptimizeMode",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -318,9 +362,13 @@ enum FieldOptionsCType implements ProtoEnumVariant {
       (e) => e.value == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "FieldOptionsCType",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching FieldOptionsCType found for the given value. $value",
+                details: {
+                  "name": "FieldOptionsCType",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -332,9 +380,13 @@ enum FieldOptionsCType implements ProtoEnumVariant {
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "FieldOptionsCType",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching FieldOptionsCType found for the given value. $value",
+                details: {
+                  "name": "FieldOptionsCType",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -366,9 +418,13 @@ enum FieldOptionsJSType implements ProtoEnumVariant {
       (e) => e.value == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "FieldOptionsJSType",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching FieldOptionsJSType found for the given value. $value",
+                details: {
+                  "name": "FieldOptionsJSType",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -380,9 +436,13 @@ enum FieldOptionsJSType implements ProtoEnumVariant {
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "FieldOptionsJSType",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching FieldOptionsJSType found for the given value. $value",
+                details: {
+                  "name": "FieldOptionsJSType",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -410,9 +470,13 @@ enum FieldOptionsOptionRetention implements ProtoEnumVariant {
       (e) => e.value == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "FieldOptionsOptionRetention",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching FieldOptionsOptionRetention found for the given value. $value",
+                details: {
+                  "name": "FieldOptionsOptionRetention",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -424,9 +488,13 @@ enum FieldOptionsOptionRetention implements ProtoEnumVariant {
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "FieldOptionsOptionRetention",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching FieldOptionsOptionRetention found for the given value. $value",
+                details: {
+                  "name": "FieldOptionsOptionRetention",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -463,9 +531,13 @@ enum FieldOptionsOptionTargetType implements ProtoEnumVariant {
       (e) => e.value == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "FieldOptionsOptionTargetType",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching FieldOptionsOptionTargetType found for the given value. $value",
+                details: {
+                  "name": "FieldOptionsOptionTargetType",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -477,9 +549,13 @@ enum FieldOptionsOptionTargetType implements ProtoEnumVariant {
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "FieldOptionsOptionTargetType",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching FieldOptionsOptionTargetType found for the given value. $value",
+                details: {
+                  "name": "FieldOptionsOptionTargetType",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -511,9 +587,13 @@ enum MethodOptionsIdempotencyLevel implements ProtoEnumVariant {
       (e) => e.value == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "MethodOptionsIdempotencyLevel",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching MethodOptionsIdempotencyLevel found for the given value. $value",
+                details: {
+                  "name": "MethodOptionsIdempotencyLevel",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -525,9 +605,13 @@ enum MethodOptionsIdempotencyLevel implements ProtoEnumVariant {
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "MethodOptionsIdempotencyLevel",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching MethodOptionsIdempotencyLevel found for the given value. $value",
+                details: {
+                  "name": "MethodOptionsIdempotencyLevel",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -555,9 +639,13 @@ enum FeatureSetFieldPresence implements ProtoEnumVariant {
       (e) => e.value == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "FeatureSetFieldPresence",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching FeatureSetFieldPresence found for the given value. $value",
+                details: {
+                  "name": "FeatureSetFieldPresence",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -569,9 +657,13 @@ enum FeatureSetFieldPresence implements ProtoEnumVariant {
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "FeatureSetFieldPresence",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching FeatureSetFieldPresence found for the given value. $value",
+                details: {
+                  "name": "FeatureSetFieldPresence",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -598,9 +690,13 @@ enum FeatureSetEnumType implements ProtoEnumVariant {
       (e) => e.value == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "FeatureSetEnumType",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching FeatureSetEnumType found for the given value. $value",
+                details: {
+                  "name": "FeatureSetEnumType",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -612,9 +708,13 @@ enum FeatureSetEnumType implements ProtoEnumVariant {
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "FeatureSetEnumType",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching FeatureSetEnumType found for the given value. $value",
+                details: {
+                  "name": "FeatureSetEnumType",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -641,9 +741,13 @@ enum FeatureSetRepeatedFieldEncoding implements ProtoEnumVariant {
       (e) => e.value == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "FeatureSetRepeatedFieldEncoding",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching FeatureSetRepeatedFieldEncoding found for the given value. $value",
+                details: {
+                  "name": "FeatureSetRepeatedFieldEncoding",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -655,9 +759,13 @@ enum FeatureSetRepeatedFieldEncoding implements ProtoEnumVariant {
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "FeatureSetRepeatedFieldEncoding",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching FeatureSetRepeatedFieldEncoding found for the given value. $value",
+                details: {
+                  "name": "FeatureSetRepeatedFieldEncoding",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -684,9 +792,13 @@ enum FeatureSetUtf8Validation implements ProtoEnumVariant {
       (e) => e.value == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "FeatureSetUtf8Validation",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching FeatureSetUtf8Validation found for the given value. $value",
+                details: {
+                  "name": "FeatureSetUtf8Validation",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -698,9 +810,13 @@ enum FeatureSetUtf8Validation implements ProtoEnumVariant {
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "FeatureSetUtf8Validation",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching FeatureSetUtf8Validation found for the given value. $value",
+                details: {
+                  "name": "FeatureSetUtf8Validation",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -727,9 +843,13 @@ enum FeatureSetMessageEncoding implements ProtoEnumVariant {
       (e) => e.value == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "FeatureSetMessageEncoding",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching FeatureSetMessageEncoding found for the given value. $value",
+                details: {
+                  "name": "FeatureSetMessageEncoding",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -741,9 +861,13 @@ enum FeatureSetMessageEncoding implements ProtoEnumVariant {
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "FeatureSetMessageEncoding",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching FeatureSetMessageEncoding found for the given value. $value",
+                details: {
+                  "name": "FeatureSetMessageEncoding",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -770,9 +894,13 @@ enum FeatureSetJsonFormat implements ProtoEnumVariant {
       (e) => e.value == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "FeatureSetJsonFormat",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching FeatureSetJsonFormat found for the given value. $value",
+                details: {
+                  "name": "FeatureSetJsonFormat",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -784,9 +912,13 @@ enum FeatureSetJsonFormat implements ProtoEnumVariant {
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "FeatureSetJsonFormat",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching FeatureSetJsonFormat found for the given value. $value",
+                details: {
+                  "name": "FeatureSetJsonFormat",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -813,9 +945,13 @@ enum FeatureSetEnforceNamingStyle implements ProtoEnumVariant {
       (e) => e.value == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "FeatureSetEnforceNamingStyle",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching FeatureSetEnforceNamingStyle found for the given value. $value",
+                details: {
+                  "name": "FeatureSetEnforceNamingStyle",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -827,9 +963,13 @@ enum FeatureSetEnforceNamingStyle implements ProtoEnumVariant {
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "FeatureSetEnforceNamingStyle",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching FeatureSetEnforceNamingStyle found for the given value. $value",
+                details: {
+                  "name": "FeatureSetEnforceNamingStyle",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -874,9 +1014,13 @@ enum FeatureSetVisibilityFeatureDefaultSymbolVisibility
       (e) => e.value == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "FeatureSetVisibilityFeatureDefaultSymbolVisibility",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching FeatureSetVisibilityFeatureDefaultSymbolVisibility found for the given value. $value",
+                details: {
+                  "name": "FeatureSetVisibilityFeatureDefaultSymbolVisibility",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -890,9 +1034,13 @@ enum FeatureSetVisibilityFeatureDefaultSymbolVisibility
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "FeatureSetVisibilityFeatureDefaultSymbolVisibility",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching FeatureSetVisibilityFeatureDefaultSymbolVisibility found for the given value. $value",
+                details: {
+                  "name": "FeatureSetVisibilityFeatureDefaultSymbolVisibility",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -924,9 +1072,13 @@ enum SymbolVisibility implements ProtoEnumVariant {
       (e) => e.value == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "SymbolVisibility",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching SymbolVisibility found for the given value. $value",
+                details: {
+                  "name": "SymbolVisibility",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -938,9 +1090,13 @@ enum SymbolVisibility implements ProtoEnumVariant {
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "SymbolVisibility",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching SymbolVisibility found for the given value. $value",
+                details: {
+                  "name": "SymbolVisibility",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -1086,7 +1242,9 @@ class FileDescriptorProto extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'name': name,
       'package': package,
@@ -1094,92 +1252,139 @@ class FileDescriptorProto extends CosmosProtoMessage {
       'public_dependency': publicDependency.map((e) => e).toList(),
       'weak_dependency': weakDependency.map((e) => e).toList(),
       'option_dependency': optionDependency.map((e) => e).toList(),
-      'message_type': messageType.map((e) => e.toJson()).toList(),
-      'enum_type': enumType.map((e) => e.toJson()).toList(),
-      'service': service.map((e) => e.toJson()).toList(),
-      'extension': extension_.map((e) => e.toJson()).toList(),
-      'options': options?.toJson(),
-      'source_code_info': sourceCodeInfo?.toJson(),
+      'message_type': messageType.map((e) => config.encodeMessage(e)).toList(),
+      'enum_type': enumType.map((e) => config.encodeMessage(e)).toList(),
+      'service': service.map((e) => config.encodeMessage(e)).toList(),
+      'extension': extension_.map((e) => config.encodeMessage(e)).toList(),
+      'options': config.encodeMessage(options),
+      'source_code_info': config.encodeMessage(sourceCodeInfo),
       'syntax': syntax,
-      'edition': edition?.protoName,
+      'edition': config.encodeEnum(edition),
     };
   }
 
-  factory FileDescriptorProto.fromJson(Map<String, dynamic> json) {
+  factory FileDescriptorProto.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return FileDescriptorProto(
-      name: json.valueAsString<String?>('name', acceptCamelCase: true),
-      package: json.valueAsString<String?>('package', acceptCamelCase: true),
+      name: json.valueAsString<String?>(
+        'name',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      package: json.valueAsString<String?>(
+        'package',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       dependency:
           (json.valueEnsureAsList<dynamic>(
             'dependency',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
       publicDependency:
           (json.valueEnsureAsList<dynamic>(
             'public_dependency',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsInt<int>(e)).toList(),
       weakDependency:
           (json.valueEnsureAsList<dynamic>(
             'weak_dependency',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsInt<int>(e)).toList(),
       optionDependency:
           (json.valueEnsureAsList<dynamic>(
             'option_dependency',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
       messageType:
           (json.valueEnsureAsList<dynamic>(
                 'message_type',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) =>
-                    JsonParser.valueTo<DescriptorProto, Map<String, dynamic>>(
-                      value: e,
-                      parse: (v) => DescriptorProto.fromJson(v),
-                    ),
+                (e) => JsonParser.valueTo<DescriptorProto, Object>(
+                  value: e,
+                  parse:
+                      (v) => DescriptorProto.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
       enumType:
-          (json.valueEnsureAsList<dynamic>('enum_type', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'enum_type',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  EnumDescriptorProto,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => EnumDescriptorProto.fromJson(v)),
+                (e) => JsonParser.valueTo<EnumDescriptorProto, Object>(
+                  value: e,
+                  parse:
+                      (v) => EnumDescriptorProto.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
       service:
-          (json.valueEnsureAsList<dynamic>('service', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'service',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  ServiceDescriptorProto,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => ServiceDescriptorProto.fromJson(v)),
+                (e) => JsonParser.valueTo<ServiceDescriptorProto, Object>(
+                  value: e,
+                  parse:
+                      (v) => ServiceDescriptorProto.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
       extension_:
-          (json.valueEnsureAsList<dynamic>('extension', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'extension',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  FieldDescriptorProto,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => FieldDescriptorProto.fromJson(v)),
+                (e) => JsonParser.valueTo<FieldDescriptorProto, Object>(
+                  value: e,
+                  parse:
+                      (v) => FieldDescriptorProto.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
-      options: json.valueTo<FileOptions?, Map<String, dynamic>>(
+      options: json.valueTo<FileOptions?, Object>(
         key: 'options',
-        parse: (v) => FileOptions.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => FileOptions.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      sourceCodeInfo: json.valueTo<SourceCodeInfo?, Map<String, dynamic>>(
+      sourceCodeInfo: json.valueTo<SourceCodeInfo?, Object>(
         key: 'source_code_info',
-        parse: (v) => SourceCodeInfo.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) =>
+                SourceCodeInfo.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      syntax: json.valueAsString<String?>('syntax', acceptCamelCase: true),
+      syntax: json.valueAsString<String?>(
+        'syntax',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       edition: json.valueTo<Edition?, Object?>(
         key: 'edition',
         parse: (v) => Edition.from(v),
@@ -1339,113 +1544,167 @@ class DescriptorProto extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'name': name,
-      'field': field.map((e) => e.toJson()).toList(),
-      'extension': extension_.map((e) => e.toJson()).toList(),
-      'nested_type': nestedType.map((e) => e.toJson()).toList(),
-      'enum_type': enumType.map((e) => e.toJson()).toList(),
-      'extension_range': extensionRange.map((e) => e.toJson()).toList(),
-      'oneof_decl': oneofDecl.map((e) => e.toJson()).toList(),
-      'options': options?.toJson(),
-      'reserved_range': reservedRange.map((e) => e.toJson()).toList(),
+      'field': field.map((e) => config.encodeMessage(e)).toList(),
+      'extension': extension_.map((e) => config.encodeMessage(e)).toList(),
+      'nested_type': nestedType.map((e) => config.encodeMessage(e)).toList(),
+      'enum_type': enumType.map((e) => config.encodeMessage(e)).toList(),
+      'extension_range':
+          extensionRange.map((e) => config.encodeMessage(e)).toList(),
+      'oneof_decl': oneofDecl.map((e) => config.encodeMessage(e)).toList(),
+      'options': config.encodeMessage(options),
+      'reserved_range':
+          reservedRange.map((e) => config.encodeMessage(e)).toList(),
       'reserved_name': reservedName.map((e) => e).toList(),
-      'visibility': visibility?.protoName,
+      'visibility': config.encodeEnum(visibility),
     };
   }
 
-  factory DescriptorProto.fromJson(Map<String, dynamic> json) {
+  factory DescriptorProto.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return DescriptorProto(
-      name: json.valueAsString<String?>('name', acceptCamelCase: true),
+      name: json.valueAsString<String?>(
+        'name',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       field:
-          (json.valueEnsureAsList<dynamic>('field', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'field',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  FieldDescriptorProto,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => FieldDescriptorProto.fromJson(v)),
+                (e) => JsonParser.valueTo<FieldDescriptorProto, Object>(
+                  value: e,
+                  parse:
+                      (v) => FieldDescriptorProto.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
       extension_:
-          (json.valueEnsureAsList<dynamic>('extension', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'extension',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  FieldDescriptorProto,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => FieldDescriptorProto.fromJson(v)),
+                (e) => JsonParser.valueTo<FieldDescriptorProto, Object>(
+                  value: e,
+                  parse:
+                      (v) => FieldDescriptorProto.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
       nestedType:
           (json.valueEnsureAsList<dynamic>(
                 'nested_type',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) =>
-                    JsonParser.valueTo<DescriptorProto, Map<String, dynamic>>(
-                      value: e,
-                      parse: (v) => DescriptorProto.fromJson(v),
-                    ),
+                (e) => JsonParser.valueTo<DescriptorProto, Object>(
+                  value: e,
+                  parse:
+                      (v) => DescriptorProto.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
       enumType:
-          (json.valueEnsureAsList<dynamic>('enum_type', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'enum_type',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  EnumDescriptorProto,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => EnumDescriptorProto.fromJson(v)),
+                (e) => JsonParser.valueTo<EnumDescriptorProto, Object>(
+                  value: e,
+                  parse:
+                      (v) => EnumDescriptorProto.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
       extensionRange:
           (json.valueEnsureAsList<dynamic>(
                 'extension_range',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  DescriptorProtoExtensionRange,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => DescriptorProtoExtensionRange.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<DescriptorProtoExtensionRange, Object>(
+                      value: e,
+                      parse:
+                          (v) => DescriptorProtoExtensionRange.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
       oneofDecl:
-          (json.valueEnsureAsList<dynamic>('oneof_decl', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'oneof_decl',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  OneofDescriptorProto,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => OneofDescriptorProto.fromJson(v)),
+                (e) => JsonParser.valueTo<OneofDescriptorProto, Object>(
+                  value: e,
+                  parse:
+                      (v) => OneofDescriptorProto.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
-      options: json.valueTo<MessageOptions?, Map<String, dynamic>>(
+      options: json.valueTo<MessageOptions?, Object>(
         key: 'options',
-        parse: (v) => MessageOptions.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) =>
+                MessageOptions.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       reservedRange:
           (json.valueEnsureAsList<dynamic>(
                 'reserved_range',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  DescriptorProtoReservedRange,
-                  Map<String, dynamic>
-                >(
+                (e) => JsonParser.valueTo<DescriptorProtoReservedRange, Object>(
                   value: e,
-                  parse: (v) => DescriptorProtoReservedRange.fromJson(v),
+                  parse:
+                      (v) => DescriptorProtoReservedRange.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       reservedName:
           (json.valueEnsureAsList<dynamic>(
             'reserved_name',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
       visibility: json.valueTo<SymbolVisibility?, Object?>(
         key: 'visibility',
@@ -1540,18 +1799,37 @@ class DescriptorProtoExtensionRange extends CosmosProtoMessage {
   List<Object?> get protoValues => [start, end, options];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'start': start, 'end': end, 'options': options?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'start': start,
+      'end': end,
+      'options': config.encodeMessage(options),
+    };
   }
 
-  factory DescriptorProtoExtensionRange.fromJson(Map<String, dynamic> json) {
+  factory DescriptorProtoExtensionRange.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return DescriptorProtoExtensionRange(
-      start: json.valueAsInt<int?>('start', acceptCamelCase: true),
-      end: json.valueAsInt<int?>('end', acceptCamelCase: true),
-      options: json.valueTo<ExtensionRangeOptions?, Map<String, dynamic>>(
+      start: json.valueAsInt<int?>(
+        'start',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      end: json.valueAsInt<int?>(
+        'end',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      options: json.valueTo<ExtensionRangeOptions?, Object>(
         key: 'options',
-        parse: (v) => ExtensionRangeOptions.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => ExtensionRangeOptions.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1602,14 +1880,25 @@ class DescriptorProtoReservedRange extends CosmosProtoMessage {
   List<Object?> get protoValues => [start, end];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'start': start, 'end': end};
   }
 
-  factory DescriptorProtoReservedRange.fromJson(Map<String, dynamic> json) {
+  factory DescriptorProtoReservedRange.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return DescriptorProtoReservedRange(
-      start: json.valueAsInt<int?>('start', acceptCamelCase: true),
-      end: json.valueAsInt<int?>('end', acceptCamelCase: true),
+      start: json.valueAsInt<int?>(
+        'start',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      end: json.valueAsInt<int?>(
+        'end',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1691,49 +1980,65 @@ class ExtensionRangeOptions extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'uninterpreted_option':
-          uninterpretedOption.map((e) => e.toJson()).toList(),
-      'declaration': declaration.map((e) => e.toJson()).toList(),
-      'features': features?.toJson(),
-      'verification': verification?.protoName,
+          uninterpretedOption.map((e) => config.encodeMessage(e)).toList(),
+      'declaration': declaration.map((e) => config.encodeMessage(e)).toList(),
+      'features': config.encodeMessage(features),
+      'verification': config.encodeEnum(verification),
     };
   }
 
-  factory ExtensionRangeOptions.fromJson(Map<String, dynamic> json) {
+  factory ExtensionRangeOptions.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ExtensionRangeOptions(
       uninterpretedOption:
           (json.valueEnsureAsList<dynamic>(
                 'uninterpreted_option',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  UninterpretedOption,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => UninterpretedOption.fromJson(v)),
+                (e) => JsonParser.valueTo<UninterpretedOption, Object>(
+                  value: e,
+                  parse:
+                      (v) => UninterpretedOption.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
       declaration:
           (json.valueEnsureAsList<dynamic>(
                 'declaration',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   ExtensionRangeOptionsDeclaration,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
-                  parse: (v) => ExtensionRangeOptionsDeclaration.fromJson(v),
+                  parse:
+                      (v) => ExtensionRangeOptionsDeclaration.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
-      features: json.valueTo<FeatureSet?, Map<String, dynamic>>(
+      features: json.valueTo<FeatureSet?, Object>(
         key: 'features',
-        parse: (v) => FeatureSet.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => FeatureSet.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       verification: json
           .valueTo<ExtensionRangeOptionsVerificationState?, Object?>(
@@ -1823,7 +2128,9 @@ class ExtensionRangeOptionsDeclaration extends CosmosProtoMessage {
   List<Object?> get protoValues => [number, fullName, type, reserved, repeated];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'number': number,
       'full_name': fullName,
@@ -1833,13 +2140,31 @@ class ExtensionRangeOptionsDeclaration extends CosmosProtoMessage {
     };
   }
 
-  factory ExtensionRangeOptionsDeclaration.fromJson(Map<String, dynamic> json) {
+  factory ExtensionRangeOptionsDeclaration.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ExtensionRangeOptionsDeclaration(
-      number: json.valueAsInt<int?>('number', acceptCamelCase: true),
-      fullName: json.valueAsString<String?>('full_name', acceptCamelCase: true),
-      type: json.valueAsString<String?>('type', acceptCamelCase: true),
-      reserved: json.valueAsBool<bool?>('reserved', acceptCamelCase: true),
-      repeated: json.valueAsBool<bool?>('repeated', acceptCamelCase: true),
+      number: json.valueAsInt<int?>(
+        'number',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      fullName: json.valueAsString<String?>(
+        'full_name',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      type: json.valueAsString<String?>(
+        'type',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      reserved: json.valueAsBool<bool?>(
+        'reserved',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      repeated: json.valueAsBool<bool?>(
+        'repeated',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1977,26 +2302,37 @@ class FieldDescriptorProto extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'name': name,
       'number': number,
-      'label': label?.protoName,
-      'type': type?.protoName,
+      'label': config.encodeEnum(label),
+      'type': config.encodeEnum(type),
       'type_name': typeName,
       'extendee': extendee,
       'default_value': defaultValue,
       'oneof_index': oneofIndex,
       'json_name': jsonName,
-      'options': options?.toJson(),
+      'options': config.encodeMessage(options),
       'proto3_optional': proto3Optional,
     };
   }
 
-  factory FieldDescriptorProto.fromJson(Map<String, dynamic> json) {
+  factory FieldDescriptorProto.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return FieldDescriptorProto(
-      name: json.valueAsString<String?>('name', acceptCamelCase: true),
-      number: json.valueAsInt<int?>('number', acceptCamelCase: true),
+      name: json.valueAsString<String?>(
+        'name',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      number: json.valueAsInt<int?>(
+        'number',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       label: json.valueTo<FieldDescriptorProtoLabel?, Object?>(
         key: 'label',
         parse: (v) => FieldDescriptorProtoLabel.from(v),
@@ -2005,22 +2341,35 @@ class FieldDescriptorProto extends CosmosProtoMessage {
         key: 'type',
         parse: (v) => FieldDescriptorProtoType.from(v),
       ),
-      typeName: json.valueAsString<String?>('type_name', acceptCamelCase: true),
-      extendee: json.valueAsString<String?>('extendee', acceptCamelCase: true),
+      typeName: json.valueAsString<String?>(
+        'type_name',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      extendee: json.valueAsString<String?>(
+        'extendee',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       defaultValue: json.valueAsString<String?>(
         'default_value',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      oneofIndex: json.valueAsInt<int?>('oneof_index', acceptCamelCase: true),
-      jsonName: json.valueAsString<String?>('json_name', acceptCamelCase: true),
-      options: json.valueTo<FieldOptions?, Map<String, dynamic>>(
+      oneofIndex: json.valueAsInt<int?>(
+        'oneof_index',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      jsonName: json.valueAsString<String?>(
+        'json_name',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      options: json.valueTo<FieldOptions?, Object>(
         key: 'options',
-        parse: (v) => FieldOptions.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => FieldOptions.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       proto3Optional: json.valueAsBool<bool?>(
         'proto3_optional',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -2082,17 +2431,26 @@ class OneofDescriptorProto extends CosmosProtoMessage {
   List<Object?> get protoValues => [name, options];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'name': name, 'options': options?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'name': name, 'options': config.encodeMessage(options)};
   }
 
-  factory OneofDescriptorProto.fromJson(Map<String, dynamic> json) {
+  factory OneofDescriptorProto.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return OneofDescriptorProto(
-      name: json.valueAsString<String?>('name', acceptCamelCase: true),
-      options: json.valueTo<OneofOptions?, Map<String, dynamic>>(
+      name: json.valueAsString<String?>(
+        'name',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      options: json.valueTo<OneofOptions?, Object>(
         key: 'options',
-        parse: (v) => OneofOptions.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => OneofOptions.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -2181,54 +2539,77 @@ class EnumDescriptorProto extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'name': name,
-      'value': value.map((e) => e.toJson()).toList(),
-      'options': options?.toJson(),
-      'reserved_range': reservedRange.map((e) => e.toJson()).toList(),
+      'value': value.map((e) => config.encodeMessage(e)).toList(),
+      'options': config.encodeMessage(options),
+      'reserved_range':
+          reservedRange.map((e) => config.encodeMessage(e)).toList(),
       'reserved_name': reservedName.map((e) => e).toList(),
-      'visibility': visibility?.protoName,
+      'visibility': config.encodeEnum(visibility),
     };
   }
 
-  factory EnumDescriptorProto.fromJson(Map<String, dynamic> json) {
+  factory EnumDescriptorProto.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return EnumDescriptorProto(
-      name: json.valueAsString<String?>('name', acceptCamelCase: true),
+      name: json.valueAsString<String?>(
+        'name',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       value:
-          (json.valueEnsureAsList<dynamic>('value', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'value',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  EnumValueDescriptorProto,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => EnumValueDescriptorProto.fromJson(v)),
+                (e) => JsonParser.valueTo<EnumValueDescriptorProto, Object>(
+                  value: e,
+                  parse:
+                      (v) => EnumValueDescriptorProto.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
-      options: json.valueTo<EnumOptions?, Map<String, dynamic>>(
+      options: json.valueTo<EnumOptions?, Object>(
         key: 'options',
-        parse: (v) => EnumOptions.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => EnumOptions.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       reservedRange:
           (json.valueEnsureAsList<dynamic>(
                 'reserved_range',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   EnumDescriptorProtoEnumReservedRange,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
-                      (v) => EnumDescriptorProtoEnumReservedRange.fromJson(v),
+                      (v) => EnumDescriptorProtoEnumReservedRange.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       reservedName:
           (json.valueEnsureAsList<dynamic>(
             'reserved_name',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
       visibility: json.valueTo<SymbolVisibility?, Object?>(
         key: 'visibility',
@@ -2297,16 +2678,25 @@ class EnumDescriptorProtoEnumReservedRange extends CosmosProtoMessage {
   List<Object?> get protoValues => [start, end];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'start': start, 'end': end};
   }
 
   factory EnumDescriptorProtoEnumReservedRange.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return EnumDescriptorProtoEnumReservedRange(
-      start: json.valueAsInt<int?>('start', acceptCamelCase: true),
-      end: json.valueAsInt<int?>('end', acceptCamelCase: true),
+      start: json.valueAsInt<int?>(
+        'start',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      end: json.valueAsInt<int?>(
+        'end',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -2353,18 +2743,37 @@ class EnumValueDescriptorProto extends CosmosProtoMessage {
   List<Object?> get protoValues => [name, number, options];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'name': name, 'number': number, 'options': options?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'name': name,
+      'number': number,
+      'options': config.encodeMessage(options),
+    };
   }
 
-  factory EnumValueDescriptorProto.fromJson(Map<String, dynamic> json) {
+  factory EnumValueDescriptorProto.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return EnumValueDescriptorProto(
-      name: json.valueAsString<String?>('name', acceptCamelCase: true),
-      number: json.valueAsInt<int?>('number', acceptCamelCase: true),
-      options: json.valueTo<EnumValueOptions?, Map<String, dynamic>>(
+      name: json.valueAsString<String?>(
+        'name',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      number: json.valueAsInt<int?>(
+        'number',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      options: json.valueTo<EnumValueOptions?, Object>(
         key: 'options',
-        parse: (v) => EnumValueOptions.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => EnumValueOptions.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -2422,30 +2831,48 @@ class ServiceDescriptorProto extends CosmosProtoMessage {
   List<Object?> get protoValues => [name, method, options];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'name': name,
-      'method': method.map((e) => e.toJson()).toList(),
-      'options': options?.toJson(),
+      'method': method.map((e) => config.encodeMessage(e)).toList(),
+      'options': config.encodeMessage(options),
     };
   }
 
-  factory ServiceDescriptorProto.fromJson(Map<String, dynamic> json) {
+  factory ServiceDescriptorProto.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ServiceDescriptorProto(
-      name: json.valueAsString<String?>('name', acceptCamelCase: true),
+      name: json.valueAsString<String?>(
+        'name',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       method:
-          (json.valueEnsureAsList<dynamic>('method', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'method',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  MethodDescriptorProto,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => MethodDescriptorProto.fromJson(v)),
+                (e) => JsonParser.valueTo<MethodDescriptorProto, Object>(
+                  value: e,
+                  parse:
+                      (v) => MethodDescriptorProto.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
-      options: json.valueTo<ServiceOptions?, Map<String, dynamic>>(
+      options: json.valueTo<ServiceOptions?, Object>(
         key: 'options',
-        parse: (v) => ServiceOptions.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) =>
+                ServiceOptions.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -2535,40 +2962,50 @@ class MethodDescriptorProto extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'name': name,
       'input_type': inputType,
       'output_type': outputType,
-      'options': options?.toJson(),
+      'options': config.encodeMessage(options),
       'client_streaming': clientStreaming,
       'server_streaming': serverStreaming,
     };
   }
 
-  factory MethodDescriptorProto.fromJson(Map<String, dynamic> json) {
+  factory MethodDescriptorProto.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MethodDescriptorProto(
-      name: json.valueAsString<String?>('name', acceptCamelCase: true),
+      name: json.valueAsString<String?>(
+        'name',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       inputType: json.valueAsString<String?>(
         'input_type',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       outputType: json.valueAsString<String?>(
         'output_type',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      options: json.valueTo<MethodOptions?, Map<String, dynamic>>(
+      options: json.valueTo<MethodOptions?, Object>(
         key: 'options',
-        parse: (v) => MethodOptions.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) =>
+                MethodOptions.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       clientStreaming: json.valueAsBool<bool?>(
         'client_streaming',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       serverStreaming: json.valueAsBool<bool?>(
         'server_streaming',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -2860,14 +3297,16 @@ class FileOptions extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'java_package': javaPackage,
       'java_outer_classname': javaOuterClassname,
       'java_multiple_files': javaMultipleFiles,
       'java_generate_equals_and_hash': javaGenerateEqualsAndHash,
       'java_string_check_utf8': javaStringCheckUtf8,
-      'optimize_for': optimizeFor?.protoName,
+      'optimize_for': config.encodeEnum(optimizeFor),
       'go_package': goPackage,
       'cc_generic_services': ccGenericServices,
       'java_generic_services': javaGenericServices,
@@ -2881,33 +3320,36 @@ class FileOptions extends CosmosProtoMessage {
       'php_namespace': phpNamespace,
       'php_metadata_namespace': phpMetadataNamespace,
       'ruby_package': rubyPackage,
-      'features': features?.toJson(),
+      'features': config.encodeMessage(features),
       'uninterpreted_option':
-          uninterpretedOption.map((e) => e.toJson()).toList(),
+          uninterpretedOption.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory FileOptions.fromJson(Map<String, dynamic> json) {
+  factory FileOptions.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return FileOptions(
       javaPackage: json.valueAsString<String?>(
         'java_package',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       javaOuterClassname: json.valueAsString<String?>(
         'java_outer_classname',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       javaMultipleFiles: json.valueAsBool<bool?>(
         'java_multiple_files',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       javaGenerateEqualsAndHash: json.valueAsBool<bool?>(
         'java_generate_equals_and_hash',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       javaStringCheckUtf8: json.valueAsBool<bool?>(
         'java_string_check_utf8',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       optimizeFor: json.valueTo<FileOptionsOptimizeMode?, Object?>(
         key: 'optimize_for',
@@ -2915,68 +3357,77 @@ class FileOptions extends CosmosProtoMessage {
       ),
       goPackage: json.valueAsString<String?>(
         'go_package',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       ccGenericServices: json.valueAsBool<bool?>(
         'cc_generic_services',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       javaGenericServices: json.valueAsBool<bool?>(
         'java_generic_services',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       pyGenericServices: json.valueAsBool<bool?>(
         'py_generic_services',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      deprecated: json.valueAsBool<bool?>('deprecated', acceptCamelCase: true),
+      deprecated: json.valueAsBool<bool?>(
+        'deprecated',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       ccEnableArenas: json.valueAsBool<bool?>(
         'cc_enable_arenas',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       objcClassPrefix: json.valueAsString<String?>(
         'objc_class_prefix',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       csharpNamespace: json.valueAsString<String?>(
         'csharp_namespace',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       swiftPrefix: json.valueAsString<String?>(
         'swift_prefix',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       phpClassPrefix: json.valueAsString<String?>(
         'php_class_prefix',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       phpNamespace: json.valueAsString<String?>(
         'php_namespace',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       phpMetadataNamespace: json.valueAsString<String?>(
         'php_metadata_namespace',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       rubyPackage: json.valueAsString<String?>(
         'ruby_package',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      features: json.valueTo<FeatureSet?, Map<String, dynamic>>(
+      features: json.valueTo<FeatureSet?, Object>(
         key: 'features',
-        parse: (v) => FeatureSet.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => FeatureSet.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       uninterpretedOption:
           (json.valueEnsureAsList<dynamic>(
                 'uninterpreted_option',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  UninterpretedOption,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => UninterpretedOption.fromJson(v)),
+                (e) => JsonParser.valueTo<UninterpretedOption, Object>(
+                  value: e,
+                  parse:
+                      (v) => UninterpretedOption.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );
@@ -3163,7 +3614,9 @@ class MessageOptions extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'message_set_wire_format': messageSetWireFormat,
       'no_standard_descriptor_accessor': noStandardDescriptorAccessor,
@@ -3171,43 +3624,58 @@ class MessageOptions extends CosmosProtoMessage {
       'map_entry': mapEntry,
       'deprecated_legacy_json_field_conflicts':
           deprecatedLegacyJsonFieldConflicts,
-      'features': features?.toJson(),
+      'features': config.encodeMessage(features),
       'uninterpreted_option':
-          uninterpretedOption.map((e) => e.toJson()).toList(),
+          uninterpretedOption.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory MessageOptions.fromJson(Map<String, dynamic> json) {
+  factory MessageOptions.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MessageOptions(
       messageSetWireFormat: json.valueAsBool<bool?>(
         'message_set_wire_format',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       noStandardDescriptorAccessor: json.valueAsBool<bool?>(
         'no_standard_descriptor_accessor',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      deprecated: json.valueAsBool<bool?>('deprecated', acceptCamelCase: true),
-      mapEntry: json.valueAsBool<bool?>('map_entry', acceptCamelCase: true),
+      deprecated: json.valueAsBool<bool?>(
+        'deprecated',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      mapEntry: json.valueAsBool<bool?>(
+        'map_entry',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       deprecatedLegacyJsonFieldConflicts: json.valueAsBool<bool?>(
         'deprecated_legacy_json_field_conflicts',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      features: json.valueTo<FeatureSet?, Map<String, dynamic>>(
+      features: json.valueTo<FeatureSet?, Object>(
         key: 'features',
-        parse: (v) => FeatureSet.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => FeatureSet.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       uninterpretedOption:
           (json.valueEnsureAsList<dynamic>(
                 'uninterpreted_option',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  UninterpretedOption,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => UninterpretedOption.fromJson(v)),
+                (e) => JsonParser.valueTo<UninterpretedOption, Object>(
+                  value: e,
+                  parse:
+                      (v) => UninterpretedOption.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );
@@ -3433,54 +3901,76 @@ class FieldOptions extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'ctype': ctype?.protoName,
+      'ctype': config.encodeEnum(ctype),
       'packed': packed,
-      'jstype': jstype?.protoName,
+      'jstype': config.encodeEnum(jstype),
       'lazy': lazy,
       'unverified_lazy': unverifiedLazy,
       'deprecated': deprecated,
       'weak': weak,
       'debug_redact': debugRedact,
-      'retention': retention?.protoName,
-      'targets': targets.map((e) => e.protoName).toList(),
-      'edition_defaults': editionDefaults.map((e) => e.toJson()).toList(),
-      'features': features?.toJson(),
-      'feature_support': featureSupport?.toJson(),
+      'retention': config.encodeEnum(retention),
+      'targets': targets.map((e) => config.encodeEnum(e)).toList(),
+      'edition_defaults':
+          editionDefaults.map((e) => config.encodeMessage(e)).toList(),
+      'features': config.encodeMessage(features),
+      'feature_support': config.encodeMessage(featureSupport),
       'uninterpreted_option':
-          uninterpretedOption.map((e) => e.toJson()).toList(),
+          uninterpretedOption.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory FieldOptions.fromJson(Map<String, dynamic> json) {
+  factory FieldOptions.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return FieldOptions(
       ctype: json.valueTo<FieldOptionsCType?, Object?>(
         key: 'ctype',
         parse: (v) => FieldOptionsCType.from(v),
       ),
-      packed: json.valueAsBool<bool?>('packed', acceptCamelCase: true),
+      packed: json.valueAsBool<bool?>(
+        'packed',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       jstype: json.valueTo<FieldOptionsJSType?, Object?>(
         key: 'jstype',
         parse: (v) => FieldOptionsJSType.from(v),
       ),
-      lazy: json.valueAsBool<bool?>('lazy', acceptCamelCase: true),
+      lazy: json.valueAsBool<bool?>(
+        'lazy',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       unverifiedLazy: json.valueAsBool<bool?>(
         'unverified_lazy',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      deprecated: json.valueAsBool<bool?>('deprecated', acceptCamelCase: true),
-      weak: json.valueAsBool<bool?>('weak', acceptCamelCase: true),
+      deprecated: json.valueAsBool<bool?>(
+        'deprecated',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      weak: json.valueAsBool<bool?>(
+        'weak',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       debugRedact: json.valueAsBool<bool?>(
         'debug_redact',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       retention: json.valueTo<FieldOptionsOptionRetention?, Object?>(
         key: 'retention',
         parse: (v) => FieldOptionsOptionRetention.from(v),
       ),
       targets:
-          (json.valueEnsureAsList<dynamic>('targets', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'targets',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<FieldOptionsOptionTargetType, Object>(
                   value: e,
@@ -3491,39 +3981,50 @@ class FieldOptions extends CosmosProtoMessage {
       editionDefaults:
           (json.valueEnsureAsList<dynamic>(
                 'edition_defaults',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  FieldOptionsEditionDefault,
-                  Map<String, dynamic>
-                >(
+                (e) => JsonParser.valueTo<FieldOptionsEditionDefault, Object>(
                   value: e,
-                  parse: (v) => FieldOptionsEditionDefault.fromJson(v),
+                  parse:
+                      (v) => FieldOptionsEditionDefault.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
-      features: json.valueTo<FeatureSet?, Map<String, dynamic>>(
+      features: json.valueTo<FeatureSet?, Object>(
         key: 'features',
-        parse: (v) => FeatureSet.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => FeatureSet.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      featureSupport: json
-          .valueTo<FieldOptionsFeatureSupport?, Map<String, dynamic>>(
-            key: 'feature_support',
-            parse: (v) => FieldOptionsFeatureSupport.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      featureSupport: json.valueTo<FieldOptionsFeatureSupport?, Object>(
+        key: 'feature_support',
+        parse:
+            (v) => FieldOptionsFeatureSupport.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       uninterpretedOption:
           (json.valueEnsureAsList<dynamic>(
                 'uninterpreted_option',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  UninterpretedOption,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => UninterpretedOption.fromJson(v)),
+                (e) => JsonParser.valueTo<UninterpretedOption, Object>(
+                  value: e,
+                  parse:
+                      (v) => UninterpretedOption.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );
@@ -3599,17 +4100,25 @@ class FieldOptionsEditionDefault extends CosmosProtoMessage {
   List<Object?> get protoValues => [edition, value];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'edition': edition?.protoName, 'value': value};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'edition': config.encodeEnum(edition), 'value': value};
   }
 
-  factory FieldOptionsEditionDefault.fromJson(Map<String, dynamic> json) {
+  factory FieldOptionsEditionDefault.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return FieldOptionsEditionDefault(
       edition: json.valueTo<Edition?, Object?>(
         key: 'edition',
         parse: (v) => Edition.from(v),
       ),
-      value: json.valueAsString<String?>('value', acceptCamelCase: true),
+      value: json.valueAsString<String?>(
+        'value',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -3678,16 +4187,21 @@ class FieldOptionsFeatureSupport extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'edition_introduced': editionIntroduced?.protoName,
-      'edition_deprecated': editionDeprecated?.protoName,
+      'edition_introduced': config.encodeEnum(editionIntroduced),
+      'edition_deprecated': config.encodeEnum(editionDeprecated),
       'deprecation_warning': deprecationWarning,
-      'edition_removed': editionRemoved?.protoName,
+      'edition_removed': config.encodeEnum(editionRemoved),
     };
   }
 
-  factory FieldOptionsFeatureSupport.fromJson(Map<String, dynamic> json) {
+  factory FieldOptionsFeatureSupport.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return FieldOptionsFeatureSupport(
       editionIntroduced: json.valueTo<Edition?, Object?>(
         key: 'edition_introduced',
@@ -3699,7 +4213,7 @@ class FieldOptionsFeatureSupport extends CosmosProtoMessage {
       ),
       deprecationWarning: json.valueAsString<String?>(
         'deprecation_warning',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       editionRemoved: json.valueTo<Edition?, Object?>(
         key: 'edition_removed',
@@ -3759,31 +4273,42 @@ class OneofOptions extends CosmosProtoMessage {
   List<Object?> get protoValues => [features, uninterpretedOption];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'features': features?.toJson(),
+      'features': config.encodeMessage(features),
       'uninterpreted_option':
-          uninterpretedOption.map((e) => e.toJson()).toList(),
+          uninterpretedOption.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory OneofOptions.fromJson(Map<String, dynamic> json) {
+  factory OneofOptions.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return OneofOptions(
-      features: json.valueTo<FeatureSet?, Map<String, dynamic>>(
+      features: json.valueTo<FeatureSet?, Object>(
         key: 'features',
-        parse: (v) => FeatureSet.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => FeatureSet.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       uninterpretedOption:
           (json.valueEnsureAsList<dynamic>(
                 'uninterpreted_option',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  UninterpretedOption,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => UninterpretedOption.fromJson(v)),
+                (e) => JsonParser.valueTo<UninterpretedOption, Object>(
+                  value: e,
+                  parse:
+                      (v) => UninterpretedOption.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );
@@ -3884,41 +4409,58 @@ class EnumOptions extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'allow_alias': allowAlias,
       'deprecated': deprecated,
       'deprecated_legacy_json_field_conflicts':
           deprecatedLegacyJsonFieldConflicts,
-      'features': features?.toJson(),
+      'features': config.encodeMessage(features),
       'uninterpreted_option':
-          uninterpretedOption.map((e) => e.toJson()).toList(),
+          uninterpretedOption.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory EnumOptions.fromJson(Map<String, dynamic> json) {
+  factory EnumOptions.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return EnumOptions(
-      allowAlias: json.valueAsBool<bool?>('allow_alias', acceptCamelCase: true),
-      deprecated: json.valueAsBool<bool?>('deprecated', acceptCamelCase: true),
+      allowAlias: json.valueAsBool<bool?>(
+        'allow_alias',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      deprecated: json.valueAsBool<bool?>(
+        'deprecated',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       deprecatedLegacyJsonFieldConflicts: json.valueAsBool<bool?>(
         'deprecated_legacy_json_field_conflicts',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      features: json.valueTo<FeatureSet?, Map<String, dynamic>>(
+      features: json.valueTo<FeatureSet?, Object>(
         key: 'features',
-        parse: (v) => FeatureSet.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => FeatureSet.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       uninterpretedOption:
           (json.valueEnsureAsList<dynamic>(
                 'uninterpreted_option',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  UninterpretedOption,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => UninterpretedOption.fromJson(v)),
+                (e) => JsonParser.valueTo<UninterpretedOption, Object>(
+                  value: e,
+                  parse:
+                      (v) => UninterpretedOption.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );
@@ -4018,45 +4560,62 @@ class EnumValueOptions extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'deprecated': deprecated,
-      'features': features?.toJson(),
+      'features': config.encodeMessage(features),
       'debug_redact': debugRedact,
-      'feature_support': featureSupport?.toJson(),
+      'feature_support': config.encodeMessage(featureSupport),
       'uninterpreted_option':
-          uninterpretedOption.map((e) => e.toJson()).toList(),
+          uninterpretedOption.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory EnumValueOptions.fromJson(Map<String, dynamic> json) {
+  factory EnumValueOptions.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return EnumValueOptions(
-      deprecated: json.valueAsBool<bool?>('deprecated', acceptCamelCase: true),
-      features: json.valueTo<FeatureSet?, Map<String, dynamic>>(
+      deprecated: json.valueAsBool<bool?>(
+        'deprecated',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      features: json.valueTo<FeatureSet?, Object>(
         key: 'features',
-        parse: (v) => FeatureSet.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => FeatureSet.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       debugRedact: json.valueAsBool<bool?>(
         'debug_redact',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      featureSupport: json
-          .valueTo<FieldOptionsFeatureSupport?, Map<String, dynamic>>(
-            key: 'feature_support',
-            parse: (v) => FieldOptionsFeatureSupport.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      featureSupport: json.valueTo<FieldOptionsFeatureSupport?, Object>(
+        key: 'feature_support',
+        parse:
+            (v) => FieldOptionsFeatureSupport.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       uninterpretedOption:
           (json.valueEnsureAsList<dynamic>(
                 'uninterpreted_option',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  UninterpretedOption,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => UninterpretedOption.fromJson(v)),
+                (e) => JsonParser.valueTo<UninterpretedOption, Object>(
+                  value: e,
+                  parse:
+                      (v) => UninterpretedOption.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );
@@ -4141,33 +4700,47 @@ class ServiceOptions extends CosmosProtoMessage {
   List<Object?> get protoValues => [features, deprecated, uninterpretedOption];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'features': features?.toJson(),
+      'features': config.encodeMessage(features),
       'deprecated': deprecated,
       'uninterpreted_option':
-          uninterpretedOption.map((e) => e.toJson()).toList(),
+          uninterpretedOption.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory ServiceOptions.fromJson(Map<String, dynamic> json) {
+  factory ServiceOptions.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ServiceOptions(
-      features: json.valueTo<FeatureSet?, Map<String, dynamic>>(
+      features: json.valueTo<FeatureSet?, Object>(
         key: 'features',
-        parse: (v) => FeatureSet.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => FeatureSet.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      deprecated: json.valueAsBool<bool?>('deprecated', acceptCamelCase: true),
+      deprecated: json.valueAsBool<bool?>(
+        'deprecated',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       uninterpretedOption:
           (json.valueEnsureAsList<dynamic>(
                 'uninterpreted_option',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  UninterpretedOption,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => UninterpretedOption.fromJson(v)),
+                (e) => JsonParser.valueTo<UninterpretedOption, Object>(
+                  value: e,
+                  parse:
+                      (v) => UninterpretedOption.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );
@@ -4263,38 +4836,52 @@ class MethodOptions extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'deprecated': deprecated,
-      'idempotency_level': idempotencyLevel?.protoName,
-      'features': features?.toJson(),
+      'idempotency_level': config.encodeEnum(idempotencyLevel),
+      'features': config.encodeMessage(features),
       'uninterpreted_option':
-          uninterpretedOption.map((e) => e.toJson()).toList(),
+          uninterpretedOption.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory MethodOptions.fromJson(Map<String, dynamic> json) {
+  factory MethodOptions.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MethodOptions(
-      deprecated: json.valueAsBool<bool?>('deprecated', acceptCamelCase: true),
+      deprecated: json.valueAsBool<bool?>(
+        'deprecated',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       idempotencyLevel: json.valueTo<MethodOptionsIdempotencyLevel?, Object?>(
         key: 'idempotency_level',
         parse: (v) => MethodOptionsIdempotencyLevel.from(v),
       ),
-      features: json.valueTo<FeatureSet?, Map<String, dynamic>>(
+      features: json.valueTo<FeatureSet?, Object>(
         key: 'features',
-        parse: (v) => FeatureSet.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => FeatureSet.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       uninterpretedOption:
           (json.valueEnsureAsList<dynamic>(
                 'uninterpreted_option',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  UninterpretedOption,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => UninterpretedOption.fromJson(v)),
+                (e) => JsonParser.valueTo<UninterpretedOption, Object>(
+                  value: e,
+                  parse:
+                      (v) => UninterpretedOption.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );
@@ -4345,19 +4932,19 @@ class UninterpretedOption extends CosmosProtoMessage {
 
   final double? doubleValue;
 
-  final List<int>? stringValue;
+  final BuBytes? stringValue;
 
   final String? aggregateValue;
 
-  const UninterpretedOption({
+  UninterpretedOption({
     this.name = const [],
     this.identifierValue,
     this.positiveIntValue,
     this.negativeIntValue,
     this.doubleValue,
-    this.stringValue,
+    List<int>? stringValue,
     this.aggregateValue,
-  });
+  }) : stringValue = stringValue?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -4393,62 +4980,64 @@ class UninterpretedOption extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'name': name.map((e) => e.toJson()).toList(),
+      'name': name.map((e) => config.encodeMessage(e)).toList(),
       'identifier_value': identifierValue,
-      'positive_int_value': positiveIntValue?.toString(),
-      'negative_int_value': negativeIntValue?.toString(),
+      'positive_int_value': config.encodeBigint(positiveIntValue),
+      'negative_int_value': config.encodeBigint(negativeIntValue),
       'double_value': doubleValue,
-      'string_value': switch (stringValue) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'string_value': config.encodeBinary(stringValue),
       'aggregate_value': aggregateValue,
     };
   }
 
-  factory UninterpretedOption.fromJson(Map<String, dynamic> json) {
+  factory UninterpretedOption.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return UninterpretedOption(
       name:
-          (json.valueEnsureAsList<dynamic>('name', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'name',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  UninterpretedOptionNamePart,
-                  Map<String, dynamic>
-                >(
+                (e) => JsonParser.valueTo<UninterpretedOptionNamePart, Object>(
                   value: e,
-                  parse: (v) => UninterpretedOptionNamePart.fromJson(v),
+                  parse:
+                      (v) => UninterpretedOptionNamePart.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       identifierValue: json.valueAsString<String?>(
         'identifier_value',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       positiveIntValue: json.valueAsBigInt<BigInt?>(
         'positive_int_value',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       negativeIntValue: json.valueAsBigInt<BigInt?>(
         'negative_int_value',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       doubleValue: json.valueAsDouble<double?>(
         'double_value',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      stringValue: json.valueAsBytes<List<int>?>(
-        'string_value',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      stringValue: config.decodeBinary<List<int>?>(
+        json.valueAs('string_value', normalizeKeyLookup: config.normalizeKeys),
       ),
       aggregateValue: json.valueAsString<String?>(
         'aggregate_value',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -4505,20 +5094,25 @@ class UninterpretedOptionNamePart extends CosmosProtoMessage {
   List<Object?> get protoValues => [namePart, isExtension];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'name_part': namePart, 'is_extension': isExtension};
   }
 
-  factory UninterpretedOptionNamePart.fromJson(Map<String, dynamic> json) {
+  factory UninterpretedOptionNamePart.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return UninterpretedOptionNamePart(
       namePart: json.valueAsString<String>(
         'name_part',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
         onMissing: () => "",
       ),
       isExtension: json.valueAsBool<bool>(
         'is_extension',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
         onMissing: () => false,
       ),
     );
@@ -4779,20 +5373,25 @@ class FeatureSet extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'field_presence': fieldPresence?.protoName,
-      'enum_type': enumType?.protoName,
-      'repeated_field_encoding': repeatedFieldEncoding?.protoName,
-      'utf8_validation': utf8Validation?.protoName,
-      'message_encoding': messageEncoding?.protoName,
-      'json_format': jsonFormat?.protoName,
-      'enforce_naming_style': enforceNamingStyle?.protoName,
-      'default_symbol_visibility': defaultSymbolVisibility?.protoName,
+      'field_presence': config.encodeEnum(fieldPresence),
+      'enum_type': config.encodeEnum(enumType),
+      'repeated_field_encoding': config.encodeEnum(repeatedFieldEncoding),
+      'utf8_validation': config.encodeEnum(utf8Validation),
+      'message_encoding': config.encodeEnum(messageEncoding),
+      'json_format': config.encodeEnum(jsonFormat),
+      'enforce_naming_style': config.encodeEnum(enforceNamingStyle),
+      'default_symbol_visibility': config.encodeEnum(defaultSymbolVisibility),
     };
   }
 
-  factory FeatureSet.fromJson(Map<String, dynamic> json) {
+  factory FeatureSet.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return FeatureSet(
       fieldPresence: json.valueTo<FeatureSetFieldPresence?, Object?>(
         key: 'field_presence',
@@ -4950,19 +5549,32 @@ class SourceCodeInfo extends CosmosProtoMessage {
   List<Object?> get protoValues => [location];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'location': location.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'location': location.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory SourceCodeInfo.fromJson(Map<String, dynamic> json) {
+  factory SourceCodeInfo.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SourceCodeInfo(
       location:
-          (json.valueEnsureAsList<dynamic>('location', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'location',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  SourceCodeInfoLocation,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => SourceCodeInfoLocation.fromJson(v)),
+                (e) => JsonParser.valueTo<SourceCodeInfoLocation, Object>(
+                  value: e,
+                  parse:
+                      (v) => SourceCodeInfoLocation.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );
@@ -5116,7 +5728,9 @@ class SourceCodeInfoLocation extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'path': path.map((e) => e).toList(),
       'span': span.map((e) => e).toList(),
@@ -5127,30 +5741,36 @@ class SourceCodeInfoLocation extends CosmosProtoMessage {
     };
   }
 
-  factory SourceCodeInfoLocation.fromJson(Map<String, dynamic> json) {
+  factory SourceCodeInfoLocation.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SourceCodeInfoLocation(
       path:
           (json.valueEnsureAsList<dynamic>(
             'path',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsInt<int>(e)).toList(),
       span:
           (json.valueEnsureAsList<dynamic>(
             'span',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsInt<int>(e)).toList(),
       leadingComments: json.valueAsString<String?>(
         'leading_comments',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       trailingComments: json.valueAsString<String?>(
         'trailing_comments',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       leadingDetachedComments:
           (json.valueEnsureAsList<dynamic>(
             'leading_detached_comments',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
     );
   }

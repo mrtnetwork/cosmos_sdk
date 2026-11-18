@@ -10,13 +10,18 @@ class MsgSend extends CosmosProtoMessage
     with
         ICosmosProtoServiceMessage<types_tx.MsgEmpty>,
         ICosmosProtoAminoMessage {
-  final List<int>? fromAddress;
+  final BuBytes? fromAddress;
 
-  final List<int>? toAddress;
+  final BuBytes? toAddress;
 
   final List<cosmos_base_v1beta1_coin.Coin> amount;
 
-  const MsgSend({this.fromAddress, this.toAddress, this.amount = const []});
+  MsgSend({
+    List<int>? fromAddress,
+    List<int>? toAddress,
+    this.amount = const [],
+  }) : fromAddress = fromAddress?.asImmutableBytes,
+       toAddress = toAddress?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -49,48 +54,43 @@ class MsgSend extends CosmosProtoMessage
   List<Object?> get protoValues => [fromAddress, toAddress, amount];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'from_address': switch (fromAddress) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'to_address': switch (toAddress) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'amount': amount.map((e) => e.toJson()).toList(),
+      'from_address': config.encodeBinary(fromAddress),
+      'to_address': config.encodeBinary(toAddress),
+      'amount': amount.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory MsgSend.fromJson(Map<String, dynamic> json) {
+  factory MsgSend.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSend(
-      fromAddress: json.valueAsBytes<List<int>?>(
-        'from_address',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      fromAddress: config.decodeBinary<List<int>?>(
+        json.valueAs('from_address', normalizeKeyLookup: config.normalizeKeys),
       ),
-      toAddress: json.valueAsBytes<List<int>?>(
-        'to_address',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      toAddress: config.decodeBinary<List<int>?>(
+        json.valueAs('to_address', normalizeKeyLookup: config.normalizeKeys),
       ),
       amount:
-          (json.valueEnsureAsList<dynamic>('amount', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'amount',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );

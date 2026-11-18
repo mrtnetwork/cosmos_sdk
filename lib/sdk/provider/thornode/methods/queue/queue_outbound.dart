@@ -1,7 +1,7 @@
 import 'package:cosmos_sdk/sdk/provider/thornode/core/core.dart';
 import 'package:cosmos_sdk/sdk/provider/thornode/core/thorenode.dart';
 
-///
+/// Returns the outbound queue entries.
 class ThorNodeRequestQueueOutbound
     extends
         ThorNodeRequestParam<

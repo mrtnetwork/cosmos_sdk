@@ -85,53 +85,73 @@ class Params extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'distr_epoch_identifier': distrEpochIdentifier,
-      'group_creation_fee': groupCreationFee.map((e) => e.toJson()).toList(),
+      'group_creation_fee':
+          groupCreationFee.map((e) => config.encodeMessage(e)).toList(),
       'unrestricted_creator_whitelist':
           unrestrictedCreatorWhitelist.map((e) => e).toList(),
       'internal_uptime': internalUptime?.encodeString(asNanos: true),
-      'min_value_for_distribution': minValueForDistribution?.toJson(),
+      'min_value_for_distribution': config.encodeMessage(
+        minValueForDistribution,
+      ),
     };
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
       distrEpochIdentifier: json.valueAsString<String?>(
         'distr_epoch_identifier',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       groupCreationFee:
           (json.valueEnsureAsList<dynamic>(
                 'group_creation_fee',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
       unrestrictedCreatorWhitelist:
           (json.valueEnsureAsList<dynamic>(
             'unrestricted_creator_whitelist',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
-      internalUptime: json.valueTo<google_protobuf_duration.Duration?, String>(
+      internalUptime: json.valueTo<google_protobuf_duration.Duration?, Object>(
         key: 'internal_uptime',
-        parse: (v) => google_protobuf_duration.Duration.fromString(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_duration.Duration.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       minValueForDistribution: json
-          .valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
+          .valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
             key: 'min_value_for_distribution',
-            parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
     );
   }

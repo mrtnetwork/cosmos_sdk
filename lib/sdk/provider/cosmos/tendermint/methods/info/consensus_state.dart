@@ -23,7 +23,7 @@ class TendermintRequestConsensusState
   Map<String, String?> get parameters => {};
 
   @override
-  TendermintConsensusStateResponseResult onResonse(
+  TendermintConsensusStateResponseResult onResponse(
     Map<String, dynamic> result,
   ) {
     return TendermintConsensusStateResponseResult.fromJson(result);

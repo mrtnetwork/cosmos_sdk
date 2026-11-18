@@ -39,17 +39,28 @@ class QueryReferenceMemoRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height, asset, reference];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'height': height, 'asset': asset, 'reference': reference};
   }
 
-  factory QueryReferenceMemoRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryReferenceMemoRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryReferenceMemoRequest(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
-      asset: json.valueAsString<String?>('asset', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      asset: json.valueAsString<String?>(
+        'asset',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       reference: json.valueAsString<String?>(
         'reference',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -88,19 +99,19 @@ class QueryReferenceMemoResponse extends CosmosProtoMessage {
 
   final String? registrationHash;
 
-  final List<int>? registeredBy;
+  final BuBytes? registeredBy;
 
   final List<String> usedByTxs;
 
-  const QueryReferenceMemoResponse({
+  QueryReferenceMemoResponse({
     this.asset,
     this.memo,
     this.reference,
     this.height,
     this.registrationHash,
-    this.registeredBy,
+    List<int>? registeredBy,
     this.usedByTxs = const [],
-  });
+  }) : registeredBy = registeredBy?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -137,50 +148,58 @@ class QueryReferenceMemoResponse extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'asset': asset?.toJson(),
+      'asset': config.encodeMessage(asset),
       'memo': memo,
       'reference': reference,
-      'height': height?.toString(),
+      'height': config.encodeBigint(height),
       'registration_hash': registrationHash,
-      'registered_by': switch (registeredBy) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'registered_by': config.encodeBinary(registeredBy),
       'used_by_txs': usedByTxs.map((e) => e).toList(),
     };
   }
 
-  factory QueryReferenceMemoResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryReferenceMemoResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryReferenceMemoResponse(
-      asset: json.valueTo<common_common.Asset?, Map<String, dynamic>>(
+      asset: json.valueTo<common_common.Asset?, Object>(
         key: 'asset',
-        parse: (v) => common_common.Asset.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => common_common.Asset.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      memo: json.valueAsString<String?>('memo', acceptCamelCase: true),
+      memo: json.valueAsString<String?>(
+        'memo',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       reference: json.valueAsString<String?>(
         'reference',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      height: json.valueAsBigInt<BigInt?>('height', acceptCamelCase: true),
+      height: json.valueAsBigInt<BigInt?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       registrationHash: json.valueAsString<String?>(
         'registration_hash',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      registeredBy: json.valueAsBytes<List<int>?>(
-        'registered_by',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      registeredBy: config.decodeBinary<List<int>?>(
+        json.valueAs('registered_by', normalizeKeyLookup: config.normalizeKeys),
       ),
       usedByTxs:
           (json.valueEnsureAsList<dynamic>(
             'used_by_txs',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
     );
   }
@@ -235,14 +254,25 @@ class QueryReferenceMemoByHashRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height, hash];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'height': height, 'hash': hash};
   }
 
-  factory QueryReferenceMemoByHashRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryReferenceMemoByHashRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryReferenceMemoByHashRequest(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
-      hash: json.valueAsString<String?>('hash', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      hash: json.valueAsString<String?>(
+        'hash',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -281,19 +311,19 @@ class QueryReferenceMemoByHashResponse extends CosmosProtoMessage {
 
   final String? registrationHash;
 
-  final List<int>? registeredBy;
+  final BuBytes? registeredBy;
 
   final List<String> usedByTxs;
 
-  const QueryReferenceMemoByHashResponse({
+  QueryReferenceMemoByHashResponse({
     this.asset,
     this.memo,
     this.reference,
     this.height,
     this.registrationHash,
-    this.registeredBy,
+    List<int>? registeredBy,
     this.usedByTxs = const [],
-  });
+  }) : registeredBy = registeredBy?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -330,50 +360,58 @@ class QueryReferenceMemoByHashResponse extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'asset': asset?.toJson(),
+      'asset': config.encodeMessage(asset),
       'memo': memo,
       'reference': reference,
-      'height': height?.toString(),
+      'height': config.encodeBigint(height),
       'registration_hash': registrationHash,
-      'registered_by': switch (registeredBy) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'registered_by': config.encodeBinary(registeredBy),
       'used_by_txs': usedByTxs.map((e) => e).toList(),
     };
   }
 
-  factory QueryReferenceMemoByHashResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryReferenceMemoByHashResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryReferenceMemoByHashResponse(
-      asset: json.valueTo<common_common.Asset?, Map<String, dynamic>>(
+      asset: json.valueTo<common_common.Asset?, Object>(
         key: 'asset',
-        parse: (v) => common_common.Asset.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => common_common.Asset.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      memo: json.valueAsString<String?>('memo', acceptCamelCase: true),
+      memo: json.valueAsString<String?>(
+        'memo',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       reference: json.valueAsString<String?>(
         'reference',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      height: json.valueAsBigInt<BigInt?>('height', acceptCamelCase: true),
+      height: json.valueAsBigInt<BigInt?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       registrationHash: json.valueAsString<String?>(
         'registration_hash',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      registeredBy: json.valueAsBytes<List<int>?>(
-        'registered_by',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      registeredBy: config.decodeBinary<List<int>?>(
+        json.valueAs('registered_by', normalizeKeyLookup: config.normalizeKeys),
       ),
       usedByTxs:
           (json.valueEnsureAsList<dynamic>(
             'used_by_txs',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
     );
   }
@@ -438,17 +476,29 @@ class QueryReferenceMemoPreflightRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height, asset, amount];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'height': height, 'asset': asset, 'amount': amount};
   }
 
   factory QueryReferenceMemoPreflightRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryReferenceMemoPreflightRequest(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
-      asset: json.valueAsString<String?>('asset', acceptCamelCase: true),
-      amount: json.valueAsString<String?>('amount', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      asset: json.valueAsString<String?>(
+        'asset',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      amount: json.valueAsString<String?>(
+        'amount',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -540,41 +590,53 @@ class QueryReferenceMemoPreflightResponse extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'reference': reference,
       'available': available,
-      'expires_at': expiresAt?.toString(),
-      'usage_count': usageCount?.toString(),
-      'max_use': maxUse?.toString(),
+      'expires_at': config.encodeBigint(expiresAt),
+      'usage_count': config.encodeBigint(usageCount),
+      'max_use': config.encodeBigint(maxUse),
       'can_register': canRegister,
       'memo': memo,
     };
   }
 
   factory QueryReferenceMemoPreflightResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryReferenceMemoPreflightResponse(
       reference: json.valueAsString<String?>(
         'reference',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      available: json.valueAsBool<bool?>('available', acceptCamelCase: true),
+      available: json.valueAsBool<bool?>(
+        'available',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       expiresAt: json.valueAsBigInt<BigInt?>(
         'expires_at',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       usageCount: json.valueAsBigInt<BigInt?>(
         'usage_count',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      maxUse: json.valueAsBigInt<BigInt?>('max_use', acceptCamelCase: true),
+      maxUse: json.valueAsBigInt<BigInt?>(
+        'max_use',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       canRegister: json.valueAsBool<bool?>(
         'can_register',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      memo: json.valueAsString<String?>('memo', acceptCamelCase: true),
+      memo: json.valueAsString<String?>(
+        'memo',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

@@ -24,14 +24,25 @@ class OraclePrice extends CosmosProtoMessage {
   List<Object?> get protoValues => [symbol, price];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'symbol': symbol, 'price': price};
   }
 
-  factory OraclePrice.fromJson(Map<String, dynamic> json) {
+  factory OraclePrice.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return OraclePrice(
-      symbol: json.valueAsString<String?>('symbol', acceptCamelCase: true),
-      price: json.valueAsString<String?>('price', acceptCamelCase: true),
+      symbol: json.valueAsString<String?>(
+        'symbol',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      price: json.valueAsString<String?>(
+        'price',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

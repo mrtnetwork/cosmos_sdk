@@ -40,13 +40,18 @@ enum ContractCodeHistoryOperationType implements ProtoEnumVariant {
 
   /// Looks up a value by its proto wire int. Throws if not found.
   static ContractCodeHistoryOperationType fromValue(int? value) {
+    value ??= 0;
     return ContractCodeHistoryOperationType.values.firstWhere(
       (e) => e.value == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "ContractCodeHistoryOperationType",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching ContractCodeHistoryOperationType found for the given value. $value",
+                details: {
+                  "name": "ContractCodeHistoryOperationType",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -54,13 +59,18 @@ enum ContractCodeHistoryOperationType implements ProtoEnumVariant {
   /// Looks up a value by wire int, Dart enum name, or original proto
   /// name (whichever [value] happens to be). Throws if not found.
   static ContractCodeHistoryOperationType from(Object? value) {
+    value ??= 0;
     return ContractCodeHistoryOperationType.values.firstWhere(
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "ContractCodeHistoryOperationType",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching ContractCodeHistoryOperationType found for the given value. $value",
+                details: {
+                  "name": "ContractCodeHistoryOperationType",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -72,7 +82,7 @@ class ContractInfo extends CosmosProtoMessage {
   final BigInt? codeId;
 
   /// Creator address who initially instantiated the contract
-  final List<int>? creator;
+  final BuBytes? creator;
 
   /// Label is mandatory metadata to be stored with a contract instance.
   final String? label;
@@ -86,20 +96,21 @@ class ContractInfo extends CosmosProtoMessage {
   final String? admin;
 
   /// Proof that enclave executed the instantiate command
-  final List<int>? adminProof;
+  final BuBytes? adminProof;
 
   final bool? requireGovernance;
 
-  const ContractInfo({
+  ContractInfo({
     this.codeId,
-    this.creator,
+    List<int>? creator,
     this.label,
     this.created,
     this.ibcPortId,
     this.admin,
-    this.adminProof,
+    List<int>? adminProof,
     this.requireGovernance,
-  });
+  }) : creator = creator?.asImmutableBytes,
+       adminProof = adminProof?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -134,58 +145,60 @@ class ContractInfo extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'code_id': codeId?.toString(),
-      'creator': switch (creator) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'code_id': config.encodeBigint(codeId),
+      'creator': config.encodeBinary(creator),
       'label': label,
-      'created': created?.toJson(),
+      'created': config.encodeMessage(created),
       'ibc_port_id': ibcPortId,
       'admin': admin,
-      'admin_proof': switch (adminProof) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'admin_proof': config.encodeBinary(adminProof),
       'require_governance': requireGovernance,
     };
   }
 
-  factory ContractInfo.fromJson(Map<String, dynamic> json) {
+  factory ContractInfo.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ContractInfo(
-      codeId: json.valueAsBigInt<BigInt?>('code_id', acceptCamelCase: true),
-      creator: json.valueAsBytes<List<int>?>(
-        'creator',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      codeId: json.valueAsBigInt<BigInt?>(
+        'code_id',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      label: json.valueAsString<String?>('label', acceptCamelCase: true),
-      created: json.valueTo<AbsoluteTxPosition?, Map<String, dynamic>>(
+      creator: config.decodeBinary<List<int>?>(
+        json.valueAs('creator', normalizeKeyLookup: config.normalizeKeys),
+      ),
+      label: json.valueAsString<String?>(
+        'label',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      created: json.valueTo<AbsoluteTxPosition?, Object>(
         key: 'created',
-        parse: (v) => AbsoluteTxPosition.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => AbsoluteTxPosition.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       ibcPortId: json.valueAsString<String?>(
         'ibc_port_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      admin: json.valueAsString<String?>('admin', acceptCamelCase: true),
-      adminProof: json.valueAsBytes<List<int>?>(
-        'admin_proof',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      admin: json.valueAsString<String?>(
+        'admin',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      adminProof: config.decodeBinary<List<int>?>(
+        json.valueAs('admin_proof', normalizeKeyLookup: config.normalizeKeys),
       ),
       requireGovernance: json.valueAsBool<bool?>(
         'require_governance',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -238,20 +251,28 @@ class AbsoluteTxPosition extends CosmosProtoMessage {
   List<Object?> get protoValues => [blockHeight, txIndex];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'block_height': blockHeight?.toString(),
-      'tx_index': txIndex?.toString(),
+      'block_height': config.encodeBigint(blockHeight),
+      'tx_index': config.encodeBigint(txIndex),
     };
   }
 
-  factory AbsoluteTxPosition.fromJson(Map<String, dynamic> json) {
+  factory AbsoluteTxPosition.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AbsoluteTxPosition(
       blockHeight: json.valueAsBigInt<BigInt?>(
         'block_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      txIndex: json.valueAsBigInt<BigInt?>('tx_index', acceptCamelCase: true),
+      txIndex: json.valueAsBigInt<BigInt?>(
+        'tx_index',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -278,14 +299,14 @@ class ContractCodeHistoryEntry extends CosmosProtoMessage {
   /// Updated Tx position when the operation was executed.
   final AbsoluteTxPosition? updated;
 
-  final List<int>? msg;
+  final BuBytes? msg;
 
-  const ContractCodeHistoryEntry({
+  ContractCodeHistoryEntry({
     this.operation,
     this.codeId,
     this.updated,
-    this.msg,
-  });
+    List<int>? msg,
+  }) : msg = msg?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -307,37 +328,41 @@ class ContractCodeHistoryEntry extends CosmosProtoMessage {
   List<Object?> get protoValues => [operation, codeId, updated, msg];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'operation': operation?.protoName,
-      'code_id': codeId?.toString(),
-      'updated': updated?.toJson(),
-      'msg': switch (msg) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'operation': config.encodeEnum(operation),
+      'code_id': config.encodeBigint(codeId),
+      'updated': config.encodeMessage(updated),
+      'msg': config.encodeBinary(msg),
     };
   }
 
-  factory ContractCodeHistoryEntry.fromJson(Map<String, dynamic> json) {
+  factory ContractCodeHistoryEntry.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ContractCodeHistoryEntry(
       operation: json.valueTo<ContractCodeHistoryOperationType?, Object?>(
         key: 'operation',
         parse: (v) => ContractCodeHistoryOperationType.from(v),
       ),
-      codeId: json.valueAsBigInt<BigInt?>('code_id', acceptCamelCase: true),
-      updated: json.valueTo<AbsoluteTxPosition?, Map<String, dynamic>>(
-        key: 'updated',
-        parse: (v) => AbsoluteTxPosition.fromJson(v),
-        acceptCamelCase: true,
+      codeId: json.valueAsBigInt<BigInt?>(
+        'code_id',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      msg: json.valueAsBytes<List<int>?>(
-        'msg',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      updated: json.valueTo<AbsoluteTxPosition?, Object>(
+        key: 'updated',
+        parse:
+            (v) => AbsoluteTxPosition.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      msg: config.decodeBinary<List<int>?>(
+        json.valueAs('msg', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }

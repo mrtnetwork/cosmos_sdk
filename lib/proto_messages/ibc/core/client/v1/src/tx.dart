@@ -44,28 +44,43 @@ class MsgCreateClient extends CosmosProtoMessage
   List<Object?> get protoValues => [clientState, consensusState, signer];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'client_state': clientState?.toJson(),
-      'consensus_state': consensusState?.toJson(),
+      'client_state': config.encodeMessage(clientState),
+      'consensus_state': config.encodeMessage(consensusState),
       'signer': signer,
     };
   }
 
-  factory MsgCreateClient.fromJson(Map<String, dynamic> json) {
+  factory MsgCreateClient.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgCreateClient(
-      clientState: json.valueTo<google_protobuf_any.Any?, Map<String, dynamic>>(
+      clientState: json.valueTo<google_protobuf_any.Any?, Object>(
         key: 'client_state',
-        parse: (v) => google_protobuf_any.Any.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_any.Any.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      consensusState: json
-          .valueTo<google_protobuf_any.Any?, Map<String, dynamic>>(
-            key: 'consensus_state',
-            parse: (v) => google_protobuf_any.Any.fromJson(v),
-            acceptCamelCase: true,
-          ),
-      signer: json.valueAsString<String?>('signer', acceptCamelCase: true),
+      consensusState: json.valueTo<google_protobuf_any.Any?, Object>(
+        key: 'consensus_state',
+        parse:
+            (v) => google_protobuf_any.Any.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      signer: json.valueAsString<String?>(
+        'signer',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -119,13 +134,21 @@ class MsgCreateClientResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [clientId];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'client_id': clientId};
   }
 
-  factory MsgCreateClientResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgCreateClientResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgCreateClientResponse(
-      clientId: json.valueAsString<String?>('client_id', acceptCamelCase: true),
+      clientId: json.valueAsString<String?>(
+        'client_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -175,24 +198,38 @@ class MsgUpdateClient extends CosmosProtoMessage
   List<Object?> get protoValues => [clientId, clientMessage, signer];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'client_id': clientId,
-      'client_message': clientMessage?.toJson(),
+      'client_message': config.encodeMessage(clientMessage),
       'signer': signer,
     };
   }
 
-  factory MsgUpdateClient.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateClient.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateClient(
-      clientId: json.valueAsString<String?>('client_id', acceptCamelCase: true),
-      clientMessage: json
-          .valueTo<google_protobuf_any.Any?, Map<String, dynamic>>(
-            key: 'client_message',
-            parse: (v) => google_protobuf_any.Any.fromJson(v),
-            acceptCamelCase: true,
-          ),
-      signer: json.valueAsString<String?>('signer', acceptCamelCase: true),
+      clientId: json.valueAsString<String?>(
+        'client_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      clientMessage: json.valueTo<google_protobuf_any.Any?, Object>(
+        key: 'client_message',
+        parse:
+            (v) => google_protobuf_any.Any.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      signer: json.valueAsString<String?>(
+        'signer',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -241,11 +278,16 @@ class MsgUpdateClientResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgUpdateClientResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateClientResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateClientResponse();
   }
 
@@ -273,22 +315,24 @@ class MsgUpgradeClient extends CosmosProtoMessage
   final google_protobuf_any.Any? consensusState;
 
   /// proof that old chain committed to new client
-  final List<int>? proofUpgradeClient;
+  final BuBytes? proofUpgradeClient;
 
   /// proof that old chain committed to new consensus state
-  final List<int>? proofUpgradeConsensusState;
+  final BuBytes? proofUpgradeConsensusState;
 
   /// signer address
   final String? signer;
 
-  const MsgUpgradeClient({
+  MsgUpgradeClient({
     this.clientId,
     this.clientState,
     this.consensusState,
-    this.proofUpgradeClient,
-    this.proofUpgradeConsensusState,
+    List<int>? proofUpgradeClient,
+    List<int>? proofUpgradeConsensusState,
     this.signer,
-  });
+  }) : proofUpgradeClient = proofUpgradeClient?.asImmutableBytes,
+       proofUpgradeConsensusState =
+           proofUpgradeConsensusState?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -321,54 +365,64 @@ class MsgUpgradeClient extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'client_id': clientId,
-      'client_state': clientState?.toJson(),
-      'consensus_state': consensusState?.toJson(),
-      'proof_upgrade_client': switch (proofUpgradeClient) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'proof_upgrade_consensus_state': switch (proofUpgradeConsensusState) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'client_state': config.encodeMessage(clientState),
+      'consensus_state': config.encodeMessage(consensusState),
+      'proof_upgrade_client': config.encodeBinary(proofUpgradeClient),
+      'proof_upgrade_consensus_state': config.encodeBinary(
+        proofUpgradeConsensusState,
+      ),
       'signer': signer,
     };
   }
 
-  factory MsgUpgradeClient.fromJson(Map<String, dynamic> json) {
+  factory MsgUpgradeClient.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpgradeClient(
-      clientId: json.valueAsString<String?>('client_id', acceptCamelCase: true),
-      clientState: json.valueTo<google_protobuf_any.Any?, Map<String, dynamic>>(
+      clientId: json.valueAsString<String?>(
+        'client_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      clientState: json.valueTo<google_protobuf_any.Any?, Object>(
         key: 'client_state',
-        parse: (v) => google_protobuf_any.Any.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_any.Any.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      consensusState: json
-          .valueTo<google_protobuf_any.Any?, Map<String, dynamic>>(
-            key: 'consensus_state',
-            parse: (v) => google_protobuf_any.Any.fromJson(v),
-            acceptCamelCase: true,
-          ),
-      proofUpgradeClient: json.valueAsBytes<List<int>?>(
-        'proof_upgrade_client',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      consensusState: json.valueTo<google_protobuf_any.Any?, Object>(
+        key: 'consensus_state',
+        parse:
+            (v) => google_protobuf_any.Any.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      proofUpgradeConsensusState: json.valueAsBytes<List<int>?>(
-        'proof_upgrade_consensus_state',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      proofUpgradeClient: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'proof_upgrade_client',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
-      signer: json.valueAsString<String?>('signer', acceptCamelCase: true),
+      proofUpgradeConsensusState: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'proof_upgrade_consensus_state',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
+      ),
+      signer: json.valueAsString<String?>(
+        'signer',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -423,11 +477,16 @@ class MsgUpgradeClientResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgUpgradeClientResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgUpgradeClientResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpgradeClientResponse();
   }
 
@@ -478,24 +537,38 @@ class MsgSubmitMisbehaviour extends CosmosProtoMessage
   List<Object?> get protoValues => [clientId, misbehaviour, signer];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'client_id': clientId,
-      'misbehaviour': misbehaviour?.toJson(),
+      'misbehaviour': config.encodeMessage(misbehaviour),
       'signer': signer,
     };
   }
 
-  factory MsgSubmitMisbehaviour.fromJson(Map<String, dynamic> json) {
+  factory MsgSubmitMisbehaviour.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSubmitMisbehaviour(
-      clientId: json.valueAsString<String?>('client_id', acceptCamelCase: true),
-      misbehaviour: json
-          .valueTo<google_protobuf_any.Any?, Map<String, dynamic>>(
-            key: 'misbehaviour',
-            parse: (v) => google_protobuf_any.Any.fromJson(v),
-            acceptCamelCase: true,
-          ),
-      signer: json.valueAsString<String?>('signer', acceptCamelCase: true),
+      clientId: json.valueAsString<String?>(
+        'client_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      misbehaviour: json.valueTo<google_protobuf_any.Any?, Object>(
+        key: 'misbehaviour',
+        parse:
+            (v) => google_protobuf_any.Any.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      signer: json.valueAsString<String?>(
+        'signer',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -547,11 +620,16 @@ class MsgSubmitMisbehaviourResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgSubmitMisbehaviourResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgSubmitMisbehaviourResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSubmitMisbehaviourResponse();
   }
 
@@ -614,7 +692,9 @@ class MsgRecoverClient extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'subject_client_id': subjectClientId,
       'substitute_client_id': substituteClientId,
@@ -622,17 +702,23 @@ class MsgRecoverClient extends CosmosProtoMessage
     };
   }
 
-  factory MsgRecoverClient.fromJson(Map<String, dynamic> json) {
+  factory MsgRecoverClient.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgRecoverClient(
       subjectClientId: json.valueAsString<String?>(
         'subject_client_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       substituteClientId: json.valueAsString<String?>(
         'substitute_client_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      signer: json.valueAsString<String?>('signer', acceptCamelCase: true),
+      signer: json.valueAsString<String?>(
+        'signer',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -678,11 +764,16 @@ class MsgRecoverClientResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgRecoverClientResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgRecoverClientResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgRecoverClientResponse();
   }
 
@@ -740,29 +831,43 @@ class MsgIBCSoftwareUpgrade extends CosmosProtoMessage
   List<Object?> get protoValues => [plan, upgradedClientState, signer];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'plan': plan?.toJson(),
-      'upgraded_client_state': upgradedClientState?.toJson(),
+      'plan': config.encodeMessage(plan),
+      'upgraded_client_state': config.encodeMessage(upgradedClientState),
       'signer': signer,
     };
   }
 
-  factory MsgIBCSoftwareUpgrade.fromJson(Map<String, dynamic> json) {
+  factory MsgIBCSoftwareUpgrade.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgIBCSoftwareUpgrade(
-      plan: json
-          .valueTo<cosmos_upgrade_v1beta1_upgrade.Plan?, Map<String, dynamic>>(
-            key: 'plan',
-            parse: (v) => cosmos_upgrade_v1beta1_upgrade.Plan.fromJson(v),
-            acceptCamelCase: true,
-          ),
-      upgradedClientState: json
-          .valueTo<google_protobuf_any.Any?, Map<String, dynamic>>(
-            key: 'upgraded_client_state',
-            parse: (v) => google_protobuf_any.Any.fromJson(v),
-            acceptCamelCase: true,
-          ),
-      signer: json.valueAsString<String?>('signer', acceptCamelCase: true),
+      plan: json.valueTo<cosmos_upgrade_v1beta1_upgrade.Plan?, Object>(
+        key: 'plan',
+        parse:
+            (v) => cosmos_upgrade_v1beta1_upgrade.Plan.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      upgradedClientState: json.valueTo<google_protobuf_any.Any?, Object>(
+        key: 'upgraded_client_state',
+        parse:
+            (v) => google_protobuf_any.Any.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      signer: json.valueAsString<String?>(
+        'signer',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -816,11 +921,16 @@ class MsgIBCSoftwareUpgradeResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgIBCSoftwareUpgradeResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgIBCSoftwareUpgradeResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgIBCSoftwareUpgradeResponse();
   }
 
@@ -866,19 +976,30 @@ class MsgUpdateParams extends CosmosProtoMessage
   List<Object?> get protoValues => [signer, params];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'signer': signer, 'params': params?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'signer': signer, 'params': config.encodeMessage(params)};
   }
 
-  factory MsgUpdateParams.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateParams.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateParams(
-      signer: json.valueAsString<String?>('signer', acceptCamelCase: true),
-      params: json
-          .valueTo<ibc_core_client_v1_client.Params?, Map<String, dynamic>>(
-            key: 'params',
-            parse: (v) => ibc_core_client_v1_client.Params.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      signer: json.valueAsString<String?>(
+        'signer',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      params: json.valueTo<ibc_core_client_v1_client.Params?, Object>(
+        key: 'params',
+        parse:
+            (v) => ibc_core_client_v1_client.Params.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -926,11 +1047,16 @@ class MsgUpdateParamsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgUpdateParamsResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateParamsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateParamsResponse();
   }
 
@@ -971,14 +1097,25 @@ class MsgDeleteClientCreator extends CosmosProtoMessage
   List<Object?> get protoValues => [clientId, signer];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'client_id': clientId, 'signer': signer};
   }
 
-  factory MsgDeleteClientCreator.fromJson(Map<String, dynamic> json) {
+  factory MsgDeleteClientCreator.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgDeleteClientCreator(
-      clientId: json.valueAsString<String?>('client_id', acceptCamelCase: true),
-      signer: json.valueAsString<String?>('signer', acceptCamelCase: true),
+      clientId: json.valueAsString<String?>(
+        'client_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      signer: json.valueAsString<String?>(
+        'signer',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1025,11 +1162,16 @@ class MsgDeleteClientCreatorResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgDeleteClientCreatorResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgDeleteClientCreatorResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgDeleteClientCreatorResponse();
   }
 

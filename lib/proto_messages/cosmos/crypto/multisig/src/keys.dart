@@ -57,26 +57,39 @@ class LegacyAminoPubKey extends CosmosProtoMessage {
   List<Object?> get protoValues => [threshold, publicKeys];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'threshold': threshold,
-      'public_keys': publicKeys.map((e) => e.toJson()).toList(),
+      'public_keys': publicKeys.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory LegacyAminoPubKey.fromJson(Map<String, dynamic> json) {
+  factory LegacyAminoPubKey.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return LegacyAminoPubKey(
-      threshold: json.valueAsInt<int?>('threshold', acceptCamelCase: true),
+      threshold: json.valueAsInt<int?>(
+        'threshold',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       publicKeys:
           (json.valueEnsureAsList<dynamic>(
                 'public_keys',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  google_protobuf_any.Any,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => google_protobuf_any.Any.fromJson(v)),
+                (e) => JsonParser.valueTo<google_protobuf_any.Any, Object>(
+                  value: e,
+                  parse:
+                      (v) => google_protobuf_any.Any.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );

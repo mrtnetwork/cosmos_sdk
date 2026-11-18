@@ -26,7 +26,7 @@ class TendermintRequestGenesisChunked
   Map<String, String?> get parameters => {"chunk": chunk?.toString()};
 
   @override
-  TendermintGenesisChunkedResponseResult onResonse(
+  TendermintGenesisChunkedResponseResult onResponse(
     Map<String, dynamic> result,
   ) {
     return TendermintGenesisChunkedResponseResult.fromJson(result);

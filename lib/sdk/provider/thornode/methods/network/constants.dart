@@ -20,7 +20,7 @@ class ThorNodeRequestConstants
   Map<String, String?> get parameters => {"height": height?.toString()};
 
   @override
-  ThorNodeNetworkConstants onResonse(Map<String, dynamic> result) {
+  ThorNodeNetworkConstants onResponse(Map<String, dynamic> result) {
     return ThorNodeNetworkConstants.fromJson(result["int_64_values"]);
   }
 }

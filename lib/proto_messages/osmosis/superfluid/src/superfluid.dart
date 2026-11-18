@@ -28,13 +28,18 @@ enum SuperfluidAssetType implements ProtoEnumVariant {
 
   /// Looks up a value by its proto wire int. Throws if not found.
   static SuperfluidAssetType fromValue(int? value) {
+    value ??= 0;
     return SuperfluidAssetType.values.firstWhere(
       (e) => e.value == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "SuperfluidAssetType",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching SuperfluidAssetType found for the given value. $value",
+                details: {
+                  "name": "SuperfluidAssetType",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -42,13 +47,18 @@ enum SuperfluidAssetType implements ProtoEnumVariant {
   /// Looks up a value by wire int, Dart enum name, or original proto
   /// name (whichever [value] happens to be). Throws if not found.
   static SuperfluidAssetType from(Object? value) {
+    value ??= 0;
     return SuperfluidAssetType.values.firstWhere(
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "SuperfluidAssetType",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching SuperfluidAssetType found for the given value. $value",
+                details: {
+                  "name": "SuperfluidAssetType",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -80,13 +90,21 @@ class SuperfluidAsset extends CosmosProtoMessage {
   List<Object?> get protoValues => [denom, assetType];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'denom': denom, 'asset_type': assetType?.protoName};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'denom': denom, 'asset_type': config.encodeEnum(assetType)};
   }
 
-  factory SuperfluidAsset.fromJson(Map<String, dynamic> json) {
+  factory SuperfluidAsset.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SuperfluidAsset(
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       assetType: json.valueTo<SuperfluidAssetType?, Object?>(
         key: 'asset_type',
         parse: (v) => SuperfluidAssetType.from(v),
@@ -150,24 +168,32 @@ class OsmoEquivalentMultiplierRecord extends CosmosProtoMessage {
   List<Object?> get protoValues => [epochNumber, denom, multiplier];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'epoch_number': epochNumber?.toString(),
+      'epoch_number': config.encodeBigint(epochNumber),
       'denom': denom,
       'multiplier': multiplier,
     };
   }
 
-  factory OsmoEquivalentMultiplierRecord.fromJson(Map<String, dynamic> json) {
+  factory OsmoEquivalentMultiplierRecord.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return OsmoEquivalentMultiplierRecord(
       epochNumber: json.valueAsBigInt<BigInt?>(
         'epoch_number',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       multiplier: json.valueAsString<String?>(
         'multiplier',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -229,36 +255,48 @@ class SuperfluidDelegationRecord extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'delegator_address': delegatorAddress,
       'validator_address': validatorAddress,
-      'delegation_amount': delegationAmount?.toJson(),
-      'equivalent_staked_amount': equivalentStakedAmount?.toJson(),
+      'delegation_amount': config.encodeMessage(delegationAmount),
+      'equivalent_staked_amount': config.encodeMessage(equivalentStakedAmount),
     };
   }
 
-  factory SuperfluidDelegationRecord.fromJson(Map<String, dynamic> json) {
+  factory SuperfluidDelegationRecord.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SuperfluidDelegationRecord(
       delegatorAddress: json.valueAsString<String?>(
         'delegator_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       validatorAddress: json.valueAsString<String?>(
         'validator_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      delegationAmount: json
-          .valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
-            key: 'delegation_amount',
-            parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      delegationAmount: json.valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
+        key: 'delegation_amount',
+        parse:
+            (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       equivalentStakedAmount: json
-          .valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
+          .valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
             key: 'equivalent_staked_amount',
-            parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
     );
   }
@@ -335,47 +373,63 @@ class ConcentratedPoolUserPositionRecord extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'validator_address': validatorAddress,
-      'position_id': positionId?.toString(),
-      'lock_id': lockId?.toString(),
-      'synthetic_lock': syntheticLock?.toJson(),
-      'delegation_amount': delegationAmount?.toJson(),
-      'equivalent_staked_amount': equivalentStakedAmount?.toJson(),
+      'position_id': config.encodeBigint(positionId),
+      'lock_id': config.encodeBigint(lockId),
+      'synthetic_lock': config.encodeMessage(syntheticLock),
+      'delegation_amount': config.encodeMessage(delegationAmount),
+      'equivalent_staked_amount': config.encodeMessage(equivalentStakedAmount),
     };
   }
 
   factory ConcentratedPoolUserPositionRecord.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ConcentratedPoolUserPositionRecord(
       validatorAddress: json.valueAsString<String?>(
         'validator_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       positionId: json.valueAsBigInt<BigInt?>(
         'position_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      lockId: json.valueAsBigInt<BigInt?>('lock_id', acceptCamelCase: true),
-      syntheticLock: json
-          .valueTo<osmosis_lockup_lock.SyntheticLock?, Map<String, dynamic>>(
-            key: 'synthetic_lock',
-            parse: (v) => osmosis_lockup_lock.SyntheticLock.fromJson(v),
-            acceptCamelCase: true,
-          ),
-      delegationAmount: json
-          .valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
-            key: 'delegation_amount',
-            parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      lockId: json.valueAsBigInt<BigInt?>(
+        'lock_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      syntheticLock: json.valueTo<osmosis_lockup_lock.SyntheticLock?, Object>(
+        key: 'synthetic_lock',
+        parse:
+            (v) => osmosis_lockup_lock.SyntheticLock.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      delegationAmount: json.valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
+        key: 'delegation_amount',
+        parse:
+            (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       equivalentStakedAmount: json
-          .valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
+          .valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
             key: 'equivalent_staked_amount',
-            parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
     );
   }

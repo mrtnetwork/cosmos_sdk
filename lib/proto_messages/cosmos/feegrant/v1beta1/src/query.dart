@@ -41,14 +41,25 @@ class QueryAllowanceRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [granter, grantee];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'granter': granter, 'grantee': grantee};
   }
 
-  factory QueryAllowanceRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryAllowanceRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryAllowanceRequest(
-      granter: json.valueAsString<String?>('granter', acceptCamelCase: true),
-      grantee: json.valueAsString<String?>('grantee', acceptCamelCase: true),
+      granter: json.valueAsString<String?>(
+        'granter',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      grantee: json.valueAsString<String?>(
+        'grantee',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -96,19 +107,25 @@ class QueryAllowanceResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [allowance];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'allowance': allowance?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'allowance': config.encodeMessage(allowance)};
   }
 
-  factory QueryAllowanceResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryAllowanceResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryAllowanceResponse(
-      allowance: json.valueTo<
-        cosmos_feegrant_v1beta1_feegrant.Grant?,
-        Map<String, dynamic>
-      >(
+      allowance: json.valueTo<cosmos_feegrant_v1beta1_feegrant.Grant?, Object>(
         key: 'allowance',
-        parse: (v) => cosmos_feegrant_v1beta1_feegrant.Grant.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => cosmos_feegrant_v1beta1_feegrant.Grant.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -162,22 +179,32 @@ class QueryAllowancesRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [grantee, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'grantee': grantee, 'pagination': pagination?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'grantee': grantee, 'pagination': config.encodeMessage(pagination)};
   }
 
-  factory QueryAllowancesRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryAllowancesRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryAllowancesRequest(
-      grantee: json.valueAsString<String?>('grantee', acceptCamelCase: true),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageRequest?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) => cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(v),
-        acceptCamelCase: true,
+      grantee: json.valueAsString<String?>(
+        'grantee',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageRequest?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -239,38 +266,51 @@ class QueryAllowancesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [allowances, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'allowances': allowances.map((e) => e.toJson()).toList(),
-      'pagination': pagination?.toJson(),
+      'allowances': allowances.map((e) => config.encodeMessage(e)).toList(),
+      'pagination': config.encodeMessage(pagination),
     };
   }
 
-  factory QueryAllowancesResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryAllowancesResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryAllowancesResponse(
       allowances:
-          (json.valueEnsureAsList<dynamic>('allowances', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'allowances',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   cosmos_feegrant_v1beta1_feegrant.Grant,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
-                      (v) => cosmos_feegrant_v1beta1_feegrant.Grant.fromJson(v),
+                      (v) => cosmos_feegrant_v1beta1_feegrant.Grant.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageResponse?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) =>
-                cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageResponse?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -330,22 +370,32 @@ class QueryAllowancesByGranterRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [granter, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'granter': granter, 'pagination': pagination?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'granter': granter, 'pagination': config.encodeMessage(pagination)};
   }
 
-  factory QueryAllowancesByGranterRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryAllowancesByGranterRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryAllowancesByGranterRequest(
-      granter: json.valueAsString<String?>('granter', acceptCamelCase: true),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageRequest?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) => cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(v),
-        acceptCamelCase: true,
+      granter: json.valueAsString<String?>(
+        'granter',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageRequest?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -413,38 +463,51 @@ class QueryAllowancesByGranterResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [allowances, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'allowances': allowances.map((e) => e.toJson()).toList(),
-      'pagination': pagination?.toJson(),
+      'allowances': allowances.map((e) => config.encodeMessage(e)).toList(),
+      'pagination': config.encodeMessage(pagination),
     };
   }
 
-  factory QueryAllowancesByGranterResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryAllowancesByGranterResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryAllowancesByGranterResponse(
       allowances:
-          (json.valueEnsureAsList<dynamic>('allowances', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'allowances',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   cosmos_feegrant_v1beta1_feegrant.Grant,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
-                      (v) => cosmos_feegrant_v1beta1_feegrant.Grant.fromJson(v),
+                      (v) => cosmos_feegrant_v1beta1_feegrant.Grant.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageResponse?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) =>
-                cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageResponse?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 

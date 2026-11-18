@@ -43,7 +43,9 @@ class ChannelState extends CosmosProtoMessage {
   List<Object?> get protoValues => [portId, channelId, admin, relayers];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'port_id': portId,
       'channel_id': channelId,
@@ -52,18 +54,28 @@ class ChannelState extends CosmosProtoMessage {
     };
   }
 
-  factory ChannelState.fromJson(Map<String, dynamic> json) {
+  factory ChannelState.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ChannelState(
-      portId: json.valueAsString<String?>('port_id', acceptCamelCase: true),
+      portId: json.valueAsString<String?>(
+        'port_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       channelId: json.valueAsString<String?>(
         'channel_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      admin: json.valueAsString<String?>('admin', acceptCamelCase: true),
+      admin: json.valueAsString<String?>(
+        'admin',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       relayers:
           (json.valueEnsureAsList<dynamic>(
             'relayers',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
     );
   }

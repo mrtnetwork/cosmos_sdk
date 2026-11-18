@@ -25,13 +25,21 @@ class EipBaseFee extends CosmosProtoMessage {
   List<Object?> get protoValues => [baseFee];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'base_fee': baseFee};
   }
 
-  factory EipBaseFee.fromJson(Map<String, dynamic> json) {
+  factory EipBaseFee.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return EipBaseFee(
-      baseFee: json.valueAsString<String?>('base_fee', acceptCamelCase: true),
+      baseFee: json.valueAsString<String?>(
+        'base_fee',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -71,11 +79,16 @@ class QueryParamsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryParamsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsRequest();
   }
 
@@ -119,19 +132,25 @@ class QueryParamsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [params];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'params': params?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'params': config.encodeMessage(params)};
   }
 
-  factory QueryParamsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsResponse(
-      params: json.valueTo<
-        injective_txfees_v1beta1_txfees.Params?,
-        Map<String, dynamic>
-      >(
+      params: json.valueTo<injective_txfees_v1beta1_txfees.Params?, Object>(
         key: 'params',
-        parse: (v) => injective_txfees_v1beta1_txfees.Params.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => injective_txfees_v1beta1_txfees.Params.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -176,11 +195,16 @@ class QueryEipBaseFeeRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryEipBaseFeeRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryEipBaseFeeRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryEipBaseFeeRequest();
   }
 
@@ -222,16 +246,22 @@ class QueryEipBaseFeeResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [baseFee];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'base_fee': baseFee?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'base_fee': config.encodeMessage(baseFee)};
   }
 
-  factory QueryEipBaseFeeResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryEipBaseFeeResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryEipBaseFeeResponse(
-      baseFee: json.valueTo<EipBaseFee?, Map<String, dynamic>>(
+      baseFee: json.valueTo<EipBaseFee?, Object>(
         key: 'base_fee',
-        parse: (v) => EipBaseFee.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => EipBaseFee.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

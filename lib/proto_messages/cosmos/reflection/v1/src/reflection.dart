@@ -31,11 +31,16 @@ class FileDescriptorsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory FileDescriptorsRequest.fromJson(Map<String, dynamic> json) {
+  factory FileDescriptorsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return FileDescriptorsRequest();
   }
 
@@ -84,23 +89,35 @@ class FileDescriptorsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [files];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'files': files.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'files': files.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory FileDescriptorsResponse.fromJson(Map<String, dynamic> json) {
+  factory FileDescriptorsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return FileDescriptorsResponse(
       files:
-          (json.valueEnsureAsList<dynamic>('files', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'files',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   google_protobuf_descriptor.FileDescriptorProto,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => google_protobuf_descriptor
-                          .FileDescriptorProto.fromJson(v),
+                          .FileDescriptorProto.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),

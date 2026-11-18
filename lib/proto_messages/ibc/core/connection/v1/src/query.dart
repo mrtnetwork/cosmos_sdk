@@ -40,15 +40,20 @@ class QueryConnectionRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [connectionId];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'connection_id': connectionId};
   }
 
-  factory QueryConnectionRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryConnectionRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryConnectionRequest(
       connectionId: json.valueAsString<String?>(
         'connection_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -80,16 +85,13 @@ class QueryConnectionResponse extends CosmosProtoMessage {
   final ibc_core_connection_v1_connection.ConnectionEnd? connection;
 
   /// merkle proof of existence
-  final List<int>? proof;
+  final BuBytes? proof;
 
   /// height at which the proof was retrieved
   final ibc_core_client_v1_client.Height? proofHeight;
 
-  const QueryConnectionResponse({
-    this.connection,
-    this.proof,
-    this.proofHeight,
-  });
+  QueryConnectionResponse({this.connection, List<int>? proof, this.proofHeight})
+    : proof = proof?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -110,42 +112,43 @@ class QueryConnectionResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [connection, proof, proofHeight];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'connection': connection?.toJson(),
-      'proof': switch (proof) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'proof_height': proofHeight?.toJson(),
+      'connection': config.encodeMessage(connection),
+      'proof': config.encodeBinary(proof),
+      'proof_height': config.encodeMessage(proofHeight),
     };
   }
 
-  factory QueryConnectionResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryConnectionResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryConnectionResponse(
-      connection: json.valueTo<
-        ibc_core_connection_v1_connection.ConnectionEnd?,
-        Map<String, dynamic>
-      >(
-        key: 'connection',
-        parse:
-            (v) => ibc_core_connection_v1_connection.ConnectionEnd.fromJson(v),
-        acceptCamelCase: true,
-      ),
-      proof: json.valueAsBytes<List<int>?>(
-        'proof',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
-      ),
-      proofHeight: json
-          .valueTo<ibc_core_client_v1_client.Height?, Map<String, dynamic>>(
-            key: 'proof_height',
-            parse: (v) => ibc_core_client_v1_client.Height.fromJson(v),
-            acceptCamelCase: true,
+      connection: json
+          .valueTo<ibc_core_connection_v1_connection.ConnectionEnd?, Object>(
+            key: 'connection',
+            parse:
+                (v) => ibc_core_connection_v1_connection.ConnectionEnd.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
+      proof: config.decodeBinary<List<int>?>(
+        json.valueAs('proof', normalizeKeyLookup: config.normalizeKeys),
+      ),
+      proofHeight: json.valueTo<ibc_core_client_v1_client.Height?, Object>(
+        key: 'proof_height',
+        parse:
+            (v) => ibc_core_client_v1_client.Height.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -200,21 +203,28 @@ class QueryConnectionsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [pagination];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'pagination': pagination?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'pagination': config.encodeMessage(pagination)};
   }
 
-  factory QueryConnectionsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryConnectionsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryConnectionsRequest(
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageRequest?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) => cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageRequest?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -285,49 +295,62 @@ class QueryConnectionsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [connections, pagination, height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'connections': connections.map((e) => e.toJson()).toList(),
-      'pagination': pagination?.toJson(),
-      'height': height?.toJson(),
+      'connections': connections.map((e) => config.encodeMessage(e)).toList(),
+      'pagination': config.encodeMessage(pagination),
+      'height': config.encodeMessage(height),
     };
   }
 
-  factory QueryConnectionsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryConnectionsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryConnectionsResponse(
       connections:
           (json.valueEnsureAsList<dynamic>(
                 'connections',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   ibc_core_connection_v1_connection.IdentifiedConnection,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => ibc_core_connection_v1_connection
-                          .IdentifiedConnection.fromJson(v),
+                          .IdentifiedConnection.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageResponse?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) =>
-                cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(v),
-        acceptCamelCase: true,
-      ),
-      height: json
-          .valueTo<ibc_core_client_v1_client.Height?, Map<String, dynamic>>(
-            key: 'height',
-            parse: (v) => ibc_core_client_v1_client.Height.fromJson(v),
-            acceptCamelCase: true,
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageResponse?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
+      height: json.valueTo<ibc_core_client_v1_client.Height?, Object>(
+        key: 'height',
+        parse:
+            (v) => ibc_core_client_v1_client.Height.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -390,13 +413,21 @@ class QueryClientConnectionsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [clientId];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'client_id': clientId};
   }
 
-  factory QueryClientConnectionsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryClientConnectionsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryClientConnectionsRequest(
-      clientId: json.valueAsString<String?>('client_id', acceptCamelCase: true),
+      clientId: json.valueAsString<String?>(
+        'client_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -431,16 +462,16 @@ class QueryClientConnectionsResponse extends CosmosProtoMessage {
   final List<String> connectionPaths;
 
   /// merkle proof of existence
-  final List<int>? proof;
+  final BuBytes? proof;
 
   /// height at which the proof was generated
   final ibc_core_client_v1_client.Height? proofHeight;
 
-  const QueryClientConnectionsResponse({
+  QueryClientConnectionsResponse({
     this.connectionPaths = const [],
-    this.proof,
+    List<int>? proof,
     this.proofHeight,
-  });
+  }) : proof = proof?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -464,38 +495,39 @@ class QueryClientConnectionsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [connectionPaths, proof, proofHeight];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'connection_paths': connectionPaths.map((e) => e).toList(),
-      'proof': switch (proof) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'proof_height': proofHeight?.toJson(),
+      'proof': config.encodeBinary(proof),
+      'proof_height': config.encodeMessage(proofHeight),
     };
   }
 
-  factory QueryClientConnectionsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryClientConnectionsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryClientConnectionsResponse(
       connectionPaths:
           (json.valueEnsureAsList<dynamic>(
             'connection_paths',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
-      proof: json.valueAsBytes<List<int>?>(
-        'proof',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      proof: config.decodeBinary<List<int>?>(
+        json.valueAs('proof', normalizeKeyLookup: config.normalizeKeys),
       ),
-      proofHeight: json
-          .valueTo<ibc_core_client_v1_client.Height?, Map<String, dynamic>>(
-            key: 'proof_height',
-            parse: (v) => ibc_core_client_v1_client.Height.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      proofHeight: json.valueTo<ibc_core_client_v1_client.Height?, Object>(
+        key: 'proof_height',
+        parse:
+            (v) => ibc_core_client_v1_client.Height.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -548,17 +580,20 @@ class QueryConnectionClientStateRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [connectionId];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'connection_id': connectionId};
   }
 
   factory QueryConnectionClientStateRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryConnectionClientStateRequest(
       connectionId: json.valueAsString<String?>(
         'connection_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -594,16 +629,16 @@ class QueryConnectionClientStateResponse extends CosmosProtoMessage {
   final ibc_core_client_v1_client.IdentifiedClientState? identifiedClientState;
 
   /// merkle proof of existence
-  final List<int>? proof;
+  final BuBytes? proof;
 
   /// height at which the proof was retrieved
   final ibc_core_client_v1_client.Height? proofHeight;
 
-  const QueryConnectionClientStateResponse({
+  QueryConnectionClientStateResponse({
     this.identifiedClientState,
-    this.proof,
+    List<int>? proof,
     this.proofHeight,
-  });
+  }) : proof = proof?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -624,44 +659,43 @@ class QueryConnectionClientStateResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [identifiedClientState, proof, proofHeight];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'identified_client_state': identifiedClientState?.toJson(),
-      'proof': switch (proof) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'proof_height': proofHeight?.toJson(),
+      'identified_client_state': config.encodeMessage(identifiedClientState),
+      'proof': config.encodeBinary(proof),
+      'proof_height': config.encodeMessage(proofHeight),
     };
   }
 
   factory QueryConnectionClientStateResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryConnectionClientStateResponse(
-      identifiedClientState: json.valueTo<
-        ibc_core_client_v1_client.IdentifiedClientState?,
-        Map<String, dynamic>
-      >(
-        key: 'identified_client_state',
-        parse:
-            (v) => ibc_core_client_v1_client.IdentifiedClientState.fromJson(v),
-        acceptCamelCase: true,
-      ),
-      proof: json.valueAsBytes<List<int>?>(
-        'proof',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
-      ),
-      proofHeight: json
-          .valueTo<ibc_core_client_v1_client.Height?, Map<String, dynamic>>(
-            key: 'proof_height',
-            parse: (v) => ibc_core_client_v1_client.Height.fromJson(v),
-            acceptCamelCase: true,
+      identifiedClientState: json
+          .valueTo<ibc_core_client_v1_client.IdentifiedClientState?, Object>(
+            key: 'identified_client_state',
+            parse:
+                (v) => ibc_core_client_v1_client.IdentifiedClientState.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
+      proof: config.decodeBinary<List<int>?>(
+        json.valueAs('proof', normalizeKeyLookup: config.normalizeKeys),
+      ),
+      proofHeight: json.valueTo<ibc_core_client_v1_client.Height?, Object>(
+        key: 'proof_height',
+        parse:
+            (v) => ibc_core_client_v1_client.Height.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -735,29 +769,32 @@ class QueryConnectionConsensusStateRequest extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'connection_id': connectionId,
-      'revision_number': revisionNumber?.toString(),
-      'revision_height': revisionHeight?.toString(),
+      'revision_number': config.encodeBigint(revisionNumber),
+      'revision_height': config.encodeBigint(revisionHeight),
     };
   }
 
   factory QueryConnectionConsensusStateRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryConnectionConsensusStateRequest(
       connectionId: json.valueAsString<String?>(
         'connection_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       revisionNumber: json.valueAsBigInt<BigInt?>(
         'revision_number',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       revisionHeight: json.valueAsBigInt<BigInt?>(
         'revision_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -798,17 +835,17 @@ class QueryConnectionConsensusStateResponse extends CosmosProtoMessage {
   final String? clientId;
 
   /// merkle proof of existence
-  final List<int>? proof;
+  final BuBytes? proof;
 
   /// height at which the proof was retrieved
   final ibc_core_client_v1_client.Height? proofHeight;
 
-  const QueryConnectionConsensusStateResponse({
+  QueryConnectionConsensusStateResponse({
     this.consensusState,
     this.clientId,
-    this.proof,
+    List<int>? proof,
     this.proofHeight,
-  });
+  }) : proof = proof?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -835,43 +872,47 @@ class QueryConnectionConsensusStateResponse extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'consensus_state': consensusState?.toJson(),
+      'consensus_state': config.encodeMessage(consensusState),
       'client_id': clientId,
-      'proof': switch (proof) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'proof_height': proofHeight?.toJson(),
+      'proof': config.encodeBinary(proof),
+      'proof_height': config.encodeMessage(proofHeight),
     };
   }
 
   factory QueryConnectionConsensusStateResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryConnectionConsensusStateResponse(
-      consensusState: json
-          .valueTo<google_protobuf_any.Any?, Map<String, dynamic>>(
-            key: 'consensus_state',
-            parse: (v) => google_protobuf_any.Any.fromJson(v),
-            acceptCamelCase: true,
-          ),
-      clientId: json.valueAsString<String?>('client_id', acceptCamelCase: true),
-      proof: json.valueAsBytes<List<int>?>(
-        'proof',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      consensusState: json.valueTo<google_protobuf_any.Any?, Object>(
+        key: 'consensus_state',
+        parse:
+            (v) => google_protobuf_any.Any.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      proofHeight: json
-          .valueTo<ibc_core_client_v1_client.Height?, Map<String, dynamic>>(
-            key: 'proof_height',
-            parse: (v) => ibc_core_client_v1_client.Height.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      clientId: json.valueAsString<String?>(
+        'client_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      proof: config.decodeBinary<List<int>?>(
+        json.valueAs('proof', normalizeKeyLookup: config.normalizeKeys),
+      ),
+      proofHeight: json.valueTo<ibc_core_client_v1_client.Height?, Object>(
+        key: 'proof_height',
+        parse:
+            (v) => ibc_core_client_v1_client.Height.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -923,11 +964,16 @@ class QueryConnectionParamsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryConnectionParamsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryConnectionParamsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryConnectionParamsRequest();
   }
 
@@ -971,19 +1017,25 @@ class QueryConnectionParamsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [params];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'params': params?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'params': config.encodeMessage(params)};
   }
 
-  factory QueryConnectionParamsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryConnectionParamsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryConnectionParamsResponse(
-      params: json.valueTo<
-        ibc_core_connection_v1_connection.Params?,
-        Map<String, dynamic>
-      >(
+      params: json.valueTo<ibc_core_connection_v1_connection.Params?, Object>(
         key: 'params',
-        parse: (v) => ibc_core_connection_v1_connection.Params.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => ibc_core_connection_v1_connection.Params.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

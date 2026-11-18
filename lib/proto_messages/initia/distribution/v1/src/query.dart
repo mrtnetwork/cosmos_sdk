@@ -32,11 +32,16 @@ class QueryParamsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryParamsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsRequest();
   }
 
@@ -80,19 +85,25 @@ class QueryParamsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [params];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'params': params?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'params': config.encodeMessage(params)};
   }
 
-  factory QueryParamsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsResponse(
-      params: json.valueTo<
-        initia_distribution_v1_distribution.Params?,
-        Map<String, dynamic>
-      >(
+      params: json.valueTo<initia_distribution_v1_distribution.Params?, Object>(
         key: 'params',
-        parse: (v) => initia_distribution_v1_distribution.Params.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => initia_distribution_v1_distribution.Params.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -143,17 +154,20 @@ class QueryValidatorOutstandingRewardsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [validatorAddress];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'validator_address': validatorAddress};
   }
 
   factory QueryValidatorOutstandingRewardsRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryValidatorOutstandingRewardsRequest(
       validatorAddress: json.valueAsString<String?>(
         'validator_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -205,23 +219,29 @@ class QueryValidatorOutstandingRewardsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [rewards];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'rewards': rewards?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'rewards': config.encodeMessage(rewards)};
   }
 
   factory QueryValidatorOutstandingRewardsResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryValidatorOutstandingRewardsResponse(
       rewards: json.valueTo<
         initia_distribution_v1_distribution.ValidatorOutstandingRewards?,
-        Map<String, dynamic>
+        Object
       >(
         key: 'rewards',
         parse:
             (v) => initia_distribution_v1_distribution
-                .ValidatorOutstandingRewards.fromJson(v),
-        acceptCamelCase: true,
+                .ValidatorOutstandingRewards.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -278,15 +298,20 @@ class QueryValidatorCommissionRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [validatorAddress];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'validator_address': validatorAddress};
   }
 
-  factory QueryValidatorCommissionRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryValidatorCommissionRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryValidatorCommissionRequest(
       validatorAddress: json.valueAsString<String?>(
         'validator_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -339,21 +364,29 @@ class QueryValidatorCommissionResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [commission];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'commission': commission?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'commission': config.encodeMessage(commission)};
   }
 
-  factory QueryValidatorCommissionResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryValidatorCommissionResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryValidatorCommissionResponse(
       commission: json.valueTo<
         initia_distribution_v1_distribution.ValidatorAccumulatedCommission?,
-        Map<String, dynamic>
+        Object
       >(
         key: 'commission',
         parse:
             (v) => initia_distribution_v1_distribution
-                .ValidatorAccumulatedCommission.fromJson(v),
-        acceptCamelCase: true,
+                .ValidatorAccumulatedCommission.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -432,38 +465,45 @@ class QueryValidatorSlashesRequest extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'validator_address': validatorAddress,
-      'starting_height': startingHeight?.toString(),
-      'ending_height': endingHeight?.toString(),
-      'pagination': pagination?.toJson(),
+      'starting_height': config.encodeBigint(startingHeight),
+      'ending_height': config.encodeBigint(endingHeight),
+      'pagination': config.encodeMessage(pagination),
     };
   }
 
-  factory QueryValidatorSlashesRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryValidatorSlashesRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryValidatorSlashesRequest(
       validatorAddress: json.valueAsString<String?>(
         'validator_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       startingHeight: json.valueAsBigInt<BigInt?>(
         'starting_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       endingHeight: json.valueAsBigInt<BigInt?>(
         'ending_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageRequest?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) => cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageRequest?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -533,39 +573,52 @@ class QueryValidatorSlashesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [slashes, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'slashes': slashes.map((e) => e.toJson()).toList(),
-      'pagination': pagination?.toJson(),
+      'slashes': slashes.map((e) => config.encodeMessage(e)).toList(),
+      'pagination': config.encodeMessage(pagination),
     };
   }
 
-  factory QueryValidatorSlashesResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryValidatorSlashesResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryValidatorSlashesResponse(
       slashes:
-          (json.valueEnsureAsList<dynamic>('slashes', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'slashes',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   initia_distribution_v1_distribution.ValidatorSlashEvent,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => initia_distribution_v1_distribution
-                          .ValidatorSlashEvent.fromJson(v),
+                          .ValidatorSlashEvent.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageResponse?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) =>
-                cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageResponse?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -632,22 +685,27 @@ class QueryDelegationRewardsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [delegatorAddress, validatorAddress];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'delegator_address': delegatorAddress,
       'validator_address': validatorAddress,
     };
   }
 
-  factory QueryDelegationRewardsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryDelegationRewardsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryDelegationRewardsRequest(
       delegatorAddress: json.valueAsString<String?>(
         'delegator_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       validatorAddress: json.valueAsString<String?>(
         'validator_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -706,23 +764,35 @@ class QueryDelegationRewardsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [rewards];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'rewards': rewards.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'rewards': rewards.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory QueryDelegationRewardsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryDelegationRewardsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryDelegationRewardsResponse(
       rewards:
-          (json.valueEnsureAsList<dynamic>('rewards', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'rewards',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   initia_distribution_v1_distribution.DecPool,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
-                      (v) => initia_distribution_v1_distribution
-                          .DecPool.fromJson(v),
+                      (v) =>
+                          initia_distribution_v1_distribution.DecPool.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
                 ),
               )
               .toList(),
@@ -780,17 +850,20 @@ class QueryDelegationTotalRewardsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [delegatorAddress];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'delegator_address': delegatorAddress};
   }
 
   factory QueryDelegationTotalRewardsRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryDelegationTotalRewardsRequest(
       delegatorAddress: json.valueAsString<String?>(
         'delegator_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -860,42 +933,59 @@ class QueryDelegationTotalRewardsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [rewards, total];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'rewards': rewards.map((e) => e.toJson()).toList(),
-      'total': total.map((e) => e.toJson()).toList(),
+      'rewards': rewards.map((e) => config.encodeMessage(e)).toList(),
+      'total': total.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
   factory QueryDelegationTotalRewardsResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryDelegationTotalRewardsResponse(
       rewards:
-          (json.valueEnsureAsList<dynamic>('rewards', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'rewards',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   initia_distribution_v1_distribution.DelegationDelegatorReward,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => initia_distribution_v1_distribution
-                          .DelegationDelegatorReward.fromJson(v),
+                          .DelegationDelegatorReward.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       total:
-          (json.valueEnsureAsList<dynamic>('total', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'total',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   initia_distribution_v1_distribution.DecPool,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
-                      (v) => initia_distribution_v1_distribution
-                          .DecPool.fromJson(v),
+                      (v) =>
+                          initia_distribution_v1_distribution.DecPool.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
                 ),
               )
               .toList(),

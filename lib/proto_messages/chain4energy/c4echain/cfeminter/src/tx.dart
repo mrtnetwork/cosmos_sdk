@@ -38,26 +38,40 @@ class MsgBurn extends CosmosProtoMessage
   List<Object?> get protoValues => [address, amount];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'address': address,
-      'amount': amount.map((e) => e.toJson()).toList(),
+      'amount': amount.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory MsgBurn.fromJson(Map<String, dynamic> json) {
+  factory MsgBurn.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgBurn(
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       amount:
-          (json.valueEnsureAsList<dynamic>('amount', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'amount',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -107,11 +121,16 @@ class MsgBurnResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgBurnResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgBurnResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgBurnResponse();
   }
 
@@ -164,41 +183,57 @@ class MsgUpdateParams extends CosmosProtoMessage
   List<Object?> get protoValues => [authority, mintDenom, startTime, minters];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'authority': authority,
       'mint_denom': mintDenom,
       'start_time': startTime?.toRfc3339(),
-      'minters': minters.map((e) => e.toJson()).toList(),
+      'minters': minters.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory MsgUpdateParams.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateParams.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateParams(
       authority: json.valueAsString<String?>(
         'authority',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       mintDenom: json.valueAsString<String?>(
         'mint_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      startTime: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      startTime: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'start_time',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       minters:
-          (json.valueEnsureAsList<dynamic>('minters', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'minters',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   chain4energy_c4echain_cfeminter_minter.Minter,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => chain4energy_c4echain_cfeminter_minter
-                          .Minter.fromJson(v),
+                          .Minter.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -257,11 +292,16 @@ class MsgUpdateParamsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgUpdateParamsResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateParamsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateParamsResponse();
   }
 
@@ -311,36 +351,52 @@ class MsgUpdateMintersParams extends CosmosProtoMessage
   List<Object?> get protoValues => [authority, startTime, minters];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'authority': authority,
       'start_time': startTime?.toRfc3339(),
-      'minters': minters.map((e) => e.toJson()).toList(),
+      'minters': minters.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory MsgUpdateMintersParams.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateMintersParams.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateMintersParams(
       authority: json.valueAsString<String?>(
         'authority',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      startTime: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      startTime: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'start_time',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       minters:
-          (json.valueEnsureAsList<dynamic>('minters', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'minters',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   chain4energy_c4echain_cfeminter_minter.Minter,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => chain4energy_c4echain_cfeminter_minter
-                          .Minter.fromJson(v),
+                          .Minter.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -401,11 +457,16 @@ class MsgUpdateMintersParamsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgUpdateMintersParamsResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateMintersParamsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateMintersParamsResponse();
   }
 

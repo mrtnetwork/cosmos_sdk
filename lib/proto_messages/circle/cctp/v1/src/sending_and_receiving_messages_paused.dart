@@ -40,15 +40,21 @@ class SendingAndReceivingMessagesPaused extends CosmosProtoMessage {
   List<Object?> get protoValues => [paused];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'paused': paused};
   }
 
   factory SendingAndReceivingMessagesPaused.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SendingAndReceivingMessagesPaused(
-      paused: json.valueAsBool<bool?>('paused', acceptCamelCase: true),
+      paused: json.valueAsBool<bool?>(
+        'paused',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

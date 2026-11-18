@@ -29,13 +29,21 @@ class MsgToggleIbcSwitch extends CosmosProtoMessage
   List<Object?> get protoValues => [sender];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'sender': sender};
   }
 
-  factory MsgToggleIbcSwitch.fromJson(Map<String, dynamic> json) {
+  factory MsgToggleIbcSwitch.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgToggleIbcSwitch(
-      sender: json.valueAsString<String?>('sender', acceptCamelCase: true),
+      sender: json.valueAsString<String?>(
+        'sender',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -77,11 +85,16 @@ class MsgToggleIbcSwitchResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgToggleIbcSwitchResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgToggleIbcSwitchResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgToggleIbcSwitchResponse();
   }
 
@@ -127,24 +140,31 @@ class MsgUpdateParams extends CosmosProtoMessage
   List<Object?> get protoValues => [authority, params];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'authority': authority, 'params': params?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'authority': authority, 'params': config.encodeMessage(params)};
   }
 
-  factory MsgUpdateParams.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateParams.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateParams(
       authority: json.valueAsString<String?>(
         'authority',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      params: json.valueTo<
-        secret_emergencybutton_v1beta1_params.Params?,
-        Map<String, dynamic>
-      >(
-        key: 'params',
-        parse: (v) => secret_emergencybutton_v1beta1_params.Params.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      params: json
+          .valueTo<secret_emergencybutton_v1beta1_params.Params?, Object>(
+            key: 'params',
+            parse:
+                (v) => secret_emergencybutton_v1beta1_params.Params.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -191,11 +211,16 @@ class MsgUpdateParamsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgUpdateParamsResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateParamsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateParamsResponse();
   }
 

@@ -24,20 +24,32 @@ enum MissionType implements ProtoEnumVariant {
 
   /// Looks up a value by its proto wire int. Throws if not found.
   static MissionType fromValue(int? value) {
+    value ??= 0;
     return MissionType.values.firstWhere(
       (e) => e.value == value,
       orElse:
-          () => throw ItemNotFoundException(name: "MissionType", value: value),
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching MissionType found for the given value. $value",
+                details: {"name": "MissionType", "value": value?.toString()},
+              ),
     );
   }
 
   /// Looks up a value by wire int, Dart enum name, or original proto
   /// name (whichever [value] happens to be). Throws if not found.
   static MissionType from(Object? value) {
+    value ??= 0;
     return MissionType.values.firstWhere(
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
-          () => throw ItemNotFoundException(name: "MissionType", value: value),
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching MissionType found for the given value. $value",
+                details: {"name": "MissionType", "value": value?.toString()},
+              ),
     );
   }
 }
@@ -98,40 +110,58 @@ class Mission extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'id': id?.toString(),
-      'campaign_id': campaignId?.toString(),
+      'id': config.encodeBigint(id),
+      'campaign_id': config.encodeBigint(campaignId),
       'name': name,
       'description': description,
-      'missionType': missionType?.protoName,
+      'missionType': config.encodeEnum(missionType),
       'weight': weight,
       'claim_start_date': claimStartDate?.toRfc3339(),
     };
   }
 
-  factory Mission.fromJson(Map<String, dynamic> json) {
+  factory Mission.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Mission(
-      id: json.valueAsBigInt<BigInt?>('id', acceptCamelCase: true),
+      id: json.valueAsBigInt<BigInt?>(
+        'id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       campaignId: json.valueAsBigInt<BigInt?>(
         'campaign_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      name: json.valueAsString<String?>('name', acceptCamelCase: true),
+      name: json.valueAsString<String?>(
+        'name',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       description: json.valueAsString<String?>(
         'description',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       missionType: json.valueTo<MissionType?, Object?>(
         key: 'missionType',
         parse: (v) => MissionType.from(v),
       ),
-      weight: json.valueAsString<String?>('weight', acceptCamelCase: true),
+      weight: json.valueAsString<String?>(
+        'weight',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       claimStartDate: json
-          .valueTo<google_protobuf_timestamp.Timestamp?, String>(
+          .valueTo<google_protobuf_timestamp.Timestamp?, Object>(
             key: 'claim_start_date',
-            parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => google_protobuf_timestamp.Timestamp.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
     );
   }

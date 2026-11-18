@@ -36,25 +36,37 @@ class Grant extends CosmosProtoMessage {
   List<Object?> get protoValues => [authorization, expiration];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'authorization': authorization?.toJson(),
+      'authorization': config.encodeMessage(authorization),
       'expiration': expiration?.toRfc3339(),
     };
   }
 
-  factory Grant.fromJson(Map<String, dynamic> json) {
+  factory Grant.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Grant(
-      authorization: json
-          .valueTo<google_protobuf_any.Any?, Map<String, dynamic>>(
-            key: 'authorization',
-            parse: (v) => google_protobuf_any.Any.fromJson(v),
-            acceptCamelCase: true,
-          ),
-      expiration: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      authorization: json.valueTo<google_protobuf_any.Any?, Object>(
+        key: 'authorization',
+        parse:
+            (v) => google_protobuf_any.Any.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      expiration: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'expiration',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -121,29 +133,47 @@ class GrantAuthorization extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'granter': granter,
       'grantee': grantee,
-      'authorization': authorization?.toJson(),
+      'authorization': config.encodeMessage(authorization),
       'expiration': expiration?.toRfc3339(),
     };
   }
 
-  factory GrantAuthorization.fromJson(Map<String, dynamic> json) {
+  factory GrantAuthorization.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GrantAuthorization(
-      granter: json.valueAsString<String?>('granter', acceptCamelCase: true),
-      grantee: json.valueAsString<String?>('grantee', acceptCamelCase: true),
-      authorization: json
-          .valueTo<google_protobuf_any.Any?, Map<String, dynamic>>(
-            key: 'authorization',
-            parse: (v) => google_protobuf_any.Any.fromJson(v),
-            acceptCamelCase: true,
-          ),
-      expiration: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      granter: json.valueAsString<String?>(
+        'granter',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      grantee: json.valueAsString<String?>(
+        'grantee',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      authorization: json.valueTo<google_protobuf_any.Any?, Object>(
+        key: 'authorization',
+        parse:
+            (v) => google_protobuf_any.Any.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      expiration: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'expiration',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

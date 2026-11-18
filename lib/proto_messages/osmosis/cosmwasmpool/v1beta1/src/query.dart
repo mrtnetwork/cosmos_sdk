@@ -34,11 +34,16 @@ class ParamsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory ParamsRequest.fromJson(Map<String, dynamic> json) {
+  factory ParamsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ParamsRequest();
   }
 
@@ -80,19 +85,25 @@ class ParamsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [params];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'params': params?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'params': config.encodeMessage(params)};
   }
 
-  factory ParamsResponse.fromJson(Map<String, dynamic> json) {
+  factory ParamsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ParamsResponse(
-      params: json.valueTo<
-        osmosis_cosmwasmpool_v1beta1_params.Params?,
-        Map<String, dynamic>
-      >(
+      params: json.valueTo<osmosis_cosmwasmpool_v1beta1_params.Params?, Object>(
         key: 'params',
-        parse: (v) => osmosis_cosmwasmpool_v1beta1_params.Params.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => osmosis_cosmwasmpool_v1beta1_params.Params.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -141,21 +152,28 @@ class PoolsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [pagination];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'pagination': pagination?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'pagination': config.encodeMessage(pagination)};
   }
 
-  factory PoolsRequest.fromJson(Map<String, dynamic> json) {
+  factory PoolsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return PoolsRequest(
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageRequest?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) => cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageRequest?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -215,34 +233,48 @@ class PoolsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [pools, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'pools': pools.map((e) => e.toJson()).toList(),
-      'pagination': pagination?.toJson(),
+      'pools': pools.map((e) => config.encodeMessage(e)).toList(),
+      'pagination': config.encodeMessage(pagination),
     };
   }
 
-  factory PoolsResponse.fromJson(Map<String, dynamic> json) {
+  factory PoolsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return PoolsResponse(
       pools:
-          (json.valueEnsureAsList<dynamic>('pools', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'pools',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  google_protobuf_any.Any,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => google_protobuf_any.Any.fromJson(v)),
+                (e) => JsonParser.valueTo<google_protobuf_any.Any, Object>(
+                  value: e,
+                  parse:
+                      (v) => google_protobuf_any.Any.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageResponse?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) =>
-                cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageResponse?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -297,13 +329,21 @@ class ContractInfoByPoolIdRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [poolId];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'pool_id': poolId?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'pool_id': config.encodeBigint(poolId)};
   }
 
-  factory ContractInfoByPoolIdRequest.fromJson(Map<String, dynamic> json) {
+  factory ContractInfoByPoolIdRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ContractInfoByPoolIdRequest(
-      poolId: json.valueAsBigInt<BigInt?>('pool_id', acceptCamelCase: true),
+      poolId: json.valueAsBigInt<BigInt?>(
+        'pool_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -355,17 +395,28 @@ class ContractInfoByPoolIdResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [contractAddress, codeId];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'contract_address': contractAddress, 'code_id': codeId?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'contract_address': contractAddress,
+      'code_id': config.encodeBigint(codeId),
+    };
   }
 
-  factory ContractInfoByPoolIdResponse.fromJson(Map<String, dynamic> json) {
+  factory ContractInfoByPoolIdResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ContractInfoByPoolIdResponse(
       contractAddress: json.valueAsString<String?>(
         'contract_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      codeId: json.valueAsBigInt<BigInt?>('code_id', acceptCamelCase: true),
+      codeId: json.valueAsBigInt<BigInt?>(
+        'code_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -426,24 +477,32 @@ class PoolRawFilteredStateRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [poolId, keyFilter, valueFilter];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'pool_id': poolId?.toString(),
+      'pool_id': config.encodeBigint(poolId),
       'key_filter': keyFilter,
       'value_filter': valueFilter,
     };
   }
 
-  factory PoolRawFilteredStateRequest.fromJson(Map<String, dynamic> json) {
+  factory PoolRawFilteredStateRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return PoolRawFilteredStateRequest(
-      poolId: json.valueAsBigInt<BigInt?>('pool_id', acceptCamelCase: true),
+      poolId: json.valueAsBigInt<BigInt?>(
+        'pool_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       keyFilter: json.valueAsString<String?>(
         'key_filter',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       valueFilter: json.valueAsString<String?>(
         'value_filter',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -474,9 +533,10 @@ class PoolRawFilteredStateRequest extends CosmosProtoMessage
 
 class PoolRawFilteredStateResponse extends CosmosProtoMessage {
   /// values represents the list of values in the pool.
-  final List<List<int>> values;
+  final List<BuBytes> values;
 
-  const PoolRawFilteredStateResponse({this.values = const []});
+  PoolRawFilteredStateResponse({List<List<int>> values = const []})
+    : values = values.map((e) => e.asImmutableBytes).toImutableList;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -499,28 +559,23 @@ class PoolRawFilteredStateResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [values];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {
-      'values':
-          values
-              .map(
-                (e) => StringUtils.decode(e, encoding: StringEncoding.base64),
-              )
-              .toList(),
-    };
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'values': values.map((e) => config.encodeBinary(e)).toList()};
   }
 
-  factory PoolRawFilteredStateResponse.fromJson(Map<String, dynamic> json) {
+  factory PoolRawFilteredStateResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return PoolRawFilteredStateResponse(
       values:
-          (json.valueEnsureAsList<dynamic>('values', acceptCamelCase: true))
-              .map(
-                (e) => JsonParser.valueAsBytes<List<int>>(
-                  e,
-                  encoding: StringEncoding.base64,
-                ),
-              )
-              .toList(),
+          (json.valueEnsureAsList<dynamic>(
+            'values',
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
+          )).map((e) => config.decodeBinary<List<int>>(e)).toList(),
     );
   }
 

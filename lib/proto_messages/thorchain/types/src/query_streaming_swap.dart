@@ -31,14 +31,25 @@ class QueryStreamingSwapRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [txId, height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'tx_id': txId, 'height': height};
   }
 
-  factory QueryStreamingSwapRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryStreamingSwapRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryStreamingSwapRequest(
-      txId: json.valueAsString<String?>('tx_id', acceptCamelCase: true),
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      txId: json.valueAsString<String?>(
+        'tx_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -181,13 +192,15 @@ class QueryStreamingSwapResponse extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'tx_id': txId,
-      'interval': interval?.toString(),
-      'quantity': quantity?.toString(),
-      'count': count?.toString(),
-      'last_height': lastHeight?.toString(),
+      'interval': config.encodeBigint(interval),
+      'quantity': config.encodeBigint(quantity),
+      'count': config.encodeBigint(count),
+      'last_height': config.encodeBigint(lastHeight),
       'trade_target': tradeTarget,
       'source_asset': sourceAsset,
       'target_asset': targetAsset,
@@ -195,54 +208,80 @@ class QueryStreamingSwapResponse extends CosmosProtoMessage {
       'deposit': deposit,
       'in': in_,
       'out': out,
-      'failed_swaps': failedSwaps.map((e) => e.toString()).toList(),
+      'failed_swaps': failedSwaps.map((e) => config.encodeBigint(e)).toList(),
       'failed_swap_reasons': failedSwapReasons.map((e) => e).toList(),
-      'initial_height': initialHeight?.toString(),
+      'initial_height': config.encodeBigint(initialHeight),
     };
   }
 
-  factory QueryStreamingSwapResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryStreamingSwapResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryStreamingSwapResponse(
-      txId: json.valueAsString<String?>('tx_id', acceptCamelCase: true),
-      interval: json.valueAsBigInt<BigInt?>('interval', acceptCamelCase: true),
-      quantity: json.valueAsBigInt<BigInt?>('quantity', acceptCamelCase: true),
-      count: json.valueAsBigInt<BigInt?>('count', acceptCamelCase: true),
+      txId: json.valueAsString<String?>(
+        'tx_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      interval: json.valueAsBigInt<BigInt?>(
+        'interval',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      quantity: json.valueAsBigInt<BigInt?>(
+        'quantity',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      count: json.valueAsBigInt<BigInt?>(
+        'count',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       lastHeight: json.valueAsBigInt<BigInt?>(
         'last_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       tradeTarget: json.valueAsString<String?>(
         'trade_target',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       sourceAsset: json.valueAsString<String?>(
         'source_asset',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       targetAsset: json.valueAsString<String?>(
         'target_asset',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       destination: json.valueAsString<String?>(
         'destination',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      deposit: json.valueAsString<String?>('deposit', acceptCamelCase: true),
-      in_: json.valueAsString<String?>('in', acceptCamelCase: true),
-      out: json.valueAsString<String?>('out', acceptCamelCase: true),
+      deposit: json.valueAsString<String?>(
+        'deposit',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      in_: json.valueAsString<String?>(
+        'in',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      out: json.valueAsString<String?>(
+        'out',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       failedSwaps:
           (json.valueEnsureAsList<dynamic>(
             'failed_swaps',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsBigInt<BigInt>(e)).toList(),
       failedSwapReasons:
           (json.valueEnsureAsList<dynamic>(
             'failed_swap_reasons',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
       initialHeight: json.valueAsBigInt<BigInt?>(
         'initial_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -300,13 +339,21 @@ class QueryStreamingSwapsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'height': height};
   }
 
-  factory QueryStreamingSwapsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryStreamingSwapsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryStreamingSwapsRequest(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -354,24 +401,34 @@ class QueryStreamingSwapsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [streamingSwaps];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'streaming_swaps': streamingSwaps.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'streaming_swaps':
+          streamingSwaps.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
-  factory QueryStreamingSwapsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryStreamingSwapsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryStreamingSwapsResponse(
       streamingSwaps:
           (json.valueEnsureAsList<dynamic>(
                 'streaming_swaps',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  QueryStreamingSwapResponse,
-                  Map<String, dynamic>
-                >(
+                (e) => JsonParser.valueTo<QueryStreamingSwapResponse, Object>(
                   value: e,
-                  parse: (v) => QueryStreamingSwapResponse.fromJson(v),
+                  parse:
+                      (v) => QueryStreamingSwapResponse.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),

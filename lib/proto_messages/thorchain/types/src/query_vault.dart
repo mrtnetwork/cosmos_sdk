@@ -33,14 +33,25 @@ class QueryVaultRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [pubKey, height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'pub_key': pubKey, 'height': height};
   }
 
-  factory QueryVaultRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryVaultRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryVaultRequest(
-      pubKey: json.valueAsString<String?>('pub_key', acceptCamelCase: true),
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      pubKey: json.valueAsString<String?>(
+        'pub_key',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -197,108 +208,150 @@ class QueryVaultResponse extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'block_height': blockHeight?.toString(),
+      'block_height': config.encodeBigint(blockHeight),
       'pub_key': pubKey,
-      'coins': coins.map((e) => e.toJson()).toList(),
+      'coins': coins.map((e) => config.encodeMessage(e)).toList(),
       'type': type,
       'status': status,
-      'status_since': statusSince?.toString(),
+      'status_since': config.encodeBigint(statusSince),
       'membership': membership.map((e) => e).toList(),
       'chains': chains.map((e) => e).toList(),
-      'inbound_tx_count': inboundTxCount?.toString(),
-      'outbound_tx_count': outboundTxCount?.toString(),
+      'inbound_tx_count': config.encodeBigint(inboundTxCount),
+      'outbound_tx_count': config.encodeBigint(outboundTxCount),
       'pending_tx_block_heights':
-          pendingTxBlockHeights.map((e) => e.toString()).toList(),
-      'routers': routers.map((e) => e.toJson()).toList(),
-      'addresses': addresses.map((e) => e.toJson()).toList(),
+          pendingTxBlockHeights.map((e) => config.encodeBigint(e)).toList(),
+      'routers': routers.map((e) => config.encodeMessage(e)).toList(),
+      'addresses': addresses.map((e) => config.encodeMessage(e)).toList(),
       'frozen': frozen.map((e) => e).toList(),
       'pub_key_eddsa': pubKeyEddsa,
-      'vault_creation_height_xmr': vaultCreationHeightXmr?.toString(),
+      'vault_creation_height_xmr': config.encodeBigint(vaultCreationHeightXmr),
       'pub_key_frost': pubKeyFrost,
     };
   }
 
-  factory QueryVaultResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryVaultResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryVaultResponse(
       blockHeight: json.valueAsBigInt<BigInt?>(
         'block_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      pubKey: json.valueAsString<String?>('pub_key', acceptCamelCase: true),
+      pubKey: json.valueAsString<String?>(
+        'pub_key',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       coins:
-          (json.valueEnsureAsList<dynamic>('coins', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'coins',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  common_common.Coin,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => common_common.Coin.fromJson(v)),
+                (e) => JsonParser.valueTo<common_common.Coin, Object>(
+                  value: e,
+                  parse:
+                      (v) => common_common.Coin.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
-      type: json.valueAsString<String?>('type', acceptCamelCase: true),
-      status: json.valueAsString<String?>('status', acceptCamelCase: true),
+      type: json.valueAsString<String?>(
+        'type',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      status: json.valueAsString<String?>(
+        'status',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       statusSince: json.valueAsBigInt<BigInt?>(
         'status_since',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       membership:
           (json.valueEnsureAsList<dynamic>(
             'membership',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
       chains:
           (json.valueEnsureAsList<dynamic>(
             'chains',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
       inboundTxCount: json.valueAsBigInt<BigInt?>(
         'inbound_tx_count',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       outboundTxCount: json.valueAsBigInt<BigInt?>(
         'outbound_tx_count',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       pendingTxBlockHeights:
           (json.valueEnsureAsList<dynamic>(
             'pending_tx_block_heights',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsBigInt<BigInt>(e)).toList(),
       routers:
-          (json.valueEnsureAsList<dynamic>('routers', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'routers',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<VaultRouter, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<VaultRouter, Object>(
                   value: e,
-                  parse: (v) => VaultRouter.fromJson(v),
+                  parse:
+                      (v) => VaultRouter.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       addresses:
-          (json.valueEnsureAsList<dynamic>('addresses', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'addresses',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<VaultAddress, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<VaultAddress, Object>(
                   value: e,
-                  parse: (v) => VaultAddress.fromJson(v),
+                  parse:
+                      (v) => VaultAddress.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       frozen:
           (json.valueEnsureAsList<dynamic>(
             'frozen',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
       pubKeyEddsa: json.valueAsString<String?>(
         'pub_key_eddsa',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       vaultCreationHeightXmr: json.valueAsBigInt<BigInt?>(
         'vault_creation_height_xmr',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       pubKeyFrost: json.valueAsString<String?>(
         'pub_key_frost',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -372,16 +425,24 @@ class QueryKeysignPartyRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [pubKey, signingHeight];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'pub_key': pubKey, 'signing_height': signingHeight};
   }
 
-  factory QueryKeysignPartyRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryKeysignPartyRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryKeysignPartyRequest(
-      pubKey: json.valueAsString<String?>('pub_key', acceptCamelCase: true),
+      pubKey: json.valueAsString<String?>(
+        'pub_key',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       signingHeight: json.valueAsString<String?>(
         'signing_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -478,49 +539,63 @@ class QueryKeysignPartyResponse extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'pub_key': pubKey,
       'signers': signers.map((e) => e).toList(),
-      'height': height?.toString(),
-      'threshold': threshold?.toString(),
-      'required_signers': requiredSigners?.toString(),
+      'height': config.encodeBigint(height),
+      'threshold': config.encodeBigint(threshold),
+      'required_signers': config.encodeBigint(requiredSigners),
       'never_signers': neverSigners.map((e) => e).toList(),
       'jailed_fallback_signers': jailedFallbackSigners.map((e) => e).toList(),
-      'active_signer_count': activeSignerCount?.toString(),
+      'active_signer_count': config.encodeBigint(activeSignerCount),
     };
   }
 
-  factory QueryKeysignPartyResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryKeysignPartyResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryKeysignPartyResponse(
-      pubKey: json.valueAsString<String?>('pub_key', acceptCamelCase: true),
+      pubKey: json.valueAsString<String?>(
+        'pub_key',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       signers:
           (json.valueEnsureAsList<dynamic>(
             'signers',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
-      height: json.valueAsBigInt<BigInt?>('height', acceptCamelCase: true),
+      height: json.valueAsBigInt<BigInt?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       threshold: json.valueAsBigInt<BigInt?>(
         'threshold',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       requiredSigners: json.valueAsBigInt<BigInt?>(
         'required_signers',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       neverSigners:
           (json.valueEnsureAsList<dynamic>(
             'never_signers',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
       jailedFallbackSigners:
           (json.valueEnsureAsList<dynamic>(
             'jailed_fallback_signers',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
       activeSignerCount: json.valueAsBigInt<BigInt?>(
         'active_signer_count',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -571,13 +646,21 @@ class QueryAsgardVaultsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'height': height};
   }
 
-  factory QueryAsgardVaultsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryAsgardVaultsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryAsgardVaultsRequest(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -625,22 +708,35 @@ class QueryAsgardVaultsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [asgardVaults];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'asgard_vaults': asgardVaults.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'asgard_vaults':
+          asgardVaults.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
-  factory QueryAsgardVaultsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryAsgardVaultsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryAsgardVaultsResponse(
       asgardVaults:
           (json.valueEnsureAsList<dynamic>(
                 'asgard_vaults',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  QueryVaultResponse,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => QueryVaultResponse.fromJson(v)),
+                (e) => JsonParser.valueTo<QueryVaultResponse, Object>(
+                  value: e,
+                  parse:
+                      (v) => QueryVaultResponse.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );
@@ -689,13 +785,21 @@ class QueryVaultsPubkeysRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'height': height};
   }
 
-  factory QueryVaultsPubkeysRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryVaultsPubkeysRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryVaultsPubkeysRequest(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -754,30 +858,51 @@ class QueryVaultsPubkeysResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [asgard, inactive];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'asgard': asgard.map((e) => e.toJson()).toList(),
-      'inactive': inactive.map((e) => e.toJson()).toList(),
+      'asgard': asgard.map((e) => config.encodeMessage(e)).toList(),
+      'inactive': inactive.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory QueryVaultsPubkeysResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryVaultsPubkeysResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryVaultsPubkeysResponse(
       asgard:
-          (json.valueEnsureAsList<dynamic>('asgard', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'asgard',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<VaultInfo, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<VaultInfo, Object>(
                   value: e,
-                  parse: (v) => VaultInfo.fromJson(v),
+                  parse:
+                      (v) => VaultInfo.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       inactive:
-          (json.valueEnsureAsList<dynamic>('inactive', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'inactive',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<VaultInfo, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<VaultInfo, Object>(
                   value: e,
-                  parse: (v) => VaultInfo.fromJson(v),
+                  parse:
+                      (v) => VaultInfo.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -858,40 +983,57 @@ class VaultInfo extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'pub_key': pubKey,
-      'routers': routers.map((e) => e.toJson()).toList(),
+      'routers': routers.map((e) => config.encodeMessage(e)).toList(),
       'pub_key_eddsa': pubKeyEddsa,
       'membership': membership.map((e) => e).toList(),
       'pub_key_frost': pubKeyFrost,
     };
   }
 
-  factory VaultInfo.fromJson(Map<String, dynamic> json) {
+  factory VaultInfo.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return VaultInfo(
-      pubKey: json.valueAsString<String?>('pub_key', acceptCamelCase: true),
+      pubKey: json.valueAsString<String?>(
+        'pub_key',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       routers:
-          (json.valueEnsureAsList<dynamic>('routers', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'routers',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<VaultRouter, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<VaultRouter, Object>(
                   value: e,
-                  parse: (v) => VaultRouter.fromJson(v),
+                  parse:
+                      (v) => VaultRouter.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       pubKeyEddsa: json.valueAsString<String?>(
         'pub_key_eddsa',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       membership:
           (json.valueEnsureAsList<dynamic>(
             'membership',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
       pubKeyFrost: json.valueAsString<String?>(
         'pub_key_frost',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -945,17 +1087,25 @@ class QueryXMRSpentOutputRefsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [vaultPubKey, height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'vault_pub_key': vaultPubKey, 'height': height};
   }
 
-  factory QueryXMRSpentOutputRefsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryXMRSpentOutputRefsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryXMRSpentOutputRefsRequest(
       vaultPubKey: json.valueAsString<String?>(
         'vault_pub_key',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1008,24 +1158,35 @@ class QueryXMRSpentOutputRefsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [spentOutputRefs];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'spent_output_refs': spentOutputRefs.map((e) => e.toJson()).toList(),
+      'spent_output_refs':
+          spentOutputRefs.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory QueryXMRSpentOutputRefsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryXMRSpentOutputRefsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryXMRSpentOutputRefsResponse(
       spentOutputRefs:
           (json.valueEnsureAsList<dynamic>(
                 'spent_output_refs',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  common_common.OutputRef,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => common_common.OutputRef.fromJson(v)),
+                (e) => JsonParser.valueTo<common_common.OutputRef, Object>(
+                  value: e,
+                  parse:
+                      (v) => common_common.OutputRef.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );
@@ -1069,14 +1230,25 @@ class VaultRouter extends CosmosProtoMessage {
   List<Object?> get protoValues => [chain, router];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'chain': chain, 'router': router};
   }
 
-  factory VaultRouter.fromJson(Map<String, dynamic> json) {
+  factory VaultRouter.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return VaultRouter(
-      chain: json.valueAsString<String?>('chain', acceptCamelCase: true),
-      router: json.valueAsString<String?>('router', acceptCamelCase: true),
+      chain: json.valueAsString<String?>(
+        'chain',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      router: json.valueAsString<String?>(
+        'router',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1118,14 +1290,25 @@ class VaultAddress extends CosmosProtoMessage {
   List<Object?> get protoValues => [chain, address];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'chain': chain, 'address': address};
   }
 
-  factory VaultAddress.fromJson(Map<String, dynamic> json) {
+  factory VaultAddress.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return VaultAddress(
-      chain: json.valueAsString<String?>('chain', acceptCamelCase: true),
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
+      chain: json.valueAsString<String?>(
+        'chain',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1169,13 +1352,21 @@ class QueryVaultSolvencyRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'height': height};
   }
 
-  factory QueryVaultSolvencyRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryVaultSolvencyRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryVaultSolvencyRequest(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1223,18 +1414,30 @@ class VaultSolvencyAsset extends CosmosProtoMessage {
   List<Object?> get protoValues => [asset, amount];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'asset': asset?.toJson(), 'amount': amount};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'asset': config.encodeMessage(asset), 'amount': amount};
   }
 
-  factory VaultSolvencyAsset.fromJson(Map<String, dynamic> json) {
+  factory VaultSolvencyAsset.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return VaultSolvencyAsset(
-      asset: json.valueTo<common_common.Asset?, Map<String, dynamic>>(
+      asset: json.valueTo<common_common.Asset?, Object>(
         key: 'asset',
-        parse: (v) => common_common.Asset.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => common_common.Asset.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      amount: json.valueAsString<String?>('amount', acceptCamelCase: true),
+      amount: json.valueAsString<String?>(
+        'amount',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1280,19 +1483,32 @@ class QueryVaultSolvencyResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [assets];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'assets': assets.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'assets': assets.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory QueryVaultSolvencyResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryVaultSolvencyResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryVaultSolvencyResponse(
       assets:
-          (json.valueEnsureAsList<dynamic>('assets', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'assets',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  VaultSolvencyAsset,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => VaultSolvencyAsset.fromJson(v)),
+                (e) => JsonParser.valueTo<VaultSolvencyAsset, Object>(
+                  value: e,
+                  parse:
+                      (v) => VaultSolvencyAsset.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );

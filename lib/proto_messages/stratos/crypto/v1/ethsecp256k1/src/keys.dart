@@ -7,9 +7,9 @@ import 'package:cosmos_sdk/sdk/serialization/serialization.dart';
 /// key format.
 class PubKey extends CosmosProtoMessage {
   /// key is the public key in byte form
-  final List<int>? key;
+  final BuBytes? key;
 
-  const PubKey({this.key});
+  PubKey({List<int>? key}) : key = key?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -26,24 +26,19 @@ class PubKey extends CosmosProtoMessage {
   List<Object?> get protoValues => [key];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {
-      'key': switch (key) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-    };
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'key': config.encodeBinary(key)};
   }
 
-  factory PubKey.fromJson(Map<String, dynamic> json) {
+  factory PubKey.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return PubKey(
-      key: json.valueAsBytes<List<int>?>(
-        'key',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      key: config.decodeBinary<List<int>?>(
+        json.valueAs('key', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }
@@ -62,9 +57,9 @@ class PubKey extends CosmosProtoMessage {
 /// Tendermint's PrivateKey interface.
 class PrivKey extends CosmosProtoMessage {
   /// key is the private key in byte form
-  final List<int>? key;
+  final BuBytes? key;
 
-  const PrivKey({this.key});
+  PrivKey({List<int>? key}) : key = key?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -81,24 +76,19 @@ class PrivKey extends CosmosProtoMessage {
   List<Object?> get protoValues => [key];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {
-      'key': switch (key) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-    };
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'key': config.encodeBinary(key)};
   }
 
-  factory PrivKey.fromJson(Map<String, dynamic> json) {
+  factory PrivKey.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return PrivKey(
-      key: json.valueAsBytes<List<int>?>(
-        'key',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      key: config.decodeBinary<List<int>?>(
+        json.valueAs('key', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }

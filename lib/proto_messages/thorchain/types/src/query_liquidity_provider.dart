@@ -37,15 +37,29 @@ class QueryLiquidityProviderRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [asset, address, height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'asset': asset, 'address': address, 'height': height};
   }
 
-  factory QueryLiquidityProviderRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryLiquidityProviderRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryLiquidityProviderRequest(
-      asset: json.valueAsString<String?>('asset', acceptCamelCase: true),
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      asset: json.valueAsString<String?>(
+        'asset',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -176,13 +190,15 @@ class QueryLiquidityProviderResponse extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'asset': asset,
       'rune_address': runeAddress,
       'asset_address': assetAddress,
-      'last_add_height': lastAddHeight?.toString(),
-      'last_withdraw_height': lastWithdrawHeight?.toString(),
+      'last_add_height': config.encodeBigint(lastAddHeight),
+      'last_withdraw_height': config.encodeBigint(lastWithdrawHeight),
       'units': units,
       'pending_rune': pendingRune,
       'pending_asset': pendingAsset,
@@ -197,65 +213,74 @@ class QueryLiquidityProviderResponse extends CosmosProtoMessage {
     };
   }
 
-  factory QueryLiquidityProviderResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryLiquidityProviderResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryLiquidityProviderResponse(
-      asset: json.valueAsString<String?>('asset', acceptCamelCase: true),
+      asset: json.valueAsString<String?>(
+        'asset',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       runeAddress: json.valueAsString<String?>(
         'rune_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       assetAddress: json.valueAsString<String?>(
         'asset_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       lastAddHeight: json.valueAsBigInt<BigInt?>(
         'last_add_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       lastWithdrawHeight: json.valueAsBigInt<BigInt?>(
         'last_withdraw_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      units: json.valueAsString<String?>('units', acceptCamelCase: true),
+      units: json.valueAsString<String?>(
+        'units',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       pendingRune: json.valueAsString<String?>(
         'pending_rune',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       pendingAsset: json.valueAsString<String?>(
         'pending_asset',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       pendingTxId: json.valueAsString<String?>(
         'pending_tx_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       runeDepositValue: json.valueAsString<String?>(
         'rune_deposit_value',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       assetDepositValue: json.valueAsString<String?>(
         'asset_deposit_value',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       runeRedeemValue: json.valueAsString<String?>(
         'rune_redeem_value',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       assetRedeemValue: json.valueAsString<String?>(
         'asset_redeem_value',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       luviDepositValue: json.valueAsString<String?>(
         'luvi_deposit_value',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       luviRedeemValue: json.valueAsString<String?>(
         'luvi_redeem_value',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       luviGrowthPct: json.valueAsString<String?>(
         'luvi_growth_pct',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -316,14 +341,25 @@ class QueryLiquidityProvidersRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [asset, height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'asset': asset, 'height': height};
   }
 
-  factory QueryLiquidityProvidersRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryLiquidityProvidersRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryLiquidityProvidersRequest(
-      asset: json.valueAsString<String?>('asset', acceptCamelCase: true),
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      asset: json.valueAsString<String?>(
+        'asset',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -376,27 +412,36 @@ class QueryLiquidityProvidersResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [liquidityProviders];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'liquidity_providers': liquidityProviders.map((e) => e.toJson()).toList(),
+      'liquidity_providers':
+          liquidityProviders.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory QueryLiquidityProvidersResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryLiquidityProvidersResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryLiquidityProvidersResponse(
       liquidityProviders:
           (json.valueEnsureAsList<dynamic>(
                 'liquidity_providers',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  QueryLiquidityProviderResponse,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => QueryLiquidityProviderResponse.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<QueryLiquidityProviderResponse, Object>(
+                      value: e,
+                      parse:
+                          (v) => QueryLiquidityProviderResponse.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );

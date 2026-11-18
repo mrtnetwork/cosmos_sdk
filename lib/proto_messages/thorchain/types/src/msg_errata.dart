@@ -14,9 +14,10 @@ class MsgErrataTx extends CosmosProtoMessage
 
   final String? chain;
 
-  final List<int>? signer;
+  final BuBytes? signer;
 
-  const MsgErrataTx({this.txId, this.chain, this.signer});
+  MsgErrataTx({this.txId, this.chain, List<int>? signer})
+    : signer = signer?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -42,28 +43,31 @@ class MsgErrataTx extends CosmosProtoMessage
   List<Object?> get protoValues => [txId, chain, signer];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'tx_id': txId,
       'chain': chain,
-      'signer': switch (signer) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'signer': config.encodeBinary(signer),
     };
   }
 
-  factory MsgErrataTx.fromJson(Map<String, dynamic> json) {
+  factory MsgErrataTx.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgErrataTx(
-      txId: json.valueAsString<String?>('tx_id', acceptCamelCase: true),
-      chain: json.valueAsString<String?>('chain', acceptCamelCase: true),
-      signer: json.valueAsBytes<List<int>?>(
-        'signer',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      txId: json.valueAsString<String?>(
+        'tx_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      chain: json.valueAsString<String?>(
+        'chain',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      signer: config.decodeBinary<List<int>?>(
+        json.valueAs('signer', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }
@@ -97,9 +101,10 @@ class MsgErrataTxQuorum extends CosmosProtoMessage
         ICosmosProtoAminoMessage {
   final common_common.QuorumErrataTx? quoErrata;
 
-  final List<int>? signer;
+  final BuBytes? signer;
 
-  const MsgErrataTxQuorum({this.quoErrata, this.signer});
+  MsgErrataTxQuorum({this.quoErrata, List<int>? signer})
+    : signer = signer?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -127,31 +132,31 @@ class MsgErrataTxQuorum extends CosmosProtoMessage
   List<Object?> get protoValues => [quoErrata, signer];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'quoErrata': quoErrata?.toJson(),
-      'signer': switch (signer) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'quoErrata': config.encodeMessage(quoErrata),
+      'signer': config.encodeBinary(signer),
     };
   }
 
-  factory MsgErrataTxQuorum.fromJson(Map<String, dynamic> json) {
+  factory MsgErrataTxQuorum.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgErrataTxQuorum(
-      quoErrata: json
-          .valueTo<common_common.QuorumErrataTx?, Map<String, dynamic>>(
-            key: 'quoErrata',
-            parse: (v) => common_common.QuorumErrataTx.fromJson(v),
-            acceptCamelCase: true,
-          ),
-      signer: json.valueAsBytes<List<int>?>(
-        'signer',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      quoErrata: json.valueTo<common_common.QuorumErrataTx?, Object>(
+        key: 'quoErrata',
+        parse:
+            (v) => common_common.QuorumErrataTx.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      signer: config.decodeBinary<List<int>?>(
+        json.valueAs('signer', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }

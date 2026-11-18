@@ -44,12 +44,12 @@ class TraceConfig extends CosmosProtoMessage {
 
   /// temporary state modifications to Geth in order to simulate the effects of
   /// eth_call
-  final List<int>? stateOverrides;
+  final BuBytes? stateOverrides;
 
   /// block overrides block context fields encoded as json
-  final List<int>? blockOverrides;
+  final BuBytes? blockOverrides;
 
-  const TraceConfig({
+  TraceConfig({
     this.tracer,
     this.timeout,
     this.reexec,
@@ -61,9 +61,10 @@ class TraceConfig extends CosmosProtoMessage {
     this.enableMemory,
     this.enableReturnData,
     this.tracerJsonConfig,
-    this.stateOverrides,
-    this.blockOverrides,
-  });
+    List<int>? stateOverrides,
+    List<int>? blockOverrides,
+  }) : stateOverrides = stateOverrides?.asImmutableBytes,
+       blockOverrides = blockOverrides?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -108,80 +109,92 @@ class TraceConfig extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'tracer': tracer,
       'timeout': timeout,
-      'reexec': reexec?.toString(),
+      'reexec': config.encodeBigint(reexec),
       'disable_stack': disableStack,
       'disable_storage': disableStorage,
       'debug': debug,
       'limit': limit,
-      'overrides': overrides?.toJson(),
+      'overrides': config.encodeMessage(overrides),
       'enable_memory': enableMemory,
       'enable_return_data': enableReturnData,
       'tracer_json_config': tracerJsonConfig,
-      'state_overrides': switch (stateOverrides) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'block_overrides': switch (blockOverrides) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'state_overrides': config.encodeBinary(stateOverrides),
+      'block_overrides': config.encodeBinary(blockOverrides),
     };
   }
 
-  factory TraceConfig.fromJson(Map<String, dynamic> json) {
+  factory TraceConfig.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return TraceConfig(
-      tracer: json.valueAsString<String?>('tracer', acceptCamelCase: true),
-      timeout: json.valueAsString<String?>('timeout', acceptCamelCase: true),
-      reexec: json.valueAsBigInt<BigInt?>('reexec', acceptCamelCase: true),
+      tracer: json.valueAsString<String?>(
+        'tracer',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      timeout: json.valueAsString<String?>(
+        'timeout',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      reexec: json.valueAsBigInt<BigInt?>(
+        'reexec',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       disableStack: json.valueAsBool<bool?>(
         'disable_stack',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       disableStorage: json.valueAsBool<bool?>(
         'disable_storage',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      debug: json.valueAsBool<bool?>('debug', acceptCamelCase: true),
-      limit: json.valueAsInt<int?>('limit', acceptCamelCase: true),
-      overrides: json.valueTo<
-        injective_evm_v1_chain_config.ChainConfig?,
-        Map<String, dynamic>
-      >(
-        key: 'overrides',
-        parse: (v) => injective_evm_v1_chain_config.ChainConfig.fromJson(v),
-        acceptCamelCase: true,
+      debug: json.valueAsBool<bool?>(
+        'debug',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
+      limit: json.valueAsInt<int?>(
+        'limit',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      overrides: json
+          .valueTo<injective_evm_v1_chain_config.ChainConfig?, Object>(
+            key: 'overrides',
+            parse:
+                (v) => injective_evm_v1_chain_config.ChainConfig.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
       enableMemory: json.valueAsBool<bool?>(
         'enable_memory',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       enableReturnData: json.valueAsBool<bool?>(
         'enable_return_data',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       tracerJsonConfig: json.valueAsString<String?>(
         'tracer_json_config',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      stateOverrides: json.valueAsBytes<List<int>?>(
-        'state_overrides',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      stateOverrides: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'state_overrides',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
-      blockOverrides: json.valueAsBytes<List<int>?>(
-        'block_overrides',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      blockOverrides: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'block_overrides',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
     );
   }

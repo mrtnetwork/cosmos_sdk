@@ -42,20 +42,29 @@ class MsgSubmitEvidence extends CosmosProtoMessage
   List<Object?> get protoValues => [submitter, evidence];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'submitter': submitter, 'evidence': evidence?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'submitter': submitter, 'evidence': config.encodeMessage(evidence)};
   }
 
-  factory MsgSubmitEvidence.fromJson(Map<String, dynamic> json) {
+  factory MsgSubmitEvidence.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSubmitEvidence(
       submitter: json.valueAsString<String?>(
         'submitter',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      evidence: json.valueTo<google_protobuf_any.Any?, Map<String, dynamic>>(
+      evidence: json.valueTo<google_protobuf_any.Any?, Object>(
         key: 'evidence',
-        parse: (v) => google_protobuf_any.Any.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_any.Any.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -88,9 +97,9 @@ class MsgSubmitEvidence extends CosmosProtoMessage
 /// MsgSubmitEvidenceResponse defines the Msg/SubmitEvidence response type.
 class MsgSubmitEvidenceResponse extends CosmosProtoMessage {
   /// hash defines the hash of the evidence.
-  final List<int>? hash;
+  final BuBytes? hash;
 
-  const MsgSubmitEvidenceResponse({this.hash});
+  MsgSubmitEvidenceResponse({List<int>? hash}) : hash = hash?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -107,24 +116,19 @@ class MsgSubmitEvidenceResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [hash];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {
-      'hash': switch (hash) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-    };
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'hash': config.encodeBinary(hash)};
   }
 
-  factory MsgSubmitEvidenceResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgSubmitEvidenceResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSubmitEvidenceResponse(
-      hash: json.valueAsBytes<List<int>?>(
-        'hash',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      hash: config.decodeBinary<List<int>?>(
+        json.valueAs('hash', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }

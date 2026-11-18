@@ -20,20 +20,32 @@ enum MetricStatus implements ProtoEnumVariant {
 
   /// Looks up a value by its proto wire int. Throws if not found.
   static MetricStatus fromValue(int? value) {
+    value ??= 0;
     return MetricStatus.values.firstWhere(
       (e) => e.value == value,
       orElse:
-          () => throw ItemNotFoundException(name: "MetricStatus", value: value),
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching MetricStatus found for the given value. $value",
+                details: {"name": "MetricStatus", "value": value?.toString()},
+              ),
     );
   }
 
   /// Looks up a value by wire int, Dart enum name, or original proto
   /// name (whichever [value] happens to be). Throws if not found.
   static MetricStatus from(Object? value) {
+    value ??= 0;
     return MetricStatus.values.firstWhere(
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
-          () => throw ItemNotFoundException(name: "MetricStatus", value: value),
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching MetricStatus found for the given value. $value",
+                details: {"name": "MetricStatus", "value": value?.toString()},
+              ),
     );
   }
 }
@@ -95,7 +107,9 @@ class Oracle extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'chain_id': chainId,
       'connection_id': connectionId,
@@ -107,27 +121,39 @@ class Oracle extends CosmosProtoMessage {
     };
   }
 
-  factory Oracle.fromJson(Map<String, dynamic> json) {
+  factory Oracle.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Oracle(
-      chainId: json.valueAsString<String?>('chain_id', acceptCamelCase: true),
+      chainId: json.valueAsString<String?>(
+        'chain_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       connectionId: json.valueAsString<String?>(
         'connection_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       channelId: json.valueAsString<String?>(
         'channel_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      portId: json.valueAsString<String?>('port_id', acceptCamelCase: true),
+      portId: json.valueAsString<String?>(
+        'port_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       icaAddress: json.valueAsString<String?>(
         'ica_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       contractAddress: json.valueAsString<String?>(
         'contract_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      active: json.valueAsBool<bool?>('active', acceptCamelCase: true),
+      active: json.valueAsBool<bool?>(
+        'active',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -212,42 +238,53 @@ class Metric extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'key': key,
       'value': value,
       'metric_type': metricType,
-      'update_time': updateTime?.toString(),
-      'block_height': blockHeight?.toString(),
+      'update_time': config.encodeBigint(updateTime),
+      'block_height': config.encodeBigint(blockHeight),
       'attributes': attributes,
       'destination_oracle': destinationOracle,
-      'status': status?.protoName,
+      'status': config.encodeEnum(status),
     };
   }
 
-  factory Metric.fromJson(Map<String, dynamic> json) {
+  factory Metric.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Metric(
-      key: json.valueAsString<String?>('key', acceptCamelCase: true),
-      value: json.valueAsString<String?>('value', acceptCamelCase: true),
+      key: json.valueAsString<String?>(
+        'key',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      value: json.valueAsString<String?>(
+        'value',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       metricType: json.valueAsString<String?>(
         'metric_type',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       updateTime: json.valueAsBigInt<BigInt?>(
         'update_time',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       blockHeight: json.valueAsBigInt<BigInt?>(
         'block_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       attributes: json.valueAsString<String?>(
         'attributes',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       destinationOracle: json.valueAsString<String?>(
         'destination_oracle',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       status: json.valueTo<MetricStatus?, Object?>(
         key: 'status',

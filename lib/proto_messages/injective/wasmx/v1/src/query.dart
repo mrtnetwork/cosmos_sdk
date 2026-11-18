@@ -33,11 +33,16 @@ class QueryWasmxParamsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryWasmxParamsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryWasmxParamsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryWasmxParamsRequest();
   }
 
@@ -81,18 +86,26 @@ class QueryWasmxParamsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [params];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'params': params?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'params': config.encodeMessage(params)};
   }
 
-  factory QueryWasmxParamsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryWasmxParamsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryWasmxParamsResponse(
-      params: json
-          .valueTo<injective_wasmx_v1_wasmx.Params?, Map<String, dynamic>>(
-            key: 'params',
-            parse: (v) => injective_wasmx_v1_wasmx.Params.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      params: json.valueTo<injective_wasmx_v1_wasmx.Params?, Object>(
+        key: 'params',
+        parse:
+            (v) => injective_wasmx_v1_wasmx.Params.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -138,11 +151,16 @@ class QueryModuleStateRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryModuleStateRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryModuleStateRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryModuleStateRequest();
   }
 
@@ -186,19 +204,25 @@ class QueryModuleStateResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [state];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'state': state?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'state': config.encodeMessage(state)};
   }
 
-  factory QueryModuleStateResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryModuleStateResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryModuleStateResponse(
-      state: json.valueTo<
-        injective_wasmx_v1_genesis.GenesisState?,
-        Map<String, dynamic>
-      >(
+      state: json.valueTo<injective_wasmx_v1_genesis.GenesisState?, Object>(
         key: 'state',
-        parse: (v) => injective_wasmx_v1_genesis.GenesisState.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => injective_wasmx_v1_genesis.GenesisState.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -246,17 +270,20 @@ class QueryContractRegistrationInfoRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [contractAddress];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'contract_address': contractAddress};
   }
 
   factory QueryContractRegistrationInfoRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryContractRegistrationInfoRequest(
       contractAddress: json.valueAsString<String?>(
         'contract_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -305,22 +332,27 @@ class QueryContractRegistrationInfoResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [contract];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'contract': contract?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'contract': config.encodeMessage(contract)};
   }
 
   factory QueryContractRegistrationInfoResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryContractRegistrationInfoResponse(
-      contract: json.valueTo<
-        injective_wasmx_v1_wasmx.RegisteredContract?,
-        Map<String, dynamic>
-      >(
-        key: 'contract',
-        parse: (v) => injective_wasmx_v1_wasmx.RegisteredContract.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      contract: json
+          .valueTo<injective_wasmx_v1_wasmx.RegisteredContract?, Object>(
+            key: 'contract',
+            parse:
+                (v) => injective_wasmx_v1_wasmx.RegisteredContract.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 

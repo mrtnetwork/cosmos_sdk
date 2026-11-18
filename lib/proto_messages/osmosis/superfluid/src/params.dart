@@ -27,15 +27,20 @@ class Params extends CosmosProtoMessage {
   List<Object?> get protoValues => [minimumRiskFactor];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'minimum_risk_factor': minimumRiskFactor};
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
       minimumRiskFactor: json.valueAsString<String?>(
         'minimum_risk_factor',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

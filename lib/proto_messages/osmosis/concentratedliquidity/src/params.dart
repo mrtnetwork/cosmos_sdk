@@ -112,10 +112,12 @@ class Params extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'authorized_tick_spacing':
-          authorizedTickSpacing.map((e) => e.toString()).toList(),
+          authorizedTickSpacing.map((e) => config.encodeBigint(e)).toList(),
       'authorized_spread_factors':
           authorizedSpreadFactors.map((e) => e).toList(),
       'balancer_shares_reward_discount': balancerSharesRewardDiscount,
@@ -126,58 +128,70 @@ class Params extends CosmosProtoMessage {
           isPermissionlessPoolCreationEnabled,
       'unrestricted_pool_creator_whitelist':
           unrestrictedPoolCreatorWhitelist.map((e) => e).toList(),
-      'hook_gas_limit': hookGasLimit?.toString(),
+      'hook_gas_limit': config.encodeBigint(hookGasLimit),
     };
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
       authorizedTickSpacing:
           (json.valueEnsureAsList<dynamic>(
             'authorized_tick_spacing',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsBigInt<BigInt>(e)).toList(),
       authorizedSpreadFactors:
           (json.valueEnsureAsList<dynamic>(
             'authorized_spread_factors',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
       balancerSharesRewardDiscount: json.valueAsString<String?>(
         'balancer_shares_reward_discount',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       authorizedQuoteDenoms:
           (json.valueEnsureAsList<dynamic>(
             'authorized_quote_denoms',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
       authorizedUptimes:
           (json.valueEnsureAsList<dynamic>(
                 'authorized_uptimes',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   google_protobuf_duration.Duration,
-                  String
+                  Object
                 >(
                   value: e,
-                  parse: (v) => google_protobuf_duration.Duration.fromString(v),
+                  parse:
+                      (v) => google_protobuf_duration.Duration.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       isPermissionlessPoolCreationEnabled: json.valueAsBool<bool?>(
         'is_permissionless_pool_creation_enabled',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       unrestrictedPoolCreatorWhitelist:
           (json.valueEnsureAsList<dynamic>(
             'unrestricted_pool_creator_whitelist',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
       hookGasLimit: json.valueAsBigInt<BigInt?>(
         'hook_gas_limit',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

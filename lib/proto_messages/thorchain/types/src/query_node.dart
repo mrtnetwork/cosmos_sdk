@@ -33,14 +33,25 @@ class QueryNodeRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [address, height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'address': address, 'height': height};
   }
 
-  factory QueryNodeRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryNodeRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryNodeRequest(
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -223,131 +234,164 @@ class QueryNodeResponse extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'node_address': nodeAddress,
       'status': status,
-      'pub_key_set': pubKeySet?.toJson(),
+      'pub_key_set': config.encodeMessage(pubKeySet),
       'validator_cons_pub_key': validatorConsPubKey,
       'peer_id': peerId,
-      'active_block_height': activeBlockHeight?.toString(),
-      'status_since': statusSince?.toString(),
+      'active_block_height': config.encodeBigint(activeBlockHeight),
+      'status_since': config.encodeBigint(statusSince),
       'node_operator_address': nodeOperatorAddress,
       'total_bond': totalBond,
-      'bond_providers': bondProviders?.toJson(),
+      'bond_providers': config.encodeMessage(bondProviders),
       'signer_membership': signerMembership.map((e) => e).toList(),
       'requested_to_leave': requestedToLeave,
       'forced_to_leave': forcedToLeave,
-      'leave_height': leaveHeight?.toString(),
+      'leave_height': config.encodeBigint(leaveHeight),
       'ip_address': ipAddress,
       'version': version,
-      'slash_points': slashPoints?.toString(),
-      'jail': jail?.toJson(),
+      'slash_points': config.encodeBigint(slashPoints),
+      'jail': config.encodeMessage(jail),
       'current_award': currentAward,
-      'observe_chains': observeChains.map((e) => e.toJson()).toList(),
-      'preflight_status': preflightStatus?.toJson(),
+      'observe_chains':
+          observeChains.map((e) => config.encodeMessage(e)).toList(),
+      'preflight_status': config.encodeMessage(preflightStatus),
       'maintenance': maintenance,
-      'missing_blocks': missingBlocks?.toString(),
+      'missing_blocks': config.encodeBigint(missingBlocks),
     };
   }
 
-  factory QueryNodeResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryNodeResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryNodeResponse(
       nodeAddress: json.valueAsString<String?>(
         'node_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      status: json.valueAsString<String?>('status', acceptCamelCase: true),
-      pubKeySet: json.valueTo<common_common.PubKeySet?, Map<String, dynamic>>(
+      status: json.valueAsString<String?>(
+        'status',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      pubKeySet: json.valueTo<common_common.PubKeySet?, Object>(
         key: 'pub_key_set',
-        parse: (v) => common_common.PubKeySet.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => common_common.PubKeySet.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       validatorConsPubKey: json.valueAsString<String?>(
         'validator_cons_pub_key',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      peerId: json.valueAsString<String?>('peer_id', acceptCamelCase: true),
+      peerId: json.valueAsString<String?>(
+        'peer_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       activeBlockHeight: json.valueAsBigInt<BigInt?>(
         'active_block_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       statusSince: json.valueAsBigInt<BigInt?>(
         'status_since',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       nodeOperatorAddress: json.valueAsString<String?>(
         'node_operator_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       totalBond: json.valueAsString<String?>(
         'total_bond',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      bondProviders: json.valueTo<NodeBondProviders?, Map<String, dynamic>>(
+      bondProviders: json.valueTo<NodeBondProviders?, Object>(
         key: 'bond_providers',
-        parse: (v) => NodeBondProviders.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => NodeBondProviders.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       signerMembership:
           (json.valueEnsureAsList<dynamic>(
             'signer_membership',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
       requestedToLeave: json.valueAsBool<bool?>(
         'requested_to_leave',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       forcedToLeave: json.valueAsBool<bool?>(
         'forced_to_leave',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       leaveHeight: json.valueAsBigInt<BigInt?>(
         'leave_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       ipAddress: json.valueAsString<String?>(
         'ip_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      version: json.valueAsString<String?>('version', acceptCamelCase: true),
+      version: json.valueAsString<String?>(
+        'version',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       slashPoints: json.valueAsBigInt<BigInt?>(
         'slash_points',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      jail: json.valueTo<NodeJail?, Map<String, dynamic>>(
+      jail: json.valueTo<NodeJail?, Object>(
         key: 'jail',
-        parse: (v) => NodeJail.fromJson(v),
-        acceptCamelCase: true,
+        parse: (v) => NodeJail.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       currentAward: json.valueAsString<String?>(
         'current_award',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       observeChains:
           (json.valueEnsureAsList<dynamic>(
                 'observe_chains',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<ChainHeight, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<ChainHeight, Object>(
                   value: e,
-                  parse: (v) => ChainHeight.fromJson(v),
+                  parse:
+                      (v) => ChainHeight.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
-      preflightStatus: json.valueTo<NodePreflightStatus?, Map<String, dynamic>>(
+      preflightStatus: json.valueTo<NodePreflightStatus?, Object>(
         key: 'preflight_status',
-        parse: (v) => NodePreflightStatus.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => NodePreflightStatus.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       maintenance: json.valueAsBool<bool?>(
         'maintenance',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       missingBlocks: json.valueAsBigInt<BigInt?>(
         'missing_blocks',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -426,13 +470,21 @@ class QueryNodesRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'height': height};
   }
 
-  factory QueryNodesRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryNodesRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryNodesRequest(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -480,20 +532,32 @@ class QueryNodesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [nodes];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'nodes': nodes.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'nodes': nodes.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory QueryNodesResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryNodesResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryNodesResponse(
       nodes:
-          (json.valueEnsureAsList<dynamic>('nodes', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'nodes',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) =>
-                    JsonParser.valueTo<QueryNodeResponse, Map<String, dynamic>>(
-                      value: e,
-                      parse: (v) => QueryNodeResponse.fromJson(v),
-                    ),
+                (e) => JsonParser.valueTo<QueryNodeResponse, Object>(
+                  value: e,
+                  parse:
+                      (v) => QueryNodeResponse.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );
@@ -544,27 +608,39 @@ class NodeBondProviders extends CosmosProtoMessage {
   List<Object?> get protoValues => [nodeOperatorFee, providers];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'node_operator_fee': nodeOperatorFee,
-      'providers': providers.map((e) => e.toJson()).toList(),
+      'providers': providers.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory NodeBondProviders.fromJson(Map<String, dynamic> json) {
+  factory NodeBondProviders.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return NodeBondProviders(
       nodeOperatorFee: json.valueAsString<String?>(
         'node_operator_fee',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       providers:
-          (json.valueEnsureAsList<dynamic>('providers', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'providers',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) =>
-                    JsonParser.valueTo<NodeBondProvider, Map<String, dynamic>>(
-                      value: e,
-                      parse: (v) => NodeBondProvider.fromJson(v),
-                    ),
+                (e) => JsonParser.valueTo<NodeBondProvider, Object>(
+                  value: e,
+                  parse:
+                      (v) => NodeBondProvider.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );
@@ -609,17 +685,25 @@ class NodeBondProvider extends CosmosProtoMessage {
   List<Object?> get protoValues => [bondAddress, bond];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'bond_address': bondAddress, 'bond': bond};
   }
 
-  factory NodeBondProvider.fromJson(Map<String, dynamic> json) {
+  factory NodeBondProvider.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return NodeBondProvider(
       bondAddress: json.valueAsString<String?>(
         'bond_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      bond: json.valueAsString<String?>('bond', acceptCamelCase: true),
+      bond: json.valueAsString<String?>(
+        'bond',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -658,17 +742,28 @@ class NodeJail extends CosmosProtoMessage {
   List<Object?> get protoValues => [releaseHeight, reason];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'release_height': releaseHeight?.toString(), 'reason': reason};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'release_height': config.encodeBigint(releaseHeight),
+      'reason': reason,
+    };
   }
 
-  factory NodeJail.fromJson(Map<String, dynamic> json) {
+  factory NodeJail.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return NodeJail(
       releaseHeight: json.valueAsBigInt<BigInt?>(
         'release_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      reason: json.valueAsString<String?>('reason', acceptCamelCase: true),
+      reason: json.valueAsString<String?>(
+        'reason',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -710,14 +805,25 @@ class ChainHeight extends CosmosProtoMessage {
   List<Object?> get protoValues => [chain, height];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'chain': chain, 'height': height?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'chain': chain, 'height': config.encodeBigint(height)};
   }
 
-  factory ChainHeight.fromJson(Map<String, dynamic> json) {
+  factory ChainHeight.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ChainHeight(
-      chain: json.valueAsString<String?>('chain', acceptCamelCase: true),
-      height: json.valueAsBigInt<BigInt?>('height', acceptCamelCase: true),
+      chain: json.valueAsString<String?>(
+        'chain',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      height: json.valueAsBigInt<BigInt?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -764,15 +870,33 @@ class NodePreflightStatus extends CosmosProtoMessage {
   List<Object?> get protoValues => [status, reason, code];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'status': status, 'reason': reason, 'code': code?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'status': status,
+      'reason': reason,
+      'code': config.encodeBigint(code),
+    };
   }
 
-  factory NodePreflightStatus.fromJson(Map<String, dynamic> json) {
+  factory NodePreflightStatus.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return NodePreflightStatus(
-      status: json.valueAsString<String?>('status', acceptCamelCase: true),
-      reason: json.valueAsString<String?>('reason', acceptCamelCase: true),
-      code: json.valueAsBigInt<BigInt?>('code', acceptCamelCase: true),
+      status: json.valueAsString<String?>(
+        'status',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      reason: json.valueAsString<String?>(
+        'reason',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      code: json.valueAsBigInt<BigInt?>(
+        'code',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

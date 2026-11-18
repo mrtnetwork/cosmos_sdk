@@ -27,17 +27,28 @@ class Params extends CosmosProtoMessage {
   List<Object?> get protoValues => [securityAddress, limit];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'security_address': securityAddress, 'limit': limit?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'security_address': securityAddress,
+      'limit': config.encodeBigint(limit),
+    };
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
       securityAddress: json.valueAsString<String?>(
         'security_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      limit: json.valueAsBigInt<BigInt?>('limit', acceptCamelCase: true),
+      limit: json.valueAsBigInt<BigInt?>(
+        'limit',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

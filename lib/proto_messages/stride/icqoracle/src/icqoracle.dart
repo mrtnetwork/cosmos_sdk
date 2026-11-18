@@ -80,13 +80,15 @@ class TokenPrice extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'base_denom': baseDenom,
       'quote_denom': quoteDenom,
       'osmosis_base_denom': osmosisBaseDenom,
       'osmosis_quote_denom': osmosisQuoteDenom,
-      'osmosis_pool_id': osmosisPoolId?.toString(),
+      'osmosis_pool_id': config.encodeBigint(osmosisPoolId),
       'spot_price': spotPrice,
       'last_request_time': lastRequestTime?.toRfc3339(),
       'last_response_time': lastResponseTime?.toRfc3339(),
@@ -94,47 +96,58 @@ class TokenPrice extends CosmosProtoMessage {
     };
   }
 
-  factory TokenPrice.fromJson(Map<String, dynamic> json) {
+  factory TokenPrice.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return TokenPrice(
       baseDenom: json.valueAsString<String?>(
         'base_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       quoteDenom: json.valueAsString<String?>(
         'quote_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       osmosisBaseDenom: json.valueAsString<String?>(
         'osmosis_base_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       osmosisQuoteDenom: json.valueAsString<String?>(
         'osmosis_quote_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       osmosisPoolId: json.valueAsBigInt<BigInt?>(
         'osmosis_pool_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       spotPrice: json.valueAsString<String?>(
         'spot_price',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       lastRequestTime: json
-          .valueTo<google_protobuf_timestamp.Timestamp?, String>(
+          .valueTo<google_protobuf_timestamp.Timestamp?, Object>(
             key: 'last_request_time',
-            parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => google_protobuf_timestamp.Timestamp.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
       lastResponseTime: json
-          .valueTo<google_protobuf_timestamp.Timestamp?, String>(
+          .valueTo<google_protobuf_timestamp.Timestamp?, Object>(
             key: 'last_response_time',
-            parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => google_protobuf_timestamp.Timestamp.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
       queryInProgress: json.valueAsBool<bool?>(
         'query_in_progress',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -212,32 +225,39 @@ class Params extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'osmosis_chain_id': osmosisChainId,
       'osmosis_connection_id': osmosisConnectionId,
-      'update_interval_sec': updateIntervalSec?.toString(),
-      'price_expiration_timeout_sec': priceExpirationTimeoutSec?.toString(),
+      'update_interval_sec': config.encodeBigint(updateIntervalSec),
+      'price_expiration_timeout_sec': config.encodeBigint(
+        priceExpirationTimeoutSec,
+      ),
     };
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
       osmosisChainId: json.valueAsString<String?>(
         'osmosis_chain_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       osmosisConnectionId: json.valueAsString<String?>(
         'osmosis_connection_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       updateIntervalSec: json.valueAsBigInt<BigInt?>(
         'update_interval_sec',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       priceExpirationTimeoutSec: json.valueAsBigInt<BigInt?>(
         'price_expiration_timeout_sec',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

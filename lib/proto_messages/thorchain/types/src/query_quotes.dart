@@ -95,7 +95,9 @@ class QueryQuoteSwapRequest extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'from_asset': fromAsset,
       'to_asset': toAsset,
@@ -113,48 +115,63 @@ class QueryQuoteSwapRequest extends CosmosProtoMessage
     };
   }
 
-  factory QueryQuoteSwapRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryQuoteSwapRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryQuoteSwapRequest(
       fromAsset: json.valueAsString<String?>(
         'from_asset',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      toAsset: json.valueAsString<String?>('to_asset', acceptCamelCase: true),
-      amount: json.valueAsString<String?>('amount', acceptCamelCase: true),
+      toAsset: json.valueAsString<String?>(
+        'to_asset',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      amount: json.valueAsString<String?>(
+        'amount',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       streamingInterval: json.valueAsString<String?>(
         'streaming_interval',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       streamingQuantity: json.valueAsString<String?>(
         'streaming_quantity',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       destination: json.valueAsString<String?>(
         'destination',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       toleranceBps: json.valueAsString<String?>(
         'tolerance_bps',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       refundAddress: json.valueAsString<String?>(
         'refund_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       affiliate: json.valueAsString<String?>(
         'affiliate',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       affiliateBps: json.valueAsString<String?>(
         'affiliate_bps',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       liquidityToleranceBps: json.valueAsString<String?>(
         'liquidity_tolerance_bps',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      extended: json.valueAsBool<bool?>('extended', acceptCamelCase: true),
+      extended: json.valueAsBool<bool?>(
+        'extended',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -346,16 +363,22 @@ class QueryQuoteSwapResponse extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'inbound_address': inboundAddress,
-      'inbound_confirmation_blocks': inboundConfirmationBlocks?.toString(),
-      'inbound_confirmation_seconds': inboundConfirmationSeconds?.toString(),
-      'outbound_delay_blocks': outboundDelayBlocks?.toString(),
-      'outbound_delay_seconds': outboundDelaySeconds?.toString(),
-      'fees': fees?.toJson(),
+      'inbound_confirmation_blocks': config.encodeBigint(
+        inboundConfirmationBlocks,
+      ),
+      'inbound_confirmation_seconds': config.encodeBigint(
+        inboundConfirmationSeconds,
+      ),
+      'outbound_delay_blocks': config.encodeBigint(outboundDelayBlocks),
+      'outbound_delay_seconds': config.encodeBigint(outboundDelaySeconds),
+      'fees': config.encodeMessage(fees),
       'router': router,
-      'expiry': expiry?.toString(),
+      'expiry': config.encodeBigint(expiry),
       'warning': warning,
       'notes': notes,
       'dust_threshold': dustThreshold,
@@ -364,88 +387,112 @@ class QueryQuoteSwapResponse extends CosmosProtoMessage {
       'gas_rate_units': gasRateUnits,
       'memo': memo,
       'expected_amount_out': expectedAmountOut,
-      'max_streaming_quantity': maxStreamingQuantity?.toString(),
-      'streaming_swap_blocks': streamingSwapBlocks?.toString(),
-      'streaming_swap_seconds': streamingSwapSeconds?.toString(),
-      'total_swap_seconds': totalSwapSeconds?.toString(),
-      'vout': vout.map((e) => e.toJson()).toList(),
+      'max_streaming_quantity': config.encodeBigint(maxStreamingQuantity),
+      'streaming_swap_blocks': config.encodeBigint(streamingSwapBlocks),
+      'streaming_swap_seconds': config.encodeBigint(streamingSwapSeconds),
+      'total_swap_seconds': config.encodeBigint(totalSwapSeconds),
+      'vout': vout.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory QueryQuoteSwapResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryQuoteSwapResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryQuoteSwapResponse(
       inboundAddress: json.valueAsString<String?>(
         'inbound_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       inboundConfirmationBlocks: json.valueAsBigInt<BigInt?>(
         'inbound_confirmation_blocks',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       inboundConfirmationSeconds: json.valueAsBigInt<BigInt?>(
         'inbound_confirmation_seconds',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       outboundDelayBlocks: json.valueAsBigInt<BigInt?>(
         'outbound_delay_blocks',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       outboundDelaySeconds: json.valueAsBigInt<BigInt?>(
         'outbound_delay_seconds',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      fees: json.valueTo<QuoteFees?, Map<String, dynamic>>(
+      fees: json.valueTo<QuoteFees?, Object>(
         key: 'fees',
-        parse: (v) => QuoteFees.fromJson(v),
-        acceptCamelCase: true,
+        parse: (v) => QuoteFees.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      router: json.valueAsString<String?>('router', acceptCamelCase: true),
-      expiry: json.valueAsBigInt<BigInt?>('expiry', acceptCamelCase: true),
-      warning: json.valueAsString<String?>('warning', acceptCamelCase: true),
-      notes: json.valueAsString<String?>('notes', acceptCamelCase: true),
+      router: json.valueAsString<String?>(
+        'router',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      expiry: json.valueAsBigInt<BigInt?>(
+        'expiry',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      warning: json.valueAsString<String?>(
+        'warning',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      notes: json.valueAsString<String?>(
+        'notes',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       dustThreshold: json.valueAsString<String?>(
         'dust_threshold',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       recommendedMinAmountIn: json.valueAsString<String?>(
         'recommended_min_amount_in',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       recommendedGasRate: json.valueAsString<String?>(
         'recommended_gas_rate',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       gasRateUnits: json.valueAsString<String?>(
         'gas_rate_units',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      memo: json.valueAsString<String?>('memo', acceptCamelCase: true),
+      memo: json.valueAsString<String?>(
+        'memo',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       expectedAmountOut: json.valueAsString<String?>(
         'expected_amount_out',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       maxStreamingQuantity: json.valueAsBigInt<BigInt?>(
         'max_streaming_quantity',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       streamingSwapBlocks: json.valueAsBigInt<BigInt?>(
         'streaming_swap_blocks',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       streamingSwapSeconds: json.valueAsBigInt<BigInt?>(
         'streaming_swap_seconds',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       totalSwapSeconds: json.valueAsBigInt<BigInt?>(
         'total_swap_seconds',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       vout:
-          (json.valueEnsureAsList<dynamic>('vout', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'vout',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<Vout, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<Vout, Object>(
                   value: e,
-                  parse: (v) => Vout.fromJson(v),
+                  parse:
+                      (v) =>
+                          Vout.fromJson(JsonParser.valueAs(v), config: config),
                 ),
               )
               .toList(),
@@ -547,36 +594,53 @@ class QuoteFees extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'asset': asset,
       'affiliate': affiliate,
       'outbound': outbound,
       'liquidity': liquidity,
       'total': total,
-      'slippage_bps': slippageBps?.toString(),
-      'total_bps': totalBps?.toString(),
+      'slippage_bps': config.encodeBigint(slippageBps),
+      'total_bps': config.encodeBigint(totalBps),
     };
   }
 
-  factory QuoteFees.fromJson(Map<String, dynamic> json) {
+  factory QuoteFees.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QuoteFees(
-      asset: json.valueAsString<String?>('asset', acceptCamelCase: true),
+      asset: json.valueAsString<String?>(
+        'asset',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       affiliate: json.valueAsString<String?>(
         'affiliate',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      outbound: json.valueAsString<String?>('outbound', acceptCamelCase: true),
+      outbound: json.valueAsString<String?>(
+        'outbound',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       liquidity: json.valueAsString<String?>(
         'liquidity',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      total: json.valueAsString<String?>('total', acceptCamelCase: true),
+      total: json.valueAsString<String?>(
+        'total',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       slippageBps: json.valueAsBigInt<BigInt?>(
         'slippage_bps',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      totalBps: json.valueAsBigInt<BigInt?>('total_bps', acceptCamelCase: true),
+      totalBps: json.valueAsBigInt<BigInt?>(
+        'total_bps',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -629,15 +693,29 @@ class Vout extends CosmosProtoMessage {
   List<Object?> get protoValues => [type, data, amount];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'type': type, 'data': data, 'amount': amount?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'type': type, 'data': data, 'amount': config.encodeBigint(amount)};
   }
 
-  factory Vout.fromJson(Map<String, dynamic> json) {
+  factory Vout.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Vout(
-      type: json.valueAsString<String?>('type', acceptCamelCase: true),
-      data: json.valueAsString<String?>('data', acceptCamelCase: true),
-      amount: json.valueAsBigInt<BigInt?>('amount', acceptCamelCase: true),
+      type: json.valueAsString<String?>(
+        'type',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      data: json.valueAsString<String?>(
+        'data',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      amount: json.valueAsBigInt<BigInt?>(
+        'amount',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -745,7 +823,9 @@ class QueryQuoteLimitRequest extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'from_asset': fromAsset,
       'to_asset': toAsset,
@@ -760,41 +840,50 @@ class QueryQuoteLimitRequest extends CosmosProtoMessage
     };
   }
 
-  factory QueryQuoteLimitRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryQuoteLimitRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryQuoteLimitRequest(
       fromAsset: json.valueAsString<String?>(
         'from_asset',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      toAsset: json.valueAsString<String?>('to_asset', acceptCamelCase: true),
-      amount: json.valueAsString<String?>('amount', acceptCamelCase: true),
+      toAsset: json.valueAsString<String?>(
+        'to_asset',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      amount: json.valueAsString<String?>(
+        'amount',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       destination: json.valueAsString<String?>(
         'destination',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       targetOut: json.valueAsString<String?>(
         'target_out',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       customTtl: json.valueAsString<String?>(
         'custom_ttl',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       streamingQuantity: json.valueAsString<String?>(
         'streaming_quantity',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       affiliate: json.valueAsString<String?>(
         'affiliate',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       affiliateBps: json.valueAsString<String?>(
         'affiliate_bps',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       refundAddress: json.valueAsString<String?>(
         'refund_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -924,14 +1013,16 @@ class QueryQuoteLimitResponse extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'expected_amount_out': expectedAmountOut,
-      'fees': fees?.toJson(),
+      'fees': config.encodeMessage(fees),
       'inbound_address': inboundAddress,
       'memo': memo,
-      'order_expiry_block': orderExpiryBlock?.toString(),
-      'order_expiry_timestamp': orderExpiryTimestamp?.toString(),
+      'order_expiry_block': config.encodeBigint(orderExpiryBlock),
+      'order_expiry_timestamp': config.encodeBigint(orderExpiryTimestamp),
       'recommended_min_amount_in': recommendedMinAmountIn,
       'router': router,
       'dust_threshold': dustThreshold,
@@ -941,47 +1032,59 @@ class QueryQuoteLimitResponse extends CosmosProtoMessage {
     };
   }
 
-  factory QueryQuoteLimitResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryQuoteLimitResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryQuoteLimitResponse(
       expectedAmountOut: json.valueAsString<String?>(
         'expected_amount_out',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      fees: json.valueTo<QuoteFees?, Map<String, dynamic>>(
+      fees: json.valueTo<QuoteFees?, Object>(
         key: 'fees',
-        parse: (v) => QuoteFees.fromJson(v),
-        acceptCamelCase: true,
+        parse: (v) => QuoteFees.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       inboundAddress: json.valueAsString<String?>(
         'inbound_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      memo: json.valueAsString<String?>('memo', acceptCamelCase: true),
+      memo: json.valueAsString<String?>(
+        'memo',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       orderExpiryBlock: json.valueAsBigInt<BigInt?>(
         'order_expiry_block',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       orderExpiryTimestamp: json.valueAsBigInt<BigInt?>(
         'order_expiry_timestamp',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       recommendedMinAmountIn: json.valueAsString<String?>(
         'recommended_min_amount_in',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      router: json.valueAsString<String?>('router', acceptCamelCase: true),
+      router: json.valueAsString<String?>(
+        'router',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       dustThreshold: json.valueAsString<String?>(
         'dust_threshold',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      notes: json.valueAsString<String?>('notes', acceptCamelCase: true),
+      notes: json.valueAsString<String?>(
+        'notes',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       recommendedGasRate: json.valueAsString<String?>(
         'recommended_gas_rate',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       gasRateUnits: json.valueAsString<String?>(
         'gas_rate_units',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

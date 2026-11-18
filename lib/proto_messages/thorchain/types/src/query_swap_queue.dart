@@ -33,13 +33,21 @@ class QuerySwapQueueRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'height': height};
   }
 
-  factory QuerySwapQueueRequest.fromJson(Map<String, dynamic> json) {
+  factory QuerySwapQueueRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QuerySwapQueueRequest(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -87,19 +95,34 @@ class QuerySwapQueueResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [swapQueue];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'swap_queue': swapQueue.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'swap_queue': swapQueue.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
-  factory QuerySwapQueueResponse.fromJson(Map<String, dynamic> json) {
+  factory QuerySwapQueueResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QuerySwapQueueResponse(
       swapQueue:
-          (json.valueEnsureAsList<dynamic>('swap_queue', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'swap_queue',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  types_msg_swap.MsgSwap,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => types_msg_swap.MsgSwap.fromJson(v)),
+                (e) => JsonParser.valueTo<types_msg_swap.MsgSwap, Object>(
+                  value: e,
+                  parse:
+                      (v) => types_msg_swap.MsgSwap.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );
@@ -156,19 +179,33 @@ class QuerySwapQueuePaginatedRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height, offset, limit];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'height': height,
-      'offset': offset?.toString(),
-      'limit': limit?.toString(),
+      'offset': config.encodeBigint(offset),
+      'limit': config.encodeBigint(limit),
     };
   }
 
-  factory QuerySwapQueuePaginatedRequest.fromJson(Map<String, dynamic> json) {
+  factory QuerySwapQueuePaginatedRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QuerySwapQueuePaginatedRequest(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
-      offset: json.valueAsBigInt<BigInt?>('offset', acceptCamelCase: true),
-      limit: json.valueAsBigInt<BigInt?>('limit', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      offset: json.valueAsBigInt<BigInt?>(
+        'offset',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      limit: json.valueAsBigInt<BigInt?>(
+        'limit',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -228,31 +265,45 @@ class QuerySwapQueuePaginatedResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [swapQueue, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'swap_queue': swapQueue.map((e) => e.toJson()).toList(),
-      'pagination': pagination?.toJson(),
+      'swap_queue': swapQueue.map((e) => config.encodeMessage(e)).toList(),
+      'pagination': config.encodeMessage(pagination),
     };
   }
 
-  factory QuerySwapQueuePaginatedResponse.fromJson(Map<String, dynamic> json) {
+  factory QuerySwapQueuePaginatedResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QuerySwapQueuePaginatedResponse(
       swapQueue:
-          (json.valueEnsureAsList<dynamic>('swap_queue', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'swap_queue',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  types_msg_swap.MsgSwap,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => types_msg_swap.MsgSwap.fromJson(v)),
+                (e) => JsonParser.valueTo<types_msg_swap.MsgSwap, Object>(
+                  value: e,
+                  parse:
+                      (v) => types_msg_swap.MsgSwap.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
-      pagination: json.valueTo<
-        types_query_limit_swaps.PaginationMeta?,
-        Map<String, dynamic>
-      >(
+      pagination: json.valueTo<types_query_limit_swaps.PaginationMeta?, Object>(
         key: 'pagination',
-        parse: (v) => types_query_limit_swaps.PaginationMeta.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => types_query_limit_swaps.PaginationMeta.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

@@ -23,9 +23,10 @@ import 'package:cosmos_sdk/sdk/serialization/serialization.dart';
 class RemoteTokenMessenger extends CosmosProtoMessage {
   final int? domainId;
 
-  final List<int>? address;
+  final BuBytes? address;
 
-  const RemoteTokenMessenger({this.domainId, this.address});
+  RemoteTokenMessenger({this.domainId, List<int>? address})
+    : address = address?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -42,26 +43,23 @@ class RemoteTokenMessenger extends CosmosProtoMessage {
   List<Object?> get protoValues => [domainId, address];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {
-      'domain_id': domainId,
-      'address': switch (address) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-    };
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'domain_id': domainId, 'address': config.encodeBinary(address)};
   }
 
-  factory RemoteTokenMessenger.fromJson(Map<String, dynamic> json) {
+  factory RemoteTokenMessenger.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return RemoteTokenMessenger(
-      domainId: json.valueAsInt<int?>('domain_id', acceptCamelCase: true),
-      address: json.valueAsBytes<List<int>?>(
-        'address',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      domainId: json.valueAsInt<int?>(
+        'domain_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      address: config.decodeBinary<List<int>?>(
+        json.valueAs('address', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }

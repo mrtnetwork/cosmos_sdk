@@ -74,50 +74,63 @@ class MsgUpdateParams extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'authority': authority,
-      'block': block?.toJson(),
-      'evidence': evidence?.toJson(),
-      'validator': validator?.toJson(),
-      'abci': abci?.toJson(),
+      'block': config.encodeMessage(block),
+      'evidence': config.encodeMessage(evidence),
+      'validator': config.encodeMessage(validator),
+      'abci': config.encodeMessage(abci),
     };
   }
 
-  factory MsgUpdateParams.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateParams.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateParams(
       authority: json.valueAsString<String?>(
         'authority',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      block: json
-          .valueTo<tendermint_types_params.BlockParams?, Map<String, dynamic>>(
-            key: 'block',
-            parse: (v) => tendermint_types_params.BlockParams.fromJson(v),
-            acceptCamelCase: true,
-          ),
-      evidence: json.valueTo<
-        tendermint_types_params.EvidenceParams?,
-        Map<String, dynamic>
-      >(
+      block: json.valueTo<tendermint_types_params.BlockParams?, Object>(
+        key: 'block',
+        parse:
+            (v) => tendermint_types_params.BlockParams.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      evidence: json.valueTo<tendermint_types_params.EvidenceParams?, Object>(
         key: 'evidence',
-        parse: (v) => tendermint_types_params.EvidenceParams.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => tendermint_types_params.EvidenceParams.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      validator: json.valueTo<
-        tendermint_types_params.ValidatorParams?,
-        Map<String, dynamic>
-      >(
+      validator: json.valueTo<tendermint_types_params.ValidatorParams?, Object>(
         key: 'validator',
-        parse: (v) => tendermint_types_params.ValidatorParams.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => tendermint_types_params.ValidatorParams.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      abci: json
-          .valueTo<tendermint_types_params.ABCIParams?, Map<String, dynamic>>(
-            key: 'abci',
-            parse: (v) => tendermint_types_params.ABCIParams.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      abci: json.valueTo<tendermint_types_params.ABCIParams?, Object>(
+        key: 'abci',
+        parse:
+            (v) => tendermint_types_params.ABCIParams.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -178,11 +191,16 @@ class MsgUpdateParamsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgUpdateParamsResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateParamsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateParamsResponse();
   }
 

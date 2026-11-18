@@ -31,14 +31,25 @@ class QueryUpgradeProposalRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [name, height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'name': name, 'height': height};
   }
 
-  factory QueryUpgradeProposalRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryUpgradeProposalRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryUpgradeProposalRequest(
-      name: json.valueAsString<String?>('name', acceptCamelCase: true),
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      name: json.valueAsString<String?>(
+        'name',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -143,42 +154,61 @@ class QueryUpgradeProposalResponse extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'name': name,
-      'height': height?.toString(),
+      'height': config.encodeBigint(height),
       'info': info,
       'approved': approved,
       'approved_percent': approvedPercent,
-      'validators_to_quorum': validatorsToQuorum?.toString(),
+      'validators_to_quorum': config.encodeBigint(validatorsToQuorum),
       'approvers': approvers.map((e) => e).toList(),
       'rejecters': rejecters.map((e) => e).toList(),
     };
   }
 
-  factory QueryUpgradeProposalResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryUpgradeProposalResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryUpgradeProposalResponse(
-      name: json.valueAsString<String?>('name', acceptCamelCase: true),
-      height: json.valueAsBigInt<BigInt?>('height', acceptCamelCase: true),
-      info: json.valueAsString<String?>('info', acceptCamelCase: true),
-      approved: json.valueAsBool<bool?>('approved', acceptCamelCase: true),
+      name: json.valueAsString<String?>(
+        'name',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      height: json.valueAsBigInt<BigInt?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      info: json.valueAsString<String?>(
+        'info',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      approved: json.valueAsBool<bool?>(
+        'approved',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       approvedPercent: json.valueAsString<String?>(
         'approved_percent',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       validatorsToQuorum: json.valueAsBigInt<BigInt?>(
         'validators_to_quorum',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       approvers:
           (json.valueEnsureAsList<dynamic>(
             'approvers',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
       rejecters:
           (json.valueEnsureAsList<dynamic>(
             'rejecters',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
     );
   }
@@ -229,13 +259,21 @@ class QueryUpgradeProposalsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'height': height};
   }
 
-  factory QueryUpgradeProposalsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryUpgradeProposalsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryUpgradeProposalsRequest(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -283,26 +321,34 @@ class QueryUpgradeProposalsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [upgradeProposals];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'upgrade_proposals': upgradeProposals.map((e) => e.toJson()).toList(),
+      'upgrade_proposals':
+          upgradeProposals.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory QueryUpgradeProposalsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryUpgradeProposalsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryUpgradeProposalsResponse(
       upgradeProposals:
           (json.valueEnsureAsList<dynamic>(
                 'upgrade_proposals',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  QueryUpgradeProposalResponse,
-                  Map<String, dynamic>
-                >(
+                (e) => JsonParser.valueTo<QueryUpgradeProposalResponse, Object>(
                   value: e,
-                  parse: (v) => QueryUpgradeProposalResponse.fromJson(v),
+                  parse:
+                      (v) => QueryUpgradeProposalResponse.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -354,14 +400,25 @@ class QueryUpgradeVotesRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [name, height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'name': name, 'height': height};
   }
 
-  factory QueryUpgradeVotesRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryUpgradeVotesRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryUpgradeVotesRequest(
-      name: json.valueAsString<String?>('name', acceptCamelCase: true),
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      name: json.valueAsString<String?>(
+        'name',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -412,17 +469,25 @@ class UpgradeVote extends CosmosProtoMessage {
   List<Object?> get protoValues => [nodeAddress, vote];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'node_address': nodeAddress, 'vote': vote};
   }
 
-  factory UpgradeVote.fromJson(Map<String, dynamic> json) {
+  factory UpgradeVote.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return UpgradeVote(
       nodeAddress: json.valueAsString<String?>(
         'node_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      vote: json.valueAsString<String?>('vote', acceptCamelCase: true),
+      vote: json.valueAsString<String?>(
+        'vote',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -464,21 +529,34 @@ class QueryUpgradeVotesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [upgradeVotes];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'upgrade_votes': upgradeVotes.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'upgrade_votes':
+          upgradeVotes.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
-  factory QueryUpgradeVotesResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryUpgradeVotesResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryUpgradeVotesResponse(
       upgradeVotes:
           (json.valueEnsureAsList<dynamic>(
                 'upgrade_votes',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<UpgradeVote, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<UpgradeVote, Object>(
                   value: e,
-                  parse: (v) => UpgradeVote.fromJson(v),
+                  parse:
+                      (v) => UpgradeVote.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),

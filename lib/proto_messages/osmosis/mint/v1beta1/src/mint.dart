@@ -30,14 +30,25 @@ class WeightedAddress extends CosmosProtoMessage {
   List<Object?> get protoValues => [address, weight];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'address': address, 'weight': weight};
   }
 
-  factory WeightedAddress.fromJson(Map<String, dynamic> json) {
+  factory WeightedAddress.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return WeightedAddress(
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
-      weight: json.valueAsString<String?>('weight', acceptCamelCase: true),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      weight: json.valueAsString<String?>(
+        'weight',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -106,7 +117,9 @@ class DistributionProportions extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'staking': staking,
       'pool_incentives': poolIncentives,
@@ -115,20 +128,26 @@ class DistributionProportions extends CosmosProtoMessage {
     };
   }
 
-  factory DistributionProportions.fromJson(Map<String, dynamic> json) {
+  factory DistributionProportions.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return DistributionProportions(
-      staking: json.valueAsString<String?>('staking', acceptCamelCase: true),
+      staking: json.valueAsString<String?>(
+        'staking',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       poolIncentives: json.valueAsString<String?>(
         'pool_incentives',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       developerRewards: json.valueAsString<String?>(
         'developer_rewards',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       communityPool: json.valueAsString<String?>(
         'community_pool',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -230,65 +249,82 @@ class Params extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'mint_denom': mintDenom,
       'genesis_epoch_provisions': genesisEpochProvisions,
       'epoch_identifier': epochIdentifier,
-      'reduction_period_in_epochs': reductionPeriodInEpochs?.toString(),
+      'reduction_period_in_epochs': config.encodeBigint(
+        reductionPeriodInEpochs,
+      ),
       'reduction_factor': reductionFactor,
-      'distribution_proportions': distributionProportions?.toJson(),
+      'distribution_proportions': config.encodeMessage(distributionProportions),
       'weighted_developer_rewards_receivers':
-          weightedDeveloperRewardsReceivers.map((e) => e.toJson()).toList(),
-      'minting_rewards_distribution_start_epoch':
-          mintingRewardsDistributionStartEpoch?.toString(),
+          weightedDeveloperRewardsReceivers
+              .map((e) => config.encodeMessage(e))
+              .toList(),
+      'minting_rewards_distribution_start_epoch': config.encodeBigint(
+        mintingRewardsDistributionStartEpoch,
+      ),
     };
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
       mintDenom: json.valueAsString<String?>(
         'mint_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       genesisEpochProvisions: json.valueAsString<String?>(
         'genesis_epoch_provisions',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       epochIdentifier: json.valueAsString<String?>(
         'epoch_identifier',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       reductionPeriodInEpochs: json.valueAsBigInt<BigInt?>(
         'reduction_period_in_epochs',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       reductionFactor: json.valueAsString<String?>(
         'reduction_factor',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      distributionProportions: json
-          .valueTo<DistributionProportions?, Map<String, dynamic>>(
-            key: 'distribution_proportions',
-            parse: (v) => DistributionProportions.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      distributionProportions: json.valueTo<DistributionProportions?, Object>(
+        key: 'distribution_proportions',
+        parse:
+            (v) => DistributionProportions.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       weightedDeveloperRewardsReceivers:
           (json.valueEnsureAsList<dynamic>(
                 'weighted_developer_rewards_receivers',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) =>
-                    JsonParser.valueTo<WeightedAddress, Map<String, dynamic>>(
-                      value: e,
-                      parse: (v) => WeightedAddress.fromJson(v),
-                    ),
+                (e) => JsonParser.valueTo<WeightedAddress, Object>(
+                  value: e,
+                  parse:
+                      (v) => WeightedAddress.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
       mintingRewardsDistributionStartEpoch: json.valueAsBigInt<BigInt?>(
         'minting_rewards_distribution_start_epoch',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

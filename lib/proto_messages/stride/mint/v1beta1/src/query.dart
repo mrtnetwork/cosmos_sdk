@@ -30,11 +30,16 @@ class QueryParamsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryParamsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsRequest();
   }
 
@@ -78,18 +83,26 @@ class QueryParamsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [params];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'params': params?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'params': config.encodeMessage(params)};
   }
 
-  factory QueryParamsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsResponse(
-      params: json
-          .valueTo<stride_mint_v1beta1_mint.Params?, Map<String, dynamic>>(
-            key: 'params',
-            parse: (v) => stride_mint_v1beta1_mint.Params.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      params: json.valueTo<stride_mint_v1beta1_mint.Params?, Object>(
+        key: 'params',
+        parse:
+            (v) => stride_mint_v1beta1_mint.Params.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -135,11 +148,16 @@ class QueryEpochProvisionsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryEpochProvisionsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryEpochProvisionsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryEpochProvisionsRequest();
   }
 
@@ -165,9 +183,10 @@ class QueryEpochProvisionsRequest extends CosmosProtoMessage
 /// Query/EpochProvisions RPC method.
 class QueryEpochProvisionsResponse extends CosmosProtoMessage {
   /// epoch_provisions is the current minting per epoch provisions value.
-  final List<int>? epochProvisions;
+  final BuBytes? epochProvisions;
 
-  const QueryEpochProvisionsResponse({this.epochProvisions});
+  QueryEpochProvisionsResponse({List<int>? epochProvisions})
+    : epochProvisions = epochProvisions?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -184,24 +203,22 @@ class QueryEpochProvisionsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [epochProvisions];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {
-      'epoch_provisions': switch (epochProvisions) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-    };
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'epoch_provisions': config.encodeBinary(epochProvisions)};
   }
 
-  factory QueryEpochProvisionsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryEpochProvisionsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryEpochProvisionsResponse(
-      epochProvisions: json.valueAsBytes<List<int>?>(
-        'epoch_provisions',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      epochProvisions: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'epoch_provisions',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
     );
   }

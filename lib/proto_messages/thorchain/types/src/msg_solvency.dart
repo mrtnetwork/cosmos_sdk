@@ -20,16 +20,16 @@ class MsgSolvency extends CosmosProtoMessage
 
   final BigInt? height;
 
-  final List<int>? signer;
+  final BuBytes? signer;
 
-  const MsgSolvency({
+  MsgSolvency({
     this.id,
     this.chain,
     this.pubKey,
     this.coins = const [],
     this.height,
-    this.signer,
-  });
+    List<int>? signer,
+  }) : signer = signer?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -62,42 +62,59 @@ class MsgSolvency extends CosmosProtoMessage
   List<Object?> get protoValues => [id, chain, pubKey, coins, height, signer];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'id': id,
       'chain': chain,
       'pub_key': pubKey,
-      'coins': coins.map((e) => e.toJson()).toList(),
-      'height': height?.toString(),
-      'signer': switch (signer) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'coins': coins.map((e) => config.encodeMessage(e)).toList(),
+      'height': config.encodeBigint(height),
+      'signer': config.encodeBinary(signer),
     };
   }
 
-  factory MsgSolvency.fromJson(Map<String, dynamic> json) {
+  factory MsgSolvency.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSolvency(
-      id: json.valueAsString<String?>('id', acceptCamelCase: true),
-      chain: json.valueAsString<String?>('chain', acceptCamelCase: true),
-      pubKey: json.valueAsString<String?>('pub_key', acceptCamelCase: true),
+      id: json.valueAsString<String?>(
+        'id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      chain: json.valueAsString<String?>(
+        'chain',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      pubKey: json.valueAsString<String?>(
+        'pub_key',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       coins:
-          (json.valueEnsureAsList<dynamic>('coins', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'coins',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  common_common.Coin,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => common_common.Coin.fromJson(v)),
+                (e) => JsonParser.valueTo<common_common.Coin, Object>(
+                  value: e,
+                  parse:
+                      (v) => common_common.Coin.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
-      height: json.valueAsBigInt<BigInt?>('height', acceptCamelCase: true),
-      signer: json.valueAsBytes<List<int>?>(
-        'signer',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      height: json.valueAsBigInt<BigInt?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      signer: config.decodeBinary<List<int>?>(
+        json.valueAs('signer', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }
@@ -138,9 +155,10 @@ class MsgSolvencyQuorum extends CosmosProtoMessage
         ICosmosProtoAminoMessage {
   final common_common.QuorumSolvency? quoSolvency;
 
-  final List<int>? signer;
+  final BuBytes? signer;
 
-  const MsgSolvencyQuorum({this.quoSolvency, this.signer});
+  MsgSolvencyQuorum({this.quoSolvency, List<int>? signer})
+    : signer = signer?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -168,31 +186,31 @@ class MsgSolvencyQuorum extends CosmosProtoMessage
   List<Object?> get protoValues => [quoSolvency, signer];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'quoSolvency': quoSolvency?.toJson(),
-      'signer': switch (signer) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'quoSolvency': config.encodeMessage(quoSolvency),
+      'signer': config.encodeBinary(signer),
     };
   }
 
-  factory MsgSolvencyQuorum.fromJson(Map<String, dynamic> json) {
+  factory MsgSolvencyQuorum.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSolvencyQuorum(
-      quoSolvency: json
-          .valueTo<common_common.QuorumSolvency?, Map<String, dynamic>>(
-            key: 'quoSolvency',
-            parse: (v) => common_common.QuorumSolvency.fromJson(v),
-            acceptCamelCase: true,
-          ),
-      signer: json.valueAsBytes<List<int>?>(
-        'signer',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      quoSolvency: json.valueTo<common_common.QuorumSolvency?, Object>(
+        key: 'quoSolvency',
+        parse:
+            (v) => common_common.QuorumSolvency.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      signer: config.decodeBinary<List<int>?>(
+        json.valueAs('signer', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }

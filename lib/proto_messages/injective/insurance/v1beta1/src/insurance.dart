@@ -36,20 +36,29 @@ class Params extends CosmosProtoMessage {
   List<Object?> get protoValues => [defaultRedemptionNoticePeriodDuration];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'default_redemption_notice_period_duration':
           defaultRedemptionNoticePeriodDuration?.encodeString(asNanos: true),
     };
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
       defaultRedemptionNoticePeriodDuration: json
-          .valueTo<google_protobuf_duration.Duration?, String>(
+          .valueTo<google_protobuf_duration.Duration?, Object>(
             key: 'default_redemption_notice_period_duration',
-            parse: (v) => google_protobuf_duration.Duration.fromString(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => google_protobuf_duration.Duration.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
     );
   }
@@ -162,7 +171,9 @@ class InsuranceFund extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'deposit_denom': depositDenom,
       'insurance_pool_token_denom': insurancePoolTokenDenom,
@@ -174,51 +185,67 @@ class InsuranceFund extends CosmosProtoMessage {
       'market_ticker': marketTicker,
       'oracle_base': oracleBase,
       'oracle_quote': oracleQuote,
-      'oracle_type': oracleType?.protoName,
-      'expiry': expiry?.toString(),
+      'oracle_type': config.encodeEnum(oracleType),
+      'expiry': config.encodeBigint(expiry),
     };
   }
 
-  factory InsuranceFund.fromJson(Map<String, dynamic> json) {
+  factory InsuranceFund.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return InsuranceFund(
       depositDenom: json.valueAsString<String?>(
         'deposit_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       insurancePoolTokenDenom: json.valueAsString<String?>(
         'insurance_pool_token_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       redemptionNoticePeriodDuration: json
-          .valueTo<google_protobuf_duration.Duration?, String>(
+          .valueTo<google_protobuf_duration.Duration?, Object>(
             key: 'redemption_notice_period_duration',
-            parse: (v) => google_protobuf_duration.Duration.fromString(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => google_protobuf_duration.Duration.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
-      balance: json.valueAsString<String?>('balance', acceptCamelCase: true),
+      balance: json.valueAsString<String?>(
+        'balance',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       totalShare: json.valueAsString<String?>(
         'total_share',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      marketId: json.valueAsString<String?>('market_id', acceptCamelCase: true),
+      marketId: json.valueAsString<String?>(
+        'market_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       marketTicker: json.valueAsString<String?>(
         'market_ticker',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       oracleBase: json.valueAsString<String?>(
         'oracle_base',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       oracleQuote: json.valueAsString<String?>(
         'oracle_quote',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       oracleType: json
           .valueTo<injective_oracle_v1beta1_oracle.OracleType?, Object?>(
             key: 'oracle_type',
             parse: (v) => injective_oracle_v1beta1_oracle.OracleType.from(v),
           ),
-      expiry: json.valueAsBigInt<BigInt?>('expiry', acceptCamelCase: true),
+      expiry: json.valueAsBigInt<BigInt?>(
+        'expiry',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -302,33 +329,54 @@ class RedemptionSchedule extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'id': id?.toString(),
+      'id': config.encodeBigint(id),
       'marketId': marketId,
       'redeemer': redeemer,
       'claimable_redemption_time': claimableRedemptionTime?.toRfc3339(),
-      'redemption_amount': redemptionAmount?.toJson(),
+      'redemption_amount': config.encodeMessage(redemptionAmount),
     };
   }
 
-  factory RedemptionSchedule.fromJson(Map<String, dynamic> json) {
+  factory RedemptionSchedule.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return RedemptionSchedule(
-      id: json.valueAsBigInt<BigInt?>('id', acceptCamelCase: true),
-      marketId: json.valueAsString<String?>('marketId', acceptCamelCase: true),
-      redeemer: json.valueAsString<String?>('redeemer', acceptCamelCase: true),
+      id: json.valueAsBigInt<BigInt?>(
+        'id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      marketId: json.valueAsString<String?>(
+        'marketId',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      redeemer: json.valueAsString<String?>(
+        'redeemer',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       claimableRedemptionTime: json
-          .valueTo<google_protobuf_timestamp.Timestamp?, String>(
+          .valueTo<google_protobuf_timestamp.Timestamp?, Object>(
             key: 'claimable_redemption_time',
-            parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => google_protobuf_timestamp.Timestamp.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
-      redemptionAmount: json
-          .valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
-            key: 'redemption_amount',
-            parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      redemptionAmount: json.valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
+        key: 'redemption_amount',
+        parse:
+            (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -386,19 +434,38 @@ class FailedRedemptionSchedule extends CosmosProtoMessage {
   List<Object?> get protoValues => [id, schedule, err];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'id': id?.toString(), 'schedule': schedule?.toJson(), 'err': err};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'id': config.encodeBigint(id),
+      'schedule': config.encodeMessage(schedule),
+      'err': err,
+    };
   }
 
-  factory FailedRedemptionSchedule.fromJson(Map<String, dynamic> json) {
+  factory FailedRedemptionSchedule.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return FailedRedemptionSchedule(
-      id: json.valueAsBigInt<BigInt?>('id', acceptCamelCase: true),
-      schedule: json.valueTo<RedemptionSchedule?, Map<String, dynamic>>(
-        key: 'schedule',
-        parse: (v) => RedemptionSchedule.fromJson(v),
-        acceptCamelCase: true,
+      id: json.valueAsBigInt<BigInt?>(
+        'id',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      err: json.valueAsString<String?>('err', acceptCamelCase: true),
+      schedule: json.valueTo<RedemptionSchedule?, Object>(
+        key: 'schedule',
+        parse:
+            (v) => RedemptionSchedule.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      err: json.valueAsString<String?>(
+        'err',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

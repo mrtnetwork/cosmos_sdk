@@ -32,15 +32,29 @@ class ParamChange extends CosmosProtoMessage {
   List<Object?> get protoValues => [subspace, key, value];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'subspace': subspace, 'key': key, 'value': value};
   }
 
-  factory ParamChange.fromJson(Map<String, dynamic> json) {
+  factory ParamChange.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ParamChange(
-      subspace: json.valueAsString<String?>('subspace', acceptCamelCase: true),
-      key: json.valueAsString<String?>('key', acceptCamelCase: true),
-      value: json.valueAsString<String?>('value', acceptCamelCase: true),
+      subspace: json.valueAsString<String?>(
+        'subspace',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      key: json.valueAsString<String?>(
+        'key',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      value: json.valueAsString<String?>(
+        'value',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

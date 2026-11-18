@@ -46,33 +46,52 @@ class Config extends CosmosProtoMessage {
   List<Object?> get protoValues => [modules, golangBindings];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'modules': modules.map((e) => e.toJson()).toList(),
-      'golang_bindings': golangBindings.map((e) => e.toJson()).toList(),
+      'modules': modules.map((e) => config.encodeMessage(e)).toList(),
+      'golang_bindings':
+          golangBindings.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory Config.fromJson(Map<String, dynamic> json) {
+  factory Config.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Config(
       modules:
-          (json.valueEnsureAsList<dynamic>('modules', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'modules',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<ModuleConfig, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<ModuleConfig, Object>(
                   value: e,
-                  parse: (v) => ModuleConfig.fromJson(v),
+                  parse:
+                      (v) => ModuleConfig.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       golangBindings:
           (json.valueEnsureAsList<dynamic>(
                 'golang_bindings',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<GolangBinding, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<GolangBinding, Object>(
                   value: e,
-                  parse: (v) => GolangBinding.fromJson(v),
+                  parse:
+                      (v) => GolangBinding.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -147,31 +166,49 @@ class ModuleConfig extends CosmosProtoMessage {
   List<Object?> get protoValues => [name, config, golangBindings];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'name': name,
-      'config': config?.toJson(),
-      'golang_bindings': golangBindings.map((e) => e.toJson()).toList(),
+      'config': config.encodeMessage(this.config),
+      'golang_bindings':
+          golangBindings.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory ModuleConfig.fromJson(Map<String, dynamic> json) {
+  factory ModuleConfig.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ModuleConfig(
-      name: json.valueAsString<String?>('name', acceptCamelCase: true),
-      config: json.valueTo<google_protobuf_any.Any?, Map<String, dynamic>>(
+      name: json.valueAsString<String?>(
+        'name',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      config: json.valueTo<google_protobuf_any.Any?, Object>(
         key: 'config',
-        parse: (v) => google_protobuf_any.Any.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_any.Any.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       golangBindings:
           (json.valueEnsureAsList<dynamic>(
                 'golang_bindings',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<GolangBinding, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<GolangBinding, Object>(
                   value: e,
-                  parse: (v) => GolangBinding.fromJson(v),
+                  parse:
+                      (v) => GolangBinding.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -224,19 +261,24 @@ class GolangBinding extends CosmosProtoMessage {
   List<Object?> get protoValues => [interfaceType, implementation];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'interface_type': interfaceType, 'implementation': implementation};
   }
 
-  factory GolangBinding.fromJson(Map<String, dynamic> json) {
+  factory GolangBinding.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GolangBinding(
       interfaceType: json.valueAsString<String?>(
         'interface_type',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       implementation: json.valueAsString<String?>(
         'implementation',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

@@ -13,7 +13,7 @@ class MsgSubmitQueryResponse extends CosmosProtoMessage
 
   final String? queryId;
 
-  final List<int>? result;
+  final BuBytes? result;
 
   final tendermint_crypto_proof.ProofOps? proofOps;
 
@@ -21,14 +21,14 @@ class MsgSubmitQueryResponse extends CosmosProtoMessage
 
   final String? fromAddress;
 
-  const MsgSubmitQueryResponse({
+  MsgSubmitQueryResponse({
     this.chainId,
     this.queryId,
-    this.result,
+    List<int>? result,
     this.proofOps,
     this.height,
     this.fromAddress,
-  });
+  }) : result = result?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -70,42 +70,51 @@ class MsgSubmitQueryResponse extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'chain_id': chainId,
       'query_id': queryId,
-      'result': switch (result) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'proof_ops': proofOps?.toJson(),
-      'height': height?.toString(),
+      'result': config.encodeBinary(result),
+      'proof_ops': config.encodeMessage(proofOps),
+      'height': config.encodeBigint(height),
       'from_address': fromAddress,
     };
   }
 
-  factory MsgSubmitQueryResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgSubmitQueryResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSubmitQueryResponse(
-      chainId: json.valueAsString<String?>('chain_id', acceptCamelCase: true),
-      queryId: json.valueAsString<String?>('query_id', acceptCamelCase: true),
-      result: json.valueAsBytes<List<int>?>(
-        'result',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      chainId: json.valueAsString<String?>(
+        'chain_id',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      proofOps: json
-          .valueTo<tendermint_crypto_proof.ProofOps?, Map<String, dynamic>>(
-            key: 'proof_ops',
-            parse: (v) => tendermint_crypto_proof.ProofOps.fromJson(v),
-            acceptCamelCase: true,
-          ),
-      height: json.valueAsBigInt<BigInt?>('height', acceptCamelCase: true),
+      queryId: json.valueAsString<String?>(
+        'query_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      result: config.decodeBinary<List<int>?>(
+        json.valueAs('result', normalizeKeyLookup: config.normalizeKeys),
+      ),
+      proofOps: json.valueTo<tendermint_crypto_proof.ProofOps?, Object>(
+        key: 'proof_ops',
+        parse:
+            (v) => tendermint_crypto_proof.ProofOps.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      height: json.valueAsBigInt<BigInt?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       fromAddress: json.valueAsString<String?>(
         'from_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -161,11 +170,16 @@ class MsgSubmitQueryResponseResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgSubmitQueryResponseResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgSubmitQueryResponseResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSubmitQueryResponseResponse();
   }
 

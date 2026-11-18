@@ -71,39 +71,47 @@ class MsgRegisterTokenPriceQuery extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'admin': admin,
       'base_denom': baseDenom,
       'quote_denom': quoteDenom,
       'osmosis_base_denom': osmosisBaseDenom,
       'osmosis_quote_denom': osmosisQuoteDenom,
-      'osmosis_pool_id': osmosisPoolId?.toString(),
+      'osmosis_pool_id': config.encodeBigint(osmosisPoolId),
     };
   }
 
-  factory MsgRegisterTokenPriceQuery.fromJson(Map<String, dynamic> json) {
+  factory MsgRegisterTokenPriceQuery.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgRegisterTokenPriceQuery(
-      admin: json.valueAsString<String?>('admin', acceptCamelCase: true),
+      admin: json.valueAsString<String?>(
+        'admin',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       baseDenom: json.valueAsString<String?>(
         'base_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       quoteDenom: json.valueAsString<String?>(
         'quote_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       osmosisBaseDenom: json.valueAsString<String?>(
         'osmosis_base_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       osmosisQuoteDenom: json.valueAsString<String?>(
         'osmosis_quote_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       osmosisPoolId: json.valueAsBigInt<BigInt?>(
         'osmosis_pool_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -154,13 +162,16 @@ class MsgRegisterTokenPriceQueryResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
   factory MsgRegisterTokenPriceQueryResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgRegisterTokenPriceQueryResponse();
   }
 
@@ -229,29 +240,37 @@ class MsgRemoveTokenPriceQuery extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'admin': admin,
       'base_denom': baseDenom,
       'quote_denom': quoteDenom,
-      'osmosis_pool_id': osmosisPoolId?.toString(),
+      'osmosis_pool_id': config.encodeBigint(osmosisPoolId),
     };
   }
 
-  factory MsgRemoveTokenPriceQuery.fromJson(Map<String, dynamic> json) {
+  factory MsgRemoveTokenPriceQuery.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgRemoveTokenPriceQuery(
-      admin: json.valueAsString<String?>('admin', acceptCamelCase: true),
+      admin: json.valueAsString<String?>(
+        'admin',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       baseDenom: json.valueAsString<String?>(
         'base_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       quoteDenom: json.valueAsString<String?>(
         'quote_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       osmosisPoolId: json.valueAsBigInt<BigInt?>(
         'osmosis_pool_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -300,11 +319,16 @@ class MsgRemoveTokenPriceQueryResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgRemoveTokenPriceQueryResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgRemoveTokenPriceQueryResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgRemoveTokenPriceQueryResponse();
   }
 
@@ -360,22 +384,30 @@ class MsgUpdateParams extends CosmosProtoMessage
   List<Object?> get protoValues => [authority, params];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'authority': authority, 'params': params?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'authority': authority, 'params': config.encodeMessage(params)};
   }
 
-  factory MsgUpdateParams.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateParams.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateParams(
       authority: json.valueAsString<String?>(
         'authority',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      params: json
-          .valueTo<stride_icqoracle_icqoracle.Params?, Map<String, dynamic>>(
-            key: 'params',
-            parse: (v) => stride_icqoracle_icqoracle.Params.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      params: json.valueTo<stride_icqoracle_icqoracle.Params?, Object>(
+        key: 'params',
+        parse:
+            (v) => stride_icqoracle_icqoracle.Params.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -424,11 +456,16 @@ class MsgUpdateParamsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgUpdateParamsResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateParamsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateParamsResponse();
   }
 

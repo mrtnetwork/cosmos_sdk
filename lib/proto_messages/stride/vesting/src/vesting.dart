@@ -45,35 +45,52 @@ class Period extends CosmosProtoMessage {
   List<Object?> get protoValues => [startTime, length, amount, actionType];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'start_time': startTime?.toString(),
-      'length': length?.toString(),
-      'amount': amount.map((e) => e.toJson()).toList(),
+      'start_time': config.encodeBigint(startTime),
+      'length': config.encodeBigint(length),
+      'amount': amount.map((e) => config.encodeMessage(e)).toList(),
       'action_type': actionType,
     };
   }
 
-  factory Period.fromJson(Map<String, dynamic> json) {
+  factory Period.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Period(
       startTime: json.valueAsBigInt<BigInt?>(
         'start_time',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      length: json.valueAsBigInt<BigInt?>('length', acceptCamelCase: true),
+      length: json.valueAsBigInt<BigInt?>(
+        'length',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       amount:
-          (json.valueEnsureAsList<dynamic>('amount', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'amount',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
-      actionType: json.valueAsInt<int?>('action_type', acceptCamelCase: true),
+      actionType: json.valueAsInt<int?>(
+        'action_type',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

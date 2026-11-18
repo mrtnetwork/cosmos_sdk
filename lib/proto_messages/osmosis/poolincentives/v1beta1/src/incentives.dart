@@ -26,15 +26,20 @@ class Params extends CosmosProtoMessage {
   List<Object?> get protoValues => [mintedDenom];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'minted_denom': mintedDenom};
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
       mintedDenom: json.valueAsString<String?>(
         'minted_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -78,25 +83,38 @@ class DistrInfo extends CosmosProtoMessage {
   List<Object?> get protoValues => [totalWeight, records];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'total_weight': totalWeight,
-      'records': records.map((e) => e.toJson()).toList(),
+      'records': records.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory DistrInfo.fromJson(Map<String, dynamic> json) {
+  factory DistrInfo.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return DistrInfo(
       totalWeight: json.valueAsString<String?>(
         'total_weight',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       records:
-          (json.valueEnsureAsList<dynamic>('records', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'records',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<DistrRecord, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<DistrRecord, Object>(
                   value: e,
-                  parse: (v) => DistrRecord.fromJson(v),
+                  parse:
+                      (v) => DistrRecord.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -145,14 +163,25 @@ class DistrRecord extends CosmosProtoMessage {
   List<Object?> get protoValues => [gaugeId, weight];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'gauge_id': gaugeId?.toString(), 'weight': weight};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'gauge_id': config.encodeBigint(gaugeId), 'weight': weight};
   }
 
-  factory DistrRecord.fromJson(Map<String, dynamic> json) {
+  factory DistrRecord.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return DistrRecord(
-      gaugeId: json.valueAsBigInt<BigInt?>('gauge_id', acceptCamelCase: true),
-      weight: json.valueAsString<String?>('weight', acceptCamelCase: true),
+      gaugeId: json.valueAsBigInt<BigInt?>(
+        'gauge_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      weight: json.valueAsString<String?>(
+        'weight',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

@@ -43,25 +43,33 @@ class QueryTokenPriceRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [baseDenom, quoteDenom, poolId];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'base_denom': baseDenom,
       'quote_denom': quoteDenom,
-      'pool_id': poolId?.toString(),
+      'pool_id': config.encodeBigint(poolId),
     };
   }
 
-  factory QueryTokenPriceRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryTokenPriceRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTokenPriceRequest(
       baseDenom: json.valueAsString<String?>(
         'base_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       quoteDenom: json.valueAsString<String?>(
         'quote_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      poolId: json.valueAsBigInt<BigInt?>('pool_id', acceptCamelCase: true),
+      poolId: json.valueAsBigInt<BigInt?>(
+        'pool_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -117,21 +125,28 @@ class QueryTokenPricesRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [pagination];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'pagination': pagination?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'pagination': config.encodeMessage(pagination)};
   }
 
-  factory QueryTokenPricesRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryTokenPricesRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTokenPricesRequest(
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageRequest?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) => cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageRequest?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -201,31 +216,37 @@ class TokenPriceResponse extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'base_denom_unwrapped': baseDenomUnwrapped,
       'quote_denom_unwrapped': quoteDenomUnwrapped,
-      'token_price': tokenPrice?.toJson(),
+      'token_price': config.encodeMessage(tokenPrice),
     };
   }
 
-  factory TokenPriceResponse.fromJson(Map<String, dynamic> json) {
+  factory TokenPriceResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return TokenPriceResponse(
       baseDenomUnwrapped: json.valueAsString<String?>(
         'base_denom_unwrapped',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       quoteDenomUnwrapped: json.valueAsString<String?>(
         'quote_denom_unwrapped',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      tokenPrice: json.valueTo<
-        stride_icqoracle_icqoracle.TokenPrice?,
-        Map<String, dynamic>
-      >(
+      tokenPrice: json.valueTo<stride_icqoracle_icqoracle.TokenPrice?, Object>(
         key: 'token_price',
-        parse: (v) => stride_icqoracle_icqoracle.TokenPrice.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => stride_icqoracle_icqoracle.TokenPrice.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -281,37 +302,48 @@ class QueryTokenPricesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [tokenPrices, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'token_prices': tokenPrices.map((e) => e.toJson()).toList(),
-      'pagination': pagination?.toJson(),
+      'token_prices': tokenPrices.map((e) => config.encodeMessage(e)).toList(),
+      'pagination': config.encodeMessage(pagination),
     };
   }
 
-  factory QueryTokenPricesResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryTokenPricesResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTokenPricesResponse(
       tokenPrices:
           (json.valueEnsureAsList<dynamic>(
                 'token_prices',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  TokenPriceResponse,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => TokenPriceResponse.fromJson(v)),
+                (e) => JsonParser.valueTo<TokenPriceResponse, Object>(
+                  value: e,
+                  parse:
+                      (v) => TokenPriceResponse.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageResponse?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) =>
-                cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageResponse?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -363,11 +395,16 @@ class QueryParamsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryParamsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsRequest();
   }
 
@@ -410,18 +447,26 @@ class QueryParamsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [params];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'params': params?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'params': config.encodeMessage(params)};
   }
 
-  factory QueryParamsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsResponse(
-      params: json
-          .valueTo<stride_icqoracle_icqoracle.Params?, Map<String, dynamic>>(
-            key: 'params',
-            parse: (v) => stride_icqoracle_icqoracle.Params.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      params: json.valueTo<stride_icqoracle_icqoracle.Params?, Object>(
+        key: 'params',
+        parse:
+            (v) => stride_icqoracle_icqoracle.Params.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -471,21 +516,24 @@ class QueryTokenPriceForQuoteDenomRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [baseDenom, quoteDenom];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'base_denom': baseDenom, 'quote_denom': quoteDenom};
   }
 
   factory QueryTokenPriceForQuoteDenomRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTokenPriceForQuoteDenomRequest(
       baseDenom: json.valueAsString<String?>(
         'base_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       quoteDenom: json.valueAsString<String?>(
         'quote_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -537,15 +585,21 @@ class QueryTokenPriceForQuoteDenomResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [price];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'price': price};
   }
 
   factory QueryTokenPriceForQuoteDenomResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTokenPriceForQuoteDenomResponse(
-      price: json.valueAsString<String?>('price', acceptCamelCase: true),
+      price: json.valueAsString<String?>(
+        'price',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

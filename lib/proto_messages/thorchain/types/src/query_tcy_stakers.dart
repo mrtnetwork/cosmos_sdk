@@ -31,14 +31,25 @@ class QueryTCYStakerRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [address, height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'address': address, 'height': height};
   }
 
-  factory QueryTCYStakerRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryTCYStakerRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTCYStakerRequest(
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -90,14 +101,25 @@ class QueryTCYStakerResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [address, amount];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'address': address, 'amount': amount};
   }
 
-  factory QueryTCYStakerResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryTCYStakerResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTCYStakerResponse(
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
-      amount: json.valueAsString<String?>('amount', acceptCamelCase: true),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      amount: json.valueAsString<String?>(
+        'amount',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -141,13 +163,21 @@ class QueryTCYStakersRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'height': height};
   }
 
-  factory QueryTCYStakersRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryTCYStakersRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTCYStakersRequest(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -195,22 +225,34 @@ class QueryTCYStakersResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [tcyStakers];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'tcy_stakers': tcyStakers.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'tcy_stakers': tcyStakers.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
-  factory QueryTCYStakersResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryTCYStakersResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTCYStakersResponse(
       tcyStakers:
           (json.valueEnsureAsList<dynamic>(
                 'tcy_stakers',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  QueryTCYStakerResponse,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => QueryTCYStakerResponse.fromJson(v)),
+                (e) => JsonParser.valueTo<QueryTCYStakerResponse, Object>(
+                  value: e,
+                  parse:
+                      (v) => QueryTCYStakerResponse.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );

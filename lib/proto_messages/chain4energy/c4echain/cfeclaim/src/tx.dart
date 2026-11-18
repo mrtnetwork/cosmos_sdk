@@ -44,24 +44,32 @@ class MsgClaim extends CosmosProtoMessage
   List<Object?> get protoValues => [claimer, campaignId, missionId];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'claimer': claimer,
-      'campaign_id': campaignId?.toString(),
-      'mission_id': missionId?.toString(),
+      'campaign_id': config.encodeBigint(campaignId),
+      'mission_id': config.encodeBigint(missionId),
     };
   }
 
-  factory MsgClaim.fromJson(Map<String, dynamic> json) {
+  factory MsgClaim.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgClaim(
-      claimer: json.valueAsString<String?>('claimer', acceptCamelCase: true),
+      claimer: json.valueAsString<String?>(
+        'claimer',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       campaignId: json.valueAsBigInt<BigInt?>(
         'campaign_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       missionId: json.valueAsBigInt<BigInt?>(
         'mission_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -115,22 +123,33 @@ class MsgClaimResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [amount];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'amount': amount.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'amount': amount.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory MsgClaimResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgClaimResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgClaimResponse(
       amount:
-          (json.valueEnsureAsList<dynamic>('amount', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'amount',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -185,24 +204,32 @@ class MsgInitialClaim extends CosmosProtoMessage
   List<Object?> get protoValues => [claimer, campaignId, destinationAddress];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'claimer': claimer,
-      'campaign_id': campaignId?.toString(),
+      'campaign_id': config.encodeBigint(campaignId),
       'destination_address': destinationAddress,
     };
   }
 
-  factory MsgInitialClaim.fromJson(Map<String, dynamic> json) {
+  factory MsgInitialClaim.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgInitialClaim(
-      claimer: json.valueAsString<String?>('claimer', acceptCamelCase: true),
+      claimer: json.valueAsString<String?>(
+        'claimer',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       campaignId: json.valueAsBigInt<BigInt?>(
         'campaign_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       destinationAddress: json.valueAsString<String?>(
         'destination_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -256,22 +283,33 @@ class MsgInitialClaimResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [amount];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'amount': amount.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'amount': amount.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory MsgInitialClaimResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgInitialClaimResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgInitialClaimResponse(
       amount:
-          (json.valueEnsureAsList<dynamic>('amount', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'amount',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -381,12 +419,14 @@ class MsgCreateCampaign extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'owner': owner,
       'name': name,
       'description': description,
-      'campaign_type': campaignType?.protoName,
+      'campaign_type': config.encodeEnum(campaignType),
       'removable_claim_records': removableClaimRecords,
       'feegrant_amount': feegrantAmount,
       'initial_claim_free_amount': initialClaimFreeAmount,
@@ -399,13 +439,22 @@ class MsgCreateCampaign extends CosmosProtoMessage
     };
   }
 
-  factory MsgCreateCampaign.fromJson(Map<String, dynamic> json) {
+  factory MsgCreateCampaign.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgCreateCampaign(
-      owner: json.valueAsString<String?>('owner', acceptCamelCase: true),
-      name: json.valueAsString<String?>('name', acceptCamelCase: true),
+      owner: json.valueAsString<String?>(
+        'owner',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      name: json.valueAsString<String?>(
+        'name',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       description: json.valueAsString<String?>(
         'description',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       campaignType: json.valueTo<
         chain4energy_c4echain_cfeclaim_campaign.CampaignType?,
@@ -417,40 +466,59 @@ class MsgCreateCampaign extends CosmosProtoMessage
       ),
       removableClaimRecords: json.valueAsBool<bool?>(
         'removable_claim_records',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       feegrantAmount: json.valueAsString<String?>(
         'feegrant_amount',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       initialClaimFreeAmount: json.valueAsString<String?>(
         'initial_claim_free_amount',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      free: json.valueAsString<String?>('free', acceptCamelCase: true),
-      startTime: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      free: json.valueAsString<String?>(
+        'free',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      startTime: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'start_time',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      endTime: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      endTime: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'end_time',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      lockupPeriod: json.valueTo<google_protobuf_duration.Duration?, String>(
+      lockupPeriod: json.valueTo<google_protobuf_duration.Duration?, Object>(
         key: 'lockup_period',
-        parse: (v) => google_protobuf_duration.Duration.fromString(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_duration.Duration.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      vestingPeriod: json.valueTo<google_protobuf_duration.Duration?, String>(
+      vestingPeriod: json.valueTo<google_protobuf_duration.Duration?, Object>(
         key: 'vesting_period',
-        parse: (v) => google_protobuf_duration.Duration.fromString(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_duration.Duration.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       vestingPoolName: json.valueAsString<String?>(
         'vesting_pool_name',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -524,15 +592,20 @@ class MsgCreateCampaignResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [campaignId];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'campaign_id': campaignId?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'campaign_id': config.encodeBigint(campaignId)};
   }
 
-  factory MsgCreateCampaignResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgCreateCampaignResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgCreateCampaignResponse(
       campaignId: json.valueAsBigInt<BigInt?>(
         'campaign_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -605,29 +678,40 @@ class MsgAddMission extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'owner': owner,
-      'campaign_id': campaignId?.toString(),
+      'campaign_id': config.encodeBigint(campaignId),
       'name': name,
       'description': description,
-      'mission_type': missionType?.protoName,
+      'mission_type': config.encodeEnum(missionType),
       'weight': weight,
       'claim_start_date': claimStartDate?.toRfc3339(),
     };
   }
 
-  factory MsgAddMission.fromJson(Map<String, dynamic> json) {
+  factory MsgAddMission.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgAddMission(
-      owner: json.valueAsString<String?>('owner', acceptCamelCase: true),
+      owner: json.valueAsString<String?>(
+        'owner',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       campaignId: json.valueAsBigInt<BigInt?>(
         'campaign_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      name: json.valueAsString<String?>('name', acceptCamelCase: true),
+      name: json.valueAsString<String?>(
+        'name',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       description: json.valueAsString<String?>(
         'description',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       missionType: json.valueTo<
         chain4energy_c4echain_cfeclaim_mission.MissionType?,
@@ -637,12 +721,19 @@ class MsgAddMission extends CosmosProtoMessage
         parse:
             (v) => chain4energy_c4echain_cfeclaim_mission.MissionType.from(v),
       ),
-      weight: json.valueAsString<String?>('weight', acceptCamelCase: true),
+      weight: json.valueAsString<String?>(
+        'weight',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       claimStartDate: json
-          .valueTo<google_protobuf_timestamp.Timestamp?, String>(
+          .valueTo<google_protobuf_timestamp.Timestamp?, Object>(
             key: 'claim_start_date',
-            parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => google_protobuf_timestamp.Timestamp.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
     );
   }
@@ -701,15 +792,20 @@ class MsgAddMissionResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [missionId];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'mission_id': missionId?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'mission_id': config.encodeBigint(missionId)};
   }
 
-  factory MsgAddMissionResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgAddMissionResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgAddMissionResponse(
       missionId: json.valueAsBigInt<BigInt?>(
         'mission_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -762,36 +858,48 @@ class MsgAddClaimRecords extends CosmosProtoMessage
   List<Object?> get protoValues => [owner, campaignId, claimRecordEntries];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'owner': owner,
-      'campaign_id': campaignId?.toString(),
+      'campaign_id': config.encodeBigint(campaignId),
       'claim_record_entries':
-          claimRecordEntries.map((e) => e.toJson()).toList(),
+          claimRecordEntries.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory MsgAddClaimRecords.fromJson(Map<String, dynamic> json) {
+  factory MsgAddClaimRecords.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgAddClaimRecords(
-      owner: json.valueAsString<String?>('owner', acceptCamelCase: true),
+      owner: json.valueAsString<String?>(
+        'owner',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       campaignId: json.valueAsBigInt<BigInt?>(
         'campaign_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       claimRecordEntries:
           (json.valueEnsureAsList<dynamic>(
                 'claim_record_entries',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   chain4energy_c4echain_cfeclaim_claim_record.ClaimRecordEntry,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => chain4energy_c4echain_cfeclaim_claim_record
-                          .ClaimRecordEntry.fromJson(v),
+                          .ClaimRecordEntry.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -846,11 +954,16 @@ class MsgAddClaimRecordsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgAddClaimRecordsResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgAddClaimRecordsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgAddClaimRecordsResponse();
   }
 
@@ -893,24 +1006,32 @@ class MsgDeleteClaimRecord extends CosmosProtoMessage
   List<Object?> get protoValues => [owner, campaignId, userAddress];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'owner': owner,
-      'campaign_id': campaignId?.toString(),
+      'campaign_id': config.encodeBigint(campaignId),
       'user_address': userAddress,
     };
   }
 
-  factory MsgDeleteClaimRecord.fromJson(Map<String, dynamic> json) {
+  factory MsgDeleteClaimRecord.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgDeleteClaimRecord(
-      owner: json.valueAsString<String?>('owner', acceptCamelCase: true),
+      owner: json.valueAsString<String?>(
+        'owner',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       campaignId: json.valueAsBigInt<BigInt?>(
         'campaign_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       userAddress: json.valueAsString<String?>(
         'user_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -959,11 +1080,16 @@ class MsgDeleteClaimRecordResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgDeleteClaimRecordResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgDeleteClaimRecordResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgDeleteClaimRecordResponse();
   }
 
@@ -1000,16 +1126,24 @@ class MsgCloseCampaign extends CosmosProtoMessage
   List<Object?> get protoValues => [owner, campaignId];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'owner': owner, 'campaign_id': campaignId?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'owner': owner, 'campaign_id': config.encodeBigint(campaignId)};
   }
 
-  factory MsgCloseCampaign.fromJson(Map<String, dynamic> json) {
+  factory MsgCloseCampaign.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgCloseCampaign(
-      owner: json.valueAsString<String?>('owner', acceptCamelCase: true),
+      owner: json.valueAsString<String?>(
+        'owner',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       campaignId: json.valueAsBigInt<BigInt?>(
         'campaign_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1054,11 +1188,16 @@ class MsgCloseCampaignResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgCloseCampaignResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgCloseCampaignResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgCloseCampaignResponse();
   }
 
@@ -1109,31 +1248,47 @@ class MsgEnableCampaign extends CosmosProtoMessage
   List<Object?> get protoValues => [owner, campaignId, startTime, endTime];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'owner': owner,
-      'campaign_id': campaignId?.toString(),
+      'campaign_id': config.encodeBigint(campaignId),
       'start_time': startTime?.toRfc3339(),
       'end_time': endTime?.toRfc3339(),
     };
   }
 
-  factory MsgEnableCampaign.fromJson(Map<String, dynamic> json) {
+  factory MsgEnableCampaign.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgEnableCampaign(
-      owner: json.valueAsString<String?>('owner', acceptCamelCase: true),
+      owner: json.valueAsString<String?>(
+        'owner',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       campaignId: json.valueAsBigInt<BigInt?>(
         'campaign_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      startTime: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      startTime: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'start_time',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      endTime: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      endTime: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'end_time',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1186,11 +1341,16 @@ class MsgEnableCampaignResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgEnableCampaignResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgEnableCampaignResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgEnableCampaignResponse();
   }
 
@@ -1227,16 +1387,24 @@ class MsgRemoveCampaign extends CosmosProtoMessage
   List<Object?> get protoValues => [owner, campaignId];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'owner': owner, 'campaign_id': campaignId?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'owner': owner, 'campaign_id': config.encodeBigint(campaignId)};
   }
 
-  factory MsgRemoveCampaign.fromJson(Map<String, dynamic> json) {
+  factory MsgRemoveCampaign.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgRemoveCampaign(
-      owner: json.valueAsString<String?>('owner', acceptCamelCase: true),
+      owner: json.valueAsString<String?>(
+        'owner',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       campaignId: json.valueAsBigInt<BigInt?>(
         'campaign_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1281,11 +1449,16 @@ class MsgRemoveCampaignResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgRemoveCampaignResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgRemoveCampaignResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgRemoveCampaignResponse();
   }
 

@@ -1,8 +1,4 @@
-import 'package:blockchain_utils/bip/bip/conf/core/coin_conf.dart'
-    show ChainType;
-import 'package:blockchain_utils/cbor/cbor.dart';
-import 'package:blockchain_utils/helper/extensions/extensions.dart';
-import 'package:blockchain_utils/utils/json/extension/json.dart';
+import 'package:blockchain_utils/blockchain_utils.dart';
 import 'package:cosmos_sdk/sdk/crypto/types/types.dart';
 import 'package:cosmos_sdk/sdk/provider/types/types.dart';
 import 'package:cosmos_sdk/sdk/serialization/src/identifier.dart';
@@ -209,6 +205,7 @@ class CosmosSdkChain with CborTagSerializable {
   final List<CosmosKeysAlgs> supportedAlgs;
   final ChainType type;
   final List<CosmosChannelInfo> ibcChannels;
+  final List<CosmosMultisigSupport> multisigSupports;
   @override
   SerializationIdentifier get serializationIdentifier =>
       CosmosSerializationIdentifiers.defaultTag;
@@ -248,6 +245,11 @@ class CosmosSdkChain with CborTagSerializable {
               .listAt<CborTagValue>(12)
               .map((e) => CosmosChannelInfo.deserialize(obj: e))
               .toList(),
+      multisigSupports:
+          values
+              .listAt<CborIntValue>(13)
+              .map((e) => CosmosMultisigSupport.fromValue(e.value))
+              .toList(),
     );
   }
 
@@ -272,6 +274,9 @@ class CosmosSdkChain with CborTagSerializable {
     CborTagSerializable.listFromDynamic(
       ibcChannels.map((e) => e.toCbor()).toList(),
     ),
+    CborTagSerializable.listFromDynamic(
+      multisigSupports.map((e) => e.value.toCbor()).toList(),
+    ),
   ];
   CosmosSdkChain({
     required this.name,
@@ -287,9 +292,11 @@ class CosmosSdkChain with CborTagSerializable {
     required List<CosmosSdkAsset> fees,
     required List<CosmosKeysAlgs> supportedAlgs,
     required List<CosmosChannelInfo> ibcChannels,
+    required List<CosmosMultisigSupport> multisigSupports,
   }) : fees = fees.immutable,
        supportedAlgs = supportedAlgs.immutable,
-       ibcChannels = ibcChannels.immutable;
+       ibcChannels = ibcChannels.immutable,
+       multisigSupports = multisigSupports.immutable;
   Map<String, dynamic> toJson() {
     return {
       "name": name,
@@ -305,6 +312,7 @@ class CosmosSdkChain with CborTagSerializable {
       "fees": fees.map((e) => e.toJson()).toList(),
       "type": type.name,
       "best_apis": bestApis.map((e) => e.toJson()).toList(),
+      "multisig_supports": multisigSupports.map((e) => e.name).toList(),
     };
   }
 
@@ -343,9 +351,17 @@ class CosmosSdkChain with CborTagSerializable {
               .valueEnsureAsList<Map<String, dynamic>>("ibc_channels")
               .map(CosmosChannelInfo.fromJson)
               .toList(),
+      multisigSupports:
+          json
+              .valueAsList<List<String>>("multisig_supports")
+              .map(CosmosMultisigSupport.fromName)
+              .toList(),
     );
   }
-  CosmosSdkChain copyWith({List<CosmosChannelInfo>? ibcChannels}) {
+  CosmosSdkChain copyWith({
+    List<CosmosChannelInfo>? ibcChannels,
+    List<CosmosMultisigSupport>? multisigSupports,
+  }) {
     return CosmosSdkChain(
       name: name,
       path: path,
@@ -360,6 +376,7 @@ class CosmosSdkChain with CborTagSerializable {
       fees: fees,
       supportedAlgs: supportedAlgs,
       ibcChannels: ibcChannels ?? this.ibcChannels,
+      multisigSupports: multisigSupports ?? this.multisigSupports,
     );
   }
 

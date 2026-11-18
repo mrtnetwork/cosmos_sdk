@@ -50,33 +50,44 @@ class Params extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'community_tax': communityTax,
       'withdraw_addr_enabled': withdrawAddrEnabled,
-      'reward_weights': rewardWeights.map((e) => e.toJson()).toList(),
+      'reward_weights':
+          rewardWeights.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
       communityTax: json.valueAsString<String?>(
         'community_tax',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       withdrawAddrEnabled: json.valueAsBool<bool?>(
         'withdraw_addr_enabled',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       rewardWeights:
           (json.valueEnsureAsList<dynamic>(
                 'reward_weights',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<RewardWeight, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<RewardWeight, Object>(
                   value: e,
-                  parse: (v) => RewardWeight.fromJson(v),
+                  parse:
+                      (v) => RewardWeight.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -131,14 +142,25 @@ class RewardWeight extends CosmosProtoMessage {
   List<Object?> get protoValues => [denom, weight];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'denom': denom, 'weight': weight};
   }
 
-  factory RewardWeight.fromJson(Map<String, dynamic> json) {
+  factory RewardWeight.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return RewardWeight(
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
-      weight: json.valueAsString<String?>('weight', acceptCamelCase: true),
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      weight: json.valueAsString<String?>(
+        'weight',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -185,25 +207,41 @@ class DecPool extends CosmosProtoMessage {
   List<Object?> get protoValues => [denom, decCoins];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'denom': denom,
-      'dec_coins': decCoins.map((e) => e.toJson()).toList(),
+      'dec_coins': decCoins.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory DecPool.fromJson(Map<String, dynamic> json) {
+  factory DecPool.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return DecPool(
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       decCoins:
-          (json.valueEnsureAsList<dynamic>('dec_coins', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'dec_coins',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   cosmos_base_v1beta1_coin.DecCoin,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.DecCoin.fromJson(v),
+                  parse:
+                      (v) => cosmos_base_v1beta1_coin.DecCoin.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -255,21 +293,33 @@ class ValidatorAccumulatedCommission extends CosmosProtoMessage {
   List<Object?> get protoValues => [commissions];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'commissions': commissions.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'commissions': commissions.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
-  factory ValidatorAccumulatedCommission.fromJson(Map<String, dynamic> json) {
+  factory ValidatorAccumulatedCommission.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ValidatorAccumulatedCommission(
       commissions:
           (json.valueEnsureAsList<dynamic>(
                 'commissions',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<DecPool, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<DecPool, Object>(
                   value: e,
-                  parse: (v) => DecPool.fromJson(v),
+                  parse:
+                      (v) => DecPool.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -318,18 +368,31 @@ class ValidatorOutstandingRewards extends CosmosProtoMessage {
   List<Object?> get protoValues => [rewards];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'rewards': rewards.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'rewards': rewards.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory ValidatorOutstandingRewards.fromJson(Map<String, dynamic> json) {
+  factory ValidatorOutstandingRewards.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ValidatorOutstandingRewards(
       rewards:
-          (json.valueEnsureAsList<dynamic>('rewards', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'rewards',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<DecPool, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<DecPool, Object>(
                   value: e,
-                  parse: (v) => DecPool.fromJson(v),
+                  parse:
+                      (v) => DecPool.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -382,28 +445,41 @@ class ValidatorSlashEvent extends CosmosProtoMessage {
   List<Object?> get protoValues => [validatorPeriod, fractions];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'validator_period': validatorPeriod?.toString(),
-      'fractions': fractions.map((e) => e.toJson()).toList(),
+      'validator_period': config.encodeBigint(validatorPeriod),
+      'fractions': fractions.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory ValidatorSlashEvent.fromJson(Map<String, dynamic> json) {
+  factory ValidatorSlashEvent.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ValidatorSlashEvent(
       validatorPeriod: json.valueAsBigInt<BigInt?>(
         'validator_period',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       fractions:
-          (json.valueEnsureAsList<dynamic>('fractions', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'fractions',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   cosmos_base_v1beta1_coin.DecCoin,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.DecCoin.fromJson(v),
+                  parse:
+                      (v) => cosmos_base_v1beta1_coin.DecCoin.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -461,25 +537,38 @@ class DelegationDelegatorReward extends CosmosProtoMessage {
   List<Object?> get protoValues => [validatorAddress, reward];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'validator_address': validatorAddress,
-      'reward': reward.map((e) => e.toJson()).toList(),
+      'reward': reward.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory DelegationDelegatorReward.fromJson(Map<String, dynamic> json) {
+  factory DelegationDelegatorReward.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return DelegationDelegatorReward(
       validatorAddress: json.valueAsString<String?>(
         'validator_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       reward:
-          (json.valueEnsureAsList<dynamic>('reward', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'reward',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<DecPool, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<DecPool, Object>(
                   value: e,
-                  parse: (v) => DecPool.fromJson(v),
+                  parse:
+                      (v) => DecPool.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),

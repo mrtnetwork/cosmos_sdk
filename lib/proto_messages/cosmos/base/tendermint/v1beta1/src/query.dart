@@ -49,22 +49,35 @@ class GetValidatorSetByHeightRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'height': height?.toString(), 'pagination': pagination?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'height': config.encodeBigint(height),
+      'pagination': config.encodeMessage(pagination),
+    };
   }
 
-  factory GetValidatorSetByHeightRequest.fromJson(Map<String, dynamic> json) {
+  factory GetValidatorSetByHeightRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GetValidatorSetByHeightRequest(
-      height: json.valueAsBigInt<BigInt?>('height', acceptCamelCase: true),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageRequest?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) => cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(v),
-        acceptCamelCase: true,
+      height: json.valueAsBigInt<BigInt?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageRequest?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -135,39 +148,53 @@ class GetValidatorSetByHeightResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [blockHeight, validators, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'block_height': blockHeight?.toString(),
-      'validators': validators.map((e) => e.toJson()).toList(),
-      'pagination': pagination?.toJson(),
+      'block_height': config.encodeBigint(blockHeight),
+      'validators': validators.map((e) => config.encodeMessage(e)).toList(),
+      'pagination': config.encodeMessage(pagination),
     };
   }
 
-  factory GetValidatorSetByHeightResponse.fromJson(Map<String, dynamic> json) {
+  factory GetValidatorSetByHeightResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GetValidatorSetByHeightResponse(
       blockHeight: json.valueAsBigInt<BigInt?>(
         'block_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       validators:
-          (json.valueEnsureAsList<dynamic>('validators', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'validators',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<Validator, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<Validator, Object>(
                   value: e,
-                  parse: (v) => Validator.fromJson(v),
+                  parse:
+                      (v) => Validator.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageResponse?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) =>
-                cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageResponse?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -224,21 +251,28 @@ class GetLatestValidatorSetRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [pagination];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'pagination': pagination?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'pagination': config.encodeMessage(pagination)};
   }
 
-  factory GetLatestValidatorSetRequest.fromJson(Map<String, dynamic> json) {
+  factory GetLatestValidatorSetRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GetLatestValidatorSetRequest(
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageRequest?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) => cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageRequest?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -306,39 +340,53 @@ class GetLatestValidatorSetResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [blockHeight, validators, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'block_height': blockHeight?.toString(),
-      'validators': validators.map((e) => e.toJson()).toList(),
-      'pagination': pagination?.toJson(),
+      'block_height': config.encodeBigint(blockHeight),
+      'validators': validators.map((e) => config.encodeMessage(e)).toList(),
+      'pagination': config.encodeMessage(pagination),
     };
   }
 
-  factory GetLatestValidatorSetResponse.fromJson(Map<String, dynamic> json) {
+  factory GetLatestValidatorSetResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GetLatestValidatorSetResponse(
       blockHeight: json.valueAsBigInt<BigInt?>(
         'block_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       validators:
-          (json.valueEnsureAsList<dynamic>('validators', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'validators',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<Validator, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<Validator, Object>(
                   value: e,
-                  parse: (v) => Validator.fromJson(v),
+                  parse:
+                      (v) => Validator.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageResponse?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) =>
-                cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageResponse?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -408,30 +456,42 @@ class Validator extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'address': address,
-      'pub_key': pubKey?.toJson(),
-      'voting_power': votingPower?.toString(),
-      'proposer_priority': proposerPriority?.toString(),
+      'pub_key': config.encodeMessage(pubKey),
+      'voting_power': config.encodeBigint(votingPower),
+      'proposer_priority': config.encodeBigint(proposerPriority),
     };
   }
 
-  factory Validator.fromJson(Map<String, dynamic> json) {
+  factory Validator.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Validator(
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
-      pubKey: json.valueTo<google_protobuf_any.Any?, Map<String, dynamic>>(
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      pubKey: json.valueTo<google_protobuf_any.Any?, Object>(
         key: 'pub_key',
-        parse: (v) => google_protobuf_any.Any.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_any.Any.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       votingPower: json.valueAsBigInt<BigInt?>(
         'voting_power',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       proposerPriority: json.valueAsBigInt<BigInt?>(
         'proposer_priority',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -482,13 +542,21 @@ class GetBlockByHeightRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'height': height?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'height': config.encodeBigint(height)};
   }
 
-  factory GetBlockByHeightRequest.fromJson(Map<String, dynamic> json) {
+  factory GetBlockByHeightRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GetBlockByHeightRequest(
-      height: json.valueAsBigInt<BigInt?>('height', acceptCamelCase: true),
+      height: json.valueAsBigInt<BigInt?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -550,35 +618,49 @@ class GetBlockByHeightResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [blockId, block, sdkBlock];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'block_id': blockId?.toJson(),
-      'block': block?.toJson(),
-      'sdk_block': sdkBlock?.toJson(),
+      'block_id': config.encodeMessage(blockId),
+      'block': config.encodeMessage(block),
+      'sdk_block': config.encodeMessage(sdkBlock),
     };
   }
 
-  factory GetBlockByHeightResponse.fromJson(Map<String, dynamic> json) {
+  factory GetBlockByHeightResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GetBlockByHeightResponse(
-      blockId: json
-          .valueTo<tendermint_types_types.BlockID?, Map<String, dynamic>>(
-            key: 'block_id',
-            parse: (v) => tendermint_types_types.BlockID.fromJson(v),
-            acceptCamelCase: true,
-          ),
-      block: json.valueTo<tendermint_types_block.Block?, Map<String, dynamic>>(
+      blockId: json.valueTo<tendermint_types_types.BlockID?, Object>(
+        key: 'block_id',
+        parse:
+            (v) => tendermint_types_types.BlockID.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      block: json.valueTo<tendermint_types_block.Block?, Object>(
         key: 'block',
-        parse: (v) => tendermint_types_block.Block.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => tendermint_types_block.Block.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      sdkBlock: json.valueTo<
-        cosmos_base_tendermint_v1beta1_types.Block?,
-        Map<String, dynamic>
-      >(
-        key: 'sdk_block',
-        parse: (v) => cosmos_base_tendermint_v1beta1_types.Block.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      sdkBlock: json
+          .valueTo<cosmos_base_tendermint_v1beta1_types.Block?, Object>(
+            key: 'sdk_block',
+            parse:
+                (v) => cosmos_base_tendermint_v1beta1_types.Block.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -632,11 +714,16 @@ class GetLatestBlockRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory GetLatestBlockRequest.fromJson(Map<String, dynamic> json) {
+  factory GetLatestBlockRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GetLatestBlockRequest();
   }
 
@@ -697,35 +784,49 @@ class GetLatestBlockResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [blockId, block, sdkBlock];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'block_id': blockId?.toJson(),
-      'block': block?.toJson(),
-      'sdk_block': sdkBlock?.toJson(),
+      'block_id': config.encodeMessage(blockId),
+      'block': config.encodeMessage(block),
+      'sdk_block': config.encodeMessage(sdkBlock),
     };
   }
 
-  factory GetLatestBlockResponse.fromJson(Map<String, dynamic> json) {
+  factory GetLatestBlockResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GetLatestBlockResponse(
-      blockId: json
-          .valueTo<tendermint_types_types.BlockID?, Map<String, dynamic>>(
-            key: 'block_id',
-            parse: (v) => tendermint_types_types.BlockID.fromJson(v),
-            acceptCamelCase: true,
-          ),
-      block: json.valueTo<tendermint_types_block.Block?, Map<String, dynamic>>(
+      blockId: json.valueTo<tendermint_types_types.BlockID?, Object>(
+        key: 'block_id',
+        parse:
+            (v) => tendermint_types_types.BlockID.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      block: json.valueTo<tendermint_types_block.Block?, Object>(
         key: 'block',
-        parse: (v) => tendermint_types_block.Block.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => tendermint_types_block.Block.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      sdkBlock: json.valueTo<
-        cosmos_base_tendermint_v1beta1_types.Block?,
-        Map<String, dynamic>
-      >(
-        key: 'sdk_block',
-        parse: (v) => cosmos_base_tendermint_v1beta1_types.Block.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      sdkBlock: json
+          .valueTo<cosmos_base_tendermint_v1beta1_types.Block?, Object>(
+            key: 'sdk_block',
+            parse:
+                (v) => cosmos_base_tendermint_v1beta1_types.Block.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -779,11 +880,16 @@ class GetSyncingRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory GetSyncingRequest.fromJson(Map<String, dynamic> json) {
+  factory GetSyncingRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GetSyncingRequest();
   }
 
@@ -844,24 +950,32 @@ class GetSyncingResponse extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'syncing': syncing,
-      'earliest_block_height': earliestBlockHeight?.toString(),
-      'latest_block_height': latestBlockHeight?.toString(),
+      'earliest_block_height': config.encodeBigint(earliestBlockHeight),
+      'latest_block_height': config.encodeBigint(latestBlockHeight),
     };
   }
 
-  factory GetSyncingResponse.fromJson(Map<String, dynamic> json) {
+  factory GetSyncingResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GetSyncingResponse(
-      syncing: json.valueAsBool<bool?>('syncing', acceptCamelCase: true),
+      syncing: json.valueAsBool<bool?>(
+        'syncing',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       earliestBlockHeight: json.valueAsBigInt<BigInt?>(
         'earliest_block_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       latestBlockHeight: json.valueAsBigInt<BigInt?>(
         'latest_block_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -906,11 +1020,16 @@ class GetNodeInfoRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory GetNodeInfoRequest.fromJson(Map<String, dynamic> json) {
+  factory GetNodeInfoRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GetNodeInfoRequest();
   }
 
@@ -955,25 +1074,35 @@ class GetNodeInfoResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [defaultNodeInfo, applicationVersion];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'default_node_info': defaultNodeInfo?.toJson(),
-      'application_version': applicationVersion?.toJson(),
+      'default_node_info': config.encodeMessage(defaultNodeInfo),
+      'application_version': config.encodeMessage(applicationVersion),
     };
   }
 
-  factory GetNodeInfoResponse.fromJson(Map<String, dynamic> json) {
+  factory GetNodeInfoResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GetNodeInfoResponse(
       defaultNodeInfo: json
-          .valueTo<tendermint_p2p_types.DefaultNodeInfo?, Map<String, dynamic>>(
+          .valueTo<tendermint_p2p_types.DefaultNodeInfo?, Object>(
             key: 'default_node_info',
-            parse: (v) => tendermint_p2p_types.DefaultNodeInfo.fromJson(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => tendermint_p2p_types.DefaultNodeInfo.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
-      applicationVersion: json.valueTo<VersionInfo?, Map<String, dynamic>>(
+      applicationVersion: json.valueTo<VersionInfo?, Object>(
         key: 'application_version',
-        parse: (v) => VersionInfo.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => VersionInfo.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1070,7 +1199,9 @@ class VersionInfo extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'name': name,
       'app_name': appName,
@@ -1078,40 +1209,60 @@ class VersionInfo extends CosmosProtoMessage {
       'git_commit': gitCommit,
       'build_tags': buildTags,
       'go_version': goVersion,
-      'build_deps': buildDeps.map((e) => e.toJson()).toList(),
+      'build_deps': buildDeps.map((e) => config.encodeMessage(e)).toList(),
       'cosmos_sdk_version': cosmosSdkVersion,
     };
   }
 
-  factory VersionInfo.fromJson(Map<String, dynamic> json) {
+  factory VersionInfo.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return VersionInfo(
-      name: json.valueAsString<String?>('name', acceptCamelCase: true),
-      appName: json.valueAsString<String?>('app_name', acceptCamelCase: true),
-      version: json.valueAsString<String?>('version', acceptCamelCase: true),
+      name: json.valueAsString<String?>(
+        'name',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      appName: json.valueAsString<String?>(
+        'app_name',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      version: json.valueAsString<String?>(
+        'version',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       gitCommit: json.valueAsString<String?>(
         'git_commit',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       buildTags: json.valueAsString<String?>(
         'build_tags',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       goVersion: json.valueAsString<String?>(
         'go_version',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       buildDeps:
-          (json.valueEnsureAsList<dynamic>('build_deps', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'build_deps',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<Module, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<Module, Object>(
                   value: e,
-                  parse: (v) => Module.fromJson(v),
+                  parse:
+                      (v) => Module.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       cosmosSdkVersion: json.valueAsString<String?>(
         'cosmos_sdk_version',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1168,15 +1319,29 @@ class Module extends CosmosProtoMessage {
   List<Object?> get protoValues => [path, version, sum];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'path': path, 'version': version, 'sum': sum};
   }
 
-  factory Module.fromJson(Map<String, dynamic> json) {
+  factory Module.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Module(
-      path: json.valueAsString<String?>('path', acceptCamelCase: true),
-      version: json.valueAsString<String?>('version', acceptCamelCase: true),
-      sum: json.valueAsString<String?>('sum', acceptCamelCase: true),
+      path: json.valueAsString<String?>(
+        'path',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      version: json.valueAsString<String?>(
+        'version',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      sum: json.valueAsString<String?>(
+        'sum',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1197,7 +1362,7 @@ class Module extends CosmosProtoMessage {
 /// ABCIQueryRequest defines the request structure for the ABCIQuery gRPC query.
 class ABCIQueryRequest extends CosmosProtoMessage
     with ICosmosProtoQueryMessage<ABCIQueryResponse> {
-  final List<int>? data;
+  final BuBytes? data;
 
   final String? path;
 
@@ -1205,7 +1370,8 @@ class ABCIQueryRequest extends CosmosProtoMessage
 
   final bool? prove;
 
-  const ABCIQueryRequest({this.data, this.path, this.height, this.prove});
+  ABCIQueryRequest({List<int>? data, this.path, this.height, this.prove})
+    : data = data?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -1233,31 +1399,37 @@ class ABCIQueryRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [data, path, height, prove];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'data': switch (data) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'data': config.encodeBinary(data),
       'path': path,
-      'height': height?.toString(),
+      'height': config.encodeBigint(height),
       'prove': prove,
     };
   }
 
-  factory ABCIQueryRequest.fromJson(Map<String, dynamic> json) {
+  factory ABCIQueryRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ABCIQueryRequest(
-      data: json.valueAsBytes<List<int>?>(
-        'data',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      data: config.decodeBinary<List<int>?>(
+        json.valueAs('data', normalizeKeyLookup: config.normalizeKeys),
       ),
-      path: json.valueAsString<String?>('path', acceptCamelCase: true),
-      height: json.valueAsBigInt<BigInt?>('height', acceptCamelCase: true),
-      prove: json.valueAsBool<bool?>('prove', acceptCamelCase: true),
+      path: json.valueAsString<String?>(
+        'path',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      height: json.valueAsBigInt<BigInt?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      prove: json.valueAsBool<bool?>(
+        'prove',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1301,9 +1473,9 @@ class ABCIQueryResponse extends CosmosProtoMessage {
   /// nondeterministic
   final BigInt? index;
 
-  final List<int>? key;
+  final BuBytes? key;
 
-  final List<int>? value;
+  final BuBytes? value;
 
   final ProofOps? proofOps;
 
@@ -1311,17 +1483,18 @@ class ABCIQueryResponse extends CosmosProtoMessage {
 
   final String? codespace;
 
-  const ABCIQueryResponse({
+  ABCIQueryResponse({
     this.code,
     this.log,
     this.info,
     this.index,
-    this.key,
-    this.value,
+    List<int>? key,
+    List<int>? value,
     this.proofOps,
     this.height,
     this.codespace,
-  });
+  }) : key = key?.asImmutableBytes,
+       value = value?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -1358,57 +1531,61 @@ class ABCIQueryResponse extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'code': code,
       'log': log,
       'info': info,
-      'index': index?.toString(),
-      'key': switch (key) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'value': switch (value) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'proof_ops': proofOps?.toJson(),
-      'height': height?.toString(),
+      'index': config.encodeBigint(index),
+      'key': config.encodeBinary(key),
+      'value': config.encodeBinary(value),
+      'proof_ops': config.encodeMessage(proofOps),
+      'height': config.encodeBigint(height),
       'codespace': codespace,
     };
   }
 
-  factory ABCIQueryResponse.fromJson(Map<String, dynamic> json) {
+  factory ABCIQueryResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ABCIQueryResponse(
-      code: json.valueAsInt<int?>('code', acceptCamelCase: true),
-      log: json.valueAsString<String?>('log', acceptCamelCase: true),
-      info: json.valueAsString<String?>('info', acceptCamelCase: true),
-      index: json.valueAsBigInt<BigInt?>('index', acceptCamelCase: true),
-      key: json.valueAsBytes<List<int>?>(
-        'key',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      code: json.valueAsInt<int?>(
+        'code',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      value: json.valueAsBytes<List<int>?>(
-        'value',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      log: json.valueAsString<String?>(
+        'log',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      proofOps: json.valueTo<ProofOps?, Map<String, dynamic>>(
+      info: json.valueAsString<String?>(
+        'info',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      index: json.valueAsBigInt<BigInt?>(
+        'index',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      key: config.decodeBinary<List<int>?>(
+        json.valueAs('key', normalizeKeyLookup: config.normalizeKeys),
+      ),
+      value: config.decodeBinary<List<int>?>(
+        json.valueAs('value', normalizeKeyLookup: config.normalizeKeys),
+      ),
+      proofOps: json.valueTo<ProofOps?, Object>(
         key: 'proof_ops',
-        parse: (v) => ProofOps.fromJson(v),
-        acceptCamelCase: true,
+        parse: (v) => ProofOps.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      height: json.valueAsBigInt<BigInt?>('height', acceptCamelCase: true),
+      height: json.valueAsBigInt<BigInt?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       codespace: json.valueAsString<String?>(
         'codespace',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1441,11 +1618,13 @@ class ABCIQueryResponse extends CosmosProtoMessage {
 class ProofOp extends CosmosProtoMessage {
   final String? type;
 
-  final List<int>? key;
+  final BuBytes? key;
 
-  final List<int>? data;
+  final BuBytes? data;
 
-  const ProofOp({this.type, this.key, this.data});
+  ProofOp({this.type, List<int>? key, List<int>? data})
+    : key = key?.asImmutableBytes,
+      data = data?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -1466,38 +1645,30 @@ class ProofOp extends CosmosProtoMessage {
   List<Object?> get protoValues => [type, key, data];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'type': type,
-      'key': switch (key) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'data': switch (data) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'key': config.encodeBinary(key),
+      'data': config.encodeBinary(data),
     };
   }
 
-  factory ProofOp.fromJson(Map<String, dynamic> json) {
+  factory ProofOp.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ProofOp(
-      type: json.valueAsString<String?>('type', acceptCamelCase: true),
-      key: json.valueAsBytes<List<int>?>(
-        'key',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      type: json.valueAsString<String?>(
+        'type',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      data: json.valueAsBytes<List<int>?>(
-        'data',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      key: config.decodeBinary<List<int>?>(
+        json.valueAs('key', normalizeKeyLookup: config.normalizeKeys),
+      ),
+      data: config.decodeBinary<List<int>?>(
+        json.valueAs('data', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }
@@ -1545,18 +1716,31 @@ class ProofOps extends CosmosProtoMessage {
   List<Object?> get protoValues => [ops];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'ops': ops.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'ops': ops.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory ProofOps.fromJson(Map<String, dynamic> json) {
+  factory ProofOps.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ProofOps(
       ops:
-          (json.valueEnsureAsList<dynamic>('ops', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'ops',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<ProofOp, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<ProofOp, Object>(
                   value: e,
-                  parse: (v) => ProofOp.fromJson(v),
+                  parse:
+                      (v) => ProofOp.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -1603,13 +1787,21 @@ class GetBlockResultsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'height': height?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'height': config.encodeBigint(height)};
   }
 
-  factory GetBlockResultsRequest.fromJson(Map<String, dynamic> json) {
+  factory GetBlockResultsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GetBlockResultsRequest(
-      height: json.valueAsBigInt<BigInt?>('height', acceptCamelCase: true),
+      height: json.valueAsBigInt<BigInt?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1659,11 +1851,16 @@ class GetLatestBlockResultsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory GetLatestBlockResultsRequest.fromJson(Map<String, dynamic> json) {
+  factory GetLatestBlockResultsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GetLatestBlockResultsRequest();
   }
 
@@ -1705,16 +1902,16 @@ class GetBlockResultsResponse extends CosmosProtoMessage {
   final tendermint_types_params.ConsensusParams? consensusParamUpdates;
 
   /// app_hash is the app hash after processing this block.
-  final List<int>? appHash;
+  final BuBytes? appHash;
 
-  const GetBlockResultsResponse({
+  GetBlockResultsResponse({
     this.height,
     this.txsResults = const [],
     this.finalizeBlockEvents = const [],
     this.validatorUpdates = const [],
     this.consensusParamUpdates,
-    this.appHash,
-  });
+    List<int>? appHash,
+  }) : appHash = appHash?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -1754,85 +1951,99 @@ class GetBlockResultsResponse extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'height': height?.toString(),
-      'txs_results': txsResults.map((e) => e.toJson()).toList(),
+      'height': config.encodeBigint(height),
+      'txs_results': txsResults.map((e) => config.encodeMessage(e)).toList(),
       'finalize_block_events':
-          finalizeBlockEvents.map((e) => e.toJson()).toList(),
-      'validator_updates': validatorUpdates.map((e) => e.toJson()).toList(),
-      'consensus_param_updates': consensusParamUpdates?.toJson(),
-      'app_hash': switch (appHash) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+          finalizeBlockEvents.map((e) => config.encodeMessage(e)).toList(),
+      'validator_updates':
+          validatorUpdates.map((e) => config.encodeMessage(e)).toList(),
+      'consensus_param_updates': config.encodeMessage(consensusParamUpdates),
+      'app_hash': config.encodeBinary(appHash),
     };
   }
 
-  factory GetBlockResultsResponse.fromJson(Map<String, dynamic> json) {
+  factory GetBlockResultsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GetBlockResultsResponse(
-      height: json.valueAsBigInt<BigInt?>('height', acceptCamelCase: true),
+      height: json.valueAsBigInt<BigInt?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       txsResults:
           (json.valueEnsureAsList<dynamic>(
                 'txs_results',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   tendermint_abci_types.ExecTxResult,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
-                  parse: (v) => tendermint_abci_types.ExecTxResult.fromJson(v),
+                  parse:
+                      (v) => tendermint_abci_types.ExecTxResult.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       finalizeBlockEvents:
           (json.valueEnsureAsList<dynamic>(
                 'finalize_block_events',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  tendermint_abci_types.Event,
-                  Map<String, dynamic>
-                >(
+                (e) => JsonParser.valueTo<tendermint_abci_types.Event, Object>(
                   value: e,
-                  parse: (v) => tendermint_abci_types.Event.fromJson(v),
+                  parse:
+                      (v) => tendermint_abci_types.Event.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       validatorUpdates:
           (json.valueEnsureAsList<dynamic>(
                 'validator_updates',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   tendermint_abci_types.ValidatorUpdate,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
-                      (v) => tendermint_abci_types.ValidatorUpdate.fromJson(v),
+                      (v) => tendermint_abci_types.ValidatorUpdate.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
-      consensusParamUpdates: json.valueTo<
-        tendermint_types_params.ConsensusParams?,
-        Map<String, dynamic>
-      >(
-        key: 'consensus_param_updates',
-        parse: (v) => tendermint_types_params.ConsensusParams.fromJson(v),
-        acceptCamelCase: true,
-      ),
-      appHash: json.valueAsBytes<List<int>?>(
-        'app_hash',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      consensusParamUpdates: json
+          .valueTo<tendermint_types_params.ConsensusParams?, Object>(
+            key: 'consensus_param_updates',
+            parse:
+                (v) => tendermint_types_params.ConsensusParams.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
+      appHash: config.decodeBinary<List<int>?>(
+        json.valueAs('app_hash', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }
@@ -1890,16 +2101,16 @@ class GetLatestBlockResultsResponse extends CosmosProtoMessage {
   final tendermint_types_params.ConsensusParams? consensusParamUpdates;
 
   /// app_hash is the app hash after processing this block.
-  final List<int>? appHash;
+  final BuBytes? appHash;
 
-  const GetLatestBlockResultsResponse({
+  GetLatestBlockResultsResponse({
     this.height,
     this.txsResults = const [],
     this.finalizeBlockEvents = const [],
     this.validatorUpdates = const [],
     this.consensusParamUpdates,
-    this.appHash,
-  });
+    List<int>? appHash,
+  }) : appHash = appHash?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -1939,85 +2150,99 @@ class GetLatestBlockResultsResponse extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'height': height?.toString(),
-      'txs_results': txsResults.map((e) => e.toJson()).toList(),
+      'height': config.encodeBigint(height),
+      'txs_results': txsResults.map((e) => config.encodeMessage(e)).toList(),
       'finalize_block_events':
-          finalizeBlockEvents.map((e) => e.toJson()).toList(),
-      'validator_updates': validatorUpdates.map((e) => e.toJson()).toList(),
-      'consensus_param_updates': consensusParamUpdates?.toJson(),
-      'app_hash': switch (appHash) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+          finalizeBlockEvents.map((e) => config.encodeMessage(e)).toList(),
+      'validator_updates':
+          validatorUpdates.map((e) => config.encodeMessage(e)).toList(),
+      'consensus_param_updates': config.encodeMessage(consensusParamUpdates),
+      'app_hash': config.encodeBinary(appHash),
     };
   }
 
-  factory GetLatestBlockResultsResponse.fromJson(Map<String, dynamic> json) {
+  factory GetLatestBlockResultsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GetLatestBlockResultsResponse(
-      height: json.valueAsBigInt<BigInt?>('height', acceptCamelCase: true),
+      height: json.valueAsBigInt<BigInt?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       txsResults:
           (json.valueEnsureAsList<dynamic>(
                 'txs_results',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   tendermint_abci_types.ExecTxResult,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
-                  parse: (v) => tendermint_abci_types.ExecTxResult.fromJson(v),
+                  parse:
+                      (v) => tendermint_abci_types.ExecTxResult.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       finalizeBlockEvents:
           (json.valueEnsureAsList<dynamic>(
                 'finalize_block_events',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  tendermint_abci_types.Event,
-                  Map<String, dynamic>
-                >(
+                (e) => JsonParser.valueTo<tendermint_abci_types.Event, Object>(
                   value: e,
-                  parse: (v) => tendermint_abci_types.Event.fromJson(v),
+                  parse:
+                      (v) => tendermint_abci_types.Event.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       validatorUpdates:
           (json.valueEnsureAsList<dynamic>(
                 'validator_updates',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   tendermint_abci_types.ValidatorUpdate,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
-                      (v) => tendermint_abci_types.ValidatorUpdate.fromJson(v),
+                      (v) => tendermint_abci_types.ValidatorUpdate.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
-      consensusParamUpdates: json.valueTo<
-        tendermint_types_params.ConsensusParams?,
-        Map<String, dynamic>
-      >(
-        key: 'consensus_param_updates',
-        parse: (v) => tendermint_types_params.ConsensusParams.fromJson(v),
-        acceptCamelCase: true,
-      ),
-      appHash: json.valueAsBytes<List<int>?>(
-        'app_hash',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      consensusParamUpdates: json
+          .valueTo<tendermint_types_params.ConsensusParams?, Object>(
+            key: 'consensus_param_updates',
+            parse:
+                (v) => tendermint_types_params.ConsensusParams.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
+      appHash: config.decodeBinary<List<int>?>(
+        json.valueAs('app_hash', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }

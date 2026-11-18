@@ -31,14 +31,25 @@ class QueryTradeUnitRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [asset, height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'asset': asset, 'height': height};
   }
 
-  factory QueryTradeUnitRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryTradeUnitRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTradeUnitRequest(
-      asset: json.valueAsString<String?>('asset', acceptCamelCase: true),
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      asset: json.valueAsString<String?>(
+        'asset',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -95,15 +106,29 @@ class QueryTradeUnitResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [asset, units, depth];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'asset': asset, 'units': units, 'depth': depth};
   }
 
-  factory QueryTradeUnitResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryTradeUnitResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTradeUnitResponse(
-      asset: json.valueAsString<String?>('asset', acceptCamelCase: true),
-      units: json.valueAsString<String?>('units', acceptCamelCase: true),
-      depth: json.valueAsString<String?>('depth', acceptCamelCase: true),
+      asset: json.valueAsString<String?>(
+        'asset',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      units: json.valueAsString<String?>(
+        'units',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      depth: json.valueAsString<String?>(
+        'depth',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -148,13 +173,21 @@ class QueryTradeUnitsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'height': height};
   }
 
-  factory QueryTradeUnitsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryTradeUnitsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTradeUnitsRequest(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -202,22 +235,34 @@ class QueryTradeUnitsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [tradeUnits];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'trade_units': tradeUnits.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'trade_units': tradeUnits.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
-  factory QueryTradeUnitsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryTradeUnitsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTradeUnitsResponse(
       tradeUnits:
           (json.valueEnsureAsList<dynamic>(
                 'trade_units',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  QueryTradeUnitResponse,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => QueryTradeUnitResponse.fromJson(v)),
+                (e) => JsonParser.valueTo<QueryTradeUnitResponse, Object>(
+                  value: e,
+                  parse:
+                      (v) => QueryTradeUnitResponse.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );

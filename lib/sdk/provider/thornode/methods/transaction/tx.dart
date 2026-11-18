@@ -21,7 +21,7 @@ class ThorNodeRequestGetTransaction
   @override
   Map<String, String?> get parameters => {"height": height?.toString()};
   @override
-  ThorTxResponse onResonse(Map<String, dynamic> result) {
+  ThorTxResponse onResponse(Map<String, dynamic> result) {
     return ThorTxResponse.fromJson(result);
   }
 }

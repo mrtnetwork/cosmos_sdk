@@ -1,5 +1,12 @@
 import 'package:blockchain_utils/utils/json/extension/json.dart';
 
+@Deprecated(
+  "Use ThorQuoteSwapResponse/MayaQuoteSwapResponse in on_chain_swap instead.",
+)
+/// Legacy THORNode swap-quote response, superseded by the OpenAPI-generated
+/// `ThorQuoteSwapResponse` / `MayaQuoteSwapResponse` in on_chain_swap.
+/// Kept for backward compatibility; new code must use `ThorProvider` or
+/// `MayaProvider` instead.
 class ThoreNodeQouteSwapResponse {
   final String inboundAddress;
   final BigInt? inboundConfirmationBlocks;
@@ -101,6 +108,11 @@ class ThoreNodeQouteSwapResponse {
   }
 }
 
+@Deprecated(
+  "Use ThorQuoteSwapResponse/MayaQuoteSwapResponse in on_chain_swap instead.",
+)
+/// Legacy THORNode swap-quote fee breakdown, superseded by the
+/// OpenAPI-generated `ThorQuoteFees` / `MayaQuoteFees` in on_chain_swap.
 class ThoreNodeQouteSwapFeeResponse {
   final String asset;
   final String? affiliate;

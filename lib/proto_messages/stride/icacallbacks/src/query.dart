@@ -34,11 +34,16 @@ class QueryParamsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryParamsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsRequest();
   }
 
@@ -82,18 +87,26 @@ class QueryParamsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [params];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'params': params?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'params': config.encodeMessage(params)};
   }
 
-  factory QueryParamsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsResponse(
-      params: json
-          .valueTo<stride_icacallbacks_params.Params?, Map<String, dynamic>>(
-            key: 'params',
-            parse: (v) => stride_icacallbacks_params.Params.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      params: json.valueTo<stride_icacallbacks_params.Params?, Object>(
+        key: 'params',
+        parse:
+            (v) => stride_icacallbacks_params.Params.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -139,15 +152,20 @@ class QueryGetCallbackDataRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [callbackKey];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'callback_key': callbackKey};
   }
 
-  factory QueryGetCallbackDataRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryGetCallbackDataRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryGetCallbackDataRequest(
       callbackKey: json.valueAsString<String?>(
         'callback_key',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -193,21 +211,27 @@ class QueryGetCallbackDataResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [callbackData];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'callback_data': callbackData?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'callback_data': config.encodeMessage(callbackData)};
   }
 
-  factory QueryGetCallbackDataResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryGetCallbackDataResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryGetCallbackDataResponse(
-      callbackData: json.valueTo<
-        stride_icacallbacks_callback_data.CallbackData?,
-        Map<String, dynamic>
-      >(
-        key: 'callback_data',
-        parse:
-            (v) => stride_icacallbacks_callback_data.CallbackData.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      callbackData: json
+          .valueTo<stride_icacallbacks_callback_data.CallbackData?, Object>(
+            key: 'callback_data',
+            parse:
+                (v) => stride_icacallbacks_callback_data.CallbackData.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -255,21 +279,28 @@ class QueryAllCallbackDataRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [pagination];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'pagination': pagination?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'pagination': config.encodeMessage(pagination)};
   }
 
-  factory QueryAllCallbackDataRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryAllCallbackDataRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryAllCallbackDataRequest(
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageRequest?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) => cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageRequest?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -331,42 +362,53 @@ class QueryAllCallbackDataResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [callbackData, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'callback_data': callbackData.map((e) => e.toJson()).toList(),
-      'pagination': pagination?.toJson(),
+      'callback_data':
+          callbackData.map((e) => config.encodeMessage(e)).toList(),
+      'pagination': config.encodeMessage(pagination),
     };
   }
 
-  factory QueryAllCallbackDataResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryAllCallbackDataResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryAllCallbackDataResponse(
       callbackData:
           (json.valueEnsureAsList<dynamic>(
                 'callback_data',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   stride_icacallbacks_callback_data.CallbackData,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => stride_icacallbacks_callback_data
-                          .CallbackData.fromJson(v),
+                          .CallbackData.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageResponse?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) =>
-                cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageResponse?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 

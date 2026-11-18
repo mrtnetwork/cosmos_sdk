@@ -33,21 +33,28 @@ class QueryChecksumsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [pagination];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'pagination': pagination?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'pagination': config.encodeMessage(pagination)};
   }
 
-  factory QueryChecksumsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryChecksumsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryChecksumsRequest(
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageRequest?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) => cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageRequest?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -108,30 +115,37 @@ class QueryChecksumsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [checksums, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'checksums': checksums.map((e) => e).toList(),
-      'pagination': pagination?.toJson(),
+      'pagination': config.encodeMessage(pagination),
     };
   }
 
-  factory QueryChecksumsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryChecksumsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryChecksumsResponse(
       checksums:
           (json.valueEnsureAsList<dynamic>(
             'checksums',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageResponse?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) =>
-                cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageResponse?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -182,13 +196,21 @@ class QueryCodeRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [checksum];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'checksum': checksum};
   }
 
-  factory QueryCodeRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryCodeRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryCodeRequest(
-      checksum: json.valueAsString<String?>('checksum', acceptCamelCase: true),
+      checksum: json.valueAsString<String?>(
+        'checksum',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -213,9 +235,9 @@ class QueryCodeRequest extends CosmosProtoMessage
 
 /// QueryCodeResponse is the response type for the Query/Code RPC method.
 class QueryCodeResponse extends CosmosProtoMessage {
-  final List<int>? data;
+  final BuBytes? data;
 
-  const QueryCodeResponse({this.data});
+  QueryCodeResponse({List<int>? data}) : data = data?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -232,24 +254,19 @@ class QueryCodeResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [data];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {
-      'data': switch (data) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-    };
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'data': config.encodeBinary(data)};
   }
 
-  factory QueryCodeResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryCodeResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryCodeResponse(
-      data: json.valueAsBytes<List<int>?>(
-        'data',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      data: config.decodeBinary<List<int>?>(
+        json.valueAs('data', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }

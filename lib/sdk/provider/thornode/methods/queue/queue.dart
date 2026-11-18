@@ -2,7 +2,7 @@ import 'package:cosmos_sdk/sdk/provider/thornode/core/core.dart';
 import 'package:cosmos_sdk/sdk/provider/thornode/core/thorenode.dart';
 import 'package:cosmos_sdk/sdk/provider/thornode/models/models/queue_statistics.dart';
 
-/// Returns all trade accounts for an asset
+/// Returns queue statistics for the network.
 class ThorNodeRequestQueue
     extends
         ThorNodeRequestParam<
@@ -23,7 +23,7 @@ class ThorNodeRequestQueue
   Map<String, String?> get parameters => {"height": height?.toString()};
 
   @override
-  ThorQueueStatisticsResponse onResonse(Map<String, dynamic> result) {
+  ThorQueueStatisticsResponse onResponse(Map<String, dynamic> result) {
     return ThorQueueStatisticsResponse.fromJson(result);
   }
 }

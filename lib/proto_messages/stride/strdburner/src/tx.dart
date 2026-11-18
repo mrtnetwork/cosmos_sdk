@@ -32,14 +32,25 @@ class MsgBurn extends CosmosProtoMessage
   List<Object?> get protoValues => [burner, amount];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'burner': burner, 'amount': amount};
   }
 
-  factory MsgBurn.fromJson(Map<String, dynamic> json) {
+  factory MsgBurn.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgBurn(
-      burner: json.valueAsString<String?>('burner', acceptCamelCase: true),
-      amount: json.valueAsString<String?>('amount', acceptCamelCase: true),
+      burner: json.valueAsString<String?>(
+        'burner',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      amount: json.valueAsString<String?>(
+        'amount',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -83,11 +94,16 @@ class MsgBurnResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgBurnResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgBurnResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgBurnResponse();
   }
 
@@ -133,19 +149,24 @@ class MsgLink extends CosmosProtoMessage
   List<Object?> get protoValues => [strideAddress, linkedAddress];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'stride_address': strideAddress, 'linked_address': linkedAddress};
   }
 
-  factory MsgLink.fromJson(Map<String, dynamic> json) {
+  factory MsgLink.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgLink(
       strideAddress: json.valueAsString<String?>(
         'stride_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       linkedAddress: json.valueAsString<String?>(
         'linked_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -190,11 +211,16 @@ class MsgLinkResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgLinkResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgLinkResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgLinkResponse();
   }
 

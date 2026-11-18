@@ -42,20 +42,32 @@ enum OracleType implements ProtoEnumVariant {
 
   /// Looks up a value by its proto wire int. Throws if not found.
   static OracleType fromValue(int? value) {
+    value ??= 0;
     return OracleType.values.firstWhere(
       (e) => e.value == value,
       orElse:
-          () => throw ItemNotFoundException(name: "OracleType", value: value),
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching OracleType found for the given value. $value",
+                details: {"name": "OracleType", "value": value?.toString()},
+              ),
     );
   }
 
   /// Looks up a value by wire int, Dart enum name, or original proto
   /// name (whichever [value] happens to be). Throws if not found.
   static OracleType from(Object? value) {
+    value ??= 0;
     return OracleType.values.firstWhere(
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
-          () => throw ItemNotFoundException(name: "OracleType", value: value),
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching OracleType found for the given value. $value",
+                details: {"name": "OracleType", "value": value?.toString()},
+              ),
     );
   }
 }
@@ -128,50 +140,59 @@ class Params extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'pyth_contract': pythContract,
       'chainlink_verifier_proxy_contract': chainlinkVerifierProxyContract,
-      'chainlink_data_streams_verification_gas_limit':
-          chainlinkDataStreamsVerificationGasLimit?.toString(),
+      'chainlink_data_streams_verification_gas_limit': config.encodeBigint(
+        chainlinkDataStreamsVerificationGasLimit,
+      ),
       'pyth_pro_verifier_contract': pythProVerifierContract,
-      'pyth_pro_verification_gas_limit':
-          pythProVerificationGasLimit?.toString(),
-      'pyth_pro_verification_fee': pythProVerificationFee?.toString(),
-      'seda_fast_params': sedaFastParams?.toJson(),
+      'pyth_pro_verification_gas_limit': config.encodeBigint(
+        pythProVerificationGasLimit,
+      ),
+      'pyth_pro_verification_fee': config.encodeBigint(pythProVerificationFee),
+      'seda_fast_params': config.encodeMessage(sedaFastParams),
     };
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
       pythContract: json.valueAsString<String?>(
         'pyth_contract',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       chainlinkVerifierProxyContract: json.valueAsString<String?>(
         'chainlink_verifier_proxy_contract',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       chainlinkDataStreamsVerificationGasLimit: json.valueAsBigInt<BigInt?>(
         'chainlink_data_streams_verification_gas_limit',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       pythProVerifierContract: json.valueAsString<String?>(
         'pyth_pro_verifier_contract',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       pythProVerificationGasLimit: json.valueAsBigInt<BigInt?>(
         'pyth_pro_verification_gas_limit',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       pythProVerificationFee: json.valueAsBigInt<BigInt?>(
         'pyth_pro_verification_fee',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      sedaFastParams: json.valueTo<SedaFastParams?, Map<String, dynamic>>(
+      sedaFastParams: json.valueTo<SedaFastParams?, Object>(
         key: 'seda_fast_params',
-        parse: (v) => SedaFastParams.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) =>
+                SedaFastParams.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -204,7 +225,7 @@ class SedaFastParams extends CosmosProtoMessage {
   /// SEC1 secp256k1 public key published by SEDA Fast at GET /info.
   /// Compressed (33 B, 0x02/0x03 prefix) or uncompressed (65 B, 0x04 prefix).
   /// Empty value disables all MsgRelaySedaFastPrices handling.
-  final List<int>? publicKey;
+  final BuBytes? publicKey;
 
   /// Allowlist of execProgramIds whose dataResult.result payload is an ASCII
   /// decimal string (e.g. "384.48255"), parsed as LegacyDec.
@@ -214,11 +235,11 @@ class SedaFastParams extends CosmosProtoMessage {
   /// JSON object containing {price:{mantissa,expo},...}.
   final List<String> jsonProgramIds;
 
-  const SedaFastParams({
-    this.publicKey,
+  SedaFastParams({
+    List<int>? publicKey,
     this.simpleProgramIds = const [],
     this.jsonProgramIds = const [],
-  });
+  }) : publicKey = publicKey?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -249,36 +270,35 @@ class SedaFastParams extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'public_key': switch (publicKey) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'public_key': config.encodeBinary(publicKey),
       'simple_program_ids': simpleProgramIds.map((e) => e).toList(),
       'json_program_ids': jsonProgramIds.map((e) => e).toList(),
     };
   }
 
-  factory SedaFastParams.fromJson(Map<String, dynamic> json) {
+  factory SedaFastParams.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SedaFastParams(
-      publicKey: json.valueAsBytes<List<int>?>(
-        'public_key',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      publicKey: config.decodeBinary<List<int>?>(
+        json.valueAs('public_key', normalizeKeyLookup: config.normalizeKeys),
       ),
       simpleProgramIds:
           (json.valueEnsureAsList<dynamic>(
             'simple_program_ids',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
       jsonProgramIds:
           (json.valueEnsureAsList<dynamic>(
             'json_program_ids',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
     );
   }
@@ -319,13 +339,21 @@ class OracleInfo extends CosmosProtoMessage {
   List<Object?> get protoValues => [symbol, oracleType];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'symbol': symbol, 'oracle_type': oracleType?.protoName};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'symbol': symbol, 'oracle_type': config.encodeEnum(oracleType)};
   }
 
-  factory OracleInfo.fromJson(Map<String, dynamic> json) {
+  factory OracleInfo.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return OracleInfo(
-      symbol: json.valueAsString<String?>('symbol', acceptCamelCase: true),
+      symbol: json.valueAsString<String?>(
+        'symbol',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       oracleType: json.valueTo<OracleType?, Object?>(
         key: 'oracle_type',
         parse: (v) => OracleType.from(v),
@@ -382,27 +410,39 @@ class ChainlinkPriceState extends CosmosProtoMessage {
   List<Object?> get protoValues => [feedId, answer, timestamp, priceState];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'feed_id': feedId,
       'answer': answer,
-      'timestamp': timestamp?.toString(),
-      'price_state': priceState?.toJson(),
+      'timestamp': config.encodeBigint(timestamp),
+      'price_state': config.encodeMessage(priceState),
     };
   }
 
-  factory ChainlinkPriceState.fromJson(Map<String, dynamic> json) {
+  factory ChainlinkPriceState.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ChainlinkPriceState(
-      feedId: json.valueAsString<String?>('feed_id', acceptCamelCase: true),
-      answer: json.valueAsString<String?>('answer', acceptCamelCase: true),
+      feedId: json.valueAsString<String?>(
+        'feed_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      answer: json.valueAsString<String?>(
+        'answer',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       timestamp: json.valueAsBigInt<BigInt?>(
         'timestamp',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      priceState: json.valueTo<PriceState?, Map<String, dynamic>>(
+      priceState: json.valueTo<PriceState?, Object>(
         key: 'price_state',
-        parse: (v) => PriceState.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => PriceState.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -472,32 +512,44 @@ class BandPriceState extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'symbol': symbol,
       'rate': rate,
-      'resolve_time': resolveTime?.toString(),
-      'request_ID': requestId?.toString(),
-      'price_state': priceState?.toJson(),
+      'resolve_time': config.encodeBigint(resolveTime),
+      'request_ID': config.encodeBigint(requestId),
+      'price_state': config.encodeMessage(priceState),
     };
   }
 
-  factory BandPriceState.fromJson(Map<String, dynamic> json) {
+  factory BandPriceState.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return BandPriceState(
-      symbol: json.valueAsString<String?>('symbol', acceptCamelCase: true),
-      rate: json.valueAsString<String?>('rate', acceptCamelCase: true),
+      symbol: json.valueAsString<String?>(
+        'symbol',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      rate: json.valueAsString<String?>(
+        'rate',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       resolveTime: json.valueAsBigInt<BigInt?>(
         'resolve_time',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       requestId: json.valueAsBigInt<BigInt?>(
         'request_ID',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      priceState: json.valueTo<PriceState?, Map<String, dynamic>>(
+      priceState: json.valueTo<PriceState?, Object>(
         key: 'price_state',
-        parse: (v) => PriceState.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => PriceState.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -560,28 +612,41 @@ class PriceFeedState extends CosmosProtoMessage {
   List<Object?> get protoValues => [base, quote, priceState, relayers];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'base': base,
       'quote': quote,
-      'price_state': priceState?.toJson(),
+      'price_state': config.encodeMessage(priceState),
       'relayers': relayers.map((e) => e).toList(),
     };
   }
 
-  factory PriceFeedState.fromJson(Map<String, dynamic> json) {
+  factory PriceFeedState.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return PriceFeedState(
-      base: json.valueAsString<String?>('base', acceptCamelCase: true),
-      quote: json.valueAsString<String?>('quote', acceptCamelCase: true),
-      priceState: json.valueTo<PriceState?, Map<String, dynamic>>(
+      base: json.valueAsString<String?>(
+        'base',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      quote: json.valueAsString<String?>(
+        'quote',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      priceState: json.valueTo<PriceState?, Object>(
         key: 'price_state',
-        parse: (v) => PriceState.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => PriceState.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       relayers:
           (json.valueEnsureAsList<dynamic>(
             'relayers',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
     );
   }
@@ -632,17 +697,26 @@ class ProviderInfo extends CosmosProtoMessage {
   List<Object?> get protoValues => [provider, relayers];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'provider': provider, 'relayers': relayers.map((e) => e).toList()};
   }
 
-  factory ProviderInfo.fromJson(Map<String, dynamic> json) {
+  factory ProviderInfo.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ProviderInfo(
-      provider: json.valueAsString<String?>('provider', acceptCamelCase: true),
+      provider: json.valueAsString<String?>(
+        'provider',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       relayers:
           (json.valueEnsureAsList<dynamic>(
             'relayers',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
     );
   }
@@ -688,31 +762,42 @@ class ProviderState extends CosmosProtoMessage {
   List<Object?> get protoValues => [providerInfo, providerPriceStates];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'provider_info': providerInfo?.toJson(),
+      'provider_info': config.encodeMessage(providerInfo),
       'provider_price_states':
-          providerPriceStates.map((e) => e.toJson()).toList(),
+          providerPriceStates.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory ProviderState.fromJson(Map<String, dynamic> json) {
+  factory ProviderState.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ProviderState(
-      providerInfo: json.valueTo<ProviderInfo?, Map<String, dynamic>>(
+      providerInfo: json.valueTo<ProviderInfo?, Object>(
         key: 'provider_info',
-        parse: (v) => ProviderInfo.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => ProviderInfo.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       providerPriceStates:
           (json.valueEnsureAsList<dynamic>(
                 'provider_price_states',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  ProviderPriceState,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => ProviderPriceState.fromJson(v)),
+                (e) => JsonParser.valueTo<ProviderPriceState, Object>(
+                  value: e,
+                  parse:
+                      (v) => ProviderPriceState.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );
@@ -760,17 +845,26 @@ class ProviderPriceState extends CosmosProtoMessage {
   List<Object?> get protoValues => [symbol, state];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'symbol': symbol, 'state': state?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'symbol': symbol, 'state': config.encodeMessage(state)};
   }
 
-  factory ProviderPriceState.fromJson(Map<String, dynamic> json) {
+  factory ProviderPriceState.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ProviderPriceState(
-      symbol: json.valueAsString<String?>('symbol', acceptCamelCase: true),
-      state: json.valueTo<PriceState?, Map<String, dynamic>>(
+      symbol: json.valueAsString<String?>(
+        'symbol',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      state: json.valueTo<PriceState?, Object>(
         key: 'state',
-        parse: (v) => PriceState.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => PriceState.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -833,29 +927,44 @@ class CoinbasePriceState extends CosmosProtoMessage {
   List<Object?> get protoValues => [kind, timestamp, key, value, priceState];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'kind': kind,
-      'timestamp': timestamp?.toString(),
+      'timestamp': config.encodeBigint(timestamp),
       'key': key,
-      'value': value?.toString(),
-      'price_state': priceState?.toJson(),
+      'value': config.encodeBigint(value),
+      'price_state': config.encodeMessage(priceState),
     };
   }
 
-  factory CoinbasePriceState.fromJson(Map<String, dynamic> json) {
+  factory CoinbasePriceState.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return CoinbasePriceState(
-      kind: json.valueAsString<String?>('kind', acceptCamelCase: true),
+      kind: json.valueAsString<String?>(
+        'kind',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       timestamp: json.valueAsBigInt<BigInt?>(
         'timestamp',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      key: json.valueAsString<String?>('key', acceptCamelCase: true),
-      value: json.valueAsBigInt<BigInt?>('value', acceptCamelCase: true),
-      priceState: json.valueTo<PriceState?, Map<String, dynamic>>(
+      key: json.valueAsString<String?>(
+        'key',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      value: json.valueAsBigInt<BigInt?>(
+        'value',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      priceState: json.valueTo<PriceState?, Object>(
         key: 'price_state',
-        parse: (v) => PriceState.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => PriceState.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -919,27 +1028,39 @@ class StorkPriceState extends CosmosProtoMessage {
   List<Object?> get protoValues => [timestamp, symbol, value, priceState];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'timestamp': timestamp?.toString(),
+      'timestamp': config.encodeBigint(timestamp),
       'symbol': symbol,
       'value': value,
-      'price_state': priceState?.toJson(),
+      'price_state': config.encodeMessage(priceState),
     };
   }
 
-  factory StorkPriceState.fromJson(Map<String, dynamic> json) {
+  factory StorkPriceState.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return StorkPriceState(
       timestamp: json.valueAsBigInt<BigInt?>(
         'timestamp',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      symbol: json.valueAsString<String?>('symbol', acceptCamelCase: true),
-      value: json.valueAsString<String?>('value', acceptCamelCase: true),
-      priceState: json.valueTo<PriceState?, Map<String, dynamic>>(
+      symbol: json.valueAsString<String?>(
+        'symbol',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      value: json.valueAsString<String?>(
+        'value',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      priceState: json.valueTo<PriceState?, Object>(
         key: 'price_state',
-        parse: (v) => PriceState.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => PriceState.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -990,24 +1111,32 @@ class PriceState extends CosmosProtoMessage {
   List<Object?> get protoValues => [price, cumulativePrice, timestamp];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'price': price,
       'cumulative_price': cumulativePrice,
-      'timestamp': timestamp?.toString(),
+      'timestamp': config.encodeBigint(timestamp),
     };
   }
 
-  factory PriceState.fromJson(Map<String, dynamic> json) {
+  factory PriceState.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return PriceState(
-      price: json.valueAsString<String?>('price', acceptCamelCase: true),
+      price: json.valueAsString<String?>(
+        'price',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       cumulativePrice: json.valueAsString<String?>(
         'cumulative_price',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       timestamp: json.valueAsBigInt<BigInt?>(
         'timestamp',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1077,31 +1206,49 @@ class PythPriceState extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'price_id': priceId,
       'ema_price': emaPrice,
       'ema_conf': emaConf,
       'conf': conf,
-      'publish_time': publishTime?.toString(),
-      'price_state': priceState?.toJson(),
+      'publish_time': config.encodeBigint(publishTime),
+      'price_state': config.encodeMessage(priceState),
     };
   }
 
-  factory PythPriceState.fromJson(Map<String, dynamic> json) {
+  factory PythPriceState.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return PythPriceState(
-      priceId: json.valueAsString<String?>('price_id', acceptCamelCase: true),
-      emaPrice: json.valueAsString<String?>('ema_price', acceptCamelCase: true),
-      emaConf: json.valueAsString<String?>('ema_conf', acceptCamelCase: true),
-      conf: json.valueAsString<String?>('conf', acceptCamelCase: true),
+      priceId: json.valueAsString<String?>(
+        'price_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      emaPrice: json.valueAsString<String?>(
+        'ema_price',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      emaConf: json.valueAsString<String?>(
+        'ema_conf',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      conf: json.valueAsString<String?>(
+        'conf',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       publishTime: json.valueAsBigInt<BigInt?>(
         'publish_time',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      priceState: json.valueTo<PriceState?, Map<String, dynamic>>(
+      priceState: json.valueTo<PriceState?, Object>(
         key: 'price_state',
-        parse: (v) => PriceState.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => PriceState.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1177,40 +1324,49 @@ class ChainlinkDataStreamsPriceState extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'feed_id': feedId,
       'report_price': reportPrice,
-      'valid_from_timestamp': validFromTimestamp?.toString(),
-      'observations_timestamp': observationsTimestamp?.toString(),
-      'price_state': priceState?.toJson(),
-      'expires_at': expiresAt?.toString(),
+      'valid_from_timestamp': config.encodeBigint(validFromTimestamp),
+      'observations_timestamp': config.encodeBigint(observationsTimestamp),
+      'price_state': config.encodeMessage(priceState),
+      'expires_at': config.encodeBigint(expiresAt),
     };
   }
 
-  factory ChainlinkDataStreamsPriceState.fromJson(Map<String, dynamic> json) {
+  factory ChainlinkDataStreamsPriceState.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ChainlinkDataStreamsPriceState(
-      feedId: json.valueAsString<String?>('feed_id', acceptCamelCase: true),
+      feedId: json.valueAsString<String?>(
+        'feed_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       reportPrice: json.valueAsString<String?>(
         'report_price',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       validFromTimestamp: json.valueAsBigInt<BigInt?>(
         'valid_from_timestamp',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       observationsTimestamp: json.valueAsBigInt<BigInt?>(
         'observations_timestamp',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      priceState: json.valueTo<PriceState?, Map<String, dynamic>>(
+      priceState: json.valueTo<PriceState?, Object>(
         key: 'price_state',
-        parse: (v) => PriceState.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => PriceState.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       expiresAt: json.valueAsBigInt<BigInt?>(
         'expires_at',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1325,60 +1481,78 @@ class BandOracleRequest extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'request_id': requestId?.toString(),
-      'oracle_script_id': oracleScriptId?.toString(),
+      'request_id': config.encodeBigint(requestId),
+      'oracle_script_id': config.encodeBigint(oracleScriptId),
       'symbols': symbols.map((e) => e).toList(),
-      'ask_count': askCount?.toString(),
-      'min_count': minCount?.toString(),
-      'fee_limit': feeLimit.map((e) => e.toJson()).toList(),
-      'prepare_gas': prepareGas?.toString(),
-      'execute_gas': executeGas?.toString(),
-      'min_source_count': minSourceCount?.toString(),
+      'ask_count': config.encodeBigint(askCount),
+      'min_count': config.encodeBigint(minCount),
+      'fee_limit': feeLimit.map((e) => config.encodeMessage(e)).toList(),
+      'prepare_gas': config.encodeBigint(prepareGas),
+      'execute_gas': config.encodeBigint(executeGas),
+      'min_source_count': config.encodeBigint(minSourceCount),
     };
   }
 
-  factory BandOracleRequest.fromJson(Map<String, dynamic> json) {
+  factory BandOracleRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return BandOracleRequest(
       requestId: json.valueAsBigInt<BigInt?>(
         'request_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       oracleScriptId: json.valueAsBigInt<BigInt?>(
         'oracle_script_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       symbols:
           (json.valueEnsureAsList<dynamic>(
             'symbols',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
-      askCount: json.valueAsBigInt<BigInt?>('ask_count', acceptCamelCase: true),
-      minCount: json.valueAsBigInt<BigInt?>('min_count', acceptCamelCase: true),
+      askCount: json.valueAsBigInt<BigInt?>(
+        'ask_count',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      minCount: json.valueAsBigInt<BigInt?>(
+        'min_count',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       feeLimit:
-          (json.valueEnsureAsList<dynamic>('fee_limit', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'fee_limit',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
       prepareGas: json.valueAsBigInt<BigInt?>(
         'prepare_gas',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       executeGas: json.valueAsBigInt<BigInt?>(
         'execute_gas',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       minSourceCount: json.valueAsBigInt<BigInt?>(
         'min_source_count',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1468,43 +1642,50 @@ class BandIBCParams extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'band_ibc_enabled': bandIbcEnabled,
-      'ibc_request_interval': ibcRequestInterval?.toString(),
+      'ibc_request_interval': config.encodeBigint(ibcRequestInterval),
       'ibc_source_channel': ibcSourceChannel,
       'ibc_version': ibcVersion,
       'ibc_port_id': ibcPortId,
-      'legacy_oracle_ids': legacyOracleIds.map((e) => e.toString()).toList(),
+      'legacy_oracle_ids':
+          legacyOracleIds.map((e) => config.encodeBigint(e)).toList(),
     };
   }
 
-  factory BandIBCParams.fromJson(Map<String, dynamic> json) {
+  factory BandIBCParams.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return BandIBCParams(
       bandIbcEnabled: json.valueAsBool<bool?>(
         'band_ibc_enabled',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       ibcRequestInterval: json.valueAsBigInt<BigInt?>(
         'ibc_request_interval',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       ibcSourceChannel: json.valueAsString<String?>(
         'ibc_source_channel',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       ibcVersion: json.valueAsString<String?>(
         'ibc_version',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       ibcPortId: json.valueAsString<String?>(
         'ibc_port_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       legacyOracleIds:
           (json.valueEnsureAsList<dynamic>(
             'legacy_oracle_ids',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsBigInt<BigInt>(e)).toList(),
     );
   }
@@ -1561,31 +1742,44 @@ class PriceRecords extends CosmosProtoMessage {
   List<Object?> get protoValues => [oracle, symbolId, latestPriceRecords];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'oracle': oracle?.protoName,
+      'oracle': config.encodeEnum(oracle),
       'symbol_id': symbolId,
       'latest_price_records':
-          latestPriceRecords.map((e) => e.toJson()).toList(),
+          latestPriceRecords.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory PriceRecords.fromJson(Map<String, dynamic> json) {
+  factory PriceRecords.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return PriceRecords(
       oracle: json.valueTo<OracleType?, Object?>(
         key: 'oracle',
         parse: (v) => OracleType.from(v),
       ),
-      symbolId: json.valueAsString<String?>('symbol_id', acceptCamelCase: true),
+      symbolId: json.valueAsString<String?>(
+        'symbol_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       latestPriceRecords:
           (json.valueEnsureAsList<dynamic>(
                 'latest_price_records',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<PriceRecord, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<PriceRecord, Object>(
                   value: e,
-                  parse: (v) => PriceRecord.fromJson(v),
+                  parse:
+                      (v) => PriceRecord.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -1635,17 +1829,25 @@ class PriceRecord extends CosmosProtoMessage {
   List<Object?> get protoValues => [timestamp, price];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'timestamp': timestamp?.toString(), 'price': price};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'timestamp': config.encodeBigint(timestamp), 'price': price};
   }
 
-  factory PriceRecord.fromJson(Map<String, dynamic> json) {
+  factory PriceRecord.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return PriceRecord(
       timestamp: json.valueAsBigInt<BigInt?>(
         'timestamp',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      price: json.valueAsString<String?>('price', acceptCamelCase: true),
+      price: json.valueAsString<String?>(
+        'price',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1744,42 +1946,62 @@ class MetadataStatistics extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'group_count': groupCount,
       'records_sample_size': recordsSampleSize,
       'mean': mean,
       'twap': twap,
-      'first_timestamp': firstTimestamp?.toString(),
-      'last_timestamp': lastTimestamp?.toString(),
+      'first_timestamp': config.encodeBigint(firstTimestamp),
+      'last_timestamp': config.encodeBigint(lastTimestamp),
       'min_price': minPrice,
       'max_price': maxPrice,
       'median_price': medianPrice,
     };
   }
 
-  factory MetadataStatistics.fromJson(Map<String, dynamic> json) {
+  factory MetadataStatistics.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MetadataStatistics(
-      groupCount: json.valueAsInt<int?>('group_count', acceptCamelCase: true),
+      groupCount: json.valueAsInt<int?>(
+        'group_count',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       recordsSampleSize: json.valueAsInt<int?>(
         'records_sample_size',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      mean: json.valueAsString<String?>('mean', acceptCamelCase: true),
-      twap: json.valueAsString<String?>('twap', acceptCamelCase: true),
+      mean: json.valueAsString<String?>(
+        'mean',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      twap: json.valueAsString<String?>(
+        'twap',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       firstTimestamp: json.valueAsBigInt<BigInt?>(
         'first_timestamp',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       lastTimestamp: json.valueAsBigInt<BigInt?>(
         'last_timestamp',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      minPrice: json.valueAsString<String?>('min_price', acceptCamelCase: true),
-      maxPrice: json.valueAsString<String?>('max_price', acceptCamelCase: true),
+      minPrice: json.valueAsString<String?>(
+        'min_price',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      maxPrice: json.valueAsString<String?>(
+        'max_price',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       medianPrice: json.valueAsString<String?>(
         'median_price',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1866,31 +2088,57 @@ class PriceAttestation extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'price_id': priceId,
-      'price': price?.toString(),
-      'conf': conf?.toString(),
+      'price': config.encodeBigint(price),
+      'conf': config.encodeBigint(conf),
       'expo': expo,
-      'ema_price': emaPrice?.toString(),
-      'ema_conf': emaConf?.toString(),
+      'ema_price': config.encodeBigint(emaPrice),
+      'ema_conf': config.encodeBigint(emaConf),
       'ema_expo': emaExpo,
-      'publish_time': publishTime?.toString(),
+      'publish_time': config.encodeBigint(publishTime),
     };
   }
 
-  factory PriceAttestation.fromJson(Map<String, dynamic> json) {
+  factory PriceAttestation.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return PriceAttestation(
-      priceId: json.valueAsString<String?>('price_id', acceptCamelCase: true),
-      price: json.valueAsBigInt<BigInt?>('price', acceptCamelCase: true),
-      conf: json.valueAsBigInt<BigInt?>('conf', acceptCamelCase: true),
-      expo: json.valueAsInt<int?>('expo', acceptCamelCase: true),
-      emaPrice: json.valueAsBigInt<BigInt?>('ema_price', acceptCamelCase: true),
-      emaConf: json.valueAsBigInt<BigInt?>('ema_conf', acceptCamelCase: true),
-      emaExpo: json.valueAsInt<int?>('ema_expo', acceptCamelCase: true),
+      priceId: json.valueAsString<String?>(
+        'price_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      price: json.valueAsBigInt<BigInt?>(
+        'price',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      conf: json.valueAsBigInt<BigInt?>(
+        'conf',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      expo: json.valueAsInt<int?>(
+        'expo',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      emaPrice: json.valueAsBigInt<BigInt?>(
+        'ema_price',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      emaConf: json.valueAsBigInt<BigInt?>(
+        'ema_conf',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      emaExpo: json.valueAsInt<int?>(
+        'ema_expo',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       publishTime: json.valueAsBigInt<BigInt?>(
         'publish_time',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1942,26 +2190,40 @@ class AssetPair extends CosmosProtoMessage {
   List<Object?> get protoValues => [assetId, signedPrices];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'asset_id': assetId,
-      'signed_prices': signedPrices.map((e) => e.toJson()).toList(),
+      'signed_prices':
+          signedPrices.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory AssetPair.fromJson(Map<String, dynamic> json) {
+  factory AssetPair.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AssetPair(
-      assetId: json.valueAsString<String?>('asset_id', acceptCamelCase: true),
+      assetId: json.valueAsString<String?>(
+        'asset_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       signedPrices:
           (json.valueEnsureAsList<dynamic>(
                 'signed_prices',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  SignedPriceOfAssetPair,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => SignedPriceOfAssetPair.fromJson(v)),
+                (e) => JsonParser.valueTo<SignedPriceOfAssetPair, Object>(
+                  value: e,
+                  parse:
+                      (v) => SignedPriceOfAssetPair.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );
@@ -1991,14 +2253,14 @@ class SignedPriceOfAssetPair extends CosmosProtoMessage {
 
   final String? price;
 
-  final List<int>? signature;
+  final BuBytes? signature;
 
-  const SignedPriceOfAssetPair({
+  SignedPriceOfAssetPair({
     this.publisherKey,
     this.timestamp,
     this.price,
-    this.signature,
-  });
+    List<int>? signature,
+  }) : signature = signature?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -2020,36 +2282,36 @@ class SignedPriceOfAssetPair extends CosmosProtoMessage {
   List<Object?> get protoValues => [publisherKey, timestamp, price, signature];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'publisher_key': publisherKey,
-      'timestamp': timestamp?.toString(),
+      'timestamp': config.encodeBigint(timestamp),
       'price': price,
-      'signature': switch (signature) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'signature': config.encodeBinary(signature),
     };
   }
 
-  factory SignedPriceOfAssetPair.fromJson(Map<String, dynamic> json) {
+  factory SignedPriceOfAssetPair.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SignedPriceOfAssetPair(
       publisherKey: json.valueAsString<String?>(
         'publisher_key',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       timestamp: json.valueAsBigInt<BigInt?>(
         'timestamp',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      price: json.valueAsString<String?>('price', acceptCamelCase: true),
-      signature: json.valueAsBytes<List<int>?>(
-        'signature',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      price: json.valueAsString<String?>(
+        'price',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      signature: config.decodeBinary<List<int>?>(
+        json.valueAs('signature', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }
@@ -2070,20 +2332,21 @@ class SignedPriceOfAssetPair extends CosmosProtoMessage {
 }
 
 class ChainlinkReport extends CosmosProtoMessage {
-  final List<int>? feedId;
+  final BuBytes? feedId;
 
-  final List<int>? fullReport;
+  final BuBytes? fullReport;
 
   final BigInt? validFromTimestamp;
 
   final BigInt? observationsTimestamp;
 
-  const ChainlinkReport({
-    this.feedId,
-    this.fullReport,
+  ChainlinkReport({
+    List<int>? feedId,
+    List<int>? fullReport,
     this.validFromTimestamp,
     this.observationsTimestamp,
-  });
+  }) : feedId = feedId?.asImmutableBytes,
+       fullReport = fullReport?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -2110,46 +2373,35 @@ class ChainlinkReport extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'feed_id': switch (feedId) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'full_report': switch (fullReport) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'valid_from_timestamp': validFromTimestamp?.toString(),
-      'observations_timestamp': observationsTimestamp?.toString(),
+      'feed_id': config.encodeBinary(feedId),
+      'full_report': config.encodeBinary(fullReport),
+      'valid_from_timestamp': config.encodeBigint(validFromTimestamp),
+      'observations_timestamp': config.encodeBigint(observationsTimestamp),
     };
   }
 
-  factory ChainlinkReport.fromJson(Map<String, dynamic> json) {
+  factory ChainlinkReport.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ChainlinkReport(
-      feedId: json.valueAsBytes<List<int>?>(
-        'feed_id',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      feedId: config.decodeBinary<List<int>?>(
+        json.valueAs('feed_id', normalizeKeyLookup: config.normalizeKeys),
       ),
-      fullReport: json.valueAsBytes<List<int>?>(
-        'full_report',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      fullReport: config.decodeBinary<List<int>?>(
+        json.valueAs('full_report', normalizeKeyLookup: config.normalizeKeys),
       ),
       validFromTimestamp: json.valueAsBigInt<BigInt?>(
         'valid_from_timestamp',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       observationsTimestamp: json.valueAsBigInt<BigInt?>(
         'observations_timestamp',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -2203,25 +2455,34 @@ class PythProPriceState extends CosmosProtoMessage {
   List<Object?> get protoValues => [feedId, timestamp, priceState];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'feed_id': feedId,
-      'timestamp': timestamp?.toString(),
-      'price_state': priceState?.toJson(),
+      'timestamp': config.encodeBigint(timestamp),
+      'price_state': config.encodeMessage(priceState),
     };
   }
 
-  factory PythProPriceState.fromJson(Map<String, dynamic> json) {
+  factory PythProPriceState.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return PythProPriceState(
-      feedId: json.valueAsInt<int?>('feed_id', acceptCamelCase: true),
+      feedId: json.valueAsInt<int?>(
+        'feed_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       timestamp: json.valueAsBigInt<BigInt?>(
         'timestamp',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      priceState: json.valueTo<PriceState?, Map<String, dynamic>>(
+      priceState: json.valueTo<PriceState?, Object>(
         key: 'price_state',
-        parse: (v) => PriceState.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => PriceState.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -2280,25 +2541,34 @@ class SedaFastPriceState extends CosmosProtoMessage {
   List<Object?> get protoValues => [feedId, timestamp, priceState];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'feed_id': feedId,
-      'timestamp': timestamp?.toString(),
-      'price_state': priceState?.toJson(),
+      'timestamp': config.encodeBigint(timestamp),
+      'price_state': config.encodeMessage(priceState),
     };
   }
 
-  factory SedaFastPriceState.fromJson(Map<String, dynamic> json) {
+  factory SedaFastPriceState.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SedaFastPriceState(
-      feedId: json.valueAsString<String?>('feed_id', acceptCamelCase: true),
+      feedId: json.valueAsString<String?>(
+        'feed_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       timestamp: json.valueAsBigInt<BigInt?>(
         'timestamp',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      priceState: json.valueTo<PriceState?, Map<String, dynamic>>(
+      priceState: json.valueTo<PriceState?, Object>(
         key: 'price_state',
-        parse: (v) => PriceState.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => PriceState.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

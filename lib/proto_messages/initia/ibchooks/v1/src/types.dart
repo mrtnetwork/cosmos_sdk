@@ -27,15 +27,20 @@ class Params extends CosmosProtoMessage {
   List<Object?> get protoValues => [defaultAllowed];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'default_allowed': defaultAllowed};
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
       defaultAllowed: json.valueAsBool<bool?>(
         'default_allowed',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -73,14 +78,25 @@ class Acl extends CosmosProtoMessage {
   List<Object?> get protoValues => [address, allowed];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'address': address, 'allowed': allowed};
   }
 
-  factory Acl.fromJson(Map<String, dynamic> json) {
+  factory Acl.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Acl(
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
-      allowed: json.valueAsBool<bool?>('allowed', acceptCamelCase: true),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      allowed: json.valueAsBool<bool?>(
+        'allowed',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

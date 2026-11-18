@@ -59,46 +59,60 @@ class MsgCreateBalancerPool extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'sender': sender,
-      'pool_params': poolParams?.toJson(),
-      'pool_assets': poolAssets.map((e) => e.toJson()).toList(),
+      'pool_params': config.encodeMessage(poolParams),
+      'pool_assets': poolAssets.map((e) => config.encodeMessage(e)).toList(),
       'future_pool_governor': futurePoolGovernor,
     };
   }
 
-  factory MsgCreateBalancerPool.fromJson(Map<String, dynamic> json) {
+  factory MsgCreateBalancerPool.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgCreateBalancerPool(
-      sender: json.valueAsString<String?>('sender', acceptCamelCase: true),
-      poolParams: json.valueTo<
-        osmosis_gamm_v1beta1_balancer_pool.PoolParams?,
-        Map<String, dynamic>
-      >(
-        key: 'pool_params',
-        parse: (v) => osmosis_gamm_v1beta1_balancer_pool.PoolParams.fromJson(v),
-        acceptCamelCase: true,
+      sender: json.valueAsString<String?>(
+        'sender',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
+      poolParams: json
+          .valueTo<osmosis_gamm_v1beta1_balancer_pool.PoolParams?, Object>(
+            key: 'pool_params',
+            parse:
+                (v) => osmosis_gamm_v1beta1_balancer_pool.PoolParams.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
       poolAssets:
           (json.valueEnsureAsList<dynamic>(
                 'pool_assets',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   osmosis_gamm_v1beta1_balancer_pool.PoolAsset,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
-                      (v) => osmosis_gamm_v1beta1_balancer_pool
-                          .PoolAsset.fromJson(v),
+                      (v) =>
+                          osmosis_gamm_v1beta1_balancer_pool.PoolAsset.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
                 ),
               )
               .toList(),
       futurePoolGovernor: json.valueAsString<String?>(
         'future_pool_governor',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -162,13 +176,21 @@ class MsgCreateBalancerPoolResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [poolId];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'pool_id': poolId?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'pool_id': config.encodeBigint(poolId)};
   }
 
-  factory MsgCreateBalancerPoolResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgCreateBalancerPoolResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgCreateBalancerPoolResponse(
-      poolId: json.valueAsBigInt<BigInt?>('pool_id', acceptCamelCase: true),
+      poolId: json.valueAsBigInt<BigInt?>(
+        'pool_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

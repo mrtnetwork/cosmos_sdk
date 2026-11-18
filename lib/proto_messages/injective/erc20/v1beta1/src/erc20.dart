@@ -27,19 +27,24 @@ class TokenPair extends CosmosProtoMessage {
   List<Object?> get protoValues => [bankDenom, erc20Address];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'bank_denom': bankDenom, 'erc20_address': erc20Address};
   }
 
-  factory TokenPair.fromJson(Map<String, dynamic> json) {
+  factory TokenPair.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return TokenPair(
       bankDenom: json.valueAsString<String?>(
         'bank_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       erc20Address: json.valueAsString<String?>(
         'erc20_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

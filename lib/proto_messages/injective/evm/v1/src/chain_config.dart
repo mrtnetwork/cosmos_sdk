@@ -171,7 +171,9 @@ class ChainConfig extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'homestead_block': homesteadBlock,
       'dao_fork_block': daoForkBlock,
@@ -194,102 +196,108 @@ class ChainConfig extends CosmosProtoMessage {
       'cancun_time': cancunTime,
       'prague_time': pragueTime,
       'eip155_chain_id': eip155ChainId,
-      'blob_schedule_config': blobScheduleConfig?.toJson(),
+      'blob_schedule_config': config.encodeMessage(blobScheduleConfig),
     };
   }
 
-  factory ChainConfig.fromJson(Map<String, dynamic> json) {
+  factory ChainConfig.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ChainConfig(
       homesteadBlock: json.valueAsString<String?>(
         'homestead_block',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       daoForkBlock: json.valueAsString<String?>(
         'dao_fork_block',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       daoForkSupport: json.valueAsBool<bool?>(
         'dao_fork_support',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       eip150Block: json.valueAsString<String?>(
         'eip150_block',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       eip150Hash: json.valueAsString<String?>(
         'eip150_hash',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       eip155Block: json.valueAsString<String?>(
         'eip155_block',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       eip158Block: json.valueAsString<String?>(
         'eip158_block',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       byzantiumBlock: json.valueAsString<String?>(
         'byzantium_block',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       constantinopleBlock: json.valueAsString<String?>(
         'constantinople_block',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       petersburgBlock: json.valueAsString<String?>(
         'petersburg_block',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       istanbulBlock: json.valueAsString<String?>(
         'istanbul_block',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       muirGlacierBlock: json.valueAsString<String?>(
         'muir_glacier_block',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       berlinBlock: json.valueAsString<String?>(
         'berlin_block',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       londonBlock: json.valueAsString<String?>(
         'london_block',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       arrowGlacierBlock: json.valueAsString<String?>(
         'arrow_glacier_block',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       grayGlacierBlock: json.valueAsString<String?>(
         'gray_glacier_block',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       mergeNetsplitBlock: json.valueAsString<String?>(
         'merge_netsplit_block',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       shanghaiTime: json.valueAsString<String?>(
         'shanghai_time',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       cancunTime: json.valueAsString<String?>(
         'cancun_time',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       pragueTime: json.valueAsString<String?>(
         'prague_time',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       eip155ChainId: json.valueAsString<String?>(
         'eip155_chain_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      blobScheduleConfig: json
-          .valueTo<BlobScheduleConfig?, Map<String, dynamic>>(
-            key: 'blob_schedule_config',
-            parse: (v) => BlobScheduleConfig.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      blobScheduleConfig: json.valueTo<BlobScheduleConfig?, Object>(
+        key: 'blob_schedule_config',
+        parse:
+            (v) => BlobScheduleConfig.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -360,36 +368,45 @@ class BlobScheduleConfig extends CosmosProtoMessage {
   List<Object?> get protoValues => [cancun, prague, osaka, verkle];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'cancun': cancun?.toJson(),
-      'prague': prague?.toJson(),
-      'osaka': osaka?.toJson(),
-      'verkle': verkle?.toJson(),
+      'cancun': config.encodeMessage(cancun),
+      'prague': config.encodeMessage(prague),
+      'osaka': config.encodeMessage(osaka),
+      'verkle': config.encodeMessage(verkle),
     };
   }
 
-  factory BlobScheduleConfig.fromJson(Map<String, dynamic> json) {
+  factory BlobScheduleConfig.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return BlobScheduleConfig(
-      cancun: json.valueTo<BlobConfig?, Map<String, dynamic>>(
+      cancun: json.valueTo<BlobConfig?, Object>(
         key: 'cancun',
-        parse: (v) => BlobConfig.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => BlobConfig.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      prague: json.valueTo<BlobConfig?, Map<String, dynamic>>(
+      prague: json.valueTo<BlobConfig?, Object>(
         key: 'prague',
-        parse: (v) => BlobConfig.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => BlobConfig.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      osaka: json.valueTo<BlobConfig?, Map<String, dynamic>>(
+      osaka: json.valueTo<BlobConfig?, Object>(
         key: 'osaka',
-        parse: (v) => BlobConfig.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => BlobConfig.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      verkle: json.valueTo<BlobConfig?, Map<String, dynamic>>(
+      verkle: json.valueTo<BlobConfig?, Object>(
         key: 'verkle',
-        parse: (v) => BlobConfig.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => BlobConfig.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -446,21 +463,32 @@ class BlobConfig extends CosmosProtoMessage {
   List<Object?> get protoValues => [target, max, baseFeeUpdateFraction];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'target': target?.toString(),
-      'max': max?.toString(),
-      'base_fee_update_fraction': baseFeeUpdateFraction?.toString(),
+      'target': config.encodeBigint(target),
+      'max': config.encodeBigint(max),
+      'base_fee_update_fraction': config.encodeBigint(baseFeeUpdateFraction),
     };
   }
 
-  factory BlobConfig.fromJson(Map<String, dynamic> json) {
+  factory BlobConfig.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return BlobConfig(
-      target: json.valueAsBigInt<BigInt?>('target', acceptCamelCase: true),
-      max: json.valueAsBigInt<BigInt?>('max', acceptCamelCase: true),
+      target: json.valueAsBigInt<BigInt?>(
+        'target',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      max: json.valueAsBigInt<BigInt?>(
+        'max',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       baseFeeUpdateFraction: json.valueAsBigInt<BigInt?>(
         'base_fee_update_fraction',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

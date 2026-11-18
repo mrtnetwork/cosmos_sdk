@@ -22,7 +22,7 @@ class ThorNodeRequestAsgardInboundAddresses
   @override
   Map<String, String?> get parameters => {"height": height?.toString()};
   @override
-  List<ThorAsgardInboundAddressesResponse> onResonse(
+  List<ThorAsgardInboundAddressesResponse> onResponse(
     List<Map<String, dynamic>> result,
   ) {
     return result

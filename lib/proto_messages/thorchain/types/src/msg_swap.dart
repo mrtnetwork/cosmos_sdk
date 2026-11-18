@@ -20,18 +20,32 @@ enum SwapType implements ProtoEnumVariant {
 
   /// Looks up a value by its proto wire int. Throws if not found.
   static SwapType fromValue(int? value) {
+    value ??= 0;
     return SwapType.values.firstWhere(
       (e) => e.value == value,
-      orElse: () => throw ItemNotFoundException(name: "SwapType", value: value),
+      orElse:
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching SwapType found for the given value. $value",
+                details: {"name": "SwapType", "value": value?.toString()},
+              ),
     );
   }
 
   /// Looks up a value by wire int, Dart enum name, or original proto
   /// name (whichever [value] happens to be). Throws if not found.
   static SwapType from(Object? value) {
+    value ??= 0;
     return SwapType.values.firstWhere(
       (e) => e.value == value || e.name == value || e.protoName == value,
-      orElse: () => throw ItemNotFoundException(name: "SwapType", value: value),
+      orElse:
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching SwapType found for the given value. $value",
+                details: {"name": "SwapType", "value": value?.toString()},
+              ),
     );
   }
 }
@@ -52,20 +66,32 @@ enum SwapVersion implements ProtoEnumVariant {
 
   /// Looks up a value by its proto wire int. Throws if not found.
   static SwapVersion fromValue(int? value) {
+    value ??= 0;
     return SwapVersion.values.firstWhere(
       (e) => e.value == value,
       orElse:
-          () => throw ItemNotFoundException(name: "SwapVersion", value: value),
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching SwapVersion found for the given value. $value",
+                details: {"name": "SwapVersion", "value": value?.toString()},
+              ),
     );
   }
 
   /// Looks up a value by wire int, Dart enum name, or original proto
   /// name (whichever [value] happens to be). Throws if not found.
   static SwapVersion from(Object? value) {
+    value ??= 0;
     return SwapVersion.values.firstWhere(
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
-          () => throw ItemNotFoundException(name: "SwapVersion", value: value),
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching SwapVersion found for the given value. $value",
+                details: {"name": "SwapVersion", "value": value?.toString()},
+              ),
     );
   }
 }
@@ -152,48 +178,76 @@ class SwapState extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'interval': interval?.toString(),
-      'quantity': quantity?.toString(),
-      'ttl': ttl?.toString(),
-      'count': count?.toString(),
-      'last_height': lastHeight?.toString(),
+      'interval': config.encodeBigint(interval),
+      'quantity': config.encodeBigint(quantity),
+      'ttl': config.encodeBigint(ttl),
+      'count': config.encodeBigint(count),
+      'last_height': config.encodeBigint(lastHeight),
       'deposit': deposit,
       'withdrawn': withdrawn,
       'in': in_,
       'out': out,
-      'failed_swaps': failedSwaps.map((e) => e.toString()).toList(),
+      'failed_swaps': failedSwaps.map((e) => config.encodeBigint(e)).toList(),
       'failed_swap_reasons': failedSwapReasons.map((e) => e).toList(),
     };
   }
 
-  factory SwapState.fromJson(Map<String, dynamic> json) {
+  factory SwapState.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SwapState(
-      interval: json.valueAsBigInt<BigInt?>('interval', acceptCamelCase: true),
-      quantity: json.valueAsBigInt<BigInt?>('quantity', acceptCamelCase: true),
-      ttl: json.valueAsBigInt<BigInt?>('ttl', acceptCamelCase: true),
-      count: json.valueAsBigInt<BigInt?>('count', acceptCamelCase: true),
+      interval: json.valueAsBigInt<BigInt?>(
+        'interval',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      quantity: json.valueAsBigInt<BigInt?>(
+        'quantity',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      ttl: json.valueAsBigInt<BigInt?>(
+        'ttl',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      count: json.valueAsBigInt<BigInt?>(
+        'count',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       lastHeight: json.valueAsBigInt<BigInt?>(
         'last_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      deposit: json.valueAsString<String?>('deposit', acceptCamelCase: true),
+      deposit: json.valueAsString<String?>(
+        'deposit',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       withdrawn: json.valueAsString<String?>(
         'withdrawn',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      in_: json.valueAsString<String?>('in', acceptCamelCase: true),
-      out: json.valueAsString<String?>('out', acceptCamelCase: true),
+      in_: json.valueAsString<String?>(
+        'in',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      out: json.valueAsString<String?>(
+        'out',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       failedSwaps:
           (json.valueEnsureAsList<dynamic>(
             'failed_swaps',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsBigInt<BigInt>(e)).toList(),
       failedSwapReasons:
           (json.valueEnsureAsList<dynamic>(
             'failed_swap_reasons',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
     );
   }
@@ -233,7 +287,7 @@ class MsgSwap extends CosmosProtoMessage {
 
   final String? affiliateBasisPoints;
 
-  final List<int>? signer;
+  final BuBytes? signer;
 
   final String? aggregator;
 
@@ -255,14 +309,14 @@ class MsgSwap extends CosmosProtoMessage {
 
   final int? index;
 
-  const MsgSwap({
+  MsgSwap({
     this.tx,
     this.targetAsset,
     this.destination,
     this.tradeTarget,
     this.affiliateAddress,
     this.affiliateBasisPoints,
-    this.signer,
+    List<int>? signer,
     this.aggregator,
     this.aggregatorTargetAddress,
     this.aggregatorTargetLimit,
@@ -273,7 +327,7 @@ class MsgSwap extends CosmosProtoMessage {
     this.state,
     this.version,
     this.index,
-  });
+  }) : signer = signer?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -326,78 +380,83 @@ class MsgSwap extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'tx': tx?.toJson(),
-      'target_asset': targetAsset?.toJson(),
+      'tx': config.encodeMessage(tx),
+      'target_asset': config.encodeMessage(targetAsset),
       'destination': destination,
       'trade_target': tradeTarget,
       'affiliate_address': affiliateAddress,
       'affiliate_basis_points': affiliateBasisPoints,
-      'signer': switch (signer) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'signer': config.encodeBinary(signer),
       'aggregator': aggregator,
       'aggregator_target_address': aggregatorTargetAddress,
       'aggregator_target_limit': aggregatorTargetLimit,
-      'swap_type': swapType?.protoName,
-      'stream_quantity': streamQuantity?.toString(),
-      'stream_interval': streamInterval?.toString(),
-      'initial_block_height': initialBlockHeight?.toString(),
-      'state': state?.toJson(),
-      'version': version?.protoName,
+      'swap_type': config.encodeEnum(swapType),
+      'stream_quantity': config.encodeBigint(streamQuantity),
+      'stream_interval': config.encodeBigint(streamInterval),
+      'initial_block_height': config.encodeBigint(initialBlockHeight),
+      'state': config.encodeMessage(state),
+      'version': config.encodeEnum(version),
       'index': index,
     };
   }
 
-  factory MsgSwap.fromJson(Map<String, dynamic> json) {
+  factory MsgSwap.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSwap(
-      tx: json.valueTo<common_common.Tx?, Map<String, dynamic>>(
+      tx: json.valueTo<common_common.Tx?, Object>(
         key: 'tx',
-        parse: (v) => common_common.Tx.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => common_common.Tx.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      targetAsset: json.valueTo<common_common.Asset?, Map<String, dynamic>>(
+      targetAsset: json.valueTo<common_common.Asset?, Object>(
         key: 'target_asset',
-        parse: (v) => common_common.Asset.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => common_common.Asset.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       destination: json.valueAsString<String?>(
         'destination',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       tradeTarget: json.valueAsString<String?>(
         'trade_target',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       affiliateAddress: json.valueAsString<String?>(
         'affiliate_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       affiliateBasisPoints: json.valueAsString<String?>(
         'affiliate_basis_points',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      signer: json.valueAsBytes<List<int>?>(
-        'signer',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      signer: config.decodeBinary<List<int>?>(
+        json.valueAs('signer', normalizeKeyLookup: config.normalizeKeys),
       ),
       aggregator: json.valueAsString<String?>(
         'aggregator',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       aggregatorTargetAddress: json.valueAsString<String?>(
         'aggregator_target_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       aggregatorTargetLimit: json.valueAsString<String?>(
         'aggregator_target_limit',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       swapType: json.valueTo<SwapType?, Object?>(
         key: 'swap_type',
@@ -405,26 +464,29 @@ class MsgSwap extends CosmosProtoMessage {
       ),
       streamQuantity: json.valueAsBigInt<BigInt?>(
         'stream_quantity',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       streamInterval: json.valueAsBigInt<BigInt?>(
         'stream_interval',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       initialBlockHeight: json.valueAsBigInt<BigInt?>(
         'initial_block_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      state: json.valueTo<SwapState?, Map<String, dynamic>>(
+      state: json.valueTo<SwapState?, Object>(
         key: 'state',
-        parse: (v) => SwapState.fromJson(v),
-        acceptCamelCase: true,
+        parse: (v) => SwapState.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       version: json.valueTo<SwapVersion?, Object?>(
         key: 'version',
         parse: (v) => SwapVersion.from(v),
       ),
-      index: json.valueAsInt<int?>('index', acceptCamelCase: true),
+      index: json.valueAsInt<int?>(
+        'index',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

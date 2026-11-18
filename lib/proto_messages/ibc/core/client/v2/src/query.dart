@@ -36,13 +36,21 @@ class QueryCounterpartyInfoRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [clientId];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'client_id': clientId};
   }
 
-  factory QueryCounterpartyInfoRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryCounterpartyInfoRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryCounterpartyInfoRequest(
-      clientId: json.valueAsString<String?>('client_id', acceptCamelCase: true),
+      clientId: json.valueAsString<String?>(
+        'client_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -87,21 +95,28 @@ class QueryCounterpartyInfoResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [counterpartyInfo];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'counterparty_info': counterpartyInfo?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'counterparty_info': config.encodeMessage(counterpartyInfo)};
   }
 
-  factory QueryCounterpartyInfoResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryCounterpartyInfoResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryCounterpartyInfoResponse(
-      counterpartyInfo: json.valueTo<
-        ibc_core_client_v2_counterparty.CounterpartyInfo?,
-        Map<String, dynamic>
-      >(
-        key: 'counterparty_info',
-        parse:
-            (v) => ibc_core_client_v2_counterparty.CounterpartyInfo.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      counterpartyInfo: json
+          .valueTo<ibc_core_client_v2_counterparty.CounterpartyInfo?, Object>(
+            key: 'counterparty_info',
+            parse:
+                (v) =>
+                    ibc_core_client_v2_counterparty.CounterpartyInfo.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -151,13 +166,21 @@ class QueryConfigRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [clientId];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'client_id': clientId};
   }
 
-  factory QueryConfigRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryConfigRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryConfigRequest(
-      clientId: json.valueAsString<String?>('client_id', acceptCamelCase: true),
+      clientId: json.valueAsString<String?>(
+        'client_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -201,18 +224,26 @@ class QueryConfigResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [config];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'config': config?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'config': config.encodeMessage(this.config)};
   }
 
-  factory QueryConfigResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryConfigResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryConfigResponse(
-      config: json
-          .valueTo<ibc_core_client_v2_config.Config?, Map<String, dynamic>>(
-            key: 'config',
-            parse: (v) => ibc_core_client_v2_config.Config.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      config: json.valueTo<ibc_core_client_v2_config.Config?, Object>(
+        key: 'config',
+        parse:
+            (v) => ibc_core_client_v2_config.Config.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

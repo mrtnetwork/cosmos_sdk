@@ -2,7 +2,6 @@ import 'package:blockchain_utils/blockchain_utils.dart';
 import 'package:cosmos_sdk/proto_messages/types.dart';
 import 'package:cosmos_sdk/sdk/crypto/keypair/public_key.dart';
 import 'package:cosmos_sdk/sdk/crypto/types/types.dart';
-import 'package:cosmos_sdk/sdk/exception/exception.dart';
 import 'package:cosmos_sdk/proto_messages/ethermint/crypto/v1/ethsecp256k1/models.dart'
     as ethermint;
 import 'package:cosmos_sdk/proto_messages/cosmos/evm/crypto/v1/ethsecp256k1/models.dart'
@@ -13,23 +12,38 @@ import 'package:cosmos_sdk/proto_messages/initia/crypto/v1beta1/ethsecp256k1/mod
     as initia;
 import 'package:cosmos_sdk/proto_messages/stratos/crypto/v1/ethsecp256k1/models.dart'
     as stratos;
+import 'package:cosmos_sdk/sdk/serialization/src/protobuf.dart';
 
 class CosmosETHSecp256K1PublicKey extends CosmosPublicKey {
   final Secp256k1PublicKey publicKey;
   @override
   final CosmosKeysAlgs algorithm;
   const CosmosETHSecp256K1PublicKey._(this.publicKey, this.algorithm);
-  factory CosmosETHSecp256K1PublicKey({
+  factory CosmosETHSecp256K1PublicKey.from({
     required Secp256k1PublicKey publicKey,
-    CosmosKeysAlgs algorithm = CosmosKeysAlgs.ethsecp256k1,
+    required CosmosKeysAlgs algorithm,
   }) {
+    switch (algorithm) {
+      case CosmosKeysAlgs.ethsecp256k1:
+      case CosmosKeysAlgs.injectiveEthsecp256k1:
+      case CosmosKeysAlgs.comosEthsecp256k1:
+      case CosmosKeysAlgs.stratosEthsecp256k1:
+      case CosmosKeysAlgs.intiaEthsecp256k1:
+        break;
+      default:
+        throw BuError(
+          DefaultErrorType.invalidArgument,
+          "Invalid cosmos eth algorithm for CosmosETHSecp256K1PublicKey: expected an ethsecp256k1 variant.",
+          details: {"algorithm": algorithm.name},
+        );
+    }
     return CosmosETHSecp256K1PublicKey._(publicKey, algorithm);
   }
   factory CosmosETHSecp256K1PublicKey.fromBytes(
     List<int> keyBytes, {
     CosmosKeysAlgs algorithm = CosmosKeysAlgs.ethsecp256k1,
   }) {
-    return CosmosETHSecp256K1PublicKey(
+    return CosmosETHSecp256K1PublicKey.from(
       publicKey: Secp256k1PublicKey.fromBytes(keyBytes),
       algorithm: algorithm,
     );
@@ -50,32 +64,31 @@ class CosmosETHSecp256K1PublicKey extends CosmosPublicKey {
     ethermint.PubKey innerKey = ethermint.PubKey.deserialize(bytes);
     List<int>? keyBytes = innerKey.key;
     if (keyBytes == null) {
-      throw DartCosmosSdkPluginException("Invalid secp256k1 encoded key.");
+      throw BuError(
+        DefaultErrorType.invalidKeyData,
+        "Invalid secp256k1 encoded key.",
+      );
     }
-    return CosmosETHSecp256K1PublicKey._(
-      Secp256k1PublicKey.fromBytes(keyBytes),
-      algorithm,
+    return CosmosETHSecp256K1PublicKey.from(
+      publicKey: Secp256k1PublicKey.fromBytes(keyBytes),
+      algorithm: algorithm,
     );
   }
   @override
-  List<int> toBytes({bool compressed = true}) {
-    if (compressed) return publicKey.compressed;
-    return publicKey.uncompressed;
+  BuBytes toBytes({CryptoKeyEncoding encoding = CryptoKeyEncoding.base}) {
+    return publicKey.toBytes(mode: encoding);
   }
 
   @override
   String toString() {
-    return publicKey.toHex();
+    return toBytes().toHex();
   }
 
   @override
-  Map<String, dynamic> toJson() {
-    return {
-      'key': StringUtils.decode(
-        publicKey.compressed,
-        encoding: StringEncoding.base64,
-      ),
-    };
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'key': config.encodeBinary(toBytes())};
   }
 
   @override
@@ -90,7 +103,11 @@ class CosmosETHSecp256K1PublicKey extends CosmosPublicKey {
       DefaultCosmosProtoTypeUrl.stratosCryptoV1Ethsecp256k1PubKey,
     CosmosKeysAlgs.intiaEthsecp256k1 =>
       DefaultCosmosProtoTypeUrl.initiaCryptoV1beta1Ethsecp256k1PubKey,
-    _ => throw DartCosmosSdkPluginException("Invalid ethereum algorithm."),
+    _ =>
+      throw BuError(
+        DefaultErrorType.invalidArgument,
+        "Invalid ethereum algorithm.",
+      ),
   };
 
   @override
@@ -102,14 +119,23 @@ class CosmosETHSecp256K1PublicKey extends CosmosPublicKey {
       CosmosKeysAlgs.comosEthsecp256k1 => cosmos.PubKey.protoConfigStatic(),
       CosmosKeysAlgs.stratosEthsecp256k1 => stratos.PubKey.protoConfigStatic(),
       CosmosKeysAlgs.intiaEthsecp256k1 => initia.PubKey.protoConfigStatic(),
-      _ => throw DartCosmosSdkPluginException("Invalid ethereum algorithm."),
+      _ =>
+        throw BuError(
+          DefaultErrorType.invalidArgument,
+          "Invalid ethereum algorithm.",
+        ),
     };
   }
 
   String toEthAddress() {
-    return EthAddrEncoder().encodeKey(publicKey.uncompressed);
+    return EthAddrEncoder().encodeKey(
+      toBytes(encoding: CryptoKeyEncoding.uncompressed),
+    );
   }
 
   @override
-  List<Object?> get protoValues => [publicKey.compressed];
+  List<Object?> get protoValues => [publicKey];
+
+  @override
+  List<dynamic> get variables => [publicKey];
 }

@@ -32,13 +32,18 @@ enum ResponseResultType implements ProtoEnumVariant {
 
   /// Looks up a value by its proto wire int. Throws if not found.
   static ResponseResultType fromValue(int? value) {
+    value ??= 0;
     return ResponseResultType.values.firstWhere(
       (e) => e.value == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "ResponseResultType",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching ResponseResultType found for the given value. $value",
+                details: {
+                  "name": "ResponseResultType",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -46,13 +51,18 @@ enum ResponseResultType implements ProtoEnumVariant {
   /// Looks up a value by wire int, Dart enum name, or original proto
   /// name (whichever [value] happens to be). Throws if not found.
   static ResponseResultType from(Object? value) {
+    value ??= 0;
     return ResponseResultType.values.firstWhere(
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "ResponseResultType",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching ResponseResultType found for the given value. $value",
+                details: {
+                  "name": "ResponseResultType",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -91,20 +101,38 @@ class MsgChannelOpenInit extends CosmosProtoMessage
   List<Object?> get protoValues => [portId, channel, signer];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'port_id': portId, 'channel': channel?.toJson(), 'signer': signer};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'port_id': portId,
+      'channel': config.encodeMessage(channel),
+      'signer': signer,
+    };
   }
 
-  factory MsgChannelOpenInit.fromJson(Map<String, dynamic> json) {
+  factory MsgChannelOpenInit.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgChannelOpenInit(
-      portId: json.valueAsString<String?>('port_id', acceptCamelCase: true),
-      channel: json
-          .valueTo<ibc_core_channel_v1_channel.Channel?, Map<String, dynamic>>(
-            key: 'channel',
-            parse: (v) => ibc_core_channel_v1_channel.Channel.fromJson(v),
-            acceptCamelCase: true,
-          ),
-      signer: json.valueAsString<String?>('signer', acceptCamelCase: true),
+      portId: json.valueAsString<String?>(
+        'port_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      channel: json.valueTo<ibc_core_channel_v1_channel.Channel?, Object>(
+        key: 'channel',
+        parse:
+            (v) => ibc_core_channel_v1_channel.Channel.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      signer: json.valueAsString<String?>(
+        'signer',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -157,17 +185,25 @@ class MsgChannelOpenInitResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [channelId, version];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'channel_id': channelId, 'version': version};
   }
 
-  factory MsgChannelOpenInitResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgChannelOpenInitResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgChannelOpenInitResponse(
       channelId: json.valueAsString<String?>(
         'channel_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      version: json.valueAsString<String?>('version', acceptCamelCase: true),
+      version: json.valueAsString<String?>(
+        'version',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -199,21 +235,21 @@ class MsgChannelOpenTry extends CosmosProtoMessage
 
   final String? counterpartyVersion;
 
-  final List<int>? proofInit;
+  final BuBytes? proofInit;
 
   final ibc_core_client_v1_client.Height? proofHeight;
 
   final String? signer;
 
-  const MsgChannelOpenTry({
+  MsgChannelOpenTry({
     this.portId,
     this.previousChannelId,
     this.channel,
     this.counterpartyVersion,
-    this.proofInit,
+    List<int>? proofInit,
     this.proofHeight,
     this.signer,
-  });
+  }) : proofInit = proofInit?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -251,53 +287,62 @@ class MsgChannelOpenTry extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'port_id': portId,
       'previous_channel_id': previousChannelId,
-      'channel': channel?.toJson(),
+      'channel': config.encodeMessage(channel),
       'counterparty_version': counterpartyVersion,
-      'proof_init': switch (proofInit) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'proof_height': proofHeight?.toJson(),
+      'proof_init': config.encodeBinary(proofInit),
+      'proof_height': config.encodeMessage(proofHeight),
       'signer': signer,
     };
   }
 
-  factory MsgChannelOpenTry.fromJson(Map<String, dynamic> json) {
+  factory MsgChannelOpenTry.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgChannelOpenTry(
-      portId: json.valueAsString<String?>('port_id', acceptCamelCase: true),
+      portId: json.valueAsString<String?>(
+        'port_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       previousChannelId: json.valueAsString<String?>(
         'previous_channel_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      channel: json
-          .valueTo<ibc_core_channel_v1_channel.Channel?, Map<String, dynamic>>(
-            key: 'channel',
-            parse: (v) => ibc_core_channel_v1_channel.Channel.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      channel: json.valueTo<ibc_core_channel_v1_channel.Channel?, Object>(
+        key: 'channel',
+        parse:
+            (v) => ibc_core_channel_v1_channel.Channel.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       counterpartyVersion: json.valueAsString<String?>(
         'counterparty_version',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      proofInit: json.valueAsBytes<List<int>?>(
-        'proof_init',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      proofInit: config.decodeBinary<List<int>?>(
+        json.valueAs('proof_init', normalizeKeyLookup: config.normalizeKeys),
       ),
-      proofHeight: json
-          .valueTo<ibc_core_client_v1_client.Height?, Map<String, dynamic>>(
-            key: 'proof_height',
-            parse: (v) => ibc_core_client_v1_client.Height.fromJson(v),
-            acceptCamelCase: true,
-          ),
-      signer: json.valueAsString<String?>('signer', acceptCamelCase: true),
+      proofHeight: json.valueTo<ibc_core_client_v1_client.Height?, Object>(
+        key: 'proof_height',
+        parse:
+            (v) => ibc_core_client_v1_client.Height.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      signer: json.valueAsString<String?>(
+        'signer',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -357,16 +402,24 @@ class MsgChannelOpenTryResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [version, channelId];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'version': version, 'channel_id': channelId};
   }
 
-  factory MsgChannelOpenTryResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgChannelOpenTryResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgChannelOpenTryResponse(
-      version: json.valueAsString<String?>('version', acceptCamelCase: true),
+      version: json.valueAsString<String?>(
+        'version',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       channelId: json.valueAsString<String?>(
         'channel_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -396,21 +449,21 @@ class MsgChannelOpenAck extends CosmosProtoMessage
 
   final String? counterpartyVersion;
 
-  final List<int>? proofTry;
+  final BuBytes? proofTry;
 
   final ibc_core_client_v1_client.Height? proofHeight;
 
   final String? signer;
 
-  const MsgChannelOpenAck({
+  MsgChannelOpenAck({
     this.portId,
     this.channelId,
     this.counterpartyChannelId,
     this.counterpartyVersion,
-    this.proofTry,
+    List<int>? proofTry,
     this.proofHeight,
     this.signer,
-  });
+  }) : proofTry = proofTry?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -445,51 +498,57 @@ class MsgChannelOpenAck extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'port_id': portId,
       'channel_id': channelId,
       'counterparty_channel_id': counterpartyChannelId,
       'counterparty_version': counterpartyVersion,
-      'proof_try': switch (proofTry) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'proof_height': proofHeight?.toJson(),
+      'proof_try': config.encodeBinary(proofTry),
+      'proof_height': config.encodeMessage(proofHeight),
       'signer': signer,
     };
   }
 
-  factory MsgChannelOpenAck.fromJson(Map<String, dynamic> json) {
+  factory MsgChannelOpenAck.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgChannelOpenAck(
-      portId: json.valueAsString<String?>('port_id', acceptCamelCase: true),
+      portId: json.valueAsString<String?>(
+        'port_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       channelId: json.valueAsString<String?>(
         'channel_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       counterpartyChannelId: json.valueAsString<String?>(
         'counterparty_channel_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       counterpartyVersion: json.valueAsString<String?>(
         'counterparty_version',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      proofTry: json.valueAsBytes<List<int>?>(
-        'proof_try',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      proofTry: config.decodeBinary<List<int>?>(
+        json.valueAs('proof_try', normalizeKeyLookup: config.normalizeKeys),
       ),
-      proofHeight: json
-          .valueTo<ibc_core_client_v1_client.Height?, Map<String, dynamic>>(
-            key: 'proof_height',
-            parse: (v) => ibc_core_client_v1_client.Height.fromJson(v),
-            acceptCamelCase: true,
-          ),
-      signer: json.valueAsString<String?>('signer', acceptCamelCase: true),
+      proofHeight: json.valueTo<ibc_core_client_v1_client.Height?, Object>(
+        key: 'proof_height',
+        parse:
+            (v) => ibc_core_client_v1_client.Height.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      signer: json.valueAsString<String?>(
+        'signer',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -542,11 +601,16 @@ class MsgChannelOpenAckResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgChannelOpenAckResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgChannelOpenAckResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgChannelOpenAckResponse();
   }
 
@@ -567,19 +631,19 @@ class MsgChannelOpenConfirm extends CosmosProtoMessage
 
   final String? channelId;
 
-  final List<int>? proofAck;
+  final BuBytes? proofAck;
 
   final ibc_core_client_v1_client.Height? proofHeight;
 
   final String? signer;
 
-  const MsgChannelOpenConfirm({
+  MsgChannelOpenConfirm({
     this.portId,
     this.channelId,
-    this.proofAck,
+    List<int>? proofAck,
     this.proofHeight,
     this.signer,
-  });
+  }) : proofAck = proofAck?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -610,41 +674,47 @@ class MsgChannelOpenConfirm extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'port_id': portId,
       'channel_id': channelId,
-      'proof_ack': switch (proofAck) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'proof_height': proofHeight?.toJson(),
+      'proof_ack': config.encodeBinary(proofAck),
+      'proof_height': config.encodeMessage(proofHeight),
       'signer': signer,
     };
   }
 
-  factory MsgChannelOpenConfirm.fromJson(Map<String, dynamic> json) {
+  factory MsgChannelOpenConfirm.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgChannelOpenConfirm(
-      portId: json.valueAsString<String?>('port_id', acceptCamelCase: true),
+      portId: json.valueAsString<String?>(
+        'port_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       channelId: json.valueAsString<String?>(
         'channel_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      proofAck: json.valueAsBytes<List<int>?>(
-        'proof_ack',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      proofAck: config.decodeBinary<List<int>?>(
+        json.valueAs('proof_ack', normalizeKeyLookup: config.normalizeKeys),
       ),
-      proofHeight: json
-          .valueTo<ibc_core_client_v1_client.Height?, Map<String, dynamic>>(
-            key: 'proof_height',
-            parse: (v) => ibc_core_client_v1_client.Height.fromJson(v),
-            acceptCamelCase: true,
-          ),
-      signer: json.valueAsString<String?>('signer', acceptCamelCase: true),
+      proofHeight: json.valueTo<ibc_core_client_v1_client.Height?, Object>(
+        key: 'proof_height',
+        parse:
+            (v) => ibc_core_client_v1_client.Height.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      signer: json.valueAsString<String?>(
+        'signer',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -698,11 +768,16 @@ class MsgChannelOpenConfirmResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgChannelOpenConfirmResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgChannelOpenConfirmResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgChannelOpenConfirmResponse();
   }
 
@@ -748,18 +823,29 @@ class MsgChannelCloseInit extends CosmosProtoMessage
   List<Object?> get protoValues => [portId, channelId, signer];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'port_id': portId, 'channel_id': channelId, 'signer': signer};
   }
 
-  factory MsgChannelCloseInit.fromJson(Map<String, dynamic> json) {
+  factory MsgChannelCloseInit.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgChannelCloseInit(
-      portId: json.valueAsString<String?>('port_id', acceptCamelCase: true),
+      portId: json.valueAsString<String?>(
+        'port_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       channelId: json.valueAsString<String?>(
         'channel_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      signer: json.valueAsString<String?>('signer', acceptCamelCase: true),
+      signer: json.valueAsString<String?>(
+        'signer',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -805,11 +891,16 @@ class MsgChannelCloseInitResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgChannelCloseInitResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgChannelCloseInitResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgChannelCloseInitResponse();
   }
 
@@ -830,19 +921,19 @@ class MsgChannelCloseConfirm extends CosmosProtoMessage
 
   final String? channelId;
 
-  final List<int>? proofInit;
+  final BuBytes? proofInit;
 
   final ibc_core_client_v1_client.Height? proofHeight;
 
   final String? signer;
 
-  const MsgChannelCloseConfirm({
+  MsgChannelCloseConfirm({
     this.portId,
     this.channelId,
-    this.proofInit,
+    List<int>? proofInit,
     this.proofHeight,
     this.signer,
-  });
+  }) : proofInit = proofInit?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -873,41 +964,47 @@ class MsgChannelCloseConfirm extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'port_id': portId,
       'channel_id': channelId,
-      'proof_init': switch (proofInit) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'proof_height': proofHeight?.toJson(),
+      'proof_init': config.encodeBinary(proofInit),
+      'proof_height': config.encodeMessage(proofHeight),
       'signer': signer,
     };
   }
 
-  factory MsgChannelCloseConfirm.fromJson(Map<String, dynamic> json) {
+  factory MsgChannelCloseConfirm.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgChannelCloseConfirm(
-      portId: json.valueAsString<String?>('port_id', acceptCamelCase: true),
+      portId: json.valueAsString<String?>(
+        'port_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       channelId: json.valueAsString<String?>(
         'channel_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      proofInit: json.valueAsBytes<List<int>?>(
-        'proof_init',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      proofInit: config.decodeBinary<List<int>?>(
+        json.valueAs('proof_init', normalizeKeyLookup: config.normalizeKeys),
       ),
-      proofHeight: json
-          .valueTo<ibc_core_client_v1_client.Height?, Map<String, dynamic>>(
-            key: 'proof_height',
-            parse: (v) => ibc_core_client_v1_client.Height.fromJson(v),
-            acceptCamelCase: true,
-          ),
-      signer: json.valueAsString<String?>('signer', acceptCamelCase: true),
+      proofHeight: json.valueTo<ibc_core_client_v1_client.Height?, Object>(
+        key: 'proof_height',
+        parse:
+            (v) => ibc_core_client_v1_client.Height.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      signer: json.valueAsString<String?>(
+        'signer',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -961,11 +1058,16 @@ class MsgChannelCloseConfirmResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgChannelCloseConfirmResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgChannelCloseConfirmResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgChannelCloseConfirmResponse();
   }
 
@@ -983,18 +1085,18 @@ class MsgRecvPacket extends CosmosProtoMessage
     with ICosmosProtoServiceMessage<MsgRecvPacketResponse> {
   final ibc_core_channel_v1_channel.Packet? packet;
 
-  final List<int>? proofCommitment;
+  final BuBytes? proofCommitment;
 
   final ibc_core_client_v1_client.Height? proofHeight;
 
   final String? signer;
 
-  const MsgRecvPacket({
+  MsgRecvPacket({
     this.packet,
-    this.proofCommitment,
+    List<int>? proofCommitment,
     this.proofHeight,
     this.signer,
-  });
+  }) : proofCommitment = proofCommitment?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -1023,41 +1125,50 @@ class MsgRecvPacket extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'packet': packet?.toJson(),
-      'proof_commitment': switch (proofCommitment) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'proof_height': proofHeight?.toJson(),
+      'packet': config.encodeMessage(packet),
+      'proof_commitment': config.encodeBinary(proofCommitment),
+      'proof_height': config.encodeMessage(proofHeight),
       'signer': signer,
     };
   }
 
-  factory MsgRecvPacket.fromJson(Map<String, dynamic> json) {
+  factory MsgRecvPacket.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgRecvPacket(
-      packet: json
-          .valueTo<ibc_core_channel_v1_channel.Packet?, Map<String, dynamic>>(
-            key: 'packet',
-            parse: (v) => ibc_core_channel_v1_channel.Packet.fromJson(v),
-            acceptCamelCase: true,
-          ),
-      proofCommitment: json.valueAsBytes<List<int>?>(
-        'proof_commitment',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      packet: json.valueTo<ibc_core_channel_v1_channel.Packet?, Object>(
+        key: 'packet',
+        parse:
+            (v) => ibc_core_channel_v1_channel.Packet.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      proofHeight: json
-          .valueTo<ibc_core_client_v1_client.Height?, Map<String, dynamic>>(
-            key: 'proof_height',
-            parse: (v) => ibc_core_client_v1_client.Height.fromJson(v),
-            acceptCamelCase: true,
-          ),
-      signer: json.valueAsString<String?>('signer', acceptCamelCase: true),
+      proofCommitment: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'proof_commitment',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
+      ),
+      proofHeight: json.valueTo<ibc_core_client_v1_client.Height?, Object>(
+        key: 'proof_height',
+        parse:
+            (v) => ibc_core_client_v1_client.Height.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      signer: json.valueAsString<String?>(
+        'signer',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1112,11 +1223,16 @@ class MsgRecvPacketResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [result];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'result': result?.protoName};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'result': config.encodeEnum(result)};
   }
 
-  factory MsgRecvPacketResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgRecvPacketResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgRecvPacketResponse(
       result: json.valueTo<ResponseResultType?, Object?>(
         key: 'result',
@@ -1142,7 +1258,7 @@ class MsgTimeout extends CosmosProtoMessage
     with ICosmosProtoServiceMessage<MsgTimeoutResponse> {
   final ibc_core_channel_v1_channel.Packet? packet;
 
-  final List<int>? proofUnreceived;
+  final BuBytes? proofUnreceived;
 
   final ibc_core_client_v1_client.Height? proofHeight;
 
@@ -1150,13 +1266,13 @@ class MsgTimeout extends CosmosProtoMessage
 
   final String? signer;
 
-  const MsgTimeout({
+  MsgTimeout({
     this.packet,
-    this.proofUnreceived,
+    List<int>? proofUnreceived,
     this.proofHeight,
     this.nextSequenceRecv,
     this.signer,
-  });
+  }) : proofUnreceived = proofUnreceived?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -1187,46 +1303,55 @@ class MsgTimeout extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'packet': packet?.toJson(),
-      'proof_unreceived': switch (proofUnreceived) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'proof_height': proofHeight?.toJson(),
-      'next_sequence_recv': nextSequenceRecv?.toString(),
+      'packet': config.encodeMessage(packet),
+      'proof_unreceived': config.encodeBinary(proofUnreceived),
+      'proof_height': config.encodeMessage(proofHeight),
+      'next_sequence_recv': config.encodeBigint(nextSequenceRecv),
       'signer': signer,
     };
   }
 
-  factory MsgTimeout.fromJson(Map<String, dynamic> json) {
+  factory MsgTimeout.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgTimeout(
-      packet: json
-          .valueTo<ibc_core_channel_v1_channel.Packet?, Map<String, dynamic>>(
-            key: 'packet',
-            parse: (v) => ibc_core_channel_v1_channel.Packet.fromJson(v),
-            acceptCamelCase: true,
-          ),
-      proofUnreceived: json.valueAsBytes<List<int>?>(
-        'proof_unreceived',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      packet: json.valueTo<ibc_core_channel_v1_channel.Packet?, Object>(
+        key: 'packet',
+        parse:
+            (v) => ibc_core_channel_v1_channel.Packet.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      proofHeight: json
-          .valueTo<ibc_core_client_v1_client.Height?, Map<String, dynamic>>(
-            key: 'proof_height',
-            parse: (v) => ibc_core_client_v1_client.Height.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      proofUnreceived: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'proof_unreceived',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
+      ),
+      proofHeight: json.valueTo<ibc_core_client_v1_client.Height?, Object>(
+        key: 'proof_height',
+        parse:
+            (v) => ibc_core_client_v1_client.Height.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       nextSequenceRecv: json.valueAsBigInt<BigInt?>(
         'next_sequence_recv',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      signer: json.valueAsString<String?>('signer', acceptCamelCase: true),
+      signer: json.valueAsString<String?>(
+        'signer',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1282,11 +1407,16 @@ class MsgTimeoutResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [result];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'result': result?.protoName};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'result': config.encodeEnum(result)};
   }
 
-  factory MsgTimeoutResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgTimeoutResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgTimeoutResponse(
       result: json.valueTo<ResponseResultType?, Object?>(
         key: 'result',
@@ -1312,9 +1442,9 @@ class MsgTimeoutOnClose extends CosmosProtoMessage
     with ICosmosProtoServiceMessage<MsgTimeoutOnCloseResponse> {
   final ibc_core_channel_v1_channel.Packet? packet;
 
-  final List<int>? proofUnreceived;
+  final BuBytes? proofUnreceived;
 
-  final List<int>? proofClose;
+  final BuBytes? proofClose;
 
   final ibc_core_client_v1_client.Height? proofHeight;
 
@@ -1322,14 +1452,15 @@ class MsgTimeoutOnClose extends CosmosProtoMessage
 
   final String? signer;
 
-  const MsgTimeoutOnClose({
+  MsgTimeoutOnClose({
     this.packet,
-    this.proofUnreceived,
-    this.proofClose,
+    List<int>? proofUnreceived,
+    List<int>? proofClose,
     this.proofHeight,
     this.nextSequenceRecv,
     this.signer,
-  });
+  }) : proofUnreceived = proofUnreceived?.asImmutableBytes,
+       proofClose = proofClose?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -1362,58 +1493,59 @@ class MsgTimeoutOnClose extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'packet': packet?.toJson(),
-      'proof_unreceived': switch (proofUnreceived) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'proof_close': switch (proofClose) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'proof_height': proofHeight?.toJson(),
-      'next_sequence_recv': nextSequenceRecv?.toString(),
+      'packet': config.encodeMessage(packet),
+      'proof_unreceived': config.encodeBinary(proofUnreceived),
+      'proof_close': config.encodeBinary(proofClose),
+      'proof_height': config.encodeMessage(proofHeight),
+      'next_sequence_recv': config.encodeBigint(nextSequenceRecv),
       'signer': signer,
     };
   }
 
-  factory MsgTimeoutOnClose.fromJson(Map<String, dynamic> json) {
+  factory MsgTimeoutOnClose.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgTimeoutOnClose(
-      packet: json
-          .valueTo<ibc_core_channel_v1_channel.Packet?, Map<String, dynamic>>(
-            key: 'packet',
-            parse: (v) => ibc_core_channel_v1_channel.Packet.fromJson(v),
-            acceptCamelCase: true,
-          ),
-      proofUnreceived: json.valueAsBytes<List<int>?>(
-        'proof_unreceived',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      packet: json.valueTo<ibc_core_channel_v1_channel.Packet?, Object>(
+        key: 'packet',
+        parse:
+            (v) => ibc_core_channel_v1_channel.Packet.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      proofClose: json.valueAsBytes<List<int>?>(
-        'proof_close',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      proofUnreceived: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'proof_unreceived',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
-      proofHeight: json
-          .valueTo<ibc_core_client_v1_client.Height?, Map<String, dynamic>>(
-            key: 'proof_height',
-            parse: (v) => ibc_core_client_v1_client.Height.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      proofClose: config.decodeBinary<List<int>?>(
+        json.valueAs('proof_close', normalizeKeyLookup: config.normalizeKeys),
+      ),
+      proofHeight: json.valueTo<ibc_core_client_v1_client.Height?, Object>(
+        key: 'proof_height',
+        parse:
+            (v) => ibc_core_client_v1_client.Height.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       nextSequenceRecv: json.valueAsBigInt<BigInt?>(
         'next_sequence_recv',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      signer: json.valueAsString<String?>('signer', acceptCamelCase: true),
+      signer: json.valueAsString<String?>(
+        'signer',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1470,11 +1602,16 @@ class MsgTimeoutOnCloseResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [result];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'result': result?.protoName};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'result': config.encodeEnum(result)};
   }
 
-  factory MsgTimeoutOnCloseResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgTimeoutOnCloseResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgTimeoutOnCloseResponse(
       result: json.valueTo<ResponseResultType?, Object?>(
         key: 'result',
@@ -1500,21 +1637,22 @@ class MsgAcknowledgement extends CosmosProtoMessage
     with ICosmosProtoServiceMessage<MsgAcknowledgementResponse> {
   final ibc_core_channel_v1_channel.Packet? packet;
 
-  final List<int>? acknowledgement;
+  final BuBytes? acknowledgement;
 
-  final List<int>? proofAcked;
+  final BuBytes? proofAcked;
 
   final ibc_core_client_v1_client.Height? proofHeight;
 
   final String? signer;
 
-  const MsgAcknowledgement({
+  MsgAcknowledgement({
     this.packet,
-    this.acknowledgement,
-    this.proofAcked,
+    List<int>? acknowledgement,
+    List<int>? proofAcked,
     this.proofHeight,
     this.signer,
-  });
+  }) : acknowledgement = acknowledgement?.asImmutableBytes,
+       proofAcked = proofAcked?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -1545,53 +1683,54 @@ class MsgAcknowledgement extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'packet': packet?.toJson(),
-      'acknowledgement': switch (acknowledgement) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'proof_acked': switch (proofAcked) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'proof_height': proofHeight?.toJson(),
+      'packet': config.encodeMessage(packet),
+      'acknowledgement': config.encodeBinary(acknowledgement),
+      'proof_acked': config.encodeBinary(proofAcked),
+      'proof_height': config.encodeMessage(proofHeight),
       'signer': signer,
     };
   }
 
-  factory MsgAcknowledgement.fromJson(Map<String, dynamic> json) {
+  factory MsgAcknowledgement.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgAcknowledgement(
-      packet: json
-          .valueTo<ibc_core_channel_v1_channel.Packet?, Map<String, dynamic>>(
-            key: 'packet',
-            parse: (v) => ibc_core_channel_v1_channel.Packet.fromJson(v),
-            acceptCamelCase: true,
-          ),
-      acknowledgement: json.valueAsBytes<List<int>?>(
-        'acknowledgement',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      packet: json.valueTo<ibc_core_channel_v1_channel.Packet?, Object>(
+        key: 'packet',
+        parse:
+            (v) => ibc_core_channel_v1_channel.Packet.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      proofAcked: json.valueAsBytes<List<int>?>(
-        'proof_acked',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      acknowledgement: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'acknowledgement',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
-      proofHeight: json
-          .valueTo<ibc_core_client_v1_client.Height?, Map<String, dynamic>>(
-            key: 'proof_height',
-            parse: (v) => ibc_core_client_v1_client.Height.fromJson(v),
-            acceptCamelCase: true,
-          ),
-      signer: json.valueAsString<String?>('signer', acceptCamelCase: true),
+      proofAcked: config.decodeBinary<List<int>?>(
+        json.valueAs('proof_acked', normalizeKeyLookup: config.normalizeKeys),
+      ),
+      proofHeight: json.valueTo<ibc_core_client_v1_client.Height?, Object>(
+        key: 'proof_height',
+        parse:
+            (v) => ibc_core_client_v1_client.Height.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      signer: json.valueAsString<String?>(
+        'signer',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1647,11 +1786,16 @@ class MsgAcknowledgementResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [result];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'result': result?.protoName};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'result': config.encodeEnum(result)};
   }
 
-  factory MsgAcknowledgementResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgAcknowledgementResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgAcknowledgementResponse(
       result: json.valueTo<ResponseResultType?, Object?>(
         key: 'result',

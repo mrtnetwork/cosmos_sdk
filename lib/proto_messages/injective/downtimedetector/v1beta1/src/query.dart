@@ -41,16 +41,19 @@ class RecoveredSinceDowntimeOfLengthRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [downtime, recovery];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'downtime': downtime?.protoName,
+      'downtime': config.encodeEnum(downtime),
       'recovery': recovery?.encodeString(asNanos: true),
     };
   }
 
   factory RecoveredSinceDowntimeOfLengthRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return RecoveredSinceDowntimeOfLengthRequest(
       downtime: json.valueTo<
         injective_downtimedetector_v1beta1_downtime_duration.Downtime?,
@@ -61,10 +64,14 @@ class RecoveredSinceDowntimeOfLengthRequest extends CosmosProtoMessage
             (v) => injective_downtimedetector_v1beta1_downtime_duration
                 .Downtime.from(v),
       ),
-      recovery: json.valueTo<google_protobuf_duration.Duration?, String>(
+      recovery: json.valueTo<google_protobuf_duration.Duration?, Object>(
         key: 'recovery',
-        parse: (v) => google_protobuf_duration.Duration.fromString(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_duration.Duration.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -122,17 +129,20 @@ class RecoveredSinceDowntimeOfLengthResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [successfullyRecovered];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'successfully_recovered': successfullyRecovered};
   }
 
   factory RecoveredSinceDowntimeOfLengthResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return RecoveredSinceDowntimeOfLengthResponse(
       successfullyRecovered: json.valueAsBool<bool?>(
         'successfully_recovered',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

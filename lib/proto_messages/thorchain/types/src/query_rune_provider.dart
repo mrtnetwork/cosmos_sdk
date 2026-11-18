@@ -31,14 +31,25 @@ class QueryRuneProviderRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [address, height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'address': address, 'height': height};
   }
 
-  factory QueryRuneProviderRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryRuneProviderRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryRuneProviderRequest(
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -125,7 +136,9 @@ class QueryRuneProviderResponse extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'rune_address': runeAddress,
       'units': units,
@@ -133,35 +146,47 @@ class QueryRuneProviderResponse extends CosmosProtoMessage {
       'pnl': pnl,
       'deposit_amount': depositAmount,
       'withdraw_amount': withdrawAmount,
-      'last_deposit_height': lastDepositHeight?.toString(),
-      'last_withdraw_height': lastWithdrawHeight?.toString(),
+      'last_deposit_height': config.encodeBigint(lastDepositHeight),
+      'last_withdraw_height': config.encodeBigint(lastWithdrawHeight),
     };
   }
 
-  factory QueryRuneProviderResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryRuneProviderResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryRuneProviderResponse(
       runeAddress: json.valueAsString<String?>(
         'rune_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      units: json.valueAsString<String?>('units', acceptCamelCase: true),
-      value: json.valueAsString<String?>('value', acceptCamelCase: true),
-      pnl: json.valueAsString<String?>('pnl', acceptCamelCase: true),
+      units: json.valueAsString<String?>(
+        'units',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      value: json.valueAsString<String?>(
+        'value',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      pnl: json.valueAsString<String?>(
+        'pnl',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       depositAmount: json.valueAsString<String?>(
         'deposit_amount',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       withdrawAmount: json.valueAsString<String?>(
         'withdraw_amount',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       lastDepositHeight: json.valueAsBigInt<BigInt?>(
         'last_deposit_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       lastWithdrawHeight: json.valueAsBigInt<BigInt?>(
         'last_withdraw_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -212,13 +237,21 @@ class QueryRuneProvidersRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'height': height};
   }
 
-  factory QueryRuneProvidersRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryRuneProvidersRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryRuneProvidersRequest(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -266,21 +299,33 @@ class QueryRuneProvidersResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [providers];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'providers': providers.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'providers': providers.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
-  factory QueryRuneProvidersResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryRuneProvidersResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryRuneProvidersResponse(
       providers:
-          (json.valueEnsureAsList<dynamic>('providers', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'providers',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  QueryRuneProviderResponse,
-                  Map<String, dynamic>
-                >(
+                (e) => JsonParser.valueTo<QueryRuneProviderResponse, Object>(
                   value: e,
-                  parse: (v) => QueryRuneProviderResponse.fromJson(v),
+                  parse:
+                      (v) => QueryRuneProviderResponse.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),

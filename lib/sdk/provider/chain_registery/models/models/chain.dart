@@ -79,11 +79,8 @@ class CCRExplorer {
   factory CCRExplorer.fromJson(Map<String, dynamic> json) => CCRExplorer(
     kind: json['kind'],
     url: json['url'],
-    txPage: (json['tx_page'] as String?)?.replaceAll(r"${txHash}", "#txId"),
-    accountPage: (json['account_page'] as String?)?.replaceAll(
-      r"${accountAddress}",
-      "#address",
-    ),
+    txPage: json['tx_page'] as String?,
+    accountPage: json['account_page'] as String?,
   );
 
   Map<String, dynamic> toJson() => {
@@ -1040,7 +1037,7 @@ class CosmosDirectoryAsset {
       'display': display?.toJson(),
       'symbol': symbol,
       'logo_URIs': logoURIs?.toJson(),
-      "dicimals": decimals,
+      "decimals": decimals,
       "coingecko_id": coingeckoId,
     };
   }

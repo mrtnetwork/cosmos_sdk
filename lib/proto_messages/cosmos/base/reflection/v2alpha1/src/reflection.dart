@@ -35,19 +35,38 @@ class TxDescriptor extends CosmosProtoMessage {
   List<Object?> get protoValues => [fullname, msgs];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'fullname': fullname, 'msgs': msgs.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'fullname': fullname,
+      'msgs': msgs.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
-  factory TxDescriptor.fromJson(Map<String, dynamic> json) {
+  factory TxDescriptor.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return TxDescriptor(
-      fullname: json.valueAsString<String?>('fullname', acceptCamelCase: true),
+      fullname: json.valueAsString<String?>(
+        'fullname',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       msgs:
-          (json.valueEnsureAsList<dynamic>('msgs', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'msgs',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<MsgDescriptor, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<MsgDescriptor, Object>(
                   value: e,
-                  parse: (v) => MsgDescriptor.fromJson(v),
+                  parse:
+                      (v) => MsgDescriptor.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -99,19 +118,34 @@ class AuthnDescriptor extends CosmosProtoMessage {
   List<Object?> get protoValues => [signModes];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'sign_modes': signModes.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'sign_modes': signModes.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
-  factory AuthnDescriptor.fromJson(Map<String, dynamic> json) {
+  factory AuthnDescriptor.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AuthnDescriptor(
       signModes:
-          (json.valueEnsureAsList<dynamic>('sign_modes', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'sign_modes',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  SigningModeDescriptor,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => SigningModeDescriptor.fromJson(v)),
+                (e) => JsonParser.valueTo<SigningModeDescriptor, Object>(
+                  value: e,
+                  parse:
+                      (v) => SigningModeDescriptor.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );
@@ -177,7 +211,9 @@ class SigningModeDescriptor extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'name': name,
       'number': number,
@@ -185,13 +221,22 @@ class SigningModeDescriptor extends CosmosProtoMessage {
     };
   }
 
-  factory SigningModeDescriptor.fromJson(Map<String, dynamic> json) {
+  factory SigningModeDescriptor.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SigningModeDescriptor(
-      name: json.valueAsString<String?>('name', acceptCamelCase: true),
-      number: json.valueAsInt<int?>('number', acceptCamelCase: true),
+      name: json.valueAsString<String?>(
+        'name',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      number: json.valueAsInt<int?>(
+        'number',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       authnInfoProviderMethodFullname: json.valueAsString<String?>(
         'authn_info_provider_method_fullname',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -233,13 +278,21 @@ class ChainDescriptor extends CosmosProtoMessage {
   List<Object?> get protoValues => [id];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'id': id};
   }
 
-  factory ChainDescriptor.fromJson(Map<String, dynamic> json) {
+  factory ChainDescriptor.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ChainDescriptor(
-      id: json.valueAsString<String?>('id', acceptCamelCase: true),
+      id: json.valueAsString<String?>(
+        'id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -280,19 +333,34 @@ class CodecDescriptor extends CosmosProtoMessage {
   List<Object?> get protoValues => [interfaces];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'interfaces': interfaces.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'interfaces': interfaces.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
-  factory CodecDescriptor.fromJson(Map<String, dynamic> json) {
+  factory CodecDescriptor.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return CodecDescriptor(
       interfaces:
-          (json.valueEnsureAsList<dynamic>('interfaces', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'interfaces',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  InterfaceDescriptor,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => InterfaceDescriptor.fromJson(v)),
+                (e) => JsonParser.valueTo<InterfaceDescriptor, Object>(
+                  value: e,
+                  parse:
+                      (v) => InterfaceDescriptor.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );
@@ -361,47 +429,65 @@ class InterfaceDescriptor extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'fullname': fullname,
       'interface_accepting_messages':
-          interfaceAcceptingMessages.map((e) => e.toJson()).toList(),
+          interfaceAcceptingMessages
+              .map((e) => config.encodeMessage(e))
+              .toList(),
       'interface_implementers':
-          interfaceImplementers.map((e) => e.toJson()).toList(),
+          interfaceImplementers.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory InterfaceDescriptor.fromJson(Map<String, dynamic> json) {
+  factory InterfaceDescriptor.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return InterfaceDescriptor(
-      fullname: json.valueAsString<String?>('fullname', acceptCamelCase: true),
+      fullname: json.valueAsString<String?>(
+        'fullname',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       interfaceAcceptingMessages:
           (json.valueEnsureAsList<dynamic>(
                 'interface_accepting_messages',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   InterfaceAcceptingMessageDescriptor,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
-                  parse: (v) => InterfaceAcceptingMessageDescriptor.fromJson(v),
+                  parse:
+                      (v) => InterfaceAcceptingMessageDescriptor.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       interfaceImplementers:
           (json.valueEnsureAsList<dynamic>(
                 'interface_implementers',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  InterfaceImplementerDescriptor,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => InterfaceImplementerDescriptor.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<InterfaceImplementerDescriptor, Object>(
+                      value: e,
+                      parse:
+                          (v) => InterfaceImplementerDescriptor.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -457,14 +543,25 @@ class InterfaceImplementerDescriptor extends CosmosProtoMessage {
   List<Object?> get protoValues => [fullname, typeUrl];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'fullname': fullname, 'type_url': typeUrl};
   }
 
-  factory InterfaceImplementerDescriptor.fromJson(Map<String, dynamic> json) {
+  factory InterfaceImplementerDescriptor.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return InterfaceImplementerDescriptor(
-      fullname: json.valueAsString<String?>('fullname', acceptCamelCase: true),
-      typeUrl: json.valueAsString<String?>('type_url', acceptCamelCase: true),
+      fullname: json.valueAsString<String?>(
+        'fullname',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      typeUrl: json.valueAsString<String?>(
+        'type_url',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -519,7 +616,9 @@ class InterfaceAcceptingMessageDescriptor extends CosmosProtoMessage {
   List<Object?> get protoValues => [fullname, fieldDescriptorNames];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'fullname': fullname,
       'field_descriptor_names': fieldDescriptorNames.map((e) => e).toList(),
@@ -527,14 +626,19 @@ class InterfaceAcceptingMessageDescriptor extends CosmosProtoMessage {
   }
 
   factory InterfaceAcceptingMessageDescriptor.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return InterfaceAcceptingMessageDescriptor(
-      fullname: json.valueAsString<String?>('fullname', acceptCamelCase: true),
+      fullname: json.valueAsString<String?>(
+        'fullname',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       fieldDescriptorNames:
           (json.valueEnsureAsList<dynamic>(
             'field_descriptor_names',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
     );
   }
@@ -575,15 +679,20 @@ class ConfigurationDescriptor extends CosmosProtoMessage {
   List<Object?> get protoValues => [bech32AccountAddressPrefix];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'bech32_account_address_prefix': bech32AccountAddressPrefix};
   }
 
-  factory ConfigurationDescriptor.fromJson(Map<String, dynamic> json) {
+  factory ConfigurationDescriptor.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ConfigurationDescriptor(
       bech32AccountAddressPrefix: json.valueAsString<String?>(
         'bech32_account_address_prefix',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -623,15 +732,20 @@ class MsgDescriptor extends CosmosProtoMessage {
   List<Object?> get protoValues => [msgTypeUrl];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'msg_type_url': msgTypeUrl};
   }
 
-  factory MsgDescriptor.fromJson(Map<String, dynamic> json) {
+  factory MsgDescriptor.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgDescriptor(
       msgTypeUrl: json.valueAsString<String?>(
         'msg_type_url',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -672,11 +786,16 @@ class GetAuthnDescriptorRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory GetAuthnDescriptorRequest.fromJson(Map<String, dynamic> json) {
+  factory GetAuthnDescriptorRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GetAuthnDescriptorRequest();
   }
 
@@ -721,16 +840,23 @@ class GetAuthnDescriptorResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [authn];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'authn': authn?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'authn': config.encodeMessage(authn)};
   }
 
-  factory GetAuthnDescriptorResponse.fromJson(Map<String, dynamic> json) {
+  factory GetAuthnDescriptorResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GetAuthnDescriptorResponse(
-      authn: json.valueTo<AuthnDescriptor?, Map<String, dynamic>>(
+      authn: json.valueTo<AuthnDescriptor?, Object>(
         key: 'authn',
-        parse: (v) => AuthnDescriptor.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) =>
+                AuthnDescriptor.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -777,11 +903,16 @@ class GetChainDescriptorRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory GetChainDescriptorRequest.fromJson(Map<String, dynamic> json) {
+  factory GetChainDescriptorRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GetChainDescriptorRequest();
   }
 
@@ -826,16 +957,23 @@ class GetChainDescriptorResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [chain];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'chain': chain?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'chain': config.encodeMessage(chain)};
   }
 
-  factory GetChainDescriptorResponse.fromJson(Map<String, dynamic> json) {
+  factory GetChainDescriptorResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GetChainDescriptorResponse(
-      chain: json.valueTo<ChainDescriptor?, Map<String, dynamic>>(
+      chain: json.valueTo<ChainDescriptor?, Object>(
         key: 'chain',
-        parse: (v) => ChainDescriptor.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) =>
+                ChainDescriptor.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -882,11 +1020,16 @@ class GetCodecDescriptorRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory GetCodecDescriptorRequest.fromJson(Map<String, dynamic> json) {
+  factory GetCodecDescriptorRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GetCodecDescriptorRequest();
   }
 
@@ -931,16 +1074,23 @@ class GetCodecDescriptorResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [codec];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'codec': codec?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'codec': config.encodeMessage(codec)};
   }
 
-  factory GetCodecDescriptorResponse.fromJson(Map<String, dynamic> json) {
+  factory GetCodecDescriptorResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GetCodecDescriptorResponse(
-      codec: json.valueTo<CodecDescriptor?, Map<String, dynamic>>(
+      codec: json.valueTo<CodecDescriptor?, Object>(
         key: 'codec',
-        parse: (v) => CodecDescriptor.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) =>
+                CodecDescriptor.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -987,13 +1137,16 @@ class GetConfigurationDescriptorRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
   factory GetConfigurationDescriptorRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GetConfigurationDescriptorRequest();
   }
 
@@ -1040,18 +1193,25 @@ class GetConfigurationDescriptorResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [config];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'config': config?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'config': config.encodeMessage(this.config)};
   }
 
   factory GetConfigurationDescriptorResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GetConfigurationDescriptorResponse(
-      config: json.valueTo<ConfigurationDescriptor?, Map<String, dynamic>>(
+      config: json.valueTo<ConfigurationDescriptor?, Object>(
         key: 'config',
-        parse: (v) => ConfigurationDescriptor.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => ConfigurationDescriptor.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1098,13 +1258,16 @@ class GetQueryServicesDescriptorRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
   factory GetQueryServicesDescriptorRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GetQueryServicesDescriptorRequest();
   }
 
@@ -1151,18 +1314,25 @@ class GetQueryServicesDescriptorResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [queries];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'queries': queries?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'queries': config.encodeMessage(queries)};
   }
 
   factory GetQueryServicesDescriptorResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GetQueryServicesDescriptorResponse(
-      queries: json.valueTo<QueryServicesDescriptor?, Map<String, dynamic>>(
+      queries: json.valueTo<QueryServicesDescriptor?, Object>(
         key: 'queries',
-        parse: (v) => QueryServicesDescriptor.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => QueryServicesDescriptor.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1209,11 +1379,16 @@ class GetTxDescriptorRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory GetTxDescriptorRequest.fromJson(Map<String, dynamic> json) {
+  factory GetTxDescriptorRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GetTxDescriptorRequest();
   }
 
@@ -1259,16 +1434,22 @@ class GetTxDescriptorResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [tx];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'tx': tx?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'tx': config.encodeMessage(tx)};
   }
 
-  factory GetTxDescriptorResponse.fromJson(Map<String, dynamic> json) {
+  factory GetTxDescriptorResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GetTxDescriptorResponse(
-      tx: json.valueTo<TxDescriptor?, Map<String, dynamic>>(
+      tx: json.valueTo<TxDescriptor?, Object>(
         key: 'tx',
-        parse: (v) => TxDescriptor.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => TxDescriptor.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1316,22 +1497,35 @@ class QueryServicesDescriptor extends CosmosProtoMessage {
   List<Object?> get protoValues => [queryServices];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'query_services': queryServices.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'query_services':
+          queryServices.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
-  factory QueryServicesDescriptor.fromJson(Map<String, dynamic> json) {
+  factory QueryServicesDescriptor.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryServicesDescriptor(
       queryServices:
           (json.valueEnsureAsList<dynamic>(
                 'query_services',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  QueryServiceDescriptor,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => QueryServiceDescriptor.fromJson(v)),
+                (e) => JsonParser.valueTo<QueryServiceDescriptor, Object>(
+                  value: e,
+                  parse:
+                      (v) => QueryServiceDescriptor.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );
@@ -1393,25 +1587,44 @@ class QueryServiceDescriptor extends CosmosProtoMessage {
   List<Object?> get protoValues => [fullname, isModule, methods];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'fullname': fullname,
       'is_module': isModule,
-      'methods': methods.map((e) => e.toJson()).toList(),
+      'methods': methods.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory QueryServiceDescriptor.fromJson(Map<String, dynamic> json) {
+  factory QueryServiceDescriptor.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryServiceDescriptor(
-      fullname: json.valueAsString<String?>('fullname', acceptCamelCase: true),
-      isModule: json.valueAsBool<bool?>('is_module', acceptCamelCase: true),
+      fullname: json.valueAsString<String?>(
+        'fullname',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      isModule: json.valueAsBool<bool?>(
+        'is_module',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       methods:
-          (json.valueEnsureAsList<dynamic>('methods', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'methods',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  QueryMethodDescriptor,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => QueryMethodDescriptor.fromJson(v)),
+                (e) => JsonParser.valueTo<QueryMethodDescriptor, Object>(
+                  value: e,
+                  parse:
+                      (v) => QueryMethodDescriptor.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );
@@ -1464,16 +1677,24 @@ class QueryMethodDescriptor extends CosmosProtoMessage {
   List<Object?> get protoValues => [name, fullQueryPath];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'name': name, 'full_query_path': fullQueryPath};
   }
 
-  factory QueryMethodDescriptor.fromJson(Map<String, dynamic> json) {
+  factory QueryMethodDescriptor.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryMethodDescriptor(
-      name: json.valueAsString<String?>('name', acceptCamelCase: true),
+      name: json.valueAsString<String?>(
+        'name',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       fullQueryPath: json.valueAsString<String?>(
         'full_query_path',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

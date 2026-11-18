@@ -29,13 +29,21 @@ class QueryQueueRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'height': height};
   }
 
-  factory QueryQueueRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryQueueRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryQueueRequest(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -107,28 +115,42 @@ class QueryQueueResponse extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'swap': swap?.toString(),
-      'outbound': outbound?.toString(),
-      'internal': internal?.toString(),
+      'swap': config.encodeBigint(swap),
+      'outbound': config.encodeBigint(outbound),
+      'internal': config.encodeBigint(internal),
       'scheduled_outbound_value': scheduledOutboundValue,
       'scheduled_outbound_clout': scheduledOutboundClout,
     };
   }
 
-  factory QueryQueueResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryQueueResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryQueueResponse(
-      swap: json.valueAsBigInt<BigInt?>('swap', acceptCamelCase: true),
-      outbound: json.valueAsBigInt<BigInt?>('outbound', acceptCamelCase: true),
-      internal: json.valueAsBigInt<BigInt?>('internal', acceptCamelCase: true),
+      swap: json.valueAsBigInt<BigInt?>(
+        'swap',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      outbound: json.valueAsBigInt<BigInt?>(
+        'outbound',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      internal: json.valueAsBigInt<BigInt?>(
+        'internal',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       scheduledOutboundValue: json.valueAsString<String?>(
         'scheduled_outbound_value',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       scheduledOutboundClout: json.valueAsString<String?>(
         'scheduled_outbound_clout',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

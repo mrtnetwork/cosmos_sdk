@@ -36,29 +36,47 @@ class SpotOrderBook extends CosmosProtoMessage {
   List<Object?> get protoValues => [marketId, isBuySide, orders];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'market_id': marketId,
       'isBuySide': isBuySide,
-      'orders': orders.map((e) => e.toJson()).toList(),
+      'orders': orders.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory SpotOrderBook.fromJson(Map<String, dynamic> json) {
+  factory SpotOrderBook.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SpotOrderBook(
-      marketId: json.valueAsString<String?>('market_id', acceptCamelCase: true),
-      isBuySide: json.valueAsBool<bool?>('isBuySide', acceptCamelCase: true),
+      marketId: json.valueAsString<String?>(
+        'market_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      isBuySide: json.valueAsBool<bool?>(
+        'isBuySide',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       orders:
-          (json.valueEnsureAsList<dynamic>('orders', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'orders',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_exchange_v2_order.SpotLimitOrder,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
-                      (v) => injective_exchange_v2_order
-                          .SpotLimitOrder.fromJson(v),
+                      (v) =>
+                          injective_exchange_v2_order.SpotLimitOrder.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
                 ),
               )
               .toList(),
@@ -122,29 +140,47 @@ class DerivativeOrderBook extends CosmosProtoMessage {
   List<Object?> get protoValues => [marketId, isBuySide, orders];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'market_id': marketId,
       'isBuySide': isBuySide,
-      'orders': orders.map((e) => e.toJson()).toList(),
+      'orders': orders.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory DerivativeOrderBook.fromJson(Map<String, dynamic> json) {
+  factory DerivativeOrderBook.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return DerivativeOrderBook(
-      marketId: json.valueAsString<String?>('market_id', acceptCamelCase: true),
-      isBuySide: json.valueAsBool<bool?>('isBuySide', acceptCamelCase: true),
+      marketId: json.valueAsString<String?>(
+        'market_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      isBuySide: json.valueAsBool<bool?>(
+        'isBuySide',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       orders:
-          (json.valueEnsureAsList<dynamic>('orders', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'orders',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_exchange_v2_order.DerivativeLimitOrder,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => injective_exchange_v2_order
-                          .DerivativeLimitOrder.fromJson(v),
+                          .DerivativeLimitOrder.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -232,84 +268,112 @@ class ConditionalDerivativeOrderBook extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'market_id': marketId,
-      'limit_buy_orders': limitBuyOrders.map((e) => e.toJson()).toList(),
-      'market_buy_orders': marketBuyOrders.map((e) => e.toJson()).toList(),
-      'limit_sell_orders': limitSellOrders.map((e) => e.toJson()).toList(),
-      'market_sell_orders': marketSellOrders.map((e) => e.toJson()).toList(),
+      'limit_buy_orders':
+          limitBuyOrders.map((e) => config.encodeMessage(e)).toList(),
+      'market_buy_orders':
+          marketBuyOrders.map((e) => config.encodeMessage(e)).toList(),
+      'limit_sell_orders':
+          limitSellOrders.map((e) => config.encodeMessage(e)).toList(),
+      'market_sell_orders':
+          marketSellOrders.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory ConditionalDerivativeOrderBook.fromJson(Map<String, dynamic> json) {
+  factory ConditionalDerivativeOrderBook.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ConditionalDerivativeOrderBook(
-      marketId: json.valueAsString<String?>('market_id', acceptCamelCase: true),
+      marketId: json.valueAsString<String?>(
+        'market_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       limitBuyOrders:
           (json.valueEnsureAsList<dynamic>(
                 'limit_buy_orders',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_exchange_v2_order.DerivativeLimitOrder,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => injective_exchange_v2_order
-                          .DerivativeLimitOrder.fromJson(v),
+                          .DerivativeLimitOrder.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       marketBuyOrders:
           (json.valueEnsureAsList<dynamic>(
                 'market_buy_orders',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_exchange_v2_order.DerivativeMarketOrder,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => injective_exchange_v2_order
-                          .DerivativeMarketOrder.fromJson(v),
+                          .DerivativeMarketOrder.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       limitSellOrders:
           (json.valueEnsureAsList<dynamic>(
                 'limit_sell_orders',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_exchange_v2_order.DerivativeLimitOrder,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => injective_exchange_v2_order
-                          .DerivativeLimitOrder.fromJson(v),
+                          .DerivativeLimitOrder.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       marketSellOrders:
           (json.valueEnsureAsList<dynamic>(
                 'market_sell_orders',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_exchange_v2_order.DerivativeMarketOrder,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => injective_exchange_v2_order
-                          .DerivativeMarketOrder.fromJson(v),
+                          .DerivativeMarketOrder.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -420,7 +484,9 @@ class SubaccountOrderbookMetadata extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'vanilla_limit_order_count': vanillaLimitOrderCount,
       'reduce_only_limit_order_count': reduceOnlyLimitOrderCount,
@@ -431,31 +497,34 @@ class SubaccountOrderbookMetadata extends CosmosProtoMessage {
     };
   }
 
-  factory SubaccountOrderbookMetadata.fromJson(Map<String, dynamic> json) {
+  factory SubaccountOrderbookMetadata.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SubaccountOrderbookMetadata(
       vanillaLimitOrderCount: json.valueAsInt<int?>(
         'vanilla_limit_order_count',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       reduceOnlyLimitOrderCount: json.valueAsInt<int?>(
         'reduce_only_limit_order_count',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       aggregateReduceOnlyQuantity: json.valueAsString<String?>(
         'aggregate_reduce_only_quantity',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       aggregateVanillaQuantity: json.valueAsString<String?>(
         'aggregate_vanilla_quantity',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       vanillaConditionalOrderCount: json.valueAsInt<int?>(
         'vanilla_conditional_order_count',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       reduceOnlyConditionalOrderCount: json.valueAsInt<int?>(
         'reduce_only_conditional_order_count',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

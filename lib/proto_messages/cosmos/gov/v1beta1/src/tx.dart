@@ -61,37 +61,53 @@ class MsgSubmitProposal extends CosmosProtoMessage
   List<Object?> get protoValues => [content, initialDeposit, proposer];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'content': content?.toJson(),
-      'initial_deposit': initialDeposit.map((e) => e.toJson()).toList(),
+      'content': config.encodeMessage(content),
+      'initial_deposit':
+          initialDeposit.map((e) => config.encodeMessage(e)).toList(),
       'proposer': proposer,
     };
   }
 
-  factory MsgSubmitProposal.fromJson(Map<String, dynamic> json) {
+  factory MsgSubmitProposal.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSubmitProposal(
-      content: json.valueTo<google_protobuf_any.Any?, Map<String, dynamic>>(
+      content: json.valueTo<google_protobuf_any.Any?, Object>(
         key: 'content',
-        parse: (v) => google_protobuf_any.Any.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_any.Any.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       initialDeposit:
           (json.valueEnsureAsList<dynamic>(
                 'initial_deposit',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
-      proposer: json.valueAsString<String?>('proposer', acceptCamelCase: true),
+      proposer: json.valueAsString<String?>(
+        'proposer',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -152,15 +168,20 @@ class MsgSubmitProposalResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [proposalId];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'proposal_id': proposalId?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'proposal_id': config.encodeBigint(proposalId)};
   }
 
-  factory MsgSubmitProposalResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgSubmitProposalResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSubmitProposalResponse(
       proposalId: json.valueAsBigInt<BigInt?>(
         'proposal_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -211,21 +232,29 @@ class MsgVote extends CosmosProtoMessage
   List<Object?> get protoValues => [proposalId, voter, option];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'proposal_id': proposalId?.toString(),
+      'proposal_id': config.encodeBigint(proposalId),
       'voter': voter,
-      'option': option?.protoName,
+      'option': config.encodeEnum(option),
     };
   }
 
-  factory MsgVote.fromJson(Map<String, dynamic> json) {
+  factory MsgVote.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgVote(
       proposalId: json.valueAsBigInt<BigInt?>(
         'proposal_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      voter: json.valueAsString<String?>('voter', acceptCamelCase: true),
+      voter: json.valueAsString<String?>(
+        'voter',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       option: json.valueTo<cosmos_gov_v1beta1_gov.VoteOption?, Object?>(
         key: 'option',
         parse: (v) => cosmos_gov_v1beta1_gov.VoteOption.from(v),
@@ -278,11 +307,16 @@ class MsgVoteResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgVoteResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgVoteResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgVoteResponse();
   }
 
@@ -343,32 +377,46 @@ class MsgVoteWeighted extends CosmosProtoMessage
   List<Object?> get protoValues => [proposalId, voter, options];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'proposal_id': proposalId?.toString(),
+      'proposal_id': config.encodeBigint(proposalId),
       'voter': voter,
-      'options': options.map((e) => e.toJson()).toList(),
+      'options': options.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory MsgVoteWeighted.fromJson(Map<String, dynamic> json) {
+  factory MsgVoteWeighted.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgVoteWeighted(
       proposalId: json.valueAsBigInt<BigInt?>(
         'proposal_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      voter: json.valueAsString<String?>('voter', acceptCamelCase: true),
+      voter: json.valueAsString<String?>(
+        'voter',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       options:
-          (json.valueEnsureAsList<dynamic>('options', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'options',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   cosmos_gov_v1beta1_gov.WeightedVoteOption,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
-                      (v) =>
-                          cosmos_gov_v1beta1_gov.WeightedVoteOption.fromJson(v),
+                      (v) => cosmos_gov_v1beta1_gov.WeightedVoteOption.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -423,11 +471,16 @@ class MsgVoteWeightedResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgVoteWeightedResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgVoteWeightedResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgVoteWeightedResponse();
   }
 
@@ -488,34 +541,45 @@ class MsgDeposit extends CosmosProtoMessage
   List<Object?> get protoValues => [proposalId, depositor, amount];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'proposal_id': proposalId?.toString(),
+      'proposal_id': config.encodeBigint(proposalId),
       'depositor': depositor,
-      'amount': amount.map((e) => e.toJson()).toList(),
+      'amount': amount.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory MsgDeposit.fromJson(Map<String, dynamic> json) {
+  factory MsgDeposit.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgDeposit(
       proposalId: json.valueAsBigInt<BigInt?>(
         'proposal_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       depositor: json.valueAsString<String?>(
         'depositor',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       amount:
-          (json.valueEnsureAsList<dynamic>('amount', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'amount',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -567,11 +631,16 @@ class MsgDepositResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgDepositResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgDepositResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgDepositResponse();
   }
 

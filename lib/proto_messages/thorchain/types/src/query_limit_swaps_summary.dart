@@ -41,7 +41,9 @@ class QueryLimitSwapsSummaryRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height, sourceAsset, targetAsset];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'height': height,
       'source_asset': sourceAsset,
@@ -49,16 +51,22 @@ class QueryLimitSwapsSummaryRequest extends CosmosProtoMessage
     };
   }
 
-  factory QueryLimitSwapsSummaryRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryLimitSwapsSummaryRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryLimitSwapsSummaryRequest(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       sourceAsset: json.valueAsString<String?>(
         'source_asset',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       targetAsset: json.valueAsString<String?>(
         'target_asset',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -129,29 +137,37 @@ class AssetPairSummary extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'source_asset': sourceAsset,
       'target_asset': targetAsset,
-      'count': count?.toString(),
+      'count': config.encodeBigint(count),
       'total_value_usd': totalValueUsd,
     };
   }
 
-  factory AssetPairSummary.fromJson(Map<String, dynamic> json) {
+  factory AssetPairSummary.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AssetPairSummary(
       sourceAsset: json.valueAsString<String?>(
         'source_asset',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       targetAsset: json.valueAsString<String?>(
         'target_asset',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      count: json.valueAsBigInt<BigInt?>('count', acceptCamelCase: true),
+      count: json.valueAsBigInt<BigInt?>(
+        'count',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       totalValueUsd: json.valueAsString<String?>(
         'total_value_usd',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -220,46 +236,55 @@ class QueryLimitSwapsSummaryResponse extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'total_limit_swaps': totalLimitSwaps?.toString(),
+      'total_limit_swaps': config.encodeBigint(totalLimitSwaps),
       'total_value_usd': totalValueUsd,
-      'asset_pairs': assetPairs.map((e) => e.toJson()).toList(),
-      'oldest_swap_blocks': oldestSwapBlocks?.toString(),
-      'average_age_blocks': averageAgeBlocks?.toString(),
+      'asset_pairs': assetPairs.map((e) => config.encodeMessage(e)).toList(),
+      'oldest_swap_blocks': config.encodeBigint(oldestSwapBlocks),
+      'average_age_blocks': config.encodeBigint(averageAgeBlocks),
     };
   }
 
-  factory QueryLimitSwapsSummaryResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryLimitSwapsSummaryResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryLimitSwapsSummaryResponse(
       totalLimitSwaps: json.valueAsBigInt<BigInt?>(
         'total_limit_swaps',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       totalValueUsd: json.valueAsString<String?>(
         'total_value_usd',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       assetPairs:
           (json.valueEnsureAsList<dynamic>(
                 'asset_pairs',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) =>
-                    JsonParser.valueTo<AssetPairSummary, Map<String, dynamic>>(
-                      value: e,
-                      parse: (v) => AssetPairSummary.fromJson(v),
-                    ),
+                (e) => JsonParser.valueTo<AssetPairSummary, Object>(
+                  value: e,
+                  parse:
+                      (v) => AssetPairSummary.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
       oldestSwapBlocks: json.valueAsBigInt<BigInt?>(
         'oldest_swap_blocks',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       averageAgeBlocks: json.valueAsBigInt<BigInt?>(
         'average_age_blocks',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

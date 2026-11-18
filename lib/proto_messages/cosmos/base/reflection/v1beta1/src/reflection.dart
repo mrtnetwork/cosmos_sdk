@@ -28,11 +28,16 @@ class ListAllInterfacesRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory ListAllInterfacesRequest.fromJson(Map<String, dynamic> json) {
+  factory ListAllInterfacesRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ListAllInterfacesRequest();
   }
 
@@ -82,16 +87,22 @@ class ListAllInterfacesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [interfaceNames];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'interface_names': interfaceNames.map((e) => e).toList()};
   }
 
-  factory ListAllInterfacesResponse.fromJson(Map<String, dynamic> json) {
+  factory ListAllInterfacesResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ListAllInterfacesResponse(
       interfaceNames:
           (json.valueEnsureAsList<dynamic>(
             'interface_names',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
     );
   }
@@ -140,15 +151,20 @@ class ListImplementationsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [interfaceName];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'interface_name': interfaceName};
   }
 
-  factory ListImplementationsRequest.fromJson(Map<String, dynamic> json) {
+  factory ListImplementationsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ListImplementationsRequest(
       interfaceName: json.valueAsString<String?>(
         'interface_name',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -204,19 +220,25 @@ class ListImplementationsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [implementationMessageNames];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'implementation_message_names':
           implementationMessageNames.map((e) => e).toList(),
     };
   }
 
-  factory ListImplementationsResponse.fromJson(Map<String, dynamic> json) {
+  factory ListImplementationsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ListImplementationsResponse(
       implementationMessageNames:
           (json.valueEnsureAsList<dynamic>(
             'implementation_message_names',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
     );
   }

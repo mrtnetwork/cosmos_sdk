@@ -1,3 +1,7 @@
+## 5.0.0
+- BREAKING: all legacy exception classes removed; every error is now `BuError` with a `CosmosErrorType` taxonomy value.
+- Cryptography now routes through the `blockchain_utils` dual backend (pure Dart default, optional Rust FFI/WASM) with backend-parity test suites.
+
 ## 4.1.1
 - Fix ED25519 address generation.
 

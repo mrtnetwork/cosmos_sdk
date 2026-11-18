@@ -68,64 +68,80 @@ class GenesisState extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'params': params?.toJson(),
-      'auction_round': auctionRound?.toString(),
-      'highest_bid': highestBid?.toJson(),
-      'auction_ending_timestamp': auctionEndingTimestamp?.toString(),
-      'last_auction_result': lastAuctionResult?.toJson(),
-      'vouchers': vouchers.map((e) => e.toJson()).toList(),
+      'params': config.encodeMessage(params),
+      'auction_round': config.encodeBigint(auctionRound),
+      'highest_bid': config.encodeMessage(highestBid),
+      'auction_ending_timestamp': config.encodeBigint(auctionEndingTimestamp),
+      'last_auction_result': config.encodeMessage(lastAuctionResult),
+      'vouchers': vouchers.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory GenesisState.fromJson(Map<String, dynamic> json) {
+  factory GenesisState.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GenesisState(
-      params: json.valueTo<
-        injective_auction_v1beta1_auction.Params?,
-        Map<String, dynamic>
-      >(
+      params: json.valueTo<injective_auction_v1beta1_auction.Params?, Object>(
         key: 'params',
-        parse: (v) => injective_auction_v1beta1_auction.Params.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => injective_auction_v1beta1_auction.Params.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       auctionRound: json.valueAsBigInt<BigInt?>(
         'auction_round',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      highestBid: json.valueTo<
-        injective_auction_v1beta1_auction.Bid?,
-        Map<String, dynamic>
-      >(
+      highestBid: json.valueTo<injective_auction_v1beta1_auction.Bid?, Object>(
         key: 'highest_bid',
-        parse: (v) => injective_auction_v1beta1_auction.Bid.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => injective_auction_v1beta1_auction.Bid.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       auctionEndingTimestamp: json.valueAsBigInt<BigInt?>(
         'auction_ending_timestamp',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       lastAuctionResult: json.valueTo<
         injective_auction_v1beta1_auction.LastAuctionResult?,
-        Map<String, dynamic>
+        Object
       >(
         key: 'last_auction_result',
         parse:
-            (v) =>
-                injective_auction_v1beta1_auction.LastAuctionResult.fromJson(v),
-        acceptCamelCase: true,
+            (v) => injective_auction_v1beta1_auction.LastAuctionResult.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       vouchers:
-          (json.valueEnsureAsList<dynamic>('vouchers', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'vouchers',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_common_vouchers_v1_vouchers.AddressVoucher,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => injective_common_vouchers_v1_vouchers
-                          .AddressVoucher.fromJson(v),
+                          .AddressVoucher.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),

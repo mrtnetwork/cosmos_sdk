@@ -25,18 +25,32 @@ enum Owner implements ProtoEnumVariant {
 
   /// Looks up a value by its proto wire int. Throws if not found.
   static Owner fromValue(int? value) {
+    value ??= 0;
     return Owner.values.firstWhere(
       (e) => e.value == value,
-      orElse: () => throw ItemNotFoundException(name: "Owner", value: value),
+      orElse:
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching Owner found for the given value. $value",
+                details: {"name": "Owner", "value": value?.toString()},
+              ),
     );
   }
 
   /// Looks up a value by wire int, Dart enum name, or original proto
   /// name (whichever [value] happens to be). Throws if not found.
   static Owner from(Object? value) {
+    value ??= 0;
     return Owner.values.firstWhere(
       (e) => e.value == value || e.name == value || e.protoName == value,
-      orElse: () => throw ItemNotFoundException(name: "Owner", value: value),
+      orElse:
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching Owner found for the given value. $value",
+                details: {"name": "Owner", "value": value?.toString()},
+              ),
     );
   }
 }
@@ -90,23 +104,34 @@ class TokenPair extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'erc20_address': erc20Address,
       'denom': denom,
       'enabled': enabled,
-      'contract_owner': contractOwner?.protoName,
+      'contract_owner': config.encodeEnum(contractOwner),
     };
   }
 
-  factory TokenPair.fromJson(Map<String, dynamic> json) {
+  factory TokenPair.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return TokenPair(
       erc20Address: json.valueAsString<String?>(
         'erc20_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
-      enabled: json.valueAsBool<bool?>('enabled', acceptCamelCase: true),
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      enabled: json.valueAsBool<bool?>(
+        'enabled',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       contractOwner: json.valueTo<Owner?, Object?>(
         key: 'contract_owner',
         parse: (v) => Owner.from(v),

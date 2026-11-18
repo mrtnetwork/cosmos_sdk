@@ -76,7 +76,9 @@ class UserAllocation extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'airdrop_id': airdropId,
       'address': address,
@@ -86,22 +88,32 @@ class UserAllocation extends CosmosProtoMessage {
     };
   }
 
-  factory UserAllocation.fromJson(Map<String, dynamic> json) {
+  factory UserAllocation.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return UserAllocation(
       airdropId: json.valueAsString<String?>(
         'airdrop_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
-      claimed: json.valueAsString<String?>('claimed', acceptCamelCase: true),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      claimed: json.valueAsString<String?>(
+        'claimed',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       forfeited: json.valueAsString<String?>(
         'forfeited',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       allocations:
           (json.valueEnsureAsList<dynamic>(
             'allocations',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
     );
   }
@@ -208,7 +220,9 @@ class Airdrop extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'id': id,
       'reward_denom': rewardDenom,
@@ -223,51 +237,73 @@ class Airdrop extends CosmosProtoMessage {
     };
   }
 
-  factory Airdrop.fromJson(Map<String, dynamic> json) {
+  factory Airdrop.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Airdrop(
-      id: json.valueAsString<String?>('id', acceptCamelCase: true),
+      id: json.valueAsString<String?>(
+        'id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       rewardDenom: json.valueAsString<String?>(
         'reward_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       distributionStartDate: json
-          .valueTo<google_protobuf_timestamp.Timestamp?, String>(
+          .valueTo<google_protobuf_timestamp.Timestamp?, Object>(
             key: 'distribution_start_date',
-            parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => google_protobuf_timestamp.Timestamp.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
       distributionEndDate: json
-          .valueTo<google_protobuf_timestamp.Timestamp?, String>(
+          .valueTo<google_protobuf_timestamp.Timestamp?, Object>(
             key: 'distribution_end_date',
-            parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => google_protobuf_timestamp.Timestamp.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
-      clawbackDate: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      clawbackDate: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'clawback_date',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       claimTypeDeadlineDate: json
-          .valueTo<google_protobuf_timestamp.Timestamp?, String>(
+          .valueTo<google_protobuf_timestamp.Timestamp?, Object>(
             key: 'claim_type_deadline_date',
-            parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => google_protobuf_timestamp.Timestamp.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
       earlyClaimPenalty: json.valueAsString<String?>(
         'early_claim_penalty',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       distributorAddress: json.valueAsString<String?>(
         'distributor_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       allocatorAddress: json.valueAsString<String?>(
         'allocator_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       linkerAddress: json.valueAsString<String?>(
         'linker_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

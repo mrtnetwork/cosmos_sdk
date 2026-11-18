@@ -3,8 +3,13 @@ import 'package:cosmos_sdk/cosmos_sdk.dart';
 import 'package:cosmos_sdk/proto_messages/cosmos/base/tendermint/v1beta1/src/query.dart';
 import 'package:cosmos_sdk/proto_messages/cosmos/tx/v1beta1/src/service.dart';
 import 'package:test/test.dart';
+import 'utils.dart';
 
 void main() {
+  CosmosTestApi.runTest(encodingRequestParamsTest, 'EncodingRequestParams');
+}
+
+void encodingRequestParamsTest() {
   test('encodable provider params', () {
     final param = TendermintRequestAbciQuery(
       request: TxDecodeAminoRequest(aminoBinary: [1, 2, 3]),

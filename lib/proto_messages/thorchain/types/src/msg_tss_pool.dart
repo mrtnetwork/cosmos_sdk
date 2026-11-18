@@ -26,25 +26,25 @@ class MsgTssPool extends CosmosProtoMessage
 
   final List<String> chains;
 
-  final List<int>? signer;
+  final BuBytes? signer;
 
   final BigInt? keygenTime;
 
-  final List<int>? keysharesBackup;
+  final BuBytes? keysharesBackup;
 
-  final List<int>? secp256k1Signature;
+  final BuBytes? secp256k1Signature;
 
   final String? poolPubKeyEddsa;
 
-  final List<int>? keysharesBackupEddsa;
+  final BuBytes? keysharesBackupEddsa;
 
-  final List<int>? keysharesBackupFrost;
+  final BuBytes? keysharesBackupFrost;
 
   final String? poolPubKeyFrost;
 
   final BigInt? observedMoneroHeight;
 
-  const MsgTssPool({
+  MsgTssPool({
     this.id,
     this.poolPubKey,
     this.keygenType,
@@ -52,16 +52,20 @@ class MsgTssPool extends CosmosProtoMessage
     this.height,
     this.blame = const [],
     this.chains = const [],
-    this.signer,
+    List<int>? signer,
     this.keygenTime,
-    this.keysharesBackup,
-    this.secp256k1Signature,
+    List<int>? keysharesBackup,
+    List<int>? secp256k1Signature,
     this.poolPubKeyEddsa,
-    this.keysharesBackupEddsa,
-    this.keysharesBackupFrost,
+    List<int>? keysharesBackupEddsa,
+    List<int>? keysharesBackupFrost,
     this.poolPubKeyFrost,
     this.observedMoneroHeight,
-  });
+  }) : signer = signer?.asImmutableBytes,
+       keysharesBackup = keysharesBackup?.asImmutableBytes,
+       secp256k1Signature = secp256k1Signature?.asImmutableBytes,
+       keysharesBackupEddsa = keysharesBackupEddsa?.asImmutableBytes,
+       keysharesBackupFrost = keysharesBackupFrost?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -132,63 +136,41 @@ class MsgTssPool extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'id': id,
       'pool_pub_key': poolPubKey,
-      'keygen_type': keygenType?.protoName,
+      'keygen_type': config.encodeEnum(keygenType),
       'pub_keys': pubKeys.map((e) => e).toList(),
-      'height': height?.toString(),
-      'blame': blame.map((e) => e.toJson()).toList(),
+      'height': config.encodeBigint(height),
+      'blame': blame.map((e) => config.encodeMessage(e)).toList(),
       'chains': chains.map((e) => e).toList(),
-      'signer': switch (signer) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'keygen_time': keygenTime?.toString(),
-      'keyshares_backup': switch (keysharesBackup) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'secp256k1_signature': switch (secp256k1Signature) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'signer': config.encodeBinary(signer),
+      'keygen_time': config.encodeBigint(keygenTime),
+      'keyshares_backup': config.encodeBinary(keysharesBackup),
+      'secp256k1_signature': config.encodeBinary(secp256k1Signature),
       'pool_pub_key_eddsa': poolPubKeyEddsa,
-      'keyshares_backup_eddsa': switch (keysharesBackupEddsa) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'keyshares_backup_frost': switch (keysharesBackupFrost) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'keyshares_backup_eddsa': config.encodeBinary(keysharesBackupEddsa),
+      'keyshares_backup_frost': config.encodeBinary(keysharesBackupFrost),
       'pool_pub_key_frost': poolPubKeyFrost,
-      'observed_monero_height': observedMoneroHeight?.toString(),
+      'observed_monero_height': config.encodeBigint(observedMoneroHeight),
     };
   }
 
-  factory MsgTssPool.fromJson(Map<String, dynamic> json) {
+  factory MsgTssPool.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgTssPool(
-      id: json.valueAsString<String?>('id', acceptCamelCase: true),
+      id: json.valueAsString<String?>(
+        'id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       poolPubKey: json.valueAsString<String?>(
         'pool_pub_key',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       keygenType: json.valueTo<types_type_keygen.KeygenType?, Object?>(
         key: 'keygen_type',
@@ -197,63 +179,78 @@ class MsgTssPool extends CosmosProtoMessage
       pubKeys:
           (json.valueEnsureAsList<dynamic>(
             'pub_keys',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
-      height: json.valueAsBigInt<BigInt?>('height', acceptCamelCase: true),
+      height: json.valueAsBigInt<BigInt?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       blame:
-          (json.valueEnsureAsList<dynamic>('blame', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'blame',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  types_type_blame.Blame,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => types_type_blame.Blame.fromJson(v)),
+                (e) => JsonParser.valueTo<types_type_blame.Blame, Object>(
+                  value: e,
+                  parse:
+                      (v) => types_type_blame.Blame.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
       chains:
           (json.valueEnsureAsList<dynamic>(
             'chains',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
-      signer: json.valueAsBytes<List<int>?>(
-        'signer',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      signer: config.decodeBinary<List<int>?>(
+        json.valueAs('signer', normalizeKeyLookup: config.normalizeKeys),
       ),
       keygenTime: json.valueAsBigInt<BigInt?>(
         'keygen_time',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      keysharesBackup: json.valueAsBytes<List<int>?>(
-        'keyshares_backup',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      keysharesBackup: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'keyshares_backup',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
-      secp256k1Signature: json.valueAsBytes<List<int>?>(
-        'secp256k1_signature',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      secp256k1Signature: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'secp256k1_signature',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
       poolPubKeyEddsa: json.valueAsString<String?>(
         'pool_pub_key_eddsa',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      keysharesBackupEddsa: json.valueAsBytes<List<int>?>(
-        'keyshares_backup_eddsa',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      keysharesBackupEddsa: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'keyshares_backup_eddsa',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
-      keysharesBackupFrost: json.valueAsBytes<List<int>?>(
-        'keyshares_backup_frost',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      keysharesBackupFrost: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'keyshares_backup_frost',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
       poolPubKeyFrost: json.valueAsString<String?>(
         'pool_pub_key_frost',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       observedMoneroHeight: json.valueAsBigInt<BigInt?>(
         'observed_monero_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

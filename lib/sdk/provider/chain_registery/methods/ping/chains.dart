@@ -12,7 +12,7 @@ class ChainRegistryRequestPingPubChains
   List<String?> get pathParameters => [chainType.pubPingPathSegment];
 
   @override
-  List<PingPubChain> onResonse(List<Map<String, dynamic>> result) {
+  List<PingPubChain> onResponse(List<Map<String, dynamic>> result) {
     return CCRUtilities.readChainDirectories(result);
   }
 }

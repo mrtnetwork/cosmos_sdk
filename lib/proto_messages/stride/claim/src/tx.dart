@@ -61,7 +61,9 @@ class MsgSetAirdropAllocations extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'allocator': allocator,
       'airdrop_identifier': airdropIdentifier,
@@ -70,25 +72,30 @@ class MsgSetAirdropAllocations extends CosmosProtoMessage
     };
   }
 
-  factory MsgSetAirdropAllocations.fromJson(Map<String, dynamic> json) {
+  factory MsgSetAirdropAllocations.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSetAirdropAllocations(
       allocator: json.valueAsString<String?>(
         'allocator',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       airdropIdentifier: json.valueAsString<String?>(
         'airdrop_identifier',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       users:
           (json.valueEnsureAsList<dynamic>(
             'users',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
       weights:
           (json.valueEnsureAsList<dynamic>(
             'weights',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
     );
   }
@@ -137,11 +144,16 @@ class MsgSetAirdropAllocationsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgSetAirdropAllocationsResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgSetAirdropAllocationsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSetAirdropAllocationsResponse();
   }
 
@@ -183,13 +195,21 @@ class MsgClaimFreeAmount extends CosmosProtoMessage
   List<Object?> get protoValues => [user];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'user': user};
   }
 
-  factory MsgClaimFreeAmount.fromJson(Map<String, dynamic> json) {
+  factory MsgClaimFreeAmount.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgClaimFreeAmount(
-      user: json.valueAsString<String?>('user', acceptCamelCase: true),
+      user: json.valueAsString<String?>(
+        'user',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -238,25 +258,36 @@ class MsgClaimFreeAmountResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [claimedAmount];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'claimed_amount': claimedAmount.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'claimed_amount':
+          claimedAmount.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
-  factory MsgClaimFreeAmountResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgClaimFreeAmountResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgClaimFreeAmountResponse(
       claimedAmount:
           (json.valueEnsureAsList<dynamic>(
                 'claimed_amount',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -340,38 +371,52 @@ class MsgCreateAirdrop extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'distributor': distributor,
       'identifier': identifier,
       'chain_id': chainId,
       'denom': denom,
-      'start_time': startTime?.toString(),
-      'duration': duration?.toString(),
+      'start_time': config.encodeBigint(startTime),
+      'duration': config.encodeBigint(duration),
       'autopilot_enabled': autopilotEnabled,
     };
   }
 
-  factory MsgCreateAirdrop.fromJson(Map<String, dynamic> json) {
+  factory MsgCreateAirdrop.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgCreateAirdrop(
       distributor: json.valueAsString<String?>(
         'distributor',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       identifier: json.valueAsString<String?>(
         'identifier',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      chainId: json.valueAsString<String?>('chain_id', acceptCamelCase: true),
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
+      chainId: json.valueAsString<String?>(
+        'chain_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       startTime: json.valueAsBigInt<BigInt?>(
         'start_time',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      duration: json.valueAsBigInt<BigInt?>('duration', acceptCamelCase: true),
+      duration: json.valueAsBigInt<BigInt?>(
+        'duration',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       autopilotEnabled: json.valueAsBool<bool?>(
         'autopilot_enabled',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -421,11 +466,16 @@ class MsgCreateAirdropResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgCreateAirdropResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgCreateAirdropResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgCreateAirdropResponse();
   }
 
@@ -469,19 +519,24 @@ class MsgDeleteAirdrop extends CosmosProtoMessage
   List<Object?> get protoValues => [distributor, identifier];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'distributor': distributor, 'identifier': identifier};
   }
 
-  factory MsgDeleteAirdrop.fromJson(Map<String, dynamic> json) {
+  factory MsgDeleteAirdrop.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgDeleteAirdrop(
       distributor: json.valueAsString<String?>(
         'distributor',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       identifier: json.valueAsString<String?>(
         'identifier',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -526,11 +581,16 @@ class MsgDeleteAirdropResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgDeleteAirdropResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgDeleteAirdropResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgDeleteAirdropResponse();
   }
 

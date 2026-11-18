@@ -23,7 +23,7 @@ class TendermintRequestNumUnconfirmedTxs
   Map<String, String?> get parameters => {};
 
   @override
-  TendermintNumUnconfirmedTransactionsResponseResult onResonse(
+  TendermintNumUnconfirmedTransactionsResponseResult onResponse(
     Map<String, dynamic> result,
   ) {
     return TendermintNumUnconfirmedTransactionsResponseResult.fromJson(result);

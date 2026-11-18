@@ -23,7 +23,7 @@ class CosmosRestRequestMessage<Response extends CosmosProtoMessage>
   Map<String, dynamic> get parameters => spec.queryParameters;
 
   @override
-  Response onResonse(Map<String, dynamic> result) {
+  Response onResponse(Map<String, dynamic> result) {
     return request.onQueryResponseJson(result);
   }
 }

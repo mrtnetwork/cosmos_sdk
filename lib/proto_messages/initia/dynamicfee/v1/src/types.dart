@@ -61,37 +61,42 @@ class Params extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'base_gas_price': baseGasPrice,
       'min_base_gas_price': minBaseGasPrice,
       'max_base_gas_price': maxBaseGasPrice,
       'max_change_rate': maxChangeRate,
-      'target_gas': targetGas?.toString(),
+      'target_gas': config.encodeBigint(targetGas),
     };
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
       baseGasPrice: json.valueAsString<String?>(
         'base_gas_price',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       minBaseGasPrice: json.valueAsString<String?>(
         'min_base_gas_price',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       maxBaseGasPrice: json.valueAsString<String?>(
         'max_base_gas_price',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       maxChangeRate: json.valueAsString<String?>(
         'max_change_rate',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       targetGas: json.valueAsBigInt<BigInt?>(
         'target_gas',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

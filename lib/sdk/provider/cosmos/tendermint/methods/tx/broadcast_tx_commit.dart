@@ -26,7 +26,7 @@ class TendermintRequestBroadcastTxCommit
   Map<String, String?> get parameters => {"tx": tx};
 
   @override
-  TendermintBroadcastTxCommitResponseResult onResonse(
+  TendermintBroadcastTxCommitResponseResult onResponse(
     Map<String, dynamic> result,
   ) {
     return TendermintBroadcastTxCommitResponseResult.fromJson(result);

@@ -1,2 +1,2 @@
-export 'src/benchmark.dart';
 export 'src/tx.dart';
+export 'src/benchmark.dart';

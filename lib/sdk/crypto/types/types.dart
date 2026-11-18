@@ -1,10 +1,6 @@
-import 'package:blockchain_utils/bip/bip/conf/bip44/bip44_coins.dart';
-import 'package:blockchain_utils/bip/bip/conf/core/coin_conf.dart';
-import 'package:blockchain_utils/exception/exceptions.dart';
-import 'package:blockchain_utils/helper/extensions/extensions.dart';
+import 'package:blockchain_utils/blockchain_utils.dart';
 
-/// injective.types.v1beta1.EthAccount
-///
+/// Key algorithms supported for Cosmos addresses and signatures.
 enum CosmosKeysAlgs {
   secp256k1(view: "Secp256k1", package: "cosmos.crypto.secp256k1", value: 0),
   ethsecp256k1(
@@ -96,7 +92,15 @@ enum CosmosKeysAlgs {
         Bip44Coins.cosmosTestnetNist256p1,
       ],
     };
-    return coins.firstWhere((e) => e.conf.chainType == chain);
+    return coins.firstWhere(
+      (e) => e.conf.chainType == chain,
+      orElse:
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                'No coin for algorithm $name on chain type ${chain.name}.',
+              ),
+    );
   }
 
   static CosmosKeysAlgs? fromName(String name) {
@@ -108,7 +112,10 @@ enum CosmosKeysAlgs {
       (element) => element.value == value,
       orElse:
           () =>
-              throw ItemNotFoundException(name: "CosmosKeysAlgs", value: value),
+              throw BuError(
+                DefaultErrorType.invalidArgument,
+                'Unknown CosmosKeysAlgs value "$value".',
+              ),
     );
   }
 
@@ -117,7 +124,10 @@ enum CosmosKeysAlgs {
       (element) => element.name == name,
       orElse:
           () =>
-              throw ItemNotFoundException(name: "CosmosKeysAlgs", value: name),
+              throw BuError(
+                DefaultErrorType.invalidArgument,
+                'Unknown CosmosKeysAlgs name "$name".',
+              ),
     );
   }
 
@@ -126,20 +136,66 @@ enum CosmosKeysAlgs {
       (element) => element.package == packageName,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "CosmosKeysAlgs",
-                value: packageName,
+              throw BuError(
+                DefaultErrorType.invalidArgument,
+                'Unknown CosmosKeysAlgs package "$packageName".',
               ),
     );
   }
 
   static CosmosKeysAlgs? fromTypeUrl(String typeUrl) {
     if (typeUrl.startsWith("/")) {
-      typeUrl = typeUrl.substring(1, typeUrl.length - 1);
+      typeUrl = typeUrl.substring(1);
     }
     if (typeUrl.isEmpty) return null;
     return supportedAlgs.firstWhereNullable(
       (element) => typeUrl.startsWith(element.package),
+    );
+  }
+}
+
+/// Which multisig pubkey type a chain handles.
+///
+/// The Cosmos SDK standard is the amino threshold multisig
+/// (`/cosmos.crypto.multisig.LegacyAminoPubKey`). The chain-registry does
+/// not publish this, so the builder resolves it from the curated
+/// `chain_registery/multisig_supports.dart` cache (override first, then
+/// bare chain name) and falls back to [unknown]. Unknown values
+/// deserialize leniently to [unknown] so newer snapshots never break
+/// older readers.
+enum CosmosMultisigSupport {
+  legacyAminoThreshold(
+    view: "LegacyAmino threshold",
+    typeUrl: "cosmos.crypto.multisig.LegacyAminoPubKey",
+    value: 0,
+  ),
+  none(view: "No multisig", typeUrl: "", value: 1),
+  unknown(view: "Unknown", typeUrl: "", value: 2);
+
+  final String view;
+  final String typeUrl;
+  final int value;
+  const CosmosMultisigSupport({
+    required this.view,
+    required this.typeUrl,
+    required this.value,
+  });
+
+  String getPublicKeyTypeUrl() {
+    return typeUrl.isEmpty ? "" : "/$typeUrl";
+  }
+
+  static CosmosMultisigSupport fromValue(int? value) {
+    return values.firstWhere(
+      (element) => element.value == value,
+      orElse: () => CosmosMultisigSupport.unknown,
+    );
+  }
+
+  static CosmosMultisigSupport fromName(String name) {
+    return values.firstWhere(
+      (element) => element.name == name,
+      orElse: () => CosmosMultisigSupport.unknown,
     );
   }
 }

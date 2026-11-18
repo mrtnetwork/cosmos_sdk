@@ -1,4 +1,4 @@
-import 'package:blockchain_utils/bip/slip/slip173/slip173.dart';
+import 'package:blockchain_utils/protocol/bip/slip/slip173/slip173.dart';
 
 // This class defines constants related to Cosmos addresses.
 class CosmosAddrConst {

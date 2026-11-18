@@ -66,7 +66,9 @@ class MsgCreateClawbackVestingAccount extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'funder_address': funderAddress,
       'vesting_address': vestingAddress,
@@ -74,19 +76,22 @@ class MsgCreateClawbackVestingAccount extends CosmosProtoMessage
     };
   }
 
-  factory MsgCreateClawbackVestingAccount.fromJson(Map<String, dynamic> json) {
+  factory MsgCreateClawbackVestingAccount.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgCreateClawbackVestingAccount(
       funderAddress: json.valueAsString<String?>(
         'funder_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       vestingAddress: json.valueAsString<String?>(
         'vesting_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       enableGovClawback: json.valueAsBool<bool?>(
         'enable_gov_clawback',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -136,13 +141,16 @@ class MsgCreateClawbackVestingAccountResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
   factory MsgCreateClawbackVestingAccountResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgCreateClawbackVestingAccountResponse();
   }
 
@@ -237,60 +245,79 @@ class MsgFundVestingAccount extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'funder_address': funderAddress,
       'vesting_address': vestingAddress,
       'start_time': startTime?.toRfc3339(),
-      'lockup_periods': lockupPeriods.map((e) => e.toJson()).toList(),
-      'vesting_periods': vestingPeriods.map((e) => e.toJson()).toList(),
+      'lockup_periods':
+          lockupPeriods.map((e) => config.encodeMessage(e)).toList(),
+      'vesting_periods':
+          vestingPeriods.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory MsgFundVestingAccount.fromJson(Map<String, dynamic> json) {
+  factory MsgFundVestingAccount.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgFundVestingAccount(
       funderAddress: json.valueAsString<String?>(
         'funder_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       vestingAddress: json.valueAsString<String?>(
         'vesting_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      startTime: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      startTime: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'start_time',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       lockupPeriods:
           (json.valueEnsureAsList<dynamic>(
                 'lockup_periods',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   cosmos_vesting_v1beta1_vesting.Period,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
-                      (v) => cosmos_vesting_v1beta1_vesting.Period.fromJson(v),
+                      (v) => cosmos_vesting_v1beta1_vesting.Period.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       vestingPeriods:
           (json.valueEnsureAsList<dynamic>(
                 'vesting_periods',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   cosmos_vesting_v1beta1_vesting.Period,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
-                      (v) => cosmos_vesting_v1beta1_vesting.Period.fromJson(v),
+                      (v) => cosmos_vesting_v1beta1_vesting.Period.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -355,11 +382,16 @@ class MsgFundVestingAccountResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgFundVestingAccountResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgFundVestingAccountResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgFundVestingAccountResponse();
   }
 
@@ -426,7 +458,9 @@ class MsgClawback extends CosmosProtoMessage
   List<Object?> get protoValues => [funderAddress, accountAddress, destAddress];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'funder_address': funderAddress,
       'account_address': accountAddress,
@@ -434,19 +468,22 @@ class MsgClawback extends CosmosProtoMessage
     };
   }
 
-  factory MsgClawback.fromJson(Map<String, dynamic> json) {
+  factory MsgClawback.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgClawback(
       funderAddress: json.valueAsString<String?>(
         'funder_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       accountAddress: json.valueAsString<String?>(
         'account_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       destAddress: json.valueAsString<String?>(
         'dest_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -502,22 +539,33 @@ class MsgClawbackResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [coins];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'coins': coins.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'coins': coins.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory MsgClawbackResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgClawbackResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgClawbackResponse(
       coins:
-          (json.valueEnsureAsList<dynamic>('coins', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'coins',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -597,7 +645,9 @@ class MsgUpdateVestingFunder extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'funder_address': funderAddress,
       'new_funder_address': newFunderAddress,
@@ -605,19 +655,22 @@ class MsgUpdateVestingFunder extends CosmosProtoMessage
     };
   }
 
-  factory MsgUpdateVestingFunder.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateVestingFunder.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateVestingFunder(
       funderAddress: json.valueAsString<String?>(
         'funder_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       newFunderAddress: json.valueAsString<String?>(
         'new_funder_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       vestingAddress: json.valueAsString<String?>(
         'vesting_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -667,11 +720,16 @@ class MsgUpdateVestingFunderResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgUpdateVestingFunderResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateVestingFunderResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateVestingFunderResponse();
   }
 
@@ -723,15 +781,20 @@ class MsgConvertVestingAccount extends CosmosProtoMessage
   List<Object?> get protoValues => [vestingAddress];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'vesting_address': vestingAddress};
   }
 
-  factory MsgConvertVestingAccount.fromJson(Map<String, dynamic> json) {
+  factory MsgConvertVestingAccount.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgConvertVestingAccount(
       vestingAddress: json.valueAsString<String?>(
         'vesting_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -778,11 +841,16 @@ class MsgConvertVestingAccountResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgConvertVestingAccountResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgConvertVestingAccountResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgConvertVestingAccountResponse();
   }
 

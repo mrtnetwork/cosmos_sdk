@@ -27,7 +27,7 @@ class ThorNodeRequestAssetSaversPosition
   Map<String, String?> get parameters => {"height": height?.toString()};
 
   @override
-  List<AssetSaverPositionResponse> onResonse(
+  List<AssetSaverPositionResponse> onResponse(
     List<Map<String, dynamic>> result,
   ) {
     return result.map((e) => AssetSaverPositionResponse.fromJson(e)).toList();

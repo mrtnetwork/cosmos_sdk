@@ -57,37 +57,48 @@ class GenesisVestingType extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'name': name,
-      'lockup_period': lockupPeriod?.toString(),
+      'lockup_period': config.encodeBigint(lockupPeriod),
       'lockup_period_unit': lockupPeriodUnit,
-      'vesting_period': vestingPeriod?.toString(),
+      'vesting_period': config.encodeBigint(vestingPeriod),
       'vesting_period_unit': vestingPeriodUnit,
       'free': free,
     };
   }
 
-  factory GenesisVestingType.fromJson(Map<String, dynamic> json) {
+  factory GenesisVestingType.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GenesisVestingType(
-      name: json.valueAsString<String?>('name', acceptCamelCase: true),
+      name: json.valueAsString<String?>(
+        'name',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       lockupPeriod: json.valueAsBigInt<BigInt?>(
         'lockup_period',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       lockupPeriodUnit: json.valueAsString<String?>(
         'lockup_period_unit',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       vestingPeriod: json.valueAsBigInt<BigInt?>(
         'vesting_period',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       vestingPeriodUnit: json.valueAsString<String?>(
         'vesting_period_unit',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      free: json.valueAsString<String?>('free', acceptCamelCase: true),
+      free: json.valueAsString<String?>(
+        'free',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

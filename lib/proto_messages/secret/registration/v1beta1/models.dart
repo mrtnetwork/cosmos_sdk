@@ -1,2 +1,2 @@
-export 'src/msg.dart';
 export 'src/query.dart';
+export 'src/msg.dart';

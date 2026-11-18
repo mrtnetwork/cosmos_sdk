@@ -29,13 +29,21 @@ class QueryVersionRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'height': height};
   }
 
-  factory QueryVersionRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryVersionRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryVersionRequest(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -98,24 +106,38 @@ class QueryVersionResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [current, next, nextSinceHeight, querier];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'current': current,
       'next': next,
-      'next_since_height': nextSinceHeight?.toString(),
+      'next_since_height': config.encodeBigint(nextSinceHeight),
       'querier': querier,
     };
   }
 
-  factory QueryVersionResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryVersionResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryVersionResponse(
-      current: json.valueAsString<String?>('current', acceptCamelCase: true),
-      next: json.valueAsString<String?>('next', acceptCamelCase: true),
+      current: json.valueAsString<String?>(
+        'current',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      next: json.valueAsString<String?>(
+        'next',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       nextSinceHeight: json.valueAsBigInt<BigInt?>(
         'next_since_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      querier: json.valueAsString<String?>('querier', acceptCamelCase: true),
+      querier: json.valueAsString<String?>(
+        'querier',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

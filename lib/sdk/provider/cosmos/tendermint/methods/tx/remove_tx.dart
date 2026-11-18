@@ -8,7 +8,7 @@ class TendermintRequestRemoveTx
   /// The transaction
   final String txKey;
 
-  /// Checks the transaction without executing it.
+  /// Removes a transaction from mempool.
   @override
   String get method => TendermintMethods.removeTx.url;
 
@@ -19,5 +19,5 @@ class TendermintRequestRemoveTx
   Map<String, String?> get parameters => {"txKey": txKey};
 
   @override
-  void onResonse(Map<String, dynamic> result) {}
+  void onResponse(Map<String, dynamic> result) {}
 }

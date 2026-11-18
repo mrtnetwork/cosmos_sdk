@@ -30,11 +30,16 @@ class ConfigRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory ConfigRequest.fromJson(Map<String, dynamic> json) {
+  factory ConfigRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ConfigRequest();
   }
 
@@ -98,32 +103,37 @@ class ConfigResponse extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'minimum_gas_price': minimumGasPrice,
       'pruning_keep_recent': pruningKeepRecent,
       'pruning_interval': pruningInterval,
-      'halt_height': haltHeight?.toString(),
+      'halt_height': config.encodeBigint(haltHeight),
     };
   }
 
-  factory ConfigResponse.fromJson(Map<String, dynamic> json) {
+  factory ConfigResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ConfigResponse(
       minimumGasPrice: json.valueAsString<String?>(
         'minimum_gas_price',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       pruningKeepRecent: json.valueAsString<String?>(
         'pruning_keep_recent',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       pruningInterval: json.valueAsString<String?>(
         'pruning_interval',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       haltHeight: json.valueAsBigInt<BigInt?>(
         'halt_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -169,11 +179,16 @@ class StatusRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory StatusRequest.fromJson(Map<String, dynamic> json) {
+  factory StatusRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return StatusRequest();
   }
 
@@ -206,18 +221,19 @@ class StatusResponse extends CosmosProtoMessage {
   final google_protobuf_timestamp.Timestamp? timestamp;
 
   /// block height timestamp
-  final List<int>? appHash;
+  final BuBytes? appHash;
 
   /// app hash of the current block
-  final List<int>? validatorHash;
+  final BuBytes? validatorHash;
 
-  const StatusResponse({
+  StatusResponse({
     this.earliestStoreHeight,
     this.height,
     this.timestamp,
-    this.appHash,
-    this.validatorHash,
-  });
+    List<int>? appHash,
+    List<int>? validatorHash,
+  }) : appHash = appHash?.asImmutableBytes,
+       validatorHash = validatorHash?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -246,49 +262,48 @@ class StatusResponse extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'earliest_store_height': earliestStoreHeight?.toString(),
-      'height': height?.toString(),
+      'earliest_store_height': config.encodeBigint(earliestStoreHeight),
+      'height': config.encodeBigint(height),
       'timestamp': timestamp?.toRfc3339(),
-      'app_hash': switch (appHash) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'validator_hash': switch (validatorHash) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'app_hash': config.encodeBinary(appHash),
+      'validator_hash': config.encodeBinary(validatorHash),
     };
   }
 
-  factory StatusResponse.fromJson(Map<String, dynamic> json) {
+  factory StatusResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return StatusResponse(
       earliestStoreHeight: json.valueAsBigInt<BigInt?>(
         'earliest_store_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      height: json.valueAsBigInt<BigInt?>('height', acceptCamelCase: true),
-      timestamp: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      height: json.valueAsBigInt<BigInt?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      timestamp: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'timestamp',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      appHash: json.valueAsBytes<List<int>?>(
-        'app_hash',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      appHash: config.decodeBinary<List<int>?>(
+        json.valueAs('app_hash', normalizeKeyLookup: config.normalizeKeys),
       ),
-      validatorHash: json.valueAsBytes<List<int>?>(
-        'validator_hash',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      validatorHash: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'validator_hash',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
     );
   }

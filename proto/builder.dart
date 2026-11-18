@@ -176,6 +176,7 @@ class CosmosProtoPackagesBuilder {
   const CosmosProtoPackagesBuilder._({required this.resolver});
   factory CosmosProtoPackagesBuilder() {
     final resolver = ProtoCompiler.fromDirectory(
+      builder: CosmosProtoCodegenTarget(),
       writer: ProtoPackageWriter(
         skipFiles: [
           ProtoWriteSkipFile(
@@ -241,4 +242,340 @@ void _process({
   );
   final exitCode = process.exitCode;
   assert(exitCode == 0, "Dart fix failed with exit code $exitCode");
+}
+
+class CosmosProtoCodegenTarget extends DefaultProtoCodegenTarget {
+  @override
+  String get messageBaseClassName => "CosmosProtoMessage";
+  static const List<String> alwaysIncludedPackagePrefixes = [
+    "injective.crypto",
+    "cosmos.evm.crypto",
+    "cosmos.crypto",
+    "cosmos.tx",
+    "ethermint.crypto",
+    "injective.crypto.v1beta1.ethsecp256k1",
+    "stratos.crypto.v1.ethsecp256k1",
+    "initia.crypto.v1beta1.ethsecp256k1",
+  ];
+  static const List<String> suppressedOptionPrefixes = [
+    "gogoproto",
+    "cosmos_proto.scalar",
+    "cosmos_proto.method_added_in",
+    "cosmos_proto.implements_interface",
+    "cosmos_proto.accepts_interface",
+    "cosmos_proto.accepts_interface",
+    "cosmos_proto.message_added_in",
+  ];
+
+  static const List<String> knownQueryServices = [
+    "Query",
+    "ABCIListenerService",
+    "Service",
+    "ReflectionService",
+    "QueryService",
+  ];
+  static const List<String> knownTxServices = [
+    "Msg",
+    "ABCI",
+    "MsgCreator",
+    "SQSIngester",
+    "Stream",
+    "LocalhostBifrost",
+  ];
+
+  static const queryMixinName = "ICosmosProtoQueryMessage";
+  static const serviceMixinName = "ICosmosProtoServiceMessage";
+  static const aminoMixinName = "ICosmosProtoAminoMessage";
+  static const aminoOptionKey = "amino.name";
+
+  const CosmosProtoCodegenTarget();
+
+  @override
+  List<ProtoOption> filterFieldOptions(ProtoField field) {
+    return field.options
+        .where(
+          (e) => !(suppressedOptionPrefixes.any((f) => e.name.startsWith(f))),
+        )
+        .toList();
+  }
+
+  @override
+  List<ProtoOption> filterMessageOptions(
+    ProtoMessage message,
+    List<ServiceMessageOption> services,
+  ) {
+    final List<ProtoOption> options = [
+      ...message.options,
+      ...services.expand((e) => e.rpc.options),
+    ];
+    return options
+        .where(
+          (e) => !(suppressedOptionPrefixes.any((f) => e.name.startsWith(f))),
+        )
+        .toList();
+  }
+
+  @override
+  List<String> defaultImports(ProtoFile file) {
+    return [
+      ...super.defaultImports(file),
+      "package:cosmos_sdk/proto_messages/types.dart",
+      "package:cosmos_sdk/sdk/serialization/serialization.dart",
+    ];
+  }
+
+  @override
+  List<String> mixinsFor(
+    ProtoMessage message,
+    ProtoCompiler resolver,
+    Set<ProtoTypeLocation> importRefrences,
+  ) {
+    if (message.services.isEmpty) return [];
+    List<String> mixins = [];
+    bool hasQuery = false;
+    bool hasTx = false;
+    for (final i in message.services) {
+      if (!hasQuery && knownQueryServices.contains(i.serviceName)) {
+        mixins.add(
+          '$queryMixinName<${ProtoRuntimeTypeMapper.bareDartType(type: i.type, importRefrences: importRefrences, resolver: resolver)}>',
+        );
+        hasQuery = true;
+        continue;
+      }
+      if (!hasTx && knownTxServices.contains(i.serviceName)) {
+        mixins.add(
+          '$serviceMixinName<${ProtoRuntimeTypeMapper.bareDartType(type: i.type, importRefrences: importRefrences, resolver: resolver)}>',
+        );
+        hasTx = true;
+      }
+    }
+    if (message.hasOption(aminoOptionKey)) {
+      mixins.add(aminoMixinName);
+    }
+
+    return mixins;
+  }
+
+  @override
+  String buildExtraMembers(
+    ProtoMessage message,
+    ProtoCompiler resolver,
+    Set<ProtoTypeLocation> importRefrences,
+  ) {
+    // Deliberately built from the proto package + declaration name only
+    // (never OnChainProtoUtils.className / classNamePrefix), so this stays a
+    // stable cross-run identifier even when classNamePrefix changes what
+    // the generated Dart class itself is called.
+    final name = OnChainProtoUtils.snakeToCamel(
+      "${message.package}.${message.fullName()}".replaceAll(".", "_"),
+      capitalizeFirst: false,
+    );
+    final buf = StringBuffer();
+    buf.writeln('  @override');
+    buf.writeln(
+      'DefaultCosmosProtoTypeUrl get declarationId => DefaultCosmosProtoTypeUrl.$name;',
+    );
+
+    final queryService = message.services.firstWhereNullable(
+      (e) => knownQueryServices.contains(e.serviceName),
+    );
+    if (queryService != null) {
+      final query = queryService.type;
+      buf.writeln('  @override');
+      buf.writeln(
+        '  ${ProtoRuntimeTypeMapper.bareDartType(type: query, importRefrences: importRefrences, resolver: resolver)} onQueryResponse(List<int> bytes) {',
+      );
+      buf.writeln(
+        "    return ${ProtoRuntimeTypeMapper.bareDartType(type: query, importRefrences: importRefrences, resolver: resolver)}.deserialize(bytes);",
+      );
+      buf.writeln('  }');
+      buf.writeln('  @override');
+      buf.writeln(
+        '  ${ProtoRuntimeTypeMapper.bareDartType(type: query, importRefrences: importRefrences, resolver: resolver)} onQueryResponseJson(Map<String, dynamic> json) {',
+      );
+      buf.writeln(
+        "     return ${ProtoRuntimeTypeMapper.bareDartType(type: query, importRefrences: importRefrences, resolver: resolver)}.fromJson(json);",
+      );
+      buf.writeln('  }');
+    }
+    final txService = message.services.firstWhereNullable(
+      (e) => knownTxServices.contains(e.serviceName),
+    );
+    if (txService != null) {
+      final request = txService.type;
+      buf.writeln('  @override');
+      buf.writeln(
+        '  ${ProtoRuntimeTypeMapper.bareDartType(type: request, importRefrences: importRefrences, resolver: resolver)} onServiceResponse(List<int> bytes) {',
+      );
+      buf.writeln(
+        "     return ${ProtoRuntimeTypeMapper.bareDartType(type: request, importRefrences: importRefrences, resolver: resolver)}.deserialize(bytes);",
+      );
+      buf.writeln('  }');
+      buf.writeln('  @override');
+      buf.writeln(
+        '  ${ProtoRuntimeTypeMapper.bareDartType(type: request, importRefrences: importRefrences, resolver: resolver)} onServiceResponseJson(Map<String, dynamic> json) {',
+      );
+      buf.writeln(
+        "      return ${ProtoRuntimeTypeMapper.bareDartType(type: request, importRefrences: importRefrences, resolver: resolver)}.fromJson(json);",
+      );
+      buf.writeln('  }');
+    }
+
+    return buf.toString();
+  }
+
+  @override
+  List<ProtoService> filterServices(List<ProtoService> services) {
+    return services
+        .where(
+          (e) =>
+              knownQueryServices.contains(e.name) ||
+              knownTxServices.contains(e.name),
+        )
+        .toList();
+  }
+
+  @override
+  String? buildToJson(
+    ProtoMessage message,
+    ProtoCompiler resolver, {
+    bool camelCase = false,
+    bool allowNullValue = true,
+    String configGetter =
+        "ProtoJsonConfig config = DefaultProtoJsonConfig.defaultConfig",
+  }) {
+    return super.buildToJson(
+      message,
+      resolver,
+      camelCase: camelCase,
+      allowNullValue: allowNullValue,
+      configGetter:
+          "CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig",
+    );
+  }
+
+  @override
+  String? buildFromJson(
+    ProtoMessage message,
+    ProtoCompiler resolver,
+    String className,
+    Set<ProtoTypeLocation> importRefrences, {
+    bool camelCase = false,
+    bool defaultOnMissing = true,
+    StringBuffer? buf,
+    String configGetter =
+        "CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig",
+  }) {
+    // StringBuffer? buf;
+    if (OnChainProtoUtils.isGoogleTimestamp(message.package, message.name)) {
+      buf ??= StringBuffer();
+      buf.writeln('  factory $className.fromRfc3339(String timestamp) {');
+      buf.writeln(
+        '    final data = ProtoUtils.timestampFromRfc3339(timestamp);',
+      );
+      buf.writeln(
+        '    return $className(seconds: BigInt.from(data.seconds), nanos: data.nanos);',
+      );
+      buf.writeln('  }');
+      buf.writeln();
+      buf.writeln('  String toRfc3339()');
+      buf.writeln('  {');
+      buf.writeln(
+        '  return ProtoUtils.timestampToRfc3339(seconds?.asSafeInt ?? 0  ,nanos??0);',
+      );
+      buf.writeln('  }');
+    }
+    if (OnChainProtoUtils.isGoogleDuration(message.package, message.name)) {
+      buf ??= StringBuffer();
+      buf.writeln('  factory $className.fromString(String duration) {');
+      buf.writeln(
+        '    final data = ProtoUtils.googleDurationFromJson(duration);',
+      );
+      buf.writeln(
+        '    return $className(seconds: data.seconds, nanos: data.nanos);',
+      );
+      buf.writeln('  }');
+      buf.writeln();
+      buf.writeln('  String encodeString({bool asNanos = true})');
+      buf.writeln('  {');
+      buf.writeln(
+        '  return ProtoUtils.googleDurationToJson(seconds??BigInt.zero  ,nanos??0, asNanos:asNanos);',
+      );
+      buf.writeln('  }');
+    }
+
+    return super.buildFromJson(
+      message,
+      resolver,
+      className,
+      importRefrences,
+      configGetter: configGetter,
+      camelCase: camelCase,
+      buf: buf,
+      defaultOnMissing: defaultOnMissing,
+    );
+  }
+
+  @override
+  ({
+    List<ProtoMessageRefrence> references,
+    List<ProtoDeclaration> declarations,
+  })?
+  computeReferenceClosure(
+    Map<String, GeneratedProtoPackage> generatedPackages,
+  ) {
+    List<ProtoMessageRefrence> references = [];
+    List<ProtoDeclaration> declarations = [];
+    List<ProtoMessageRefrence> collectTransitiveReferences(
+      ProtoMessageRefrence reference,
+    ) {
+      final package = generatedPackages[reference.package]!;
+      List<ProtoMessageRefrence> nestedReferences = [];
+      ProtoDeclaration? declaration;
+      for (final i in package.files) {
+        declaration ??= i.file.messages.firstWhereNullable(
+          (e) => e.isEqualTo(reference),
+        );
+        declaration ??= i.file.enums.firstWhereNullable(
+          (e) => e.isEqualTo(reference),
+        );
+        if (declaration != null) break;
+      }
+      if (declarations.contains(declaration)) return [];
+      assert(declaration != null);
+      if (declaration == null) return nestedReferences;
+      declarations.add(declaration);
+      final r = declaration.refTypes();
+      for (final i in r) {
+        nestedReferences.addAll(collectTransitiveReferences(i));
+      }
+      return nestedReferences;
+    }
+
+    // Seed the closure: messages that already carry a service (RPC
+    // request/response types are always relevant) plus everything in a
+    // target's always-included packages (e.g. crypto key types that get
+    // referenced only via `Any`, so no ordinary field reference would
+    // otherwise pull them in).
+    List<ProtoMessageRefrence> seedReferences = [];
+    for (final i in generatedPackages.values) {
+      for (final f in i.files) {
+        final bool alwaysIncluded = alwaysIncludedPackagePrefixes.any(
+          (e) => f.file.package.startsWith(e),
+        );
+        for (final m in f.file.messages) {
+          if (m.services.isNotEmpty || alwaysIncluded) {
+            seedReferences.addAll(m.refTypes());
+            declarations.add(m);
+          }
+        }
+      }
+    }
+
+    references = List.from(seedReferences, growable: true);
+    for (final i in seedReferences) {
+      references.addAll(collectTransitiveReferences(i));
+    }
+    return (references: references, declarations: declarations);
+  }
 }

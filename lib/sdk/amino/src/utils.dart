@@ -1,5 +1,4 @@
 import 'package:blockchain_utils/blockchain_utils.dart'; // Bech32Encoder
-import 'package:cosmos_sdk/sdk/exception/exception.dart';
 import 'package:cosmos_sdk/sdk/types/bech32_config.dart';
 
 /// expected options
@@ -137,7 +136,8 @@ class CosmosAminoUtils {
         final bytes =
             value is List<int>
                 ? value
-                : throw AminoJsonParserException(
+                : throw BuError(
+                  DefaultErrorType.invalidArgument,
                   'bech32 encoding expects raw bytes, got ${value.runtimeType}',
                 );
         final addressType = _addressTypeOption(fieldOptions);

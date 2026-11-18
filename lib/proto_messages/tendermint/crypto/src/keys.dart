@@ -4,11 +4,13 @@ import 'package:cosmos_sdk/sdk/serialization/serialization.dart';
 
 /// PublicKey defines the keys available for use with Validators
 class PublicKey extends CosmosProtoMessage {
-  final List<int>? ed25519;
+  final BuBytes? ed25519;
 
-  final List<int>? secp256k1;
+  final BuBytes? secp256k1;
 
-  const PublicKey({this.ed25519, this.secp256k1});
+  PublicKey({List<int>? ed25519, List<int>? secp256k1})
+    : ed25519 = ed25519?.asImmutableBytes,
+      secp256k1 = secp256k1?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -25,36 +27,25 @@ class PublicKey extends CosmosProtoMessage {
   List<Object?> get protoValues => [ed25519, secp256k1];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'ed25519': switch (ed25519) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'secp256k1': switch (secp256k1) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'ed25519': config.encodeBinary(ed25519),
+      'secp256k1': config.encodeBinary(secp256k1),
     };
   }
 
-  factory PublicKey.fromJson(Map<String, dynamic> json) {
+  factory PublicKey.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return PublicKey(
-      ed25519: json.valueAsBytes<List<int>?>(
-        'ed25519',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      ed25519: config.decodeBinary<List<int>?>(
+        json.valueAs('ed25519', normalizeKeyLookup: config.normalizeKeys),
       ),
-      secp256k1: json.valueAsBytes<List<int>?>(
-        'secp256k1',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      secp256k1: config.decodeBinary<List<int>?>(
+        json.valueAs('secp256k1', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }

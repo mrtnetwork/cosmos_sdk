@@ -17,9 +17,9 @@ class TendermintMethods {
     "/status",
   );
 
-  /// Network informations
+  /// Network information
   static const TendermintMethods netInfo = TendermintMethods._(
-    "Network informations",
+    "Network information",
     "/net_info",
   );
 
@@ -161,9 +161,9 @@ class TendermintMethods {
     "/abci_query",
   );
 
-  /// Dial a peer, this route in under unsafe, and has to manually enabled to use
+  /// Dial a peer. This route is under unsafe and has to be manually enabled to use.
   static const TendermintMethods dialSeeds = TendermintMethods._(
-    "Dial a peer, this route in under unsafe, and has to manually enabled to use",
+    "Dial a peer. This route is under unsafe and has to be manually enabled to use.",
     "/dial_seeds",
   );
 

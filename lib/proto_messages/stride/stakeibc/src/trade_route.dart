@@ -70,39 +70,47 @@ class TradeConfig extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'pool_id': poolId?.toString(),
+      'pool_id': config.encodeBigint(poolId),
       'swap_price': swapPrice,
-      'price_update_timestamp': priceUpdateTimestamp?.toString(),
+      'price_update_timestamp': config.encodeBigint(priceUpdateTimestamp),
       'max_allowed_swap_loss_rate': maxAllowedSwapLossRate,
       'min_swap_amount': minSwapAmount,
       'max_swap_amount': maxSwapAmount,
     };
   }
 
-  factory TradeConfig.fromJson(Map<String, dynamic> json) {
+  factory TradeConfig.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return TradeConfig(
-      poolId: json.valueAsBigInt<BigInt?>('pool_id', acceptCamelCase: true),
+      poolId: json.valueAsBigInt<BigInt?>(
+        'pool_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       swapPrice: json.valueAsString<String?>(
         'swap_price',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       priceUpdateTimestamp: json.valueAsBigInt<BigInt?>(
         'price_update_timestamp',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       maxAllowedSwapLossRate: json.valueAsString<String?>(
         'max_allowed_swap_loss_rate',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       minSwapAmount: json.valueAsString<String?>(
         'min_swap_amount',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       maxSwapAmount: json.valueAsString<String?>(
         'max_swap_amount',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -244,90 +252,102 @@ class TradeRoute extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'reward_denom_on_host_zone': rewardDenomOnHostZone,
       'reward_denom_on_reward_zone': rewardDenomOnRewardZone,
       'reward_denom_on_trade_zone': rewardDenomOnTradeZone,
       'host_denom_on_trade_zone': hostDenomOnTradeZone,
       'host_denom_on_host_zone': hostDenomOnHostZone,
-      'host_account': hostAccount?.toJson(),
-      'reward_account': rewardAccount?.toJson(),
-      'trade_account': tradeAccount?.toJson(),
+      'host_account': config.encodeMessage(hostAccount),
+      'reward_account': config.encodeMessage(rewardAccount),
+      'trade_account': config.encodeMessage(tradeAccount),
       'host_to_reward_channel_id': hostToRewardChannelId,
       'reward_to_trade_channel_id': rewardToTradeChannelId,
       'trade_to_host_channel_id': tradeToHostChannelId,
       'min_transfer_amount': minTransferAmount,
-      'trade_config': tradeConfig?.toJson(),
+      'trade_config': config.encodeMessage(tradeConfig),
     };
   }
 
-  factory TradeRoute.fromJson(Map<String, dynamic> json) {
+  factory TradeRoute.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return TradeRoute(
       rewardDenomOnHostZone: json.valueAsString<String?>(
         'reward_denom_on_host_zone',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       rewardDenomOnRewardZone: json.valueAsString<String?>(
         'reward_denom_on_reward_zone',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       rewardDenomOnTradeZone: json.valueAsString<String?>(
         'reward_denom_on_trade_zone',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       hostDenomOnTradeZone: json.valueAsString<String?>(
         'host_denom_on_trade_zone',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       hostDenomOnHostZone: json.valueAsString<String?>(
         'host_denom_on_host_zone',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      hostAccount: json.valueTo<
-        stride_stakeibc_ica_account.ICAAccount?,
-        Map<String, dynamic>
-      >(
-        key: 'host_account',
-        parse: (v) => stride_stakeibc_ica_account.ICAAccount.fromJson(v),
-        acceptCamelCase: true,
-      ),
-      rewardAccount: json.valueTo<
-        stride_stakeibc_ica_account.ICAAccount?,
-        Map<String, dynamic>
-      >(
-        key: 'reward_account',
-        parse: (v) => stride_stakeibc_ica_account.ICAAccount.fromJson(v),
-        acceptCamelCase: true,
-      ),
-      tradeAccount: json.valueTo<
-        stride_stakeibc_ica_account.ICAAccount?,
-        Map<String, dynamic>
-      >(
-        key: 'trade_account',
-        parse: (v) => stride_stakeibc_ica_account.ICAAccount.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      hostAccount: json
+          .valueTo<stride_stakeibc_ica_account.ICAAccount?, Object>(
+            key: 'host_account',
+            parse:
+                (v) => stride_stakeibc_ica_account.ICAAccount.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
+      rewardAccount: json
+          .valueTo<stride_stakeibc_ica_account.ICAAccount?, Object>(
+            key: 'reward_account',
+            parse:
+                (v) => stride_stakeibc_ica_account.ICAAccount.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
+      tradeAccount: json
+          .valueTo<stride_stakeibc_ica_account.ICAAccount?, Object>(
+            key: 'trade_account',
+            parse:
+                (v) => stride_stakeibc_ica_account.ICAAccount.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
       hostToRewardChannelId: json.valueAsString<String?>(
         'host_to_reward_channel_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       rewardToTradeChannelId: json.valueAsString<String?>(
         'reward_to_trade_channel_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       tradeToHostChannelId: json.valueAsString<String?>(
         'trade_to_host_channel_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       minTransferAmount: json.valueAsString<String?>(
         'min_transfer_amount',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      tradeConfig: json.valueTo<TradeConfig?, Map<String, dynamic>>(
+      tradeConfig: json.valueTo<TradeConfig?, Object>(
         key: 'trade_config',
-        parse: (v) => TradeConfig.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => TradeConfig.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

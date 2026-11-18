@@ -33,14 +33,25 @@ class QueryTssKeygenMetricRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [pubKey, height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'pub_key': pubKey, 'height': height};
   }
 
-  factory QueryTssKeygenMetricRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryTssKeygenMetricRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTssKeygenMetricRequest(
-      pubKey: json.valueAsString<String?>('pub_key', acceptCamelCase: true),
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      pubKey: json.valueAsString<String?>(
+        'pub_key',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -91,22 +102,34 @@ class QueryTssKeygenMetricResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [metrics];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'metrics': metrics.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'metrics': metrics.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory QueryTssKeygenMetricResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryTssKeygenMetricResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTssKeygenMetricResponse(
       metrics:
-          (json.valueEnsureAsList<dynamic>('metrics', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'metrics',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   types_type_tss_metric.TssKeygenMetric,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
-                      (v) => types_type_tss_metric.TssKeygenMetric.fromJson(v),
+                      (v) => types_type_tss_metric.TssKeygenMetric.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -156,13 +179,21 @@ class QueryTssMetricRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'height': height};
   }
 
-  factory QueryTssMetricRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryTssMetricRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTssMetricRequest(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -214,35 +245,48 @@ class QueryTssMetricResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [keygen, keysign];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'keygen': keygen.map((e) => e.toJson()).toList(),
-      'keysign': keysign?.toJson(),
+      'keygen': keygen.map((e) => config.encodeMessage(e)).toList(),
+      'keysign': config.encodeMessage(keysign),
     };
   }
 
-  factory QueryTssMetricResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryTssMetricResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTssMetricResponse(
       keygen:
-          (json.valueEnsureAsList<dynamic>('keygen', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'keygen',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   types_type_tss_metric.TssKeygenMetric,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
-                      (v) => types_type_tss_metric.TssKeygenMetric.fromJson(v),
+                      (v) => types_type_tss_metric.TssKeygenMetric.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
-      keysign: json.valueTo<
-        types_type_tss_metric.TssKeysignMetric?,
-        Map<String, dynamic>
-      >(
+      keysign: json.valueTo<types_type_tss_metric.TssKeysignMetric?, Object>(
         key: 'keysign',
-        parse: (v) => types_type_tss_metric.TssKeysignMetric.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => types_type_tss_metric.TssKeysignMetric.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

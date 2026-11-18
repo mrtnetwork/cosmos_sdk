@@ -22,13 +22,21 @@ class ProtoInt64 extends CosmosProtoMessage {
   List<Object?> get protoValues => [value];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'value': value?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'value': config.encodeBigint(value)};
   }
 
-  factory ProtoInt64.fromJson(Map<String, dynamic> json) {
+  factory ProtoInt64.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ProtoInt64(
-      value: json.valueAsBigInt<BigInt?>('value', acceptCamelCase: true),
+      value: json.valueAsBigInt<BigInt?>(
+        'value',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

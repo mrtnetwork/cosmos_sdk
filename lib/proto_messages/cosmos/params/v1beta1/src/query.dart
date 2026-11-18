@@ -36,14 +36,25 @@ class QueryParamsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [subspace, key];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'subspace': subspace, 'key': key};
   }
 
-  factory QueryParamsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsRequest(
-      subspace: json.valueAsString<String?>('subspace', acceptCamelCase: true),
-      key: json.valueAsString<String?>('key', acceptCamelCase: true),
+      subspace: json.valueAsString<String?>(
+        'subspace',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      key: json.valueAsString<String?>(
+        'key',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -96,19 +107,25 @@ class QueryParamsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [param];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'param': param?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'param': config.encodeMessage(param)};
   }
 
-  factory QueryParamsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsResponse(
-      param: json.valueTo<
-        cosmos_params_v1beta1_params.ParamChange?,
-        Map<String, dynamic>
-      >(
+      param: json.valueTo<cosmos_params_v1beta1_params.ParamChange?, Object>(
         key: 'param',
-        parse: (v) => cosmos_params_v1beta1_params.ParamChange.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => cosmos_params_v1beta1_params.ParamChange.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -155,11 +172,16 @@ class QuerySubspacesRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QuerySubspacesRequest.fromJson(Map<String, dynamic> json) {
+  factory QuerySubspacesRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QuerySubspacesRequest();
   }
 
@@ -208,18 +230,33 @@ class QuerySubspacesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [subspaces];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'subspaces': subspaces.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'subspaces': subspaces.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
-  factory QuerySubspacesResponse.fromJson(Map<String, dynamic> json) {
+  factory QuerySubspacesResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QuerySubspacesResponse(
       subspaces:
-          (json.valueEnsureAsList<dynamic>('subspaces', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'subspaces',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<Subspace, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<Subspace, Object>(
                   value: e,
-                  parse: (v) => Subspace.fromJson(v),
+                  parse:
+                      (v) => Subspace.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -269,17 +306,26 @@ class Subspace extends CosmosProtoMessage {
   List<Object?> get protoValues => [subspace, keys];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'subspace': subspace, 'keys': keys.map((e) => e).toList()};
   }
 
-  factory Subspace.fromJson(Map<String, dynamic> json) {
+  factory Subspace.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Subspace(
-      subspace: json.valueAsString<String?>('subspace', acceptCamelCase: true),
+      subspace: json.valueAsString<String?>(
+        'subspace',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       keys:
           (json.valueEnsureAsList<dynamic>(
             'keys',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
     );
   }

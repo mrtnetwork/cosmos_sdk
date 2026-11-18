@@ -33,27 +33,42 @@ class Schedule extends CosmosProtoMessage {
   List<Object?> get protoValues => [height, msgs];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'height': height?.toString(),
-      'msgs': msgs.map((e) => e.toJson()).toList(),
+      'height': config.encodeBigint(height),
+      'msgs': msgs.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory Schedule.fromJson(Map<String, dynamic> json) {
+  factory Schedule.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Schedule(
-      height: json.valueAsBigInt<BigInt?>('height', acceptCamelCase: true),
+      height: json.valueAsBigInt<BigInt?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       msgs:
-          (json.valueEnsureAsList<dynamic>('msgs', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'msgs',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   thorchain_scheduler_v1_tx.MsgScheduleExecuteContract,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => thorchain_scheduler_v1_tx
-                          .MsgScheduleExecuteContract.fromJson(v),
+                          .MsgScheduleExecuteContract.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),

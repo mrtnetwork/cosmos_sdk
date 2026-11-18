@@ -23,18 +23,32 @@ enum Type implements ProtoEnumVariant {
 
   /// Looks up a value by its proto wire int. Throws if not found.
   static Type fromValue(int? value) {
+    value ??= 0;
     return Type.values.firstWhere(
       (e) => e.value == value,
-      orElse: () => throw ItemNotFoundException(name: "Type", value: value),
+      orElse:
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching Type found for the given value. $value",
+                details: {"name": "Type", "value": value?.toString()},
+              ),
     );
   }
 
   /// Looks up a value by wire int, Dart enum name, or original proto
   /// name (whichever [value] happens to be). Throws if not found.
   static Type from(Object? value) {
+    value ??= 0;
     return Type.values.firstWhere(
       (e) => e.value == value || e.name == value || e.protoName == value,
-      orElse: () => throw ItemNotFoundException(name: "Type", value: value),
+      orElse:
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching Type found for the given value. $value",
+                details: {"name": "Type", "value": value?.toString()},
+              ),
     );
   }
 }
@@ -43,11 +57,12 @@ enum Type implements ProtoEnumVariant {
 class InterchainAccountPacketData extends CosmosProtoMessage {
   final Type? type;
 
-  final List<int>? data;
+  final BuBytes? data;
 
   final String? memo;
 
-  const InterchainAccountPacketData({this.type, this.data, this.memo});
+  InterchainAccountPacketData({this.type, List<int>? data, this.memo})
+    : data = data?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -68,32 +83,32 @@ class InterchainAccountPacketData extends CosmosProtoMessage {
   List<Object?> get protoValues => [type, data, memo];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'type': type?.protoName,
-      'data': switch (data) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'type': config.encodeEnum(type),
+      'data': config.encodeBinary(data),
       'memo': memo,
     };
   }
 
-  factory InterchainAccountPacketData.fromJson(Map<String, dynamic> json) {
+  factory InterchainAccountPacketData.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return InterchainAccountPacketData(
       type: json.valueTo<Type?, Object?>(
         key: 'type',
         parse: (v) => Type.from(v),
       ),
-      data: json.valueAsBytes<List<int>?>(
-        'data',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      data: config.decodeBinary<List<int>?>(
+        json.valueAs('data', normalizeKeyLookup: config.normalizeKeys),
       ),
-      memo: json.valueAsString<String?>('memo', acceptCamelCase: true),
+      memo: json.valueAsString<String?>(
+        'memo',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

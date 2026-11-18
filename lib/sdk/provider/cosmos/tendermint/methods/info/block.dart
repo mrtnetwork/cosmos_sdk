@@ -22,7 +22,7 @@ class TendermintRequestBlock
   Map<String, String?> get parameters => {"height": height?.toString()};
 
   @override
-  TendermintBlockComplete onResonse(Map<String, dynamic> result) {
+  TendermintBlockComplete onResponse(Map<String, dynamic> result) {
     return TendermintBlockComplete.fromJson(result);
   }
 }

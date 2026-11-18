@@ -117,16 +117,18 @@ class TxOutItem extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'chain': chain,
       'to_address': toAddress,
       'vault_pub_key': vaultPubKey,
-      'coin': coin?.toJson(),
+      'coin': config.encodeMessage(coin),
       'memo': memo,
       'original_memo': originalMemo,
-      'max_gas': maxGas.map((e) => e.toJson()).toList(),
-      'gas_rate': gasRate?.toString(),
+      'max_gas': maxGas.map((e) => config.encodeMessage(e)).toList(),
+      'gas_rate': config.encodeBigint(gasRate),
       'in_hash': inHash,
       'out_hash': outHash,
       'module_name': moduleName,
@@ -139,66 +141,96 @@ class TxOutItem extends CosmosProtoMessage {
     };
   }
 
-  factory TxOutItem.fromJson(Map<String, dynamic> json) {
+  factory TxOutItem.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return TxOutItem(
-      chain: json.valueAsString<String?>('chain', acceptCamelCase: true),
+      chain: json.valueAsString<String?>(
+        'chain',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       toAddress: json.valueAsString<String?>(
         'to_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       vaultPubKey: json.valueAsString<String?>(
         'vault_pub_key',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      coin: json.valueTo<common_common.Coin?, Map<String, dynamic>>(
+      coin: json.valueTo<common_common.Coin?, Object>(
         key: 'coin',
-        parse: (v) => common_common.Coin.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => common_common.Coin.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      memo: json.valueAsString<String?>('memo', acceptCamelCase: true),
+      memo: json.valueAsString<String?>(
+        'memo',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       originalMemo: json.valueAsString<String?>(
         'original_memo',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       maxGas:
-          (json.valueEnsureAsList<dynamic>('max_gas', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'max_gas',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  common_common.Coin,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => common_common.Coin.fromJson(v)),
+                (e) => JsonParser.valueTo<common_common.Coin, Object>(
+                  value: e,
+                  parse:
+                      (v) => common_common.Coin.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
-      gasRate: json.valueAsBigInt<BigInt?>('gas_rate', acceptCamelCase: true),
-      inHash: json.valueAsString<String?>('in_hash', acceptCamelCase: true),
-      outHash: json.valueAsString<String?>('out_hash', acceptCamelCase: true),
+      gasRate: json.valueAsBigInt<BigInt?>(
+        'gas_rate',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      inHash: json.valueAsString<String?>(
+        'in_hash',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      outHash: json.valueAsString<String?>(
+        'out_hash',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       moduleName: json.valueAsString<String?>(
         'module_name',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       aggregator: json.valueAsString<String?>(
         'aggregator',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       aggregatorTargetAsset: json.valueAsString<String?>(
         'aggregator_target_asset',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       aggregatorTargetLimit: json.valueAsString<String?>(
         'aggregator_target_limit',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       cloutSpent: json.valueAsString<String?>(
         'clout_spent',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       vaultPubKeyEddsa: json.valueAsString<String?>(
         'vault_pub_key_eddsa',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       vaultPubKeyFrost: json.valueAsString<String?>(
         'vault_pub_key_frost',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -267,22 +299,38 @@ class TxOut extends CosmosProtoMessage {
   List<Object?> get protoValues => [height, txArray];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'height': height?.toString(),
-      'tx_array': txArray.map((e) => e.toJson()).toList(),
+      'height': config.encodeBigint(height),
+      'tx_array': txArray.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory TxOut.fromJson(Map<String, dynamic> json) {
+  factory TxOut.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return TxOut(
-      height: json.valueAsBigInt<BigInt?>('height', acceptCamelCase: true),
+      height: json.valueAsBigInt<BigInt?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       txArray:
-          (json.valueEnsureAsList<dynamic>('tx_array', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'tx_array',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<TxOutItem, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<TxOutItem, Object>(
                   value: e,
-                  parse: (v) => TxOutItem.fromJson(v),
+                  parse:
+                      (v) => TxOutItem.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),

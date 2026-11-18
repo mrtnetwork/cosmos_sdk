@@ -13,7 +13,7 @@ class TendermintRequestConsensusParams
   TendermintRequestConsensusParams({this.height});
 
   /// height to return. If no height is provided,
-  /// it will fetch commit informations regarding the latest block.
+  /// it will fetch commit information regarding the latest block.
   final int? height;
 
   /// Get consensus parameters
@@ -27,7 +27,7 @@ class TendermintRequestConsensusParams
   Map<String, String?> get parameters => {"height": height?.toString()};
 
   @override
-  TendermintConsensusParamsResponseResult onResonse(
+  TendermintConsensusParamsResponseResult onResponse(
     Map<String, dynamic> result,
   ) {
     return TendermintConsensusParamsResponseResult.fromJson(result);

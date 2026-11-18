@@ -2,7 +2,7 @@ import 'package:cosmos_sdk/sdk/provider/thornode/core/core.dart';
 import 'package:cosmos_sdk/sdk/provider/thornode/core/thorenode.dart';
 import 'package:cosmos_sdk/sdk/provider/thornode/models/models/pool.dart';
 
-/// Returns protocol owned liquidity overview statistics..
+/// Returns protocol owned liquidity overview statistics.
 class ThorNodeRequestPolStatics
     extends ThorNodeRequestParam<PolStaticsResponse, Map<String, dynamic>> {
   ThorNodeRequestPolStatics({this.height});
@@ -19,7 +19,7 @@ class ThorNodeRequestPolStatics
   Map<String, String?> get parameters => {"height": height?.toString()};
 
   @override
-  PolStaticsResponse onResonse(Map<String, dynamic> result) {
+  PolStaticsResponse onResponse(Map<String, dynamic> result) {
     return PolStaticsResponse.fromJson(result);
   }
 }

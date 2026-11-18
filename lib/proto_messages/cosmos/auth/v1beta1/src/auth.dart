@@ -50,28 +50,43 @@ class BaseAccount extends CosmosProtoMessage {
   List<Object?> get protoValues => [address, pubKey, accountNumber, sequence];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'address': address,
-      'pub_key': pubKey?.toJson(),
-      'account_number': accountNumber?.toString(),
-      'sequence': sequence?.toString(),
+      'pub_key': config.encodeMessage(pubKey),
+      'account_number': config.encodeBigint(accountNumber),
+      'sequence': config.encodeBigint(sequence),
     };
   }
 
-  factory BaseAccount.fromJson(Map<String, dynamic> json) {
+  factory BaseAccount.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return BaseAccount(
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
-      pubKey: json.valueTo<google_protobuf_any.Any?, Map<String, dynamic>>(
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      pubKey: json.valueTo<google_protobuf_any.Any?, Object>(
         key: 'pub_key',
-        parse: (v) => google_protobuf_any.Any.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_any.Any.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       accountNumber: json.valueAsBigInt<BigInt?>(
         'account_number',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      sequence: json.valueAsBigInt<BigInt?>('sequence', acceptCamelCase: true),
+      sequence: json.valueAsBigInt<BigInt?>(
+        'sequence',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -145,37 +160,42 @@ class Params extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'max_memo_characters': maxMemoCharacters?.toString(),
-      'tx_sig_limit': txSigLimit?.toString(),
-      'tx_size_cost_per_byte': txSizeCostPerByte?.toString(),
-      'sig_verify_cost_ed25519': sigVerifyCostEd25519?.toString(),
-      'sig_verify_cost_secp256k1': sigVerifyCostSecp256k1?.toString(),
+      'max_memo_characters': config.encodeBigint(maxMemoCharacters),
+      'tx_sig_limit': config.encodeBigint(txSigLimit),
+      'tx_size_cost_per_byte': config.encodeBigint(txSizeCostPerByte),
+      'sig_verify_cost_ed25519': config.encodeBigint(sigVerifyCostEd25519),
+      'sig_verify_cost_secp256k1': config.encodeBigint(sigVerifyCostSecp256k1),
     };
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
       maxMemoCharacters: json.valueAsBigInt<BigInt?>(
         'max_memo_characters',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       txSigLimit: json.valueAsBigInt<BigInt?>(
         'tx_sig_limit',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       txSizeCostPerByte: json.valueAsBigInt<BigInt?>(
         'tx_size_cost_per_byte',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       sigVerifyCostEd25519: json.valueAsBigInt<BigInt?>(
         'sig_verify_cost_ed25519',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       sigVerifyCostSecp256k1: json.valueAsBigInt<BigInt?>(
         'sig_verify_cost_secp256k1',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

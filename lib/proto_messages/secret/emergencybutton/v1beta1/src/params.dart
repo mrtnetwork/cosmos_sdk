@@ -28,19 +28,24 @@ class Params extends CosmosProtoMessage {
   List<Object?> get protoValues => [switchStatus, pauserAddress];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'switch_status': switchStatus, 'pauser_address': pauserAddress};
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
       switchStatus: json.valueAsString<String?>(
         'switch_status',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       pauserAddress: json.valueAsString<String?>(
         'pauser_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

@@ -35,17 +35,25 @@ class ValidatorPreference extends CosmosProtoMessage {
   List<Object?> get protoValues => [valOperAddress, weight];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'val_oper_address': valOperAddress, 'weight': weight};
   }
 
-  factory ValidatorPreference.fromJson(Map<String, dynamic> json) {
+  factory ValidatorPreference.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ValidatorPreference(
       valOperAddress: json.valueAsString<String?>(
         'val_oper_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      weight: json.valueAsString<String?>('weight', acceptCamelCase: true),
+      weight: json.valueAsString<String?>(
+        'weight',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

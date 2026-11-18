@@ -85,49 +85,73 @@ class SmoothWeightChangeParams extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'start_time': startTime?.toRfc3339(),
       'duration': duration?.encodeString(asNanos: true),
       'initial_pool_weights':
-          initialPoolWeights.map((e) => e.toJson()).toList(),
-      'target_pool_weights': targetPoolWeights.map((e) => e.toJson()).toList(),
+          initialPoolWeights.map((e) => config.encodeMessage(e)).toList(),
+      'target_pool_weights':
+          targetPoolWeights.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory SmoothWeightChangeParams.fromJson(Map<String, dynamic> json) {
+  factory SmoothWeightChangeParams.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SmoothWeightChangeParams(
-      startTime: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      startTime: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'start_time',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      duration: json.valueTo<google_protobuf_duration.Duration?, String>(
+      duration: json.valueTo<google_protobuf_duration.Duration?, Object>(
         key: 'duration',
-        parse: (v) => google_protobuf_duration.Duration.fromString(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_duration.Duration.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       initialPoolWeights:
           (json.valueEnsureAsList<dynamic>(
                 'initial_pool_weights',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<PoolAsset, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<PoolAsset, Object>(
                   value: e,
-                  parse: (v) => PoolAsset.fromJson(v),
+                  parse:
+                      (v) => PoolAsset.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       targetPoolWeights:
           (json.valueEnsureAsList<dynamic>(
                 'target_pool_weights',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<PoolAsset, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<PoolAsset, Object>(
                   value: e,
-                  parse: (v) => PoolAsset.fromJson(v),
+                  parse:
+                      (v) => PoolAsset.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -209,24 +233,40 @@ class PoolParams extends CosmosProtoMessage {
   List<Object?> get protoValues => [swapFee, exitFee, smoothWeightChangeParams];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'swap_fee': swapFee,
       'exit_fee': exitFee,
-      'smooth_weight_change_params': smoothWeightChangeParams?.toJson(),
+      'smooth_weight_change_params': config.encodeMessage(
+        smoothWeightChangeParams,
+      ),
     };
   }
 
-  factory PoolParams.fromJson(Map<String, dynamic> json) {
+  factory PoolParams.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return PoolParams(
-      swapFee: json.valueAsString<String?>('swap_fee', acceptCamelCase: true),
-      exitFee: json.valueAsString<String?>('exit_fee', acceptCamelCase: true),
-      smoothWeightChangeParams: json
-          .valueTo<SmoothWeightChangeParams?, Map<String, dynamic>>(
-            key: 'smooth_weight_change_params',
-            parse: (v) => SmoothWeightChangeParams.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      swapFee: json.valueAsString<String?>(
+        'swap_fee',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      exitFee: json.valueAsString<String?>(
+        'exit_fee',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      smoothWeightChangeParams: json.valueTo<SmoothWeightChangeParams?, Object>(
+        key: 'smooth_weight_change_params',
+        parse:
+            (v) => SmoothWeightChangeParams.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -279,18 +319,30 @@ class PoolAsset extends CosmosProtoMessage {
   List<Object?> get protoValues => [token, weight];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'token': token?.toJson(), 'weight': weight};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'token': config.encodeMessage(token), 'weight': weight};
   }
 
-  factory PoolAsset.fromJson(Map<String, dynamic> json) {
+  factory PoolAsset.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return PoolAsset(
-      token: json.valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
+      token: json.valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
         key: 'token',
-        parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      weight: json.valueAsString<String?>('weight', acceptCamelCase: true),
+      weight: json.valueAsString<String?>(
+        'weight',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

@@ -19,20 +19,32 @@ enum KeygenType implements ProtoEnumVariant {
 
   /// Looks up a value by its proto wire int. Throws if not found.
   static KeygenType fromValue(int? value) {
+    value ??= 0;
     return KeygenType.values.firstWhere(
       (e) => e.value == value,
       orElse:
-          () => throw ItemNotFoundException(name: "KeygenType", value: value),
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching KeygenType found for the given value. $value",
+                details: {"name": "KeygenType", "value": value?.toString()},
+              ),
     );
   }
 
   /// Looks up a value by wire int, Dart enum name, or original proto
   /// name (whichever [value] happens to be). Throws if not found.
   static KeygenType from(Object? value) {
+    value ??= 0;
     return KeygenType.values.firstWhere(
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
-          () => throw ItemNotFoundException(name: "KeygenType", value: value),
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching KeygenType found for the given value. $value",
+                details: {"name": "KeygenType", "value": value?.toString()},
+              ),
     );
   }
 }
@@ -68,17 +80,25 @@ class Keygen extends CosmosProtoMessage {
   List<Object?> get protoValues => [id, type, members];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'id': id,
-      'type': type?.protoName,
+      'type': config.encodeEnum(type),
       'members': members.map((e) => e).toList(),
     };
   }
 
-  factory Keygen.fromJson(Map<String, dynamic> json) {
+  factory Keygen.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Keygen(
-      id: json.valueAsString<String?>('id', acceptCamelCase: true),
+      id: json.valueAsString<String?>(
+        'id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       type: json.valueTo<KeygenType?, Object?>(
         key: 'type',
         parse: (v) => KeygenType.from(v),
@@ -86,7 +106,8 @@ class Keygen extends CosmosProtoMessage {
       members:
           (json.valueEnsureAsList<dynamic>(
             'members',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
     );
   }
@@ -134,22 +155,38 @@ class KeygenBlock extends CosmosProtoMessage {
   List<Object?> get protoValues => [height, keygens];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'height': height?.toString(),
-      'keygens': keygens.map((e) => e.toJson()).toList(),
+      'height': config.encodeBigint(height),
+      'keygens': keygens.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory KeygenBlock.fromJson(Map<String, dynamic> json) {
+  factory KeygenBlock.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return KeygenBlock(
-      height: json.valueAsBigInt<BigInt?>('height', acceptCamelCase: true),
+      height: json.valueAsBigInt<BigInt?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       keygens:
-          (json.valueEnsureAsList<dynamic>('keygens', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'keygens',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<Keygen, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<Keygen, Object>(
                   value: e,
-                  parse: (v) => Keygen.fromJson(v),
+                  parse:
+                      (v) => Keygen.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),

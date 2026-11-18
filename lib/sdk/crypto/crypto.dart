@@ -9,3 +9,4 @@ export 'ethSecp256k1/private_key.dart';
 export 'keypair/public_key.dart';
 export 'types/types.dart';
 export 'keypair/private_key.dart';
+export 'multisig/multisig_address.dart';

@@ -29,13 +29,21 @@ class QueryDenomAdminRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [denom];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'denom': denom};
   }
 
-  factory QueryDenomAdminRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryDenomAdminRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryDenomAdminRequest(
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -78,13 +86,21 @@ class QueryDenomAdminResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [admin];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'admin': admin};
   }
 
-  factory QueryDenomAdminResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryDenomAdminResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryDenomAdminResponse(
-      admin: json.valueAsString<String?>('admin', acceptCamelCase: true),
+      admin: json.valueAsString<String?>(
+        'admin',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

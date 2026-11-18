@@ -27,14 +27,25 @@ class VestingPoolReservation extends CosmosProtoMessage {
   List<Object?> get protoValues => [id, amount];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'id': id?.toString(), 'amount': amount};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'id': config.encodeBigint(id), 'amount': amount};
   }
 
-  factory VestingPoolReservation.fromJson(Map<String, dynamic> json) {
+  factory VestingPoolReservation.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return VestingPoolReservation(
-      id: json.valueAsBigInt<BigInt?>('id', acceptCamelCase: true),
-      amount: json.valueAsString<String?>('amount', acceptCamelCase: true),
+      id: json.valueAsBigInt<BigInt?>(
+        'id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      amount: json.valueAsString<String?>(
+        'amount',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

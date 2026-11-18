@@ -37,23 +37,30 @@ class Params extends CosmosProtoMessage {
   List<Object?> get protoValues => [codeIdWhitelist, poolMigrationLimit];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'code_id_whitelist': codeIdWhitelist.map((e) => e.toString()).toList(),
-      'pool_migration_limit': poolMigrationLimit?.toString(),
+      'code_id_whitelist':
+          codeIdWhitelist.map((e) => config.encodeBigint(e)).toList(),
+      'pool_migration_limit': config.encodeBigint(poolMigrationLimit),
     };
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
       codeIdWhitelist:
           (json.valueEnsureAsList<dynamic>(
             'code_id_whitelist',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsBigInt<BigInt>(e)).toList(),
       poolMigrationLimit: json.valueAsBigInt<BigInt?>(
         'pool_migration_limit',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

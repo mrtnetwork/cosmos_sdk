@@ -23,7 +23,7 @@ class TendermintRequestGenesis
   Map<String, String> get parameters => {};
 
   @override
-  TendermintGenesisResponseResult onResonse(Map<String, dynamic> result) {
+  TendermintGenesisResponseResult onResponse(Map<String, dynamic> result) {
     return TendermintGenesisResponseResult.fromJson(result);
   }
 }

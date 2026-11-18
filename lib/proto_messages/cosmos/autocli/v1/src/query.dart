@@ -31,11 +31,16 @@ class AppOptionsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory AppOptionsRequest.fromJson(Map<String, dynamic> json) {
+  factory AppOptionsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AppOptionsRequest();
   }
 
@@ -85,26 +90,36 @@ class AppOptionsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [moduleOptions];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'module_options': moduleOptions.map((k, v) => MapEntry(k, v.toJson())),
+      'module_options': config.encodeMap(
+        moduleOptions,
+        (k, v) => MapEntry(k, config.encodeMessage(v)),
+      ),
     };
   }
 
-  factory AppOptionsResponse.fromJson(Map<String, dynamic> json) {
+  factory AppOptionsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AppOptionsResponse(
-      moduleOptions: (json.valueAsMap<Map<dynamic, dynamic>>(
-        'module_options',
-        acceptCamelCase: true,
-      )).map(
+      moduleOptions: config.decodeMap(
+        json.valueAs(
+          'module_options',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
         (k, v) => MapEntry(
           JsonParser.valueAsString<String>(k),
-          JsonParser.valueTo<
-            cosmos_autocli_v1_options.ModuleOptions,
-            Map<String, dynamic>
-          >(
+          JsonParser.valueTo<cosmos_autocli_v1_options.ModuleOptions, Object>(
             value: v,
-            parse: (v) => cosmos_autocli_v1_options.ModuleOptions.fromJson(v),
+            parse:
+                (v) => cosmos_autocli_v1_options.ModuleOptions.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
           ),
         ),
       ),

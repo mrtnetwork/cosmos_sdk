@@ -34,22 +34,27 @@ class Config extends CosmosProtoMessage {
   List<Object?> get protoValues => [skipAnteHandler, skipPostHandler];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'skip_ante_handler': skipAnteHandler,
       'skip_post_handler': skipPostHandler,
     };
   }
 
-  factory Config.fromJson(Map<String, dynamic> json) {
+  factory Config.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Config(
       skipAnteHandler: json.valueAsBool<bool?>(
         'skip_ante_handler',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       skipPostHandler: json.valueAsBool<bool?>(
         'skip_post_handler',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

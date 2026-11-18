@@ -33,7 +33,7 @@ class ThorNodeRequestAddressBorrowerSaverPosition
   Map<String, String?> get parameters => {"height": height?.toString()};
 
   @override
-  AssetBorrowerPositionResponse onResonse(Map<String, dynamic> result) {
+  AssetBorrowerPositionResponse onResponse(Map<String, dynamic> result) {
     return AssetBorrowerPositionResponse.fromJson(result);
   }
 }

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:blockchain_utils/exception/exceptions.dart';
 import 'package:blockchain_utils/service/service.dart';
 import 'package:cosmos_sdk/cosmos_sdk.dart';
@@ -112,10 +111,6 @@ class CosmosExampleProvider with CosmosServiceProvider {
       final response = await client.get(uri, headers: {
         ...params.headers
       }).timeout(timeout ?? defaultRequestTimeout);
-      if (ServiceProviderUtils.isSuccessStatusCode(response.statusCode)) {
-        File("/home/mrhaydari/dev/packages/cosmos_sdk/example/test/testing/s.json")
-            .writeAsString(response.body);
-      }
       // print("uri $uri ${params.headers} ${response.statusCode} ${response.body}");
       return params.toResponse(response.bodyBytes,
           statusCode: response.statusCode);

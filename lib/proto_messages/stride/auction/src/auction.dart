@@ -21,20 +21,32 @@ enum AuctionType implements ProtoEnumVariant {
 
   /// Looks up a value by its proto wire int. Throws if not found.
   static AuctionType fromValue(int? value) {
+    value ??= 0;
     return AuctionType.values.firstWhere(
       (e) => e.value == value,
       orElse:
-          () => throw ItemNotFoundException(name: "AuctionType", value: value),
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching AuctionType found for the given value. $value",
+                details: {"name": "AuctionType", "value": value?.toString()},
+              ),
     );
   }
 
   /// Looks up a value by wire int, Dart enum name, or original proto
   /// name (whichever [value] happens to be). Throws if not found.
   static AuctionType from(Object? value) {
+    value ??= 0;
     return AuctionType.values.firstWhere(
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
-          () => throw ItemNotFoundException(name: "AuctionType", value: value),
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching AuctionType found for the given value. $value",
+                details: {"name": "AuctionType", "value": value?.toString()},
+              ),
     );
   }
 }
@@ -121,9 +133,11 @@ class Auction extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'type': type?.protoName,
+      'type': config.encodeEnum(type),
       'name': name,
       'selling_denom': sellingDenom,
       'payment_denom': paymentDenom,
@@ -136,41 +150,50 @@ class Auction extends CosmosProtoMessage {
     };
   }
 
-  factory Auction.fromJson(Map<String, dynamic> json) {
+  factory Auction.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Auction(
       type: json.valueTo<AuctionType?, Object?>(
         key: 'type',
         parse: (v) => AuctionType.from(v),
       ),
-      name: json.valueAsString<String?>('name', acceptCamelCase: true),
+      name: json.valueAsString<String?>(
+        'name',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       sellingDenom: json.valueAsString<String?>(
         'selling_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       paymentDenom: json.valueAsString<String?>(
         'payment_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      enabled: json.valueAsBool<bool?>('enabled', acceptCamelCase: true),
+      enabled: json.valueAsBool<bool?>(
+        'enabled',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       minPriceMultiplier: json.valueAsString<String?>(
         'min_price_multiplier',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       minBidAmount: json.valueAsString<String?>(
         'min_bid_amount',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       beneficiary: json.valueAsString<String?>(
         'beneficiary',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       totalPaymentTokenReceived: json.valueAsString<String?>(
         'total_payment_token_received',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       totalSellingTokenSold: json.valueAsString<String?>(
         'total_selling_token_sold',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

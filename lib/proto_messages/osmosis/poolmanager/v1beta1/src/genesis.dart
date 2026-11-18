@@ -61,40 +61,52 @@ class Params extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'pool_creation_fee': poolCreationFee.map((e) => e.toJson()).toList(),
-      'taker_fee_params': takerFeeParams?.toJson(),
+      'pool_creation_fee':
+          poolCreationFee.map((e) => config.encodeMessage(e)).toList(),
+      'taker_fee_params': config.encodeMessage(takerFeeParams),
       'authorized_quote_denoms': authorizedQuoteDenoms.map((e) => e).toList(),
     };
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
       poolCreationFee:
           (json.valueEnsureAsList<dynamic>(
                 'pool_creation_fee',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
-      takerFeeParams: json.valueTo<TakerFeeParams?, Map<String, dynamic>>(
+      takerFeeParams: json.valueTo<TakerFeeParams?, Object>(
         key: 'taker_fee_params',
-        parse: (v) => TakerFeeParams.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) =>
+                TakerFeeParams.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       authorizedQuoteDenoms:
           (json.valueEnsureAsList<dynamic>(
             'authorized_quote_denoms',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
     );
   }
@@ -232,63 +244,84 @@ class TakerFeeParams extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'default_taker_fee': defaultTakerFee,
-      'osmo_taker_fee_distribution': osmoTakerFeeDistribution?.toJson(),
-      'non_osmo_taker_fee_distribution': nonOsmoTakerFeeDistribution?.toJson(),
+      'osmo_taker_fee_distribution': config.encodeMessage(
+        osmoTakerFeeDistribution,
+      ),
+      'non_osmo_taker_fee_distribution': config.encodeMessage(
+        nonOsmoTakerFeeDistribution,
+      ),
       'admin_addresses': adminAddresses.map((e) => e).toList(),
       'community_pool_denom_to_swap_non_whitelisted_assets_to':
           communityPoolDenomToSwapNonWhitelistedAssetsTo,
       'reduced_fee_whitelist': reducedFeeWhitelist.map((e) => e).toList(),
       'community_pool_denom_whitelist':
           communityPoolDenomWhitelist.map((e) => e).toList(),
-      'daily_staking_rewards_smoothing_factor':
-          dailyStakingRewardsSmoothingFactor?.toString(),
+      'daily_staking_rewards_smoothing_factor': config.encodeBigint(
+        dailyStakingRewardsSmoothingFactor,
+      ),
     };
   }
 
-  factory TakerFeeParams.fromJson(Map<String, dynamic> json) {
+  factory TakerFeeParams.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return TakerFeeParams(
       defaultTakerFee: json.valueAsString<String?>(
         'default_taker_fee',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       osmoTakerFeeDistribution: json
-          .valueTo<TakerFeeDistributionPercentage?, Map<String, dynamic>>(
+          .valueTo<TakerFeeDistributionPercentage?, Object>(
             key: 'osmo_taker_fee_distribution',
-            parse: (v) => TakerFeeDistributionPercentage.fromJson(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => TakerFeeDistributionPercentage.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
       nonOsmoTakerFeeDistribution: json
-          .valueTo<TakerFeeDistributionPercentage?, Map<String, dynamic>>(
+          .valueTo<TakerFeeDistributionPercentage?, Object>(
             key: 'non_osmo_taker_fee_distribution',
-            parse: (v) => TakerFeeDistributionPercentage.fromJson(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => TakerFeeDistributionPercentage.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
       adminAddresses:
           (json.valueEnsureAsList<dynamic>(
             'admin_addresses',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
       communityPoolDenomToSwapNonWhitelistedAssetsTo: json
           .valueAsString<String?>(
             'community_pool_denom_to_swap_non_whitelisted_assets_to',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
           ),
       reducedFeeWhitelist:
           (json.valueEnsureAsList<dynamic>(
             'reduced_fee_whitelist',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
       communityPoolDenomWhitelist:
           (json.valueEnsureAsList<dynamic>(
             'community_pool_denom_whitelist',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
       dailyStakingRewardsSmoothingFactor: json.valueAsBigInt<BigInt?>(
         'daily_staking_rewards_smoothing_factor',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -356,7 +389,9 @@ class TakerFeeDistributionPercentage extends CosmosProtoMessage {
   List<Object?> get protoValues => [stakingRewards, communityPool, burn];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'staking_rewards': stakingRewards,
       'community_pool': communityPool,
@@ -364,17 +399,23 @@ class TakerFeeDistributionPercentage extends CosmosProtoMessage {
     };
   }
 
-  factory TakerFeeDistributionPercentage.fromJson(Map<String, dynamic> json) {
+  factory TakerFeeDistributionPercentage.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return TakerFeeDistributionPercentage(
       stakingRewards: json.valueAsString<String?>(
         'staking_rewards',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       communityPool: json.valueAsString<String?>(
         'community_pool',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      burn: json.valueAsString<String?>('burn', acceptCamelCase: true),
+      burn: json.valueAsString<String?>(
+        'burn',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -446,66 +487,83 @@ class TakerFeesTracker extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'taker_fees_to_stakers':
-          takerFeesToStakers.map((e) => e.toJson()).toList(),
+          takerFeesToStakers.map((e) => config.encodeMessage(e)).toList(),
       'taker_fees_to_community_pool':
-          takerFeesToCommunityPool.map((e) => e.toJson()).toList(),
-      'height_accounting_starts_from': heightAccountingStartsFrom?.toString(),
-      'taker_fees_to_burn': takerFeesToBurn.map((e) => e.toJson()).toList(),
+          takerFeesToCommunityPool.map((e) => config.encodeMessage(e)).toList(),
+      'height_accounting_starts_from': config.encodeBigint(
+        heightAccountingStartsFrom,
+      ),
+      'taker_fees_to_burn':
+          takerFeesToBurn.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory TakerFeesTracker.fromJson(Map<String, dynamic> json) {
+  factory TakerFeesTracker.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return TakerFeesTracker(
       takerFeesToStakers:
           (json.valueEnsureAsList<dynamic>(
                 'taker_fees_to_stakers',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
       takerFeesToCommunityPool:
           (json.valueEnsureAsList<dynamic>(
                 'taker_fees_to_community_pool',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
       heightAccountingStartsFrom: json.valueAsBigInt<BigInt?>(
         'height_accounting_starts_from',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       takerFeesToBurn:
           (json.valueEnsureAsList<dynamic>(
                 'taker_fees_to_burn',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );

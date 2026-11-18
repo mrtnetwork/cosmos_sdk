@@ -32,16 +32,24 @@ class DenomAuthorityMetadata extends CosmosProtoMessage {
   List<Object?> get protoValues => [admin, adminBurnAllowed];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'admin': admin, 'admin_burn_allowed': adminBurnAllowed};
   }
 
-  factory DenomAuthorityMetadata.fromJson(Map<String, dynamic> json) {
+  factory DenomAuthorityMetadata.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return DenomAuthorityMetadata(
-      admin: json.valueAsString<String?>('admin', acceptCamelCase: true),
+      admin: json.valueAsString<String?>(
+        'admin',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       adminBurnAllowed: json.valueAsBool<bool?>(
         'admin_burn_allowed',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

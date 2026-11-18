@@ -16,7 +16,7 @@ class CosmosGrpcRequestMessage<Response extends CosmosProtoMessage>
   String get method => request.declarationId.getServiceUrl();
 
   @override
-  Response onResonse(List<int> result) {
+  Response onResponse(List<int> result) {
     return request.onQueryResponse(result);
   }
 }

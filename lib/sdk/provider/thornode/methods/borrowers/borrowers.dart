@@ -27,7 +27,7 @@ class ThorNodeRequestAssetBorrowersInformation
   Map<String, String?> get parameters => {"height": height?.toString()};
 
   @override
-  List<AssetBorrowerPositionResponse> onResonse(
+  List<AssetBorrowerPositionResponse> onResponse(
     List<Map<String, dynamic>> result,
   ) {
     return result

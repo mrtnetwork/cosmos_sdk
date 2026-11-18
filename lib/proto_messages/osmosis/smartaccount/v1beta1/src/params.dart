@@ -51,29 +51,37 @@ class Params extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'maximum_unauthenticated_gas': maximumUnauthenticatedGas?.toString(),
+      'maximum_unauthenticated_gas': config.encodeBigint(
+        maximumUnauthenticatedGas,
+      ),
       'is_smart_account_active': isSmartAccountActive,
       'circuit_breaker_controllers':
           circuitBreakerControllers.map((e) => e).toList(),
     };
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
       maximumUnauthenticatedGas: json.valueAsBigInt<BigInt?>(
         'maximum_unauthenticated_gas',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       isSmartAccountActive: json.valueAsBool<bool?>(
         'is_smart_account_active',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       circuitBreakerControllers:
           (json.valueEnsureAsList<dynamic>(
             'circuit_breaker_controllers',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
     );
   }

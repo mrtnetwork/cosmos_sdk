@@ -28,11 +28,12 @@ import 'package:cosmos_sdk/sdk/serialization/serialization.dart';
 class TokenPair extends CosmosProtoMessage {
   final int? remoteDomain;
 
-  final List<int>? remoteToken;
+  final BuBytes? remoteToken;
 
   final String? localToken;
 
-  const TokenPair({this.remoteDomain, this.remoteToken, this.localToken});
+  TokenPair({this.remoteDomain, List<int>? remoteToken, this.localToken})
+    : remoteToken = remoteToken?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -53,34 +54,31 @@ class TokenPair extends CosmosProtoMessage {
   List<Object?> get protoValues => [remoteDomain, remoteToken, localToken];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'remote_domain': remoteDomain,
-      'remote_token': switch (remoteToken) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'remote_token': config.encodeBinary(remoteToken),
       'local_token': localToken,
     };
   }
 
-  factory TokenPair.fromJson(Map<String, dynamic> json) {
+  factory TokenPair.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return TokenPair(
       remoteDomain: json.valueAsInt<int?>(
         'remote_domain',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      remoteToken: json.valueAsBytes<List<int>?>(
-        'remote_token',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      remoteToken: config.decodeBinary<List<int>?>(
+        json.valueAs('remote_token', normalizeKeyLookup: config.normalizeKeys),
       ),
       localToken: json.valueAsString<String?>(
         'local_token',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

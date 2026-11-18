@@ -48,11 +48,16 @@ class QueryRolesRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryRolesRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryRolesRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryRolesRequest();
   }
 
@@ -116,7 +121,9 @@ class QueryRolesResponse extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'owner': owner,
       'attester_manager': attesterManager,
@@ -125,17 +132,26 @@ class QueryRolesResponse extends CosmosProtoMessage {
     };
   }
 
-  factory QueryRolesResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryRolesResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryRolesResponse(
-      owner: json.valueAsString<String?>('owner', acceptCamelCase: true),
+      owner: json.valueAsString<String?>(
+        'owner',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       attesterManager: json.valueAsString<String?>(
         'attester_manager',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      pauser: json.valueAsString<String?>('pauser', acceptCamelCase: true),
+      pauser: json.valueAsString<String?>(
+        'pauser',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       tokenController: json.valueAsString<String?>(
         'token_controller',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -183,13 +199,21 @@ class QueryGetAttesterRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [attester];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'attester': attester};
   }
 
-  factory QueryGetAttesterRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryGetAttesterRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryGetAttesterRequest(
-      attester: json.valueAsString<String?>('attester', acceptCamelCase: true),
+      attester: json.valueAsString<String?>(
+        'attester',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -234,18 +258,26 @@ class QueryGetAttesterResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [attester];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'attester': attester?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'attester': config.encodeMessage(attester)};
   }
 
-  factory QueryGetAttesterResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryGetAttesterResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryGetAttesterResponse(
-      attester: json
-          .valueTo<circle_cctp_v1_attester.Attester?, Map<String, dynamic>>(
-            key: 'attester',
-            parse: (v) => circle_cctp_v1_attester.Attester.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      attester: json.valueTo<circle_cctp_v1_attester.Attester?, Object>(
+        key: 'attester',
+        parse:
+            (v) => circle_cctp_v1_attester.Attester.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -293,21 +325,28 @@ class QueryAllAttestersRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [pagination];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'pagination': pagination?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'pagination': config.encodeMessage(pagination)};
   }
 
-  factory QueryAllAttestersRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryAllAttestersRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryAllAttestersRequest(
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageRequest?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) => cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageRequest?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -368,37 +407,51 @@ class QueryAllAttestersResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [attesters, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'attesters': attesters.map((e) => e.toJson()).toList(),
-      'pagination': pagination?.toJson(),
+      'attesters': attesters.map((e) => config.encodeMessage(e)).toList(),
+      'pagination': config.encodeMessage(pagination),
     };
   }
 
-  factory QueryAllAttestersResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryAllAttestersResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryAllAttestersResponse(
       attesters:
-          (json.valueEnsureAsList<dynamic>('attesters', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'attesters',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   circle_cctp_v1_attester.Attester,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
-                  parse: (v) => circle_cctp_v1_attester.Attester.fromJson(v),
+                  parse:
+                      (v) => circle_cctp_v1_attester.Attester.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageResponse?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) =>
-                cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageResponse?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -453,15 +506,21 @@ class QueryGetPerMessageBurnLimitRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [denom];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'denom': denom};
   }
 
   factory QueryGetPerMessageBurnLimitRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryGetPerMessageBurnLimitRequest(
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -510,23 +569,29 @@ class QueryGetPerMessageBurnLimitResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [burnLimit];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'burn_limit': burnLimit?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'burn_limit': config.encodeMessage(burnLimit)};
   }
 
   factory QueryGetPerMessageBurnLimitResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryGetPerMessageBurnLimitResponse(
       burnLimit: json.valueTo<
         circle_cctp_v1_per_message_burn_limit.PerMessageBurnLimit?,
-        Map<String, dynamic>
+        Object
       >(
         key: 'burn_limit',
         parse:
             (v) => circle_cctp_v1_per_message_burn_limit
-                .PerMessageBurnLimit.fromJson(v),
-        acceptCamelCase: true,
+                .PerMessageBurnLimit.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -578,23 +643,28 @@ class QueryAllPerMessageBurnLimitsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [pagination];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'pagination': pagination?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'pagination': config.encodeMessage(pagination)};
   }
 
   factory QueryAllPerMessageBurnLimitsRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryAllPerMessageBurnLimitsRequest(
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageRequest?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) => cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageRequest?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -661,44 +731,52 @@ class QueryAllPerMessageBurnLimitsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [burnLimits, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'burn_limits': burnLimits.map((e) => e.toJson()).toList(),
-      'pagination': pagination?.toJson(),
+      'burn_limits': burnLimits.map((e) => config.encodeMessage(e)).toList(),
+      'pagination': config.encodeMessage(pagination),
     };
   }
 
   factory QueryAllPerMessageBurnLimitsResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryAllPerMessageBurnLimitsResponse(
       burnLimits:
           (json.valueEnsureAsList<dynamic>(
                 'burn_limits',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   circle_cctp_v1_per_message_burn_limit.PerMessageBurnLimit,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => circle_cctp_v1_per_message_burn_limit
-                          .PerMessageBurnLimit.fromJson(v),
+                          .PerMessageBurnLimit.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageResponse?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) =>
-                cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageResponse?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -755,13 +833,16 @@ class QueryGetBurningAndMintingPausedRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
   factory QueryGetBurningAndMintingPausedRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryGetBurningAndMintingPausedRequest();
   }
 
@@ -809,23 +890,29 @@ class QueryGetBurningAndMintingPausedResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [paused];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'paused': paused?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'paused': config.encodeMessage(paused)};
   }
 
   factory QueryGetBurningAndMintingPausedResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryGetBurningAndMintingPausedResponse(
       paused: json.valueTo<
         circle_cctp_v1_burning_and_minting_paused.BurningAndMintingPaused?,
-        Map<String, dynamic>
+        Object
       >(
         key: 'paused',
         parse:
             (v) => circle_cctp_v1_burning_and_minting_paused
-                .BurningAndMintingPaused.fromJson(v),
-        acceptCamelCase: true,
+                .BurningAndMintingPaused.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -880,13 +967,16 @@ class QueryGetSendingAndReceivingMessagesPausedRequest
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
   factory QueryGetSendingAndReceivingMessagesPausedRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryGetSendingAndReceivingMessagesPausedRequest();
   }
 
@@ -939,23 +1029,29 @@ class QueryGetSendingAndReceivingMessagesPausedResponse
   List<Object?> get protoValues => [paused];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'paused': paused?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'paused': config.encodeMessage(paused)};
   }
 
   factory QueryGetSendingAndReceivingMessagesPausedResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryGetSendingAndReceivingMessagesPausedResponse(
       paused: json.valueTo<
         circle_cctp_v1_sending_and_receiving_messages_paused.SendingAndReceivingMessagesPaused?,
-        Map<String, dynamic>
+        Object
       >(
         key: 'paused',
         parse:
             (v) => circle_cctp_v1_sending_and_receiving_messages_paused
-                .SendingAndReceivingMessagesPaused.fromJson(v),
-        acceptCamelCase: true,
+                .SendingAndReceivingMessagesPaused.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1008,13 +1104,16 @@ class QueryGetMaxMessageBodySizeRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
   factory QueryGetMaxMessageBodySizeRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryGetMaxMessageBodySizeRequest();
   }
 
@@ -1060,23 +1159,29 @@ class QueryGetMaxMessageBodySizeResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [amount];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'amount': amount?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'amount': config.encodeMessage(amount)};
   }
 
   factory QueryGetMaxMessageBodySizeResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryGetMaxMessageBodySizeResponse(
       amount: json.valueTo<
         circle_cctp_v1_max_message_body_size.MaxMessageBodySize?,
-        Map<String, dynamic>
+        Object
       >(
         key: 'amount',
         parse:
             (v) => circle_cctp_v1_max_message_body_size
-                .MaxMessageBodySize.fromJson(v),
-        acceptCamelCase: true,
+                .MaxMessageBodySize.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1125,13 +1230,16 @@ class QueryGetNextAvailableNonceRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
   factory QueryGetNextAvailableNonceRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryGetNextAvailableNonceRequest();
   }
 
@@ -1177,18 +1285,25 @@ class QueryGetNextAvailableNonceResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [nonce];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'nonce': nonce?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'nonce': config.encodeMessage(nonce)};
   }
 
   factory QueryGetNextAvailableNonceResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryGetNextAvailableNonceResponse(
-      nonce: json.valueTo<circle_cctp_v1_nonce.Nonce?, Map<String, dynamic>>(
+      nonce: json.valueTo<circle_cctp_v1_nonce.Nonce?, Object>(
         key: 'nonce',
-        parse: (v) => circle_cctp_v1_nonce.Nonce.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => circle_cctp_v1_nonce.Nonce.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1235,13 +1350,16 @@ class QueryGetSignatureThresholdRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
   factory QueryGetSignatureThresholdRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryGetSignatureThresholdRequest();
   }
 
@@ -1287,23 +1405,29 @@ class QueryGetSignatureThresholdResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [amount];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'amount': amount?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'amount': config.encodeMessage(amount)};
   }
 
   factory QueryGetSignatureThresholdResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryGetSignatureThresholdResponse(
       amount: json.valueTo<
         circle_cctp_v1_signature_threshold.SignatureThreshold?,
-        Map<String, dynamic>
+        Object
       >(
         key: 'amount',
         parse:
-            (v) => circle_cctp_v1_signature_threshold
-                .SignatureThreshold.fromJson(v),
-        acceptCamelCase: true,
+            (v) =>
+                circle_cctp_v1_signature_threshold.SignatureThreshold.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1356,19 +1480,24 @@ class QueryGetTokenPairRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [remoteDomain, remoteToken];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'remote_domain': remoteDomain, 'remote_token': remoteToken};
   }
 
-  factory QueryGetTokenPairRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryGetTokenPairRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryGetTokenPairRequest(
       remoteDomain: json.valueAsInt<int?>(
         'remote_domain',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       remoteToken: json.valueAsString<String?>(
         'remote_token',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1417,18 +1546,26 @@ class QueryGetTokenPairResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [pair];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'pair': pair?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'pair': config.encodeMessage(pair)};
   }
 
-  factory QueryGetTokenPairResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryGetTokenPairResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryGetTokenPairResponse(
-      pair: json
-          .valueTo<circle_cctp_v1_token_pair.TokenPair?, Map<String, dynamic>>(
-            key: 'pair',
-            parse: (v) => circle_cctp_v1_token_pair.TokenPair.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      pair: json.valueTo<circle_cctp_v1_token_pair.TokenPair?, Object>(
+        key: 'pair',
+        parse:
+            (v) => circle_cctp_v1_token_pair.TokenPair.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1476,21 +1613,28 @@ class QueryAllTokenPairsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [pagination];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'pagination': pagination?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'pagination': config.encodeMessage(pagination)};
   }
 
-  factory QueryAllTokenPairsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryAllTokenPairsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryAllTokenPairsRequest(
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageRequest?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) => cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageRequest?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -1554,40 +1698,51 @@ class QueryAllTokenPairsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [tokenPairs, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'token_pairs': tokenPairs.map((e) => e.toJson()).toList(),
-      'pagination': pagination?.toJson(),
+      'token_pairs': tokenPairs.map((e) => config.encodeMessage(e)).toList(),
+      'pagination': config.encodeMessage(pagination),
     };
   }
 
-  factory QueryAllTokenPairsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryAllTokenPairsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryAllTokenPairsResponse(
       tokenPairs:
           (json.valueEnsureAsList<dynamic>(
                 'token_pairs',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   circle_cctp_v1_token_pair.TokenPair,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
-                  parse: (v) => circle_cctp_v1_token_pair.TokenPair.fromJson(v),
+                  parse:
+                      (v) => circle_cctp_v1_token_pair.TokenPair.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageResponse?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) =>
-                cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageResponse?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -1644,17 +1799,25 @@ class QueryGetUsedNonceRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [sourceDomain, nonce];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'source_domain': sourceDomain, 'nonce': nonce?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'source_domain': sourceDomain, 'nonce': config.encodeBigint(nonce)};
   }
 
-  factory QueryGetUsedNonceRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryGetUsedNonceRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryGetUsedNonceRequest(
       sourceDomain: json.valueAsInt<int?>(
         'source_domain',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      nonce: json.valueAsBigInt<BigInt?>('nonce', acceptCamelCase: true),
+      nonce: json.valueAsBigInt<BigInt?>(
+        'nonce',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1702,16 +1865,25 @@ class QueryGetUsedNonceResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [nonce];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'nonce': nonce?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'nonce': config.encodeMessage(nonce)};
   }
 
-  factory QueryGetUsedNonceResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryGetUsedNonceResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryGetUsedNonceResponse(
-      nonce: json.valueTo<circle_cctp_v1_nonce.Nonce?, Map<String, dynamic>>(
+      nonce: json.valueTo<circle_cctp_v1_nonce.Nonce?, Object>(
         key: 'nonce',
-        parse: (v) => circle_cctp_v1_nonce.Nonce.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => circle_cctp_v1_nonce.Nonce.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1760,21 +1932,28 @@ class QueryAllUsedNoncesRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [pagination];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'pagination': pagination?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'pagination': config.encodeMessage(pagination)};
   }
 
-  factory QueryAllUsedNoncesRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryAllUsedNoncesRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryAllUsedNoncesRequest(
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageRequest?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) => cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageRequest?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -1838,40 +2017,48 @@ class QueryAllUsedNoncesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [usedNonces, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'used_nonces': usedNonces.map((e) => e.toJson()).toList(),
-      'pagination': pagination?.toJson(),
+      'used_nonces': usedNonces.map((e) => config.encodeMessage(e)).toList(),
+      'pagination': config.encodeMessage(pagination),
     };
   }
 
-  factory QueryAllUsedNoncesResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryAllUsedNoncesResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryAllUsedNoncesResponse(
       usedNonces:
           (json.valueEnsureAsList<dynamic>(
                 'used_nonces',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  circle_cctp_v1_nonce.Nonce,
-                  Map<String, dynamic>
-                >(
+                (e) => JsonParser.valueTo<circle_cctp_v1_nonce.Nonce, Object>(
                   value: e,
-                  parse: (v) => circle_cctp_v1_nonce.Nonce.fromJson(v),
+                  parse:
+                      (v) => circle_cctp_v1_nonce.Nonce.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageResponse?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) =>
-                cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageResponse?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -1926,13 +2113,21 @@ class QueryRemoteTokenMessengerRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [domainId];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'domain_id': domainId};
   }
 
-  factory QueryRemoteTokenMessengerRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryRemoteTokenMessengerRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryRemoteTokenMessengerRequest(
-      domainId: json.valueAsInt<int?>('domain_id', acceptCamelCase: true),
+      domainId: json.valueAsInt<int?>(
+        'domain_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1980,23 +2175,31 @@ class QueryRemoteTokenMessengerResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [remoteTokenMessenger];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'remote_token_messenger': remoteTokenMessenger?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'remote_token_messenger': config.encodeMessage(remoteTokenMessenger),
+    };
   }
 
   factory QueryRemoteTokenMessengerResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryRemoteTokenMessengerResponse(
       remoteTokenMessenger: json.valueTo<
         circle_cctp_v1_remote_token_messenger.RemoteTokenMessenger?,
-        Map<String, dynamic>
+        Object
       >(
         key: 'remote_token_messenger',
         parse:
             (v) => circle_cctp_v1_remote_token_messenger
-                .RemoteTokenMessenger.fromJson(v),
-        acceptCamelCase: true,
+                .RemoteTokenMessenger.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -2048,23 +2251,28 @@ class QueryRemoteTokenMessengersRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [pagination];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'pagination': pagination?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'pagination': config.encodeMessage(pagination)};
   }
 
   factory QueryRemoteTokenMessengersRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryRemoteTokenMessengersRequest(
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageRequest?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) => cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageRequest?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -2131,45 +2339,53 @@ class QueryRemoteTokenMessengersResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [remoteTokenMessengers, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'remote_token_messengers':
-          remoteTokenMessengers.map((e) => e.toJson()).toList(),
-      'pagination': pagination?.toJson(),
+          remoteTokenMessengers.map((e) => config.encodeMessage(e)).toList(),
+      'pagination': config.encodeMessage(pagination),
     };
   }
 
   factory QueryRemoteTokenMessengersResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryRemoteTokenMessengersResponse(
       remoteTokenMessengers:
           (json.valueEnsureAsList<dynamic>(
                 'remote_token_messengers',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   circle_cctp_v1_remote_token_messenger.RemoteTokenMessenger,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => circle_cctp_v1_remote_token_messenger
-                          .RemoteTokenMessenger.fromJson(v),
+                          .RemoteTokenMessenger.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageResponse?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) =>
-                cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageResponse?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -2225,11 +2441,16 @@ class QueryBurnMessageVersionRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryBurnMessageVersionRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryBurnMessageVersionRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryBurnMessageVersionRequest();
   }
 
@@ -2276,13 +2497,21 @@ class QueryBurnMessageVersionResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [version];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'version': version};
   }
 
-  factory QueryBurnMessageVersionResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryBurnMessageVersionResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryBurnMessageVersionResponse(
-      version: json.valueAsInt<int?>('version', acceptCamelCase: true),
+      version: json.valueAsInt<int?>(
+        'version',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -2323,11 +2552,16 @@ class QueryLocalMessageVersionRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryLocalMessageVersionRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryLocalMessageVersionRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryLocalMessageVersionRequest();
   }
 
@@ -2374,13 +2608,21 @@ class QueryLocalMessageVersionResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [version];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'version': version};
   }
 
-  factory QueryLocalMessageVersionResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryLocalMessageVersionResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryLocalMessageVersionResponse(
-      version: json.valueAsInt<int?>('version', acceptCamelCase: true),
+      version: json.valueAsInt<int?>(
+        'version',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -2421,11 +2663,16 @@ class QueryLocalDomainRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryLocalDomainRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryLocalDomainRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryLocalDomainRequest();
   }
 
@@ -2470,13 +2717,21 @@ class QueryLocalDomainResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [domainId];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'domain_id': domainId};
   }
 
-  factory QueryLocalDomainResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryLocalDomainResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryLocalDomainResponse(
-      domainId: json.valueAsInt<int?>('domain_id', acceptCamelCase: true),
+      domainId: json.valueAsInt<int?>(
+        'domain_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

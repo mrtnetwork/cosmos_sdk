@@ -29,11 +29,16 @@ class QueryFeeTokensRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryFeeTokensRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryFeeTokensRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryFeeTokensRequest();
   }
 
@@ -81,23 +86,36 @@ class QueryFeeTokensResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [feeTokens];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'fee_tokens': feeTokens.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'fee_tokens': feeTokens.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
-  factory QueryFeeTokensResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryFeeTokensResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryFeeTokensResponse(
       feeTokens:
-          (json.valueEnsureAsList<dynamic>('fee_tokens', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'fee_tokens',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   osmosis_txfees_v1beta1_feetoken.FeeToken,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
-                      (v) =>
-                          osmosis_txfees_v1beta1_feetoken.FeeToken.fromJson(v),
+                      (v) => osmosis_txfees_v1beta1_feetoken.FeeToken.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -151,13 +169,21 @@ class QueryDenomSpotPriceRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [denom];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'denom': denom};
   }
 
-  factory QueryDenomSpotPriceRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryDenomSpotPriceRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryDenomSpotPriceRequest(
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -207,16 +233,24 @@ class QueryDenomSpotPriceResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [poolID, spotPrice];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'poolID': poolID?.toString(), 'spot_price': spotPrice};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'poolID': config.encodeBigint(poolID), 'spot_price': spotPrice};
   }
 
-  factory QueryDenomSpotPriceResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryDenomSpotPriceResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryDenomSpotPriceResponse(
-      poolID: json.valueAsBigInt<BigInt?>('poolID', acceptCamelCase: true),
+      poolID: json.valueAsBigInt<BigInt?>(
+        'poolID',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       spotPrice: json.valueAsString<String?>(
         'spot_price',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -261,13 +295,21 @@ class QueryDenomPoolIdRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [denom];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'denom': denom};
   }
 
-  factory QueryDenomPoolIdRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryDenomPoolIdRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryDenomPoolIdRequest(
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -310,13 +352,21 @@ class QueryDenomPoolIdResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [poolID];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'poolID': poolID?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'poolID': config.encodeBigint(poolID)};
   }
 
-  factory QueryDenomPoolIdResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryDenomPoolIdResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryDenomPoolIdResponse(
-      poolID: json.valueAsBigInt<BigInt?>('poolID', acceptCamelCase: true),
+      poolID: json.valueAsBigInt<BigInt?>(
+        'poolID',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -355,11 +405,16 @@ class QueryBaseDenomRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryBaseDenomRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryBaseDenomRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryBaseDenomRequest();
   }
 
@@ -401,15 +456,20 @@ class QueryBaseDenomResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [baseDenom];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'base_denom': baseDenom};
   }
 
-  factory QueryBaseDenomResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryBaseDenomResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryBaseDenomResponse(
       baseDenom: json.valueAsString<String?>(
         'base_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -449,11 +509,16 @@ class QueryEipBaseFeeRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryEipBaseFeeRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryEipBaseFeeRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryEipBaseFeeRequest();
   }
 
@@ -495,13 +560,21 @@ class QueryEipBaseFeeResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [baseFee];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'base_fee': baseFee};
   }
 
-  factory QueryEipBaseFeeResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryEipBaseFeeResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryEipBaseFeeResponse(
-      baseFee: json.valueAsString<String?>('base_fee', acceptCamelCase: true),
+      baseFee: json.valueAsString<String?>(
+        'base_fee',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

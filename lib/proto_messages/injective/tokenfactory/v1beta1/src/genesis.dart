@@ -37,32 +37,45 @@ class GenesisState extends CosmosProtoMessage {
   List<Object?> get protoValues => [params, factoryDenoms];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'params': params?.toJson(),
-      'factory_denoms': factoryDenoms.map((e) => e.toJson()).toList(),
+      'params': config.encodeMessage(params),
+      'factory_denoms':
+          factoryDenoms.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory GenesisState.fromJson(Map<String, dynamic> json) {
+  factory GenesisState.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GenesisState(
-      params: json.valueTo<
-        injective_tokenfactory_v1beta1_params.Params?,
-        Map<String, dynamic>
-      >(
-        key: 'params',
-        parse: (v) => injective_tokenfactory_v1beta1_params.Params.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      params: json
+          .valueTo<injective_tokenfactory_v1beta1_params.Params?, Object>(
+            key: 'params',
+            parse:
+                (v) => injective_tokenfactory_v1beta1_params.Params.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
       factoryDenoms:
           (json.valueEnsureAsList<dynamic>(
                 'factory_denoms',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<GenesisDenom, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<GenesisDenom, Object>(
                   value: e,
-                  parse: (v) => GenesisDenom.fromJson(v),
+                  parse:
+                      (v) => GenesisDenom.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -144,32 +157,52 @@ class GenesisDenom extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'denom': denom,
-      'authority_metadata': authorityMetadata?.toJson(),
+      'authority_metadata': config.encodeMessage(authorityMetadata),
       'name': name,
       'symbol': symbol,
       'decimals': decimals,
     };
   }
 
-  factory GenesisDenom.fromJson(Map<String, dynamic> json) {
+  factory GenesisDenom.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GenesisDenom(
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       authorityMetadata: json.valueTo<
         injective_tokenfactory_v1beta1_authority_metadata.DenomAuthorityMetadata?,
-        Map<String, dynamic>
+        Object
       >(
         key: 'authority_metadata',
         parse:
             (v) => injective_tokenfactory_v1beta1_authority_metadata
-                .DenomAuthorityMetadata.fromJson(v),
-        acceptCamelCase: true,
+                .DenomAuthorityMetadata.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      name: json.valueAsString<String?>('name', acceptCamelCase: true),
-      symbol: json.valueAsString<String?>('symbol', acceptCamelCase: true),
-      decimals: json.valueAsInt<int?>('decimals', acceptCamelCase: true),
+      name: json.valueAsString<String?>(
+        'name',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      symbol: json.valueAsString<String?>(
+        'symbol',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      decimals: json.valueAsInt<int?>(
+        'decimals',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

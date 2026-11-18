@@ -80,51 +80,69 @@ class MsgCreateResourceNode extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'network_address': networkAddress,
-      'pubkey': pubkey?.toJson(),
-      'value': value?.toJson(),
+      'pubkey': config.encodeMessage(pubkey),
+      'value': config.encodeMessage(value),
       'owner_address': ownerAddress,
       'beneficiary_address': beneficiaryAddress,
-      'description': description?.toJson(),
+      'description': config.encodeMessage(description),
       'node_type': nodeType,
     };
   }
 
-  factory MsgCreateResourceNode.fromJson(Map<String, dynamic> json) {
+  factory MsgCreateResourceNode.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgCreateResourceNode(
       networkAddress: json.valueAsString<String?>(
         'network_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      pubkey: json.valueTo<google_protobuf_any.Any?, Map<String, dynamic>>(
+      pubkey: json.valueTo<google_protobuf_any.Any?, Object>(
         key: 'pubkey',
-        parse: (v) => google_protobuf_any.Any.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_any.Any.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      value: json.valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
+      value: json.valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
         key: 'value',
-        parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       ownerAddress: json.valueAsString<String?>(
         'owner_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       beneficiaryAddress: json.valueAsString<String?>(
         'beneficiary_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      description: json.valueTo<
-        stratos_register_v1_register.Description?,
-        Map<String, dynamic>
-      >(
-        key: 'description',
-        parse: (v) => stratos_register_v1_register.Description.fromJson(v),
-        acceptCamelCase: true,
+      description: json
+          .valueTo<stratos_register_v1_register.Description?, Object>(
+            key: 'description',
+            parse:
+                (v) => stratos_register_v1_register.Description.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
+      nodeType: json.valueAsInt<int?>(
+        'node_type',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      nodeType: json.valueAsInt<int?>('node_type', acceptCamelCase: true),
     );
   }
 
@@ -185,11 +203,16 @@ class MsgCreateResourceNodeResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgCreateResourceNodeResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgCreateResourceNodeResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgCreateResourceNodeResponse();
   }
 
@@ -269,49 +292,64 @@ class MsgCreateMetaNode extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'network_address': networkAddress,
-      'pubkey': pubkey?.toJson(),
-      'value': value?.toJson(),
+      'pubkey': config.encodeMessage(pubkey),
+      'value': config.encodeMessage(value),
       'owner_address': ownerAddress,
       'beneficiary_address': beneficiaryAddress,
-      'description': description?.toJson(),
+      'description': config.encodeMessage(description),
     };
   }
 
-  factory MsgCreateMetaNode.fromJson(Map<String, dynamic> json) {
+  factory MsgCreateMetaNode.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgCreateMetaNode(
       networkAddress: json.valueAsString<String?>(
         'network_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      pubkey: json.valueTo<google_protobuf_any.Any?, Map<String, dynamic>>(
+      pubkey: json.valueTo<google_protobuf_any.Any?, Object>(
         key: 'pubkey',
-        parse: (v) => google_protobuf_any.Any.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_any.Any.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      value: json.valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
+      value: json.valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
         key: 'value',
-        parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       ownerAddress: json.valueAsString<String?>(
         'owner_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       beneficiaryAddress: json.valueAsString<String?>(
         'beneficiary_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      description: json.valueTo<
-        stratos_register_v1_register.Description?,
-        Map<String, dynamic>
-      >(
-        key: 'description',
-        parse: (v) => stratos_register_v1_register.Description.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      description: json
+          .valueTo<stratos_register_v1_register.Description?, Object>(
+            key: 'description',
+            parse:
+                (v) => stratos_register_v1_register.Description.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -369,11 +407,16 @@ class MsgCreateMetaNodeResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgCreateMetaNodeResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgCreateMetaNodeResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgCreateMetaNodeResponse();
   }
 
@@ -421,22 +464,27 @@ class MsgRemoveResourceNode extends CosmosProtoMessage
   List<Object?> get protoValues => [resourceNodeAddress, ownerAddress];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'resource_node_address': resourceNodeAddress,
       'owner_address': ownerAddress,
     };
   }
 
-  factory MsgRemoveResourceNode.fromJson(Map<String, dynamic> json) {
+  factory MsgRemoveResourceNode.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgRemoveResourceNode(
       resourceNodeAddress: json.valueAsString<String?>(
         'resource_node_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       ownerAddress: json.valueAsString<String?>(
         'owner_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -484,11 +532,16 @@ class MsgRemoveResourceNodeResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgRemoveResourceNodeResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgRemoveResourceNodeResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgRemoveResourceNodeResponse();
   }
 
@@ -536,22 +589,27 @@ class MsgRemoveMetaNode extends CosmosProtoMessage
   List<Object?> get protoValues => [metaNodeAddress, ownerAddress];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'meta_node_address': metaNodeAddress,
       'owner_address': ownerAddress,
     };
   }
 
-  factory MsgRemoveMetaNode.fromJson(Map<String, dynamic> json) {
+  factory MsgRemoveMetaNode.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgRemoveMetaNode(
       metaNodeAddress: json.valueAsString<String?>(
         'meta_node_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       ownerAddress: json.valueAsString<String?>(
         'owner_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -597,11 +655,16 @@ class MsgRemoveMetaNodeResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgRemoveMetaNodeResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgRemoveMetaNodeResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgRemoveMetaNodeResponse();
   }
 
@@ -673,9 +736,11 @@ class MsgUpdateResourceNode extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'description': description?.toJson(),
+      'description': config.encodeMessage(description),
       'beneficiary_address': beneficiaryAddress,
       'network_address': networkAddress,
       'owner_address': ownerAddress,
@@ -683,29 +748,37 @@ class MsgUpdateResourceNode extends CosmosProtoMessage
     };
   }
 
-  factory MsgUpdateResourceNode.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateResourceNode.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateResourceNode(
-      description: json.valueTo<
-        stratos_register_v1_register.Description?,
-        Map<String, dynamic>
-      >(
-        key: 'description',
-        parse: (v) => stratos_register_v1_register.Description.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      description: json
+          .valueTo<stratos_register_v1_register.Description?, Object>(
+            key: 'description',
+            parse:
+                (v) => stratos_register_v1_register.Description.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
       beneficiaryAddress: json.valueAsString<String?>(
         'beneficiary_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       networkAddress: json.valueAsString<String?>(
         'network_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       ownerAddress: json.valueAsString<String?>(
         'owner_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      nodeType: json.valueAsInt<int?>('node_type', acceptCamelCase: true),
+      nodeType: json.valueAsInt<int?>(
+        'node_type',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -758,11 +831,16 @@ class MsgUpdateResourceNodeResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgUpdateResourceNodeResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateResourceNodeResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateResourceNodeResponse();
   }
 
@@ -829,36 +907,43 @@ class MsgUpdateMetaNode extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'description': description?.toJson(),
+      'description': config.encodeMessage(description),
       'beneficiary_address': beneficiaryAddress,
       'network_address': networkAddress,
       'owner_address': ownerAddress,
     };
   }
 
-  factory MsgUpdateMetaNode.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateMetaNode.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateMetaNode(
-      description: json.valueTo<
-        stratos_register_v1_register.Description?,
-        Map<String, dynamic>
-      >(
-        key: 'description',
-        parse: (v) => stratos_register_v1_register.Description.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      description: json
+          .valueTo<stratos_register_v1_register.Description?, Object>(
+            key: 'description',
+            parse:
+                (v) => stratos_register_v1_register.Description.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
       beneficiaryAddress: json.valueAsString<String?>(
         'beneficiary_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       networkAddress: json.valueAsString<String?>(
         'network_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       ownerAddress: json.valueAsString<String?>(
         'owner_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -909,11 +994,16 @@ class MsgUpdateMetaNodeResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgUpdateMetaNodeResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateMetaNodeResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateMetaNodeResponse();
   }
 
@@ -971,30 +1061,38 @@ class MsgUpdateResourceNodeDeposit extends CosmosProtoMessage
   List<Object?> get protoValues => [networkAddress, ownerAddress, depositDelta];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'network_address': networkAddress,
       'owner_address': ownerAddress,
-      'deposit_delta': depositDelta?.toJson(),
+      'deposit_delta': config.encodeMessage(depositDelta),
     };
   }
 
-  factory MsgUpdateResourceNodeDeposit.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateResourceNodeDeposit.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateResourceNodeDeposit(
       networkAddress: json.valueAsString<String?>(
         'network_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       ownerAddress: json.valueAsString<String?>(
         'owner_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      depositDelta: json
-          .valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
-            key: 'deposit_delta',
-            parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      depositDelta: json.valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
+        key: 'deposit_delta',
+        parse:
+            (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1045,13 +1143,16 @@ class MsgUpdateResourceNodeDepositResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
   factory MsgUpdateResourceNodeDepositResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateResourceNodeDepositResponse();
   }
 
@@ -1130,7 +1231,9 @@ class MsgUpdateEffectiveDeposit extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'reporters': reporters.map((e) => e).toList(),
       'reporter_owner': reporterOwner.map((e) => e).toList(),
@@ -1139,25 +1242,30 @@ class MsgUpdateEffectiveDeposit extends CosmosProtoMessage
     };
   }
 
-  factory MsgUpdateEffectiveDeposit.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateEffectiveDeposit.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateEffectiveDeposit(
       reporters:
           (json.valueEnsureAsList<dynamic>(
             'reporters',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
       reporterOwner:
           (json.valueEnsureAsList<dynamic>(
             'reporter_owner',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
       networkAddress: json.valueAsString<String?>(
         'network_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       effectiveTokens: json.valueAsString<String?>(
         'effective_tokens',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1207,13 +1315,16 @@ class MsgUpdateEffectiveDepositResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
   factory MsgUpdateEffectiveDepositResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateEffectiveDepositResponse();
   }
 
@@ -1272,30 +1383,38 @@ class MsgUpdateMetaNodeDeposit extends CosmosProtoMessage
   List<Object?> get protoValues => [networkAddress, ownerAddress, depositDelta];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'network_address': networkAddress,
       'owner_address': ownerAddress,
-      'deposit_delta': depositDelta?.toJson(),
+      'deposit_delta': config.encodeMessage(depositDelta),
     };
   }
 
-  factory MsgUpdateMetaNodeDeposit.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateMetaNodeDeposit.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateMetaNodeDeposit(
       networkAddress: json.valueAsString<String?>(
         'network_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       ownerAddress: json.valueAsString<String?>(
         'owner_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      depositDelta: json
-          .valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
-            key: 'deposit_delta',
-            parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      depositDelta: json.valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
+        key: 'deposit_delta',
+        parse:
+            (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1346,11 +1465,16 @@ class MsgUpdateMetaNodeDepositResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgUpdateMetaNodeDepositResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateMetaNodeDepositResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateMetaNodeDepositResponse();
   }
 
@@ -1426,7 +1550,9 @@ class MsgMetaNodeRegistrationVote extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'candidate_network_address': candidateNetworkAddress,
       'candidate_owner_address': candidateOwnerAddress,
@@ -1436,24 +1562,30 @@ class MsgMetaNodeRegistrationVote extends CosmosProtoMessage
     };
   }
 
-  factory MsgMetaNodeRegistrationVote.fromJson(Map<String, dynamic> json) {
+  factory MsgMetaNodeRegistrationVote.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgMetaNodeRegistrationVote(
       candidateNetworkAddress: json.valueAsString<String?>(
         'candidate_network_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       candidateOwnerAddress: json.valueAsString<String?>(
         'candidate_owner_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      opinion: json.valueAsBool<bool?>('opinion', acceptCamelCase: true),
+      opinion: json.valueAsBool<bool?>(
+        'opinion',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       voterNetworkAddress: json.valueAsString<String?>(
         'voter_network_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       voterOwnerAddress: json.valueAsString<String?>(
         'voter_owner_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1505,13 +1637,16 @@ class MsgMetaNodeRegistrationVoteResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
   factory MsgMetaNodeRegistrationVoteResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgMetaNodeRegistrationVoteResponse();
   }
 
@@ -1578,7 +1713,9 @@ class MsgKickMetaNodeVote extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'target_network_address': targetNetworkAddress,
       'opinion': opinion,
@@ -1587,20 +1724,26 @@ class MsgKickMetaNodeVote extends CosmosProtoMessage
     };
   }
 
-  factory MsgKickMetaNodeVote.fromJson(Map<String, dynamic> json) {
+  factory MsgKickMetaNodeVote.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgKickMetaNodeVote(
       targetNetworkAddress: json.valueAsString<String?>(
         'target_network_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      opinion: json.valueAsBool<bool?>('opinion', acceptCamelCase: true),
+      opinion: json.valueAsBool<bool?>(
+        'opinion',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       voterNetworkAddress: json.valueAsString<String?>(
         'voter_network_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       voterOwnerAddress: json.valueAsString<String?>(
         'voter_owner_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1647,11 +1790,16 @@ class MsgKickMetaNodeVoteResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgKickMetaNodeVoteResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgKickMetaNodeVoteResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgKickMetaNodeVoteResponse();
   }
 
@@ -1705,22 +1853,30 @@ class MsgUpdateParams extends CosmosProtoMessage
   List<Object?> get protoValues => [authority, params];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'authority': authority, 'params': params?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'authority': authority, 'params': config.encodeMessage(params)};
   }
 
-  factory MsgUpdateParams.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateParams.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateParams(
       authority: json.valueAsString<String?>(
         'authority',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      params: json
-          .valueTo<stratos_register_v1_register.Params?, Map<String, dynamic>>(
-            key: 'params',
-            parse: (v) => stratos_register_v1_register.Params.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      params: json.valueTo<stratos_register_v1_register.Params?, Object>(
+        key: 'params',
+        parse:
+            (v) => stratos_register_v1_register.Params.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1769,11 +1925,16 @@ class MsgUpdateParamsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgUpdateParamsResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateParamsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateParamsResponse();
   }
 

@@ -36,22 +36,37 @@ class Grant extends CosmosProtoMessage {
   List<Object?> get protoValues => [granter, grantee, allowance];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'granter': granter,
       'grantee': grantee,
-      'allowance': allowance?.toJson(),
+      'allowance': config.encodeMessage(allowance),
     };
   }
 
-  factory Grant.fromJson(Map<String, dynamic> json) {
+  factory Grant.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Grant(
-      granter: json.valueAsString<String?>('granter', acceptCamelCase: true),
-      grantee: json.valueAsString<String?>('grantee', acceptCamelCase: true),
-      allowance: json.valueTo<google_protobuf_any.Any?, Map<String, dynamic>>(
+      granter: json.valueAsString<String?>(
+        'granter',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      grantee: json.valueAsString<String?>(
+        'grantee',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      allowance: json.valueTo<google_protobuf_any.Any?, Object>(
         key: 'allowance',
-        parse: (v) => google_protobuf_any.Any.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_any.Any.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

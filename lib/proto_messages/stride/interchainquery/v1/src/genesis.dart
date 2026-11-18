@@ -21,22 +21,32 @@ enum TimeoutPolicy implements ProtoEnumVariant {
 
   /// Looks up a value by its proto wire int. Throws if not found.
   static TimeoutPolicy fromValue(int? value) {
+    value ??= 0;
     return TimeoutPolicy.values.firstWhere(
       (e) => e.value == value,
       orElse:
           () =>
-              throw ItemNotFoundException(name: "TimeoutPolicy", value: value),
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching TimeoutPolicy found for the given value. $value",
+                details: {"name": "TimeoutPolicy", "value": value?.toString()},
+              ),
     );
   }
 
   /// Looks up a value by wire int, Dart enum name, or original proto
   /// name (whichever [value] happens to be). Throws if not found.
   static TimeoutPolicy from(Object? value) {
+    value ??= 0;
     return TimeoutPolicy.values.firstWhere(
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
           () =>
-              throw ItemNotFoundException(name: "TimeoutPolicy", value: value),
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching TimeoutPolicy found for the given value. $value",
+                details: {"name": "TimeoutPolicy", "value": value?.toString()},
+              ),
     );
   }
 }
@@ -50,13 +60,13 @@ class Query extends CosmosProtoMessage {
 
   final String? queryType;
 
-  final List<int>? requestData;
+  final BuBytes? requestData;
 
   final String? callbackModule;
 
   final String? callbackId;
 
-  final List<int>? callbackData;
+  final BuBytes? callbackData;
 
   final TimeoutPolicy? timeoutPolicy;
 
@@ -68,21 +78,22 @@ class Query extends CosmosProtoMessage {
 
   final BigInt? submissionHeight;
 
-  const Query({
+  Query({
     this.id,
     this.connectionId,
     this.chainId,
     this.queryType,
-    this.requestData,
+    List<int>? requestData,
     this.callbackModule,
     this.callbackId,
-    this.callbackData,
+    List<int>? callbackData,
     this.timeoutPolicy,
     this.timeoutDuration,
     this.timeoutTimestamp,
     this.requestSent,
     this.submissionHeight,
-  });
+  }) : requestData = requestData?.asImmutableBytes,
+       callbackData = callbackData?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -127,86 +138,85 @@ class Query extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'id': id,
       'connection_id': connectionId,
       'chain_id': chainId,
       'query_type': queryType,
-      'request_data': switch (requestData) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'request_data': config.encodeBinary(requestData),
       'callback_module': callbackModule,
       'callback_id': callbackId,
-      'callback_data': switch (callbackData) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'timeout_policy': timeoutPolicy?.protoName,
+      'callback_data': config.encodeBinary(callbackData),
+      'timeout_policy': config.encodeEnum(timeoutPolicy),
       'timeout_duration': timeoutDuration?.encodeString(asNanos: true),
-      'timeout_timestamp': timeoutTimestamp?.toString(),
+      'timeout_timestamp': config.encodeBigint(timeoutTimestamp),
       'request_sent': requestSent,
-      'submission_height': submissionHeight?.toString(),
+      'submission_height': config.encodeBigint(submissionHeight),
     };
   }
 
-  factory Query.fromJson(Map<String, dynamic> json) {
+  factory Query.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Query(
-      id: json.valueAsString<String?>('id', acceptCamelCase: true),
+      id: json.valueAsString<String?>(
+        'id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       connectionId: json.valueAsString<String?>(
         'connection_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      chainId: json.valueAsString<String?>('chain_id', acceptCamelCase: true),
+      chainId: json.valueAsString<String?>(
+        'chain_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       queryType: json.valueAsString<String?>(
         'query_type',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      requestData: json.valueAsBytes<List<int>?>(
-        'request_data',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      requestData: config.decodeBinary<List<int>?>(
+        json.valueAs('request_data', normalizeKeyLookup: config.normalizeKeys),
       ),
       callbackModule: json.valueAsString<String?>(
         'callback_module',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       callbackId: json.valueAsString<String?>(
         'callback_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      callbackData: json.valueAsBytes<List<int>?>(
-        'callback_data',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      callbackData: config.decodeBinary<List<int>?>(
+        json.valueAs('callback_data', normalizeKeyLookup: config.normalizeKeys),
       ),
       timeoutPolicy: json.valueTo<TimeoutPolicy?, Object?>(
         key: 'timeout_policy',
         parse: (v) => TimeoutPolicy.from(v),
       ),
-      timeoutDuration: json.valueTo<google_protobuf_duration.Duration?, String>(
+      timeoutDuration: json.valueTo<google_protobuf_duration.Duration?, Object>(
         key: 'timeout_duration',
-        parse: (v) => google_protobuf_duration.Duration.fromString(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_duration.Duration.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       timeoutTimestamp: json.valueAsBigInt<BigInt?>(
         'timeout_timestamp',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       requestSent: json.valueAsBool<bool?>(
         'request_sent',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       submissionHeight: json.valueAsBigInt<BigInt?>(
         'submission_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

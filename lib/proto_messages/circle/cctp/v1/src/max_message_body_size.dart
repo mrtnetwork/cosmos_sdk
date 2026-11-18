@@ -40,13 +40,21 @@ class MaxMessageBodySize extends CosmosProtoMessage {
   List<Object?> get protoValues => [amount];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'amount': amount?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'amount': config.encodeBigint(amount)};
   }
 
-  factory MaxMessageBodySize.fromJson(Map<String, dynamic> json) {
+  factory MaxMessageBodySize.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MaxMessageBodySize(
-      amount: json.valueAsBigInt<BigInt?>('amount', acceptCamelCase: true),
+      amount: json.valueAsBigInt<BigInt?>(
+        'amount',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

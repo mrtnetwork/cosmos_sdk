@@ -26,24 +26,34 @@ class RegisteredContractWithAddress extends CosmosProtoMessage {
   List<Object?> get protoValues => [address, registeredContract];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'address': address,
-      'registered_contract': registeredContract?.toJson(),
+      'registered_contract': config.encodeMessage(registeredContract),
     };
   }
 
-  factory RegisteredContractWithAddress.fromJson(Map<String, dynamic> json) {
+  factory RegisteredContractWithAddress.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return RegisteredContractWithAddress(
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
-      registeredContract: json.valueTo<
-        injective_wasmx_v1_wasmx.RegisteredContract?,
-        Map<String, dynamic>
-      >(
-        key: 'registered_contract',
-        parse: (v) => injective_wasmx_v1_wasmx.RegisteredContract.fromJson(v),
-        acceptCamelCase: true,
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
+      registeredContract: json
+          .valueTo<injective_wasmx_v1_wasmx.RegisteredContract?, Object>(
+            key: 'registered_contract',
+            parse:
+                (v) => injective_wasmx_v1_wasmx.RegisteredContract.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -97,35 +107,46 @@ class GenesisState extends CosmosProtoMessage {
   List<Object?> get protoValues => [params, registeredContracts];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'params': params?.toJson(),
+      'params': config.encodeMessage(params),
       'registered_contracts':
-          registeredContracts.map((e) => e.toJson()).toList(),
+          registeredContracts.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory GenesisState.fromJson(Map<String, dynamic> json) {
+  factory GenesisState.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GenesisState(
-      params: json
-          .valueTo<injective_wasmx_v1_wasmx.Params?, Map<String, dynamic>>(
-            key: 'params',
-            parse: (v) => injective_wasmx_v1_wasmx.Params.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      params: json.valueTo<injective_wasmx_v1_wasmx.Params?, Object>(
+        key: 'params',
+        parse:
+            (v) => injective_wasmx_v1_wasmx.Params.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       registeredContracts:
           (json.valueEnsureAsList<dynamic>(
                 'registered_contracts',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  RegisteredContractWithAddress,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => RegisteredContractWithAddress.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<RegisteredContractWithAddress, Object>(
+                      value: e,
+                      parse:
+                          (v) => RegisteredContractWithAddress.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );

@@ -30,19 +30,33 @@ class ProtocolVersion extends CosmosProtoMessage {
   List<Object?> get protoValues => [p2p, block, app];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'p2p': p2p?.toString(),
-      'block': block?.toString(),
-      'app': app?.toString(),
+      'p2p': config.encodeBigint(p2p),
+      'block': config.encodeBigint(block),
+      'app': config.encodeBigint(app),
     };
   }
 
-  factory ProtocolVersion.fromJson(Map<String, dynamic> json) {
+  factory ProtocolVersion.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ProtocolVersion(
-      p2p: json.valueAsBigInt<BigInt?>('p2p', acceptCamelCase: true),
-      block: json.valueAsBigInt<BigInt?>('block', acceptCamelCase: true),
-      app: json.valueAsBigInt<BigInt?>('app', acceptCamelCase: true),
+      p2p: json.valueAsBigInt<BigInt?>(
+        'p2p',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      block: json.valueAsBigInt<BigInt?>(
+        'block',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      app: json.valueAsBigInt<BigInt?>(
+        'app',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -71,22 +85,22 @@ class DefaultNodeInfo extends CosmosProtoMessage {
 
   final String? version;
 
-  final List<int>? channels;
+  final BuBytes? channels;
 
   final String? moniker;
 
   final DefaultNodeInfoOther? other;
 
-  const DefaultNodeInfo({
+  DefaultNodeInfo({
     this.protocolVersion,
     this.defaultNodeId,
     this.listenAddr,
     this.network,
     this.version,
-    this.channels,
+    List<int>? channels,
     this.moniker,
     this.other,
-  });
+  }) : channels = channels?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -121,52 +135,64 @@ class DefaultNodeInfo extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'protocol_version': protocolVersion?.toJson(),
+      'protocol_version': config.encodeMessage(protocolVersion),
       'default_node_id': defaultNodeId,
       'listen_addr': listenAddr,
       'network': network,
       'version': version,
-      'channels': switch (channels) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'channels': config.encodeBinary(channels),
       'moniker': moniker,
-      'other': other?.toJson(),
+      'other': config.encodeMessage(other),
     };
   }
 
-  factory DefaultNodeInfo.fromJson(Map<String, dynamic> json) {
+  factory DefaultNodeInfo.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return DefaultNodeInfo(
-      protocolVersion: json.valueTo<ProtocolVersion?, Map<String, dynamic>>(
+      protocolVersion: json.valueTo<ProtocolVersion?, Object>(
         key: 'protocol_version',
-        parse: (v) => ProtocolVersion.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) =>
+                ProtocolVersion.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       defaultNodeId: json.valueAsString<String?>(
         'default_node_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       listenAddr: json.valueAsString<String?>(
         'listen_addr',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      network: json.valueAsString<String?>('network', acceptCamelCase: true),
-      version: json.valueAsString<String?>('version', acceptCamelCase: true),
-      channels: json.valueAsBytes<List<int>?>(
-        'channels',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      network: json.valueAsString<String?>(
+        'network',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      moniker: json.valueAsString<String?>('moniker', acceptCamelCase: true),
-      other: json.valueTo<DefaultNodeInfoOther?, Map<String, dynamic>>(
+      version: json.valueAsString<String?>(
+        'version',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      channels: config.decodeBinary<List<int>?>(
+        json.valueAs('channels', normalizeKeyLookup: config.normalizeKeys),
+      ),
+      moniker: json.valueAsString<String?>(
+        'moniker',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      other: json.valueTo<DefaultNodeInfoOther?, Object>(
         key: 'other',
-        parse: (v) => DefaultNodeInfoOther.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => DefaultNodeInfoOther.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -221,16 +247,24 @@ class DefaultNodeInfoOther extends CosmosProtoMessage {
   List<Object?> get protoValues => [txIndex, rpcAddress];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'tx_index': txIndex, 'rpc_address': rpcAddress};
   }
 
-  factory DefaultNodeInfoOther.fromJson(Map<String, dynamic> json) {
+  factory DefaultNodeInfoOther.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return DefaultNodeInfoOther(
-      txIndex: json.valueAsString<String?>('tx_index', acceptCamelCase: true),
+      txIndex: json.valueAsString<String?>(
+        'tx_index',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       rpcAddress: json.valueAsString<String?>(
         'rpc_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

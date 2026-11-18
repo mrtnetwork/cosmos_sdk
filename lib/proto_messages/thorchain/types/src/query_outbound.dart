@@ -31,13 +31,21 @@ class QueryScheduledOutboundRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'height': height};
   }
 
-  factory QueryScheduledOutboundRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryScheduledOutboundRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryScheduledOutboundRequest(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -87,13 +95,21 @@ class QueryPendingOutboundRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'height': height};
   }
 
-  factory QueryPendingOutboundRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryPendingOutboundRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryPendingOutboundRequest(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -141,21 +157,33 @@ class QueryOutboundResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [txOutItems];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'tx_out_items': txOutItems.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'tx_out_items': txOutItems.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
-  factory QueryOutboundResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryOutboundResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryOutboundResponse(
       txOutItems:
           (json.valueEnsureAsList<dynamic>(
                 'tx_out_items',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<QueryTxOutItem, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<QueryTxOutItem, Object>(
                   value: e,
-                  parse: (v) => QueryTxOutItem.fromJson(v),
+                  parse:
+                      (v) => QueryTxOutItem.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -286,17 +314,19 @@ class QueryTxOutItem extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'height': height?.toString(),
+      'height': config.encodeBigint(height),
       'vault_pub_key': vaultPubKey,
       'in_hash': inHash,
       'out_hash': outHash,
       'chain': chain,
       'to_address': toAddress,
-      'coin': coin?.toJson(),
-      'max_gas': maxGas.map((e) => e.toJson()).toList(),
-      'gas_rate': gasRate?.toString(),
+      'coin': config.encodeMessage(coin),
+      'max_gas': maxGas.map((e) => config.encodeMessage(e)).toList(),
+      'gas_rate': config.encodeBigint(gasRate),
       'memo': memo,
       'original_memo': originalMemo,
       'aggregator': aggregator,
@@ -307,59 +337,92 @@ class QueryTxOutItem extends CosmosProtoMessage {
     };
   }
 
-  factory QueryTxOutItem.fromJson(Map<String, dynamic> json) {
+  factory QueryTxOutItem.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTxOutItem(
-      height: json.valueAsBigInt<BigInt?>('height', acceptCamelCase: true),
+      height: json.valueAsBigInt<BigInt?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       vaultPubKey: json.valueAsString<String?>(
         'vault_pub_key',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      inHash: json.valueAsString<String?>('in_hash', acceptCamelCase: true),
-      outHash: json.valueAsString<String?>('out_hash', acceptCamelCase: true),
-      chain: json.valueAsString<String?>('chain', acceptCamelCase: true),
+      inHash: json.valueAsString<String?>(
+        'in_hash',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      outHash: json.valueAsString<String?>(
+        'out_hash',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      chain: json.valueAsString<String?>(
+        'chain',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       toAddress: json.valueAsString<String?>(
         'to_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      coin: json.valueTo<common_common.Coin?, Map<String, dynamic>>(
+      coin: json.valueTo<common_common.Coin?, Object>(
         key: 'coin',
-        parse: (v) => common_common.Coin.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => common_common.Coin.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       maxGas:
-          (json.valueEnsureAsList<dynamic>('max_gas', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'max_gas',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  common_common.Coin,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => common_common.Coin.fromJson(v)),
+                (e) => JsonParser.valueTo<common_common.Coin, Object>(
+                  value: e,
+                  parse:
+                      (v) => common_common.Coin.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
-      gasRate: json.valueAsBigInt<BigInt?>('gas_rate', acceptCamelCase: true),
-      memo: json.valueAsString<String?>('memo', acceptCamelCase: true),
+      gasRate: json.valueAsBigInt<BigInt?>(
+        'gas_rate',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      memo: json.valueAsString<String?>(
+        'memo',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       originalMemo: json.valueAsString<String?>(
         'original_memo',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       aggregator: json.valueAsString<String?>(
         'aggregator',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       aggregatorTargetAsset: json.valueAsString<String?>(
         'aggregator_target_asset',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       aggregatorTargetLimit: json.valueAsString<String?>(
         'aggregator_target_limit',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       cloutSpent: json.valueAsString<String?>(
         'clout_spent',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       vaultPubKeyEddsa: json.valueAsString<String?>(
         'vault_pub_key_eddsa',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

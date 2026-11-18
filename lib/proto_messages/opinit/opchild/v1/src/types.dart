@@ -33,13 +33,18 @@ enum ResponseResultType implements ProtoEnumVariant {
 
   /// Looks up a value by its proto wire int. Throws if not found.
   static ResponseResultType fromValue(int? value) {
+    value ??= 0;
     return ResponseResultType.values.firstWhere(
       (e) => e.value == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "ResponseResultType",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching ResponseResultType found for the given value. $value",
+                details: {
+                  "name": "ResponseResultType",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -47,13 +52,18 @@ enum ResponseResultType implements ProtoEnumVariant {
   /// Looks up a value by wire int, Dart enum name, or original proto
   /// name (whichever [value] happens to be). Throws if not found.
   static ResponseResultType from(Object? value) {
+    value ??= 0;
     return ResponseResultType.values.firstWhere(
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "ResponseResultType",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching ResponseResultType found for the given value. $value",
+                details: {
+                  "name": "ResponseResultType",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -138,57 +148,73 @@ class Params extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'max_validators': maxValidators,
       'historical_entries': historicalEntries,
-      'min_gas_prices': minGasPrices.map((e) => e.toJson()).toList(),
+      'min_gas_prices':
+          minGasPrices.map((e) => config.encodeMessage(e)).toList(),
       'bridge_executors': bridgeExecutors.map((e) => e).toList(),
       'admin': admin,
       'fee_whitelist': feeWhitelist.map((e) => e).toList(),
-      'hook_max_gas': hookMaxGas?.toString(),
+      'hook_max_gas': config.encodeBigint(hookMaxGas),
     };
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
       maxValidators: json.valueAsInt<int?>(
         'max_validators',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       historicalEntries: json.valueAsInt<int?>(
         'historical_entries',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       minGasPrices:
           (json.valueEnsureAsList<dynamic>(
                 'min_gas_prices',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   cosmos_base_v1beta1_coin.DecCoin,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.DecCoin.fromJson(v),
+                  parse:
+                      (v) => cosmos_base_v1beta1_coin.DecCoin.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       bridgeExecutors:
           (json.valueEnsureAsList<dynamic>(
             'bridge_executors',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
-      admin: json.valueAsString<String?>('admin', acceptCamelCase: true),
+      admin: json.valueAsString<String?>(
+        'admin',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       feeWhitelist:
           (json.valueEnsureAsList<dynamic>(
             'fee_whitelist',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
       hookMaxGas: json.valueAsBigInt<BigInt?>(
         'hook_max_gas',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -268,31 +294,42 @@ class Validator extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'moniker': moniker,
       'operator_address': operatorAddress,
-      'consensus_pubkey': consensusPubkey?.toJson(),
-      'cons_power': consPower?.toString(),
+      'consensus_pubkey': config.encodeMessage(consensusPubkey),
+      'cons_power': config.encodeBigint(consPower),
     };
   }
 
-  factory Validator.fromJson(Map<String, dynamic> json) {
+  factory Validator.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Validator(
-      moniker: json.valueAsString<String?>('moniker', acceptCamelCase: true),
+      moniker: json.valueAsString<String?>(
+        'moniker',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       operatorAddress: json.valueAsString<String?>(
         'operator_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      consensusPubkey: json
-          .valueTo<google_protobuf_any.Any?, Map<String, dynamic>>(
-            key: 'consensus_pubkey',
-            parse: (v) => google_protobuf_any.Any.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      consensusPubkey: json.valueTo<google_protobuf_any.Any?, Object>(
+        key: 'consensus_pubkey',
+        parse:
+            (v) => google_protobuf_any.Any.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       consPower: json.valueAsBigInt<BigInt?>(
         'cons_power',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -371,37 +408,48 @@ class BridgeInfo extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'bridge_id': bridgeId?.toString(),
+      'bridge_id': config.encodeBigint(bridgeId),
       'bridge_addr': bridgeAddr,
       'l1_chain_id': l1ChainId,
       'l1_client_id': l1ClientId,
-      'bridge_config': bridgeConfig?.toJson(),
+      'bridge_config': config.encodeMessage(bridgeConfig),
     };
   }
 
-  factory BridgeInfo.fromJson(Map<String, dynamic> json) {
+  factory BridgeInfo.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return BridgeInfo(
-      bridgeId: json.valueAsBigInt<BigInt?>('bridge_id', acceptCamelCase: true),
+      bridgeId: json.valueAsBigInt<BigInt?>(
+        'bridge_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       bridgeAddr: json.valueAsString<String?>(
         'bridge_addr',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       l1ChainId: json.valueAsString<String?>(
         'l1_chain_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       l1ClientId: json.valueAsString<String?>(
         'l1_client_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      bridgeConfig: json
-          .valueTo<opinit_ophost_v1_types.BridgeConfig?, Map<String, dynamic>>(
-            key: 'bridge_config',
-            parse: (v) => opinit_ophost_v1_types.BridgeConfig.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      bridgeConfig: json.valueTo<opinit_ophost_v1_types.BridgeConfig?, Object>(
+        key: 'bridge_config',
+        parse:
+            (v) => opinit_ophost_v1_types.BridgeConfig.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -471,7 +519,9 @@ class MigrationInfo extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'denom': denom,
       'ibc_channel_id': ibcChannelId,
@@ -480,20 +530,26 @@ class MigrationInfo extends CosmosProtoMessage {
     };
   }
 
-  factory MigrationInfo.fromJson(Map<String, dynamic> json) {
+  factory MigrationInfo.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MigrationInfo(
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       ibcChannelId: json.valueAsString<String?>(
         'ibc_channel_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       ibcPortId: json.valueAsString<String?>(
         'ibc_port_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       baseIbcDenomPath: json.valueAsString<String?>(
         'base_ibc_denom_path',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -571,33 +627,47 @@ class OraclePriceData extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'currency_pair': currencyPair,
       'price': price,
-      'decimals': decimals?.toString(),
-      'nonce': nonce?.toString(),
-      'currency_pair_id': currencyPairId?.toString(),
-      'timestamp': timestamp?.toString(),
+      'decimals': config.encodeBigint(decimals),
+      'nonce': config.encodeBigint(nonce),
+      'currency_pair_id': config.encodeBigint(currencyPairId),
+      'timestamp': config.encodeBigint(timestamp),
     };
   }
 
-  factory OraclePriceData.fromJson(Map<String, dynamic> json) {
+  factory OraclePriceData.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return OraclePriceData(
       currencyPair: json.valueAsString<String?>(
         'currency_pair',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      price: json.valueAsString<String?>('price', acceptCamelCase: true),
-      decimals: json.valueAsBigInt<BigInt?>('decimals', acceptCamelCase: true),
-      nonce: json.valueAsBigInt<BigInt?>('nonce', acceptCamelCase: true),
+      price: json.valueAsString<String?>(
+        'price',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      decimals: json.valueAsBigInt<BigInt?>(
+        'decimals',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      nonce: json.valueAsBigInt<BigInt?>(
+        'nonce',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       currencyPairId: json.valueAsBigInt<BigInt?>(
         'currency_pair_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       timestamp: json.valueAsBigInt<BigInt?>(
         'timestamp',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -627,7 +697,7 @@ class OracleData extends CosmosProtoMessage {
   final BigInt? bridgeId;
 
   /// oracle_price_hash is the hash of all oracle prices stored in L1 ophost state.
-  final List<int>? oraclePriceHash;
+  final BuBytes? oraclePriceHash;
 
   /// prices contains all the oracle price data from L1.
   final List<OraclePriceData> prices;
@@ -640,20 +710,21 @@ class OracleData extends CosmosProtoMessage {
 
   /// proof is the Merkle proof that verifies the oracle_price_hash exists
   /// in L1's ophost module state at the specified height.
-  final List<int>? proof;
+  final BuBytes? proof;
 
   /// proof_height is the L1 height at which the proof was generated.
   final ibc_core_client_v1_client.Height? proofHeight;
 
-  const OracleData({
+  OracleData({
     this.bridgeId,
-    this.oraclePriceHash,
+    List<int>? oraclePriceHash,
     this.prices = const [],
     this.l1BlockHeight,
     this.l1BlockTime,
-    this.proof,
+    List<int>? proof,
     this.proofHeight,
-  });
+  }) : oraclePriceHash = oraclePriceHash?.asImmutableBytes,
+       proof = proof?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -690,67 +761,72 @@ class OracleData extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'bridge_id': bridgeId?.toString(),
-      'oracle_price_hash': switch (oraclePriceHash) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'prices': prices.map((e) => e.toJson()).toList(),
-      'l1_block_height': l1BlockHeight?.toString(),
-      'l1_block_time': l1BlockTime?.toString(),
-      'proof': switch (proof) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'proof_height': proofHeight?.toJson(),
+      'bridge_id': config.encodeBigint(bridgeId),
+      'oracle_price_hash': config.encodeBinary(oraclePriceHash),
+      'prices': prices.map((e) => config.encodeMessage(e)).toList(),
+      'l1_block_height': config.encodeBigint(l1BlockHeight),
+      'l1_block_time': config.encodeBigint(l1BlockTime),
+      'proof': config.encodeBinary(proof),
+      'proof_height': config.encodeMessage(proofHeight),
     };
   }
 
-  factory OracleData.fromJson(Map<String, dynamic> json) {
+  factory OracleData.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return OracleData(
-      bridgeId: json.valueAsBigInt<BigInt?>('bridge_id', acceptCamelCase: true),
-      oraclePriceHash: json.valueAsBytes<List<int>?>(
-        'oracle_price_hash',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      bridgeId: json.valueAsBigInt<BigInt?>(
+        'bridge_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      oraclePriceHash: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'oracle_price_hash',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
       prices:
-          (json.valueEnsureAsList<dynamic>('prices', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'prices',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) =>
-                    JsonParser.valueTo<OraclePriceData, Map<String, dynamic>>(
-                      value: e,
-                      parse: (v) => OraclePriceData.fromJson(v),
-                    ),
+                (e) => JsonParser.valueTo<OraclePriceData, Object>(
+                  value: e,
+                  parse:
+                      (v) => OraclePriceData.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
       l1BlockHeight: json.valueAsBigInt<BigInt?>(
         'l1_block_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       l1BlockTime: json.valueAsBigInt<BigInt?>(
         'l1_block_time',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      proof: json.valueAsBytes<List<int>?>(
-        'proof',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      proof: config.decodeBinary<List<int>?>(
+        json.valueAs('proof', normalizeKeyLookup: config.normalizeKeys),
       ),
-      proofHeight: json
-          .valueTo<ibc_core_client_v1_client.Height?, Map<String, dynamic>>(
-            key: 'proof_height',
-            parse: (v) => ibc_core_client_v1_client.Height.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      proofHeight: json.valueTo<ibc_core_client_v1_client.Height?, Object>(
+        key: 'proof_height',
+        parse:
+            (v) => ibc_core_client_v1_client.Height.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

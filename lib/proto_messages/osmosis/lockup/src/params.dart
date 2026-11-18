@@ -28,19 +28,25 @@ class Params extends CosmosProtoMessage {
   List<Object?> get protoValues => [forceUnlockAllowedAddresses];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'force_unlock_allowed_addresses':
           forceUnlockAllowedAddresses.map((e) => e).toList(),
     };
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
       forceUnlockAllowedAddresses:
           (json.valueEnsureAsList<dynamic>(
             'force_unlock_allowed_addresses',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
     );
   }

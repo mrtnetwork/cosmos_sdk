@@ -2,7 +2,7 @@ import 'package:cosmos_sdk/sdk/provider/thornode/core/core.dart';
 import 'package:cosmos_sdk/sdk/provider/thornode/core/thorenode.dart';
 import 'package:cosmos_sdk/sdk/provider/thornode/models/models/asset_liquidity_provider_information.dart';
 
-/// Returns all liquidity provider information for an asset..
+/// Returns all liquidity provider information for an asset.
 class ThorNodeRequestAssetLiquidityProvidersInformation
     extends
         ThorNodeRequestParam<
@@ -30,7 +30,7 @@ class ThorNodeRequestAssetLiquidityProvidersInformation
   Map<String, String?> get parameters => {"height": height?.toString()};
 
   @override
-  List<AssetLiquidityProviderInformationResponse> onResonse(
+  List<AssetLiquidityProviderInformationResponse> onResponse(
     List<Map<String, dynamic>> result,
   ) {
     return result

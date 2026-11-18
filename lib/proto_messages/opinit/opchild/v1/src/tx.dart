@@ -51,23 +51,39 @@ class MsgExecuteMessages extends CosmosProtoMessage
   List<Object?> get protoValues => [sender, messages];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'sender': sender,
-      'messages': messages.map((e) => e.toJson()).toList(),
+      'messages': messages.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory MsgExecuteMessages.fromJson(Map<String, dynamic> json) {
+  factory MsgExecuteMessages.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgExecuteMessages(
-      sender: json.valueAsString<String?>('sender', acceptCamelCase: true),
+      sender: json.valueAsString<String?>(
+        'sender',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       messages:
-          (json.valueEnsureAsList<dynamic>('messages', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'messages',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  google_protobuf_any.Any,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => google_protobuf_any.Any.fromJson(v)),
+                (e) => JsonParser.valueTo<google_protobuf_any.Any, Object>(
+                  value: e,
+                  parse:
+                      (v) => google_protobuf_any.Any.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );
@@ -118,11 +134,16 @@ class MsgExecuteMessagesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgExecuteMessagesResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgExecuteMessagesResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgExecuteMessagesResponse();
   }
 
@@ -177,19 +198,30 @@ class MsgSetBridgeInfo extends CosmosProtoMessage
   List<Object?> get protoValues => [sender, bridgeInfo];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'sender': sender, 'bridge_info': bridgeInfo?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'sender': sender, 'bridge_info': config.encodeMessage(bridgeInfo)};
   }
 
-  factory MsgSetBridgeInfo.fromJson(Map<String, dynamic> json) {
+  factory MsgSetBridgeInfo.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSetBridgeInfo(
-      sender: json.valueAsString<String?>('sender', acceptCamelCase: true),
-      bridgeInfo: json
-          .valueTo<opinit_opchild_v1_types.BridgeInfo?, Map<String, dynamic>>(
-            key: 'bridge_info',
-            parse: (v) => opinit_opchild_v1_types.BridgeInfo.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      sender: json.valueAsString<String?>(
+        'sender',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      bridgeInfo: json.valueTo<opinit_opchild_v1_types.BridgeInfo?, Object>(
+        key: 'bridge_info',
+        parse:
+            (v) => opinit_opchild_v1_types.BridgeInfo.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -237,11 +269,16 @@ class MsgSetBridgeInfoResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgSetBridgeInfoResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgSetBridgeInfoResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSetBridgeInfoResponse();
   }
 
@@ -281,9 +318,9 @@ class MsgFinalizeTokenDeposit extends CosmosProtoMessage
   final String? baseDenom;
 
   /// / data is a extra bytes for hooks.
-  final List<int>? data;
+  final BuBytes? data;
 
-  const MsgFinalizeTokenDeposit({
+  MsgFinalizeTokenDeposit({
     this.sender,
     this.from,
     this.to,
@@ -291,8 +328,8 @@ class MsgFinalizeTokenDeposit extends CosmosProtoMessage
     this.sequence,
     this.height,
     this.baseDenom,
-    this.data,
-  });
+    List<int>? data,
+  }) : data = data?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -339,46 +376,61 @@ class MsgFinalizeTokenDeposit extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'sender': sender,
       'from': from,
       'to': to,
-      'amount': amount?.toJson(),
-      'sequence': sequence?.toString(),
-      'height': height?.toString(),
+      'amount': config.encodeMessage(amount),
+      'sequence': config.encodeBigint(sequence),
+      'height': config.encodeBigint(height),
       'base_denom': baseDenom,
-      'data': switch (data) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'data': config.encodeBinary(data),
     };
   }
 
-  factory MsgFinalizeTokenDeposit.fromJson(Map<String, dynamic> json) {
+  factory MsgFinalizeTokenDeposit.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgFinalizeTokenDeposit(
-      sender: json.valueAsString<String?>('sender', acceptCamelCase: true),
-      from: json.valueAsString<String?>('from', acceptCamelCase: true),
-      to: json.valueAsString<String?>('to', acceptCamelCase: true),
-      amount: json
-          .valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
-            key: 'amount',
-            parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-            acceptCamelCase: true,
-          ),
-      sequence: json.valueAsBigInt<BigInt?>('sequence', acceptCamelCase: true),
-      height: json.valueAsBigInt<BigInt?>('height', acceptCamelCase: true),
+      sender: json.valueAsString<String?>(
+        'sender',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      from: json.valueAsString<String?>(
+        'from',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      to: json.valueAsString<String?>(
+        'to',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      amount: json.valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
+        key: 'amount',
+        parse:
+            (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      sequence: json.valueAsBigInt<BigInt?>(
+        'sequence',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      height: json.valueAsBigInt<BigInt?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       baseDenom: json.valueAsString<String?>(
         'base_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      data: json.valueAsBytes<List<int>?>(
-        'data',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      data: config.decodeBinary<List<int>?>(
+        json.valueAs('data', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }
@@ -437,11 +489,16 @@ class MsgFinalizeTokenDepositResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [result];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'result': result?.protoName};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'result': config.encodeEnum(result)};
   }
 
-  factory MsgFinalizeTokenDepositResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgFinalizeTokenDepositResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgFinalizeTokenDepositResponse(
       result: json
           .valueTo<opinit_opchild_v1_types.ResponseResultType?, Object?>(
@@ -508,19 +565,30 @@ class MsgRelayOracleData extends CosmosProtoMessage
   List<Object?> get protoValues => [sender, oracleData];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'sender': sender, 'oracle_data': oracleData?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'sender': sender, 'oracle_data': config.encodeMessage(oracleData)};
   }
 
-  factory MsgRelayOracleData.fromJson(Map<String, dynamic> json) {
+  factory MsgRelayOracleData.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgRelayOracleData(
-      sender: json.valueAsString<String?>('sender', acceptCamelCase: true),
-      oracleData: json
-          .valueTo<opinit_opchild_v1_types.OracleData?, Map<String, dynamic>>(
-            key: 'oracle_data',
-            parse: (v) => opinit_opchild_v1_types.OracleData.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      sender: json.valueAsString<String?>(
+        'sender',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      oracleData: json.valueTo<opinit_opchild_v1_types.OracleData?, Object>(
+        key: 'oracle_data',
+        parse:
+            (v) => opinit_opchild_v1_types.OracleData.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -568,11 +636,16 @@ class MsgRelayOracleDataResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgRelayOracleDataResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgRelayOracleDataResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgRelayOracleDataResponse();
   }
 
@@ -629,20 +702,34 @@ class MsgInitiateTokenWithdrawal extends CosmosProtoMessage
   List<Object?> get protoValues => [sender, to, amount];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'sender': sender, 'to': to, 'amount': amount?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'sender': sender, 'to': to, 'amount': config.encodeMessage(amount)};
   }
 
-  factory MsgInitiateTokenWithdrawal.fromJson(Map<String, dynamic> json) {
+  factory MsgInitiateTokenWithdrawal.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgInitiateTokenWithdrawal(
-      sender: json.valueAsString<String?>('sender', acceptCamelCase: true),
-      to: json.valueAsString<String?>('to', acceptCamelCase: true),
-      amount: json
-          .valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
-            key: 'amount',
-            parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      sender: json.valueAsString<String?>(
+        'sender',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      to: json.valueAsString<String?>(
+        'to',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      amount: json.valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
+        key: 'amount',
+        parse:
+            (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -696,15 +783,21 @@ class MsgInitiateTokenWithdrawalResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [sequence];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'sequence': sequence?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'sequence': config.encodeBigint(sequence)};
   }
 
   factory MsgInitiateTokenWithdrawalResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgInitiateTokenWithdrawalResponse(
-      sequence: json.valueAsBigInt<BigInt?>('sequence', acceptCamelCase: true),
+      sequence: json.valueAsBigInt<BigInt?>(
+        'sequence',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -777,30 +870,42 @@ class MsgUpdateSequencer extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'authority': authority,
       'moniker': moniker,
       'sequencer_address': sequencerAddress,
-      'pubkey': pubkey?.toJson(),
+      'pubkey': config.encodeMessage(pubkey),
     };
   }
 
-  factory MsgUpdateSequencer.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateSequencer.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateSequencer(
       authority: json.valueAsString<String?>(
         'authority',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      moniker: json.valueAsString<String?>('moniker', acceptCamelCase: true),
+      moniker: json.valueAsString<String?>(
+        'moniker',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       sequencerAddress: json.valueAsString<String?>(
         'sequencer_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      pubkey: json.valueTo<google_protobuf_any.Any?, Map<String, dynamic>>(
+      pubkey: json.valueTo<google_protobuf_any.Any?, Object>(
         key: 'pubkey',
-        parse: (v) => google_protobuf_any.Any.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_any.Any.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -851,11 +956,16 @@ class MsgUpdateSequencerResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgUpdateSequencerResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateSequencerResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateSequencerResponse();
   }
 
@@ -912,23 +1022,29 @@ class MsgAddFeeWhitelistAddresses extends CosmosProtoMessage
   List<Object?> get protoValues => [authority, addresses];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'authority': authority,
       'addresses': addresses.map((e) => e).toList(),
     };
   }
 
-  factory MsgAddFeeWhitelistAddresses.fromJson(Map<String, dynamic> json) {
+  factory MsgAddFeeWhitelistAddresses.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgAddFeeWhitelistAddresses(
       authority: json.valueAsString<String?>(
         'authority',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       addresses:
           (json.valueEnsureAsList<dynamic>(
             'addresses',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
     );
   }
@@ -976,13 +1092,16 @@ class MsgAddFeeWhitelistAddressesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
   factory MsgAddFeeWhitelistAddressesResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgAddFeeWhitelistAddressesResponse();
   }
 
@@ -1040,23 +1159,29 @@ class MsgRemoveFeeWhitelistAddresses extends CosmosProtoMessage
   List<Object?> get protoValues => [authority, addresses];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'authority': authority,
       'addresses': addresses.map((e) => e).toList(),
     };
   }
 
-  factory MsgRemoveFeeWhitelistAddresses.fromJson(Map<String, dynamic> json) {
+  factory MsgRemoveFeeWhitelistAddresses.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgRemoveFeeWhitelistAddresses(
       authority: json.valueAsString<String?>(
         'authority',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       addresses:
           (json.valueEnsureAsList<dynamic>(
             'addresses',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
     );
   }
@@ -1104,13 +1229,16 @@ class MsgRemoveFeeWhitelistAddressesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
   factory MsgRemoveFeeWhitelistAddressesResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgRemoveFeeWhitelistAddressesResponse();
   }
 
@@ -1165,23 +1293,29 @@ class MsgAddBridgeExecutor extends CosmosProtoMessage
   List<Object?> get protoValues => [authority, addresses];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'authority': authority,
       'addresses': addresses.map((e) => e).toList(),
     };
   }
 
-  factory MsgAddBridgeExecutor.fromJson(Map<String, dynamic> json) {
+  factory MsgAddBridgeExecutor.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgAddBridgeExecutor(
       authority: json.valueAsString<String?>(
         'authority',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       addresses:
           (json.valueEnsureAsList<dynamic>(
             'addresses',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
     );
   }
@@ -1229,11 +1363,16 @@ class MsgAddBridgeExecutorResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgAddBridgeExecutorResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgAddBridgeExecutorResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgAddBridgeExecutorResponse();
   }
 
@@ -1287,23 +1426,29 @@ class MsgRemoveBridgeExecutor extends CosmosProtoMessage
   List<Object?> get protoValues => [authority, addresses];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'authority': authority,
       'addresses': addresses.map((e) => e).toList(),
     };
   }
 
-  factory MsgRemoveBridgeExecutor.fromJson(Map<String, dynamic> json) {
+  factory MsgRemoveBridgeExecutor.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgRemoveBridgeExecutor(
       authority: json.valueAsString<String?>(
         'authority',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       addresses:
           (json.valueEnsureAsList<dynamic>(
             'addresses',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
     );
   }
@@ -1351,11 +1496,16 @@ class MsgRemoveBridgeExecutorResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgRemoveBridgeExecutorResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgRemoveBridgeExecutorResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgRemoveBridgeExecutorResponse();
   }
 
@@ -1409,31 +1559,42 @@ class MsgUpdateMinGasPrices extends CosmosProtoMessage
   List<Object?> get protoValues => [authority, minGasPrices];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'authority': authority,
-      'min_gas_prices': minGasPrices.map((e) => e.toJson()).toList(),
+      'min_gas_prices':
+          minGasPrices.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory MsgUpdateMinGasPrices.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateMinGasPrices.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateMinGasPrices(
       authority: json.valueAsString<String?>(
         'authority',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       minGasPrices:
           (json.valueEnsureAsList<dynamic>(
                 'min_gas_prices',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   cosmos_base_v1beta1_coin.DecCoin,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.DecCoin.fromJson(v),
+                  parse:
+                      (v) => cosmos_base_v1beta1_coin.DecCoin.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -1487,11 +1648,16 @@ class MsgUpdateMinGasPricesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgUpdateMinGasPricesResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateMinGasPricesResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateMinGasPricesResponse();
   }
 
@@ -1538,17 +1704,25 @@ class MsgUpdateAdmin extends CosmosProtoMessage
   List<Object?> get protoValues => [authority, newAdmin];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'authority': authority, 'new_admin': newAdmin};
   }
 
-  factory MsgUpdateAdmin.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateAdmin.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateAdmin(
       authority: json.valueAsString<String?>(
         'authority',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      newAdmin: json.valueAsString<String?>('new_admin', acceptCamelCase: true),
+      newAdmin: json.valueAsString<String?>(
+        'new_admin',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1593,11 +1767,16 @@ class MsgUpdateAdminResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgUpdateAdminResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateAdminResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateAdminResponse();
   }
 
@@ -1645,22 +1824,30 @@ class MsgUpdateParams extends CosmosProtoMessage
   List<Object?> get protoValues => [authority, params];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'authority': authority, 'params': params?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'authority': authority, 'params': config.encodeMessage(params)};
   }
 
-  factory MsgUpdateParams.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateParams.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateParams(
       authority: json.valueAsString<String?>(
         'authority',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      params: json
-          .valueTo<opinit_opchild_v1_types.Params?, Map<String, dynamic>>(
-            key: 'params',
-            parse: (v) => opinit_opchild_v1_types.Params.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      params: json.valueTo<opinit_opchild_v1_types.Params?, Object>(
+        key: 'params',
+        parse:
+            (v) => opinit_opchild_v1_types.Params.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1708,11 +1895,16 @@ class MsgUpdateParamsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgUpdateParamsResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateParamsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateParamsResponse();
   }
 
@@ -1773,34 +1965,45 @@ class MsgSpendFeePool extends CosmosProtoMessage
   List<Object?> get protoValues => [authority, recipient, amount];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'authority': authority,
       'recipient': recipient,
-      'amount': amount.map((e) => e.toJson()).toList(),
+      'amount': amount.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory MsgSpendFeePool.fromJson(Map<String, dynamic> json) {
+  factory MsgSpendFeePool.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSpendFeePool(
       authority: json.valueAsString<String?>(
         'authority',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       recipient: json.valueAsString<String?>(
         'recipient',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       amount:
-          (json.valueEnsureAsList<dynamic>('amount', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'amount',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -1852,11 +2055,16 @@ class MsgSpendFeePoolResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgSpendFeePoolResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgSpendFeePoolResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSpendFeePoolResponse();
   }
 
@@ -1881,9 +2089,10 @@ class MsgUpdateOracle extends CosmosProtoMessage
   final BigInt? height;
 
   /// / data is oracle votes bytes.
-  final List<int>? data;
+  final BuBytes? data;
 
-  const MsgUpdateOracle({this.sender, this.height, this.data});
+  MsgUpdateOracle({this.sender, this.height, List<int>? data})
+    : data = data?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -1913,28 +2122,31 @@ class MsgUpdateOracle extends CosmosProtoMessage
   List<Object?> get protoValues => [sender, height, data];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'sender': sender,
-      'height': height?.toString(),
-      'data': switch (data) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'height': config.encodeBigint(height),
+      'data': config.encodeBinary(data),
     };
   }
 
-  factory MsgUpdateOracle.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateOracle.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateOracle(
-      sender: json.valueAsString<String?>('sender', acceptCamelCase: true),
-      height: json.valueAsBigInt<BigInt?>('height', acceptCamelCase: true),
-      data: json.valueAsBytes<List<int>?>(
-        'data',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      sender: json.valueAsString<String?>(
+        'sender',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      height: json.valueAsBigInt<BigInt?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      data: config.decodeBinary<List<int>?>(
+        json.valueAs('data', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }
@@ -1981,11 +2193,16 @@ class MsgUpdateOracleResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgUpdateOracleResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateOracleResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateOracleResponse();
   }
 
@@ -2038,24 +2255,34 @@ class MsgRegisterMigrationInfo extends CosmosProtoMessage
   List<Object?> get protoValues => [authority, migrationInfo];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'authority': authority, 'migration_info': migrationInfo?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'authority': authority,
+      'migration_info': config.encodeMessage(migrationInfo),
+    };
   }
 
-  factory MsgRegisterMigrationInfo.fromJson(Map<String, dynamic> json) {
+  factory MsgRegisterMigrationInfo.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgRegisterMigrationInfo(
       authority: json.valueAsString<String?>(
         'authority',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      migrationInfo: json.valueTo<
-        opinit_opchild_v1_types.MigrationInfo?,
-        Map<String, dynamic>
-      >(
-        key: 'migration_info',
-        parse: (v) => opinit_opchild_v1_types.MigrationInfo.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      migrationInfo: json
+          .valueTo<opinit_opchild_v1_types.MigrationInfo?, Object>(
+            key: 'migration_info',
+            parse:
+                (v) => opinit_opchild_v1_types.MigrationInfo.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -2105,11 +2332,16 @@ class MsgRegisterMigrationInfoResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgRegisterMigrationInfoResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgRegisterMigrationInfoResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgRegisterMigrationInfoResponse();
   }
 
@@ -2159,19 +2391,30 @@ class MsgMigrateToken extends CosmosProtoMessage
   List<Object?> get protoValues => [sender, amount];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'sender': sender, 'amount': amount?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'sender': sender, 'amount': config.encodeMessage(amount)};
   }
 
-  factory MsgMigrateToken.fromJson(Map<String, dynamic> json) {
+  factory MsgMigrateToken.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgMigrateToken(
-      sender: json.valueAsString<String?>('sender', acceptCamelCase: true),
-      amount: json
-          .valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
-            key: 'amount',
-            parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      sender: json.valueAsString<String?>(
+        'sender',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      amount: json.valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
+        key: 'amount',
+        parse:
+            (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -2219,11 +2462,16 @@ class MsgMigrateTokenResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgMigrateTokenResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgMigrateTokenResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgMigrateTokenResponse();
   }
 

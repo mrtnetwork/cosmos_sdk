@@ -2,7 +2,7 @@ import 'package:cosmos_sdk/sdk/provider/thornode/core/core.dart';
 import 'package:cosmos_sdk/sdk/provider/thornode/core/thorenode.dart';
 import 'package:cosmos_sdk/sdk/provider/thornode/models/models/asset_saver_information.dart';
 
-/// Returns the saver position given then savers pool and address.
+/// Returns the saver position given the savers pool and address.
 class ThorNodeRequestAddressAssetSaverPosition
     extends
         ThorNodeRequestParam<AssetSaverPositionResponse, Map<String, dynamic>> {
@@ -30,7 +30,7 @@ class ThorNodeRequestAddressAssetSaverPosition
   Map<String, String?> get parameters => {"height": height?.toString()};
 
   @override
-  AssetSaverPositionResponse onResonse(Map<String, dynamic> result) {
+  AssetSaverPositionResponse onResponse(Map<String, dynamic> result) {
     return AssetSaverPositionResponse.fromJson(result);
   }
 }

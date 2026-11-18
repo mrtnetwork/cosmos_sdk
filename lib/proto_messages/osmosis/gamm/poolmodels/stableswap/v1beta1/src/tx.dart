@@ -76,58 +76,71 @@ class MsgCreateStableswapPool extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'sender': sender,
-      'pool_params': poolParams?.toJson(),
+      'pool_params': config.encodeMessage(poolParams),
       'initial_pool_liquidity':
-          initialPoolLiquidity.map((e) => e.toJson()).toList(),
-      'scaling_factors': scalingFactors.map((e) => e.toString()).toList(),
+          initialPoolLiquidity.map((e) => config.encodeMessage(e)).toList(),
+      'scaling_factors':
+          scalingFactors.map((e) => config.encodeBigint(e)).toList(),
       'future_pool_governor': futurePoolGovernor,
       'scaling_factor_controller': scalingFactorController,
     };
   }
 
-  factory MsgCreateStableswapPool.fromJson(Map<String, dynamic> json) {
+  factory MsgCreateStableswapPool.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgCreateStableswapPool(
-      sender: json.valueAsString<String?>('sender', acceptCamelCase: true),
+      sender: json.valueAsString<String?>(
+        'sender',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       poolParams: json.valueTo<
         osmosis_gamm_poolmodels_stableswap_v1beta1_stableswap_pool.PoolParams?,
-        Map<String, dynamic>
+        Object
       >(
         key: 'pool_params',
         parse:
             (v) => osmosis_gamm_poolmodels_stableswap_v1beta1_stableswap_pool
-                .PoolParams.fromJson(v),
-        acceptCamelCase: true,
+                .PoolParams.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       initialPoolLiquidity:
           (json.valueEnsureAsList<dynamic>(
                 'initial_pool_liquidity',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
       scalingFactors:
           (json.valueEnsureAsList<dynamic>(
             'scaling_factors',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsBigInt<BigInt>(e)).toList(),
       futurePoolGovernor: json.valueAsString<String?>(
         'future_pool_governor',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       scalingFactorController: json.valueAsString<String?>(
         'scaling_factor_controller',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -192,13 +205,21 @@ class MsgCreateStableswapPoolResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [poolId];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'pool_id': poolId?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'pool_id': config.encodeBigint(poolId)};
   }
 
-  factory MsgCreateStableswapPoolResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgCreateStableswapPoolResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgCreateStableswapPoolResponse(
-      poolId: json.valueAsBigInt<BigInt?>('pool_id', acceptCamelCase: true),
+      poolId: json.valueAsBigInt<BigInt?>(
+        'pool_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -262,24 +283,35 @@ class MsgStableSwapAdjustScalingFactors extends CosmosProtoMessage
   List<Object?> get protoValues => [sender, poolId, scalingFactors];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'sender': sender,
-      'pool_id': poolId?.toString(),
-      'scaling_factors': scalingFactors.map((e) => e.toString()).toList(),
+      'pool_id': config.encodeBigint(poolId),
+      'scaling_factors':
+          scalingFactors.map((e) => config.encodeBigint(e)).toList(),
     };
   }
 
   factory MsgStableSwapAdjustScalingFactors.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgStableSwapAdjustScalingFactors(
-      sender: json.valueAsString<String?>('sender', acceptCamelCase: true),
-      poolId: json.valueAsBigInt<BigInt?>('pool_id', acceptCamelCase: true),
+      sender: json.valueAsString<String?>(
+        'sender',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      poolId: json.valueAsBigInt<BigInt?>(
+        'pool_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       scalingFactors:
           (json.valueEnsureAsList<dynamic>(
             'scaling_factors',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsBigInt<BigInt>(e)).toList(),
     );
   }
@@ -328,13 +360,16 @@ class MsgStableSwapAdjustScalingFactorsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
   factory MsgStableSwapAdjustScalingFactorsResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgStableSwapAdjustScalingFactorsResponse();
   }
 

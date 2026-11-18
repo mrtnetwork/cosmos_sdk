@@ -48,23 +48,34 @@ class MsgRegisterInterchainAccount extends CosmosProtoMessage
   List<Object?> get protoValues => [owner, connectionId, version, ordering];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'owner': owner,
       'connection_id': connectionId,
       'version': version,
-      'ordering': ordering?.protoName,
+      'ordering': config.encodeEnum(ordering),
     };
   }
 
-  factory MsgRegisterInterchainAccount.fromJson(Map<String, dynamic> json) {
+  factory MsgRegisterInterchainAccount.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgRegisterInterchainAccount(
-      owner: json.valueAsString<String?>('owner', acceptCamelCase: true),
+      owner: json.valueAsString<String?>(
+        'owner',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       connectionId: json.valueAsString<String?>(
         'connection_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      version: json.valueAsString<String?>('version', acceptCamelCase: true),
+      version: json.valueAsString<String?>(
+        'version',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       ordering: json.valueTo<ibc_core_channel_v1_channel.Order?, Object?>(
         key: 'ordering',
         parse: (v) => ibc_core_channel_v1_channel.Order.from(v),
@@ -125,19 +136,25 @@ class MsgRegisterInterchainAccountResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [channelId, portId];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'channel_id': channelId, 'port_id': portId};
   }
 
   factory MsgRegisterInterchainAccountResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgRegisterInterchainAccountResponse(
       channelId: json.valueAsString<String?>(
         'channel_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      portId: json.valueAsString<String?>('port_id', acceptCamelCase: true),
+      portId: json.valueAsString<String?>(
+        'port_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -203,35 +220,46 @@ class MsgSendTx extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'owner': owner,
       'connection_id': connectionId,
-      'packet_data': packetData?.toJson(),
-      'relative_timeout': relativeTimeout?.toString(),
+      'packet_data': config.encodeMessage(packetData),
+      'relative_timeout': config.encodeBigint(relativeTimeout),
     };
   }
 
-  factory MsgSendTx.fromJson(Map<String, dynamic> json) {
+  factory MsgSendTx.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSendTx(
-      owner: json.valueAsString<String?>('owner', acceptCamelCase: true),
+      owner: json.valueAsString<String?>(
+        'owner',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       connectionId: json.valueAsString<String?>(
         'connection_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       packetData: json.valueTo<
         ibc_applications_interchain_accounts_v1_packet.InterchainAccountPacketData?,
-        Map<String, dynamic>
+        Object
       >(
         key: 'packet_data',
         parse:
             (v) => ibc_applications_interchain_accounts_v1_packet
-                .InterchainAccountPacketData.fromJson(v),
-        acceptCamelCase: true,
+                .InterchainAccountPacketData.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       relativeTimeout: json.valueAsBigInt<BigInt?>(
         'relative_timeout',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -288,13 +316,21 @@ class MsgSendTxResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [sequence];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'sequence': sequence?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'sequence': config.encodeBigint(sequence)};
   }
 
-  factory MsgSendTxResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgSendTxResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSendTxResponse(
-      sequence: json.valueAsBigInt<BigInt?>('sequence', acceptCamelCase: true),
+      sequence: json.valueAsBigInt<BigInt?>(
+        'sequence',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -343,22 +379,30 @@ class MsgUpdateParams extends CosmosProtoMessage
   List<Object?> get protoValues => [signer, params];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'signer': signer, 'params': params?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'signer': signer, 'params': config.encodeMessage(params)};
   }
 
-  factory MsgUpdateParams.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateParams.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateParams(
-      signer: json.valueAsString<String?>('signer', acceptCamelCase: true),
+      signer: json.valueAsString<String?>(
+        'signer',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       params: json.valueTo<
         ibc_applications_interchain_accounts_controller_v1_controller.Params?,
-        Map<String, dynamic>
+        Object
       >(
         key: 'params',
         parse:
             (v) => ibc_applications_interchain_accounts_controller_v1_controller
-                .Params.fromJson(v),
-        acceptCamelCase: true,
+                .Params.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -411,11 +455,16 @@ class MsgUpdateParamsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgUpdateParamsResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateParamsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateParamsResponse();
   }
 

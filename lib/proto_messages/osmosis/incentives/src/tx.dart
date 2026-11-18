@@ -97,53 +97,77 @@ class MsgCreateGauge extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'is_perpetual': isPerpetual,
       'owner': owner,
-      'distribute_to': distributeTo?.toJson(),
-      'coins': coins.map((e) => e.toJson()).toList(),
+      'distribute_to': config.encodeMessage(distributeTo),
+      'coins': coins.map((e) => config.encodeMessage(e)).toList(),
       'start_time': startTime?.toRfc3339(),
-      'num_epochs_paid_over': numEpochsPaidOver?.toString(),
-      'pool_id': poolId?.toString(),
+      'num_epochs_paid_over': config.encodeBigint(numEpochsPaidOver),
+      'pool_id': config.encodeBigint(poolId),
     };
   }
 
-  factory MsgCreateGauge.fromJson(Map<String, dynamic> json) {
+  factory MsgCreateGauge.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgCreateGauge(
       isPerpetual: json.valueAsBool<bool?>(
         'is_perpetual',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      owner: json.valueAsString<String?>('owner', acceptCamelCase: true),
-      distributeTo: json
-          .valueTo<osmosis_lockup_lock.QueryCondition?, Map<String, dynamic>>(
-            key: 'distribute_to',
-            parse: (v) => osmosis_lockup_lock.QueryCondition.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      owner: json.valueAsString<String?>(
+        'owner',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      distributeTo: json.valueTo<osmosis_lockup_lock.QueryCondition?, Object>(
+        key: 'distribute_to',
+        parse:
+            (v) => osmosis_lockup_lock.QueryCondition.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       coins:
-          (json.valueEnsureAsList<dynamic>('coins', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'coins',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
-      startTime: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      startTime: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'start_time',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       numEpochsPaidOver: json.valueAsBigInt<BigInt?>(
         'num_epochs_paid_over',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      poolId: json.valueAsBigInt<BigInt?>('pool_id', acceptCamelCase: true),
+      poolId: json.valueAsBigInt<BigInt?>(
+        'pool_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -202,11 +226,16 @@ class MsgCreateGaugeResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgCreateGaugeResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgCreateGaugeResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgCreateGaugeResponse();
   }
 
@@ -264,28 +293,45 @@ class MsgAddToGauge extends CosmosProtoMessage
   List<Object?> get protoValues => [owner, gaugeId, rewards];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'owner': owner,
-      'gauge_id': gaugeId?.toString(),
-      'rewards': rewards.map((e) => e.toJson()).toList(),
+      'gauge_id': config.encodeBigint(gaugeId),
+      'rewards': rewards.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory MsgAddToGauge.fromJson(Map<String, dynamic> json) {
+  factory MsgAddToGauge.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgAddToGauge(
-      owner: json.valueAsString<String?>('owner', acceptCamelCase: true),
-      gaugeId: json.valueAsBigInt<BigInt?>('gauge_id', acceptCamelCase: true),
+      owner: json.valueAsString<String?>(
+        'owner',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      gaugeId: json.valueAsBigInt<BigInt?>(
+        'gauge_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       rewards:
-          (json.valueEnsureAsList<dynamic>('rewards', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'rewards',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -336,11 +382,16 @@ class MsgAddToGaugeResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgAddToGaugeResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgAddToGaugeResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgAddToGaugeResponse();
   }
 
@@ -411,38 +462,53 @@ class MsgCreateGroup extends CosmosProtoMessage
   List<Object?> get protoValues => [coins, numEpochsPaidOver, owner, poolIds];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'coins': coins.map((e) => e.toJson()).toList(),
-      'num_epochs_paid_over': numEpochsPaidOver?.toString(),
+      'coins': coins.map((e) => config.encodeMessage(e)).toList(),
+      'num_epochs_paid_over': config.encodeBigint(numEpochsPaidOver),
       'owner': owner,
-      'pool_ids': poolIds.map((e) => e.toString()).toList(),
+      'pool_ids': poolIds.map((e) => config.encodeBigint(e)).toList(),
     };
   }
 
-  factory MsgCreateGroup.fromJson(Map<String, dynamic> json) {
+  factory MsgCreateGroup.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgCreateGroup(
       coins:
-          (json.valueEnsureAsList<dynamic>('coins', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'coins',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
       numEpochsPaidOver: json.valueAsBigInt<BigInt?>(
         'num_epochs_paid_over',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      owner: json.valueAsString<String?>('owner', acceptCamelCase: true),
+      owner: json.valueAsString<String?>(
+        'owner',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       poolIds:
           (json.valueEnsureAsList<dynamic>(
             'pool_ids',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsBigInt<BigInt>(e)).toList(),
     );
   }
@@ -496,13 +562,21 @@ class MsgCreateGroupResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [groupId];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'group_id': groupId?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'group_id': config.encodeBigint(groupId)};
   }
 
-  factory MsgCreateGroupResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgCreateGroupResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgCreateGroupResponse(
-      groupId: json.valueAsBigInt<BigInt?>('group_id', acceptCamelCase: true),
+      groupId: json.valueAsBigInt<BigInt?>(
+        'group_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

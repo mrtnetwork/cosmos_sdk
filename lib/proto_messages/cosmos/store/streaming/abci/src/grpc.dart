@@ -30,27 +30,34 @@ class ListenFinalizeBlockRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [req, res];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'req': req?.toJson(), 'res': res?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'req': config.encodeMessage(req), 'res': config.encodeMessage(res)};
   }
 
-  factory ListenFinalizeBlockRequest.fromJson(Map<String, dynamic> json) {
+  factory ListenFinalizeBlockRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ListenFinalizeBlockRequest(
-      req: json.valueTo<
-        tendermint_abci_types.RequestFinalizeBlock?,
-        Map<String, dynamic>
-      >(
+      req: json.valueTo<tendermint_abci_types.RequestFinalizeBlock?, Object>(
         key: 'req',
-        parse: (v) => tendermint_abci_types.RequestFinalizeBlock.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => tendermint_abci_types.RequestFinalizeBlock.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      res: json.valueTo<
-        tendermint_abci_types.ResponseFinalizeBlock?,
-        Map<String, dynamic>
-      >(
+      res: json.valueTo<tendermint_abci_types.ResponseFinalizeBlock?, Object>(
         key: 'res',
-        parse: (v) => tendermint_abci_types.ResponseFinalizeBlock.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => tendermint_abci_types.ResponseFinalizeBlock.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -103,11 +110,16 @@ class ListenFinalizeBlockResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory ListenFinalizeBlockResponse.fromJson(Map<String, dynamic> json) {
+  factory ListenFinalizeBlockResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ListenFinalizeBlockResponse();
   }
 
@@ -159,37 +171,52 @@ class ListenCommitRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [blockHeight, res, changeSet];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'block_height': blockHeight?.toString(),
-      'res': res?.toJson(),
-      'change_set': changeSet.map((e) => e.toJson()).toList(),
+      'block_height': config.encodeBigint(blockHeight),
+      'res': config.encodeMessage(res),
+      'change_set': changeSet.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory ListenCommitRequest.fromJson(Map<String, dynamic> json) {
+  factory ListenCommitRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ListenCommitRequest(
       blockHeight: json.valueAsBigInt<BigInt?>(
         'block_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      res: json
-          .valueTo<tendermint_abci_types.ResponseCommit?, Map<String, dynamic>>(
-            key: 'res',
-            parse: (v) => tendermint_abci_types.ResponseCommit.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      res: json.valueTo<tendermint_abci_types.ResponseCommit?, Object>(
+        key: 'res',
+        parse:
+            (v) => tendermint_abci_types.ResponseCommit.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       changeSet:
-          (json.valueEnsureAsList<dynamic>('change_set', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'change_set',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   cosmos_store_v1beta1_listening.StoreKVPair,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
-                      (v) => cosmos_store_v1beta1_listening
-                          .StoreKVPair.fromJson(v),
+                      (v) =>
+                          cosmos_store_v1beta1_listening.StoreKVPair.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
                 ),
               )
               .toList(),
@@ -248,11 +275,16 @@ class ListenCommitResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory ListenCommitResponse.fromJson(Map<String, dynamic> json) {
+  factory ListenCommitResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ListenCommitResponse();
   }
 

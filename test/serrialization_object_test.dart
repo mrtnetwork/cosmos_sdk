@@ -4,8 +4,13 @@ import 'package:cosmos_sdk/proto_messages/cosmos/auth/v1beta1/src/query.dart';
 import 'package:cosmos_sdk/proto_messages/cosmos/bank/v1beta1/src/query.dart'
     hide QueryParamsResponse;
 import 'package:test/test.dart';
+import 'utils.dart';
 
 void main() {
+  CosmosTestApi.runTest(serializationObjectTest, 'SerializationObject');
+}
+
+void serializationObjectTest() {
   _queryParamResponse();
   _metadata();
   _spendableBalanceByDenom();

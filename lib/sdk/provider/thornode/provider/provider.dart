@@ -2,10 +2,10 @@ import 'dart:async';
 import 'package:blockchain_utils/blockchain_utils.dart';
 import 'package:cosmos_sdk/sdk/provider/thornode/core/core.dart';
 
-/// Facilitates communication with the tendermint by making requests using a provided [ThorNodeProvider].
+/// Facilitates communication with the ThorNode network by making requests using a provided [IServiceProvider].
 class ThorNodeProvider<SERVICE extends IServiceProvider>
     implements IProvider<SERVICE, ThorNodeRequestDetails> {
-  /// The underlying tendermint service provider used for network communication.
+  /// The underlying service provider used for network communication.
   @override
   final SERVICE service;
 
@@ -46,7 +46,7 @@ class ThorNodeProvider<SERVICE extends IServiceProvider>
     return params.toEncodingResponse(response);
   }
 
-  /// Sends a request to the tendermint using the specified [request] parameter.
+  /// Sends a request to the ThorNode network using the specified [request] parameter.
   ///
   /// The [timeout] parameter, if provided, sets the maximum duration for the request.
   @override
@@ -58,12 +58,12 @@ class ThorNodeProvider<SERVICE extends IServiceProvider>
       request,
       timeout: timeout,
     );
-    return request.onResonse(r);
+    return request.onResponse(r);
   }
 
   int _id = 0;
 
-  /// Sends a request to the tendermint using the specified [request] parameter.
+  /// Sends a request to the ThorNode network using the specified [request] parameter.
   ///
   /// The [timeout] parameter, if provided, sets the maximum duration for the request.
   /// Whatever is received will be returned
@@ -72,7 +72,7 @@ class ThorNodeProvider<SERVICE extends IServiceProvider>
     IServiceRequest<RESULT, SERVICERESPONSE, ThorNodeRequestDetails> request, {
     Duration? timeout,
   }) async {
-    final params = request.buildRequest(_id++);
+    final params = await request.buildRequest(_id++);
     final response = await service.doRequest(params, timeout: timeout);
     return _findError(params: params, response: response, request: request);
   }

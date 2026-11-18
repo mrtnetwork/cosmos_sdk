@@ -40,13 +40,21 @@ class Attester extends CosmosProtoMessage {
   List<Object?> get protoValues => [attester];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'attester': attester};
   }
 
-  factory Attester.fromJson(Map<String, dynamic> json) {
+  factory Attester.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Attester(
-      attester: json.valueAsString<String?>('attester', acceptCamelCase: true),
+      attester: json.valueAsString<String?>(
+        'attester',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

@@ -29,13 +29,21 @@ class QueryRagnarokRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'height': height};
   }
 
-  factory QueryRagnarokRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryRagnarokRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryRagnarokRequest(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -78,13 +86,21 @@ class QueryRagnarokResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [inProgress];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'in_progress': inProgress};
   }
 
-  factory QueryRagnarokResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryRagnarokResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryRagnarokResponse(
-      inProgress: json.valueAsBool<bool?>('in_progress', acceptCamelCase: true),
+      inProgress: json.valueAsBool<bool?>(
+        'in_progress',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

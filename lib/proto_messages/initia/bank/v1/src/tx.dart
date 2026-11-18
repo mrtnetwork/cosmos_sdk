@@ -44,22 +44,30 @@ class MsgSetDenomMetadata extends CosmosProtoMessage
   List<Object?> get protoValues => [authority, metadata];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'authority': authority, 'metadata': metadata?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'authority': authority, 'metadata': config.encodeMessage(metadata)};
   }
 
-  factory MsgSetDenomMetadata.fromJson(Map<String, dynamic> json) {
+  factory MsgSetDenomMetadata.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSetDenomMetadata(
       authority: json.valueAsString<String?>(
         'authority',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      metadata: json
-          .valueTo<cosmos_bank_v1beta1_bank.Metadata?, Map<String, dynamic>>(
-            key: 'metadata',
-            parse: (v) => cosmos_bank_v1beta1_bank.Metadata.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      metadata: json.valueTo<cosmos_bank_v1beta1_bank.Metadata?, Object>(
+        key: 'metadata',
+        parse:
+            (v) => cosmos_bank_v1beta1_bank.Metadata.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -108,11 +116,16 @@ class MsgSetDenomMetadataResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgSetDenomMetadataResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgSetDenomMetadataResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSetDenomMetadataResponse();
   }
 

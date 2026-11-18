@@ -21,11 +21,16 @@ class SendQuorumTxResult extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory SendQuorumTxResult.fromJson(Map<String, dynamic> json) {
+  factory SendQuorumTxResult.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SendQuorumTxResult();
   }
 
@@ -65,16 +70,22 @@ class SubscribeRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [eventTypes];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'event_types': eventTypes.map((e) => e).toList()};
   }
 
-  factory SubscribeRequest.fromJson(Map<String, dynamic> json) {
+  factory SubscribeRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SubscribeRequest(
       eventTypes:
           (json.valueEnsureAsList<dynamic>(
             'event_types',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
     );
   }
@@ -101,11 +112,12 @@ class SubscribeRequest extends CosmosProtoMessage
 class EventNotification extends CosmosProtoMessage {
   final String? eventType;
 
-  final List<int>? payload;
+  final BuBytes? payload;
 
   final BigInt? timestamp;
 
-  const EventNotification({this.eventType, this.payload, this.timestamp});
+  EventNotification({this.eventType, List<int>? payload, this.timestamp})
+    : payload = payload?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -126,34 +138,31 @@ class EventNotification extends CosmosProtoMessage {
   List<Object?> get protoValues => [eventType, payload, timestamp];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'event_type': eventType,
-      'payload': switch (payload) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'timestamp': timestamp?.toString(),
+      'payload': config.encodeBinary(payload),
+      'timestamp': config.encodeBigint(timestamp),
     };
   }
 
-  factory EventNotification.fromJson(Map<String, dynamic> json) {
+  factory EventNotification.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return EventNotification(
       eventType: json.valueAsString<String?>(
         'event_type',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      payload: json.valueAsBytes<List<int>?>(
-        'payload',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      payload: config.decodeBinary<List<int>?>(
+        json.valueAs('payload', normalizeKeyLookup: config.normalizeKeys),
       ),
       timestamp: json.valueAsBigInt<BigInt?>(
         'timestamp',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -191,11 +200,16 @@ class SendQuorumNetworkFeeResult extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory SendQuorumNetworkFeeResult.fromJson(Map<String, dynamic> json) {
+  factory SendQuorumNetworkFeeResult.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SendQuorumNetworkFeeResult();
   }
 
@@ -227,11 +241,16 @@ class SendQuorumSolvencyResult extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory SendQuorumSolvencyResult.fromJson(Map<String, dynamic> json) {
+  factory SendQuorumSolvencyResult.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SendQuorumSolvencyResult();
   }
 
@@ -263,11 +282,16 @@ class SendQuorumErrataTxResult extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory SendQuorumErrataTxResult.fromJson(Map<String, dynamic> json) {
+  factory SendQuorumErrataTxResult.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SendQuorumErrataTxResult();
   }
 
@@ -299,11 +323,16 @@ class SendQuorumPriceFeedBatchResult extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory SendQuorumPriceFeedBatchResult.fromJson(Map<String, dynamic> json) {
+  factory SendQuorumPriceFeedBatchResult.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SendQuorumPriceFeedBatchResult();
   }
 

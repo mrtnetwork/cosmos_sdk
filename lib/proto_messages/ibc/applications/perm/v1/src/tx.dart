@@ -48,7 +48,9 @@ class MsgUpdateAdmin extends CosmosProtoMessage
   List<Object?> get protoValues => [authority, channelId, portId, admin];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'authority': authority,
       'channel_id': channelId,
@@ -57,18 +59,27 @@ class MsgUpdateAdmin extends CosmosProtoMessage
     };
   }
 
-  factory MsgUpdateAdmin.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateAdmin.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateAdmin(
       authority: json.valueAsString<String?>(
         'authority',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       channelId: json.valueAsString<String?>(
         'channel_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      portId: json.valueAsString<String?>('port_id', acceptCamelCase: true),
-      admin: json.valueAsString<String?>('admin', acceptCamelCase: true),
+      portId: json.valueAsString<String?>(
+        'port_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      admin: json.valueAsString<String?>(
+        'admin',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -115,11 +126,16 @@ class MsgUpdateAdminResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgUpdateAdminResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateAdminResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateAdminResponse();
   }
 
@@ -185,7 +201,9 @@ class MsgUpdatePermissionedRelayers extends CosmosProtoMessage
   List<Object?> get protoValues => [authority, channelId, portId, relayers];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'authority': authority,
       'channel_id': channelId,
@@ -194,21 +212,28 @@ class MsgUpdatePermissionedRelayers extends CosmosProtoMessage
     };
   }
 
-  factory MsgUpdatePermissionedRelayers.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdatePermissionedRelayers.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdatePermissionedRelayers(
       authority: json.valueAsString<String?>(
         'authority',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       channelId: json.valueAsString<String?>(
         'channel_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      portId: json.valueAsString<String?>('port_id', acceptCamelCase: true),
+      portId: json.valueAsString<String?>(
+        'port_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       relayers:
           (json.valueEnsureAsList<dynamic>(
             'relayers',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
     );
   }
@@ -259,13 +284,16 @@ class MsgUpdatePermissionedRelayersResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
   factory MsgUpdatePermissionedRelayersResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdatePermissionedRelayersResponse();
   }
 

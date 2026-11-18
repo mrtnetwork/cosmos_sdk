@@ -19,18 +19,32 @@ enum Action implements ProtoEnumVariant {
 
   /// Looks up a value by its proto wire int. Throws if not found.
   static Action fromValue(int? value) {
+    value ??= 0;
     return Action.values.firstWhere(
       (e) => e.value == value,
-      orElse: () => throw ItemNotFoundException(name: "Action", value: value),
+      orElse:
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching Action found for the given value. $value",
+                details: {"name": "Action", "value": value?.toString()},
+              ),
     );
   }
 
   /// Looks up a value by wire int, Dart enum name, or original proto
   /// name (whichever [value] happens to be). Throws if not found.
   static Action from(Object? value) {
+    value ??= 0;
     return Action.values.firstWhere(
       (e) => e.value == value || e.name == value || e.protoName == value,
-      orElse: () => throw ItemNotFoundException(name: "Action", value: value),
+      orElse:
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching Action found for the given value. $value",
+                details: {"name": "Action", "value": value?.toString()},
+              ),
     );
   }
 }
@@ -86,7 +100,9 @@ class ClaimRecord extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'airdrop_identifier': airdropIdentifier,
       'address': address,
@@ -95,18 +111,28 @@ class ClaimRecord extends CosmosProtoMessage {
     };
   }
 
-  factory ClaimRecord.fromJson(Map<String, dynamic> json) {
+  factory ClaimRecord.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ClaimRecord(
       airdropIdentifier: json.valueAsString<String?>(
         'airdrop_identifier',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
-      weight: json.valueAsString<String?>('weight', acceptCamelCase: true),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      weight: json.valueAsString<String?>(
+        'weight',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       actionCompleted:
           (json.valueEnsureAsList<dynamic>(
             'action_completed',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsBool<bool>(e)).toList(),
     );
   }

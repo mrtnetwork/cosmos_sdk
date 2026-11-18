@@ -55,43 +55,56 @@ class OutgoingTxBatch extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'batch_nonce': batchNonce?.toString(),
-      'batch_timeout': batchTimeout?.toString(),
-      'transactions': transactions.map((e) => e.toJson()).toList(),
+      'batch_nonce': config.encodeBigint(batchNonce),
+      'batch_timeout': config.encodeBigint(batchTimeout),
+      'transactions': transactions.map((e) => config.encodeMessage(e)).toList(),
       'token_contract': tokenContract,
-      'block': block?.toString(),
+      'block': config.encodeBigint(block),
     };
   }
 
-  factory OutgoingTxBatch.fromJson(Map<String, dynamic> json) {
+  factory OutgoingTxBatch.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return OutgoingTxBatch(
       batchNonce: json.valueAsBigInt<BigInt?>(
         'batch_nonce',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       batchTimeout: json.valueAsBigInt<BigInt?>(
         'batch_timeout',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       transactions:
           (json.valueEnsureAsList<dynamic>(
                 'transactions',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  OutgoingTransferTx,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => OutgoingTransferTx.fromJson(v)),
+                (e) => JsonParser.valueTo<OutgoingTransferTx, Object>(
+                  value: e,
+                  parse:
+                      (v) => OutgoingTransferTx.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
       tokenContract: json.valueAsString<String?>(
         'token_contract',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      block: json.valueAsBigInt<BigInt?>('block', acceptCamelCase: true),
+      block: json.valueAsBigInt<BigInt?>(
+        'block',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -162,40 +175,55 @@ class OutgoingTransferTx extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'id': id?.toString(),
+      'id': config.encodeBigint(id),
       'sender': sender,
       'dest_address': destAddress,
-      'erc20_token': erc20Token?.toJson(),
-      'erc20_fee': erc20Fee?.toJson(),
+      'erc20_token': config.encodeMessage(erc20Token),
+      'erc20_fee': config.encodeMessage(erc20Fee),
     };
   }
 
-  factory OutgoingTransferTx.fromJson(Map<String, dynamic> json) {
+  factory OutgoingTransferTx.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return OutgoingTransferTx(
-      id: json.valueAsBigInt<BigInt?>('id', acceptCamelCase: true),
-      sender: json.valueAsString<String?>('sender', acceptCamelCase: true),
+      id: json.valueAsBigInt<BigInt?>(
+        'id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      sender: json.valueAsString<String?>(
+        'sender',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       destAddress: json.valueAsString<String?>(
         'dest_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      erc20Token: json.valueTo<
-        injective_peggy_v1_attestation.ERC20Token?,
-        Map<String, dynamic>
-      >(
-        key: 'erc20_token',
-        parse: (v) => injective_peggy_v1_attestation.ERC20Token.fromJson(v),
-        acceptCamelCase: true,
-      ),
-      erc20Fee: json.valueTo<
-        injective_peggy_v1_attestation.ERC20Token?,
-        Map<String, dynamic>
-      >(
-        key: 'erc20_fee',
-        parse: (v) => injective_peggy_v1_attestation.ERC20Token.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      erc20Token: json
+          .valueTo<injective_peggy_v1_attestation.ERC20Token?, Object>(
+            key: 'erc20_token',
+            parse:
+                (v) => injective_peggy_v1_attestation.ERC20Token.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
+      erc20Fee: json
+          .valueTo<injective_peggy_v1_attestation.ERC20Token?, Object>(
+            key: 'erc20_fee',
+            parse:
+                (v) => injective_peggy_v1_attestation.ERC20Token.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 

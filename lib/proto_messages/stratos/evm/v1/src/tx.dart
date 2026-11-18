@@ -46,20 +46,43 @@ class MsgEthereumTx extends CosmosProtoMessage
   List<Object?> get protoValues => [data, size, hash, from];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'data': data?.toJson(), 'size': size, 'hash': hash, 'from': from};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'data': config.encodeMessage(data),
+      'size': size,
+      'hash': hash,
+      'from': from,
+    };
   }
 
-  factory MsgEthereumTx.fromJson(Map<String, dynamic> json) {
+  factory MsgEthereumTx.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgEthereumTx(
-      data: json.valueTo<google_protobuf_any.Any?, Map<String, dynamic>>(
+      data: json.valueTo<google_protobuf_any.Any?, Object>(
         key: 'data',
-        parse: (v) => google_protobuf_any.Any.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_any.Any.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      size: json.valueAsDouble<double?>('size', acceptCamelCase: true),
-      hash: json.valueAsString<String?>('hash', acceptCamelCase: true),
-      from: json.valueAsString<String?>('from', acceptCamelCase: true),
+      size: json.valueAsDouble<double?>(
+        'size',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      hash: json.valueAsString<String?>(
+        'hash',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      from: json.valueAsString<String?>(
+        'from',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -103,7 +126,7 @@ class MsgEthereumTxResponse extends CosmosProtoMessage {
 
   /// returned data from evm function (result or data supplied with revert
   /// opcode)
-  final List<int>? ret;
+  final BuBytes? ret;
 
   /// vm error is the error returned by vm execution
   final String? vmError;
@@ -111,13 +134,13 @@ class MsgEthereumTxResponse extends CosmosProtoMessage {
   /// gas consumed by the transaction
   final BigInt? gasUsed;
 
-  const MsgEthereumTxResponse({
+  MsgEthereumTxResponse({
     this.hash,
     this.logs = const [],
-    this.ret,
+    List<int>? ret,
     this.vmError,
     this.gasUsed,
-  });
+  }) : ret = ret?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -143,41 +166,55 @@ class MsgEthereumTxResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [hash, logs, ret, vmError, gasUsed];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'hash': hash,
-      'logs': logs.map((e) => e.toJson()).toList(),
-      'ret': switch (ret) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'logs': logs.map((e) => config.encodeMessage(e)).toList(),
+      'ret': config.encodeBinary(ret),
       'vm_error': vmError,
-      'gas_used': gasUsed?.toString(),
+      'gas_used': config.encodeBigint(gasUsed),
     };
   }
 
-  factory MsgEthereumTxResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgEthereumTxResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgEthereumTxResponse(
-      hash: json.valueAsString<String?>('hash', acceptCamelCase: true),
+      hash: json.valueAsString<String?>(
+        'hash',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       logs:
-          (json.valueEnsureAsList<dynamic>('logs', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'logs',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  stratos_evm_v1_evm.Log,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => stratos_evm_v1_evm.Log.fromJson(v)),
+                (e) => JsonParser.valueTo<stratos_evm_v1_evm.Log, Object>(
+                  value: e,
+                  parse:
+                      (v) => stratos_evm_v1_evm.Log.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
-      ret: json.valueAsBytes<List<int>?>(
-        'ret',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      ret: config.decodeBinary<List<int>?>(
+        json.valueAs('ret', normalizeKeyLookup: config.normalizeKeys),
       ),
-      vmError: json.valueAsString<String?>('vm_error', acceptCamelCase: true),
-      gasUsed: json.valueAsBigInt<BigInt?>('gas_used', acceptCamelCase: true),
+      vmError: json.valueAsString<String?>(
+        'vm_error',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      gasUsed: json.valueAsBigInt<BigInt?>(
+        'gas_used',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -233,20 +270,29 @@ class MsgUpdateParams extends CosmosProtoMessage
   List<Object?> get protoValues => [authority, params];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'authority': authority, 'params': params?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'authority': authority, 'params': config.encodeMessage(params)};
   }
 
-  factory MsgUpdateParams.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateParams.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateParams(
       authority: json.valueAsString<String?>(
         'authority',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      params: json.valueTo<stratos_evm_v1_evm.Params?, Map<String, dynamic>>(
+      params: json.valueTo<stratos_evm_v1_evm.Params?, Object>(
         key: 'params',
-        parse: (v) => stratos_evm_v1_evm.Params.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => stratos_evm_v1_evm.Params.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -296,11 +342,16 @@ class MsgUpdateParamsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgUpdateParamsResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateParamsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateParamsResponse();
   }
 
@@ -326,18 +377,18 @@ class MsgUpdateImplmentationProposal extends CosmosProtoMessage
   final String? implementationAddress;
 
   /// data for execution
-  final List<int>? data;
+  final BuBytes? data;
 
   /// value for proxy func call
   final String? value;
 
-  const MsgUpdateImplmentationProposal({
+  MsgUpdateImplmentationProposal({
     this.authority,
     this.proxyAddress,
     this.implementationAddress,
-    this.data,
+    List<int>? data,
     this.value,
-  });
+  }) : data = data?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -368,42 +419,42 @@ class MsgUpdateImplmentationProposal extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'authority': authority,
       'proxy_address': proxyAddress,
       'implementation_address': implementationAddress,
-      'data': switch (data) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'data': config.encodeBinary(data),
       'value': value,
     };
   }
 
-  factory MsgUpdateImplmentationProposal.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateImplmentationProposal.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateImplmentationProposal(
       authority: json.valueAsString<String?>(
         'authority',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       proxyAddress: json.valueAsString<String?>(
         'proxy_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       implementationAddress: json.valueAsString<String?>(
         'implementation_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      data: json.valueAsBytes<List<int>?>(
-        'data',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      data: config.decodeBinary<List<int>?>(
+        json.valueAs('data', normalizeKeyLookup: config.normalizeKeys),
       ),
-      value: json.valueAsString<String?>('value', acceptCamelCase: true),
+      value: json.valueAsString<String?>(
+        'value',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -454,13 +505,16 @@ class MsgUpdateImplmentationProposalResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
   factory MsgUpdateImplmentationProposalResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateImplmentationProposalResponse();
   }
 

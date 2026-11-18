@@ -22,13 +22,21 @@ class LockedSupply extends CosmosProtoMessage {
   List<Object?> get protoValues => [reserve];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'reserve': reserve?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'reserve': config.encodeBigint(reserve)};
   }
 
-  factory LockedSupply.fromJson(Map<String, dynamic> json) {
+  factory LockedSupply.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return LockedSupply(
-      reserve: json.valueAsBigInt<BigInt?>('reserve', acceptCamelCase: true),
+      reserve: json.valueAsBigInt<BigInt?>(
+        'reserve',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -69,13 +77,21 @@ class QuerySupplyRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'height': height};
   }
 
-  factory QuerySupplyRequest.fromJson(Map<String, dynamic> json) {
+  factory QuerySupplyRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QuerySupplyRequest(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -126,26 +142,35 @@ class QuerySupplyResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [circulating, locked, total];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'circulating': circulating?.toString(),
-      'locked': locked?.toJson(),
-      'total': total?.toString(),
+      'circulating': config.encodeBigint(circulating),
+      'locked': config.encodeMessage(locked),
+      'total': config.encodeBigint(total),
     };
   }
 
-  factory QuerySupplyResponse.fromJson(Map<String, dynamic> json) {
+  factory QuerySupplyResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QuerySupplyResponse(
       circulating: json.valueAsBigInt<BigInt?>(
         'circulating',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      locked: json.valueTo<LockedSupply?, Map<String, dynamic>>(
+      locked: json.valueTo<LockedSupply?, Object>(
         key: 'locked',
-        parse: (v) => LockedSupply.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => LockedSupply.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      total: json.valueAsBigInt<BigInt?>('total', acceptCamelCase: true),
+      total: json.valueAsBigInt<BigInt?>(
+        'total',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

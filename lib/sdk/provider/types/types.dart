@@ -1,7 +1,4 @@
-import 'package:blockchain_utils/cbor/cbor.dart';
-import 'package:blockchain_utils/exception/exceptions.dart';
-import 'package:blockchain_utils/networks/types/network.dart';
-import 'package:blockchain_utils/service/models/params.dart';
+import 'package:blockchain_utils/blockchain_utils.dart';
 import 'package:cosmos_sdk/sdk/provider/chain_registery/chain_regisery.dart';
 import 'package:cosmos_sdk/sdk/provider/cosmos/core/core.dart';
 import 'package:cosmos_sdk/sdk/provider/thornode/thornode.dart';
@@ -15,22 +12,31 @@ enum CosmosProviderApi {
 
   final int value;
   const CosmosProviderApi(this.value);
-  bool get isCosmosApi =>
-      this == tendermint || this == rest || tendermint == grpc;
+  bool get isCosmosApi => this == tendermint || this == rest || this == grpc;
 
   static List<CosmosProviderApi> get cosmosApis =>
       values.where((e) => e.isCosmosApi).toList();
   static CosmosProviderApi fromValue(int? value) {
     return values.firstWhere(
       (e) => e.value == value,
-      orElse: () => throw ItemNotFoundException(name: "CosmosProviderApi"),
+      orElse:
+          () =>
+              throw BuError(
+                DefaultErrorType.invalidArgument,
+                'Unknown CosmosProviderApi value "$value".',
+              ),
     );
   }
 
   static CosmosProviderApi fromName(String? name) {
     return values.firstWhere(
       (e) => e.name == name,
-      orElse: () => throw ItemNotFoundException(name: "CosmosProviderApi"),
+      orElse:
+          () =>
+              throw BuError(
+                DefaultErrorType.invalidArgument,
+                'Unknown CosmosProviderApi name "$name".',
+              ),
     );
   }
 }
@@ -85,7 +91,12 @@ abstract class CosmosServiceRequestParams extends BaseServiceRequestParams
 
   @override
   List<int>? encodeBody({ServiceProtocol protocol = ServiceProtocol.http}) {
-    assert(protocol.isHttp, "Unsupported protocol.");
+    if (!protocol.isHttp) {
+      throw BuError(
+        DefaultErrorType.unsupported,
+        "Unsupported protocol: gRPC.",
+      );
+    }
     return super.encodeBody(protocol: protocol);
   }
 }

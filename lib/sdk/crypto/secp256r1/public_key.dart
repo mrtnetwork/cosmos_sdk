@@ -2,15 +2,15 @@ import 'package:blockchain_utils/blockchain_utils.dart';
 import 'package:cosmos_sdk/proto_messages/types.dart';
 import 'package:cosmos_sdk/sdk/crypto/keypair/public_key.dart';
 import 'package:cosmos_sdk/sdk/crypto/types/types.dart';
-import 'package:cosmos_sdk/sdk/exception/exception.dart';
 import 'package:cosmos_sdk/proto_messages/cosmos/crypto/secp256r1/models.dart'
     show PubKey;
+import 'package:cosmos_sdk/sdk/serialization/src/protobuf.dart';
 
 class CosmosSecp256R1PublicKey extends CosmosPublicKey {
-  final Nist256p1PublicKey publicKey;
-  const CosmosSecp256R1PublicKey._(this.publicKey);
+  final Secp256r1PublicKey publicKey;
+  const CosmosSecp256R1PublicKey(this.publicKey);
   factory CosmosSecp256R1PublicKey.fromBytes(List<int> keyBytes) {
-    return CosmosSecp256R1PublicKey._(Nist256p1PublicKey.fromBytes(keyBytes));
+    return CosmosSecp256R1PublicKey(Secp256r1PublicKey.fromBytes(keyBytes));
   }
   factory CosmosSecp256R1PublicKey.fromHex(String keyHex) {
     return CosmosSecp256R1PublicKey.fromBytes(BytesUtils.fromHexString(keyHex));
@@ -19,35 +19,34 @@ class CosmosSecp256R1PublicKey extends CosmosPublicKey {
     final decode = PubKey.deserialize(bytes);
     final keyBytes = decode.key;
     if (keyBytes == null) {
-      throw DartCosmosSdkPluginException("Invalid secp256r1 encoded key.");
+      throw BuError(
+        DefaultErrorType.invalidKeyData,
+        "Invalid secp256r1 encoded key.",
+      );
     }
-    return CosmosSecp256R1PublicKey._(Nist256p1PublicKey.fromBytes(keyBytes));
+    return CosmosSecp256R1PublicKey(Secp256r1PublicKey.fromBytes(keyBytes));
   }
 
   @override
-  List<int> toBytes({bool compressed = true}) {
-    if (compressed) return publicKey.compressed;
-    return publicKey.uncompressed;
+  BuBytes toBytes({CryptoKeyEncoding encoding = CryptoKeyEncoding.base}) {
+    return publicKey.toBytes(mode: encoding);
   }
 
   @override
   String toString() {
-    return publicKey.toHex();
+    return toBytes().toHex();
   }
 
   @override
   CosmosKeysAlgs get algorithm => CosmosKeysAlgs.secp256r1;
   @override
-  List<Object?> get protoValues => [publicKey.compressed];
+  List<Object?> get protoValues => [toBytes()];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {
-      'key': StringUtils.decode(
-        publicKey.compressed,
-        encoding: StringEncoding.base64,
-      ),
-    };
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'key': config.encodeBinary(toBytes())};
   }
 
   @override
@@ -57,4 +56,7 @@ class CosmosSecp256R1PublicKey extends CosmosPublicKey {
   ProtoMessageConfig protoConfig() {
     return PubKey.protoConfigStatic();
   }
+
+  @override
+  List<dynamic> get variables => [publicKey];
 }

@@ -35,11 +35,16 @@ class QueryParamsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryParamsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsRequest();
   }
 
@@ -84,22 +89,25 @@ class QueryParamsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [params];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'params': params?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'params': config.encodeMessage(params)};
   }
 
-  factory QueryParamsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsResponse(
-      params: json.valueTo<
-        chain4energy_c4echain_cfedistributor_params.Params?,
-        Map<String, dynamic>
-      >(
-        key: 'params',
-        parse:
-            (v) =>
-                chain4energy_c4echain_cfedistributor_params.Params.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      params: json
+          .valueTo<chain4energy_c4echain_cfedistributor_params.Params?, Object>(
+            key: 'params',
+            parse:
+                (v) => chain4energy_c4echain_cfedistributor_params
+                    .Params.fromJson(JsonParser.valueAs(v), config: config),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -146,11 +154,16 @@ class QueryStatesRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryStatesRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryStatesRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryStatesRequest();
   }
 
@@ -209,44 +222,61 @@ class QueryStatesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [states, coinsOnDistributorAccount];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'states': states.map((e) => e.toJson()).toList(),
+      'states': states.map((e) => config.encodeMessage(e)).toList(),
       'coins_on_distributor_account':
-          coinsOnDistributorAccount.map((e) => e.toJson()).toList(),
+          coinsOnDistributorAccount
+              .map((e) => config.encodeMessage(e))
+              .toList(),
     };
   }
 
-  factory QueryStatesResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryStatesResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryStatesResponse(
       states:
-          (json.valueEnsureAsList<dynamic>('states', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'states',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   chain4energy_c4echain_cfedistributor_sub_distributor.State,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) =>
                           chain4energy_c4echain_cfedistributor_sub_distributor
-                              .State.fromJson(v),
+                              .State.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
                 ),
               )
               .toList(),
       coinsOnDistributorAccount:
           (json.valueEnsureAsList<dynamic>(
                 'coins_on_distributor_account',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );

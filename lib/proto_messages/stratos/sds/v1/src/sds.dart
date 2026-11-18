@@ -25,15 +25,20 @@ class Params extends CosmosProtoMessage {
   List<Object?> get protoValues => [bondDenom];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'bond_denom': bondDenom};
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
       bondDenom: json.valueAsString<String?>(
         'bond_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -51,11 +56,12 @@ class Params extends CosmosProtoMessage {
 class FileInfo extends CosmosProtoMessage {
   final String? height;
 
-  final List<int>? reporters;
+  final BuBytes? reporters;
 
   final String? uploader;
 
-  const FileInfo({this.height, this.reporters, this.uploader});
+  FileInfo({this.height, List<int>? reporters, this.uploader})
+    : reporters = reporters?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -76,29 +82,32 @@ class FileInfo extends CosmosProtoMessage {
   List<Object?> get protoValues => [height, reporters, uploader];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'height': height,
-      'reporters': switch (reporters) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'reporters': config.encodeBinary(reporters),
       'uploader': uploader,
     };
   }
 
-  factory FileInfo.fromJson(Map<String, dynamic> json) {
+  factory FileInfo.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return FileInfo(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
-      reporters: json.valueAsBytes<List<int>?>(
-        'reporters',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      uploader: json.valueAsString<String?>('uploader', acceptCamelCase: true),
+      reporters: config.decodeBinary<List<int>?>(
+        json.valueAs('reporters', normalizeKeyLookup: config.normalizeKeys),
+      ),
+      uploader: json.valueAsString<String?>(
+        'uploader',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

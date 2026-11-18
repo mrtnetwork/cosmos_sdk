@@ -31,14 +31,25 @@ class QueryDerivedPoolRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [asset, height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'asset': asset, 'height': height};
   }
 
-  factory QueryDerivedPoolRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryDerivedPoolRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryDerivedPoolRequest(
-      asset: json.valueAsString<String?>('asset', acceptCamelCase: true),
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      asset: json.valueAsString<String?>(
+        'asset',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -116,33 +127,47 @@ class QueryDerivedPoolResponse extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'asset': asset,
       'status': status,
-      'decimals': decimals?.toString(),
+      'decimals': config.encodeBigint(decimals),
       'balance_asset': balanceAsset,
       'balance_rune': balanceRune,
       'derived_depth_bps': derivedDepthBps,
     };
   }
 
-  factory QueryDerivedPoolResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryDerivedPoolResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryDerivedPoolResponse(
-      asset: json.valueAsString<String?>('asset', acceptCamelCase: true),
-      status: json.valueAsString<String?>('status', acceptCamelCase: true),
-      decimals: json.valueAsBigInt<BigInt?>('decimals', acceptCamelCase: true),
+      asset: json.valueAsString<String?>(
+        'asset',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      status: json.valueAsString<String?>(
+        'status',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      decimals: json.valueAsBigInt<BigInt?>(
+        'decimals',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       balanceAsset: json.valueAsString<String?>(
         'balance_asset',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       balanceRune: json.valueAsString<String?>(
         'balance_rune',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       derivedDepthBps: json.valueAsString<String?>(
         'derived_depth_bps',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -191,13 +216,21 @@ class QueryDerivedPoolsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'height': height};
   }
 
-  factory QueryDerivedPoolsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryDerivedPoolsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryDerivedPoolsRequest(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -245,19 +278,32 @@ class QueryDerivedPoolsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [pools];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'pools': pools.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'pools': pools.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory QueryDerivedPoolsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryDerivedPoolsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryDerivedPoolsResponse(
       pools:
-          (json.valueEnsureAsList<dynamic>('pools', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'pools',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  QueryDerivedPoolResponse,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => QueryDerivedPoolResponse.fromJson(v)),
+                (e) => JsonParser.valueTo<QueryDerivedPoolResponse, Object>(
+                  value: e,
+                  parse:
+                      (v) => QueryDerivedPoolResponse.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );

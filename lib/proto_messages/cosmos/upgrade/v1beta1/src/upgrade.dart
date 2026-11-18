@@ -80,32 +80,53 @@ class Plan extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'name': name,
       'time': time?.toRfc3339(),
-      'height': height?.toString(),
+      'height': config.encodeBigint(height),
       'info': info,
-      'upgraded_client_state': upgradedClientState?.toJson(),
+      'upgraded_client_state': config.encodeMessage(upgradedClientState),
     };
   }
 
-  factory Plan.fromJson(Map<String, dynamic> json) {
+  factory Plan.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Plan(
-      name: json.valueAsString<String?>('name', acceptCamelCase: true),
-      time: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
-        key: 'time',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+      name: json.valueAsString<String?>(
+        'name',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      height: json.valueAsBigInt<BigInt?>('height', acceptCamelCase: true),
-      info: json.valueAsString<String?>('info', acceptCamelCase: true),
-      upgradedClientState: json
-          .valueTo<google_protobuf_any.Any?, Map<String, dynamic>>(
-            key: 'upgraded_client_state',
-            parse: (v) => google_protobuf_any.Any.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      time: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
+        key: 'time',
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      height: json.valueAsBigInt<BigInt?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      info: json.valueAsString<String?>(
+        'info',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      upgradedClientState: json.valueTo<google_protobuf_any.Any?, Object>(
+        key: 'upgraded_client_state',
+        parse:
+            (v) => google_protobuf_any.Any.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -156,14 +177,25 @@ class ModuleVersion extends CosmosProtoMessage {
   List<Object?> get protoValues => [name, version];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'name': name, 'version': version?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'name': name, 'version': config.encodeBigint(version)};
   }
 
-  factory ModuleVersion.fromJson(Map<String, dynamic> json) {
+  factory ModuleVersion.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ModuleVersion(
-      name: json.valueAsString<String?>('name', acceptCamelCase: true),
-      version: json.valueAsBigInt<BigInt?>('version', acceptCamelCase: true),
+      name: json.valueAsString<String?>(
+        'name',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      version: json.valueAsBigInt<BigInt?>(
+        'version',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

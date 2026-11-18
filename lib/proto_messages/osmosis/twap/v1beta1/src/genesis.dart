@@ -33,7 +33,9 @@ class Params extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'prune_epoch_identifier': pruneEpochIdentifier,
       'record_history_keep_period': recordHistoryKeepPeriod?.encodeString(
@@ -42,17 +44,24 @@ class Params extends CosmosProtoMessage {
     };
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
       pruneEpochIdentifier: json.valueAsString<String?>(
         'prune_epoch_identifier',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       recordHistoryKeepPeriod: json
-          .valueTo<google_protobuf_duration.Duration?, String>(
+          .valueTo<google_protobuf_duration.Duration?, Object>(
             key: 'record_history_keep_period',
-            parse: (v) => google_protobuf_duration.Duration.fromString(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => google_protobuf_duration.Duration.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
     );
   }

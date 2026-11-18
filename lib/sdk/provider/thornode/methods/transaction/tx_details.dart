@@ -1,7 +1,7 @@
 import 'package:cosmos_sdk/sdk/provider/thornode/core/core.dart';
 import 'package:cosmos_sdk/sdk/provider/thornode/core/thorenode.dart';
 
-/// Returns the signers for a provided inbound or outbound hash..
+/// Returns the signers for a provided inbound or outbound hash.
 class ThorNodeRequestGetTransactionDetails
     extends ThorNodeRequestParam<Map<String, dynamic>, Map<String, dynamic>> {
   ThorNodeRequestGetTransactionDetails({required this.hash, this.height});

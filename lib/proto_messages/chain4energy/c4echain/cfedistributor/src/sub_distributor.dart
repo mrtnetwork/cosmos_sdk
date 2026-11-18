@@ -37,31 +37,47 @@ class State extends CosmosProtoMessage {
   List<Object?> get protoValues => [account, burn, remains];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'account': account?.toJson(),
+      'account': config.encodeMessage(account),
       'burn': burn,
-      'remains': remains.map((e) => e.toJson()).toList(),
+      'remains': remains.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory State.fromJson(Map<String, dynamic> json) {
+  factory State.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return State(
-      account: json.valueTo<Account?, Map<String, dynamic>>(
+      account: json.valueTo<Account?, Object>(
         key: 'account',
-        parse: (v) => Account.fromJson(v),
-        acceptCamelCase: true,
+        parse: (v) => Account.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      burn: json.valueAsBool<bool?>('burn', acceptCamelCase: true),
+      burn: json.valueAsBool<bool?>(
+        'burn',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       remains:
-          (json.valueEnsureAsList<dynamic>('remains', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'remains',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   cosmos_base_v1beta1_coin.DecCoin,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.DecCoin.fromJson(v),
+                  parse:
+                      (v) => cosmos_base_v1beta1_coin.DecCoin.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -117,30 +133,47 @@ class SubDistributor extends CosmosProtoMessage {
   List<Object?> get protoValues => [name, sources, destinations];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'name': name,
-      'sources': sources.map((e) => e.toJson()).toList(),
-      'destinations': destinations?.toJson(),
+      'sources': sources.map((e) => config.encodeMessage(e)).toList(),
+      'destinations': config.encodeMessage(destinations),
     };
   }
 
-  factory SubDistributor.fromJson(Map<String, dynamic> json) {
+  factory SubDistributor.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SubDistributor(
-      name: json.valueAsString<String?>('name', acceptCamelCase: true),
+      name: json.valueAsString<String?>(
+        'name',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       sources:
-          (json.valueEnsureAsList<dynamic>('sources', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'sources',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<Account, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<Account, Object>(
                   value: e,
-                  parse: (v) => Account.fromJson(v),
+                  parse:
+                      (v) => Account.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
-      destinations: json.valueTo<Destinations?, Map<String, dynamic>>(
+      destinations: json.valueTo<Destinations?, Object>(
         key: 'destinations',
-        parse: (v) => Destinations.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => Destinations.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -200,33 +233,45 @@ class Destinations extends CosmosProtoMessage {
   List<Object?> get protoValues => [primaryShare, burnShare, shares];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'primary_share': primaryShare?.toJson(),
+      'primary_share': config.encodeMessage(primaryShare),
       'burn_share': burnShare,
-      'shares': shares.map((e) => e.toJson()).toList(),
+      'shares': shares.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory Destinations.fromJson(Map<String, dynamic> json) {
+  factory Destinations.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Destinations(
-      primaryShare: json.valueTo<Account?, Map<String, dynamic>>(
+      primaryShare: json.valueTo<Account?, Object>(
         key: 'primary_share',
-        parse: (v) => Account.fromJson(v),
-        acceptCamelCase: true,
+        parse: (v) => Account.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       burnShare: json.valueAsString<String?>(
         'burn_share',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       shares:
-          (json.valueEnsureAsList<dynamic>('shares', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'shares',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) =>
-                    JsonParser.valueTo<DestinationShare, Map<String, dynamic>>(
-                      value: e,
-                      parse: (v) => DestinationShare.fromJson(v),
-                    ),
+                (e) => JsonParser.valueTo<DestinationShare, Object>(
+                  value: e,
+                  parse:
+                      (v) => DestinationShare.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );
@@ -281,18 +326,33 @@ class DestinationShare extends CosmosProtoMessage {
   List<Object?> get protoValues => [name, share, destination];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'name': name, 'share': share, 'destination': destination?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'name': name,
+      'share': share,
+      'destination': config.encodeMessage(destination),
+    };
   }
 
-  factory DestinationShare.fromJson(Map<String, dynamic> json) {
+  factory DestinationShare.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return DestinationShare(
-      name: json.valueAsString<String?>('name', acceptCamelCase: true),
-      share: json.valueAsString<String?>('share', acceptCamelCase: true),
-      destination: json.valueTo<Account?, Map<String, dynamic>>(
+      name: json.valueAsString<String?>(
+        'name',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      share: json.valueAsString<String?>(
+        'share',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      destination: json.valueTo<Account?, Object>(
         key: 'destination',
-        parse: (v) => Account.fromJson(v),
-        acceptCamelCase: true,
+        parse: (v) => Account.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -334,14 +394,25 @@ class Account extends CosmosProtoMessage {
   List<Object?> get protoValues => [id, type];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'id': id, 'type': type};
   }
 
-  factory Account.fromJson(Map<String, dynamic> json) {
+  factory Account.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Account(
-      id: json.valueAsString<String?>('id', acceptCamelCase: true),
-      type: json.valueAsString<String?>('type', acceptCamelCase: true),
+      id: json.valueAsString<String?>(
+        'id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      type: json.valueAsString<String?>(
+        'type',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

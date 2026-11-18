@@ -31,11 +31,16 @@ class QueryCurrentPlanRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryCurrentPlanRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryCurrentPlanRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryCurrentPlanRequest();
   }
 
@@ -80,18 +85,26 @@ class QueryCurrentPlanResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [plan];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'plan': plan?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'plan': config.encodeMessage(plan)};
   }
 
-  factory QueryCurrentPlanResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryCurrentPlanResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryCurrentPlanResponse(
-      plan: json
-          .valueTo<cosmos_upgrade_v1beta1_upgrade.Plan?, Map<String, dynamic>>(
-            key: 'plan',
-            parse: (v) => cosmos_upgrade_v1beta1_upgrade.Plan.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      plan: json.valueTo<cosmos_upgrade_v1beta1_upgrade.Plan?, Object>(
+        key: 'plan',
+        parse:
+            (v) => cosmos_upgrade_v1beta1_upgrade.Plan.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -140,13 +153,21 @@ class QueryAppliedPlanRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [name];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'name': name};
   }
 
-  factory QueryAppliedPlanRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryAppliedPlanRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryAppliedPlanRequest(
-      name: json.valueAsString<String?>('name', acceptCamelCase: true),
+      name: json.valueAsString<String?>(
+        'name',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -192,13 +213,21 @@ class QueryAppliedPlanResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [height];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'height': height?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'height': config.encodeBigint(height)};
   }
 
-  factory QueryAppliedPlanResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryAppliedPlanResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryAppliedPlanResponse(
-      height: json.valueAsBigInt<BigInt?>('height', acceptCamelCase: true),
+      height: json.valueAsBigInt<BigInt?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -246,17 +275,20 @@ class QueryUpgradedConsensusStateRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [lastHeight];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'last_height': lastHeight?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'last_height': config.encodeBigint(lastHeight)};
   }
 
   factory QueryUpgradedConsensusStateRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryUpgradedConsensusStateRequest(
       lastHeight: json.valueAsBigInt<BigInt?>(
         'last_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -288,9 +320,10 @@ class QueryUpgradedConsensusStateRequest extends CosmosProtoMessage
 /// QueryUpgradedConsensusStateResponse is the response type for the Query/UpgradedConsensusState
 /// RPC method.
 class QueryUpgradedConsensusStateResponse extends CosmosProtoMessage {
-  final List<int>? upgradedConsensusState;
+  final BuBytes? upgradedConsensusState;
 
-  const QueryUpgradedConsensusStateResponse({this.upgradedConsensusState});
+  QueryUpgradedConsensusStateResponse({List<int>? upgradedConsensusState})
+    : upgradedConsensusState = upgradedConsensusState?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -317,26 +350,24 @@ class QueryUpgradedConsensusStateResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [upgradedConsensusState];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'upgraded_consensus_state': switch (upgradedConsensusState) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'upgraded_consensus_state': config.encodeBinary(upgradedConsensusState),
     };
   }
 
   factory QueryUpgradedConsensusStateResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryUpgradedConsensusStateResponse(
-      upgradedConsensusState: json.valueAsBytes<List<int>?>(
-        'upgraded_consensus_state',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      upgradedConsensusState: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'upgraded_consensus_state',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
     );
   }
@@ -386,15 +417,20 @@ class QueryModuleVersionsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [moduleName];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'module_name': moduleName};
   }
 
-  factory QueryModuleVersionsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryModuleVersionsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryModuleVersionsRequest(
       moduleName: json.valueAsString<String?>(
         'module_name',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -446,26 +482,38 @@ class QueryModuleVersionsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [moduleVersions];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'module_versions': moduleVersions.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'module_versions':
+          moduleVersions.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
-  factory QueryModuleVersionsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryModuleVersionsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryModuleVersionsResponse(
       moduleVersions:
           (json.valueEnsureAsList<dynamic>(
                 'module_versions',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   cosmos_upgrade_v1beta1_upgrade.ModuleVersion,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
-                      (v) => cosmos_upgrade_v1beta1_upgrade
-                          .ModuleVersion.fromJson(v),
+                      (v) =>
+                          cosmos_upgrade_v1beta1_upgrade.ModuleVersion.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
                 ),
               )
               .toList(),
@@ -517,11 +565,16 @@ class QueryAuthorityRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryAuthorityRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryAuthorityRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryAuthorityRequest();
   }
 
@@ -564,13 +617,21 @@ class QueryAuthorityResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [address];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'address': address};
   }
 
-  factory QueryAuthorityResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryAuthorityResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryAuthorityResponse(
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

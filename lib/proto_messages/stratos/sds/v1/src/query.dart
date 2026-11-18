@@ -33,13 +33,21 @@ class QueryFileUploadRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [fileHash];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'file_hash': fileHash};
   }
 
-  factory QueryFileUploadRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryFileUploadRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryFileUploadRequest(
-      fileHash: json.valueAsString<String?>('file_hash', acceptCamelCase: true),
+      fileHash: json.valueAsString<String?>(
+        'file_hash',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -83,18 +91,26 @@ class QueryFileUploadResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [fileInfo];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'file_info': fileInfo?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'file_info': config.encodeMessage(fileInfo)};
   }
 
-  factory QueryFileUploadResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryFileUploadResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryFileUploadResponse(
-      fileInfo: json
-          .valueTo<stratos_sds_v1_sds.FileInfo?, Map<String, dynamic>>(
-            key: 'file_info',
-            parse: (v) => stratos_sds_v1_sds.FileInfo.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      fileInfo: json.valueTo<stratos_sds_v1_sds.FileInfo?, Object>(
+        key: 'file_info',
+        parse:
+            (v) => stratos_sds_v1_sds.FileInfo.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -140,13 +156,21 @@ class QuerySimPrepayRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [amount];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'amount': amount};
   }
 
-  factory QuerySimPrepayRequest.fromJson(Map<String, dynamic> json) {
+  factory QuerySimPrepayRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QuerySimPrepayRequest(
-      amount: json.valueAsString<String?>('amount', acceptCamelCase: true),
+      amount: json.valueAsString<String?>(
+        'amount',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -189,13 +213,21 @@ class QuerySimPrepayResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [noz];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'noz': noz};
   }
 
-  factory QuerySimPrepayResponse.fromJson(Map<String, dynamic> json) {
+  factory QuerySimPrepayResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QuerySimPrepayResponse(
-      noz: json.valueAsString<String?>('noz', acceptCamelCase: true),
+      noz: json.valueAsString<String?>(
+        'noz',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -234,11 +266,16 @@ class QueryNozPriceRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryNozPriceRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryNozPriceRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryNozPriceRequest();
   }
 
@@ -280,13 +317,21 @@ class QueryNozPriceResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [price];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'price': price};
   }
 
-  factory QueryNozPriceResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryNozPriceResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryNozPriceResponse(
-      price: json.valueAsString<String?>('price', acceptCamelCase: true),
+      price: json.valueAsString<String?>(
+        'price',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -325,11 +370,16 @@ class QueryNozSupplyRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryNozSupplyRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryNozSupplyRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryNozSupplyRequest();
   }
 
@@ -376,17 +426,25 @@ class QueryNozSupplyResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [remaining, total];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'remaining': remaining, 'total': total};
   }
 
-  factory QueryNozSupplyResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryNozSupplyResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryNozSupplyResponse(
       remaining: json.valueAsString<String?>(
         'remaining',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      total: json.valueAsString<String?>('total', acceptCamelCase: true),
+      total: json.valueAsString<String?>(
+        'total',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -429,11 +487,16 @@ class QueryParamsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryParamsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsRequest();
   }
 
@@ -477,16 +540,25 @@ class QueryParamsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [params];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'params': params?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'params': config.encodeMessage(params)};
   }
 
-  factory QueryParamsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsResponse(
-      params: json.valueTo<stratos_sds_v1_sds.Params?, Map<String, dynamic>>(
+      params: json.valueTo<stratos_sds_v1_sds.Params?, Object>(
         key: 'params',
-        parse: (v) => stratos_sds_v1_sds.Params.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => stratos_sds_v1_sds.Params.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

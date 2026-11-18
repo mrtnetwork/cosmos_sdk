@@ -43,19 +43,33 @@ class MsgSuperfluidDelegate extends CosmosProtoMessage
   List<Object?> get protoValues => [sender, lockId, valAddr];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'sender': sender,
-      'lock_id': lockId?.toString(),
+      'lock_id': config.encodeBigint(lockId),
       'val_addr': valAddr,
     };
   }
 
-  factory MsgSuperfluidDelegate.fromJson(Map<String, dynamic> json) {
+  factory MsgSuperfluidDelegate.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSuperfluidDelegate(
-      sender: json.valueAsString<String?>('sender', acceptCamelCase: true),
-      lockId: json.valueAsBigInt<BigInt?>('lock_id', acceptCamelCase: true),
-      valAddr: json.valueAsString<String?>('val_addr', acceptCamelCase: true),
+      sender: json.valueAsString<String?>(
+        'sender',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      lockId: json.valueAsBigInt<BigInt?>(
+        'lock_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      valAddr: json.valueAsString<String?>(
+        'val_addr',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -102,11 +116,16 @@ class MsgSuperfluidDelegateResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgSuperfluidDelegateResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgSuperfluidDelegateResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSuperfluidDelegateResponse();
   }
 
@@ -153,14 +172,25 @@ class MsgSuperfluidUndelegate extends CosmosProtoMessage
   List<Object?> get protoValues => [sender, lockId];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'sender': sender, 'lock_id': lockId?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'sender': sender, 'lock_id': config.encodeBigint(lockId)};
   }
 
-  factory MsgSuperfluidUndelegate.fromJson(Map<String, dynamic> json) {
+  factory MsgSuperfluidUndelegate.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSuperfluidUndelegate(
-      sender: json.valueAsString<String?>('sender', acceptCamelCase: true),
-      lockId: json.valueAsBigInt<BigInt?>('lock_id', acceptCamelCase: true),
+      sender: json.valueAsString<String?>(
+        'sender',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      lockId: json.valueAsBigInt<BigInt?>(
+        'lock_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -206,11 +236,16 @@ class MsgSuperfluidUndelegateResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgSuperfluidUndelegateResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgSuperfluidUndelegateResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSuperfluidUndelegateResponse();
   }
 
@@ -258,14 +293,25 @@ class MsgSuperfluidUnbondLock extends CosmosProtoMessage
   List<Object?> get protoValues => [sender, lockId];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'sender': sender, 'lock_id': lockId?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'sender': sender, 'lock_id': config.encodeBigint(lockId)};
   }
 
-  factory MsgSuperfluidUnbondLock.fromJson(Map<String, dynamic> json) {
+  factory MsgSuperfluidUnbondLock.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSuperfluidUnbondLock(
-      sender: json.valueAsString<String?>('sender', acceptCamelCase: true),
-      lockId: json.valueAsBigInt<BigInt?>('lock_id', acceptCamelCase: true),
+      sender: json.valueAsString<String?>(
+        'sender',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      lockId: json.valueAsBigInt<BigInt?>(
+        'lock_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -311,11 +357,16 @@ class MsgSuperfluidUnbondLockResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgSuperfluidUnbondLockResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgSuperfluidUnbondLockResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSuperfluidUnbondLockResponse();
   }
 
@@ -373,24 +424,37 @@ class MsgSuperfluidUndelegateAndUnbondLock extends CosmosProtoMessage
   List<Object?> get protoValues => [sender, lockId, coin];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'sender': sender,
-      'lock_id': lockId?.toString(),
-      'coin': coin?.toJson(),
+      'lock_id': config.encodeBigint(lockId),
+      'coin': config.encodeMessage(coin),
     };
   }
 
   factory MsgSuperfluidUndelegateAndUnbondLock.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSuperfluidUndelegateAndUnbondLock(
-      sender: json.valueAsString<String?>('sender', acceptCamelCase: true),
-      lockId: json.valueAsBigInt<BigInt?>('lock_id', acceptCamelCase: true),
-      coin: json.valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
+      sender: json.valueAsString<String?>(
+        'sender',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      lockId: json.valueAsBigInt<BigInt?>(
+        'lock_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      coin: json.valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
         key: 'coin',
-        parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -449,15 +513,21 @@ class MsgSuperfluidUndelegateAndUnbondLockResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [lockId];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'lock_id': lockId?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'lock_id': config.encodeBigint(lockId)};
   }
 
   factory MsgSuperfluidUndelegateAndUnbondLockResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSuperfluidUndelegateAndUnbondLockResponse(
-      lockId: json.valueAsBigInt<BigInt?>('lock_id', acceptCamelCase: true),
+      lockId: json.valueAsBigInt<BigInt?>(
+        'lock_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -530,30 +600,47 @@ class MsgLockAndSuperfluidDelegate extends CosmosProtoMessage
   List<Object?> get protoValues => [sender, coins, valAddr];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'sender': sender,
-      'coins': coins.map((e) => e.toJson()).toList(),
+      'coins': coins.map((e) => config.encodeMessage(e)).toList(),
       'val_addr': valAddr,
     };
   }
 
-  factory MsgLockAndSuperfluidDelegate.fromJson(Map<String, dynamic> json) {
+  factory MsgLockAndSuperfluidDelegate.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgLockAndSuperfluidDelegate(
-      sender: json.valueAsString<String?>('sender', acceptCamelCase: true),
+      sender: json.valueAsString<String?>(
+        'sender',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       coins:
-          (json.valueEnsureAsList<dynamic>('coins', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'coins',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
-      valAddr: json.valueAsString<String?>('val_addr', acceptCamelCase: true),
+      valAddr: json.valueAsString<String?>(
+        'val_addr',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -606,15 +693,21 @@ class MsgLockAndSuperfluidDelegateResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [id];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'ID': id?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'ID': config.encodeBigint(id)};
   }
 
   factory MsgLockAndSuperfluidDelegateResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgLockAndSuperfluidDelegateResponse(
-      id: json.valueAsBigInt<BigInt?>('ID', acceptCamelCase: true),
+      id: json.valueAsBigInt<BigInt?>(
+        'ID',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -684,34 +777,52 @@ class MsgCreateFullRangePositionAndSuperfluidDelegate extends CosmosProtoMessage
   List<Object?> get protoValues => [sender, coins, valAddr, poolId];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'sender': sender,
-      'coins': coins.map((e) => e.toJson()).toList(),
+      'coins': coins.map((e) => config.encodeMessage(e)).toList(),
       'val_addr': valAddr,
-      'pool_id': poolId?.toString(),
+      'pool_id': config.encodeBigint(poolId),
     };
   }
 
   factory MsgCreateFullRangePositionAndSuperfluidDelegate.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgCreateFullRangePositionAndSuperfluidDelegate(
-      sender: json.valueAsString<String?>('sender', acceptCamelCase: true),
+      sender: json.valueAsString<String?>(
+        'sender',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       coins:
-          (json.valueEnsureAsList<dynamic>('coins', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'coins',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
-      valAddr: json.valueAsString<String?>('val_addr', acceptCamelCase: true),
-      poolId: json.valueAsBigInt<BigInt?>('pool_id', acceptCamelCase: true),
+      valAddr: json.valueAsString<String?>(
+        'val_addr',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      poolId: json.valueAsBigInt<BigInt?>(
+        'pool_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -780,18 +891,27 @@ class MsgCreateFullRangePositionAndSuperfluidDelegateResponse
   List<Object?> get protoValues => [lockID, positionID];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'lockID': lockID?.toString(), 'positionID': positionID?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'lockID': config.encodeBigint(lockID),
+      'positionID': config.encodeBigint(positionID),
+    };
   }
 
   factory MsgCreateFullRangePositionAndSuperfluidDelegateResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgCreateFullRangePositionAndSuperfluidDelegateResponse(
-      lockID: json.valueAsBigInt<BigInt?>('lockID', acceptCamelCase: true),
+      lockID: json.valueAsBigInt<BigInt?>(
+        'lockID',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       positionID: json.valueAsBigInt<BigInt?>(
         'positionID',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -854,14 +974,25 @@ class MsgUnPoolWhitelistedPool extends CosmosProtoMessage
   List<Object?> get protoValues => [sender, poolId];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'sender': sender, 'pool_id': poolId?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'sender': sender, 'pool_id': config.encodeBigint(poolId)};
   }
 
-  factory MsgUnPoolWhitelistedPool.fromJson(Map<String, dynamic> json) {
+  factory MsgUnPoolWhitelistedPool.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUnPoolWhitelistedPool(
-      sender: json.valueAsString<String?>('sender', acceptCamelCase: true),
-      poolId: json.valueAsBigInt<BigInt?>('pool_id', acceptCamelCase: true),
+      sender: json.valueAsString<String?>(
+        'sender',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      poolId: json.valueAsBigInt<BigInt?>(
+        'pool_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -914,16 +1045,25 @@ class MsgUnPoolWhitelistedPoolResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [exitedLockIds];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'exited_lock_ids': exitedLockIds.map((e) => e.toString()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'exited_lock_ids':
+          exitedLockIds.map((e) => config.encodeBigint(e)).toList(),
+    };
   }
 
-  factory MsgUnPoolWhitelistedPoolResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgUnPoolWhitelistedPoolResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUnPoolWhitelistedPoolResponse(
       exitedLockIds:
           (json.valueEnsureAsList<dynamic>(
             'exited_lock_ids',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsBigInt<BigInt>(e)).toList(),
     );
   }
@@ -1001,40 +1141,56 @@ class MsgUnlockAndMigrateSharesToFullRangeConcentratedPosition
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'sender': sender,
-      'lock_id': lockId?.toString(),
-      'shares_to_migrate': sharesToMigrate?.toJson(),
-      'token_out_mins': tokenOutMins.map((e) => e.toJson()).toList(),
+      'lock_id': config.encodeBigint(lockId),
+      'shares_to_migrate': config.encodeMessage(sharesToMigrate),
+      'token_out_mins':
+          tokenOutMins.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
   factory MsgUnlockAndMigrateSharesToFullRangeConcentratedPosition.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUnlockAndMigrateSharesToFullRangeConcentratedPosition(
-      sender: json.valueAsString<String?>('sender', acceptCamelCase: true),
-      lockId: json.valueAsBigInt<BigInt?>('lock_id', acceptCamelCase: true),
-      sharesToMigrate: json
-          .valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
-            key: 'shares_to_migrate',
-            parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      sender: json.valueAsString<String?>(
+        'sender',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      lockId: json.valueAsBigInt<BigInt?>(
+        'lock_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      sharesToMigrate: json.valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
+        key: 'shares_to_migrate',
+        parse:
+            (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       tokenOutMins:
           (json.valueEnsureAsList<dynamic>(
                 'token_out_mins',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -1122,7 +1278,9 @@ class MsgUnlockAndMigrateSharesToFullRangeConcentratedPositionResponse
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'amount0': amount0,
       'amount1': amount1,
@@ -1132,19 +1290,30 @@ class MsgUnlockAndMigrateSharesToFullRangeConcentratedPositionResponse
   }
 
   factory MsgUnlockAndMigrateSharesToFullRangeConcentratedPositionResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUnlockAndMigrateSharesToFullRangeConcentratedPositionResponse(
-      amount0: json.valueAsString<String?>('amount0', acceptCamelCase: true),
-      amount1: json.valueAsString<String?>('amount1', acceptCamelCase: true),
+      amount0: json.valueAsString<String?>(
+        'amount0',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      amount1: json.valueAsString<String?>(
+        'amount1',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       liquidityCreated: json.valueAsString<String?>(
         'liquidity_created',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      joinTime: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      joinTime: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'join_time',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1223,36 +1392,48 @@ class MsgAddToConcentratedLiquiditySuperfluidPosition extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'position_id': positionId?.toString(),
+      'position_id': config.encodeBigint(positionId),
       'sender': sender,
-      'token_desired0': tokenDesired0?.toJson(),
-      'token_desired1': tokenDesired1?.toJson(),
+      'token_desired0': config.encodeMessage(tokenDesired0),
+      'token_desired1': config.encodeMessage(tokenDesired1),
     };
   }
 
   factory MsgAddToConcentratedLiquiditySuperfluidPosition.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgAddToConcentratedLiquiditySuperfluidPosition(
       positionId: json.valueAsBigInt<BigInt?>(
         'position_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      sender: json.valueAsString<String?>('sender', acceptCamelCase: true),
-      tokenDesired0: json
-          .valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
-            key: 'token_desired0',
-            parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-            acceptCamelCase: true,
-          ),
-      tokenDesired1: json
-          .valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
-            key: 'token_desired1',
-            parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      sender: json.valueAsString<String?>(
+        'sender',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      tokenDesired0: json.valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
+        key: 'token_desired0',
+        parse:
+            (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      tokenDesired1: json.valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
+        key: 'token_desired1',
+        parse:
+            (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1347,31 +1528,43 @@ class MsgAddToConcentratedLiquiditySuperfluidPositionResponse
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'position_id': positionId?.toString(),
+      'position_id': config.encodeBigint(positionId),
       'amount0': amount0,
       'amount1': amount1,
       'new_liquidity': newLiquidity,
-      'lock_id': lockId?.toString(),
+      'lock_id': config.encodeBigint(lockId),
     };
   }
 
   factory MsgAddToConcentratedLiquiditySuperfluidPositionResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgAddToConcentratedLiquiditySuperfluidPositionResponse(
       positionId: json.valueAsBigInt<BigInt?>(
         'position_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      amount0: json.valueAsString<String?>('amount0', acceptCamelCase: true),
-      amount1: json.valueAsString<String?>('amount1', acceptCamelCase: true),
+      amount0: json.valueAsString<String?>(
+        'amount0',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      amount1: json.valueAsString<String?>(
+        'amount1',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       newLiquidity: json.valueAsString<String?>(
         'new_liquidity',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      lockId: json.valueAsBigInt<BigInt?>('lock_id', acceptCamelCase: true),
+      lockId: json.valueAsBigInt<BigInt?>(
+        'lock_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1459,31 +1652,48 @@ class MsgUnbondConvertAndStake extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'lock_id': lockId?.toString(),
+      'lock_id': config.encodeBigint(lockId),
       'sender': sender,
       'val_addr': valAddr,
       'min_amt_to_stake': minAmtToStake,
-      'shares_to_convert': sharesToConvert?.toJson(),
+      'shares_to_convert': config.encodeMessage(sharesToConvert),
     };
   }
 
-  factory MsgUnbondConvertAndStake.fromJson(Map<String, dynamic> json) {
+  factory MsgUnbondConvertAndStake.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUnbondConvertAndStake(
-      lockId: json.valueAsBigInt<BigInt?>('lock_id', acceptCamelCase: true),
-      sender: json.valueAsString<String?>('sender', acceptCamelCase: true),
-      valAddr: json.valueAsString<String?>('val_addr', acceptCamelCase: true),
+      lockId: json.valueAsBigInt<BigInt?>(
+        'lock_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      sender: json.valueAsString<String?>(
+        'sender',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      valAddr: json.valueAsString<String?>(
+        'val_addr',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       minAmtToStake: json.valueAsString<String?>(
         'min_amt_to_stake',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      sharesToConvert: json
-          .valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
-            key: 'shares_to_convert',
-            parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      sharesToConvert: json.valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
+        key: 'shares_to_convert',
+        parse:
+            (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1537,15 +1747,20 @@ class MsgUnbondConvertAndStakeResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [totalAmtStaked];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'total_amt_staked': totalAmtStaked};
   }
 
-  factory MsgUnbondConvertAndStakeResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgUnbondConvertAndStakeResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUnbondConvertAndStakeResponse(
       totalAmtStaked: json.valueAsString<String?>(
         'total_amt_staked',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

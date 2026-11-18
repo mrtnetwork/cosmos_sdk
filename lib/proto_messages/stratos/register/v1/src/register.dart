@@ -86,7 +86,9 @@ class Params extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'bond_denom': bondDenom,
       'unbonding_threashold_time': unbondingThreasholdTime?.encodeString(
@@ -97,44 +99,66 @@ class Params extends CosmosProtoMessage {
       ),
       'max_entries': maxEntries,
       'resource_node_reg_enabled': resourceNodeRegEnabled,
-      'resource_node_min_deposit': resourceNodeMinDeposit?.toJson(),
+      'resource_node_min_deposit': config.encodeMessage(resourceNodeMinDeposit),
       'voting_period': votingPeriod?.encodeString(asNanos: true),
     };
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
       bondDenom: json.valueAsString<String?>(
         'bond_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       unbondingThreasholdTime: json
-          .valueTo<google_protobuf_duration.Duration?, String>(
+          .valueTo<google_protobuf_duration.Duration?, Object>(
             key: 'unbonding_threashold_time',
-            parse: (v) => google_protobuf_duration.Duration.fromString(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => google_protobuf_duration.Duration.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
       unbondingCompletionTime: json
-          .valueTo<google_protobuf_duration.Duration?, String>(
+          .valueTo<google_protobuf_duration.Duration?, Object>(
             key: 'unbonding_completion_time',
-            parse: (v) => google_protobuf_duration.Duration.fromString(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => google_protobuf_duration.Duration.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
-      maxEntries: json.valueAsInt<int?>('max_entries', acceptCamelCase: true),
+      maxEntries: json.valueAsInt<int?>(
+        'max_entries',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       resourceNodeRegEnabled: json.valueAsBool<bool?>(
         'resource_node_reg_enabled',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       resourceNodeMinDeposit: json
-          .valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
+          .valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
             key: 'resource_node_min_deposit',
-            parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
-      votingPeriod: json.valueTo<google_protobuf_duration.Duration?, String>(
+      votingPeriod: json.valueTo<google_protobuf_duration.Duration?, Object>(
         key: 'voting_period',
-        parse: (v) => google_protobuf_duration.Duration.fromString(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_duration.Duration.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -256,15 +280,17 @@ class ResourceNode extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'network_address': networkAddress,
-      'pubkey': pubkey?.toJson(),
+      'pubkey': config.encodeMessage(pubkey),
       'suspend': suspend,
-      'status': status?.protoName,
+      'status': config.encodeEnum(status),
       'tokens': tokens,
       'owner_address': ownerAddress,
-      'description': description?.toJson(),
+      'description': config.encodeMessage(description),
       'creation_time': creationTime?.toRfc3339(),
       'node_type': nodeType,
       'effective_tokens': effectiveTokens,
@@ -272,45 +298,66 @@ class ResourceNode extends CosmosProtoMessage {
     };
   }
 
-  factory ResourceNode.fromJson(Map<String, dynamic> json) {
+  factory ResourceNode.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ResourceNode(
       networkAddress: json.valueAsString<String?>(
         'network_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      pubkey: json.valueTo<google_protobuf_any.Any?, Map<String, dynamic>>(
+      pubkey: json.valueTo<google_protobuf_any.Any?, Object>(
         key: 'pubkey',
-        parse: (v) => google_protobuf_any.Any.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_any.Any.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      suspend: json.valueAsBool<bool?>('suspend', acceptCamelCase: true),
+      suspend: json.valueAsBool<bool?>(
+        'suspend',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       status: json.valueTo<cosmos_staking_v1beta1_staking.BondStatus?, Object?>(
         key: 'status',
         parse: (v) => cosmos_staking_v1beta1_staking.BondStatus.from(v),
       ),
-      tokens: json.valueAsString<String?>('tokens', acceptCamelCase: true),
+      tokens: json.valueAsString<String?>(
+        'tokens',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       ownerAddress: json.valueAsString<String?>(
         'owner_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      description: json.valueTo<Description?, Map<String, dynamic>>(
+      description: json.valueTo<Description?, Object>(
         key: 'description',
-        parse: (v) => Description.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => Description.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      creationTime: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      creationTime: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'creation_time',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      nodeType: json.valueAsInt<int?>('node_type', acceptCamelCase: true),
+      nodeType: json.valueAsInt<int?>(
+        'node_type',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       effectiveTokens: json.valueAsString<String?>(
         'effective_tokens',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       beneficiaryAddress: json.valueAsString<String?>(
         'beneficiary_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -421,54 +468,74 @@ class MetaNode extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'network_address': networkAddress,
-      'pubkey': pubkey?.toJson(),
+      'pubkey': config.encodeMessage(pubkey),
       'suspend': suspend,
-      'status': status?.protoName,
+      'status': config.encodeEnum(status),
       'tokens': tokens,
       'owner_address': ownerAddress,
-      'description': description?.toJson(),
+      'description': config.encodeMessage(description),
       'creation_time': creationTime?.toRfc3339(),
       'beneficiary_address': beneficiaryAddress,
     };
   }
 
-  factory MetaNode.fromJson(Map<String, dynamic> json) {
+  factory MetaNode.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MetaNode(
       networkAddress: json.valueAsString<String?>(
         'network_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      pubkey: json.valueTo<google_protobuf_any.Any?, Map<String, dynamic>>(
+      pubkey: json.valueTo<google_protobuf_any.Any?, Object>(
         key: 'pubkey',
-        parse: (v) => google_protobuf_any.Any.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_any.Any.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      suspend: json.valueAsBool<bool?>('suspend', acceptCamelCase: true),
+      suspend: json.valueAsBool<bool?>(
+        'suspend',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       status: json.valueTo<cosmos_staking_v1beta1_staking.BondStatus?, Object?>(
         key: 'status',
         parse: (v) => cosmos_staking_v1beta1_staking.BondStatus.from(v),
       ),
-      tokens: json.valueAsString<String?>('tokens', acceptCamelCase: true),
+      tokens: json.valueAsString<String?>(
+        'tokens',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       ownerAddress: json.valueAsString<String?>(
         'owner_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      description: json.valueTo<Description?, Map<String, dynamic>>(
+      description: json.valueTo<Description?, Object>(
         key: 'description',
-        parse: (v) => Description.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => Description.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      creationTime: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      creationTime: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'creation_time',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       beneficiaryAddress: json.valueAsString<String?>(
         'beneficiary_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -551,7 +618,9 @@ class Description extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'moniker': moniker,
       'identity': identity,
@@ -561,16 +630,31 @@ class Description extends CosmosProtoMessage {
     };
   }
 
-  factory Description.fromJson(Map<String, dynamic> json) {
+  factory Description.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Description(
-      moniker: json.valueAsString<String?>('moniker', acceptCamelCase: true),
-      identity: json.valueAsString<String?>('identity', acceptCamelCase: true),
-      website: json.valueAsString<String?>('website', acceptCamelCase: true),
+      moniker: json.valueAsString<String?>(
+        'moniker',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      identity: json.valueAsString<String?>(
+        'identity',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      website: json.valueAsString<String?>(
+        'website',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       securityContact: json.valueAsString<String?>(
         'security_contact',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      details: json.valueAsString<String?>('details', acceptCamelCase: true),
+      details: json.valueAsString<String?>(
+        'details',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

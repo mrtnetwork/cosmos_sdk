@@ -14,7 +14,7 @@ class ThorNodeRequestSaverWithdrawQuote
   /// optional block height, defaults to current tip
   final BigInt? height;
 
-  /// tthe asset to withdraw
+  /// the asset to withdraw
   final String? asset;
 
   /// the address for the position

@@ -33,13 +33,21 @@ class QueryPythPriceRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [priceId];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'price_id': priceId};
   }
 
-  factory QueryPythPriceRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryPythPriceRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryPythPriceRequest(
-      priceId: json.valueAsString<String?>('price_id', acceptCamelCase: true),
+      priceId: json.valueAsString<String?>(
+        'price_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -82,21 +90,27 @@ class QueryPythPriceResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [priceState];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'price_state': priceState?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'price_state': config.encodeMessage(priceState)};
   }
 
-  factory QueryPythPriceResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryPythPriceResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryPythPriceResponse(
-      priceState: json.valueTo<
-        injective_oracle_v1beta1_oracle.PythPriceState?,
-        Map<String, dynamic>
-      >(
-        key: 'price_state',
-        parse:
-            (v) => injective_oracle_v1beta1_oracle.PythPriceState.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      priceState: json
+          .valueTo<injective_oracle_v1beta1_oracle.PythPriceState?, Object>(
+            key: 'price_state',
+            parse:
+                (v) => injective_oracle_v1beta1_oracle.PythPriceState.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -144,11 +158,16 @@ class QueryParamsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryParamsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsRequest();
   }
 
@@ -192,19 +211,25 @@ class QueryParamsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [params];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'params': params?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'params': config.encodeMessage(params)};
   }
 
-  factory QueryParamsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsResponse(
-      params: json.valueTo<
-        injective_oracle_v1beta1_oracle.Params?,
-        Map<String, dynamic>
-      >(
+      params: json.valueTo<injective_oracle_v1beta1_oracle.Params?, Object>(
         key: 'params',
-        parse: (v) => injective_oracle_v1beta1_oracle.Params.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => injective_oracle_v1beta1_oracle.Params.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -251,11 +276,16 @@ class QueryBandRelayersRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryBandRelayersRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryBandRelayersRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryBandRelayersRequest();
   }
 
@@ -304,16 +334,22 @@ class QueryBandRelayersResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [relayers];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'relayers': relayers.map((e) => e).toList()};
   }
 
-  factory QueryBandRelayersResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryBandRelayersResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryBandRelayersResponse(
       relayers:
           (json.valueEnsureAsList<dynamic>(
             'relayers',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
     );
   }
@@ -357,11 +393,16 @@ class QueryBandPriceStatesRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryBandPriceStatesRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryBandPriceStatesRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryBandPriceStatesRequest();
   }
 
@@ -411,26 +452,37 @@ class QueryBandPriceStatesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [priceStates];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'price_states': priceStates.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'price_states': priceStates.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
-  factory QueryBandPriceStatesResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryBandPriceStatesResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryBandPriceStatesResponse(
       priceStates:
           (json.valueEnsureAsList<dynamic>(
                 'price_states',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_oracle_v1beta1_oracle.BandPriceState,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => injective_oracle_v1beta1_oracle
-                          .BandPriceState.fromJson(v),
+                          .BandPriceState.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -484,11 +536,16 @@ class QueryBandIBCPriceStatesRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryBandIBCPriceStatesRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryBandIBCPriceStatesRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryBandIBCPriceStatesRequest();
   }
 
@@ -540,26 +597,37 @@ class QueryBandIBCPriceStatesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [priceStates];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'price_states': priceStates.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'price_states': priceStates.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
-  factory QueryBandIBCPriceStatesResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryBandIBCPriceStatesResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryBandIBCPriceStatesResponse(
       priceStates:
           (json.valueEnsureAsList<dynamic>(
                 'price_states',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_oracle_v1beta1_oracle.BandPriceState,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => injective_oracle_v1beta1_oracle
-                          .BandPriceState.fromJson(v),
+                          .BandPriceState.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -613,11 +681,16 @@ class QueryPriceFeedPriceStatesRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryPriceFeedPriceStatesRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryPriceFeedPriceStatesRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryPriceFeedPriceStatesRequest();
   }
 
@@ -669,28 +742,37 @@ class QueryPriceFeedPriceStatesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [priceStates];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'price_states': priceStates.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'price_states': priceStates.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
   factory QueryPriceFeedPriceStatesResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryPriceFeedPriceStatesResponse(
       priceStates:
           (json.valueEnsureAsList<dynamic>(
                 'price_states',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_oracle_v1beta1_oracle.PriceFeedState,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => injective_oracle_v1beta1_oracle
-                          .PriceFeedState.fromJson(v),
+                          .PriceFeedState.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -744,11 +826,16 @@ class QueryCoinbasePriceStatesRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryCoinbasePriceStatesRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryCoinbasePriceStatesRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryCoinbasePriceStatesRequest();
   }
 
@@ -800,26 +887,37 @@ class QueryCoinbasePriceStatesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [priceStates];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'price_states': priceStates.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'price_states': priceStates.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
-  factory QueryCoinbasePriceStatesResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryCoinbasePriceStatesResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryCoinbasePriceStatesResponse(
       priceStates:
           (json.valueEnsureAsList<dynamic>(
                 'price_states',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_oracle_v1beta1_oracle.CoinbasePriceState,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => injective_oracle_v1beta1_oracle
-                          .CoinbasePriceState.fromJson(v),
+                          .CoinbasePriceState.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -873,11 +971,16 @@ class QueryPythPriceStatesRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryPythPriceStatesRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryPythPriceStatesRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryPythPriceStatesRequest();
   }
 
@@ -927,26 +1030,37 @@ class QueryPythPriceStatesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [priceStates];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'price_states': priceStates.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'price_states': priceStates.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
-  factory QueryPythPriceStatesResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryPythPriceStatesResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryPythPriceStatesResponse(
       priceStates:
           (json.valueEnsureAsList<dynamic>(
                 'price_states',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_oracle_v1beta1_oracle.PythPriceState,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => injective_oracle_v1beta1_oracle
-                          .PythPriceState.fromJson(v),
+                          .PythPriceState.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -1000,11 +1114,16 @@ class QueryPythProPriceStatesRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryPythProPriceStatesRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryPythProPriceStatesRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryPythProPriceStatesRequest();
   }
 
@@ -1056,26 +1175,37 @@ class QueryPythProPriceStatesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [priceStates];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'price_states': priceStates.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'price_states': priceStates.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
-  factory QueryPythProPriceStatesResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryPythProPriceStatesResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryPythProPriceStatesResponse(
       priceStates:
           (json.valueEnsureAsList<dynamic>(
                 'price_states',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_oracle_v1beta1_oracle.PythProPriceState,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => injective_oracle_v1beta1_oracle
-                          .PythProPriceState.fromJson(v),
+                          .PythProPriceState.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -1129,11 +1259,16 @@ class QuerySedaFastPriceStatesRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QuerySedaFastPriceStatesRequest.fromJson(Map<String, dynamic> json) {
+  factory QuerySedaFastPriceStatesRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QuerySedaFastPriceStatesRequest();
   }
 
@@ -1185,26 +1320,37 @@ class QuerySedaFastPriceStatesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [priceStates];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'price_states': priceStates.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'price_states': priceStates.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
-  factory QuerySedaFastPriceStatesResponse.fromJson(Map<String, dynamic> json) {
+  factory QuerySedaFastPriceStatesResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QuerySedaFastPriceStatesResponse(
       priceStates:
           (json.valueEnsureAsList<dynamic>(
                 'price_states',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_oracle_v1beta1_oracle.SedaFastPriceState,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => injective_oracle_v1beta1_oracle
-                          .SedaFastPriceState.fromJson(v),
+                          .SedaFastPriceState.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -1258,11 +1404,16 @@ class QueryStorkPriceStatesRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryStorkPriceStatesRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryStorkPriceStatesRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryStorkPriceStatesRequest();
   }
 
@@ -1312,26 +1463,37 @@ class QueryStorkPriceStatesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [priceStates];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'price_states': priceStates.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'price_states': priceStates.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
-  factory QueryStorkPriceStatesResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryStorkPriceStatesResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryStorkPriceStatesResponse(
       priceStates:
           (json.valueEnsureAsList<dynamic>(
                 'price_states',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_oracle_v1beta1_oracle.StorkPriceState,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => injective_oracle_v1beta1_oracle
-                          .StorkPriceState.fromJson(v),
+                          .StorkPriceState.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -1385,11 +1547,16 @@ class QueryStorkPublishersRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryStorkPublishersRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryStorkPublishersRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryStorkPublishersRequest();
   }
 
@@ -1439,16 +1606,22 @@ class QueryStorkPublishersResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [publishers];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'publishers': publishers.map((e) => e).toList()};
   }
 
-  factory QueryStorkPublishersResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryStorkPublishersResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryStorkPublishersResponse(
       publishers:
           (json.valueEnsureAsList<dynamic>(
             'publishers',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
     );
   }
@@ -1498,14 +1671,25 @@ class QueryProviderPriceStateRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [provider, symbol];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'provider': provider, 'symbol': symbol};
   }
 
-  factory QueryProviderPriceStateRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryProviderPriceStateRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryProviderPriceStateRequest(
-      provider: json.valueAsString<String?>('provider', acceptCamelCase: true),
-      symbol: json.valueAsString<String?>('symbol', acceptCamelCase: true),
+      provider: json.valueAsString<String?>(
+        'provider',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      symbol: json.valueAsString<String?>(
+        'symbol',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1556,20 +1740,27 @@ class QueryProviderPriceStateResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [priceState];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'price_state': priceState?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'price_state': config.encodeMessage(priceState)};
   }
 
-  factory QueryProviderPriceStateResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryProviderPriceStateResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryProviderPriceStateResponse(
-      priceState: json.valueTo<
-        injective_oracle_v1beta1_oracle.PriceState?,
-        Map<String, dynamic>
-      >(
-        key: 'price_state',
-        parse: (v) => injective_oracle_v1beta1_oracle.PriceState.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      priceState: json
+          .valueTo<injective_oracle_v1beta1_oracle.PriceState?, Object>(
+            key: 'price_state',
+            parse:
+                (v) => injective_oracle_v1beta1_oracle.PriceState.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -1617,13 +1808,16 @@ class QueryChainlinkDataStreamsPriceStatesRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
   factory QueryChainlinkDataStreamsPriceStatesRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryChainlinkDataStreamsPriceStatesRequest();
   }
 
@@ -1682,28 +1876,37 @@ class QueryChainlinkDataStreamsPriceStatesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [priceStates];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'price_states': priceStates.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'price_states': priceStates.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
   factory QueryChainlinkDataStreamsPriceStatesResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryChainlinkDataStreamsPriceStatesResponse(
       priceStates:
           (json.valueEnsureAsList<dynamic>(
                 'price_states',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_oracle_v1beta1_oracle.ChainlinkDataStreamsPriceState,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => injective_oracle_v1beta1_oracle
-                          .ChainlinkDataStreamsPriceState.fromJson(v),
+                          .ChainlinkDataStreamsPriceState.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -1759,11 +1962,16 @@ class QueryModuleStateRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryModuleStateRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryModuleStateRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryModuleStateRequest();
   }
 
@@ -1807,20 +2015,27 @@ class QueryModuleStateResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [state];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'state': state?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'state': config.encodeMessage(state)};
   }
 
-  factory QueryModuleStateResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryModuleStateResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryModuleStateResponse(
-      state: json.valueTo<
-        injective_oracle_v1beta1_genesis.GenesisState?,
-        Map<String, dynamic>
-      >(
-        key: 'state',
-        parse: (v) => injective_oracle_v1beta1_genesis.GenesisState.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      state: json
+          .valueTo<injective_oracle_v1beta1_genesis.GenesisState?, Object>(
+            key: 'state',
+            parse:
+                (v) => injective_oracle_v1beta1_genesis.GenesisState.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -1868,20 +2083,26 @@ class QueryHistoricalPriceRecordsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [oracle, symbolId];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'oracle': oracle?.protoName, 'symbol_id': symbolId};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'oracle': config.encodeEnum(oracle), 'symbol_id': symbolId};
   }
 
   factory QueryHistoricalPriceRecordsRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryHistoricalPriceRecordsRequest(
       oracle: json
           .valueTo<injective_oracle_v1beta1_oracle.OracleType?, Object?>(
             key: 'oracle',
             parse: (v) => injective_oracle_v1beta1_oracle.OracleType.from(v),
           ),
-      symbolId: json.valueAsString<String?>('symbol_id', acceptCamelCase: true),
+      symbolId: json.valueAsString<String?>(
+        'symbol_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1938,28 +2159,38 @@ class QueryHistoricalPriceRecordsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [priceRecords];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'price_records': priceRecords.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'price_records':
+          priceRecords.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
   factory QueryHistoricalPriceRecordsResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryHistoricalPriceRecordsResponse(
       priceRecords:
           (json.valueEnsureAsList<dynamic>(
                 'price_records',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_oracle_v1beta1_oracle.PriceRecords,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
-                      (v) => injective_oracle_v1beta1_oracle
-                          .PriceRecords.fromJson(v),
+                      (v) =>
+                          injective_oracle_v1beta1_oracle.PriceRecords.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
                 ),
               )
               .toList(),
@@ -2025,24 +2256,32 @@ class OracleHistoryOptions extends CosmosProtoMessage {
   List<Object?> get protoValues => [maxAge, includeRawHistory, includeMetadata];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'max_age': maxAge?.toString(),
+      'max_age': config.encodeBigint(maxAge),
       'include_raw_history': includeRawHistory,
       'include_metadata': includeMetadata,
     };
   }
 
-  factory OracleHistoryOptions.fromJson(Map<String, dynamic> json) {
+  factory OracleHistoryOptions.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return OracleHistoryOptions(
-      maxAge: json.valueAsBigInt<BigInt?>('max_age', acceptCamelCase: true),
+      maxAge: json.valueAsBigInt<BigInt?>(
+        'max_age',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       includeRawHistory: json.valueAsBool<bool?>(
         'include_raw_history',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       includeMetadata: json.valueAsBool<bool?>(
         'include_metadata',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -2102,38 +2341,50 @@ class QueryOracleVolatilityRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [baseInfo, quoteInfo, oracleHistoryOptions];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'base_info': baseInfo?.toJson(),
-      'quote_info': quoteInfo?.toJson(),
-      'oracle_history_options': oracleHistoryOptions?.toJson(),
+      'base_info': config.encodeMessage(baseInfo),
+      'quote_info': config.encodeMessage(quoteInfo),
+      'oracle_history_options': config.encodeMessage(oracleHistoryOptions),
     };
   }
 
-  factory QueryOracleVolatilityRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryOracleVolatilityRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryOracleVolatilityRequest(
-      baseInfo: json.valueTo<
-        injective_oracle_v1beta1_oracle.OracleInfo?,
-        Map<String, dynamic>
-      >(
-        key: 'base_info',
-        parse: (v) => injective_oracle_v1beta1_oracle.OracleInfo.fromJson(v),
-        acceptCamelCase: true,
-      ),
-      quoteInfo: json.valueTo<
-        injective_oracle_v1beta1_oracle.OracleInfo?,
-        Map<String, dynamic>
-      >(
-        key: 'quote_info',
-        parse: (v) => injective_oracle_v1beta1_oracle.OracleInfo.fromJson(v),
-        acceptCamelCase: true,
-      ),
-      oracleHistoryOptions: json
-          .valueTo<OracleHistoryOptions?, Map<String, dynamic>>(
-            key: 'oracle_history_options',
-            parse: (v) => OracleHistoryOptions.fromJson(v),
-            acceptCamelCase: true,
+      baseInfo: json
+          .valueTo<injective_oracle_v1beta1_oracle.OracleInfo?, Object>(
+            key: 'base_info',
+            parse:
+                (v) => injective_oracle_v1beta1_oracle.OracleInfo.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
+      quoteInfo: json
+          .valueTo<injective_oracle_v1beta1_oracle.OracleInfo?, Object>(
+            key: 'quote_info',
+            parse:
+                (v) => injective_oracle_v1beta1_oracle.OracleInfo.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
+      oracleHistoryOptions: json.valueTo<OracleHistoryOptions?, Object>(
+        key: 'oracle_history_options',
+        parse:
+            (v) => OracleHistoryOptions.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -2207,44 +2458,54 @@ class QueryOracleVolatilityResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [volatility, historyMetadata, rawHistory];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'volatility': volatility,
-      'history_metadata': historyMetadata?.toJson(),
-      'raw_history': rawHistory.map((e) => e.toJson()).toList(),
+      'history_metadata': config.encodeMessage(historyMetadata),
+      'raw_history': rawHistory.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory QueryOracleVolatilityResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryOracleVolatilityResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryOracleVolatilityResponse(
       volatility: json.valueAsString<String?>(
         'volatility',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      historyMetadata: json.valueTo<
-        injective_oracle_v1beta1_oracle.MetadataStatistics?,
-        Map<String, dynamic>
-      >(
-        key: 'history_metadata',
-        parse:
-            (v) =>
-                injective_oracle_v1beta1_oracle.MetadataStatistics.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      historyMetadata: json
+          .valueTo<injective_oracle_v1beta1_oracle.MetadataStatistics?, Object>(
+            key: 'history_metadata',
+            parse:
+                (v) =>
+                    injective_oracle_v1beta1_oracle.MetadataStatistics.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
       rawHistory:
           (json.valueEnsureAsList<dynamic>(
                 'raw_history',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_oracle_v1beta1_oracle.PriceRecord,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
-                      (v) => injective_oracle_v1beta1_oracle
-                          .PriceRecord.fromJson(v),
+                      (v) =>
+                          injective_oracle_v1beta1_oracle.PriceRecord.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
                 ),
               )
               .toList(),
@@ -2303,11 +2564,16 @@ class QueryOracleProvidersInfoRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryOracleProvidersInfoRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryOracleProvidersInfoRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryOracleProvidersInfoRequest();
   }
 
@@ -2357,23 +2623,37 @@ class QueryOracleProvidersInfoResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [providers];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'providers': providers.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'providers': providers.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
-  factory QueryOracleProvidersInfoResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryOracleProvidersInfoResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryOracleProvidersInfoResponse(
       providers:
-          (json.valueEnsureAsList<dynamic>('providers', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'providers',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_oracle_v1beta1_oracle.ProviderInfo,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
-                      (v) => injective_oracle_v1beta1_oracle
-                          .ProviderInfo.fromJson(v),
+                      (v) =>
+                          injective_oracle_v1beta1_oracle.ProviderInfo.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
                 ),
               )
               .toList(),
@@ -2427,13 +2707,21 @@ class QueryOracleProviderPricesRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [provider];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'provider': provider};
   }
 
-  factory QueryOracleProviderPricesRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryOracleProviderPricesRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryOracleProviderPricesRequest(
-      provider: json.valueAsString<String?>('provider', acceptCamelCase: true),
+      provider: json.valueAsString<String?>(
+        'provider',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -2486,28 +2774,38 @@ class QueryOracleProviderPricesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [providerState];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'providerState': providerState.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'providerState':
+          providerState.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
   factory QueryOracleProviderPricesResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryOracleProviderPricesResponse(
       providerState:
           (json.valueEnsureAsList<dynamic>(
                 'providerState',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_oracle_v1beta1_oracle.ProviderState,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => injective_oracle_v1beta1_oracle
-                          .ProviderState.fromJson(v),
+                          .ProviderState.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -2559,19 +2857,24 @@ class ScalingOptions extends CosmosProtoMessage {
   List<Object?> get protoValues => [baseDecimals, quoteDecimals];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'base_decimals': baseDecimals, 'quote_decimals': quoteDecimals};
   }
 
-  factory ScalingOptions.fromJson(Map<String, dynamic> json) {
+  factory ScalingOptions.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ScalingOptions(
       baseDecimals: json.valueAsInt<int?>(
         'base_decimals',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       quoteDecimals: json.valueAsInt<int?>(
         'quote_decimals',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -2634,28 +2937,41 @@ class QueryOraclePriceRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [oracleType, base, quote, scalingOptions];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'oracle_type': oracleType?.protoName,
+      'oracle_type': config.encodeEnum(oracleType),
       'base': base,
       'quote': quote,
-      'scaling_options': scalingOptions?.toJson(),
+      'scaling_options': config.encodeMessage(scalingOptions),
     };
   }
 
-  factory QueryOraclePriceRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryOraclePriceRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryOraclePriceRequest(
       oracleType: json
           .valueTo<injective_oracle_v1beta1_oracle.OracleType?, Object?>(
             key: 'oracle_type',
             parse: (v) => injective_oracle_v1beta1_oracle.OracleType.from(v),
           ),
-      base: json.valueAsString<String?>('base', acceptCamelCase: true),
-      quote: json.valueAsString<String?>('quote', acceptCamelCase: true),
-      scalingOptions: json.valueTo<ScalingOptions?, Map<String, dynamic>>(
+      base: json.valueAsString<String?>(
+        'base',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      quote: json.valueAsString<String?>(
+        'quote',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      scalingOptions: json.valueTo<ScalingOptions?, Object>(
         key: 'scaling_options',
-        parse: (v) => ScalingOptions.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) =>
+                ScalingOptions.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -2746,47 +3062,52 @@ class PricePairState extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'pair_price': pairPrice,
       'base_price': basePrice,
       'quote_price': quotePrice,
       'base_cumulative_price': baseCumulativePrice,
       'quote_cumulative_price': quoteCumulativePrice,
-      'base_timestamp': baseTimestamp?.toString(),
-      'quote_timestamp': quoteTimestamp?.toString(),
+      'base_timestamp': config.encodeBigint(baseTimestamp),
+      'quote_timestamp': config.encodeBigint(quoteTimestamp),
     };
   }
 
-  factory PricePairState.fromJson(Map<String, dynamic> json) {
+  factory PricePairState.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return PricePairState(
       pairPrice: json.valueAsString<String?>(
         'pair_price',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       basePrice: json.valueAsString<String?>(
         'base_price',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       quotePrice: json.valueAsString<String?>(
         'quote_price',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       baseCumulativePrice: json.valueAsString<String?>(
         'base_cumulative_price',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       quoteCumulativePrice: json.valueAsString<String?>(
         'quote_cumulative_price',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       baseTimestamp: json.valueAsBigInt<BigInt?>(
         'base_timestamp',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       quoteTimestamp: json.valueAsBigInt<BigInt?>(
         'quote_timestamp',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -2831,16 +3152,23 @@ class QueryOraclePriceResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [pricePairState];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'price_pair_state': pricePairState?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'price_pair_state': config.encodeMessage(pricePairState)};
   }
 
-  factory QueryOraclePriceResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryOraclePriceResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryOraclePriceResponse(
-      pricePairState: json.valueTo<PricePairState?, Map<String, dynamic>>(
+      pricePairState: json.valueTo<PricePairState?, Object>(
         key: 'price_pair_state',
-        parse: (v) => PricePairState.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) =>
+                PricePairState.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

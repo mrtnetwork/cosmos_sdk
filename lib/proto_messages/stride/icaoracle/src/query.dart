@@ -32,13 +32,21 @@ class QueryOracleRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [chainId];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'chain_id': chainId};
   }
 
-  factory QueryOracleRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryOracleRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryOracleRequest(
-      chainId: json.valueAsString<String?>('chain_id', acceptCamelCase: true),
+      chainId: json.valueAsString<String?>(
+        'chain_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -81,18 +89,26 @@ class QueryOracleResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [oracle];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'oracle': oracle?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'oracle': config.encodeMessage(oracle)};
   }
 
-  factory QueryOracleResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryOracleResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryOracleResponse(
-      oracle: json
-          .valueTo<stride_icaoracle_icaoracle.Oracle?, Map<String, dynamic>>(
-            key: 'oracle',
-            parse: (v) => stride_icaoracle_icaoracle.Oracle.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      oracle: json.valueTo<stride_icaoracle_icaoracle.Oracle?, Object>(
+        key: 'oracle',
+        parse:
+            (v) => stride_icaoracle_icaoracle.Oracle.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -137,11 +153,16 @@ class QueryAllOraclesRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryAllOraclesRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryAllOraclesRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryAllOraclesRequest();
   }
 
@@ -189,21 +210,34 @@ class QueryAllOraclesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [oracles];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'oracles': oracles.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'oracles': oracles.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory QueryAllOraclesResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryAllOraclesResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryAllOraclesResponse(
       oracles:
-          (json.valueEnsureAsList<dynamic>('oracles', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'oracles',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   stride_icaoracle_icaoracle.Oracle,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
-                  parse: (v) => stride_icaoracle_icaoracle.Oracle.fromJson(v),
+                  parse:
+                      (v) => stride_icaoracle_icaoracle.Oracle.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -254,13 +288,21 @@ class QueryActiveOraclesRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [active];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'active': active};
   }
 
-  factory QueryActiveOraclesRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryActiveOraclesRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryActiveOraclesRequest(
-      active: json.valueAsBool<bool?>('active', acceptCamelCase: true),
+      active: json.valueAsBool<bool?>(
+        'active',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -309,21 +351,34 @@ class QueryActiveOraclesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [oracles];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'oracles': oracles.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'oracles': oracles.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory QueryActiveOraclesResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryActiveOraclesResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryActiveOraclesResponse(
       oracles:
-          (json.valueEnsureAsList<dynamic>('oracles', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'oracles',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   stride_icaoracle_icaoracle.Oracle,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
-                  parse: (v) => stride_icaoracle_icaoracle.Oracle.fromJson(v),
+                  parse:
+                      (v) => stride_icaoracle_icaoracle.Oracle.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -376,19 +431,24 @@ class QueryMetricsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [metricKey, oracleChainId];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'metric_key': metricKey, 'oracle_chain_id': oracleChainId};
   }
 
-  factory QueryMetricsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryMetricsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryMetricsRequest(
       metricKey: json.valueAsString<String?>(
         'metric_key',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       oracleChainId: json.valueAsString<String?>(
         'oracle_chain_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -441,21 +501,34 @@ class QueryMetricsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [metrics];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'metrics': metrics.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'metrics': metrics.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory QueryMetricsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryMetricsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryMetricsResponse(
       metrics:
-          (json.valueEnsureAsList<dynamic>('metrics', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'metrics',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   stride_icaoracle_icaoracle.Metric,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
-                  parse: (v) => stride_icaoracle_icaoracle.Metric.fromJson(v),
+                  parse:
+                      (v) => stride_icaoracle_icaoracle.Metric.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),

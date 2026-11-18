@@ -13,7 +13,7 @@ class PageRequest extends CosmosProtoMessage {
   /// key is a value returned in PageResponse.next_key to begin
   /// querying the next page most efficiently. Only one of offset or key
   /// should be set.
-  final List<int>? key;
+  final BuBytes? key;
 
   /// offset is a numeric offset that can be used when key is unavailable.
   /// It is less efficient than using key. Only one of offset or key should
@@ -33,13 +33,13 @@ class PageRequest extends CosmosProtoMessage {
   /// reverse is set to true if results are to be returned in the descending order.
   final bool? reverse;
 
-  const PageRequest({
-    this.key,
+  PageRequest({
+    List<int>? key,
     this.offset,
     this.limit,
     this.countTotal,
     this.reverse,
-  });
+  }) : key = key?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -70,33 +70,42 @@ class PageRequest extends CosmosProtoMessage {
   List<Object?> get protoValues => [key, offset, limit, countTotal, reverse];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'key': switch (key) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'offset': offset?.toString(),
-      'limit': limit?.toString(),
+      'key': config.encodeBinary(key),
+      'offset': config.encodeBigint(offset),
+      'limit': config.encodeBigint(limit),
       'count_total': countTotal,
       'reverse': reverse,
     };
   }
 
-  factory PageRequest.fromJson(Map<String, dynamic> json) {
+  factory PageRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return PageRequest(
-      key: json.valueAsBytes<List<int>?>(
-        'key',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      key: config.decodeBinary<List<int>?>(
+        json.valueAs('key', normalizeKeyLookup: config.normalizeKeys),
       ),
-      offset: json.valueAsBigInt<BigInt?>('offset', acceptCamelCase: true),
-      limit: json.valueAsBigInt<BigInt?>('limit', acceptCamelCase: true),
-      countTotal: json.valueAsBool<bool?>('count_total', acceptCamelCase: true),
-      reverse: json.valueAsBool<bool?>('reverse', acceptCamelCase: true),
+      offset: json.valueAsBigInt<BigInt?>(
+        'offset',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      limit: json.valueAsBigInt<BigInt?>(
+        'limit',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      countTotal: json.valueAsBool<bool?>(
+        'count_total',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      reverse: json.valueAsBool<bool?>(
+        'reverse',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -127,13 +136,14 @@ class PageResponse extends CosmosProtoMessage {
   /// next_key is the key to be passed to PageRequest.key to
   /// query the next page most efficiently. It will be empty if
   /// there are no more results.
-  final List<int>? nextKey;
+  final BuBytes? nextKey;
 
   /// total is total number of results available if PageRequest.count_total
   /// was set, its value is undefined otherwise
   final BigInt? total;
 
-  const PageResponse({this.nextKey, this.total});
+  PageResponse({List<int>? nextKey, this.total})
+    : nextKey = nextKey?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -150,27 +160,27 @@ class PageResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [nextKey, total];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'next_key': switch (nextKey) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'total': total?.toString(),
+      'next_key': config.encodeBinary(nextKey),
+      'total': config.encodeBigint(total),
     };
   }
 
-  factory PageResponse.fromJson(Map<String, dynamic> json) {
+  factory PageResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return PageResponse(
-      nextKey: json.valueAsBytes<List<int>?>(
-        'next_key',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      nextKey: config.decodeBinary<List<int>?>(
+        json.valueAs('next_key', normalizeKeyLookup: config.normalizeKeys),
       ),
-      total: json.valueAsBigInt<BigInt?>('total', acceptCamelCase: true),
+      total: json.valueAsBigInt<BigInt?>(
+        'total',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

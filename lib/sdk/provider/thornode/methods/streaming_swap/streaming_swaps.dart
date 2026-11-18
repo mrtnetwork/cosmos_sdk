@@ -24,7 +24,7 @@ class ThorNodeRequestStreamingSwapsState
   Map<String, String?> get parameters => {"height": height?.toString()};
 
   @override
-  List<StreamingSwapStateResponse> onResonse(
+  List<StreamingSwapStateResponse> onResponse(
     List<Map<String, dynamic>> result,
   ) {
     return result.map((e) => StreamingSwapStateResponse.fromJson(e)).toList();

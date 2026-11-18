@@ -28,22 +28,32 @@ enum LockQueryType implements ProtoEnumVariant {
 
   /// Looks up a value by its proto wire int. Throws if not found.
   static LockQueryType fromValue(int? value) {
+    value ??= 0;
     return LockQueryType.values.firstWhere(
       (e) => e.value == value,
       orElse:
           () =>
-              throw ItemNotFoundException(name: "LockQueryType", value: value),
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching LockQueryType found for the given value. $value",
+                details: {"name": "LockQueryType", "value": value?.toString()},
+              ),
     );
   }
 
   /// Looks up a value by wire int, Dart enum name, or original proto
   /// name (whichever [value] happens to be). Throws if not found.
   static LockQueryType from(Object? value) {
+    value ??= 0;
     return LockQueryType.values.firstWhere(
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
           () =>
-              throw ItemNotFoundException(name: "LockQueryType", value: value),
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching LockQueryType found for the given value. $value",
+                details: {"name": "LockQueryType", "value": value?.toString()},
+              ),
     );
   }
 }
@@ -122,46 +132,71 @@ class PeriodLock extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'ID': id?.toString(),
+      'ID': config.encodeBigint(id),
       'owner': owner,
       'duration': duration?.encodeString(asNanos: true),
       'end_time': endTime?.toRfc3339(),
-      'coins': coins.map((e) => e.toJson()).toList(),
+      'coins': coins.map((e) => config.encodeMessage(e)).toList(),
       'reward_receiver_address': rewardReceiverAddress,
     };
   }
 
-  factory PeriodLock.fromJson(Map<String, dynamic> json) {
+  factory PeriodLock.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return PeriodLock(
-      id: json.valueAsBigInt<BigInt?>('ID', acceptCamelCase: true),
-      owner: json.valueAsString<String?>('owner', acceptCamelCase: true),
-      duration: json.valueTo<google_protobuf_duration.Duration?, String>(
-        key: 'duration',
-        parse: (v) => google_protobuf_duration.Duration.fromString(v),
-        acceptCamelCase: true,
+      id: json.valueAsBigInt<BigInt?>(
+        'ID',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      endTime: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      owner: json.valueAsString<String?>(
+        'owner',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      duration: json.valueTo<google_protobuf_duration.Duration?, Object>(
+        key: 'duration',
+        parse:
+            (v) => google_protobuf_duration.Duration.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      endTime: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'end_time',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       coins:
-          (json.valueEnsureAsList<dynamic>('coins', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'coins',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
       rewardReceiverAddress: json.valueAsString<String?>(
         'reward_receiver_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -240,31 +275,47 @@ class QueryCondition extends CosmosProtoMessage {
   List<Object?> get protoValues => [lockQueryType, denom, duration, timestamp];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'lock_query_type': lockQueryType?.protoName,
+      'lock_query_type': config.encodeEnum(lockQueryType),
       'denom': denom,
       'duration': duration?.encodeString(asNanos: true),
       'timestamp': timestamp?.toRfc3339(),
     };
   }
 
-  factory QueryCondition.fromJson(Map<String, dynamic> json) {
+  factory QueryCondition.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryCondition(
       lockQueryType: json.valueTo<LockQueryType?, Object?>(
         key: 'lock_query_type',
         parse: (v) => LockQueryType.from(v),
       ),
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
-      duration: json.valueTo<google_protobuf_duration.Duration?, String>(
-        key: 'duration',
-        parse: (v) => google_protobuf_duration.Duration.fromString(v),
-        acceptCamelCase: true,
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      timestamp: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      duration: json.valueTo<google_protobuf_duration.Duration?, Object>(
+        key: 'duration',
+        parse:
+            (v) => google_protobuf_duration.Duration.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      timestamp: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'timestamp',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -343,34 +394,47 @@ class SyntheticLock extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'underlying_lock_id': underlyingLockId?.toString(),
+      'underlying_lock_id': config.encodeBigint(underlyingLockId),
       'synth_denom': synthDenom,
       'end_time': endTime?.toRfc3339(),
       'duration': duration?.encodeString(asNanos: true),
     };
   }
 
-  factory SyntheticLock.fromJson(Map<String, dynamic> json) {
+  factory SyntheticLock.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SyntheticLock(
       underlyingLockId: json.valueAsBigInt<BigInt?>(
         'underlying_lock_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       synthDenom: json.valueAsString<String?>(
         'synth_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      endTime: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      endTime: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'end_time',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      duration: json.valueTo<google_protobuf_duration.Duration?, String>(
+      duration: json.valueTo<google_protobuf_duration.Duration?, Object>(
         key: 'duration',
-        parse: (v) => google_protobuf_duration.Duration.fromString(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_duration.Duration.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

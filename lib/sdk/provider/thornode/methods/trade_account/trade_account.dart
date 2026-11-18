@@ -21,7 +21,7 @@ class ThorNodeRequestTradeAccount
   Map<String, String?> get parameters => {"height": height?.toString()};
 
   @override
-  ThorTradeAccountResponse onResonse(Map<String, dynamic> result) {
+  ThorTradeAccountResponse onResponse(Map<String, dynamic> result) {
     return ThorTradeAccountResponse.fromJson(result);
   }
 }

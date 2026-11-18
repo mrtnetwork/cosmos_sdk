@@ -72,11 +72,13 @@ class QueryLimitSwapsRequest extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'height': height,
-      'offset': offset?.toString(),
-      'limit': limit?.toString(),
+      'offset': config.encodeBigint(offset),
+      'limit': config.encodeBigint(limit),
       'source_asset': sourceAsset,
       'target_asset': targetAsset,
       'sender': sender,
@@ -85,24 +87,42 @@ class QueryLimitSwapsRequest extends CosmosProtoMessage
     };
   }
 
-  factory QueryLimitSwapsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryLimitSwapsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryLimitSwapsRequest(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
-      offset: json.valueAsBigInt<BigInt?>('offset', acceptCamelCase: true),
-      limit: json.valueAsBigInt<BigInt?>('limit', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      offset: json.valueAsBigInt<BigInt?>(
+        'offset',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      limit: json.valueAsBigInt<BigInt?>(
+        'limit',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       sourceAsset: json.valueAsString<String?>(
         'source_asset',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       targetAsset: json.valueAsString<String?>(
         'target_asset',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      sender: json.valueAsString<String?>('sender', acceptCamelCase: true),
-      sortBy: json.valueAsString<String?>('sort_by', acceptCamelCase: true),
+      sender: json.valueAsString<String?>(
+        'sender',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      sortBy: json.valueAsString<String?>(
+        'sort_by',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       sortOrder: json.valueAsString<String?>(
         'sort_order',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -181,35 +201,47 @@ class LimitSwapWithDetails extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'swap': swap?.toJson(),
+      'swap': config.encodeMessage(swap),
       'ratio': ratio,
-      'blocks_since_created': blocksSinceCreated?.toString(),
-      'time_to_expiry_blocks': timeToExpiryBlocks?.toString(),
-      'created_timestamp': createdTimestamp?.toString(),
+      'blocks_since_created': config.encodeBigint(blocksSinceCreated),
+      'time_to_expiry_blocks': config.encodeBigint(timeToExpiryBlocks),
+      'created_timestamp': config.encodeBigint(createdTimestamp),
     };
   }
 
-  factory LimitSwapWithDetails.fromJson(Map<String, dynamic> json) {
+  factory LimitSwapWithDetails.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return LimitSwapWithDetails(
-      swap: json.valueTo<types_msg_swap.MsgSwap?, Map<String, dynamic>>(
+      swap: json.valueTo<types_msg_swap.MsgSwap?, Object>(
         key: 'swap',
-        parse: (v) => types_msg_swap.MsgSwap.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => types_msg_swap.MsgSwap.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      ratio: json.valueAsString<String?>('ratio', acceptCamelCase: true),
+      ratio: json.valueAsString<String?>(
+        'ratio',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       blocksSinceCreated: json.valueAsBigInt<BigInt?>(
         'blocks_since_created',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       timeToExpiryBlocks: json.valueAsBigInt<BigInt?>(
         'time_to_expiry_blocks',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       createdTimestamp: json.valueAsBigInt<BigInt?>(
         'created_timestamp',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -273,23 +305,43 @@ class PaginationMeta extends CosmosProtoMessage {
   List<Object?> get protoValues => [offset, limit, total, hasNext, hasPrev];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'offset': offset?.toString(),
-      'limit': limit?.toString(),
-      'total': total?.toString(),
+      'offset': config.encodeBigint(offset),
+      'limit': config.encodeBigint(limit),
+      'total': config.encodeBigint(total),
       'has_next': hasNext,
       'has_prev': hasPrev,
     };
   }
 
-  factory PaginationMeta.fromJson(Map<String, dynamic> json) {
+  factory PaginationMeta.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return PaginationMeta(
-      offset: json.valueAsBigInt<BigInt?>('offset', acceptCamelCase: true),
-      limit: json.valueAsBigInt<BigInt?>('limit', acceptCamelCase: true),
-      total: json.valueAsBigInt<BigInt?>('total', acceptCamelCase: true),
-      hasNext: json.valueAsBool<bool?>('has_next', acceptCamelCase: true),
-      hasPrev: json.valueAsBool<bool?>('has_prev', acceptCamelCase: true),
+      offset: json.valueAsBigInt<BigInt?>(
+        'offset',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      limit: json.valueAsBigInt<BigInt?>(
+        'limit',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      total: json.valueAsBigInt<BigInt?>(
+        'total',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      hasNext: json.valueAsBool<bool?>(
+        'has_next',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      hasPrev: json.valueAsBool<bool?>(
+        'has_prev',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -337,31 +389,43 @@ class QueryLimitSwapsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [limitSwaps, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'limit_swaps': limitSwaps.map((e) => e.toJson()).toList(),
-      'pagination': pagination?.toJson(),
+      'limit_swaps': limitSwaps.map((e) => config.encodeMessage(e)).toList(),
+      'pagination': config.encodeMessage(pagination),
     };
   }
 
-  factory QueryLimitSwapsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryLimitSwapsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryLimitSwapsResponse(
       limitSwaps:
           (json.valueEnsureAsList<dynamic>(
                 'limit_swaps',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  LimitSwapWithDetails,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => LimitSwapWithDetails.fromJson(v)),
+                (e) => JsonParser.valueTo<LimitSwapWithDetails, Object>(
+                  value: e,
+                  parse:
+                      (v) => LimitSwapWithDetails.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
-      pagination: json.valueTo<PaginationMeta?, Map<String, dynamic>>(
+      pagination: json.valueTo<PaginationMeta?, Object>(
         key: 'pagination',
-        parse: (v) => PaginationMeta.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) =>
+                PaginationMeta.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

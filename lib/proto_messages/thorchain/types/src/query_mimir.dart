@@ -31,13 +31,21 @@ class QueryMimirValuesRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'height': height};
   }
 
-  factory QueryMimirValuesRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryMimirValuesRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryMimirValuesRequest(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -85,18 +93,29 @@ class QueryMimirValuesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [mimirs];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'mimirs': mimirs.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'mimirs': mimirs.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory QueryMimirValuesResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryMimirValuesResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryMimirValuesResponse(
       mimirs:
-          (json.valueEnsureAsList<dynamic>('mimirs', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'mimirs',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<Mimir, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<Mimir, Object>(
                   value: e,
-                  parse: (v) => Mimir.fromJson(v),
+                  parse:
+                      (v) =>
+                          Mimir.fromJson(JsonParser.valueAs(v), config: config),
                 ),
               )
               .toList(),
@@ -145,14 +164,25 @@ class QueryMimirWithKeyRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [key, height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'key': key, 'height': height};
   }
 
-  factory QueryMimirWithKeyRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryMimirWithKeyRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryMimirWithKeyRequest(
-      key: json.valueAsString<String?>('key', acceptCamelCase: true),
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      key: json.valueAsString<String?>(
+        'key',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -198,13 +228,21 @@ class QueryMimirWithKeyResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [value];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'value': value?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'value': config.encodeBigint(value)};
   }
 
-  factory QueryMimirWithKeyResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryMimirWithKeyResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryMimirWithKeyResponse(
-      value: json.valueAsBigInt<BigInt?>('value', acceptCamelCase: true),
+      value: json.valueAsBigInt<BigInt?>(
+        'value',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -245,13 +283,21 @@ class QueryMimirAdminValuesRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'height': height};
   }
 
-  factory QueryMimirAdminValuesRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryMimirAdminValuesRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryMimirAdminValuesRequest(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -299,21 +345,31 @@ class QueryMimirAdminValuesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [adminMimirs];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'admin_mimirs': adminMimirs.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'admin_mimirs': adminMimirs.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
-  factory QueryMimirAdminValuesResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryMimirAdminValuesResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryMimirAdminValuesResponse(
       adminMimirs:
           (json.valueEnsureAsList<dynamic>(
                 'admin_mimirs',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<Mimir, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<Mimir, Object>(
                   value: e,
-                  parse: (v) => Mimir.fromJson(v),
+                  parse:
+                      (v) =>
+                          Mimir.fromJson(JsonParser.valueAs(v), config: config),
                 ),
               )
               .toList(),
@@ -360,13 +416,21 @@ class QueryMimirNodesAllValuesRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'height': height};
   }
 
-  factory QueryMimirNodesAllValuesRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryMimirNodesAllValuesRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryMimirNodesAllValuesRequest(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -419,21 +483,31 @@ class QueryMimirNodesAllValuesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [mimirs];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'mimirs': mimirs.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'mimirs': mimirs.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory QueryMimirNodesAllValuesResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryMimirNodesAllValuesResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryMimirNodesAllValuesResponse(
       mimirs:
-          (json.valueEnsureAsList<dynamic>('mimirs', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'mimirs',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  types_type_mimir.NodeMimir,
-                  Map<String, dynamic>
-                >(
+                (e) => JsonParser.valueTo<types_type_mimir.NodeMimir, Object>(
                   value: e,
-                  parse: (v) => types_type_mimir.NodeMimir.fromJson(v),
+                  parse:
+                      (v) => types_type_mimir.NodeMimir.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -483,13 +557,21 @@ class QueryMimirNodesValuesRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'height': height};
   }
 
-  factory QueryMimirNodesValuesRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryMimirNodesValuesRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryMimirNodesValuesRequest(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -537,18 +619,29 @@ class QueryMimirNodesValuesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [mimirs];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'mimirs': mimirs.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'mimirs': mimirs.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory QueryMimirNodesValuesResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryMimirNodesValuesResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryMimirNodesValuesResponse(
       mimirs:
-          (json.valueEnsureAsList<dynamic>('mimirs', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'mimirs',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<Mimir, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<Mimir, Object>(
                   value: e,
-                  parse: (v) => Mimir.fromJson(v),
+                  parse:
+                      (v) =>
+                          Mimir.fromJson(JsonParser.valueAs(v), config: config),
                 ),
               )
               .toList(),
@@ -597,14 +690,25 @@ class QueryMimirNodeValuesRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [address, height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'address': address, 'height': height};
   }
 
-  factory QueryMimirNodeValuesRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryMimirNodeValuesRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryMimirNodeValuesRequest(
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -655,21 +759,31 @@ class QueryMimirNodeValuesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [nodeMimirs];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'node_mimirs': nodeMimirs.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'node_mimirs': nodeMimirs.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
-  factory QueryMimirNodeValuesResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryMimirNodeValuesResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryMimirNodeValuesResponse(
       nodeMimirs:
           (json.valueEnsureAsList<dynamic>(
                 'node_mimirs',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<Mimir, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<Mimir, Object>(
                   value: e,
-                  parse: (v) => Mimir.fromJson(v),
+                  parse:
+                      (v) =>
+                          Mimir.fromJson(JsonParser.valueAs(v), config: config),
                 ),
               )
               .toList(),
@@ -711,14 +825,25 @@ class Mimir extends CosmosProtoMessage {
   List<Object?> get protoValues => [key, value];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'key': key, 'value': value?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'key': key, 'value': config.encodeBigint(value)};
   }
 
-  factory Mimir.fromJson(Map<String, dynamic> json) {
+  factory Mimir.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Mimir(
-      key: json.valueAsString<String?>('key', acceptCamelCase: true),
-      value: json.valueAsBigInt<BigInt?>('value', acceptCamelCase: true),
+      key: json.valueAsString<String?>(
+        'key',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      value: json.valueAsBigInt<BigInt?>(
+        'value',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

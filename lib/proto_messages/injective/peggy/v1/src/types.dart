@@ -25,16 +25,27 @@ class BridgeValidator extends CosmosProtoMessage {
   List<Object?> get protoValues => [power, ethereumAddress];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'power': power?.toString(), 'ethereum_address': ethereumAddress};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'power': config.encodeBigint(power),
+      'ethereum_address': ethereumAddress,
+    };
   }
 
-  factory BridgeValidator.fromJson(Map<String, dynamic> json) {
+  factory BridgeValidator.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return BridgeValidator(
-      power: json.valueAsBigInt<BigInt?>('power', acceptCamelCase: true),
+      power: json.valueAsBigInt<BigInt?>(
+        'power',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       ethereumAddress: json.valueAsString<String?>(
         'ethereum_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -105,37 +116,55 @@ class Valset extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'nonce': nonce?.toString(),
-      'members': members.map((e) => e.toJson()).toList(),
-      'height': height?.toString(),
+      'nonce': config.encodeBigint(nonce),
+      'members': members.map((e) => config.encodeMessage(e)).toList(),
+      'height': config.encodeBigint(height),
       'reward_amount': rewardAmount,
       'reward_token': rewardToken,
     };
   }
 
-  factory Valset.fromJson(Map<String, dynamic> json) {
+  factory Valset.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Valset(
-      nonce: json.valueAsBigInt<BigInt?>('nonce', acceptCamelCase: true),
+      nonce: json.valueAsBigInt<BigInt?>(
+        'nonce',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       members:
-          (json.valueEnsureAsList<dynamic>('members', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'members',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) =>
-                    JsonParser.valueTo<BridgeValidator, Map<String, dynamic>>(
-                      value: e,
-                      parse: (v) => BridgeValidator.fromJson(v),
-                    ),
+                (e) => JsonParser.valueTo<BridgeValidator, Object>(
+                  value: e,
+                  parse:
+                      (v) => BridgeValidator.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
-      height: json.valueAsBigInt<BigInt?>('height', acceptCamelCase: true),
+      height: json.valueAsBigInt<BigInt?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       rewardAmount: json.valueAsString<String?>(
         'reward_amount',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       rewardToken: json.valueAsString<String?>(
         'reward_token',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -183,22 +212,27 @@ class LastClaimEvent extends CosmosProtoMessage {
   List<Object?> get protoValues => [ethereumEventNonce, ethereumEventHeight];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'ethereum_event_nonce': ethereumEventNonce?.toString(),
-      'ethereum_event_height': ethereumEventHeight?.toString(),
+      'ethereum_event_nonce': config.encodeBigint(ethereumEventNonce),
+      'ethereum_event_height': config.encodeBigint(ethereumEventHeight),
     };
   }
 
-  factory LastClaimEvent.fromJson(Map<String, dynamic> json) {
+  factory LastClaimEvent.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return LastClaimEvent(
       ethereumEventNonce: json.valueAsBigInt<BigInt?>(
         'ethereum_event_nonce',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       ethereumEventHeight: json.valueAsBigInt<BigInt?>(
         'ethereum_event_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -240,14 +274,25 @@ class ERC20ToDenom extends CosmosProtoMessage {
   List<Object?> get protoValues => [erc20, denom];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'erc20': erc20, 'denom': denom};
   }
 
-  factory ERC20ToDenom.fromJson(Map<String, dynamic> json) {
+  factory ERC20ToDenom.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ERC20ToDenom(
-      erc20: json.valueAsString<String?>('erc20', acceptCamelCase: true),
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
+      erc20: json.valueAsString<String?>(
+        'erc20',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

@@ -32,25 +32,39 @@ class UserEntry extends CosmosProtoMessage {
   List<Object?> get protoValues => [address, claimRecords];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'address': address,
-      'claim_records': claimRecords.map((e) => e.toJson()).toList(),
+      'claim_records':
+          claimRecords.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory UserEntry.fromJson(Map<String, dynamic> json) {
+  factory UserEntry.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return UserEntry(
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       claimRecords:
           (json.valueEnsureAsList<dynamic>(
                 'claim_records',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<ClaimRecord, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<ClaimRecord, Object>(
                   value: e,
-                  parse: (v) => ClaimRecord.fromJson(v),
+                  parse:
+                      (v) => ClaimRecord.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -130,44 +144,62 @@ class ClaimRecord extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'campaign_id': campaignId?.toString(),
+      'campaign_id': config.encodeBigint(campaignId),
       'address': address,
-      'amount': amount.map((e) => e.toJson()).toList(),
-      'completed_missions': completedMissions.map((e) => e.toString()).toList(),
-      'claimed_missions': claimedMissions.map((e) => e.toString()).toList(),
+      'amount': amount.map((e) => config.encodeMessage(e)).toList(),
+      'completed_missions':
+          completedMissions.map((e) => config.encodeBigint(e)).toList(),
+      'claimed_missions':
+          claimedMissions.map((e) => config.encodeBigint(e)).toList(),
     };
   }
 
-  factory ClaimRecord.fromJson(Map<String, dynamic> json) {
+  factory ClaimRecord.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ClaimRecord(
       campaignId: json.valueAsBigInt<BigInt?>(
         'campaign_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       amount:
-          (json.valueEnsureAsList<dynamic>('amount', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'amount',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
       completedMissions:
           (json.valueEnsureAsList<dynamic>(
             'completed_missions',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsBigInt<BigInt>(e)).toList(),
       claimedMissions:
           (json.valueEnsureAsList<dynamic>(
             'claimed_missions',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsBigInt<BigInt>(e)).toList(),
     );
   }
@@ -228,34 +260,45 @@ class ClaimRecordEntry extends CosmosProtoMessage {
   List<Object?> get protoValues => [campaignId, userEntryAddress, amount];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'campaign_id': campaignId?.toString(),
+      'campaign_id': config.encodeBigint(campaignId),
       'user_entry_address': userEntryAddress,
-      'amount': amount.map((e) => e.toJson()).toList(),
+      'amount': amount.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory ClaimRecordEntry.fromJson(Map<String, dynamic> json) {
+  factory ClaimRecordEntry.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ClaimRecordEntry(
       campaignId: json.valueAsBigInt<BigInt?>(
         'campaign_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       userEntryAddress: json.valueAsString<String?>(
         'user_entry_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       amount:
-          (json.valueEnsureAsList<dynamic>('amount', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'amount',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );

@@ -39,14 +39,25 @@ class PoolParams extends CosmosProtoMessage {
   List<Object?> get protoValues => [swapFee, exitFee];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'swap_fee': swapFee, 'exit_fee': exitFee};
   }
 
-  factory PoolParams.fromJson(Map<String, dynamic> json) {
+  factory PoolParams.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return PoolParams(
-      swapFee: json.valueAsString<String?>('swap_fee', acceptCamelCase: true),
-      exitFee: json.valueAsString<String?>('exit_fee', acceptCamelCase: true),
+      swapFee: json.valueAsString<String?>(
+        'swap_fee',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      exitFee: json.valueAsString<String?>(
+        'exit_fee',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

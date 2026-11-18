@@ -1,4 +1,4 @@
-import 'package:blockchain_utils/service/models/params.dart';
+import 'package:blockchain_utils/blockchain_utils.dart';
 import 'package:cosmos_sdk/sdk/provider/thornode/core/core.dart';
 
 typedef ThorNodeServiceResponse = BaseServiceResponse;
@@ -25,8 +25,9 @@ mixin ThorNodeServiceProvider
     request,
     Duration? timeout,
   }) {
-    throw UnsupportedError(
-      "Subscribtion requests are not supported by this service.",
+    throw BuError(
+      DefaultErrorType.unsupported,
+      "Subscription requests are not supported by this service.",
     );
   }
 
@@ -35,7 +36,10 @@ mixin ThorNodeServiceProvider
     BaseGRPCServiceRequestParams params, {
     Duration? timeout,
   }) {
-    throw UnsupportedError("gRPC requests are not supported by this service.");
+    throw BuError(
+      DefaultErrorType.unsupported,
+      "gRPC requests are not supported by this service.",
+    );
   }
 
   @override
@@ -43,7 +47,10 @@ mixin ThorNodeServiceProvider
     BaseGRPCServiceRequestParams params, {
     Duration? timeout,
   }) {
-    throw UnsupportedError("gRPC requests are not supported by this service.");
+    throw BuError(
+      DefaultErrorType.unsupported,
+      "gRPC requests are not supported by this service.",
+    );
   }
 
   @override
@@ -51,6 +58,9 @@ mixin ThorNodeServiceProvider
     BaseGRPCServiceRequestParams params, {
     Duration? timeout,
   }) {
-    throw UnsupportedError("gRPC requests are not supported by this service.");
+    throw BuError(
+      DefaultErrorType.unsupported,
+      "gRPC requests are not supported by this service.",
+    );
   }
 }

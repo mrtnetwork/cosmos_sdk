@@ -34,26 +34,42 @@ class Minter extends CosmosProtoMessage {
   List<Object?> get protoValues => [sequenceId, endTime, config];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'sequence_id': sequenceId,
       'end_time': endTime?.toRfc3339(),
-      'config': config?.toJson(),
+      'config': config.encodeMessage(this.config),
     };
   }
 
-  factory Minter.fromJson(Map<String, dynamic> json) {
+  factory Minter.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Minter(
-      sequenceId: json.valueAsInt<int?>('sequence_id', acceptCamelCase: true),
-      endTime: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
-        key: 'end_time',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+      sequenceId: json.valueAsInt<int?>(
+        'sequence_id',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      config: json.valueTo<google_protobuf_any.Any?, Map<String, dynamic>>(
+      endTime: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
+        key: 'end_time',
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      config: json.valueTo<google_protobuf_any.Any?, Object>(
         key: 'config',
-        parse: (v) => google_protobuf_any.Any.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_any.Any.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -124,7 +140,9 @@ class MinterState extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'sequence_id': sequenceId,
       'amount_minted': amountMinted,
@@ -134,26 +152,36 @@ class MinterState extends CosmosProtoMessage {
     };
   }
 
-  factory MinterState.fromJson(Map<String, dynamic> json) {
+  factory MinterState.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MinterState(
-      sequenceId: json.valueAsInt<int?>('sequence_id', acceptCamelCase: true),
+      sequenceId: json.valueAsInt<int?>(
+        'sequence_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       amountMinted: json.valueAsString<String?>(
         'amount_minted',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       remainderToMint: json.valueAsString<String?>(
         'remainder_to_mint',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       lastMintBlockTime: json
-          .valueTo<google_protobuf_timestamp.Timestamp?, String>(
+          .valueTo<google_protobuf_timestamp.Timestamp?, Object>(
             key: 'last_mint_block_time',
-            parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => google_protobuf_timestamp.Timestamp.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
       remainderFromPreviousMinter: json.valueAsString<String?>(
         'remainder_from_previous_minter',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

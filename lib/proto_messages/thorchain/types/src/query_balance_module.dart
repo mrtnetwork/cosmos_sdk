@@ -33,14 +33,25 @@ class QueryBalanceModuleRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [name, height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'name': name, 'height': height};
   }
 
-  factory QueryBalanceModuleRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryBalanceModuleRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryBalanceModuleRequest(
-      name: json.valueAsString<String?>('name', acceptCamelCase: true),
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      name: json.valueAsString<String?>(
+        'name',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -69,15 +80,15 @@ class QueryBalanceModuleRequest extends CosmosProtoMessage
 class QueryBalanceModuleResponse extends CosmosProtoMessage {
   final String? name;
 
-  final List<int>? address;
+  final BuBytes? address;
 
   final List<cosmos_base_v1beta1_coin.Coin> coins;
 
-  const QueryBalanceModuleResponse({
+  QueryBalanceModuleResponse({
     this.name,
-    this.address,
+    List<int>? address,
     this.coins = const [],
-  });
+  }) : address = address?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -102,38 +113,44 @@ class QueryBalanceModuleResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [name, address, coins];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'name': name,
-      'address': switch (address) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'coins': coins.map((e) => e.toJson()).toList(),
+      'address': config.encodeBinary(address),
+      'coins': coins.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory QueryBalanceModuleResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryBalanceModuleResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryBalanceModuleResponse(
-      name: json.valueAsString<String?>('name', acceptCamelCase: true),
-      address: json.valueAsBytes<List<int>?>(
-        'address',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      name: json.valueAsString<String?>(
+        'name',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      address: config.decodeBinary<List<int>?>(
+        json.valueAs('address', normalizeKeyLookup: config.normalizeKeys),
       ),
       coins:
-          (json.valueEnsureAsList<dynamic>('coins', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'coins',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );

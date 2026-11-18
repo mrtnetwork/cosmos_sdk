@@ -45,17 +45,25 @@ class Nonce extends CosmosProtoMessage {
   List<Object?> get protoValues => [sourceDomain, nonce];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'source_domain': sourceDomain, 'nonce': nonce?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'source_domain': sourceDomain, 'nonce': config.encodeBigint(nonce)};
   }
 
-  factory Nonce.fromJson(Map<String, dynamic> json) {
+  factory Nonce.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Nonce(
       sourceDomain: json.valueAsInt<int?>(
         'source_domain',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      nonce: json.valueAsBigInt<BigInt?>('nonce', acceptCamelCase: true),
+      nonce: json.valueAsBigInt<BigInt?>(
+        'nonce',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

@@ -1,11 +1,9 @@
-import 'package:blockchain_utils/helper/extensions/extensions.dart';
-import 'package:blockchain_utils/utils/json/extension/json.dart';
-import 'package:blockchain_utils/utils/string/string.dart';
+import 'package:blockchain_utils/blockchain_utils.dart';
 import 'package:cosmos_sdk/sdk/address/address/address.dart';
 import 'package:cosmos_sdk/sdk/amino/src/unknown_amino_service.dart';
 import 'package:cosmos_sdk/proto_messages/cosmos/base/v1beta1/models.dart'
     show Coin;
-import 'package:cosmos_sdk/sdk/exception/exception.dart';
+import 'package:cosmos_sdk/src/error/cosmos_error.dart';
 import 'package:cosmos_sdk/sdk/serialization/src/protobuf.dart';
 import 'package:cosmos_sdk/sdk/types/bech32_config.dart';
 
@@ -67,13 +65,20 @@ class AminoTx {
     AminoFee? fee,
     List<ICosmosProtoAminoMessage>? messages,
     String? memo,
-    CosmosBech32Config? cofnig,
+    CosmosBech32Config? config,
   }) {
-    assert(sequence == null || !sequence.isNegative, "invalid sequence");
-    assert(
-      accountNumber == null || !accountNumber.isNegative,
-      "invalid sequence",
-    );
+    if (sequence != null && sequence.isNegative) {
+      throw BuError(
+        DefaultErrorType.invalidArgument,
+        "Invalid sequence: must not be negative.",
+      );
+    }
+    if (accountNumber != null && accountNumber.isNegative) {
+      throw BuError(
+        DefaultErrorType.invalidArgument,
+        "Invalid account number: must not be negative.",
+      );
+    }
     return AminoTx(
       chainId: chainId ?? this.chainId,
       accountNumber: accountNumber ?? this.accountNumber,
@@ -81,7 +86,8 @@ class AminoTx {
       fee: fee ?? this.fee,
       messages: messages ?? this.messages,
       memo: memo ?? this.memo,
-      config: config,
+
+      config: config ?? this.config,
     );
   }
 
@@ -103,17 +109,20 @@ class AminoTx {
       "chain_id",
       onMissing:
           () =>
-              throw const AminoJsonParserException(
+              throw BuError(
+                DefaultErrorType.invalidArgument,
                 "Missing 'chain_id' parameters.",
               ),
       onError: (_) {
-        throw const AminoJsonParserException(
+        throw BuError(
+          DefaultErrorType.invalidArgument,
           "'chain_id' must be a valid string.",
         );
       },
     );
     if (chainId.isEmpty) {
-      throw AminoJsonParserException(
+      throw BuError(
+        DefaultErrorType.invalidArgument,
         "'chain_id' must be a non-empty, valid string.",
       );
     }
@@ -123,11 +132,13 @@ class AminoTx {
       sign: false,
       onMissing:
           () =>
-              throw const AminoJsonParserException(
+              throw BuError(
+                DefaultErrorType.invalidArgument,
                 "Missing 'account_number' parameters.",
               ),
       onError: (_) {
-        throw const AminoJsonParserException(
+        throw BuError(
+          DefaultErrorType.invalidArgument,
           "'account_number' must be a valid unsigned integer as string.",
         );
       },
@@ -137,11 +148,13 @@ class AminoTx {
       sign: false,
       onMissing:
           () =>
-              throw const AminoJsonParserException(
+              throw BuError(
+                DefaultErrorType.invalidArgument,
                 "Missing 'sequence' parameters.",
               ),
       onError: (_) {
-        throw const AminoJsonParserException(
+        throw BuError(
+          DefaultErrorType.invalidArgument,
           "'sequence' must be a valid unsigned integer as string.",
         );
       },
@@ -152,17 +165,20 @@ class AminoTx {
       "msgs",
       onMissing:
           () =>
-              throw const AminoJsonParserException(
+              throw BuError(
+                DefaultErrorType.invalidArgument,
                 "Missing 'msgs' parameters.",
               ),
       onError: (_) {
-        throw const AminoJsonParserException(
+        throw BuError(
+          DefaultErrorType.invalidArgument,
           "'msgs' must be a list of objects containing valid Amino messages.",
         );
       },
     );
     if (msgs.isEmpty) {
-      throw const AminoJsonParserException(
+      throw BuError(
+        DefaultErrorType.invalidArgument,
         "At least one Amino message is required. Ensure the 'msgs' list is not empty.",
       );
     }
@@ -175,10 +191,11 @@ class AminoTx {
           continue;
         }
         messages.add(msg);
-      } on AminoJsonParserException {
+      } on BuError {
         rethrow;
       } catch (e) {
-        throw AminoJsonParserException(
+        throw BuError(
+          CosmosErrorType.aminoJsonParser,
           "Failed to parse Amino message of type: ${i.valueAs<String?>("type") ?? "null"}. Verify the message structure and format.",
         );
       }
@@ -187,16 +204,25 @@ class AminoTx {
     final memo = json.valueAs<String?>(
       "memo",
       onError: (notfound) {
-        throw const AminoJsonParserException("'memo' must be a valid string.");
+        throw BuError(
+          DefaultErrorType.invalidArgument,
+          "'memo' must be a valid string.",
+        );
       },
     );
     final fee = json.valueEnsureAsMap<String, dynamic>(
       "fee",
       onMissing:
           () =>
-              throw const AminoJsonParserException("Missing 'fee' parameters."),
+              throw BuError(
+                DefaultErrorType.invalidArgument,
+                "Missing 'fee' parameters.",
+              ),
       onError: (_) {
-        throw const AminoJsonParserException("'fee' must be a valid Object.");
+        throw BuError(
+          DefaultErrorType.invalidArgument,
+          "'fee' must be a valid Object.",
+        );
       },
     );
     final gas = fee.valueAsBigInt<BigInt>(
@@ -204,11 +230,13 @@ class AminoTx {
       sign: false,
       onMissing:
           () =>
-              throw const AminoJsonParserException(
+              throw BuError(
+                DefaultErrorType.invalidArgument,
                 "Missing fee 'gas' parameters.",
               ),
       onError: (_) {
-        throw const AminoJsonParserException(
+        throw BuError(
+          DefaultErrorType.invalidArgument,
           "'gas' must be a valid unsigned integer as string.",
         );
       },
@@ -217,25 +245,32 @@ class AminoTx {
       "amount",
       onMissing:
           () =>
-              throw const AminoJsonParserException(
+              throw BuError(
+                DefaultErrorType.invalidArgument,
                 "Missing fee 'amount' parameters.",
               ),
       onError: (notfound) {
-        throw const AminoJsonParserException(
+        throw BuError(
+          DefaultErrorType.invalidArgument,
           "'amount' must be a list of objects containing valid cosmos coin.",
         );
       },
     );
-    final payer = json.valueAs<String?>(
+
+    final payer = fee.valueAs<String?>(
       "payer",
       onError: (_) {
-        throw const AminoJsonParserException("'payer' must be a valid string.");
+        throw BuError(
+          DefaultErrorType.invalidArgument,
+          "'payer' must be a valid string.",
+        );
       },
     );
-    final granter = json.valueAs<String?>(
+    final granter = fee.valueAs<String?>(
       "granter",
       onError: (_) {
-        throw const AminoJsonParserException(
+        throw BuError(
+          DefaultErrorType.invalidArgument,
           "'granter' must be a valid string.",
         );
       },
@@ -246,14 +281,20 @@ class AminoTx {
       try {
         payerAddress = CosmosBaseAddress(payer);
       } catch (e) {
-        throw AminoJsonParserException("'payer' must be a valid address.");
+        throw BuError(
+          DefaultErrorType.invalidArgument,
+          "'payer' must be a valid address.",
+        );
       }
     }
     if (granter != null) {
       try {
         granterAddress = CosmosBaseAddress(granter);
       } catch (e) {
-        throw AminoJsonParserException("'granter' must be a valid address.");
+        throw BuError(
+          DefaultErrorType.invalidArgument,
+          "'granter' must be a valid address.",
+        );
       }
     }
     final amounts =
@@ -261,7 +302,8 @@ class AminoTx {
           try {
             return Coin.fromJson(e);
           } catch (_) {
-            throw AminoJsonParserException(
+            throw BuError(
+              DefaultErrorType.invalidArgument,
               "'amount' must be a list of objects containing valid cosmos coin.",
             );
           }

@@ -11,7 +11,7 @@ class ChainRegistryRequestCosmosDirectoryChain
   List<String?> get pathParameters => [chainName];
 
   @override
-  CCRChain onResonse(Map<String, dynamic> result) {
+  CCRChain onResponse(Map<String, dynamic> result) {
     return CCRChain.fromJson(result.valueEnsureAsMap<String, dynamic>("chain"));
   }
 }

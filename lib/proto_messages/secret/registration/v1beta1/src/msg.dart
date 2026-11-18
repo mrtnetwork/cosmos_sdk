@@ -4,13 +4,18 @@ import 'package:cosmos_sdk/sdk/serialization/serialization.dart';
 
 class RaAuthenticate extends CosmosProtoMessage
     with ICosmosProtoServiceMessage<RaAuthenticateResponse> {
-  final List<int>? sender;
+  final BuBytes? sender;
 
-  final List<int>? certificate;
+  final BuBytes? certificate;
 
   final String? replaceMachineId;
 
-  const RaAuthenticate({this.sender, this.certificate, this.replaceMachineId});
+  RaAuthenticate({
+    List<int>? sender,
+    List<int>? certificate,
+    this.replaceMachineId,
+  }) : sender = sender?.asImmutableBytes,
+       certificate = certificate?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -33,41 +38,30 @@ class RaAuthenticate extends CosmosProtoMessage
   List<Object?> get protoValues => [sender, certificate, replaceMachineId];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'sender': switch (sender) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'certificate': switch (certificate) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'sender': config.encodeBinary(sender),
+      'certificate': config.encodeBinary(certificate),
       'replace_machine_id': replaceMachineId,
     };
   }
 
-  factory RaAuthenticate.fromJson(Map<String, dynamic> json) {
+  factory RaAuthenticate.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return RaAuthenticate(
-      sender: json.valueAsBytes<List<int>?>(
-        'sender',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      sender: config.decodeBinary<List<int>?>(
+        json.valueAs('sender', normalizeKeyLookup: config.normalizeKeys),
       ),
-      certificate: json.valueAsBytes<List<int>?>(
-        'certificate',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      certificate: config.decodeBinary<List<int>?>(
+        json.valueAs('certificate', normalizeKeyLookup: config.normalizeKeys),
       ),
       replaceMachineId: json.valueAsString<String?>(
         'replace_machine_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -117,14 +111,25 @@ class RaAuthenticateResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [data, events];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'data': data, 'events': events};
   }
 
-  factory RaAuthenticateResponse.fromJson(Map<String, dynamic> json) {
+  factory RaAuthenticateResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return RaAuthenticateResponse(
-      data: json.valueAsString<String?>('data', acceptCamelCase: true),
-      events: json.valueAsString<String?>('events', acceptCamelCase: true),
+      data: json.valueAsString<String?>(
+        'data',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      events: json.valueAsString<String?>(
+        'events',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -142,9 +147,9 @@ class RaAuthenticateResponse extends CosmosProtoMessage {
 }
 
 class Key extends CosmosProtoMessage {
-  final List<int>? key;
+  final BuBytes? key;
 
-  const Key({this.key});
+  Key({List<int>? key}) : key = key?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -161,24 +166,19 @@ class Key extends CosmosProtoMessage {
   List<Object?> get protoValues => [key];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {
-      'key': switch (key) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-    };
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'key': config.encodeBinary(key)};
   }
 
-  factory Key.fromJson(Map<String, dynamic> json) {
+  factory Key.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Key(
-      key: json.valueAsBytes<List<int>?>(
-        'key',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      key: config.decodeBinary<List<int>?>(
+        json.valueAs('key', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }

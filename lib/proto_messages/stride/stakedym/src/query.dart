@@ -32,11 +32,16 @@ class QueryHostZoneRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryHostZoneRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryHostZoneRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryHostZoneRequest();
   }
 
@@ -78,18 +83,26 @@ class QueryHostZoneResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [hostZone];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'host_zone': hostZone?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'host_zone': config.encodeMessage(hostZone)};
   }
 
-  factory QueryHostZoneResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryHostZoneResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryHostZoneResponse(
-      hostZone: json
-          .valueTo<stride_stakedym_stakedym.HostZone?, Map<String, dynamic>>(
-            key: 'host_zone',
-            parse: (v) => stride_stakedym_stakedym.HostZone.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      hostZone: json.valueTo<stride_stakedym_stakedym.HostZone?, Object>(
+        key: 'host_zone',
+        parse:
+            (v) => stride_stakedym_stakedym.HostZone.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -136,15 +149,20 @@ class QueryDelegationRecordsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [includeArchived];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'include_archived': includeArchived};
   }
 
-  factory QueryDelegationRecordsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryDelegationRecordsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryDelegationRecordsRequest(
       includeArchived: json.valueAsBool<bool?>(
         'include_archived',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -198,28 +216,37 @@ class QueryDelegationRecordsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [delegationRecords];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'delegation_records': delegationRecords.map((e) => e.toJson()).toList(),
+      'delegation_records':
+          delegationRecords.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory QueryDelegationRecordsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryDelegationRecordsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryDelegationRecordsResponse(
       delegationRecords:
           (json.valueEnsureAsList<dynamic>(
                 'delegation_records',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   stride_stakedym_stakedym.DelegationRecord,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
-                      (v) =>
-                          stride_stakedym_stakedym.DelegationRecord.fromJson(v),
+                      (v) => stride_stakedym_stakedym.DelegationRecord.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -272,15 +299,20 @@ class QueryUnbondingRecordsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [includeArchived];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'include_archived': includeArchived};
   }
 
-  factory QueryUnbondingRecordsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryUnbondingRecordsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryUnbondingRecordsRequest(
       includeArchived: json.valueAsBool<bool?>(
         'include_archived',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -332,28 +364,37 @@ class QueryUnbondingRecordsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [unbondingRecords];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'unbonding_records': unbondingRecords.map((e) => e.toJson()).toList(),
+      'unbonding_records':
+          unbondingRecords.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory QueryUnbondingRecordsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryUnbondingRecordsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryUnbondingRecordsResponse(
       unbondingRecords:
           (json.valueEnsureAsList<dynamic>(
                 'unbonding_records',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   stride_stakedym_stakedym.UnbondingRecord,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
-                      (v) =>
-                          stride_stakedym_stakedym.UnbondingRecord.fromJson(v),
+                      (v) => stride_stakedym_stakedym.UnbondingRecord.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -409,20 +450,28 @@ class QueryRedemptionRecordRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [unbondingRecordId, address];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'unbonding_record_id': unbondingRecordId?.toString(),
+      'unbonding_record_id': config.encodeBigint(unbondingRecordId),
       'address': address,
     };
   }
 
-  factory QueryRedemptionRecordRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryRedemptionRecordRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryRedemptionRecordRequest(
       unbondingRecordId: json.valueAsBigInt<BigInt?>(
         'unbonding_record_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -468,18 +517,30 @@ class QueryRedemptionRecordResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [redemptionRecordResponse];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'redemption_record_response': redemptionRecordResponse?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'redemption_record_response': config.encodeMessage(
+        redemptionRecordResponse,
+      ),
+    };
   }
 
-  factory QueryRedemptionRecordResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryRedemptionRecordResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryRedemptionRecordResponse(
-      redemptionRecordResponse: json
-          .valueTo<RedemptionRecordResponse?, Map<String, dynamic>>(
-            key: 'redemption_record_response',
-            parse: (v) => RedemptionRecordResponse.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      redemptionRecordResponse: json.valueTo<RedemptionRecordResponse?, Object>(
+        key: 'redemption_record_response',
+        parse:
+            (v) => RedemptionRecordResponse.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -538,30 +599,40 @@ class QueryRedemptionRecordsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [address, unbondingRecordId, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'address': address,
-      'unbonding_record_id': unbondingRecordId?.toString(),
-      'pagination': pagination?.toJson(),
+      'unbonding_record_id': config.encodeBigint(unbondingRecordId),
+      'pagination': config.encodeMessage(pagination),
     };
   }
 
-  factory QueryRedemptionRecordsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryRedemptionRecordsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryRedemptionRecordsRequest(
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       unbondingRecordId: json.valueAsBigInt<BigInt?>(
         'unbonding_record_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageRequest?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) => cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageRequest?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -627,38 +698,51 @@ class QueryRedemptionRecordsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [redemptionRecordResponses, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'redemption_record_responses':
-          redemptionRecordResponses.map((e) => e.toJson()).toList(),
-      'pagination': pagination?.toJson(),
+          redemptionRecordResponses
+              .map((e) => config.encodeMessage(e))
+              .toList(),
+      'pagination': config.encodeMessage(pagination),
     };
   }
 
-  factory QueryRedemptionRecordsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryRedemptionRecordsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryRedemptionRecordsResponse(
       redemptionRecordResponses:
           (json.valueEnsureAsList<dynamic>(
                 'redemption_record_responses',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  RedemptionRecordResponse,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => RedemptionRecordResponse.fromJson(v)),
+                (e) => JsonParser.valueTo<RedemptionRecordResponse, Object>(
+                  value: e,
+                  parse:
+                      (v) => RedemptionRecordResponse.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageResponse?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) =>
-                cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageResponse?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -710,11 +794,16 @@ class QuerySlashRecordsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QuerySlashRecordsRequest.fromJson(Map<String, dynamic> json) {
+  factory QuerySlashRecordsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QuerySlashRecordsRequest();
   }
 
@@ -762,25 +851,37 @@ class QuerySlashRecordsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [slashRecords];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'slash_records': slashRecords.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'slash_records':
+          slashRecords.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
-  factory QuerySlashRecordsResponse.fromJson(Map<String, dynamic> json) {
+  factory QuerySlashRecordsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QuerySlashRecordsResponse(
       slashRecords:
           (json.valueEnsureAsList<dynamic>(
                 'slash_records',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   stride_stakedym_stakedym.SlashRecord,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
-                      (v) => stride_stakedym_stakedym.SlashRecord.fromJson(v),
+                      (v) => stride_stakedym_stakedym.SlashRecord.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -835,27 +936,35 @@ class RedemptionRecordResponse extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'redemption_record': redemptionRecord?.toJson(),
-      'unbonding_completion_time_seconds':
-          unbondingCompletionTimeSeconds?.toString(),
+      'redemption_record': config.encodeMessage(redemptionRecord),
+      'unbonding_completion_time_seconds': config.encodeBigint(
+        unbondingCompletionTimeSeconds,
+      ),
     };
   }
 
-  factory RedemptionRecordResponse.fromJson(Map<String, dynamic> json) {
+  factory RedemptionRecordResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return RedemptionRecordResponse(
-      redemptionRecord: json.valueTo<
-        stride_stakedym_stakedym.RedemptionRecord?,
-        Map<String, dynamic>
-      >(
-        key: 'redemption_record',
-        parse: (v) => stride_stakedym_stakedym.RedemptionRecord.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      redemptionRecord: json
+          .valueTo<stride_stakedym_stakedym.RedemptionRecord?, Object>(
+            key: 'redemption_record',
+            parse:
+                (v) => stride_stakedym_stakedym.RedemptionRecord.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
       unbondingCompletionTimeSeconds: json.valueAsBigInt<BigInt?>(
         'unbonding_completion_time_seconds',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

@@ -39,11 +39,16 @@ class QueryParamsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryParamsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsRequest();
   }
 
@@ -85,18 +90,26 @@ class QueryParamsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [params];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'params': params?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'params': config.encodeMessage(params)};
   }
 
-  factory QueryParamsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsResponse(
-      params: json
-          .valueTo<injective_peggy_v1_params.Params?, Map<String, dynamic>>(
-            key: 'params',
-            parse: (v) => injective_peggy_v1_params.Params.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      params: json.valueTo<injective_peggy_v1_params.Params?, Object>(
+        key: 'params',
+        parse:
+            (v) => injective_peggy_v1_params.Params.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -140,11 +153,16 @@ class QueryCurrentValsetRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryCurrentValsetRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryCurrentValsetRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryCurrentValsetRequest();
   }
 
@@ -186,18 +204,26 @@ class QueryCurrentValsetResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [valset];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'valset': valset?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'valset': config.encodeMessage(valset)};
   }
 
-  factory QueryCurrentValsetResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryCurrentValsetResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryCurrentValsetResponse(
-      valset: json
-          .valueTo<injective_peggy_v1_types.Valset?, Map<String, dynamic>>(
-            key: 'valset',
-            parse: (v) => injective_peggy_v1_types.Valset.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      valset: json.valueTo<injective_peggy_v1_types.Valset?, Object>(
+        key: 'valset',
+        parse:
+            (v) => injective_peggy_v1_types.Valset.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -243,13 +269,21 @@ class QueryValsetRequestRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [nonce];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'nonce': nonce?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'nonce': config.encodeBigint(nonce)};
   }
 
-  factory QueryValsetRequestRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryValsetRequestRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryValsetRequestRequest(
-      nonce: json.valueAsBigInt<BigInt?>('nonce', acceptCamelCase: true),
+      nonce: json.valueAsBigInt<BigInt?>(
+        'nonce',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -292,18 +326,26 @@ class QueryValsetRequestResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [valset];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'valset': valset?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'valset': config.encodeMessage(valset)};
   }
 
-  factory QueryValsetRequestResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryValsetRequestResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryValsetRequestResponse(
-      valset: json
-          .valueTo<injective_peggy_v1_types.Valset?, Map<String, dynamic>>(
-            key: 'valset',
-            parse: (v) => injective_peggy_v1_types.Valset.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      valset: json.valueTo<injective_peggy_v1_types.Valset?, Object>(
+        key: 'valset',
+        parse:
+            (v) => injective_peggy_v1_types.Valset.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -351,14 +393,25 @@ class QueryValsetConfirmRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [nonce, address];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'nonce': nonce?.toString(), 'address': address};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'nonce': config.encodeBigint(nonce), 'address': address};
   }
 
-  factory QueryValsetConfirmRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryValsetConfirmRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryValsetConfirmRequest(
-      nonce: json.valueAsBigInt<BigInt?>('nonce', acceptCamelCase: true),
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
+      nonce: json.valueAsBigInt<BigInt?>(
+        'nonce',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -404,19 +457,25 @@ class QueryValsetConfirmResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [confirm];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'confirm': confirm?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'confirm': config.encodeMessage(confirm)};
   }
 
-  factory QueryValsetConfirmResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryValsetConfirmResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryValsetConfirmResponse(
-      confirm: json.valueTo<
-        injective_peggy_v1_msgs.MsgValsetConfirm?,
-        Map<String, dynamic>
-      >(
+      confirm: json.valueTo<injective_peggy_v1_msgs.MsgValsetConfirm?, Object>(
         key: 'confirm',
-        parse: (v) => injective_peggy_v1_msgs.MsgValsetConfirm.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => injective_peggy_v1_msgs.MsgValsetConfirm.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -463,15 +522,21 @@ class QueryValsetConfirmsByNonceRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [nonce];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'nonce': nonce?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'nonce': config.encodeBigint(nonce)};
   }
 
   factory QueryValsetConfirmsByNonceRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryValsetConfirmsByNonceRequest(
-      nonce: json.valueAsBigInt<BigInt?>('nonce', acceptCamelCase: true),
+      nonce: json.valueAsBigInt<BigInt?>(
+        'nonce',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -524,25 +589,34 @@ class QueryValsetConfirmsByNonceResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [confirms];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'confirms': confirms.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'confirms': confirms.map((e) => config.encodeMessage(e)).toList()};
   }
 
   factory QueryValsetConfirmsByNonceResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryValsetConfirmsByNonceResponse(
       confirms:
-          (json.valueEnsureAsList<dynamic>('confirms', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'confirms',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_peggy_v1_msgs.MsgValsetConfirm,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
-                      (v) =>
-                          injective_peggy_v1_msgs.MsgValsetConfirm.fromJson(v),
+                      (v) => injective_peggy_v1_msgs.MsgValsetConfirm.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -593,11 +667,16 @@ class QueryLastValsetRequestsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryLastValsetRequestsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryLastValsetRequestsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryLastValsetRequestsRequest();
   }
 
@@ -646,22 +725,33 @@ class QueryLastValsetRequestsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [valsets];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'valsets': valsets.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'valsets': valsets.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory QueryLastValsetRequestsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryLastValsetRequestsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryLastValsetRequestsResponse(
       valsets:
-          (json.valueEnsureAsList<dynamic>('valsets', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'valsets',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  injective_peggy_v1_types.Valset,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => injective_peggy_v1_types.Valset.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<injective_peggy_v1_types.Valset, Object>(
+                      value: e,
+                      parse:
+                          (v) => injective_peggy_v1_types.Valset.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -710,15 +800,21 @@ class QueryLastPendingValsetRequestByAddrRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [address];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'address': address};
   }
 
   factory QueryLastPendingValsetRequestByAddrRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryLastPendingValsetRequestByAddrRequest(
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -773,24 +869,33 @@ class QueryLastPendingValsetRequestByAddrResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [valsets];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'valsets': valsets.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'valsets': valsets.map((e) => config.encodeMessage(e)).toList()};
   }
 
   factory QueryLastPendingValsetRequestByAddrResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryLastPendingValsetRequestByAddrResponse(
       valsets:
-          (json.valueEnsureAsList<dynamic>('valsets', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'valsets',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  injective_peggy_v1_types.Valset,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => injective_peggy_v1_types.Valset.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<injective_peggy_v1_types.Valset, Object>(
+                      value: e,
+                      parse:
+                          (v) => injective_peggy_v1_types.Valset.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -840,11 +945,16 @@ class QueryBatchFeeRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryBatchFeeRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryBatchFeeRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryBatchFeeRequest();
   }
 
@@ -891,21 +1001,36 @@ class QueryBatchFeeResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [batchFees];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'batchFees': batchFees.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'batchFees': batchFees.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
-  factory QueryBatchFeeResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryBatchFeeResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryBatchFeeResponse(
       batchFees:
-          (json.valueEnsureAsList<dynamic>('batchFees', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'batchFees',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_peggy_v1_pool.BatchFees,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
-                  parse: (v) => injective_peggy_v1_pool.BatchFees.fromJson(v),
+                  parse:
+                      (v) => injective_peggy_v1_pool.BatchFees.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -955,15 +1080,21 @@ class QueryLastPendingBatchRequestByAddrRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [address];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'address': address};
   }
 
   factory QueryLastPendingBatchRequestByAddrRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryLastPendingBatchRequestByAddrRequest(
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1013,21 +1144,25 @@ class QueryLastPendingBatchRequestByAddrResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [batch];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'batch': batch?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'batch': config.encodeMessage(batch)};
   }
 
   factory QueryLastPendingBatchRequestByAddrResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryLastPendingBatchRequestByAddrResponse(
-      batch: json.valueTo<
-        injective_peggy_v1_batch.OutgoingTxBatch?,
-        Map<String, dynamic>
-      >(
+      batch: json.valueTo<injective_peggy_v1_batch.OutgoingTxBatch?, Object>(
         key: 'batch',
-        parse: (v) => injective_peggy_v1_batch.OutgoingTxBatch.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => injective_peggy_v1_batch.OutgoingTxBatch.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1075,11 +1210,16 @@ class QueryOutgoingTxBatchesRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryOutgoingTxBatchesRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryOutgoingTxBatchesRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryOutgoingTxBatchesRequest();
   }
 
@@ -1128,23 +1268,34 @@ class QueryOutgoingTxBatchesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [batches];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'batches': batches.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'batches': batches.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory QueryOutgoingTxBatchesResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryOutgoingTxBatchesResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryOutgoingTxBatchesResponse(
       batches:
-          (json.valueEnsureAsList<dynamic>('batches', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'batches',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_peggy_v1_batch.OutgoingTxBatch,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
-                      (v) =>
-                          injective_peggy_v1_batch.OutgoingTxBatch.fromJson(v),
+                      (v) => injective_peggy_v1_batch.OutgoingTxBatch.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -1198,16 +1349,27 @@ class QueryBatchRequestByNonceRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [nonce, contractAddress];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'nonce': nonce?.toString(), 'contract_address': contractAddress};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'nonce': config.encodeBigint(nonce),
+      'contract_address': contractAddress,
+    };
   }
 
-  factory QueryBatchRequestByNonceRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryBatchRequestByNonceRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryBatchRequestByNonceRequest(
-      nonce: json.valueAsBigInt<BigInt?>('nonce', acceptCamelCase: true),
+      nonce: json.valueAsBigInt<BigInt?>(
+        'nonce',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       contractAddress: json.valueAsString<String?>(
         'contract_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1256,19 +1418,25 @@ class QueryBatchRequestByNonceResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [batch];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'batch': batch?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'batch': config.encodeMessage(batch)};
   }
 
-  factory QueryBatchRequestByNonceResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryBatchRequestByNonceResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryBatchRequestByNonceResponse(
-      batch: json.valueTo<
-        injective_peggy_v1_batch.OutgoingTxBatch?,
-        Map<String, dynamic>
-      >(
+      batch: json.valueTo<injective_peggy_v1_batch.OutgoingTxBatch?, Object>(
         key: 'batch',
-        parse: (v) => injective_peggy_v1_batch.OutgoingTxBatch.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => injective_peggy_v1_batch.OutgoingTxBatch.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1318,16 +1486,27 @@ class QueryBatchConfirmsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [nonce, contractAddress];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'nonce': nonce?.toString(), 'contract_address': contractAddress};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'nonce': config.encodeBigint(nonce),
+      'contract_address': contractAddress,
+    };
   }
 
-  factory QueryBatchConfirmsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryBatchConfirmsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryBatchConfirmsRequest(
-      nonce: json.valueAsBigInt<BigInt?>('nonce', acceptCamelCase: true),
+      nonce: json.valueAsBigInt<BigInt?>(
+        'nonce',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       contractAddress: json.valueAsString<String?>(
         'contract_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1379,23 +1558,34 @@ class QueryBatchConfirmsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [confirms];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'confirms': confirms.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'confirms': confirms.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory QueryBatchConfirmsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryBatchConfirmsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryBatchConfirmsResponse(
       confirms:
-          (json.valueEnsureAsList<dynamic>('confirms', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'confirms',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_peggy_v1_msgs.MsgConfirmBatch,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
-                      (v) =>
-                          injective_peggy_v1_msgs.MsgConfirmBatch.fromJson(v),
+                      (v) => injective_peggy_v1_msgs.MsgConfirmBatch.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -1447,13 +1637,21 @@ class QueryLastEventByAddrRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [address];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'address': address};
   }
 
-  factory QueryLastEventByAddrRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryLastEventByAddrRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryLastEventByAddrRequest(
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1496,20 +1694,27 @@ class QueryLastEventByAddrResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [lastClaimEvent];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'last_claim_event': lastClaimEvent?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'last_claim_event': config.encodeMessage(lastClaimEvent)};
   }
 
-  factory QueryLastEventByAddrResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryLastEventByAddrResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryLastEventByAddrResponse(
-      lastClaimEvent: json.valueTo<
-        injective_peggy_v1_types.LastClaimEvent?,
-        Map<String, dynamic>
-      >(
-        key: 'last_claim_event',
-        parse: (v) => injective_peggy_v1_types.LastClaimEvent.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      lastClaimEvent: json
+          .valueTo<injective_peggy_v1_types.LastClaimEvent?, Object>(
+            key: 'last_claim_event',
+            parse:
+                (v) => injective_peggy_v1_types.LastClaimEvent.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -1556,13 +1761,21 @@ class QueryERC20ToDenomRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [erc20];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'erc20': erc20};
   }
 
-  factory QueryERC20ToDenomRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryERC20ToDenomRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryERC20ToDenomRequest(
-      erc20: json.valueAsString<String?>('erc20', acceptCamelCase: true),
+      erc20: json.valueAsString<String?>(
+        'erc20',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1607,16 +1820,24 @@ class QueryERC20ToDenomResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [denom, cosmosOriginated];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'denom': denom, 'cosmos_originated': cosmosOriginated};
   }
 
-  factory QueryERC20ToDenomResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryERC20ToDenomResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryERC20ToDenomResponse(
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       cosmosOriginated: json.valueAsBool<bool?>(
         'cosmos_originated',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1661,13 +1882,21 @@ class QueryDenomToERC20Request extends CosmosProtoMessage
   List<Object?> get protoValues => [denom];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'denom': denom};
   }
 
-  factory QueryDenomToERC20Request.fromJson(Map<String, dynamic> json) {
+  factory QueryDenomToERC20Request.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryDenomToERC20Request(
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1712,16 +1941,24 @@ class QueryDenomToERC20Response extends CosmosProtoMessage {
   List<Object?> get protoValues => [erc20, cosmosOriginated];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'erc20': erc20, 'cosmos_originated': cosmosOriginated};
   }
 
-  factory QueryDenomToERC20Response.fromJson(Map<String, dynamic> json) {
+  factory QueryDenomToERC20Response.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryDenomToERC20Response(
-      erc20: json.valueAsString<String?>('erc20', acceptCamelCase: true),
+      erc20: json.valueAsString<String?>(
+        'erc20',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       cosmosOriginated: json.valueAsBool<bool?>(
         'cosmos_originated',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1766,17 +2003,20 @@ class QueryDelegateKeysByValidatorAddress extends CosmosProtoMessage
   List<Object?> get protoValues => [validatorAddress];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'validator_address': validatorAddress};
   }
 
   factory QueryDelegateKeysByValidatorAddress.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryDelegateKeysByValidatorAddress(
       validatorAddress: json.valueAsString<String?>(
         'validator_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1830,7 +2070,9 @@ class QueryDelegateKeysByValidatorAddressResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [ethAddress, orchestratorAddress];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'eth_address': ethAddress,
       'orchestrator_address': orchestratorAddress,
@@ -1838,16 +2080,17 @@ class QueryDelegateKeysByValidatorAddressResponse extends CosmosProtoMessage {
   }
 
   factory QueryDelegateKeysByValidatorAddressResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryDelegateKeysByValidatorAddressResponse(
       ethAddress: json.valueAsString<String?>(
         'eth_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       orchestratorAddress: json.valueAsString<String?>(
         'orchestrator_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1895,15 +2138,20 @@ class QueryDelegateKeysByEthAddress extends CosmosProtoMessage
   List<Object?> get protoValues => [ethAddress];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'eth_address': ethAddress};
   }
 
-  factory QueryDelegateKeysByEthAddress.fromJson(Map<String, dynamic> json) {
+  factory QueryDelegateKeysByEthAddress.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryDelegateKeysByEthAddress(
       ethAddress: json.valueAsString<String?>(
         'eth_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1956,7 +2204,9 @@ class QueryDelegateKeysByEthAddressResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [validatorAddress, orchestratorAddress];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'validator_address': validatorAddress,
       'orchestrator_address': orchestratorAddress,
@@ -1964,16 +2214,17 @@ class QueryDelegateKeysByEthAddressResponse extends CosmosProtoMessage {
   }
 
   factory QueryDelegateKeysByEthAddressResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryDelegateKeysByEthAddressResponse(
       validatorAddress: json.valueAsString<String?>(
         'validator_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       orchestratorAddress: json.valueAsString<String?>(
         'orchestrator_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -2022,17 +2273,20 @@ class QueryDelegateKeysByOrchestratorAddress extends CosmosProtoMessage
   List<Object?> get protoValues => [orchestratorAddress];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'orchestrator_address': orchestratorAddress};
   }
 
   factory QueryDelegateKeysByOrchestratorAddress.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryDelegateKeysByOrchestratorAddress(
       orchestratorAddress: json.valueAsString<String?>(
         'orchestrator_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -2089,21 +2343,24 @@ class QueryDelegateKeysByOrchestratorAddressResponse
   List<Object?> get protoValues => [validatorAddress, ethAddress];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'validator_address': validatorAddress, 'eth_address': ethAddress};
   }
 
   factory QueryDelegateKeysByOrchestratorAddressResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryDelegateKeysByOrchestratorAddressResponse(
       validatorAddress: json.valueAsString<String?>(
         'validator_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       ethAddress: json.valueAsString<String?>(
         'eth_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -2151,15 +2408,20 @@ class QueryPendingSendToEth extends CosmosProtoMessage
   List<Object?> get protoValues => [senderAddress];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'sender_address': senderAddress};
   }
 
-  factory QueryPendingSendToEth.fromJson(Map<String, dynamic> json) {
+  factory QueryPendingSendToEth.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryPendingSendToEth(
       senderAddress: json.valueAsString<String?>(
         'sender_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -2217,47 +2479,61 @@ class QueryPendingSendToEthResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [transfersInBatches, unbatchedTransfers];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'transfers_in_batches':
-          transfersInBatches.map((e) => e.toJson()).toList(),
-      'unbatched_transfers': unbatchedTransfers.map((e) => e.toJson()).toList(),
+          transfersInBatches.map((e) => config.encodeMessage(e)).toList(),
+      'unbatched_transfers':
+          unbatchedTransfers.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory QueryPendingSendToEthResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryPendingSendToEthResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryPendingSendToEthResponse(
       transfersInBatches:
           (json.valueEnsureAsList<dynamic>(
                 'transfers_in_batches',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_peggy_v1_batch.OutgoingTransferTx,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
-                      (v) => injective_peggy_v1_batch
-                          .OutgoingTransferTx.fromJson(v),
+                      (v) =>
+                          injective_peggy_v1_batch.OutgoingTransferTx.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
                 ),
               )
               .toList(),
       unbatchedTransfers:
           (json.valueEnsureAsList<dynamic>(
                 'unbatched_transfers',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_peggy_v1_batch.OutgoingTransferTx,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
-                      (v) => injective_peggy_v1_batch
-                          .OutgoingTransferTx.fromJson(v),
+                      (v) =>
+                          injective_peggy_v1_batch.OutgoingTransferTx.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
                 ),
               )
               .toList(),
@@ -2318,11 +2594,16 @@ class QueryModuleStateRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryModuleStateRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryModuleStateRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryModuleStateRequest();
   }
 
@@ -2366,19 +2647,25 @@ class QueryModuleStateResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [state];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'state': state?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'state': config.encodeMessage(state)};
   }
 
-  factory QueryModuleStateResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryModuleStateResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryModuleStateResponse(
-      state: json.valueTo<
-        injective_peggy_v1_genesis.GenesisState?,
-        Map<String, dynamic>
-      >(
+      state: json.valueTo<injective_peggy_v1_genesis.GenesisState?, Object>(
         key: 'state',
-        parse: (v) => injective_peggy_v1_genesis.GenesisState.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => injective_peggy_v1_genesis.GenesisState.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -2423,11 +2710,16 @@ class MissingNoncesRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MissingNoncesRequest.fromJson(Map<String, dynamic> json) {
+  factory MissingNoncesRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MissingNoncesRequest();
   }
 
@@ -2474,16 +2766,22 @@ class MissingNoncesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [operatorAddresses];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'operator_addresses': operatorAddresses.map((e) => e).toList()};
   }
 
-  factory MissingNoncesResponse.fromJson(Map<String, dynamic> json) {
+  factory MissingNoncesResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MissingNoncesResponse(
       operatorAddresses:
           (json.valueEnsureAsList<dynamic>(
             'operator_addresses',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
     );
   }

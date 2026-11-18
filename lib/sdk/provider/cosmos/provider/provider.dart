@@ -3,7 +3,7 @@ import 'package:blockchain_utils/blockchain_utils.dart';
 import 'package:cosmos_sdk/sdk/provider/cosmos/core/core.dart';
 import 'package:cosmos_sdk/sdk/provider/types/types.dart';
 
-/// Facilitates communication with the tendermint by making requests using a provided [CosmosProvider].
+/// Facilitates communication with Cosmos networks by making requests using the provided service.
 class CosmosProvider<SERVICE extends IServiceProvider>
     implements
         IGrpcProvider<
@@ -11,7 +11,7 @@ class CosmosProvider<SERVICE extends IServiceProvider>
           BaseCosmosServiceRequestParams,
           CosmosGrpcRequestDetails
         > {
-  /// The underlying tendermint service provider used for network communication.
+  /// The underlying service provider used for network communication.
   @override
   final SERVICE service;
 
@@ -72,7 +72,7 @@ class CosmosProvider<SERVICE extends IServiceProvider>
       request,
       timeout: timeout,
     );
-    return request.onResonse(r);
+    return request.onResponse(r);
   }
 
   int _id = 0;
@@ -109,9 +109,9 @@ class CosmosProvider<SERVICE extends IServiceProvider>
         final response = await service.doGrpcRequest(params, timeout: timeout);
         return JsonParser.valueAs<SERVICERESPONSE>(response);
       default:
-        throw ArgumentException.invalidOperationArguments(
-          'requestDynamic',
-          reason: "Unexpected request type ${request.runtimeType}. ",
+        throw BuError(
+          DefaultErrorType.invalidArgument,
+          'Unexpected request type "${request.runtimeType}" for requestDynamic.',
         );
     }
   }
@@ -120,12 +120,10 @@ class CosmosProvider<SERVICE extends IServiceProvider>
   Stream<RESULT> requestStream<RESULT>(
     IGRPCServiceRequest<RESULT, CosmosGrpcRequestDetails> request, {
     Duration? timeout,
-  }) {
-    final result = service.doGrpcRequestStream(
-      request.buildRequest(0),
-      timeout: timeout,
-    );
-    return result.map((e) => request.onResonse(e));
+  }) async* {
+    final r = await request.buildRequest(0);
+    final result = service.doGrpcRequestStream(r, timeout: timeout);
+    yield* result.map((e) => request.onResponse(e));
   }
 
   @override
@@ -143,10 +141,10 @@ class CosmosProvider<SERVICE extends IServiceProvider>
     Duration? timeout,
   }) async {
     final result = await service.doGrpcRequestStreamAsync(
-      request.buildRequest(0),
+      await request.buildRequest(0),
       timeout: timeout,
     );
-    return result.map((e) => request.onResonse(e));
+    return result.map((e) => request.onResponse(e));
   }
 
   @override

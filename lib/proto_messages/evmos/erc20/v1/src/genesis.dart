@@ -51,7 +51,9 @@ class Params extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'enable_erc20': enableErc20,
       'native_precompiles': nativePrecompiles.map((e) => e).toList(),
@@ -59,21 +61,26 @@ class Params extends CosmosProtoMessage {
     };
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
       enableErc20: json.valueAsBool<bool?>(
         'enable_erc20',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       nativePrecompiles:
           (json.valueEnsureAsList<dynamic>(
             'native_precompiles',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
       dynamicPrecompiles:
           (json.valueEnsureAsList<dynamic>(
             'dynamic_precompiles',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
     );
   }

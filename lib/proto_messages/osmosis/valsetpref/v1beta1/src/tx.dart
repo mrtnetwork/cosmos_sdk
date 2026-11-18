@@ -50,33 +50,42 @@ class MsgSetValidatorSetPreference extends CosmosProtoMessage
   List<Object?> get protoValues => [delegator, preferences];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'delegator': delegator,
-      'preferences': preferences.map((e) => e.toJson()).toList(),
+      'preferences': preferences.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory MsgSetValidatorSetPreference.fromJson(Map<String, dynamic> json) {
+  factory MsgSetValidatorSetPreference.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSetValidatorSetPreference(
       delegator: json.valueAsString<String?>(
         'delegator',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       preferences:
           (json.valueEnsureAsList<dynamic>(
                 'preferences',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   osmosis_valsetpref_v1beta1_state.ValidatorPreference,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => osmosis_valsetpref_v1beta1_state
-                          .ValidatorPreference.fromJson(v),
+                          .ValidatorPreference.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -133,13 +142,16 @@ class MsgSetValidatorSetPreferenceResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
   factory MsgSetValidatorSetPreferenceResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSetValidatorSetPreferenceResponse();
   }
 
@@ -194,20 +206,29 @@ class MsgDelegateToValidatorSet extends CosmosProtoMessage
   List<Object?> get protoValues => [delegator, coin];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'delegator': delegator, 'coin': coin?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'delegator': delegator, 'coin': config.encodeMessage(coin)};
   }
 
-  factory MsgDelegateToValidatorSet.fromJson(Map<String, dynamic> json) {
+  factory MsgDelegateToValidatorSet.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgDelegateToValidatorSet(
       delegator: json.valueAsString<String?>(
         'delegator',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      coin: json.valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
+      coin: json.valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
         key: 'coin',
-        parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -258,13 +279,16 @@ class MsgDelegateToValidatorSetResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
   factory MsgDelegateToValidatorSetResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgDelegateToValidatorSetResponse();
   }
 
@@ -318,20 +342,29 @@ class MsgUndelegateFromValidatorSet extends CosmosProtoMessage
   List<Object?> get protoValues => [delegator, coin];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'delegator': delegator, 'coin': coin?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'delegator': delegator, 'coin': config.encodeMessage(coin)};
   }
 
-  factory MsgUndelegateFromValidatorSet.fromJson(Map<String, dynamic> json) {
+  factory MsgUndelegateFromValidatorSet.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUndelegateFromValidatorSet(
       delegator: json.valueAsString<String?>(
         'delegator',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      coin: json.valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
+      coin: json.valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
         key: 'coin',
-        parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -382,13 +415,16 @@ class MsgUndelegateFromValidatorSetResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
   factory MsgUndelegateFromValidatorSetResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUndelegateFromValidatorSetResponse();
   }
 
@@ -446,22 +482,29 @@ class MsgUndelegateFromRebalancedValidatorSet extends CosmosProtoMessage
   List<Object?> get protoValues => [delegator, coin];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'delegator': delegator, 'coin': coin?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'delegator': delegator, 'coin': config.encodeMessage(coin)};
   }
 
   factory MsgUndelegateFromRebalancedValidatorSet.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUndelegateFromRebalancedValidatorSet(
       delegator: json.valueAsString<String?>(
         'delegator',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      coin: json.valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
+      coin: json.valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
         key: 'coin',
-        parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -515,13 +558,16 @@ class MsgUndelegateFromRebalancedValidatorSetResponse
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
   factory MsgUndelegateFromRebalancedValidatorSetResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUndelegateFromRebalancedValidatorSetResponse();
   }
 
@@ -580,33 +626,42 @@ class MsgRedelegateValidatorSet extends CosmosProtoMessage
   List<Object?> get protoValues => [delegator, preferences];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'delegator': delegator,
-      'preferences': preferences.map((e) => e.toJson()).toList(),
+      'preferences': preferences.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory MsgRedelegateValidatorSet.fromJson(Map<String, dynamic> json) {
+  factory MsgRedelegateValidatorSet.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgRedelegateValidatorSet(
       delegator: json.valueAsString<String?>(
         'delegator',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       preferences:
           (json.valueEnsureAsList<dynamic>(
                 'preferences',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   osmosis_valsetpref_v1beta1_state.ValidatorPreference,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => osmosis_valsetpref_v1beta1_state
-                          .ValidatorPreference.fromJson(v),
+                          .ValidatorPreference.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -663,13 +718,16 @@ class MsgRedelegateValidatorSetResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
   factory MsgRedelegateValidatorSetResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgRedelegateValidatorSetResponse();
   }
 
@@ -715,15 +773,20 @@ class MsgWithdrawDelegationRewards extends CosmosProtoMessage
   List<Object?> get protoValues => [delegator];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'delegator': delegator};
   }
 
-  factory MsgWithdrawDelegationRewards.fromJson(Map<String, dynamic> json) {
+  factory MsgWithdrawDelegationRewards.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgWithdrawDelegationRewards(
       delegator: json.valueAsString<String?>(
         'delegator',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -770,13 +833,16 @@ class MsgWithdrawDelegationRewardsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
   factory MsgWithdrawDelegationRewardsResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgWithdrawDelegationRewardsResponse();
   }
 
@@ -829,17 +895,25 @@ class MsgDelegateBondedTokens extends CosmosProtoMessage
   List<Object?> get protoValues => [delegator, lockID];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'delegator': delegator, 'lockID': lockID?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'delegator': delegator, 'lockID': config.encodeBigint(lockID)};
   }
 
-  factory MsgDelegateBondedTokens.fromJson(Map<String, dynamic> json) {
+  factory MsgDelegateBondedTokens.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgDelegateBondedTokens(
       delegator: json.valueAsString<String?>(
         'delegator',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      lockID: json.valueAsBigInt<BigInt?>('lockID', acceptCamelCase: true),
+      lockID: json.valueAsBigInt<BigInt?>(
+        'lockID',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -885,11 +959,16 @@ class MsgDelegateBondedTokensResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgDelegateBondedTokensResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgDelegateBondedTokensResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgDelegateBondedTokensResponse();
   }
 

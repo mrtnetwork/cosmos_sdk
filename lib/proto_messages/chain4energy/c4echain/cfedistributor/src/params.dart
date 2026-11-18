@@ -34,29 +34,39 @@ class Params extends CosmosProtoMessage {
   List<Object?> get protoValues => [subDistributors];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'sub_distributors': subDistributors.map((e) => e.toJson()).toList(),
+      'sub_distributors':
+          subDistributors.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
       subDistributors:
           (json.valueEnsureAsList<dynamic>(
                 'sub_distributors',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   chain4energy_c4echain_cfedistributor_sub_distributor.SubDistributor,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) =>
                           chain4energy_c4echain_cfedistributor_sub_distributor
-                              .SubDistributor.fromJson(v),
+                              .SubDistributor.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
                 ),
               )
               .toList(),

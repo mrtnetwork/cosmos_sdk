@@ -34,11 +34,16 @@ class QueryParamsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryParamsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsRequest();
   }
 
@@ -82,19 +87,25 @@ class QueryParamsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [params];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'params': params?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'params': config.encodeMessage(params)};
   }
 
-  factory QueryParamsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsResponse(
-      params: json.valueTo<
-        injective_erc20_v1beta1_params.Params?,
-        Map<String, dynamic>
-      >(
+      params: json.valueTo<injective_erc20_v1beta1_params.Params?, Object>(
         key: 'params',
-        parse: (v) => injective_erc20_v1beta1_params.Params.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => injective_erc20_v1beta1_params.Params.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -144,21 +155,28 @@ class QueryAllTokenPairsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [pagination];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'pagination': pagination?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'pagination': config.encodeMessage(pagination)};
   }
 
-  factory QueryAllTokenPairsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryAllTokenPairsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryAllTokenPairsRequest(
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageRequest?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) => cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageRequest?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -222,42 +240,51 @@ class QueryAllTokenPairsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [tokenPairs, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'token_pairs': tokenPairs.map((e) => e.toJson()).toList(),
-      'pagination': pagination?.toJson(),
+      'token_pairs': tokenPairs.map((e) => config.encodeMessage(e)).toList(),
+      'pagination': config.encodeMessage(pagination),
     };
   }
 
-  factory QueryAllTokenPairsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryAllTokenPairsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryAllTokenPairsResponse(
       tokenPairs:
           (json.valueEnsureAsList<dynamic>(
                 'token_pairs',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_erc20_v1beta1_erc20.TokenPair,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
-                      (v) =>
-                          injective_erc20_v1beta1_erc20.TokenPair.fromJson(v),
+                      (v) => injective_erc20_v1beta1_erc20.TokenPair.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageResponse?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) =>
-                cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageResponse?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -314,15 +341,20 @@ class QueryTokenPairByDenomRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [bankDenom];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'bank_denom': bankDenom};
   }
 
-  factory QueryTokenPairByDenomRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryTokenPairByDenomRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTokenPairByDenomRequest(
       bankDenom: json.valueAsString<String?>(
         'bank_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -371,19 +403,25 @@ class QueryTokenPairByDenomResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [tokenPair];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'token_pair': tokenPair?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'token_pair': config.encodeMessage(tokenPair)};
   }
 
-  factory QueryTokenPairByDenomResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryTokenPairByDenomResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTokenPairByDenomResponse(
-      tokenPair: json.valueTo<
-        injective_erc20_v1beta1_erc20.TokenPair?,
-        Map<String, dynamic>
-      >(
+      tokenPair: json.valueTo<injective_erc20_v1beta1_erc20.TokenPair?, Object>(
         key: 'token_pair',
-        parse: (v) => injective_erc20_v1beta1_erc20.TokenPair.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => injective_erc20_v1beta1_erc20.TokenPair.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -431,17 +469,20 @@ class QueryTokenPairByERC20AddressRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [erc20Address];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'erc20_address': erc20Address};
   }
 
   factory QueryTokenPairByERC20AddressRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTokenPairByERC20AddressRequest(
       erc20Address: json.valueAsString<String?>(
         'erc20_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -490,21 +531,25 @@ class QueryTokenPairByERC20AddressResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [tokenPair];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'token_pair': tokenPair?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'token_pair': config.encodeMessage(tokenPair)};
   }
 
   factory QueryTokenPairByERC20AddressResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTokenPairByERC20AddressResponse(
-      tokenPair: json.valueTo<
-        injective_erc20_v1beta1_erc20.TokenPair?,
-        Map<String, dynamic>
-      >(
+      tokenPair: json.valueTo<injective_erc20_v1beta1_erc20.TokenPair?, Object>(
         key: 'token_pair',
-        parse: (v) => injective_erc20_v1beta1_erc20.TokenPair.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => injective_erc20_v1beta1_erc20.TokenPair.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

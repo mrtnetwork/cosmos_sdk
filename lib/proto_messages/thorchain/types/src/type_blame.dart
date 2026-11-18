@@ -5,11 +5,13 @@ import 'package:cosmos_sdk/sdk/serialization/serialization.dart';
 class Node extends CosmosProtoMessage {
   final String? pubkey;
 
-  final List<int>? blameData;
+  final BuBytes? blameData;
 
-  final List<int>? blameSignature;
+  final BuBytes? blameSignature;
 
-  const Node({this.pubkey, this.blameData, this.blameSignature});
+  Node({this.pubkey, List<int>? blameData, List<int>? blameSignature})
+    : blameData = blameData?.asImmutableBytes,
+      blameSignature = blameSignature?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -30,38 +32,33 @@ class Node extends CosmosProtoMessage {
   List<Object?> get protoValues => [pubkey, blameData, blameSignature];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'pubkey': pubkey,
-      'blame_data': switch (blameData) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'blame_signature': switch (blameSignature) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'blame_data': config.encodeBinary(blameData),
+      'blame_signature': config.encodeBinary(blameSignature),
     };
   }
 
-  factory Node.fromJson(Map<String, dynamic> json) {
+  factory Node.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Node(
-      pubkey: json.valueAsString<String?>('pubkey', acceptCamelCase: true),
-      blameData: json.valueAsBytes<List<int>?>(
-        'blame_data',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      pubkey: json.valueAsString<String?>(
+        'pubkey',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      blameSignature: json.valueAsBytes<List<int>?>(
-        'blame_signature',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      blameData: config.decodeBinary<List<int>?>(
+        json.valueAs('blame_data', normalizeKeyLookup: config.normalizeKeys),
+      ),
+      blameSignature: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'blame_signature',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
     );
   }
@@ -120,35 +117,49 @@ class Blame extends CosmosProtoMessage {
   List<Object?> get protoValues => [failReason, isUnicast, blameNodes, round];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'fail_reason': failReason,
       'is_unicast': isUnicast,
-      'blame_nodes': blameNodes.map((e) => e.toJson()).toList(),
+      'blame_nodes': blameNodes.map((e) => config.encodeMessage(e)).toList(),
       'round': round,
     };
   }
 
-  factory Blame.fromJson(Map<String, dynamic> json) {
+  factory Blame.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Blame(
       failReason: json.valueAsString<String?>(
         'fail_reason',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      isUnicast: json.valueAsBool<bool?>('is_unicast', acceptCamelCase: true),
+      isUnicast: json.valueAsBool<bool?>(
+        'is_unicast',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       blameNodes:
           (json.valueEnsureAsList<dynamic>(
                 'blame_nodes',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<Node, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<Node, Object>(
                   value: e,
-                  parse: (v) => Node.fromJson(v),
+                  parse:
+                      (v) =>
+                          Node.fromJson(JsonParser.valueAs(v), config: config),
                 ),
               )
               .toList(),
-      round: json.valueAsString<String?>('round', acceptCamelCase: true),
+      round: json.valueAsString<String?>(
+        'round',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

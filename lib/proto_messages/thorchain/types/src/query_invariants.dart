@@ -31,14 +31,25 @@ class QueryInvariantRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [path, height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'path': path, 'height': height};
   }
 
-  factory QueryInvariantRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryInvariantRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryInvariantRequest(
-      path: json.valueAsString<String?>('path', acceptCamelCase: true),
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      path: json.valueAsString<String?>(
+        'path',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -103,7 +114,9 @@ class QueryInvariantResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [invariant, broken, msg];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'invariant': invariant,
       'broken': broken,
@@ -111,17 +124,24 @@ class QueryInvariantResponse extends CosmosProtoMessage {
     };
   }
 
-  factory QueryInvariantResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryInvariantResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryInvariantResponse(
       invariant: json.valueAsString<String?>(
         'invariant',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      broken: json.valueAsBool<bool?>('broken', acceptCamelCase: true),
+      broken: json.valueAsBool<bool?>(
+        'broken',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       msg:
           (json.valueEnsureAsList<dynamic>(
             'msg',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
     );
   }
@@ -167,13 +187,21 @@ class QueryInvariantsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'height': height};
   }
 
-  factory QueryInvariantsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryInvariantsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryInvariantsRequest(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -221,16 +249,22 @@ class QueryInvariantsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [invariants];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'invariants': invariants.map((e) => e).toList()};
   }
 
-  factory QueryInvariantsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryInvariantsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryInvariantsResponse(
       invariants:
           (json.valueEnsureAsList<dynamic>(
             'invariants',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
     );
   }

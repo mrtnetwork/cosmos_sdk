@@ -10,9 +10,10 @@ class MsgSetVersion extends CosmosProtoMessage
         ICosmosProtoAminoMessage {
   final String? version;
 
-  final List<int>? signer;
+  final BuBytes? signer;
 
-  const MsgSetVersion({this.version, this.signer});
+  MsgSetVersion({this.version, List<int>? signer})
+    : signer = signer?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -37,26 +38,23 @@ class MsgSetVersion extends CosmosProtoMessage
   List<Object?> get protoValues => [version, signer];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {
-      'version': version,
-      'signer': switch (signer) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-    };
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'version': version, 'signer': config.encodeBinary(signer)};
   }
 
-  factory MsgSetVersion.fromJson(Map<String, dynamic> json) {
+  factory MsgSetVersion.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSetVersion(
-      version: json.valueAsString<String?>('version', acceptCamelCase: true),
-      signer: json.valueAsBytes<List<int>?>(
-        'signer',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      version: json.valueAsString<String?>(
+        'version',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      signer: config.decodeBinary<List<int>?>(
+        json.valueAs('signer', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }

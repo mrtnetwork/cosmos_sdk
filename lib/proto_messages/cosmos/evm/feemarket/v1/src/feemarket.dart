@@ -86,41 +86,52 @@ class Params extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'no_base_fee': noBaseFee,
       'base_fee_change_denominator': baseFeeChangeDenominator,
       'elasticity_multiplier': elasticityMultiplier,
-      'enable_height': enableHeight?.toString(),
+      'enable_height': config.encodeBigint(enableHeight),
       'base_fee': baseFee,
       'min_gas_price': minGasPrice,
       'min_gas_multiplier': minGasMultiplier,
     };
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
-      noBaseFee: json.valueAsBool<bool?>('no_base_fee', acceptCamelCase: true),
+      noBaseFee: json.valueAsBool<bool?>(
+        'no_base_fee',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       baseFeeChangeDenominator: json.valueAsInt<int?>(
         'base_fee_change_denominator',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       elasticityMultiplier: json.valueAsInt<int?>(
         'elasticity_multiplier',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       enableHeight: json.valueAsBigInt<BigInt?>(
         'enable_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      baseFee: json.valueAsString<String?>('base_fee', acceptCamelCase: true),
+      baseFee: json.valueAsString<String?>(
+        'base_fee',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       minGasPrice: json.valueAsString<String?>(
         'min_gas_price',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       minGasMultiplier: json.valueAsString<String?>(
         'min_gas_multiplier',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

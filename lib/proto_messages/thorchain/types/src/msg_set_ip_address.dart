@@ -10,9 +10,10 @@ class MsgSetIPAddress extends CosmosProtoMessage
         ICosmosProtoAminoMessage {
   final String? ipAddress;
 
-  final List<int>? signer;
+  final BuBytes? signer;
 
-  const MsgSetIPAddress({this.ipAddress, this.signer});
+  MsgSetIPAddress({this.ipAddress, List<int>? signer})
+    : signer = signer?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -40,29 +41,23 @@ class MsgSetIPAddress extends CosmosProtoMessage
   List<Object?> get protoValues => [ipAddress, signer];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {
-      'ip_address': ipAddress,
-      'signer': switch (signer) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-    };
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'ip_address': ipAddress, 'signer': config.encodeBinary(signer)};
   }
 
-  factory MsgSetIPAddress.fromJson(Map<String, dynamic> json) {
+  factory MsgSetIPAddress.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSetIPAddress(
       ipAddress: json.valueAsString<String?>(
         'ip_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      signer: json.valueAsBytes<List<int>?>(
-        'signer',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      signer: config.decodeBinary<List<int>?>(
+        json.valueAs('signer', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }

@@ -22,7 +22,7 @@ class ThorNodeRequestVaultsPubkeys
   @override
   Map<String, String?> get parameters => {"height": height?.toString()};
   @override
-  List<ThorVaultPubkeysInfoResponse> onResonse(
+  List<ThorVaultPubkeysInfoResponse> onResponse(
     List<Map<String, dynamic>> result,
   ) {
     return result.map((e) => ThorVaultPubkeysInfoResponse.fromJson(e)).toList();

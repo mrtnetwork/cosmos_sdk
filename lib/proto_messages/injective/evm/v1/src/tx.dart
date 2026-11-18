@@ -25,19 +25,20 @@ class MsgEthereumTx extends CosmosProtoMessage
   /// from is the bytes of ethereum signer address. This address value is checked
   /// against the address derived from the signature (V, R, S) using the
   /// secp256k1 elliptic curve
-  final List<int>? from;
+  final BuBytes? from;
 
   /// raw is the raw bytes of the ethereum transaction
-  final List<int>? raw;
+  final BuBytes? raw;
 
-  const MsgEthereumTx({
+  MsgEthereumTx({
     this.data,
     this.size,
     this.deprecatedHash,
     this.deprecatedFrom,
-    this.from,
-    this.raw,
-  });
+    List<int>? from,
+    List<int>? raw,
+  }) : from = from?.asImmutableBytes,
+       raw = raw?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -78,54 +79,50 @@ class MsgEthereumTx extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'data': data?.toJson(),
+      'data': config.encodeMessage(data),
       'size': size,
       'deprecated_hash': deprecatedHash,
       'deprecated_from': deprecatedFrom,
-      'from': switch (from) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'raw': switch (raw) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'from': config.encodeBinary(from),
+      'raw': config.encodeBinary(raw),
     };
   }
 
-  factory MsgEthereumTx.fromJson(Map<String, dynamic> json) {
+  factory MsgEthereumTx.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgEthereumTx(
-      data: json.valueTo<google_protobuf_any.Any?, Map<String, dynamic>>(
+      data: json.valueTo<google_protobuf_any.Any?, Object>(
         key: 'data',
-        parse: (v) => google_protobuf_any.Any.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_any.Any.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      size: json.valueAsDouble<double?>('size', acceptCamelCase: true),
+      size: json.valueAsDouble<double?>(
+        'size',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       deprecatedHash: json.valueAsString<String?>(
         'deprecated_hash',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       deprecatedFrom: json.valueAsString<String?>(
         'deprecated_from',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      from: json.valueAsBytes<List<int>?>(
-        'from',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      from: config.decodeBinary<List<int>?>(
+        json.valueAs('from', normalizeKeyLookup: config.normalizeKeys),
       ),
-      raw: json.valueAsBytes<List<int>?>(
-        'raw',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      raw: config.decodeBinary<List<int>?>(
+        json.valueAs('raw', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }
@@ -172,7 +169,7 @@ class MsgEthereumTxResponse extends CosmosProtoMessage {
 
   /// ret is the returned data from evm function (result or data supplied with
   /// revert opcode)
-  final List<int>? ret;
+  final BuBytes? ret;
 
   /// vm_error is the error returned by vm execution
   final String? vmError;
@@ -181,21 +178,22 @@ class MsgEthereumTxResponse extends CosmosProtoMessage {
   final BigInt? gasUsed;
 
   /// include the block hash for json-rpc to use
-  final List<int>? blockHash;
+  final BuBytes? blockHash;
 
   /// execution_gas_used specifies the actual gas consumed during EVM execution.
   /// This is used for accurate gas estimation.
   final BigInt? executionGasUsed;
 
-  const MsgEthereumTxResponse({
+  MsgEthereumTxResponse({
     this.hash,
     this.logs = const [],
-    this.ret,
+    List<int>? ret,
     this.vmError,
     this.gasUsed,
-    this.blockHash,
+    List<int>? blockHash,
     this.executionGasUsed,
-  });
+  }) : ret = ret?.asImmutableBytes,
+       blockHash = blockHash?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -231,57 +229,63 @@ class MsgEthereumTxResponse extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'hash': hash,
-      'logs': logs.map((e) => e.toJson()).toList(),
-      'ret': switch (ret) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'logs': logs.map((e) => config.encodeMessage(e)).toList(),
+      'ret': config.encodeBinary(ret),
       'vm_error': vmError,
-      'gas_used': gasUsed?.toString(),
-      'block_hash': switch (blockHash) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'execution_gas_used': executionGasUsed?.toString(),
+      'gas_used': config.encodeBigint(gasUsed),
+      'block_hash': config.encodeBinary(blockHash),
+      'execution_gas_used': config.encodeBigint(executionGasUsed),
     };
   }
 
-  factory MsgEthereumTxResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgEthereumTxResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgEthereumTxResponse(
-      hash: json.valueAsString<String?>('hash', acceptCamelCase: true),
+      hash: json.valueAsString<String?>(
+        'hash',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       logs:
-          (json.valueEnsureAsList<dynamic>('logs', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'logs',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  injective_evm_v1_log.Log,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => injective_evm_v1_log.Log.fromJson(v)),
+                (e) => JsonParser.valueTo<injective_evm_v1_log.Log, Object>(
+                  value: e,
+                  parse:
+                      (v) => injective_evm_v1_log.Log.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
-      ret: json.valueAsBytes<List<int>?>(
-        'ret',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      ret: config.decodeBinary<List<int>?>(
+        json.valueAs('ret', normalizeKeyLookup: config.normalizeKeys),
       ),
-      vmError: json.valueAsString<String?>('vm_error', acceptCamelCase: true),
-      gasUsed: json.valueAsBigInt<BigInt?>('gas_used', acceptCamelCase: true),
-      blockHash: json.valueAsBytes<List<int>?>(
-        'block_hash',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      vmError: json.valueAsString<String?>(
+        'vm_error',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      gasUsed: json.valueAsBigInt<BigInt?>(
+        'gas_used',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      blockHash: config.decodeBinary<List<int>?>(
+        json.valueAs('block_hash', normalizeKeyLookup: config.normalizeKeys),
       ),
       executionGasUsed: json.valueAsBigInt<BigInt?>(
         'execution_gas_used',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -340,22 +344,30 @@ class MsgUpdateParams extends CosmosProtoMessage
   List<Object?> get protoValues => [authority, params];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'authority': authority, 'params': params?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'authority': authority, 'params': config.encodeMessage(params)};
   }
 
-  factory MsgUpdateParams.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateParams.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateParams(
       authority: json.valueAsString<String?>(
         'authority',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      params: json
-          .valueTo<injective_evm_v1_params.Params?, Map<String, dynamic>>(
-            key: 'params',
-            parse: (v) => injective_evm_v1_params.Params.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      params: json.valueTo<injective_evm_v1_params.Params?, Object>(
+        key: 'params',
+        parse:
+            (v) => injective_evm_v1_params.Params.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -404,11 +416,16 @@ class MsgUpdateParamsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgUpdateParamsResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateParamsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateParamsResponse();
   }
 

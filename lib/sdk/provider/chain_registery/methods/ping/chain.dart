@@ -17,7 +17,7 @@ class ChainRegistryRequestPingPubChain
     CCRSchemaType.chain.pathSegments,
   ];
   @override
-  CCRChain onResonse(Map<String, dynamic> result) {
+  CCRChain onResponse(Map<String, dynamic> result) {
     return CCRChain.fromJson(result);
   }
 }

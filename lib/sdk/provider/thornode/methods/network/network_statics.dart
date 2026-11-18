@@ -19,7 +19,7 @@ class ThorNodeRequestNetworkStatistics
   @override
   Map<String, String?> get parameters => {"height": height?.toString()};
   @override
-  ThorNetworkStaticsResponse onResonse(Map<String, dynamic> result) {
+  ThorNetworkStaticsResponse onResponse(Map<String, dynamic> result) {
     return ThorNetworkStaticsResponse.fromJson(result);
   }
 }

@@ -5,8 +5,13 @@ import 'package:cosmos_sdk/proto_messages/cosmos/base/v1beta1/src/coin.dart';
 import 'package:cosmos_sdk/proto_messages/cosmos/tx/signing/v1beta1/src/signing.dart';
 import 'package:cosmos_sdk/proto_messages/cosmos/tx/v1beta1/src/tx.dart';
 import 'package:test/test.dart';
+import 'utils.dart';
 
 void main() {
+  CosmosTestApi.runTest(serializationTest, 'Serialization');
+}
+
+void serializationTest() {
   group("serialization", () {
     _fee();
     _signerInfo();

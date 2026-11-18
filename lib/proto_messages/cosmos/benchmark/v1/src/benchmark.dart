@@ -59,33 +59,53 @@ class Op extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'seed': seed?.toString(),
+      'seed': config.encodeBigint(seed),
       'actor': actor,
-      'key_length': keyLength?.toString(),
-      'value_length': valueLength?.toString(),
+      'key_length': config.encodeBigint(keyLength),
+      'value_length': config.encodeBigint(valueLength),
       'iterations': iterations,
       'delete': delete,
       'exists': exists,
     };
   }
 
-  factory Op.fromJson(Map<String, dynamic> json) {
+  factory Op.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Op(
-      seed: json.valueAsBigInt<BigInt?>('seed', acceptCamelCase: true),
-      actor: json.valueAsString<String?>('actor', acceptCamelCase: true),
+      seed: json.valueAsBigInt<BigInt?>(
+        'seed',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      actor: json.valueAsString<String?>(
+        'actor',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       keyLength: json.valueAsBigInt<BigInt?>(
         'key_length',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       valueLength: json.valueAsBigInt<BigInt?>(
         'value_length',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      iterations: json.valueAsInt<int?>('iterations', acceptCamelCase: true),
-      delete: json.valueAsBool<bool?>('delete', acceptCamelCase: true),
-      exists: json.valueAsBool<bool?>('exists', acceptCamelCase: true),
+      iterations: json.valueAsInt<int?>(
+        'iterations',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      delete: json.valueAsBool<bool?>(
+        'delete',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      exists: json.valueAsBool<bool?>(
+        'exists',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

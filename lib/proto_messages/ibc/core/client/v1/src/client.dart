@@ -30,17 +30,32 @@ class IdentifiedClientState extends CosmosProtoMessage {
   List<Object?> get protoValues => [clientId, clientState];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'client_id': clientId, 'client_state': clientState?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'client_id': clientId,
+      'client_state': config.encodeMessage(clientState),
+    };
   }
 
-  factory IdentifiedClientState.fromJson(Map<String, dynamic> json) {
+  factory IdentifiedClientState.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return IdentifiedClientState(
-      clientId: json.valueAsString<String?>('client_id', acceptCamelCase: true),
-      clientState: json.valueTo<google_protobuf_any.Any?, Map<String, dynamic>>(
+      clientId: json.valueAsString<String?>(
+        'client_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      clientState: json.valueTo<google_protobuf_any.Any?, Object>(
         key: 'client_state',
-        parse: (v) => google_protobuf_any.Any.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_any.Any.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -90,26 +105,34 @@ class ConsensusStateWithHeight extends CosmosProtoMessage {
   List<Object?> get protoValues => [height, consensusState];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'height': height?.toJson(),
-      'consensus_state': consensusState?.toJson(),
+      'height': config.encodeMessage(height),
+      'consensus_state': config.encodeMessage(consensusState),
     };
   }
 
-  factory ConsensusStateWithHeight.fromJson(Map<String, dynamic> json) {
+  factory ConsensusStateWithHeight.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ConsensusStateWithHeight(
-      height: json.valueTo<Height?, Map<String, dynamic>>(
+      height: json.valueTo<Height?, Object>(
         key: 'height',
-        parse: (v) => Height.fromJson(v),
-        acceptCamelCase: true,
+        parse: (v) => Height.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      consensusState: json
-          .valueTo<google_protobuf_any.Any?, Map<String, dynamic>>(
-            key: 'consensus_state',
-            parse: (v) => google_protobuf_any.Any.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      consensusState: json.valueTo<google_protobuf_any.Any?, Object>(
+        key: 'consensus_state',
+        parse:
+            (v) => google_protobuf_any.Any.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -169,22 +192,27 @@ class Height extends CosmosProtoMessage {
   List<Object?> get protoValues => [revisionNumber, revisionHeight];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'revision_number': revisionNumber?.toString(),
-      'revision_height': revisionHeight?.toString(),
+      'revision_number': config.encodeBigint(revisionNumber),
+      'revision_height': config.encodeBigint(revisionHeight),
     };
   }
 
-  factory Height.fromJson(Map<String, dynamic> json) {
+  factory Height.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Height(
       revisionNumber: json.valueAsBigInt<BigInt?>(
         'revision_number',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       revisionHeight: json.valueAsBigInt<BigInt?>(
         'revision_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -231,16 +259,22 @@ class Params extends CosmosProtoMessage {
   List<Object?> get protoValues => [allowedClients];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'allowed_clients': allowedClients.map((e) => e).toList()};
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
       allowedClients:
           (json.valueEnsureAsList<dynamic>(
             'allowed_clients',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
     );
   }

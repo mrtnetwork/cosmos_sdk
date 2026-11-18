@@ -41,13 +41,21 @@ class SignatureThreshold extends CosmosProtoMessage {
   List<Object?> get protoValues => [amount];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'amount': amount};
   }
 
-  factory SignatureThreshold.fromJson(Map<String, dynamic> json) {
+  factory SignatureThreshold.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SignatureThreshold(
-      amount: json.valueAsInt<int?>('amount', acceptCamelCase: true),
+      amount: json.valueAsInt<int?>(
+        'amount',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

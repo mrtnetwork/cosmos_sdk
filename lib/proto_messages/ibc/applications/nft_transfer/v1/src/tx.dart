@@ -99,7 +99,9 @@ class MsgTransfer extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'source_port': sourcePort,
       'source_channel': sourceChannel,
@@ -107,41 +109,60 @@ class MsgTransfer extends CosmosProtoMessage
       'token_ids': tokenIds.map((e) => e).toList(),
       'sender': sender,
       'receiver': receiver,
-      'timeout_height': timeoutHeight?.toJson(),
-      'timeout_timestamp': timeoutTimestamp?.toString(),
+      'timeout_height': config.encodeMessage(timeoutHeight),
+      'timeout_timestamp': config.encodeBigint(timeoutTimestamp),
       'memo': memo,
     };
   }
 
-  factory MsgTransfer.fromJson(Map<String, dynamic> json) {
+  factory MsgTransfer.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgTransfer(
       sourcePort: json.valueAsString<String?>(
         'source_port',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       sourceChannel: json.valueAsString<String?>(
         'source_channel',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      classId: json.valueAsString<String?>('class_id', acceptCamelCase: true),
+      classId: json.valueAsString<String?>(
+        'class_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       tokenIds:
           (json.valueEnsureAsList<dynamic>(
             'token_ids',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
-      sender: json.valueAsString<String?>('sender', acceptCamelCase: true),
-      receiver: json.valueAsString<String?>('receiver', acceptCamelCase: true),
-      timeoutHeight: json
-          .valueTo<ibc_core_client_v1_client.Height?, Map<String, dynamic>>(
-            key: 'timeout_height',
-            parse: (v) => ibc_core_client_v1_client.Height.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      sender: json.valueAsString<String?>(
+        'sender',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      receiver: json.valueAsString<String?>(
+        'receiver',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      timeoutHeight: json.valueTo<ibc_core_client_v1_client.Height?, Object>(
+        key: 'timeout_height',
+        parse:
+            (v) => ibc_core_client_v1_client.Height.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       timeoutTimestamp: json.valueAsBigInt<BigInt?>(
         'timeout_timestamp',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      memo: json.valueAsString<String?>('memo', acceptCamelCase: true),
+      memo: json.valueAsString<String?>(
+        'memo',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -199,13 +220,21 @@ class MsgTransferResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [sequence];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'sequence': sequence?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'sequence': config.encodeBigint(sequence)};
   }
 
-  factory MsgTransferResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgTransferResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgTransferResponse(
-      sequence: json.valueAsBigInt<BigInt?>('sequence', acceptCamelCase: true),
+      sequence: json.valueAsBigInt<BigInt?>(
+        'sequence',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -261,24 +290,31 @@ class MsgUpdateParams extends CosmosProtoMessage
   List<Object?> get protoValues => [authority, params];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'authority': authority, 'params': params?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'authority': authority, 'params': config.encodeMessage(params)};
   }
 
-  factory MsgUpdateParams.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateParams.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateParams(
       authority: json.valueAsString<String?>(
         'authority',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      params: json.valueTo<
-        ibc_applications_nft_transfer_v1_types.Params?,
-        Map<String, dynamic>
-      >(
-        key: 'params',
-        parse: (v) => ibc_applications_nft_transfer_v1_types.Params.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      params: json
+          .valueTo<ibc_applications_nft_transfer_v1_types.Params?, Object>(
+            key: 'params',
+            parse:
+                (v) => ibc_applications_nft_transfer_v1_types.Params.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -329,11 +365,16 @@ class MsgUpdateParamsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgUpdateParamsResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateParamsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateParamsResponse();
   }
 

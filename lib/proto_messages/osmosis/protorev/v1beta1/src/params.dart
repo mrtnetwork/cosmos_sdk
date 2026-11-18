@@ -30,14 +30,25 @@ class Params extends CosmosProtoMessage {
   List<Object?> get protoValues => [enabled, admin];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'enabled': enabled, 'admin': admin};
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
-      enabled: json.valueAsBool<bool?>('enabled', acceptCamelCase: true),
-      admin: json.valueAsString<String?>('admin', acceptCamelCase: true),
+      enabled: json.valueAsBool<bool?>(
+        'enabled',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      admin: json.valueAsString<String?>(
+        'admin',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

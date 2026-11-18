@@ -1,4 +1,4 @@
-import 'package:cosmos_sdk/sdk/exception/exception.dart';
+import 'package:blockchain_utils/blockchain_utils.dart';
 import 'chain.dart';
 
 enum ChainRegistryChainType {
@@ -280,8 +280,9 @@ abstract class CCRIbcTransactionBase {
       case "legacy-mintage":
         return CCRNonIbcTransition.fromJson(json);
       default:
-        throw DartCosmosSdkPluginException(
-          "unknown ibc transaction type.",
+        throw BuError(
+          DefaultErrorType.invalidArgument,
+          'Unknown IBC transaction type "${json["type"]}".',
           details: {"type": json["type"]},
         );
     }

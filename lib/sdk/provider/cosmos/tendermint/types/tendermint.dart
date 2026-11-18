@@ -11,9 +11,9 @@ class TendermintProtocolVersion {
 
   factory TendermintProtocolVersion.fromJson(Map<String, dynamic> json) {
     return TendermintProtocolVersion(
-      p2p: json.valueAsString<String?>('p2p', acceptSnakeCase: true),
-      block: json.valueAsString<String?>('block', acceptSnakeCase: true),
-      app: json.valueAsString<String?>('app', acceptSnakeCase: true),
+      p2p: json.valueAsString<String?>('p2p', normalizeKeyLookup: true),
+      block: json.valueAsString<String?>('block', normalizeKeyLookup: true),
+      app: json.valueAsString<String?>('app', normalizeKeyLookup: true),
     );
   }
 
@@ -30,8 +30,8 @@ class TendermintPubKey {
 
   factory TendermintPubKey.fromJson(Map<String, dynamic> json) {
     return TendermintPubKey(
-      type: json.valueAsString<String?>('type', acceptSnakeCase: true),
-      value: json.valueAsString<String?>('value', acceptSnakeCase: true),
+      type: json.valueAsString<String?>('type', normalizeKeyLookup: true),
+      value: json.valueAsString<String?>('value', normalizeKeyLookup: true),
     );
   }
 
@@ -48,10 +48,13 @@ class TendermintNodeInfoOther {
 
   factory TendermintNodeInfoOther.fromJson(Map<String, dynamic> json) {
     return TendermintNodeInfoOther(
-      txIndex: json.valueAsString<String?>('tx_index', acceptSnakeCase: true),
+      txIndex: json.valueAsString<String?>(
+        'tx_index',
+        normalizeKeyLookup: true,
+      ),
       rpcAddress: json.valueAsString<String?>(
         'rpc_address',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
     );
   }
@@ -88,21 +91,24 @@ class TendermintNodeInfo {
           .valueTo<TendermintProtocolVersion?, Map<String, dynamic>>(
             key: 'protocol_version',
             parse: (v) => TendermintProtocolVersion.fromJson(v),
-            acceptSnakeCase: true,
+            normalizeKeyLookup: true,
           ),
-      id: json.valueAsString<String?>('id', acceptSnakeCase: true),
+      id: json.valueAsString<String?>('id', normalizeKeyLookup: true),
       listenAddr: json.valueAsString<String?>(
         'listen_addr',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
-      network: json.valueAsString<String?>('network', acceptSnakeCase: true),
-      version: json.valueAsString<String?>('version', acceptSnakeCase: true),
-      channels: json.valueAsString<String?>('channels', acceptSnakeCase: true),
-      moniker: json.valueAsString<String?>('moniker', acceptSnakeCase: true),
+      network: json.valueAsString<String?>('network', normalizeKeyLookup: true),
+      version: json.valueAsString<String?>('version', normalizeKeyLookup: true),
+      channels: json.valueAsString<String?>(
+        'channels',
+        normalizeKeyLookup: true,
+      ),
+      moniker: json.valueAsString<String?>('moniker', normalizeKeyLookup: true),
       other: json.valueTo<TendermintNodeInfoOther?, Map<String, dynamic>>(
         key: 'other',
         parse: (v) => TendermintNodeInfoOther.fromJson(v),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
     );
   }
@@ -148,37 +154,40 @@ class TendermintSyncInfo {
     return TendermintSyncInfo(
       latestBlockHash: json.valueAsString<String?>(
         'latest_block_hash',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       latestAppHash: json.valueAsString<String?>(
         'latest_app_hash',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       latestBlockHeight: json.valueAsString<String?>(
         'latest_block_height',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       latestBlockTime: json.valueAsString<String?>(
         'latest_block_time',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       earliestBlockHash: json.valueAsString<String?>(
         'earliest_block_hash',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       earliestAppHash: json.valueAsString<String?>(
         'earliest_app_hash',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       earliestBlockHeight: json.valueAsString<String?>(
         'earliest_block_height',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       earliestBlockTime: json.valueAsString<String?>(
         'earliest_block_time',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
-      catchingUp: json.valueAsBool<bool?>('catching_up', acceptSnakeCase: true),
+      catchingUp: json.valueAsBool<bool?>(
+        'catching_up',
+        normalizeKeyLookup: true,
+      ),
     );
   }
 
@@ -206,15 +215,15 @@ class TendermintValidatorInfo {
 
   factory TendermintValidatorInfo.fromJson(Map<String, dynamic> json) {
     return TendermintValidatorInfo(
-      address: json.valueAsString<String?>('address', acceptSnakeCase: true),
+      address: json.valueAsString<String?>('address', normalizeKeyLookup: true),
       pubKey: json.valueTo<TendermintPubKey?, Map<String, dynamic>>(
         key: 'pub_key',
         parse: (v) => TendermintPubKey.fromJson(v),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       votingPower: json.valueAsString<String?>(
         'voting_power',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
     );
   }
@@ -240,18 +249,18 @@ class TendermintStatus {
       nodeInfo: json.valueTo<TendermintNodeInfo?, Map<String, dynamic>>(
         key: 'node_info',
         parse: (v) => TendermintNodeInfo.fromJson(v),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       syncInfo: json.valueTo<TendermintSyncInfo?, Map<String, dynamic>>(
         key: 'sync_info',
         parse: (v) => TendermintSyncInfo.fromJson(v),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       validatorInfo: json
           .valueTo<TendermintValidatorInfo?, Map<String, dynamic>>(
             key: 'validator_info',
             parse: (v) => TendermintValidatorInfo.fromJson(v),
-            acceptSnakeCase: true,
+            normalizeKeyLookup: true,
           ),
     );
   }
@@ -298,19 +307,31 @@ class TendermintMonitor {
 
   factory TendermintMonitor.fromJson(Map<String, dynamic> json) {
     return TendermintMonitor(
-      active: json.valueAsBool<bool?>('Active', acceptSnakeCase: true),
-      start: json.valueAsString<String?>('Start', acceptSnakeCase: true),
-      duration: json.valueAsString<String?>('Duration', acceptSnakeCase: true),
-      idle: json.valueAsString<String?>('Idle', acceptSnakeCase: true),
-      bytes: json.valueAsString<String?>('Bytes', acceptSnakeCase: true),
-      samples: json.valueAsString<String?>('Samples', acceptSnakeCase: true),
-      instRate: json.valueAsString<String?>('InstRate', acceptSnakeCase: true),
-      curRate: json.valueAsString<String?>('CurRate', acceptSnakeCase: true),
-      avgRate: json.valueAsString<String?>('AvgRate', acceptSnakeCase: true),
-      peakRate: json.valueAsString<String?>('PeakRate', acceptSnakeCase: true),
-      bytesRem: json.valueAsString<String?>('BytesRem', acceptSnakeCase: true),
-      timeRem: json.valueAsString<String?>('TimeRem', acceptSnakeCase: true),
-      progress: json.valueAsInt<int?>('Progress', acceptSnakeCase: true),
+      active: json.valueAsBool<bool?>('Active', normalizeKeyLookup: true),
+      start: json.valueAsString<String?>('Start', normalizeKeyLookup: true),
+      duration: json.valueAsString<String?>(
+        'Duration',
+        normalizeKeyLookup: true,
+      ),
+      idle: json.valueAsString<String?>('Idle', normalizeKeyLookup: true),
+      bytes: json.valueAsString<String?>('Bytes', normalizeKeyLookup: true),
+      samples: json.valueAsString<String?>('Samples', normalizeKeyLookup: true),
+      instRate: json.valueAsString<String?>(
+        'InstRate',
+        normalizeKeyLookup: true,
+      ),
+      curRate: json.valueAsString<String?>('CurRate', normalizeKeyLookup: true),
+      avgRate: json.valueAsString<String?>('AvgRate', normalizeKeyLookup: true),
+      peakRate: json.valueAsString<String?>(
+        'PeakRate',
+        normalizeKeyLookup: true,
+      ),
+      bytesRem: json.valueAsString<String?>(
+        'BytesRem',
+        normalizeKeyLookup: true,
+      ),
+      timeRem: json.valueAsString<String?>('TimeRem', normalizeKeyLookup: true),
+      progress: json.valueAsInt<int?>('Progress', normalizeKeyLookup: true),
     );
   }
 
@@ -350,19 +371,22 @@ class TendermintChannel {
 
   factory TendermintChannel.fromJson(Map<String, dynamic> json) {
     return TendermintChannel(
-      id: json.valueAsInt<int?>('ID', acceptSnakeCase: true),
+      id: json.valueAsInt<int?>('ID', normalizeKeyLookup: true),
       sendQueueCapacity: json.valueAsString<String?>(
         'SendQueueCapacity',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       sendQueueSize: json.valueAsString<String?>(
         'SendQueueSize',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
-      priority: json.valueAsString<String?>('Priority', acceptSnakeCase: true),
+      priority: json.valueAsString<String?>(
+        'Priority',
+        normalizeKeyLookup: true,
+      ),
       recentlySent: json.valueAsString<String?>(
         'RecentlySent',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
     );
   }
@@ -393,16 +417,19 @@ class TendermintConnectionStatus {
 
   factory TendermintConnectionStatus.fromJson(Map<String, dynamic> json) {
     return TendermintConnectionStatus(
-      duration: json.valueAsString<String?>('Duration', acceptSnakeCase: true),
+      duration: json.valueAsString<String?>(
+        'Duration',
+        normalizeKeyLookup: true,
+      ),
       sendMonitor: json.valueTo<TendermintMonitor?, Map<String, dynamic>>(
         key: 'SendMonitor',
         parse: (v) => TendermintMonitor.fromJson(v),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       recvMonitor: json.valueTo<TendermintMonitor?, Map<String, dynamic>>(
         key: 'RecvMonitor',
         parse: (v) => TendermintMonitor.fromJson(v),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       channels: json.valueTo<List<TendermintChannel>?, List>(
         key: 'Channels',
@@ -415,7 +442,7 @@ class TendermintConnectionStatus {
                       ),
                     )
                     .toList(),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
     );
   }
@@ -448,16 +475,22 @@ class TendermintPeer {
       nodeInfo: json.valueTo<TendermintNodeInfo?, Map<String, dynamic>>(
         key: 'node_info',
         parse: (v) => TendermintNodeInfo.fromJson(v),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
-      isOutbound: json.valueAsBool<bool?>('is_outbound', acceptSnakeCase: true),
+      isOutbound: json.valueAsBool<bool?>(
+        'is_outbound',
+        normalizeKeyLookup: true,
+      ),
       connectionStatus: json
           .valueTo<TendermintConnectionStatus?, Map<String, dynamic>>(
             key: 'connection_status',
             parse: (v) => TendermintConnectionStatus.fromJson(v),
-            acceptSnakeCase: true,
+            normalizeKeyLookup: true,
           ),
-      remoteIp: json.valueAsString<String?>('remote_ip', acceptSnakeCase: true),
+      remoteIp: json.valueAsString<String?>(
+        'remote_ip',
+        normalizeKeyLookup: true,
+      ),
     );
   }
 
@@ -481,12 +514,12 @@ class TendermintNetInfo {
 
   factory TendermintNetInfo.fromJson(Map<String, dynamic> json) {
     return TendermintNetInfo(
-      listening: json.valueAsBool<bool?>('listening', acceptSnakeCase: true),
+      listening: json.valueAsBool<bool?>('listening', normalizeKeyLookup: true),
       listeners: json.valueAsList<List<String>?>(
         'listeners',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
-      nPeers: json.valueAsString<String?>('n_peers', acceptSnakeCase: true),
+      nPeers: json.valueAsString<String?>('n_peers', normalizeKeyLookup: true),
       peers: json.valueTo<List<TendermintPeer>?, List>(
         key: 'peers',
         parse:
@@ -497,7 +530,7 @@ class TendermintNetInfo {
                           TendermintPeer.fromJson(Map<String, dynamic>.from(e)),
                     )
                     .toList(),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
     );
   }
@@ -525,15 +558,15 @@ class TendermintBlockMeta {
       blockId: json.valueTo<TendermintBlockID?, Map<String, dynamic>>(
         key: 'block_id',
         parse: (v) => TendermintBlockID.fromJson(v),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
-      blockSize: json.valueAsInt<int?>('block_size', acceptSnakeCase: true),
+      blockSize: json.valueAsInt<int?>('block_size', normalizeKeyLookup: true),
       header: json.valueTo<TendermintBlockHeader?, Map<String, dynamic>>(
         key: 'header',
         parse: (v) => TendermintBlockHeader.fromJson(v),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
-      numTxs: json.valueAsString<String?>('num_txs', acceptSnakeCase: true),
+      numTxs: json.valueAsString<String?>('num_txs', normalizeKeyLookup: true),
     );
   }
 
@@ -557,7 +590,7 @@ class TendermintBlockchain {
     return TendermintBlockchain(
       lastHeight: json.valueAsString<String>(
         'last_height',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       blockMetas: json.valueTo<List<TendermintBlockMeta>, List>(
         key: 'block_metas',
@@ -570,7 +603,7 @@ class TendermintBlockchain {
                       ),
                     )
                     .toList(),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
     );
   }
@@ -606,24 +639,30 @@ class TendermintCommit {
 
   factory TendermintCommit.fromJson(Map<String, dynamic> json) {
     return TendermintCommit(
-      type: json.valueAsInt<int>('type', acceptSnakeCase: true),
-      height: json.valueAsString<String>('height', acceptSnakeCase: true),
-      round: json.valueAsInt<int>('round', acceptSnakeCase: true),
+      type: json.valueAsInt<int>('type', normalizeKeyLookup: true),
+      height: json.valueAsString<String>('height', normalizeKeyLookup: true),
+      round: json.valueAsInt<int>('round', normalizeKeyLookup: true),
       blockId: json.valueTo<TendermintBlockID, Map<String, dynamic>>(
         key: 'block_id',
         parse: (v) => TendermintBlockID.fromJson(v),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
-      timestamp: json.valueAsString<String>('timestamp', acceptSnakeCase: true),
+      timestamp: json.valueAsString<String>(
+        'timestamp',
+        normalizeKeyLookup: true,
+      ),
       validatorAddress: json.valueAsString<String>(
         'validator_address',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       validatorIndex: json.valueAsInt<int>(
         'validator_index',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
-      signature: json.valueAsString<String>('signature', acceptSnakeCase: true),
+      signature: json.valueAsString<String>(
+        'signature',
+        normalizeKeyLookup: true,
+      ),
     );
   }
 
@@ -651,12 +690,12 @@ class TendermintCommit {
 
 //   factory TendermintBlockLastCommit.fromJson(Map<String, dynamic> json) {
 //     return TendermintBlockLastCommit(
-//       height: json.valueAsInt<int?>('height', acceptSnakeCase: true),
-//       round: json.valueAsInt<int?>('round', acceptSnakeCase: true),
+//       height: json.valueAsInt<int?>('height', normalizeKeyLookup: true),
+//       round: json.valueAsInt<int?>('round', normalizeKeyLookup: true),
 //       blockId: json.valueTo<TendermintBlockID?, Map<String, dynamic>>(
 //         key: 'block_id',
 //         parse: (v) => TendermintBlockID.fromJson(v),
-//         acceptSnakeCase: true,
+//         normalizeKeyLookup: true
 //       ),
 //       signatures: json.valueTo<List<TendermintCommit>?, List>(
 //         key: 'signatures',
@@ -665,7 +704,7 @@ class TendermintCommit {
 //                 v
 //                     .map((e) => TendermintCommit.fromJson(Map<String, dynamic>.from(e)))
 //                     .toList(),
-//         acceptSnakeCase: true,
+//         normalizeKeyLookup: true
 //       ),
 //     );
 //   }
@@ -693,9 +732,9 @@ class TendermintBlock {
       header: json.valueTo<TendermintBlockHeader?, Map<String, dynamic>>(
         key: 'header',
         parse: (v) => TendermintBlockHeader.fromJson(v),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
-      // data: json.valueAsList<List<String>?>('data', acceptSnakeCase: true),
+      // data: json.valueAsList<List<String>?>('data', normalizeKeyLookup: true),
       // evidence: json.valueTo<List<TendermintEvidence>?, List>(
       //   key: 'evidence',
       //   parse:
@@ -703,7 +742,7 @@ class TendermintBlock {
       //           v
       //               .map((e) => TendermintEvidence.fromJson(Map<String, dynamic>.from(e)))
       //               .toList(),
-      //   acceptSnakeCase: true,
+      //   normalizeKeyLookup: true
       // ),
       lastCommit: json.valueTo<
         TendermintCommitResponseResultSignedHeaderCommit?,
@@ -712,7 +751,7 @@ class TendermintBlock {
         key: 'last_commit',
         parse:
             (v) => TendermintCommitResponseResultSignedHeaderCommit.fromJson(v),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
     );
   }
@@ -744,17 +783,17 @@ class TendermintEvidence {
 
   factory TendermintEvidence.fromJson(Map<String, dynamic> json) {
     return TendermintEvidence(
-      type: json.valueAsString<String?>('type', acceptSnakeCase: true),
-      height: json.valueAsInt<int?>('height', acceptSnakeCase: true),
-      time: json.valueAsInt<int?>('time', acceptSnakeCase: true),
+      type: json.valueAsString<String?>('type', normalizeKeyLookup: true),
+      height: json.valueAsInt<int?>('height', normalizeKeyLookup: true),
+      time: json.valueAsInt<int?>('time', normalizeKeyLookup: true),
       totalVotingPower: json.valueAsInt<int?>(
         'total_voting_power',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       validator: json.valueTo<TendermintValidator?, Map<String, dynamic>>(
         key: 'validator',
         parse: (v) => TendermintValidator.fromJson(v),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
     );
   }
@@ -781,12 +820,12 @@ class TendermintBlockComplete {
       blockId: json.valueTo<TendermintBlockID?, Map<String, dynamic>>(
         key: 'block_id',
         parse: (v) => TendermintBlockID.fromJson(v),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       block: json.valueTo<TendermintBlock?, Map<String, dynamic>>(
         key: 'block',
         parse: (v) => TendermintBlock.fromJson(v),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
     );
   }
@@ -809,7 +848,7 @@ class TendermintBlockResultsResponseResultTxsResultsEvents {
     Map<String, dynamic> json,
   ) {
     return TendermintBlockResultsResponseResultTxsResultsEvents(
-      type: json.valueAsString<String?>('type', acceptSnakeCase: true),
+      type: json.valueAsString<String?>('type', normalizeKeyLookup: true),
       attributes: json.valueTo<List<TendermintEvent>?, List>(
         key: 'attributes',
         parse:
@@ -821,7 +860,7 @@ class TendermintBlockResultsResponseResultTxsResultsEvents {
                       ),
                     )
                     .toList(),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
     );
   }
@@ -859,15 +898,18 @@ class TendermintBlockResultsResponseResultTxsResults {
     Map<String, dynamic> json,
   ) {
     return TendermintBlockResultsResponseResultTxsResults(
-      code: json.valueAsInt<int?>('code', acceptSnakeCase: true),
-      data: json.valueAsString<String?>('data', acceptSnakeCase: true),
-      log: json.valueAsString<String?>('log', acceptSnakeCase: true),
-      info: json.valueAsString<String?>('info', acceptSnakeCase: true),
+      code: json.valueAsInt<int?>('code', normalizeKeyLookup: true),
+      data: json.valueAsString<String?>('data', normalizeKeyLookup: true),
+      log: json.valueAsString<String?>('log', normalizeKeyLookup: true),
+      info: json.valueAsString<String?>('info', normalizeKeyLookup: true),
       gasWanted: json.valueAsString<String?>(
         'gas_wanted',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
-      gasUsed: json.valueAsString<String?>('gas_used', acceptSnakeCase: true),
+      gasUsed: json.valueAsString<String?>(
+        'gas_used',
+        normalizeKeyLookup: true,
+      ),
       events: json.valueTo<
         List<TendermintBlockResultsResponseResultTxsResultsEvents>?,
         List
@@ -883,11 +925,11 @@ class TendermintBlockResultsResponseResultTxsResults {
                           ),
                     )
                     .toList(),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       codespace: json.valueAsString<String?>(
         'codespace',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
     );
   }
@@ -919,7 +961,7 @@ class TendermintBlockResultsResponseResultFinalizeBlockEvents {
     Map<String, dynamic> json,
   ) {
     return TendermintBlockResultsResponseResultFinalizeBlockEvents(
-      type: json.valueAsString<String?>('type', acceptSnakeCase: true),
+      type: json.valueAsString<String?>('type', normalizeKeyLookup: true),
       attributes: json.valueTo<List<TendermintEvent>?, List>(
         key: 'attributes',
         parse:
@@ -931,7 +973,7 @@ class TendermintBlockResultsResponseResultFinalizeBlockEvents {
                       ),
                     )
                     .toList(),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
     );
   }
@@ -957,8 +999,8 @@ class TendermintBlockResultsResponseResultValidatorUpdatesPubKey {
     Map<String, dynamic> json,
   ) {
     return TendermintBlockResultsResponseResultValidatorUpdatesPubKey(
-      type: json.valueAsString<String>('type', acceptSnakeCase: true),
-      value: json.valueAsString<String>('value', acceptSnakeCase: true),
+      type: json.valueAsString<String>('type', normalizeKeyLookup: true),
+      value: json.valueAsString<String>('value', normalizeKeyLookup: true),
     );
   }
 
@@ -990,9 +1032,9 @@ class TendermintBlockResultsResponseResultValidatorUpdates {
                 TendermintBlockResultsResponseResultValidatorUpdatesPubKey.fromJson(
                   v,
                 ),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
-      power: json.valueAsString<String?>('power', acceptSnakeCase: true),
+      power: json.valueAsString<String?>('power', normalizeKeyLookup: true),
     );
   }
 
@@ -1022,7 +1064,7 @@ class TendermintBlockResultsResponseResult {
     Map<String, dynamic> json,
   ) {
     return TendermintBlockResultsResponseResult(
-      height: json.valueAsString<String>('height', acceptSnakeCase: true),
+      height: json.valueAsString<String>('height', normalizeKeyLookup: true),
       txsResults: json.valueTo<
         List<TendermintBlockResultsResponseResultTxsResults>?,
         List
@@ -1038,7 +1080,7 @@ class TendermintBlockResultsResponseResult {
                           ),
                     )
                     .toList(),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       finalizeBlockEvents: json.valueTo<
         List<TendermintBlockResultsResponseResultFinalizeBlockEvents>?,
@@ -1055,7 +1097,7 @@ class TendermintBlockResultsResponseResult {
                           ),
                     )
                     .toList(),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       validatorUpdates: json.valueTo<
         List<TendermintBlockResultsResponseResultValidatorUpdates>?,
@@ -1072,13 +1114,13 @@ class TendermintBlockResultsResponseResult {
                           ),
                     )
                     .toList(),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       consensusParamUpdates: json
           .valueTo<TendermintConsensusParams?, Map<String, dynamic>>(
             key: 'consensus_param_updates',
             parse: (v) => TendermintConsensusParams.fromJson(v),
-            acceptSnakeCase: true,
+            normalizeKeyLookup: true,
           ),
     );
   }
@@ -1114,19 +1156,19 @@ class TendermintCommitResponseResultSignedHeaderCommitSignatures {
     return TendermintCommitResponseResultSignedHeaderCommitSignatures(
       blockIdFlag: json.valueAsInt<int?>(
         'block_id_flag',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       validatorAddress: json.valueAsString<String?>(
         'validator_address',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       timestamp: json.valueAsString<String?>(
         'timestamp',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       signature: json.valueAsString<String?>(
         'signature',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
     );
   }
@@ -1159,12 +1201,12 @@ class TendermintCommitResponseResultSignedHeaderCommit {
     Map<String, dynamic> json,
   ) {
     return TendermintCommitResponseResultSignedHeaderCommit(
-      height: json.valueAsString<String>('height', acceptSnakeCase: true),
-      round: json.valueAsInt<int>('round', acceptSnakeCase: true),
+      height: json.valueAsString<String>('height', normalizeKeyLookup: true),
+      round: json.valueAsInt<int>('round', normalizeKeyLookup: true),
       blockId: json.valueTo<TendermintBlockID, Map<String, dynamic>>(
         key: 'block_id',
         parse: (v) => TendermintBlockID.fromJson(v),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       signatures: json.valueTo<
         List<TendermintCommitResponseResultSignedHeaderCommitSignatures>,
@@ -1181,7 +1223,7 @@ class TendermintCommitResponseResultSignedHeaderCommit {
                           ),
                     )
                     .toList(),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
     );
   }
@@ -1212,7 +1254,7 @@ class TendermintCommitResponseResultSignedHeader {
       header: json.valueTo<TendermintBlockHeader, Map<String, dynamic>>(
         key: 'header',
         parse: (v) => TendermintBlockHeader.fromJson(v),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       commit: json.valueTo<
         TendermintCommitResponseResultSignedHeaderCommit,
@@ -1221,7 +1263,7 @@ class TendermintCommitResponseResultSignedHeader {
         key: 'commit',
         parse:
             (v) => TendermintCommitResponseResultSignedHeaderCommit.fromJson(v),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
     );
   }
@@ -1248,9 +1290,9 @@ class TendermintCommitResponseResult {
       >(
         key: 'signed_header',
         parse: (v) => TendermintCommitResponseResultSignedHeader.fromJson(v),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
-      canonical: json.valueAsBool<bool>('canonical', acceptSnakeCase: true),
+      canonical: json.valueAsBool<bool>('canonical', normalizeKeyLookup: true),
     );
   }
 
@@ -1278,7 +1320,7 @@ class TendermintValidatorsResponseResult {
     return TendermintValidatorsResponseResult(
       blockHeight: json.valueAsString<String>(
         'block_height',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       validators: json.valueTo<List<TendermintValidatorPriority>, List>(
         key: 'validators',
@@ -1291,10 +1333,10 @@ class TendermintValidatorsResponseResult {
                       ),
                     )
                     .toList(),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
-      count: json.valueAsString<String?>('count', acceptSnakeCase: true),
-      total: json.valueAsString<String?>('total', acceptSnakeCase: true),
+      count: json.valueAsString<String?>('count', normalizeKeyLookup: true),
+      total: json.valueAsString<String?>('total', normalizeKeyLookup: true),
     );
   }
 
@@ -1321,8 +1363,8 @@ class TendermintGenesisResponseResultGenesisValidatorsPubKey {
     Map<String, dynamic> json,
   ) {
     return TendermintGenesisResponseResultGenesisValidatorsPubKey(
-      type: json.valueAsString<String>('type', acceptSnakeCase: true),
-      value: json.valueAsString<String>('value', acceptSnakeCase: true),
+      type: json.valueAsString<String>('type', normalizeKeyLookup: true),
+      value: json.valueAsString<String>('value', normalizeKeyLookup: true),
     );
   }
 
@@ -1348,7 +1390,7 @@ class TendermintGenesisResponseResultGenesisValidators {
     Map<String, dynamic> json,
   ) {
     return TendermintGenesisResponseResultGenesisValidators(
-      address: json.valueAsString<String?>('address', acceptSnakeCase: true),
+      address: json.valueAsString<String?>('address', normalizeKeyLookup: true),
       pubKey: json.valueTo<
         TendermintGenesisResponseResultGenesisValidatorsPubKey?,
         Map<String, dynamic>
@@ -1359,10 +1401,10 @@ class TendermintGenesisResponseResultGenesisValidators {
                 TendermintGenesisResponseResultGenesisValidatorsPubKey.fromJson(
                   v,
                 ),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
-      power: json.valueAsString<String?>('power', acceptSnakeCase: true),
-      name: json.valueAsString<String?>('name', acceptSnakeCase: true),
+      power: json.valueAsString<String?>('power', normalizeKeyLookup: true),
+      name: json.valueAsString<String?>('name', normalizeKeyLookup: true),
     );
   }
 
@@ -1401,18 +1443,18 @@ class TendermintGenesisResponseResultGenesis {
     return TendermintGenesisResponseResultGenesis(
       genesisTime: json.valueAsString<String>(
         'genesis_time',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
-      chainId: json.valueAsString<String>('chain_id', acceptSnakeCase: true),
+      chainId: json.valueAsString<String>('chain_id', normalizeKeyLookup: true),
       initialHeight: json.valueAsString<String>(
         'initial_height',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       consensusParams: json
           .valueTo<TendermintConsensusParams, Map<String, dynamic>>(
             key: 'consensus_params',
             parse: (v) => TendermintConsensusParams.fromJson(v),
-            acceptSnakeCase: true,
+            normalizeKeyLookup: true,
           ),
       validators: json.valueTo<
         List<TendermintGenesisResponseResultGenesisValidators>,
@@ -1429,12 +1471,12 @@ class TendermintGenesisResponseResultGenesis {
                           ),
                     )
                     .toList(),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
-      appHash: json.valueAsString<String>('app_hash', acceptSnakeCase: true),
+      appHash: json.valueAsString<String>('app_hash', normalizeKeyLookup: true),
       appState: json.valueAsMap<Map<String, dynamic>?>(
         'app_state',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
     );
   }
@@ -1465,7 +1507,7 @@ class TendermintGenesisResponseResult {
       >(
         key: 'genesis',
         parse: (v) => TendermintGenesisResponseResultGenesis.fromJson(v),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
     );
   }
@@ -1490,9 +1532,9 @@ class TendermintGenesisChunkedResponseResult {
     Map<String, dynamic> json,
   ) {
     return TendermintGenesisChunkedResponseResult(
-      chunk: json.valueAsInt<int>('chunk', acceptSnakeCase: true),
-      total: json.valueAsInt<int>('total', acceptSnakeCase: true),
-      data: json.valueAsString<String>('data', acceptSnakeCase: true),
+      chunk: json.valueAsInt<int>('chunk', normalizeKeyLookup: true),
+      total: json.valueAsInt<int>('total', normalizeKeyLookup: true),
+      data: json.valueAsString<String>('data', normalizeKeyLookup: true),
     );
   }
 
@@ -1514,8 +1556,8 @@ class TendermintDumpConsensusResponseResultPeersPeerStateRoundStateProposalBlock
     Map<String, dynamic> json,
   ) {
     return TendermintDumpConsensusResponseResultPeersPeerStateRoundStateProposalBlockPartsHeader(
-      total: json.valueAsInt<int>('total', acceptSnakeCase: true),
-      hash: json.valueAsString<String>('hash', acceptSnakeCase: true),
+      total: json.valueAsInt<int>('total', normalizeKeyLookup: true),
+      hash: json.valueAsString<String>('hash', normalizeKeyLookup: true),
     );
   }
 
@@ -1562,14 +1604,14 @@ class TendermintDumpConsensusResponseResultPeersPeerStateRoundState {
     Map<String, dynamic> json,
   ) {
     return TendermintDumpConsensusResponseResultPeersPeerStateRoundState(
-      height: json.valueAsString<String>('height', acceptSnakeCase: true),
-      round: json.valueAsString<String>('round', acceptSnakeCase: true),
-      step: json.valueAsInt<int>('step', acceptSnakeCase: true),
+      height: json.valueAsString<String>('height', normalizeKeyLookup: true),
+      round: json.valueAsString<String>('round', normalizeKeyLookup: true),
+      step: json.valueAsInt<int>('step', normalizeKeyLookup: true),
       startTime: json.valueAsString<String>(
         'start_time',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
-      proposal: json.valueAsBool<bool>('proposal', acceptSnakeCase: true),
+      proposal: json.valueAsBool<bool>('proposal', normalizeKeyLookup: true),
       proposalBlockPartsHeader: json.valueTo<
         TendermintDumpConsensusResponseResultPeersPeerStateRoundStateProposalBlockPartsHeader,
         Map<String, dynamic>
@@ -1580,36 +1622,39 @@ class TendermintDumpConsensusResponseResultPeersPeerStateRoundState {
                 TendermintDumpConsensusResponseResultPeersPeerStateRoundStateProposalBlockPartsHeader.fromJson(
                   v,
                 ),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       proposalPolRound: json.valueAsInt<int?>(
         'proposal_pol_round',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       proposalPol: json.valueAsString<String?>(
         'proposal_pol',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
-      prevotes: json.valueAsString<String?>('prevotes', acceptSnakeCase: true),
+      prevotes: json.valueAsString<String?>(
+        'prevotes',
+        normalizeKeyLookup: true,
+      ),
       precommits: json.valueAsString<String?>(
         'precommits',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       lastCommitRound: json.valueAsInt<int?>(
         'last_commit_round',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       lastCommit: json.valueAsString<String?>(
         'last_commit',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       catchupCommitRound: json.valueAsInt<int?>(
         'catchup_commit_round',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       catchupCommit: json.valueAsString<String?>(
         'catchup_commit',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
     );
   }
@@ -1647,10 +1692,10 @@ class TendermintDumpConsensusResponseResultPeersPeerStateStats {
     Map<String, dynamic> json,
   ) {
     return TendermintDumpConsensusResponseResultPeersPeerStateStats(
-      votes: json.valueAsString<String>('votes', acceptSnakeCase: true),
+      votes: json.valueAsString<String>('votes', normalizeKeyLookup: true),
       blockParts: json.valueAsString<String>(
         'block_parts',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
     );
   }
@@ -1675,7 +1720,7 @@ class TendermintDumpConsensusResponseResultPeers {
     return TendermintDumpConsensusResponseResultPeers(
       nodeAddress: json.valueAsString<String?>(
         'node_address',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       peerState: json.valueAsMap<Map<String, dynamic>?>("peer_state"),
     );
@@ -1701,7 +1746,7 @@ class TendermintDumpConsensusResponseResult {
     return TendermintDumpConsensusResponseResult(
       roundState: json.valueEnsureAsMap<String, dynamic>(
         "round_state",
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       peers: json.valueTo<
         List<TendermintDumpConsensusResponseResultPeers>,
@@ -1718,7 +1763,7 @@ class TendermintDumpConsensusResponseResult {
                           ),
                     )
                     .toList(),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
     );
   }
@@ -1750,22 +1795,22 @@ class TendermintConsensusStateResponseResultRoundStateHeightVoteSet {
     Map<String, dynamic> json,
   ) {
     return TendermintConsensusStateResponseResultRoundStateHeightVoteSet(
-      round: json.valueAsInt<int?>('round', acceptSnakeCase: true),
+      round: json.valueAsInt<int?>('round', normalizeKeyLookup: true),
       prevotes: json.valueAsList<List<String>?>(
         'prevotes',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       prevotesBitArray: json.valueAsString<String?>(
         'prevotes_bit_array',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       precommits: json.valueAsList<List<String>?>(
         'precommits',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       precommitsBitArray: json.valueAsString<String?>(
         'precommits_bit_array',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
     );
   }
@@ -1794,8 +1839,8 @@ class TendermintConsensusStateResponseResultRoundStateProposer {
     Map<String, dynamic> json,
   ) {
     return TendermintConsensusStateResponseResultRoundStateProposer(
-      address: json.valueAsString<String?>('address', acceptSnakeCase: true),
-      index: json.valueAsInt<int?>('index', acceptSnakeCase: true),
+      address: json.valueAsString<String?>('address', normalizeKeyLookup: true),
+      index: json.valueAsInt<int?>('index', normalizeKeyLookup: true),
     );
   }
 
@@ -1830,23 +1875,23 @@ class TendermintConsensusStateResponseResultRoundState {
     return TendermintConsensusStateResponseResultRoundState(
       heightRoundStep: json.valueAsString<String>(
         'height/round/step',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       startTime: json.valueAsString<String>(
         'start_time',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       proposalBlockHash: json.valueAsString<String>(
         'proposal_block_hash',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       lockedBlockHash: json.valueAsString<String>(
         'locked_block_hash',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       validBlockHash: json.valueAsString<String>(
         'valid_block_hash',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       heightVoteSet: json.valueTo<
         List<TendermintConsensusStateResponseResultRoundStateHeightVoteSet>,
@@ -1863,7 +1908,7 @@ class TendermintConsensusStateResponseResultRoundState {
                           ),
                     )
                     .toList(),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       proposer: json.valueTo<
         TendermintConsensusStateResponseResultRoundStateProposer,
@@ -1875,7 +1920,7 @@ class TendermintConsensusStateResponseResultRoundState {
                 TendermintConsensusStateResponseResultRoundStateProposer.fromJson(
                   v,
                 ),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
     );
   }
@@ -1909,7 +1954,7 @@ class TendermintConsensusStateResponseResult {
         key: 'round_state',
         parse:
             (v) => TendermintConsensusStateResponseResultRoundState.fromJson(v),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
     );
   }
@@ -1934,13 +1979,13 @@ class TendermintConsensusParamsResponseResult {
     return TendermintConsensusParamsResponseResult(
       blockHeight: json.valueAsString<String>(
         'block_height',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       consensusParams: json
           .valueTo<TendermintConsensusParams, Map<String, dynamic>>(
             key: 'consensus_params',
             parse: (v) => TendermintConsensusParams.fromJson(v),
-            acceptSnakeCase: true,
+            normalizeKeyLookup: true,
           ),
     );
   }
@@ -1968,11 +2013,11 @@ class TendermintNumUnconfirmedTransactionsResponseResult {
     Map<String, dynamic> json,
   ) {
     return TendermintNumUnconfirmedTransactionsResponseResult(
-      nTxs: json.valueAsString<String>('n_txs', acceptSnakeCase: true),
-      total: json.valueAsString<String>('total', acceptSnakeCase: true),
+      nTxs: json.valueAsString<String>('n_txs', normalizeKeyLookup: true),
+      total: json.valueAsString<String>('total', normalizeKeyLookup: true),
       totalBytes: json.valueAsString<String>(
         'total_bytes',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
     );
   }
@@ -1999,13 +2044,13 @@ class TendermintUnconfirmedTransactionsResponseResult {
     Map<String, dynamic> json,
   ) {
     return TendermintUnconfirmedTransactionsResponseResult(
-      nTxs: json.valueAsString<String>('n_txs', acceptSnakeCase: true),
-      total: json.valueAsString<String>('total', acceptSnakeCase: true),
+      nTxs: json.valueAsString<String>('n_txs', normalizeKeyLookup: true),
+      total: json.valueAsString<String>('total', normalizeKeyLookup: true),
       totalBytes: json.valueAsString<String>(
         'total_bytes',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
-      txs: json.valueAsList<List<String>?>('txs', acceptSnakeCase: true),
+      txs: json.valueAsList<List<String>?>('txs', normalizeKeyLookup: true),
     );
   }
 
@@ -2036,13 +2081,13 @@ class TendermintUnconfirmedTransactionsResponseResult {
 //     Map<String, dynamic> json,
 //   ) {
 //     return TendermintTxSearchResponseResultTxsTxResult(
-//       log: json.valueAsString<String>('log', acceptSnakeCase: true),
-//       gasWanted: json.valueAsString<String>('gas_wanted', acceptSnakeCase: true),
-//       gasUsed: json.valueAsString<String>('gas_used', acceptSnakeCase: true),
+//       log: json.valueAsString<String>('log', normalizeKeyLookup: true),
+//       gasWanted: json.valueAsString<String>('gas_wanted', normalizeKeyLookup: true),
+//       gasUsed: json.valueAsString<String>('gas_used', normalizeKeyLookup: true),
 //       tags: json.valueTo<TendermintEvent, Map<String, dynamic>>(
 //         key: 'tags',
 //         parse: (v) => TendermintEvent.fromJson(v),
-//         acceptSnakeCase: true,
+//         normalizeKeyLookup: true
 //       ),
 //     );
 //   }
@@ -2074,10 +2119,13 @@ class TendermintTxSearchResponseResultTxsProofProof {
     Map<String, dynamic> json,
   ) {
     return TendermintTxSearchResponseResultTxsProofProof(
-      total: json.valueAsString<String>('total', acceptSnakeCase: true),
-      index: json.valueAsString<String>('index', acceptSnakeCase: true),
-      leafHash: json.valueAsString<String>('leaf_hash', acceptSnakeCase: true),
-      aunts: json.valueAsList<List<String>>('aunts', acceptSnakeCase: true),
+      total: json.valueAsString<String>('total', normalizeKeyLookup: true),
+      index: json.valueAsString<String>('index', normalizeKeyLookup: true),
+      leafHash: json.valueAsString<String>(
+        'leaf_hash',
+        normalizeKeyLookup: true,
+      ),
+      aunts: json.valueAsList<List<String>>('aunts', normalizeKeyLookup: true),
     );
   }
 
@@ -2106,15 +2154,18 @@ class TendermintTxSearchResponseResultTxsProof {
     Map<String, dynamic> json,
   ) {
     return TendermintTxSearchResponseResultTxsProof(
-      rootHash: json.valueAsString<String>('RootHash', acceptSnakeCase: true),
-      data: json.valueAsString<String>('Data', acceptSnakeCase: true),
+      rootHash: json.valueAsString<String>(
+        'RootHash',
+        normalizeKeyLookup: true,
+      ),
+      data: json.valueAsString<String>('Data', normalizeKeyLookup: true),
       proof: json.valueTo<
         TendermintTxSearchResponseResultTxsProofProof,
         Map<String, dynamic>
       >(
         key: 'Proof',
         parse: (v) => TendermintTxSearchResponseResultTxsProofProof.fromJson(v),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
     );
   }
@@ -2145,23 +2196,23 @@ class TendermintTxSearchResponseResultTxs {
     Map<String, dynamic> json,
   ) {
     return TendermintTxSearchResponseResultTxs(
-      hash: json.valueAsString<String?>('hash', acceptSnakeCase: true),
-      height: json.valueAsString<String?>('height', acceptSnakeCase: true),
-      index: json.valueAsInt<int?>('index', acceptSnakeCase: true),
+      hash: json.valueAsString<String?>('hash', normalizeKeyLookup: true),
+      height: json.valueAsString<String?>('height', normalizeKeyLookup: true),
+      index: json.valueAsInt<int?>('index', normalizeKeyLookup: true),
       txResult: json
           .valueTo<TendermintCheckTxResponseResult?, Map<String, dynamic>>(
             key: 'tx_result',
             parse: (v) => TendermintCheckTxResponseResult.fromJson(v),
-            acceptSnakeCase: true,
+            normalizeKeyLookup: true,
           ),
-      tx: json.valueAsString<String?>('tx', acceptSnakeCase: true),
+      tx: json.valueAsString<String?>('tx', normalizeKeyLookup: true),
       proof: json.valueTo<
         TendermintTxSearchResponseResultTxsProof?,
         Map<String, dynamic>
       >(
         key: 'proof',
         parse: (v) => TendermintTxSearchResponseResultTxsProof.fromJson(v),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
     );
   }
@@ -2200,11 +2251,11 @@ class TendermintTxSearchResponseResult {
                       ),
                     )
                     .toList(),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       totalCount: json.valueAsString<String>(
         'total_count',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
     );
   }
@@ -2232,9 +2283,9 @@ class TendermintTxSearchResponseResult {
 
 //   factory TendermintTxResponseResultTxResult.fromJson(Map<String, dynamic> json) {
 //     return TendermintTxResponseResultTxResult(
-//       log: json.valueAsString<String>('log', acceptSnakeCase: true),
-//       gasWanted: json.valueAsString<String>('gas_wanted', acceptSnakeCase: true),
-//       gasUsed: json.valueAsString<String>('gas_used', acceptSnakeCase: true),
+//       log: json.valueAsString<String>('log', normalizeKeyLookup: true),
+//       gasWanted: json.valueAsString<String>('gas_wanted', normalizeKeyLookup: true),
+//       gasUsed: json.valueAsString<String>('gas_used', normalizeKeyLookup: true),
 //       tags: json.valueTo<List<TendermintEvent>, List>(
 //         key: 'tags',
 //         parse:
@@ -2242,7 +2293,7 @@ class TendermintTxSearchResponseResult {
 //                 v
 //                     .map((e) => TendermintEvent.fromJson(Map<String, dynamic>.from(e)))
 //                     .toList(),
-//         acceptSnakeCase: true,
+//         normalizeKeyLookup: true
 //       ),
 //     );
 //   }
@@ -2274,16 +2325,16 @@ class TendermintTxResponseResult {
 
   factory TendermintTxResponseResult.fromJson(Map<String, dynamic> json) {
     return TendermintTxResponseResult(
-      hash: json.valueAsString<String>('hash', acceptSnakeCase: true),
-      height: json.valueAsString<String>('height', acceptSnakeCase: true),
-      index: json.valueAsInt<int>('index', acceptSnakeCase: true),
+      hash: json.valueAsString<String>('hash', normalizeKeyLookup: true),
+      height: json.valueAsString<String>('height', normalizeKeyLookup: true),
+      index: json.valueAsInt<int>('index', normalizeKeyLookup: true),
       txResult: json
           .valueTo<TendermintCheckTxResponseResult, Map<String, dynamic>>(
             key: 'tx_result',
             parse: (v) => TendermintCheckTxResponseResult.fromJson(v),
-            acceptSnakeCase: true,
+            normalizeKeyLookup: true,
           ),
-      tx: json.valueAsString<String>('tx', acceptSnakeCase: true),
+      tx: json.valueAsString<String>('tx', normalizeKeyLookup: true),
     );
   }
 
@@ -2317,19 +2368,19 @@ class TendermintABCIInfoResponseResultResponse {
     Map<String, dynamic> json,
   ) {
     return TendermintABCIInfoResponseResultResponse(
-      data: json.valueAsString<String>('data', acceptSnakeCase: true),
-      version: json.valueAsString<String>('version', acceptSnakeCase: true),
+      data: json.valueAsString<String>('data', normalizeKeyLookup: true),
+      version: json.valueAsString<String>('version', normalizeKeyLookup: true),
       appVersion: json.valueAsString<String>(
         'app_version',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       lastBlockHeight: json.valueAsString<String>(
         'last_block_height',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       lastBlockAppHash: json.valueAsString<String>(
         'last_block_app_hash',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
     );
   }
@@ -2358,7 +2409,7 @@ class TendermintABCIInfoResponseResult {
       >(
         key: 'response',
         parse: (v) => TendermintABCIInfoResponseResultResponse.fromJson(v),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
     );
   }
@@ -2391,13 +2442,13 @@ class TendermintABCIQueryResponseResultResponse {
     Map<String, dynamic> json,
   ) {
     return TendermintABCIQueryResponseResultResponse(
-      log: json.valueAsString<String>('log', acceptSnakeCase: true),
-      height: json.valueAsString<String>('height', acceptSnakeCase: true),
-      proof: json.valueAsString<String?>('proof', acceptSnakeCase: true),
-      value: json.valueAsString<String?>('value', acceptSnakeCase: true),
-      key: json.valueAsString<String?>('key', acceptSnakeCase: true),
-      index: json.valueAsInt<int?>('index', acceptSnakeCase: true),
-      code: json.valueAsInt<int?>('code', acceptSnakeCase: true),
+      log: json.valueAsString<String>('log', normalizeKeyLookup: true),
+      height: json.valueAsString<String>('height', normalizeKeyLookup: true),
+      proof: json.valueAsString<String?>('proof', normalizeKeyLookup: true),
+      value: json.valueAsString<String?>('value', normalizeKeyLookup: true),
+      key: json.valueAsString<String?>('key', normalizeKeyLookup: true),
+      index: json.valueAsInt<int?>('index', normalizeKeyLookup: true),
+      code: json.valueAsInt<int?>('code', normalizeKeyLookup: true),
     );
   }
 
@@ -2429,7 +2480,7 @@ class TendermintABCIQueryResponseResult {
       >(
         key: 'response',
         parse: (v) => TendermintABCIQueryResponseResultResponse.fromJson(v),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
     );
   }
@@ -2454,9 +2505,9 @@ class TendermintBroadcastTxCommitResponseResultDeliverTx {
     Map<String, dynamic> json,
   ) {
     return TendermintBroadcastTxCommitResponseResultDeliverTx(
-      log: json.valueAsString<String>('log', acceptSnakeCase: true),
-      data: json.valueAsString<String?>('data', acceptSnakeCase: true),
-      code: json.valueAsInt<int>('code', acceptSnakeCase: true),
+      log: json.valueAsString<String>('log', normalizeKeyLookup: true),
+      data: json.valueAsString<String?>('data', normalizeKeyLookup: true),
+      code: json.valueAsInt<int>('code', normalizeKeyLookup: true),
     );
   }
 
@@ -2480,9 +2531,9 @@ class TendermintBroadcastTxCommitResponseResultCheckTx {
     Map<String, dynamic> json,
   ) {
     return TendermintBroadcastTxCommitResponseResultCheckTx(
-      log: json.valueAsString<String?>('log', acceptSnakeCase: true),
-      data: json.valueAsString<String?>('data', acceptSnakeCase: true),
-      code: json.valueAsInt<int>('code', acceptSnakeCase: true),
+      log: json.valueAsString<String?>('log', normalizeKeyLookup: true),
+      data: json.valueAsString<String?>('data', normalizeKeyLookup: true),
+      code: json.valueAsInt<int>('code', normalizeKeyLookup: true),
     );
   }
 
@@ -2510,8 +2561,8 @@ class TendermintBroadcastTxCommitResponseResult {
     Map<String, dynamic> json,
   ) {
     return TendermintBroadcastTxCommitResponseResult(
-      height: json.valueAsString<String>('height', acceptSnakeCase: true),
-      hash: json.valueAsString<String>('hash', acceptSnakeCase: true),
+      height: json.valueAsString<String>('height', normalizeKeyLookup: true),
+      hash: json.valueAsString<String>('hash', normalizeKeyLookup: true),
       deliverTx: json.valueTo<
         TendermintBroadcastTxCommitResponseResultDeliverTx?,
         Map<String, dynamic>
@@ -2520,13 +2571,13 @@ class TendermintBroadcastTxCommitResponseResult {
         parse:
             (v) =>
                 TendermintBroadcastTxCommitResponseResultDeliverTx.fromJson(v),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       txResult: json
           .valueTo<TendermintCheckTxResponseResult?, Map<String, dynamic>>(
             key: 'tx_result',
             parse: (v) => TendermintCheckTxResponseResult.fromJson(v),
-            acceptSnakeCase: true,
+            normalizeKeyLookup: true,
           ),
       checkTx: json.valueTo<
         TendermintBroadcastTxCommitResponseResultCheckTx,
@@ -2535,7 +2586,7 @@ class TendermintBroadcastTxCommitResponseResult {
         key: 'check_tx',
         parse:
             (v) => TendermintBroadcastTxCommitResponseResultCheckTx.fromJson(v),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
     );
   }
@@ -2561,7 +2612,7 @@ class TendermintCheckTxResponseResultEvents {
     Map<String, dynamic> json,
   ) {
     return TendermintCheckTxResponseResultEvents(
-      type: json.valueAsString<String?>('type', acceptSnakeCase: true),
+      type: json.valueAsString<String?>('type', normalizeKeyLookup: true),
       attributes: json.valueTo<List<TendermintEvent>?, List>(
         key: 'attributes',
         parse:
@@ -2573,7 +2624,7 @@ class TendermintCheckTxResponseResultEvents {
                       ),
                     )
                     .toList(),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
     );
   }
@@ -2609,15 +2660,18 @@ class TendermintCheckTxResponseResult {
 
   factory TendermintCheckTxResponseResult.fromJson(Map<String, dynamic> json) {
     return TendermintCheckTxResponseResult(
-      code: json.valueAsInt<int>('code', acceptSnakeCase: true),
-      data: json.valueAsString<String?>('data', acceptSnakeCase: true),
-      log: json.valueAsString<String>('log', acceptSnakeCase: true),
-      info: json.valueAsString<String?>('info', acceptSnakeCase: true),
+      code: json.valueAsInt<int>('code', normalizeKeyLookup: true),
+      data: json.valueAsString<String?>('data', normalizeKeyLookup: true),
+      log: json.valueAsString<String>('log', normalizeKeyLookup: true),
+      info: json.valueAsString<String?>('info', normalizeKeyLookup: true),
       gasWanted: json.valueAsString<String?>(
         'gas_wanted',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
-      gasUsed: json.valueAsString<String?>('gas_used', acceptSnakeCase: true),
+      gasUsed: json.valueAsString<String?>(
+        'gas_used',
+        normalizeKeyLookup: true,
+      ),
       events: json.valueTo<List<TendermintCheckTxResponseResultEvents>?, List>(
         key: 'events',
         parse:
@@ -2629,11 +2683,11 @@ class TendermintCheckTxResponseResult {
                       ),
                     )
                     .toList(),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       codespace: json.valueAsString<String?>(
         'codespace',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
     );
   }
@@ -2671,14 +2725,14 @@ class TendermintBroadcastTxResponseResult {
     Map<String, dynamic> json,
   ) {
     return TendermintBroadcastTxResponseResult(
-      code: json.valueAsInt<int>('code', acceptSnakeCase: true),
-      data: json.valueAsString<String?>('data', acceptSnakeCase: true),
-      log: json.valueAsString<String>('log', acceptSnakeCase: true),
+      code: json.valueAsInt<int>('code', normalizeKeyLookup: true),
+      data: json.valueAsString<String?>('data', normalizeKeyLookup: true),
+      log: json.valueAsString<String>('log', normalizeKeyLookup: true),
       codespace: json.valueAsString<String?>(
         'codespace',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
-      hash: json.valueAsString<String>('hash', acceptSnakeCase: true),
+      hash: json.valueAsString<String>('hash', normalizeKeyLookup: true),
     );
   }
 
@@ -2700,7 +2754,7 @@ class TendermintdialResp {
 
   factory TendermintdialResp.fromJson(Map<String, dynamic> json) {
     return TendermintdialResp(
-      log: json.valueAsString<String?>('Log', acceptSnakeCase: true),
+      log: json.valueAsString<String?>('Log', normalizeKeyLookup: true),
     );
   }
 
@@ -2733,9 +2787,9 @@ class TendermintBlockSearchResponseResult {
                       ),
                     )
                     .toList(),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
-      totalCount: json.valueAsInt<int>('total_count', acceptSnakeCase: true),
+      totalCount: json.valueAsInt<int>('total_count', normalizeKeyLookup: true),
     );
   }
 
@@ -2757,8 +2811,8 @@ class TendermintValidatorPriorityPubKey {
     Map<String, dynamic> json,
   ) {
     return TendermintValidatorPriorityPubKey(
-      type: json.valueAsString<String>('type', acceptSnakeCase: true),
-      value: json.valueAsString<String>('value', acceptSnakeCase: true),
+      type: json.valueAsString<String>('type', normalizeKeyLookup: true),
+      value: json.valueAsString<String>('value', normalizeKeyLookup: true),
     );
   }
 
@@ -2782,20 +2836,20 @@ class TendermintValidatorPriority {
 
   factory TendermintValidatorPriority.fromJson(Map<String, dynamic> json) {
     return TendermintValidatorPriority(
-      address: json.valueAsString<String?>('address', acceptSnakeCase: true),
+      address: json.valueAsString<String?>('address', normalizeKeyLookup: true),
       pubKey: json
           .valueTo<TendermintValidatorPriorityPubKey?, Map<String, dynamic>>(
             key: 'pub_key',
             parse: (v) => TendermintValidatorPriorityPubKey.fromJson(v),
-            acceptSnakeCase: true,
+            normalizeKeyLookup: true,
           ),
       votingPower: json.valueAsString<String?>(
         'voting_power',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       proposerPriority: json.valueAsString<String?>(
         'proposer_priority',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
     );
   }
@@ -2822,10 +2876,13 @@ class TendermintValidator {
       pubKey: json.valueTo<TendermintPubKey?, Map<String, dynamic>>(
         key: 'pub_key',
         parse: (v) => TendermintPubKey.fromJson(v),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
-      votingPower: json.valueAsInt<int?>('voting_power', acceptSnakeCase: true),
-      address: json.valueAsString<String?>('address', acceptSnakeCase: true),
+      votingPower: json.valueAsInt<int?>(
+        'voting_power',
+        normalizeKeyLookup: true,
+      ),
+      address: json.valueAsString<String?>('address', normalizeKeyLookup: true),
     );
   }
 
@@ -2851,11 +2908,14 @@ class TendermintConsensusParamsBlock {
 
   factory TendermintConsensusParamsBlock.fromJson(Map<String, dynamic> json) {
     return TendermintConsensusParamsBlock(
-      maxBytes: json.valueAsString<String?>('max_bytes', acceptSnakeCase: true),
-      maxGas: json.valueAsString<String?>('max_gas', acceptSnakeCase: true),
+      maxBytes: json.valueAsString<String?>(
+        'max_bytes',
+        normalizeKeyLookup: true,
+      ),
+      maxGas: json.valueAsString<String?>('max_gas', normalizeKeyLookup: true),
       timeIotaMs: json.valueAsString<String?>(
         'time_iota_ms',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
     );
   }
@@ -2878,7 +2938,7 @@ class TendermintConsensusParamsEvidence {
     Map<String, dynamic> json,
   ) {
     return TendermintConsensusParamsEvidence(
-      maxAge: json.valueAsString<String?>('max_age', acceptSnakeCase: true),
+      maxAge: json.valueAsString<String?>('max_age', normalizeKeyLookup: true),
     );
   }
 
@@ -2898,7 +2958,7 @@ class TendermintConsensusParamsValidator {
     return TendermintConsensusParamsValidator(
       pubKeyTypes: json.valueAsList<List<String>>(
         'pub_key_types',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
     );
   }
@@ -2924,19 +2984,19 @@ class TendermintConsensusParams {
       block: json.valueTo<TendermintConsensusParamsBlock, Map<String, dynamic>>(
         key: 'block',
         parse: (v) => TendermintConsensusParamsBlock.fromJson(v),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       evidence: json
           .valueTo<TendermintConsensusParamsEvidence, Map<String, dynamic>>(
             key: 'evidence',
             parse: (v) => TendermintConsensusParamsEvidence.fromJson(v),
-            acceptSnakeCase: true,
+            normalizeKeyLookup: true,
           ),
       validator: json
           .valueTo<TendermintConsensusParamsValidator, Map<String, dynamic>>(
             key: 'validator',
             parse: (v) => TendermintConsensusParamsValidator.fromJson(v),
-            acceptSnakeCase: true,
+            normalizeKeyLookup: true,
           ),
     );
   }
@@ -2959,9 +3019,9 @@ class TendermintEvent {
 
   factory TendermintEvent.fromJson(Map<String, dynamic> json) {
     return TendermintEvent(
-      key: json.valueAsString<String?>('key', acceptSnakeCase: true),
-      value: json.valueAsString<String?>('value', acceptSnakeCase: true),
-      index: json.valueAsBool<bool?>('index', acceptSnakeCase: true),
+      key: json.valueAsString<String?>('key', normalizeKeyLookup: true),
+      value: json.valueAsString<String?>('value', normalizeKeyLookup: true),
+      index: json.valueAsBool<bool?>('index', normalizeKeyLookup: true),
     );
   }
 
@@ -2978,8 +3038,8 @@ class TendermintBlockHeaderVersion {
 
   factory TendermintBlockHeaderVersion.fromJson(Map<String, dynamic> json) {
     return TendermintBlockHeaderVersion(
-      block: json.valueAsString<String>('block', acceptSnakeCase: true),
-      app: json.valueAsString<String?>('app', acceptSnakeCase: true),
+      block: json.valueAsString<String>('block', normalizeKeyLookup: true),
+      app: json.valueAsString<String?>('app', normalizeKeyLookup: true),
     );
   }
 
@@ -3026,45 +3086,48 @@ class TendermintBlockHeader {
       version: json.valueTo<TendermintBlockHeaderVersion, Map<String, dynamic>>(
         key: 'version',
         parse: (v) => TendermintBlockHeaderVersion.fromJson(v),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
-      chainId: json.valueAsString<String>('chain_id', acceptSnakeCase: true),
-      height: json.valueAsString<String>('height', acceptSnakeCase: true),
-      time: json.valueAsString<String>('time', acceptSnakeCase: true),
+      chainId: json.valueAsString<String>('chain_id', normalizeKeyLookup: true),
+      height: json.valueAsString<String>('height', normalizeKeyLookup: true),
+      time: json.valueAsString<String>('time', normalizeKeyLookup: true),
       lastBlockId: json.valueTo<TendermintBlockID, Map<String, dynamic>>(
         key: 'last_block_id',
         parse: (v) => TendermintBlockID.fromJson(v),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       lastCommitHash: json.valueAsString<String>(
         'last_commit_hash',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
-      dataHash: json.valueAsString<String>('data_hash', acceptSnakeCase: true),
+      dataHash: json.valueAsString<String>(
+        'data_hash',
+        normalizeKeyLookup: true,
+      ),
       validatorsHash: json.valueAsString<String>(
         'validators_hash',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       nextValidatorsHash: json.valueAsString<String>(
         'next_validators_hash',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       consensusHash: json.valueAsString<String>(
         'consensus_hash',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
-      appHash: json.valueAsString<String>('app_hash', acceptSnakeCase: true),
+      appHash: json.valueAsString<String>('app_hash', normalizeKeyLookup: true),
       lastResultsHash: json.valueAsString<String>(
         'last_results_hash',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       evidenceHash: json.valueAsString<String>(
         'evidence_hash',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
       proposerAddress: json.valueAsString<String>(
         'proposer_address',
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
     );
   }
@@ -3097,8 +3160,8 @@ class TendermintBlockIDParts {
 
   factory TendermintBlockIDParts.fromJson(Map<String, dynamic> json) {
     return TendermintBlockIDParts(
-      total: json.valueAsInt<int>('total', acceptSnakeCase: true),
-      hash: json.valueAsString<String>('hash', acceptSnakeCase: true),
+      total: json.valueAsInt<int>('total', normalizeKeyLookup: true),
+      hash: json.valueAsString<String>('hash', normalizeKeyLookup: true),
     );
   }
 
@@ -3115,11 +3178,11 @@ class TendermintBlockID {
 
   factory TendermintBlockID.fromJson(Map<String, dynamic> json) {
     return TendermintBlockID(
-      hash: json.valueAsString<String>('hash', acceptSnakeCase: true),
+      hash: json.valueAsString<String>('hash', normalizeKeyLookup: true),
       parts: json.valueTo<TendermintBlockIDParts, Map<String, dynamic>>(
         key: 'parts',
         parse: (v) => TendermintBlockIDParts.fromJson(v),
-        acceptSnakeCase: true,
+        normalizeKeyLookup: true,
       ),
     );
   }

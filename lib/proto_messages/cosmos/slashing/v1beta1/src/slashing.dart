@@ -72,37 +72,52 @@ class ValidatorSigningInfo extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'address': address,
-      'start_height': startHeight?.toString(),
-      'index_offset': indexOffset?.toString(),
+      'start_height': config.encodeBigint(startHeight),
+      'index_offset': config.encodeBigint(indexOffset),
       'jailed_until': jailedUntil?.toRfc3339(),
       'tombstoned': tombstoned,
-      'missed_blocks_counter': missedBlocksCounter?.toString(),
+      'missed_blocks_counter': config.encodeBigint(missedBlocksCounter),
     };
   }
 
-  factory ValidatorSigningInfo.fromJson(Map<String, dynamic> json) {
+  factory ValidatorSigningInfo.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ValidatorSigningInfo(
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       startHeight: json.valueAsBigInt<BigInt?>(
         'start_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       indexOffset: json.valueAsBigInt<BigInt?>(
         'index_offset',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      jailedUntil: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      jailedUntil: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'jailed_until',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      tombstoned: json.valueAsBool<bool?>('tombstoned', acceptCamelCase: true),
+      tombstoned: json.valueAsBool<bool?>(
+        'tombstoned',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       missedBlocksCounter: json.valueAsBigInt<BigInt?>(
         'missed_blocks_counter',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -131,21 +146,23 @@ class ValidatorSigningInfo extends CosmosProtoMessage {
 class Params extends CosmosProtoMessage {
   final BigInt? signedBlocksWindow;
 
-  final List<int>? minSignedPerWindow;
+  final BuBytes? minSignedPerWindow;
 
   final google_protobuf_duration.Duration? downtimeJailDuration;
 
-  final List<int>? slashFractionDoubleSign;
+  final BuBytes? slashFractionDoubleSign;
 
-  final List<int>? slashFractionDowntime;
+  final BuBytes? slashFractionDowntime;
 
-  const Params({
+  Params({
     this.signedBlocksWindow,
-    this.minSignedPerWindow,
+    List<int>? minSignedPerWindow,
     this.downtimeJailDuration,
-    this.slashFractionDoubleSign,
-    this.slashFractionDowntime,
-  });
+    List<int>? slashFractionDoubleSign,
+    List<int>? slashFractionDowntime,
+  }) : minSignedPerWindow = minSignedPerWindow?.asImmutableBytes,
+       slashFractionDoubleSign = slashFractionDoubleSign?.asImmutableBytes,
+       slashFractionDowntime = slashFractionDowntime?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -191,62 +208,58 @@ class Params extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'signed_blocks_window': signedBlocksWindow?.toString(),
-      'min_signed_per_window': switch (minSignedPerWindow) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'signed_blocks_window': config.encodeBigint(signedBlocksWindow),
+      'min_signed_per_window': config.encodeBinary(minSignedPerWindow),
       'downtime_jail_duration': downtimeJailDuration?.encodeString(
         asNanos: true,
       ),
-      'slash_fraction_double_sign': switch (slashFractionDoubleSign) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'slash_fraction_downtime': switch (slashFractionDowntime) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'slash_fraction_double_sign': config.encodeBinary(
+        slashFractionDoubleSign,
+      ),
+      'slash_fraction_downtime': config.encodeBinary(slashFractionDowntime),
     };
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
       signedBlocksWindow: json.valueAsBigInt<BigInt?>(
         'signed_blocks_window',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      minSignedPerWindow: json.valueAsBytes<List<int>?>(
-        'min_signed_per_window',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      minSignedPerWindow: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'min_signed_per_window',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
       downtimeJailDuration: json
-          .valueTo<google_protobuf_duration.Duration?, String>(
+          .valueTo<google_protobuf_duration.Duration?, Object>(
             key: 'downtime_jail_duration',
-            parse: (v) => google_protobuf_duration.Duration.fromString(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => google_protobuf_duration.Duration.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
-      slashFractionDoubleSign: json.valueAsBytes<List<int>?>(
-        'slash_fraction_double_sign',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      slashFractionDoubleSign: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'slash_fraction_double_sign',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
-      slashFractionDowntime: json.valueAsBytes<List<int>?>(
-        'slash_fraction_downtime',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      slashFractionDowntime: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'slash_fraction_downtime',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
     );
   }

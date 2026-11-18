@@ -39,14 +39,25 @@ class QueryTxStagesRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [txId, height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'tx_id': txId, 'height': height};
   }
 
-  factory QueryTxStagesRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryTxStagesRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTxStagesRequest(
-      txId: json.valueAsString<String?>('tx_id', acceptCamelCase: true),
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      txId: json.valueAsString<String?>(
+        'tx_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -128,57 +139,87 @@ class QueryTxStagesResponse extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'inbound_observed': inboundObserved?.toJson(),
-      'inbound_confirmation_counted': inboundConfirmationCounted?.toJson(),
-      'inbound_finalised': inboundFinalised?.toJson(),
-      'swap_status': swapStatus?.toJson(),
-      'swap_finalised': swapFinalised?.toJson(),
-      'outbound_delay': outboundDelay?.toJson(),
-      'outbound_signed': outboundSigned?.toJson(),
+      'inbound_observed': config.encodeMessage(inboundObserved),
+      'inbound_confirmation_counted': config.encodeMessage(
+        inboundConfirmationCounted,
+      ),
+      'inbound_finalised': config.encodeMessage(inboundFinalised),
+      'swap_status': config.encodeMessage(swapStatus),
+      'swap_finalised': config.encodeMessage(swapFinalised),
+      'outbound_delay': config.encodeMessage(outboundDelay),
+      'outbound_signed': config.encodeMessage(outboundSigned),
     };
   }
 
-  factory QueryTxStagesResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryTxStagesResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTxStagesResponse(
-      inboundObserved: json
-          .valueTo<InboundObservedStage?, Map<String, dynamic>>(
-            key: 'inbound_observed',
-            parse: (v) => InboundObservedStage.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      inboundObserved: json.valueTo<InboundObservedStage?, Object>(
+        key: 'inbound_observed',
+        parse:
+            (v) => InboundObservedStage.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       inboundConfirmationCounted: json
-          .valueTo<InboundConfirmationCountedStage?, Map<String, dynamic>>(
+          .valueTo<InboundConfirmationCountedStage?, Object>(
             key: 'inbound_confirmation_counted',
-            parse: (v) => InboundConfirmationCountedStage.fromJson(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => InboundConfirmationCountedStage.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
-      inboundFinalised: json
-          .valueTo<InboundFinalisedStage?, Map<String, dynamic>>(
-            key: 'inbound_finalised',
-            parse: (v) => InboundFinalisedStage.fromJson(v),
-            acceptCamelCase: true,
-          ),
-      swapStatus: json.valueTo<SwapStatus?, Map<String, dynamic>>(
+      inboundFinalised: json.valueTo<InboundFinalisedStage?, Object>(
+        key: 'inbound_finalised',
+        parse:
+            (v) => InboundFinalisedStage.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      swapStatus: json.valueTo<SwapStatus?, Object>(
         key: 'swap_status',
-        parse: (v) => SwapStatus.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => SwapStatus.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      swapFinalised: json.valueTo<SwapFinalisedStage?, Map<String, dynamic>>(
+      swapFinalised: json.valueTo<SwapFinalisedStage?, Object>(
         key: 'swap_finalised',
-        parse: (v) => SwapFinalisedStage.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => SwapFinalisedStage.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      outboundDelay: json.valueTo<OutboundDelayStage?, Map<String, dynamic>>(
+      outboundDelay: json.valueTo<OutboundDelayStage?, Object>(
         key: 'outbound_delay',
-        parse: (v) => OutboundDelayStage.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => OutboundDelayStage.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      outboundSigned: json.valueTo<OutboundSignedStage?, Map<String, dynamic>>(
+      outboundSigned: json.valueTo<OutboundSignedStage?, Object>(
         key: 'outbound_signed',
-        parse: (v) => OutboundSignedStage.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => OutboundSignedStage.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -252,14 +293,25 @@ class QueryTxStatusRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [txId, height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'tx_id': txId, 'height': height};
   }
 
-  factory QueryTxStatusRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryTxStatusRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTxStatusRequest(
-      txId: json.valueAsString<String?>('tx_id', acceptCamelCase: true),
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      txId: json.valueAsString<String?>(
+        'tx_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -328,48 +380,74 @@ class QueryTxStatusResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [tx, plannedOutTxs, outTxs, stages];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'tx': tx?.toJson(),
-      'planned_out_txs': plannedOutTxs.map((e) => e.toJson()).toList(),
-      'out_txs': outTxs.map((e) => e.toJson()).toList(),
-      'stages': stages?.toJson(),
+      'tx': config.encodeMessage(tx),
+      'planned_out_txs':
+          plannedOutTxs.map((e) => config.encodeMessage(e)).toList(),
+      'out_txs': outTxs.map((e) => config.encodeMessage(e)).toList(),
+      'stages': config.encodeMessage(stages),
     };
   }
 
-  factory QueryTxStatusResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryTxStatusResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTxStatusResponse(
-      tx: json.valueTo<common_common.Tx?, Map<String, dynamic>>(
+      tx: json.valueTo<common_common.Tx?, Object>(
         key: 'tx',
-        parse: (v) => common_common.Tx.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => common_common.Tx.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       plannedOutTxs:
           (json.valueEnsureAsList<dynamic>(
                 'planned_out_txs',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<PlannedOutTx, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<PlannedOutTx, Object>(
                   value: e,
-                  parse: (v) => PlannedOutTx.fromJson(v),
+                  parse:
+                      (v) => PlannedOutTx.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       outTxs:
-          (json.valueEnsureAsList<dynamic>('out_txs', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'out_txs',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) =>
-                    JsonParser.valueTo<common_common.Tx, Map<String, dynamic>>(
-                      value: e,
-                      parse: (v) => common_common.Tx.fromJson(v),
-                    ),
+                (e) => JsonParser.valueTo<common_common.Tx, Object>(
+                  value: e,
+                  parse:
+                      (v) => common_common.Tx.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
-      stages: json.valueTo<QueryTxStagesResponse?, Map<String, dynamic>>(
+      stages: json.valueTo<QueryTxStagesResponse?, Object>(
         key: 'stages',
-        parse: (v) => QueryTxStagesResponse.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => QueryTxStagesResponse.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -432,14 +510,25 @@ class QueryTxRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [txId, height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'tx_id': txId, 'height': height};
   }
 
-  factory QueryTxRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryTxRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTxRequest(
-      txId: json.valueAsString<String?>('tx_id', acceptCamelCase: true),
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      txId: json.valueAsString<String?>(
+        'tx_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -514,43 +603,52 @@ class QueryTxResponse extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'observed_tx': observedTx?.toJson(),
-      'consensus_height': consensusHeight?.toString(),
-      'finalised_height': finalisedHeight?.toString(),
-      'outbound_height': outboundHeight?.toString(),
-      'keysign_metric': keysignMetric?.toJson(),
+      'observed_tx': config.encodeMessage(observedTx),
+      'consensus_height': config.encodeBigint(consensusHeight),
+      'finalised_height': config.encodeBigint(finalisedHeight),
+      'outbound_height': config.encodeBigint(outboundHeight),
+      'keysign_metric': config.encodeMessage(keysignMetric),
     };
   }
 
-  factory QueryTxResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryTxResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTxResponse(
-      observedTx: json.valueTo<QueryObservedTx?, Map<String, dynamic>>(
+      observedTx: json.valueTo<QueryObservedTx?, Object>(
         key: 'observed_tx',
-        parse: (v) => QueryObservedTx.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) =>
+                QueryObservedTx.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       consensusHeight: json.valueAsBigInt<BigInt?>(
         'consensus_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       finalisedHeight: json.valueAsBigInt<BigInt?>(
         'finalised_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       outboundHeight: json.valueAsBigInt<BigInt?>(
         'outbound_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      keysignMetric: json.valueTo<
-        types_type_tss_metric.TssKeysignMetric?,
-        Map<String, dynamic>
-      >(
-        key: 'keysign_metric',
-        parse: (v) => types_type_tss_metric.TssKeysignMetric.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      keysignMetric: json
+          .valueTo<types_type_tss_metric.TssKeysignMetric?, Object>(
+            key: 'keysign_metric',
+            parse:
+                (v) => types_type_tss_metric.TssKeysignMetric.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -668,79 +766,99 @@ class QueryObservedTx extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'tx': tx?.toJson(),
+      'tx': config.encodeMessage(tx),
       'status': status,
       'out_hashes': outHashes.map((e) => e).toList(),
-      'block_height': blockHeight?.toString(),
+      'block_height': config.encodeBigint(blockHeight),
       'signers': signers.map((e) => e).toList(),
       'observed_pub_key': observedPubKey,
-      'keysign_ms': keysignMs?.toString(),
-      'finalise_height': finaliseHeight?.toString(),
+      'keysign_ms': config.encodeBigint(keysignMs),
+      'finalise_height': config.encodeBigint(finaliseHeight),
       'aggregator': aggregator,
       'aggregator_target': aggregatorTarget,
       'aggregator_target_limit': aggregatorTargetLimit,
-      'spent_output_refs': spentOutputRefs.map((e) => e.toJson()).toList(),
+      'spent_output_refs':
+          spentOutputRefs.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory QueryObservedTx.fromJson(Map<String, dynamic> json) {
+  factory QueryObservedTx.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryObservedTx(
-      tx: json.valueTo<common_common.Tx?, Map<String, dynamic>>(
+      tx: json.valueTo<common_common.Tx?, Object>(
         key: 'tx',
-        parse: (v) => common_common.Tx.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => common_common.Tx.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      status: json.valueAsString<String?>('status', acceptCamelCase: true),
+      status: json.valueAsString<String?>(
+        'status',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       outHashes:
           (json.valueEnsureAsList<dynamic>(
             'out_hashes',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
       blockHeight: json.valueAsBigInt<BigInt?>(
         'block_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       signers:
           (json.valueEnsureAsList<dynamic>(
             'signers',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
       observedPubKey: json.valueAsString<String?>(
         'observed_pub_key',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       keysignMs: json.valueAsBigInt<BigInt?>(
         'keysign_ms',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       finaliseHeight: json.valueAsBigInt<BigInt?>(
         'finalise_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       aggregator: json.valueAsString<String?>(
         'aggregator',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       aggregatorTarget: json.valueAsString<String?>(
         'aggregator_target',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       aggregatorTargetLimit: json.valueAsString<String?>(
         'aggregator_target_limit',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       spentOutputRefs:
           (json.valueEnsureAsList<dynamic>(
                 'spent_output_refs',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  common_common.OutputRef,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => common_common.OutputRef.fromJson(v)),
+                (e) => JsonParser.valueTo<common_common.OutputRef, Object>(
+                  value: e,
+                  parse:
+                      (v) => common_common.OutputRef.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );
@@ -860,74 +978,109 @@ class QueryObservedTxVoter extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'tx_id': txId,
-      'tx': tx?.toJson(),
-      'height': height?.toString(),
-      'txs': txs.map((e) => e.toJson()).toList(),
-      'actions': actions.map((e) => e.toJson()).toList(),
-      'out_txs': outTxs.map((e) => e.toJson()).toList(),
-      'finalised_height': finalisedHeight?.toString(),
+      'tx': config.encodeMessage(tx),
+      'height': config.encodeBigint(height),
+      'txs': txs.map((e) => config.encodeMessage(e)).toList(),
+      'actions': actions.map((e) => config.encodeMessage(e)).toList(),
+      'out_txs': outTxs.map((e) => config.encodeMessage(e)).toList(),
+      'finalised_height': config.encodeBigint(finalisedHeight),
       'updated_vault': updatedVault,
       'reverted': reverted,
-      'outbound_height': outboundHeight?.toString(),
+      'outbound_height': config.encodeBigint(outboundHeight),
     };
   }
 
-  factory QueryObservedTxVoter.fromJson(Map<String, dynamic> json) {
+  factory QueryObservedTxVoter.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryObservedTxVoter(
-      txId: json.valueAsString<String?>('tx_id', acceptCamelCase: true),
-      tx: json.valueTo<QueryObservedTx?, Map<String, dynamic>>(
-        key: 'tx',
-        parse: (v) => QueryObservedTx.fromJson(v),
-        acceptCamelCase: true,
+      txId: json.valueAsString<String?>(
+        'tx_id',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      height: json.valueAsBigInt<BigInt?>('height', acceptCamelCase: true),
+      tx: json.valueTo<QueryObservedTx?, Object>(
+        key: 'tx',
+        parse:
+            (v) =>
+                QueryObservedTx.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      height: json.valueAsBigInt<BigInt?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       txs:
-          (json.valueEnsureAsList<dynamic>('txs', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'txs',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) =>
-                    JsonParser.valueTo<QueryObservedTx, Map<String, dynamic>>(
-                      value: e,
-                      parse: (v) => QueryObservedTx.fromJson(v),
-                    ),
+                (e) => JsonParser.valueTo<QueryObservedTx, Object>(
+                  value: e,
+                  parse:
+                      (v) => QueryObservedTx.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
       actions:
-          (json.valueEnsureAsList<dynamic>('actions', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'actions',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  types_type_tx_out.TxOutItem,
-                  Map<String, dynamic>
-                >(
+                (e) => JsonParser.valueTo<types_type_tx_out.TxOutItem, Object>(
                   value: e,
-                  parse: (v) => types_type_tx_out.TxOutItem.fromJson(v),
+                  parse:
+                      (v) => types_type_tx_out.TxOutItem.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       outTxs:
-          (json.valueEnsureAsList<dynamic>('out_txs', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'out_txs',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) =>
-                    JsonParser.valueTo<common_common.Tx, Map<String, dynamic>>(
-                      value: e,
-                      parse: (v) => common_common.Tx.fromJson(v),
-                    ),
+                (e) => JsonParser.valueTo<common_common.Tx, Object>(
+                  value: e,
+                  parse:
+                      (v) => common_common.Tx.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
       finalisedHeight: json.valueAsBigInt<BigInt?>(
         'finalised_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       updatedVault: json.valueAsBool<bool?>(
         'updated_vault',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      reverted: json.valueAsBool<bool?>('reverted', acceptCamelCase: true),
+      reverted: json.valueAsBool<bool?>(
+        'reverted',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       outboundHeight: json.valueAsBigInt<BigInt?>(
         'outbound_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1002,14 +1155,25 @@ class QueryTxVotersRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [txId, height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'tx_id': txId, 'height': height};
   }
 
-  factory QueryTxVotersRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryTxVotersRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTxVotersRequest(
-      txId: json.valueAsString<String?>('tx_id', acceptCamelCase: true),
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      txId: json.valueAsString<String?>(
+        'tx_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1067,28 +1231,43 @@ class PlannedOutTx extends CosmosProtoMessage {
   List<Object?> get protoValues => [chain, toAddress, coin, refund];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'chain': chain,
       'to_address': toAddress,
-      'coin': coin?.toJson(),
+      'coin': config.encodeMessage(coin),
       'refund': refund,
     };
   }
 
-  factory PlannedOutTx.fromJson(Map<String, dynamic> json) {
+  factory PlannedOutTx.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return PlannedOutTx(
-      chain: json.valueAsString<String?>('chain', acceptCamelCase: true),
+      chain: json.valueAsString<String?>(
+        'chain',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       toAddress: json.valueAsString<String?>(
         'to_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      coin: json.valueTo<common_common.Coin?, Map<String, dynamic>>(
+      coin: json.valueTo<common_common.Coin?, Object>(
         key: 'coin',
-        parse: (v) => common_common.Coin.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => common_common.Coin.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      refund: json.valueAsBool<bool?>('refund', acceptCamelCase: true),
+      refund: json.valueAsBool<bool?>(
+        'refund',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1157,27 +1336,38 @@ class InboundObservedStage extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'started': started,
-      'pre_confirmation_count': preConfirmationCount?.toString(),
-      'final_count': finalCount?.toString(),
+      'pre_confirmation_count': config.encodeBigint(preConfirmationCount),
+      'final_count': config.encodeBigint(finalCount),
       'completed': completed,
     };
   }
 
-  factory InboundObservedStage.fromJson(Map<String, dynamic> json) {
+  factory InboundObservedStage.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return InboundObservedStage(
-      started: json.valueAsBool<bool?>('started', acceptCamelCase: true),
+      started: json.valueAsBool<bool?>(
+        'started',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       preConfirmationCount: json.valueAsBigInt<BigInt?>(
         'pre_confirmation_count',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       finalCount: json.valueAsBigInt<BigInt?>(
         'final_count',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      completed: json.valueAsBool<bool?>('completed', acceptCamelCase: true),
+      completed: json.valueAsBool<bool?>(
+        'completed',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1255,39 +1445,52 @@ class InboundConfirmationCountedStage extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'counting_start_height': countingStartHeight?.toString(),
+      'counting_start_height': config.encodeBigint(countingStartHeight),
       'chain': chain,
-      'external_observed_height': externalObservedHeight?.toString(),
-      'external_confirmation_delay_height':
-          externalConfirmationDelayHeight?.toString(),
-      'remaining_confirmation_seconds':
-          remainingConfirmationSeconds?.toString(),
+      'external_observed_height': config.encodeBigint(externalObservedHeight),
+      'external_confirmation_delay_height': config.encodeBigint(
+        externalConfirmationDelayHeight,
+      ),
+      'remaining_confirmation_seconds': config.encodeBigint(
+        remainingConfirmationSeconds,
+      ),
       'completed': completed,
     };
   }
 
-  factory InboundConfirmationCountedStage.fromJson(Map<String, dynamic> json) {
+  factory InboundConfirmationCountedStage.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return InboundConfirmationCountedStage(
       countingStartHeight: json.valueAsBigInt<BigInt?>(
         'counting_start_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      chain: json.valueAsString<String?>('chain', acceptCamelCase: true),
+      chain: json.valueAsString<String?>(
+        'chain',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       externalObservedHeight: json.valueAsBigInt<BigInt?>(
         'external_observed_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       externalConfirmationDelayHeight: json.valueAsBigInt<BigInt?>(
         'external_confirmation_delay_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       remainingConfirmationSeconds: json.valueAsBigInt<BigInt?>(
         'remaining_confirmation_seconds',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      completed: json.valueAsBool<bool?>('completed', acceptCamelCase: true),
+      completed: json.valueAsBool<bool?>(
+        'completed',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1330,13 +1533,21 @@ class InboundFinalisedStage extends CosmosProtoMessage {
   List<Object?> get protoValues => [completed];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'completed': completed};
   }
 
-  factory InboundFinalisedStage.fromJson(Map<String, dynamic> json) {
+  factory InboundFinalisedStage.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return InboundFinalisedStage(
-      completed: json.valueAsBool<bool?>('completed', acceptCamelCase: true),
+      completed: json.valueAsBool<bool?>(
+        'completed',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1376,17 +1587,27 @@ class SwapStatus extends CosmosProtoMessage {
   List<Object?> get protoValues => [pending, streaming];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'pending': pending, 'streaming': streaming?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'pending': pending, 'streaming': config.encodeMessage(streaming)};
   }
 
-  factory SwapStatus.fromJson(Map<String, dynamic> json) {
+  factory SwapStatus.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SwapStatus(
-      pending: json.valueAsBool<bool?>('pending', acceptCamelCase: true),
-      streaming: json.valueTo<StreamingStatus?, Map<String, dynamic>>(
+      pending: json.valueAsBool<bool?>(
+        'pending',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      streaming: json.valueTo<StreamingStatus?, Object>(
         key: 'streaming',
-        parse: (v) => StreamingStatus.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) =>
+                StreamingStatus.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1438,19 +1659,33 @@ class StreamingStatus extends CosmosProtoMessage {
   List<Object?> get protoValues => [interval, quantity, count];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'interval': interval?.toString(),
-      'quantity': quantity?.toString(),
-      'count': count?.toString(),
+      'interval': config.encodeBigint(interval),
+      'quantity': config.encodeBigint(quantity),
+      'count': config.encodeBigint(count),
     };
   }
 
-  factory StreamingStatus.fromJson(Map<String, dynamic> json) {
+  factory StreamingStatus.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return StreamingStatus(
-      interval: json.valueAsBigInt<BigInt?>('interval', acceptCamelCase: true),
-      quantity: json.valueAsBigInt<BigInt?>('quantity', acceptCamelCase: true),
-      count: json.valueAsBigInt<BigInt?>('count', acceptCamelCase: true),
+      interval: json.valueAsBigInt<BigInt?>(
+        'interval',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      quantity: json.valueAsBigInt<BigInt?>(
+        'quantity',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      count: json.valueAsBigInt<BigInt?>(
+        'count',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1490,13 +1725,21 @@ class SwapFinalisedStage extends CosmosProtoMessage {
   List<Object?> get protoValues => [completed];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'completed': completed};
   }
 
-  factory SwapFinalisedStage.fromJson(Map<String, dynamic> json) {
+  factory SwapFinalisedStage.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SwapFinalisedStage(
-      completed: json.valueAsBool<bool?>('completed', acceptCamelCase: true),
+      completed: json.valueAsBool<bool?>(
+        'completed',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1550,25 +1793,33 @@ class OutboundDelayStage extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'remaining_delay_blocks': remainingDelayBlocks?.toString(),
-      'remaining_delay_seconds': remainingDelaySeconds?.toString(),
+      'remaining_delay_blocks': config.encodeBigint(remainingDelayBlocks),
+      'remaining_delay_seconds': config.encodeBigint(remainingDelaySeconds),
       'completed': completed,
     };
   }
 
-  factory OutboundDelayStage.fromJson(Map<String, dynamic> json) {
+  factory OutboundDelayStage.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return OutboundDelayStage(
       remainingDelayBlocks: json.valueAsBigInt<BigInt?>(
         'remaining_delay_blocks',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       remainingDelaySeconds: json.valueAsBigInt<BigInt?>(
         'remaining_delay_seconds',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      completed: json.valueAsBool<bool?>('completed', acceptCamelCase: true),
+      completed: json.valueAsBool<bool?>(
+        'completed',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1626,27 +1877,38 @@ class OutboundSignedStage extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'scheduled_outbound_height': scheduledOutboundHeight?.toString(),
-      'blocks_since_scheduled': blocksSinceScheduled?.toJson(),
+      'scheduled_outbound_height': config.encodeBigint(scheduledOutboundHeight),
+      'blocks_since_scheduled': config.encodeMessage(blocksSinceScheduled),
       'completed': completed,
     };
   }
 
-  factory OutboundSignedStage.fromJson(Map<String, dynamic> json) {
+  factory OutboundSignedStage.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return OutboundSignedStage(
       scheduledOutboundHeight: json.valueAsBigInt<BigInt?>(
         'scheduled_outbound_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      blocksSinceScheduled: json
-          .valueTo<types_misc.ProtoInt64?, Map<String, dynamic>>(
-            key: 'blocks_since_scheduled',
-            parse: (v) => types_misc.ProtoInt64.fromJson(v),
-            acceptCamelCase: true,
-          ),
-      completed: json.valueAsBool<bool?>('completed', acceptCamelCase: true),
+      blocksSinceScheduled: json.valueTo<types_misc.ProtoInt64?, Object>(
+        key: 'blocks_since_scheduled',
+        parse:
+            (v) => types_misc.ProtoInt64.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      completed: json.valueAsBool<bool?>(
+        'completed',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

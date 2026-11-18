@@ -36,13 +36,21 @@ class QueryClassTraceRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [hash];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'hash': hash};
   }
 
-  factory QueryClassTraceRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryClassTraceRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryClassTraceRequest(
-      hash: json.valueAsString<String?>('hash', acceptCamelCase: true),
+      hash: json.valueAsString<String?>(
+        'hash',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -89,22 +97,25 @@ class QueryClassTraceResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [classTrace];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'class_trace': classTrace?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'class_trace': config.encodeMessage(classTrace)};
   }
 
-  factory QueryClassTraceResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryClassTraceResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryClassTraceResponse(
-      classTrace: json.valueTo<
-        ibc_applications_nft_transfer_v1_types.ClassTrace?,
-        Map<String, dynamic>
-      >(
-        key: 'class_trace',
-        parse:
-            (v) =>
-                ibc_applications_nft_transfer_v1_types.ClassTrace.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      classTrace: json
+          .valueTo<ibc_applications_nft_transfer_v1_types.ClassTrace?, Object>(
+            key: 'class_trace',
+            parse:
+                (v) => ibc_applications_nft_transfer_v1_types
+                    .ClassTrace.fromJson(JsonParser.valueAs(v), config: config),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -156,21 +167,28 @@ class QueryClassTracesRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [pagination];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'pagination': pagination?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'pagination': config.encodeMessage(pagination)};
   }
 
-  factory QueryClassTracesRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryClassTracesRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryClassTracesRequest(
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageRequest?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) => cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageRequest?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -237,42 +255,52 @@ class QueryClassTracesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [classTraces, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'class_traces': classTraces.map((e) => e.toJson()).toList(),
-      'pagination': pagination?.toJson(),
+      'class_traces': classTraces.map((e) => config.encodeMessage(e)).toList(),
+      'pagination': config.encodeMessage(pagination),
     };
   }
 
-  factory QueryClassTracesResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryClassTracesResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryClassTracesResponse(
       classTraces:
           (json.valueEnsureAsList<dynamic>(
                 'class_traces',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   ibc_applications_nft_transfer_v1_types.ClassTrace,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => ibc_applications_nft_transfer_v1_types
-                          .ClassTrace.fromJson(v),
+                          .ClassTrace.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageResponse?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) =>
-                cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageResponse?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -332,13 +360,21 @@ class QueryClassHashRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [trace];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'trace': trace};
   }
 
-  factory QueryClassHashRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryClassHashRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryClassHashRequest(
-      trace: json.valueAsString<String?>('trace', acceptCamelCase: true),
+      trace: json.valueAsString<String?>(
+        'trace',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -385,13 +421,21 @@ class QueryClassHashResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [hash];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'hash': hash};
   }
 
-  factory QueryClassHashResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryClassHashResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryClassHashResponse(
-      hash: json.valueAsString<String?>('hash', acceptCamelCase: true),
+      hash: json.valueAsString<String?>(
+        'hash',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -436,13 +480,21 @@ class QueryClassDataRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [hash];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'hash': hash};
   }
 
-  factory QueryClassDataRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryClassDataRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryClassDataRequest(
-      hash: json.valueAsString<String?>('hash', acceptCamelCase: true),
+      hash: json.valueAsString<String?>(
+        'hash',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -489,13 +541,21 @@ class QueryClassDataResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [data];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'data': data};
   }
 
-  factory QueryClassDataResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryClassDataResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryClassDataResponse(
-      data: json.valueAsString<String?>('data', acceptCamelCase: true),
+      data: json.valueAsString<String?>(
+        'data',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -543,16 +603,24 @@ class QueryEscrowAddressRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [portId, channelId];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'port_id': portId, 'channel_id': channelId};
   }
 
-  factory QueryEscrowAddressRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryEscrowAddressRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryEscrowAddressRequest(
-      portId: json.valueAsString<String?>('port_id', acceptCamelCase: true),
+      portId: json.valueAsString<String?>(
+        'port_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       channelId: json.valueAsString<String?>(
         'channel_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -602,15 +670,20 @@ class QueryEscrowAddressResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [escrowAddress];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'escrow_address': escrowAddress};
   }
 
-  factory QueryEscrowAddressResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryEscrowAddressResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryEscrowAddressResponse(
       escrowAddress: json.valueAsString<String?>(
         'escrow_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -654,11 +727,16 @@ class QueryParamsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryParamsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsRequest();
   }
 
@@ -702,20 +780,27 @@ class QueryParamsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [params];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'params': params?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'params': config.encodeMessage(params)};
   }
 
-  factory QueryParamsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsResponse(
-      params: json.valueTo<
-        ibc_applications_nft_transfer_v1_types.Params?,
-        Map<String, dynamic>
-      >(
-        key: 'params',
-        parse: (v) => ibc_applications_nft_transfer_v1_types.Params.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      params: json
+          .valueTo<ibc_applications_nft_transfer_v1_types.Params?, Object>(
+            key: 'params',
+            parse:
+                (v) => ibc_applications_nft_transfer_v1_types.Params.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 

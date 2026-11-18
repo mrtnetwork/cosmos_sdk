@@ -126,68 +126,111 @@ class TxResponse extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'height': height?.toString(),
+      'height': config.encodeBigint(height),
       'txhash': txhash,
       'codespace': codespace,
       'code': code,
       'data': data,
       'raw_log': rawLog,
-      'logs': logs.map((e) => e.toJson()).toList(),
+      'logs': logs.map((e) => config.encodeMessage(e)).toList(),
       'info': info,
-      'gas_wanted': gasWanted?.toString(),
-      'gas_used': gasUsed?.toString(),
-      'tx': tx?.toJson(),
+      'gas_wanted': config.encodeBigint(gasWanted),
+      'gas_used': config.encodeBigint(gasUsed),
+      'tx': config.encodeMessage(tx),
       'timestamp': timestamp,
-      'events': events.map((e) => e.toJson()).toList(),
+      'events': events.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory TxResponse.fromJson(Map<String, dynamic> json) {
+  factory TxResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return TxResponse(
-      height: json.valueAsBigInt<BigInt?>('height', acceptCamelCase: true),
-      txhash: json.valueAsString<String?>('txhash', acceptCamelCase: true),
+      height: json.valueAsBigInt<BigInt?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      txhash: json.valueAsString<String?>(
+        'txhash',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       codespace: json.valueAsString<String?>(
         'codespace',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      code: json.valueAsInt<int?>('code', acceptCamelCase: true),
-      data: json.valueAsString<String?>('data', acceptCamelCase: true),
-      rawLog: json.valueAsString<String?>('raw_log', acceptCamelCase: true),
+      code: json.valueAsInt<int?>(
+        'code',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      data: json.valueAsString<String?>(
+        'data',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      rawLog: json.valueAsString<String?>(
+        'raw_log',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       logs:
-          (json.valueEnsureAsList<dynamic>('logs', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'logs',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<ABCIMessageLog, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<ABCIMessageLog, Object>(
                   value: e,
-                  parse: (v) => ABCIMessageLog.fromJson(v),
+                  parse:
+                      (v) => ABCIMessageLog.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
-      info: json.valueAsString<String?>('info', acceptCamelCase: true),
+      info: json.valueAsString<String?>(
+        'info',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       gasWanted: json.valueAsBigInt<BigInt?>(
         'gas_wanted',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      gasUsed: json.valueAsBigInt<BigInt?>('gas_used', acceptCamelCase: true),
-      tx: json.valueTo<google_protobuf_any.Any?, Map<String, dynamic>>(
+      gasUsed: json.valueAsBigInt<BigInt?>(
+        'gas_used',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      tx: json.valueTo<google_protobuf_any.Any?, Object>(
         key: 'tx',
-        parse: (v) => google_protobuf_any.Any.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_any.Any.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       timestamp: json.valueAsString<String?>(
         'timestamp',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       events:
-          (json.valueEnsureAsList<dynamic>('events', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'events',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  tendermint_abci_types.Event,
-                  Map<String, dynamic>
-                >(
+                (e) => JsonParser.valueTo<tendermint_abci_types.Event, Object>(
                   value: e,
-                  parse: (v) => tendermint_abci_types.Event.fromJson(v),
+                  parse:
+                      (v) => tendermint_abci_types.Event.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -264,24 +307,43 @@ class ABCIMessageLog extends CosmosProtoMessage {
   List<Object?> get protoValues => [msgIndex, log, events];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'msg_index': msgIndex,
       'log': log,
-      'events': events.map((e) => e.toJson()).toList(),
+      'events': events.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory ABCIMessageLog.fromJson(Map<String, dynamic> json) {
+  factory ABCIMessageLog.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ABCIMessageLog(
-      msgIndex: json.valueAsInt<int?>('msg_index', acceptCamelCase: true),
-      log: json.valueAsString<String?>('log', acceptCamelCase: true),
+      msgIndex: json.valueAsInt<int?>(
+        'msg_index',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      log: json.valueAsString<String?>(
+        'log',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       events:
-          (json.valueEnsureAsList<dynamic>('events', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'events',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<StringEvent, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<StringEvent, Object>(
                   value: e,
-                  parse: (v) => StringEvent.fromJson(v),
+                  parse:
+                      (v) => StringEvent.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -337,22 +399,38 @@ class StringEvent extends CosmosProtoMessage {
   List<Object?> get protoValues => [type, attributes];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'type': type,
-      'attributes': attributes.map((e) => e.toJson()).toList(),
+      'attributes': attributes.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory StringEvent.fromJson(Map<String, dynamic> json) {
+  factory StringEvent.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return StringEvent(
-      type: json.valueAsString<String?>('type', acceptCamelCase: true),
+      type: json.valueAsString<String?>(
+        'type',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       attributes:
-          (json.valueEnsureAsList<dynamic>('attributes', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'attributes',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<Attribute, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<Attribute, Object>(
                   value: e,
-                  parse: (v) => Attribute.fromJson(v),
+                  parse:
+                      (v) => Attribute.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -400,14 +478,25 @@ class Attribute extends CosmosProtoMessage {
   List<Object?> get protoValues => [key, value];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'key': key, 'value': value};
   }
 
-  factory Attribute.fromJson(Map<String, dynamic> json) {
+  factory Attribute.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Attribute(
-      key: json.valueAsString<String?>('key', acceptCamelCase: true),
-      value: json.valueAsString<String?>('value', acceptCamelCase: true),
+      key: json.valueAsString<String?>(
+        'key',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      value: json.valueAsString<String?>(
+        'value',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -449,20 +538,28 @@ class GasInfo extends CosmosProtoMessage {
   List<Object?> get protoValues => [gasWanted, gasUsed];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'gas_wanted': gasWanted?.toString(),
-      'gas_used': gasUsed?.toString(),
+      'gas_wanted': config.encodeBigint(gasWanted),
+      'gas_used': config.encodeBigint(gasUsed),
     };
   }
 
-  factory GasInfo.fromJson(Map<String, dynamic> json) {
+  factory GasInfo.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GasInfo(
       gasWanted: json.valueAsBigInt<BigInt?>(
         'gas_wanted',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      gasUsed: json.valueAsBigInt<BigInt?>('gas_used', acceptCamelCase: true),
+      gasUsed: json.valueAsBigInt<BigInt?>(
+        'gas_used',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -485,7 +582,7 @@ class Result extends CosmosProtoMessage {
   /// length prefixed in order to separate data from multiple message executions.
   /// Deprecated. This field is still populated, but prefer msg_response instead
   /// because it also contains the Msg response typeURL.
-  final List<int>? data;
+  final BuBytes? data;
 
   /// Log contains the log information from message or handler execution.
   final String? log;
@@ -497,12 +594,12 @@ class Result extends CosmosProtoMessage {
   /// msg_responses contains the Msg handler responses type packed in Anys.
   final List<google_protobuf_any.Any> msgResponses;
 
-  const Result({
-    this.data,
+  Result({
+    List<int>? data,
     this.log,
     this.events = const [],
     this.msgResponses = const [],
-  });
+  }) : data = data?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -540,51 +637,62 @@ class Result extends CosmosProtoMessage {
   List<Object?> get protoValues => [data, log, events, msgResponses];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'data': switch (data) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'data': config.encodeBinary(data),
       'log': log,
-      'events': events.map((e) => e.toJson()).toList(),
-      'msg_responses': msgResponses.map((e) => e.toJson()).toList(),
+      'events': events.map((e) => config.encodeMessage(e)).toList(),
+      'msg_responses':
+          msgResponses.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory Result.fromJson(Map<String, dynamic> json) {
+  factory Result.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Result(
-      data: json.valueAsBytes<List<int>?>(
-        'data',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      data: config.decodeBinary<List<int>?>(
+        json.valueAs('data', normalizeKeyLookup: config.normalizeKeys),
       ),
-      log: json.valueAsString<String?>('log', acceptCamelCase: true),
+      log: json.valueAsString<String?>(
+        'log',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       events:
-          (json.valueEnsureAsList<dynamic>('events', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'events',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  tendermint_abci_types.Event,
-                  Map<String, dynamic>
-                >(
+                (e) => JsonParser.valueTo<tendermint_abci_types.Event, Object>(
                   value: e,
-                  parse: (v) => tendermint_abci_types.Event.fromJson(v),
+                  parse:
+                      (v) => tendermint_abci_types.Event.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       msgResponses:
           (json.valueEnsureAsList<dynamic>(
                 'msg_responses',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  google_protobuf_any.Any,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => google_protobuf_any.Any.fromJson(v)),
+                (e) => JsonParser.valueTo<google_protobuf_any.Any, Object>(
+                  value: e,
+                  parse:
+                      (v) => google_protobuf_any.Any.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );

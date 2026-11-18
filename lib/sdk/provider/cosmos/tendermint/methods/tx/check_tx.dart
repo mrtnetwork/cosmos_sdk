@@ -22,7 +22,7 @@ class TendermintRequestBroadcastCheckTx
   Map<String, String?> get parameters => {"tx": tx};
 
   @override
-  ResponseCheckTx onResonse(Map<String, dynamic> result) {
+  ResponseCheckTx onResponse(Map<String, dynamic> result) {
     return ResponseCheckTx.fromJson(result);
   }
 }

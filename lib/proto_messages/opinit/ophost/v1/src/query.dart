@@ -35,13 +35,21 @@ class QueryBridgeRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [bridgeId];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'bridge_id': bridgeId?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'bridge_id': config.encodeBigint(bridgeId)};
   }
 
-  factory QueryBridgeRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryBridgeRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryBridgeRequest(
-      bridgeId: json.valueAsBigInt<BigInt?>('bridge_id', acceptCamelCase: true),
+      bridgeId: json.valueAsBigInt<BigInt?>(
+        'bridge_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -100,27 +108,38 @@ class QueryBridgeResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [bridgeId, bridgeAddr, bridgeConfig];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'bridge_id': bridgeId?.toString(),
+      'bridge_id': config.encodeBigint(bridgeId),
       'bridge_addr': bridgeAddr,
-      'bridge_config': bridgeConfig?.toJson(),
+      'bridge_config': config.encodeMessage(bridgeConfig),
     };
   }
 
-  factory QueryBridgeResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryBridgeResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryBridgeResponse(
-      bridgeId: json.valueAsBigInt<BigInt?>('bridge_id', acceptCamelCase: true),
+      bridgeId: json.valueAsBigInt<BigInt?>(
+        'bridge_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       bridgeAddr: json.valueAsString<String?>(
         'bridge_addr',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      bridgeConfig: json
-          .valueTo<opinit_ophost_v1_types.BridgeConfig?, Map<String, dynamic>>(
-            key: 'bridge_config',
-            parse: (v) => opinit_ophost_v1_types.BridgeConfig.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      bridgeConfig: json.valueTo<opinit_ophost_v1_types.BridgeConfig?, Object>(
+        key: 'bridge_config',
+        parse:
+            (v) => opinit_ophost_v1_types.BridgeConfig.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -171,21 +190,28 @@ class QueryBridgesRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [pagination];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'pagination': pagination?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'pagination': config.encodeMessage(pagination)};
   }
 
-  factory QueryBridgesRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryBridgesRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryBridgesRequest(
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageRequest?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) => cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageRequest?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -246,34 +272,48 @@ class QueryBridgesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [bridges, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'bridges': bridges.map((e) => e.toJson()).toList(),
-      'pagination': pagination?.toJson(),
+      'bridges': bridges.map((e) => config.encodeMessage(e)).toList(),
+      'pagination': config.encodeMessage(pagination),
     };
   }
 
-  factory QueryBridgesResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryBridgesResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryBridgesResponse(
       bridges:
-          (json.valueEnsureAsList<dynamic>('bridges', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'bridges',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  QueryBridgeResponse,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => QueryBridgeResponse.fromJson(v)),
+                (e) => JsonParser.valueTo<QueryBridgeResponse, Object>(
+                  value: e,
+                  parse:
+                      (v) => QueryBridgeResponse.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageResponse?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) =>
-                cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageResponse?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -330,14 +370,25 @@ class QueryTokenPairByL1DenomRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [bridgeId, l1Denom];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'bridge_id': bridgeId?.toString(), 'l1_denom': l1Denom};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'bridge_id': config.encodeBigint(bridgeId), 'l1_denom': l1Denom};
   }
 
-  factory QueryTokenPairByL1DenomRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryTokenPairByL1DenomRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTokenPairByL1DenomRequest(
-      bridgeId: json.valueAsBigInt<BigInt?>('bridge_id', acceptCamelCase: true),
-      l1Denom: json.valueAsString<String?>('l1_denom', acceptCamelCase: true),
+      bridgeId: json.valueAsBigInt<BigInt?>(
+        'bridge_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      l1Denom: json.valueAsString<String?>(
+        'l1_denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -391,18 +442,26 @@ class QueryTokenPairByL1DenomResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [tokenPair];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'token_pair': tokenPair?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'token_pair': config.encodeMessage(tokenPair)};
   }
 
-  factory QueryTokenPairByL1DenomResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryTokenPairByL1DenomResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTokenPairByL1DenomResponse(
-      tokenPair: json
-          .valueTo<opinit_ophost_v1_types.TokenPair?, Map<String, dynamic>>(
-            key: 'token_pair',
-            parse: (v) => opinit_ophost_v1_types.TokenPair.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      tokenPair: json.valueTo<opinit_ophost_v1_types.TokenPair?, Object>(
+        key: 'token_pair',
+        parse:
+            (v) => opinit_ophost_v1_types.TokenPair.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -452,14 +511,25 @@ class QueryTokenPairByL2DenomRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [bridgeId, l2Denom];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'bridge_id': bridgeId?.toString(), 'l2_denom': l2Denom};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'bridge_id': config.encodeBigint(bridgeId), 'l2_denom': l2Denom};
   }
 
-  factory QueryTokenPairByL2DenomRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryTokenPairByL2DenomRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTokenPairByL2DenomRequest(
-      bridgeId: json.valueAsBigInt<BigInt?>('bridge_id', acceptCamelCase: true),
-      l2Denom: json.valueAsString<String?>('l2_denom', acceptCamelCase: true),
+      bridgeId: json.valueAsBigInt<BigInt?>(
+        'bridge_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      l2Denom: json.valueAsString<String?>(
+        'l2_denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -513,18 +583,26 @@ class QueryTokenPairByL2DenomResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [tokenPair];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'token_pair': tokenPair?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'token_pair': config.encodeMessage(tokenPair)};
   }
 
-  factory QueryTokenPairByL2DenomResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryTokenPairByL2DenomResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTokenPairByL2DenomResponse(
-      tokenPair: json
-          .valueTo<opinit_ophost_v1_types.TokenPair?, Map<String, dynamic>>(
-            key: 'token_pair',
-            parse: (v) => opinit_ophost_v1_types.TokenPair.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      tokenPair: json.valueTo<opinit_ophost_v1_types.TokenPair?, Object>(
+        key: 'token_pair',
+        parse:
+            (v) => opinit_ophost_v1_types.TokenPair.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -575,25 +653,35 @@ class QueryTokenPairsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [bridgeId, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'bridge_id': bridgeId?.toString(),
-      'pagination': pagination?.toJson(),
+      'bridge_id': config.encodeBigint(bridgeId),
+      'pagination': config.encodeMessage(pagination),
     };
   }
 
-  factory QueryTokenPairsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryTokenPairsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTokenPairsRequest(
-      bridgeId: json.valueAsBigInt<BigInt?>('bridge_id', acceptCamelCase: true),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageRequest?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) => cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(v),
-        acceptCamelCase: true,
+      bridgeId: json.valueAsBigInt<BigInt?>(
+        'bridge_id',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageRequest?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -655,40 +743,51 @@ class QueryTokenPairsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [tokenPairs, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'token_pairs': tokenPairs.map((e) => e.toJson()).toList(),
-      'pagination': pagination?.toJson(),
+      'token_pairs': tokenPairs.map((e) => config.encodeMessage(e)).toList(),
+      'pagination': config.encodeMessage(pagination),
     };
   }
 
-  factory QueryTokenPairsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryTokenPairsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTokenPairsResponse(
       tokenPairs:
           (json.valueEnsureAsList<dynamic>(
                 'token_pairs',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   opinit_ophost_v1_types.TokenPair,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
-                  parse: (v) => opinit_ophost_v1_types.TokenPair.fromJson(v),
+                  parse:
+                      (v) => opinit_ophost_v1_types.TokenPair.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageResponse?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) =>
-                cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageResponse?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -743,13 +842,21 @@ class QueryLastFinalizedOutputRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [bridgeId];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'bridge_id': bridgeId?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'bridge_id': config.encodeBigint(bridgeId)};
   }
 
-  factory QueryLastFinalizedOutputRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryLastFinalizedOutputRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryLastFinalizedOutputRequest(
-      bridgeId: json.valueAsBigInt<BigInt?>('bridge_id', acceptCamelCase: true),
+      bridgeId: json.valueAsBigInt<BigInt?>(
+        'bridge_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -808,25 +915,33 @@ class QueryLastFinalizedOutputResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [outputIndex, outputProposal];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'output_index': outputIndex?.toString(),
-      'output_proposal': outputProposal?.toJson(),
+      'output_index': config.encodeBigint(outputIndex),
+      'output_proposal': config.encodeMessage(outputProposal),
     };
   }
 
-  factory QueryLastFinalizedOutputResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryLastFinalizedOutputResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryLastFinalizedOutputResponse(
       outputIndex: json.valueAsBigInt<BigInt?>(
         'output_index',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      outputProposal: json
-          .valueTo<opinit_ophost_v1_types.Output?, Map<String, dynamic>>(
-            key: 'output_proposal',
-            parse: (v) => opinit_ophost_v1_types.Output.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      outputProposal: json.valueTo<opinit_ophost_v1_types.Output?, Object>(
+        key: 'output_proposal',
+        parse:
+            (v) => opinit_ophost_v1_types.Output.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -877,19 +992,27 @@ class QueryOutputProposalRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [bridgeId, outputIndex];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'bridge_id': bridgeId?.toString(),
-      'output_index': outputIndex?.toString(),
+      'bridge_id': config.encodeBigint(bridgeId),
+      'output_index': config.encodeBigint(outputIndex),
     };
   }
 
-  factory QueryOutputProposalRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryOutputProposalRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryOutputProposalRequest(
-      bridgeId: json.valueAsBigInt<BigInt?>('bridge_id', acceptCamelCase: true),
+      bridgeId: json.valueAsBigInt<BigInt?>(
+        'bridge_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       outputIndex: json.valueAsBigInt<BigInt?>(
         'output_index',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -952,27 +1075,38 @@ class QueryOutputProposalResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [bridgeId, outputIndex, outputProposal];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'bridge_id': bridgeId?.toString(),
-      'output_index': outputIndex?.toString(),
-      'output_proposal': outputProposal?.toJson(),
+      'bridge_id': config.encodeBigint(bridgeId),
+      'output_index': config.encodeBigint(outputIndex),
+      'output_proposal': config.encodeMessage(outputProposal),
     };
   }
 
-  factory QueryOutputProposalResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryOutputProposalResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryOutputProposalResponse(
-      bridgeId: json.valueAsBigInt<BigInt?>('bridge_id', acceptCamelCase: true),
+      bridgeId: json.valueAsBigInt<BigInt?>(
+        'bridge_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       outputIndex: json.valueAsBigInt<BigInt?>(
         'output_index',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      outputProposal: json
-          .valueTo<opinit_ophost_v1_types.Output?, Map<String, dynamic>>(
-            key: 'output_proposal',
-            parse: (v) => opinit_ophost_v1_types.Output.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      outputProposal: json.valueTo<opinit_ophost_v1_types.Output?, Object>(
+        key: 'output_proposal',
+        parse:
+            (v) => opinit_ophost_v1_types.Output.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1025,25 +1159,35 @@ class QueryOutputProposalsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [bridgeId, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'bridge_id': bridgeId?.toString(),
-      'pagination': pagination?.toJson(),
+      'bridge_id': config.encodeBigint(bridgeId),
+      'pagination': config.encodeMessage(pagination),
     };
   }
 
-  factory QueryOutputProposalsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryOutputProposalsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryOutputProposalsRequest(
-      bridgeId: json.valueAsBigInt<BigInt?>('bridge_id', acceptCamelCase: true),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageRequest?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) => cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(v),
-        acceptCamelCase: true,
+      bridgeId: json.valueAsBigInt<BigInt?>(
+        'bridge_id',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageRequest?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -1108,40 +1252,49 @@ class QueryOutputProposalsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [outputProposals, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'output_proposals': outputProposals.map((e) => e.toJson()).toList(),
-      'pagination': pagination?.toJson(),
+      'output_proposals':
+          outputProposals.map((e) => config.encodeMessage(e)).toList(),
+      'pagination': config.encodeMessage(pagination),
     };
   }
 
-  factory QueryOutputProposalsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryOutputProposalsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryOutputProposalsResponse(
       outputProposals:
           (json.valueEnsureAsList<dynamic>(
                 'output_proposals',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  QueryOutputProposalResponse,
-                  Map<String, dynamic>
-                >(
+                (e) => JsonParser.valueTo<QueryOutputProposalResponse, Object>(
                   value: e,
-                  parse: (v) => QueryOutputProposalResponse.fromJson(v),
+                  parse:
+                      (v) => QueryOutputProposalResponse.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageResponse?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) =>
-                cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageResponse?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -1194,11 +1347,16 @@ class QueryParamsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryParamsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsRequest();
   }
 
@@ -1247,18 +1405,26 @@ class QueryParamsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [params];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'params': params?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'params': config.encodeMessage(params)};
   }
 
-  factory QueryParamsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsResponse(
-      params: json
-          .valueTo<opinit_ophost_v1_types.Params?, Map<String, dynamic>>(
-            key: 'params',
-            parse: (v) => opinit_ophost_v1_types.Params.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      params: json.valueTo<opinit_ophost_v1_types.Params?, Object>(
+        key: 'params',
+        parse:
+            (v) => opinit_ophost_v1_types.Params.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1282,9 +1448,10 @@ class QueryClaimedRequest extends CosmosProtoMessage
     with ICosmosProtoQueryMessage<QueryClaimedResponse> {
   final BigInt? bridgeId;
 
-  final List<int>? withdrawalHash;
+  final BuBytes? withdrawalHash;
 
-  const QueryClaimedRequest({this.bridgeId, this.withdrawalHash});
+  QueryClaimedRequest({this.bridgeId, List<int>? withdrawalHash})
+    : withdrawalHash = withdrawalHash?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -1309,26 +1476,29 @@ class QueryClaimedRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [bridgeId, withdrawalHash];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'bridge_id': bridgeId?.toString(),
-      'withdrawal_hash': switch (withdrawalHash) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'bridge_id': config.encodeBigint(bridgeId),
+      'withdrawal_hash': config.encodeBinary(withdrawalHash),
     };
   }
 
-  factory QueryClaimedRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryClaimedRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryClaimedRequest(
-      bridgeId: json.valueAsBigInt<BigInt?>('bridge_id', acceptCamelCase: true),
-      withdrawalHash: json.valueAsBytes<List<int>?>(
-        'withdrawal_hash',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      bridgeId: json.valueAsBigInt<BigInt?>(
+        'bridge_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      withdrawalHash: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'withdrawal_hash',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
     );
   }
@@ -1376,13 +1546,21 @@ class QueryClaimedResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [claimed];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'claimed': claimed};
   }
 
-  factory QueryClaimedResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryClaimedResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryClaimedResponse(
-      claimed: json.valueAsBool<bool?>('claimed', acceptCamelCase: true),
+      claimed: json.valueAsBool<bool?>(
+        'claimed',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1425,13 +1603,21 @@ class QueryNextL1SequenceRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [bridgeId];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'bridge_id': bridgeId?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'bridge_id': config.encodeBigint(bridgeId)};
   }
 
-  factory QueryNextL1SequenceRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryNextL1SequenceRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryNextL1SequenceRequest(
-      bridgeId: json.valueAsBigInt<BigInt?>('bridge_id', acceptCamelCase: true),
+      bridgeId: json.valueAsBigInt<BigInt?>(
+        'bridge_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1475,15 +1661,20 @@ class QueryNextL1SequenceResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [nextL1Sequence];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'next_l1_sequence': nextL1Sequence?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'next_l1_sequence': config.encodeBigint(nextL1Sequence)};
   }
 
-  factory QueryNextL1SequenceResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryNextL1SequenceResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryNextL1SequenceResponse(
       nextL1Sequence: json.valueAsBigInt<BigInt?>(
         'next_l1_sequence',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1531,25 +1722,35 @@ class QueryBatchInfosRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [bridgeId, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'bridge_id': bridgeId?.toString(),
-      'pagination': pagination?.toJson(),
+      'bridge_id': config.encodeBigint(bridgeId),
+      'pagination': config.encodeMessage(pagination),
     };
   }
 
-  factory QueryBatchInfosRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryBatchInfosRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryBatchInfosRequest(
-      bridgeId: json.valueAsBigInt<BigInt?>('bridge_id', acceptCamelCase: true),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageRequest?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) => cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(v),
-        acceptCamelCase: true,
+      bridgeId: json.valueAsBigInt<BigInt?>(
+        'bridge_id',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageRequest?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -1611,42 +1812,52 @@ class QueryBatchInfosResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [batchInfos, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'batch_infos': batchInfos.map((e) => e.toJson()).toList(),
-      'pagination': pagination?.toJson(),
+      'batch_infos': batchInfos.map((e) => config.encodeMessage(e)).toList(),
+      'pagination': config.encodeMessage(pagination),
     };
   }
 
-  factory QueryBatchInfosResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryBatchInfosResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryBatchInfosResponse(
       batchInfos:
           (json.valueEnsureAsList<dynamic>(
                 'batch_infos',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   opinit_ophost_v1_types.BatchInfoWithOutput,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
-                      (v) => opinit_ophost_v1_types
-                          .BatchInfoWithOutput.fromJson(v),
+                      (v) =>
+                          opinit_ophost_v1_types.BatchInfoWithOutput.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
                 ),
               )
               .toList(),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageResponse?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) =>
-                cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageResponse?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -1707,14 +1918,25 @@ class QueryMigrationInfoRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [bridgeId, l1Denom];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'bridge_id': bridgeId?.toString(), 'l1_denom': l1Denom};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'bridge_id': config.encodeBigint(bridgeId), 'l1_denom': l1Denom};
   }
 
-  factory QueryMigrationInfoRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryMigrationInfoRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryMigrationInfoRequest(
-      bridgeId: json.valueAsBigInt<BigInt?>('bridge_id', acceptCamelCase: true),
-      l1Denom: json.valueAsString<String?>('l1_denom', acceptCamelCase: true),
+      bridgeId: json.valueAsBigInt<BigInt?>(
+        'bridge_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      l1Denom: json.valueAsString<String?>(
+        'l1_denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1766,17 +1988,26 @@ class QueryMigrationInfoResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [migrationInfo];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'migration_info': migrationInfo?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'migration_info': config.encodeMessage(migrationInfo)};
   }
 
-  factory QueryMigrationInfoResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryMigrationInfoResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryMigrationInfoResponse(
       migrationInfo: json
-          .valueTo<opinit_ophost_v1_types.MigrationInfo?, Map<String, dynamic>>(
+          .valueTo<opinit_ophost_v1_types.MigrationInfo?, Object>(
             key: 'migration_info',
-            parse: (v) => opinit_ophost_v1_types.MigrationInfo.fromJson(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => opinit_ophost_v1_types.MigrationInfo.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
     );
   }
@@ -1823,11 +2054,16 @@ class QueryOraclePriceHashRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryOraclePriceHashRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryOraclePriceHashRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryOraclePriceHashRequest();
   }
 
@@ -1875,20 +2111,27 @@ class QueryOraclePriceHashResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [oraclePriceHash];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'oracle_price_hash': oraclePriceHash?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'oracle_price_hash': config.encodeMessage(oraclePriceHash)};
   }
 
-  factory QueryOraclePriceHashResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryOraclePriceHashResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryOraclePriceHashResponse(
-      oraclePriceHash: json.valueTo<
-        opinit_ophost_v1_types.OraclePriceHash?,
-        Map<String, dynamic>
-      >(
-        key: 'oracle_price_hash',
-        parse: (v) => opinit_ophost_v1_types.OraclePriceHash.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      oraclePriceHash: json
+          .valueTo<opinit_ophost_v1_types.OraclePriceHash?, Object>(
+            key: 'oracle_price_hash',
+            parse:
+                (v) => opinit_ophost_v1_types.OraclePriceHash.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 

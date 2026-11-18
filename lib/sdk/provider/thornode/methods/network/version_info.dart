@@ -20,7 +20,7 @@ class ThorNodeRequestVersion
   Map<String, String?> get parameters => {"height": height?.toString()};
 
   @override
-  ThorVersionResponse onResonse(Map<String, dynamic> result) {
+  ThorVersionResponse onResponse(Map<String, dynamic> result) {
     return ThorVersionResponse.fromJson(result);
   }
 }

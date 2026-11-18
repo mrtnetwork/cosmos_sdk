@@ -1,3 +1,5 @@
+import 'package:blockchain_utils/utils/json/extension/json.dart';
+
 class AssetSaverPositionResponse {
   final String asset;
   final String assetAddress;
@@ -28,7 +30,7 @@ class AssetSaverPositionResponse {
       units: json['units'],
       assetDepositValue: json['asset_deposit_value'],
       assetRedeemValue: json['asset_redeem_value'],
-      growthPct: double.parse(json['growth_pct']),
+      growthPct: json.valueAsDouble("growth_pct"),
     );
   }
 

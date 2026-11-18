@@ -32,7 +32,7 @@ void main() async {
 CosmosSecp256K1PrivateKey account() {
   Bip44 key = hdKey();
   key = key.deriveDefaultPath;
-  return CosmosSecp256K1PrivateKey.fromBytes(key.privateKey.raw);
+  return CosmosSecp256K1PrivateKey.fromBytes(key.privateKey.toBytes());
 }
 
 Bip44 hdKey() {
@@ -49,7 +49,7 @@ CosmosBaseAddress destinationAccount(
       .account(0)
       .change(Bip44Changes.chainExt)
       .addressIndex(index);
-  return CosmosSecp256K1PrivateKey.fromBytes(key.privateKey.raw)
+  return CosmosSecp256K1PrivateKey.fromBytes(key.privateKey.toBytes())
       .toPublicKey()
       .toAddress(hrp: hrp);
 }
@@ -94,7 +94,7 @@ Future<AuthInfo> calculateFee(
   final config = await getConfig(client);
   final minGas = gasPrice(config.minimumGasPrice!
       .replaceAll(authInfo.fee!.amount.first.denom!, ""));
-  final fee = (gasUsed * minGas).ceil().toBigInt().toIntOrThrow;
+  final fee = (gasUsed * minGas).ceil().toBigInt().asSafeInt;
   return AuthInfo(
       signerInfos: authInfo.signerInfos,
       fee: Fee(gasLimit: gasUsed.toBigInt(), amount: [

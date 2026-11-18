@@ -118,7 +118,9 @@ class QueryInboundAddressResponse extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'chain': chain,
       'pub_key': pubKey,
@@ -138,47 +140,71 @@ class QueryInboundAddressResponse extends CosmosProtoMessage {
     };
   }
 
-  factory QueryInboundAddressResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryInboundAddressResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryInboundAddressResponse(
-      chain: json.valueAsString<String?>('chain', acceptCamelCase: true),
-      pubKey: json.valueAsString<String?>('pub_key', acceptCamelCase: true),
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
-      router: json.valueAsString<String?>('router', acceptCamelCase: true),
-      halted: json.valueAsBool<bool?>('halted', acceptCamelCase: true),
+      chain: json.valueAsString<String?>(
+        'chain',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      pubKey: json.valueAsString<String?>(
+        'pub_key',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      router: json.valueAsString<String?>(
+        'router',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      halted: json.valueAsBool<bool?>(
+        'halted',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       globalTradingPaused: json.valueAsBool<bool?>(
         'global_trading_paused',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       chainTradingPaused: json.valueAsBool<bool?>(
         'chain_trading_paused',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       chainLpActionsPaused: json.valueAsBool<bool?>(
         'chain_lp_actions_paused',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       observedFeeRate: json.valueAsString<String?>(
         'observed_fee_rate',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      gasRate: json.valueAsString<String?>('gas_rate', acceptCamelCase: true),
+      gasRate: json.valueAsString<String?>(
+        'gas_rate',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       gasRateUnits: json.valueAsString<String?>(
         'gas_rate_units',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       outboundTxSize: json.valueAsString<String?>(
         'outbound_tx_size',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       outboundFee: json.valueAsString<String?>(
         'outbound_fee',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       dustThreshold: json.valueAsString<String?>(
         'dust_threshold',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      viewKey: json.valueAsString<String?>('view_key', acceptCamelCase: true),
+      viewKey: json.valueAsString<String?>(
+        'view_key',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -235,13 +261,21 @@ class QueryInboundAddressesRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'height': height};
   }
 
-  factory QueryInboundAddressesRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryInboundAddressesRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryInboundAddressesRequest(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -289,26 +323,34 @@ class QueryInboundAddressesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [inboundAddresses];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'inbound_addresses': inboundAddresses.map((e) => e.toJson()).toList(),
+      'inbound_addresses':
+          inboundAddresses.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory QueryInboundAddressesResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryInboundAddressesResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryInboundAddressesResponse(
       inboundAddresses:
           (json.valueEnsureAsList<dynamic>(
                 'inbound_addresses',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  QueryInboundAddressResponse,
-                  Map<String, dynamic>
-                >(
+                (e) => JsonParser.valueTo<QueryInboundAddressResponse, Object>(
                   value: e,
-                  parse: (v) => QueryInboundAddressResponse.fromJson(v),
+                  parse:
+                      (v) => QueryInboundAddressResponse.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),

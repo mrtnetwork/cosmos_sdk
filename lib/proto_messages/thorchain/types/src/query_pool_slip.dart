@@ -31,14 +31,25 @@ class QueryPoolSlipRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [asset, height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'asset': asset, 'height': height};
   }
 
-  factory QueryPoolSlipRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryPoolSlipRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryPoolSlipRequest(
-      asset: json.valueAsString<String?>('asset', acceptCamelCase: true),
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      asset: json.valueAsString<String?>(
+        'asset',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -121,33 +132,47 @@ class QueryPoolSlipResponse extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'asset': asset,
-      'pool_slip': poolSlip?.toString(),
-      'rollup_count': rollupCount?.toString(),
-      'long_rollup': longRollup?.toString(),
-      'rollup': rollup?.toString(),
-      'summed_rollup': summedRollup?.toString(),
+      'pool_slip': config.encodeBigint(poolSlip),
+      'rollup_count': config.encodeBigint(rollupCount),
+      'long_rollup': config.encodeBigint(longRollup),
+      'rollup': config.encodeBigint(rollup),
+      'summed_rollup': config.encodeBigint(summedRollup),
     };
   }
 
-  factory QueryPoolSlipResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryPoolSlipResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryPoolSlipResponse(
-      asset: json.valueAsString<String?>('asset', acceptCamelCase: true),
-      poolSlip: json.valueAsBigInt<BigInt?>('pool_slip', acceptCamelCase: true),
+      asset: json.valueAsString<String?>(
+        'asset',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      poolSlip: json.valueAsBigInt<BigInt?>(
+        'pool_slip',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       rollupCount: json.valueAsBigInt<BigInt?>(
         'rollup_count',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       longRollup: json.valueAsBigInt<BigInt?>(
         'long_rollup',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      rollup: json.valueAsBigInt<BigInt?>('rollup', acceptCamelCase: true),
+      rollup: json.valueAsBigInt<BigInt?>(
+        'rollup',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       summedRollup: json.valueAsBigInt<BigInt?>(
         'summed_rollup',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -196,13 +221,21 @@ class QueryPoolSlipsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'height': height};
   }
 
-  factory QueryPoolSlipsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryPoolSlipsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryPoolSlipsRequest(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -250,19 +283,34 @@ class QueryPoolSlipsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [poolSlips];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'pool_slips': poolSlips.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'pool_slips': poolSlips.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
-  factory QueryPoolSlipsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryPoolSlipsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryPoolSlipsResponse(
       poolSlips:
-          (json.valueEnsureAsList<dynamic>('pool_slips', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'pool_slips',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  QueryPoolSlipResponse,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => QueryPoolSlipResponse.fromJson(v)),
+                (e) => JsonParser.valueTo<QueryPoolSlipResponse, Object>(
+                  value: e,
+                  parse:
+                      (v) => QueryPoolSlipResponse.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );

@@ -30,15 +30,29 @@ class ContractInfo extends CosmosProtoMessage {
   List<Object?> get protoValues => [address, contract, version];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'address': address, 'contract': contract, 'version': version};
   }
 
-  factory ContractInfo.fromJson(Map<String, dynamic> json) {
+  factory ContractInfo.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ContractInfo(
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
-      contract: json.valueAsString<String?>('contract', acceptCamelCase: true),
-      version: json.valueAsString<String?>('version', acceptCamelCase: true),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      contract: json.valueAsString<String?>(
+        'contract',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      version: json.valueAsString<String?>(
+        'version',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

@@ -59,9 +59,11 @@ class ArithmeticTwapRequest extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'pool_id': poolId?.toString(),
+      'pool_id': config.encodeBigint(poolId),
       'base_asset': baseAsset,
       'quote_asset': quoteAsset,
       'start_time': startTime?.toRfc3339(),
@@ -69,26 +71,40 @@ class ArithmeticTwapRequest extends CosmosProtoMessage
     };
   }
 
-  factory ArithmeticTwapRequest.fromJson(Map<String, dynamic> json) {
+  factory ArithmeticTwapRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ArithmeticTwapRequest(
-      poolId: json.valueAsBigInt<BigInt?>('pool_id', acceptCamelCase: true),
+      poolId: json.valueAsBigInt<BigInt?>(
+        'pool_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       baseAsset: json.valueAsString<String?>(
         'base_asset',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       quoteAsset: json.valueAsString<String?>(
         'quote_asset',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      startTime: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      startTime: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'start_time',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      endTime: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      endTime: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'end_time',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -144,15 +160,20 @@ class ArithmeticTwapResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [arithmeticTwap];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'arithmetic_twap': arithmeticTwap};
   }
 
-  factory ArithmeticTwapResponse.fromJson(Map<String, dynamic> json) {
+  factory ArithmeticTwapResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ArithmeticTwapResponse(
       arithmeticTwap: json.valueAsString<String?>(
         'arithmetic_twap',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -210,30 +231,42 @@ class ArithmeticTwapToNowRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [poolId, baseAsset, quoteAsset, startTime];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'pool_id': poolId?.toString(),
+      'pool_id': config.encodeBigint(poolId),
       'base_asset': baseAsset,
       'quote_asset': quoteAsset,
       'start_time': startTime?.toRfc3339(),
     };
   }
 
-  factory ArithmeticTwapToNowRequest.fromJson(Map<String, dynamic> json) {
+  factory ArithmeticTwapToNowRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ArithmeticTwapToNowRequest(
-      poolId: json.valueAsBigInt<BigInt?>('pool_id', acceptCamelCase: true),
+      poolId: json.valueAsBigInt<BigInt?>(
+        'pool_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       baseAsset: json.valueAsString<String?>(
         'base_asset',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       quoteAsset: json.valueAsString<String?>(
         'quote_asset',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      startTime: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      startTime: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'start_time',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -285,15 +318,20 @@ class ArithmeticTwapToNowResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [arithmeticTwap];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'arithmetic_twap': arithmeticTwap};
   }
 
-  factory ArithmeticTwapToNowResponse.fromJson(Map<String, dynamic> json) {
+  factory ArithmeticTwapToNowResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ArithmeticTwapToNowResponse(
       arithmeticTwap: json.valueAsString<String?>(
         'arithmetic_twap',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -363,9 +401,11 @@ class GeometricTwapRequest extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'pool_id': poolId?.toString(),
+      'pool_id': config.encodeBigint(poolId),
       'base_asset': baseAsset,
       'quote_asset': quoteAsset,
       'start_time': startTime?.toRfc3339(),
@@ -373,26 +413,40 @@ class GeometricTwapRequest extends CosmosProtoMessage
     };
   }
 
-  factory GeometricTwapRequest.fromJson(Map<String, dynamic> json) {
+  factory GeometricTwapRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GeometricTwapRequest(
-      poolId: json.valueAsBigInt<BigInt?>('pool_id', acceptCamelCase: true),
+      poolId: json.valueAsBigInt<BigInt?>(
+        'pool_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       baseAsset: json.valueAsString<String?>(
         'base_asset',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       quoteAsset: json.valueAsString<String?>(
         'quote_asset',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      startTime: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      startTime: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'start_time',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      endTime: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      endTime: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'end_time',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -448,15 +502,20 @@ class GeometricTwapResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [geometricTwap];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'geometric_twap': geometricTwap};
   }
 
-  factory GeometricTwapResponse.fromJson(Map<String, dynamic> json) {
+  factory GeometricTwapResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GeometricTwapResponse(
       geometricTwap: json.valueAsString<String?>(
         'geometric_twap',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -514,30 +573,42 @@ class GeometricTwapToNowRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [poolId, baseAsset, quoteAsset, startTime];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'pool_id': poolId?.toString(),
+      'pool_id': config.encodeBigint(poolId),
       'base_asset': baseAsset,
       'quote_asset': quoteAsset,
       'start_time': startTime?.toRfc3339(),
     };
   }
 
-  factory GeometricTwapToNowRequest.fromJson(Map<String, dynamic> json) {
+  factory GeometricTwapToNowRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GeometricTwapToNowRequest(
-      poolId: json.valueAsBigInt<BigInt?>('pool_id', acceptCamelCase: true),
+      poolId: json.valueAsBigInt<BigInt?>(
+        'pool_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       baseAsset: json.valueAsString<String?>(
         'base_asset',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       quoteAsset: json.valueAsString<String?>(
         'quote_asset',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      startTime: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      startTime: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'start_time',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -589,15 +660,20 @@ class GeometricTwapToNowResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [geometricTwap];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'geometric_twap': geometricTwap};
   }
 
-  factory GeometricTwapToNowResponse.fromJson(Map<String, dynamic> json) {
+  factory GeometricTwapToNowResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GeometricTwapToNowResponse(
       geometricTwap: json.valueAsString<String?>(
         'geometric_twap',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -639,11 +715,16 @@ class ParamsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory ParamsRequest.fromJson(Map<String, dynamic> json) {
+  factory ParamsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ParamsRequest();
   }
 
@@ -685,18 +766,26 @@ class ParamsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [params];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'params': params?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'params': config.encodeMessage(params)};
   }
 
-  factory ParamsResponse.fromJson(Map<String, dynamic> json) {
+  factory ParamsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ParamsResponse(
-      params: json
-          .valueTo<osmosis_twap_v1beta1_genesis.Params?, Map<String, dynamic>>(
-            key: 'params',
-            parse: (v) => osmosis_twap_v1beta1_genesis.Params.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      params: json.valueTo<osmosis_twap_v1beta1_genesis.Params?, Object>(
+        key: 'params',
+        parse:
+            (v) => osmosis_twap_v1beta1_genesis.Params.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

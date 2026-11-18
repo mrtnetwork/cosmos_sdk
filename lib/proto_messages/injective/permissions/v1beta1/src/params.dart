@@ -56,7 +56,9 @@ class EnforcedRestrictionsEVMContract extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'contract_address': contractAddress,
       'pause_event_signature': pauseEventSignature,
@@ -66,27 +68,30 @@ class EnforcedRestrictionsEVMContract extends CosmosProtoMessage {
     };
   }
 
-  factory EnforcedRestrictionsEVMContract.fromJson(Map<String, dynamic> json) {
+  factory EnforcedRestrictionsEVMContract.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return EnforcedRestrictionsEVMContract(
       contractAddress: json.valueAsString<String?>(
         'contract_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       pauseEventSignature: json.valueAsString<String?>(
         'pause_event_signature',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       unpauseEventSignature: json.valueAsString<String?>(
         'unpause_event_signature',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       blacklistEventSignature: json.valueAsString<String?>(
         'blacklist_event_signature',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       unblacklistEventSignature: json.valueAsString<String?>(
         'unblacklist_event_signature',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -161,40 +166,51 @@ class Params extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'contract_hook_max_gas': contractHookMaxGas?.toString(),
+      'contract_hook_max_gas': config.encodeBigint(contractHookMaxGas),
       'deprecated_enforced_restrictions_contracts':
           deprecatedEnforcedRestrictionsContracts.map((e) => e).toList(),
       'enforced_restrictions_evm_contracts':
-          enforcedRestrictionsEvmContracts.map((e) => e.toJson()).toList(),
+          enforcedRestrictionsEvmContracts
+              .map((e) => config.encodeMessage(e))
+              .toList(),
     };
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
       contractHookMaxGas: json.valueAsBigInt<BigInt?>(
         'contract_hook_max_gas',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       deprecatedEnforcedRestrictionsContracts:
           (json.valueEnsureAsList<dynamic>(
             'deprecated_enforced_restrictions_contracts',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
       enforcedRestrictionsEvmContracts:
           (json.valueEnsureAsList<dynamic>(
                 'enforced_restrictions_evm_contracts',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  EnforcedRestrictionsEVMContract,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => EnforcedRestrictionsEVMContract.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<EnforcedRestrictionsEVMContract, Object>(
+                      value: e,
+                      parse:
+                          (v) => EnforcedRestrictionsEVMContract.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );

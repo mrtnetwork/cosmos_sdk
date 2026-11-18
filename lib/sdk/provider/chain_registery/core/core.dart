@@ -1,5 +1,6 @@
-import 'package:blockchain_utils/cbor/cbor.dart';
-import 'package:blockchain_utils/networks/types/network.dart';
+import 'package:blockchain_utils/chain/types/network.dart';
+import 'package:blockchain_utils/encoding/encoding.dart';
+
 import 'package:blockchain_utils/service/service.dart';
 import 'package:cosmos_sdk/sdk/provider/types/types.dart';
 

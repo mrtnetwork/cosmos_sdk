@@ -6,9 +6,10 @@ import 'package:cosmos_sdk/sdk/serialization/serialization.dart';
 /// See cosmos.tx.v1beta1.ModeInfo.Multi for how to specify which signers
 /// signed and with which modes.
 class MultiSignature extends CosmosProtoMessage {
-  final List<List<int>> signatures;
+  final List<BuBytes> signatures;
 
-  const MultiSignature({this.signatures = const []});
+  MultiSignature({List<List<int>> signatures = const []})
+    : signatures = signatures.map((e) => e.asImmutableBytes).toImutableList;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -30,28 +31,25 @@ class MultiSignature extends CosmosProtoMessage {
   List<Object?> get protoValues => [signatures];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'signatures':
-          signatures
-              .map(
-                (e) => StringUtils.decode(e, encoding: StringEncoding.base64),
-              )
-              .toList(),
+      'signatures': signatures.map((e) => config.encodeBinary(e)).toList(),
     };
   }
 
-  factory MultiSignature.fromJson(Map<String, dynamic> json) {
+  factory MultiSignature.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MultiSignature(
       signatures:
-          (json.valueEnsureAsList<dynamic>('signatures', acceptCamelCase: true))
-              .map(
-                (e) => JsonParser.valueAsBytes<List<int>>(
-                  e,
-                  encoding: StringEncoding.base64,
-                ),
-              )
-              .toList(),
+          (json.valueEnsureAsList<dynamic>(
+            'signatures',
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
+          )).map((e) => config.decodeBinary<List<int>>(e)).toList(),
     );
   }
 
@@ -72,9 +70,32 @@ class MultiSignature extends CosmosProtoMessage {
 class CompactBitArray extends CosmosProtoMessage {
   final int? extraBitsStored;
 
-  final List<int>? elems;
+  final BuBytes? elems;
 
-  const CompactBitArray({this.extraBitsStored, this.elems});
+  CompactBitArray({this.extraBitsStored, List<int>? elems})
+    : elems = elems?.asImmutableBytes;
+
+  /// Builds a bit array for [count] signers with [signedIndices] set.
+  ///
+  /// Cosmos numbers bits MSB-first: bit `i` is
+  /// `elems[i ~/ 8] & (1 << (7 - i % 8))`. So signers 0 and 1 of a 2-of-3
+  /// multisig give `elems: [0xC0]` with `extraBitsStored: 3`.
+  factory CompactBitArray.fromIndices(int count, List<int> signedIndices) {
+    if (count <= 0) {
+      throw BuError(DefaultErrorType.invalidArgument, 'Invalid count.');
+    }
+    final elems = List<int>.filled((count + 7) ~/ 8, 0);
+    for (final i in signedIndices) {
+      if (i < 0 || i >= count) {
+        throw BuError(
+          DefaultErrorType.invalidArgument,
+          'Invalid signedIndices.',
+        );
+      }
+      elems[i ~/ 8] |= (1 << (7 - (i % 8)));
+    }
+    return CompactBitArray(extraBitsStored: count, elems: elems);
+  }
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -91,29 +112,26 @@ class CompactBitArray extends CosmosProtoMessage {
   List<Object?> get protoValues => [extraBitsStored, elems];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'extra_bits_stored': extraBitsStored,
-      'elems': switch (elems) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'elems': config.encodeBinary(elems),
     };
   }
 
-  factory CompactBitArray.fromJson(Map<String, dynamic> json) {
+  factory CompactBitArray.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return CompactBitArray(
       extraBitsStored: json.valueAsInt<int?>(
         'extra_bits_stored',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      elems: json.valueAsBytes<List<int>?>(
-        'elems',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      elems: config.decodeBinary<List<int>?>(
+        json.valueAs('elems', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }

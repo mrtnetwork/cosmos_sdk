@@ -32,18 +32,32 @@ enum State implements ProtoEnumVariant {
 
   /// Looks up a value by its proto wire int. Throws if not found.
   static State fromValue(int? value) {
+    value ??= 0;
     return State.values.firstWhere(
       (e) => e.value == value,
-      orElse: () => throw ItemNotFoundException(name: "State", value: value),
+      orElse:
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching State found for the given value. $value",
+                details: {"name": "State", "value": value?.toString()},
+              ),
     );
   }
 
   /// Looks up a value by wire int, Dart enum name, or original proto
   /// name (whichever [value] happens to be). Throws if not found.
   static State from(Object? value) {
+    value ??= 0;
     return State.values.firstWhere(
       (e) => e.value == value || e.name == value || e.protoName == value,
-      orElse: () => throw ItemNotFoundException(name: "State", value: value),
+      orElse:
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching State found for the given value. $value",
+                details: {"name": "State", "value": value?.toString()},
+              ),
     );
   }
 }
@@ -111,25 +125,41 @@ class ConnectionEnd extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'client_id': clientId,
-      'versions': versions.map((e) => e.toJson()).toList(),
-      'state': state?.protoName,
-      'counterparty': counterparty?.toJson(),
-      'delay_period': delayPeriod?.toString(),
+      'versions': versions.map((e) => config.encodeMessage(e)).toList(),
+      'state': config.encodeEnum(state),
+      'counterparty': config.encodeMessage(counterparty),
+      'delay_period': config.encodeBigint(delayPeriod),
     };
   }
 
-  factory ConnectionEnd.fromJson(Map<String, dynamic> json) {
+  factory ConnectionEnd.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ConnectionEnd(
-      clientId: json.valueAsString<String?>('client_id', acceptCamelCase: true),
+      clientId: json.valueAsString<String?>(
+        'client_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       versions:
-          (json.valueEnsureAsList<dynamic>('versions', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'versions',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<Version, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<Version, Object>(
                   value: e,
-                  parse: (v) => Version.fromJson(v),
+                  parse:
+                      (v) => Version.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -137,14 +167,15 @@ class ConnectionEnd extends CosmosProtoMessage {
         key: 'state',
         parse: (v) => State.from(v),
       ),
-      counterparty: json.valueTo<Counterparty?, Map<String, dynamic>>(
+      counterparty: json.valueTo<Counterparty?, Object>(
         key: 'counterparty',
-        parse: (v) => Counterparty.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => Counterparty.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       delayPeriod: json.valueAsBigInt<BigInt?>(
         'delay_period',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -232,27 +263,46 @@ class IdentifiedConnection extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'id': id,
       'client_id': clientId,
-      'versions': versions.map((e) => e.toJson()).toList(),
-      'state': state?.protoName,
-      'counterparty': counterparty?.toJson(),
-      'delay_period': delayPeriod?.toString(),
+      'versions': versions.map((e) => config.encodeMessage(e)).toList(),
+      'state': config.encodeEnum(state),
+      'counterparty': config.encodeMessage(counterparty),
+      'delay_period': config.encodeBigint(delayPeriod),
     };
   }
 
-  factory IdentifiedConnection.fromJson(Map<String, dynamic> json) {
+  factory IdentifiedConnection.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return IdentifiedConnection(
-      id: json.valueAsString<String?>('id', acceptCamelCase: true),
-      clientId: json.valueAsString<String?>('client_id', acceptCamelCase: true),
+      id: json.valueAsString<String?>(
+        'id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      clientId: json.valueAsString<String?>(
+        'client_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       versions:
-          (json.valueEnsureAsList<dynamic>('versions', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'versions',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<Version, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<Version, Object>(
                   value: e,
-                  parse: (v) => Version.fromJson(v),
+                  parse:
+                      (v) => Version.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -260,14 +310,15 @@ class IdentifiedConnection extends CosmosProtoMessage {
         key: 'state',
         parse: (v) => State.from(v),
       ),
-      counterparty: json.valueTo<Counterparty?, Map<String, dynamic>>(
+      counterparty: json.valueTo<Counterparty?, Object>(
         key: 'counterparty',
-        parse: (v) => Counterparty.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => Counterparty.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       delayPeriod: json.valueAsBigInt<BigInt?>(
         'delay_period',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -327,30 +378,39 @@ class Counterparty extends CosmosProtoMessage {
   List<Object?> get protoValues => [clientId, connectionId, prefix];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'client_id': clientId,
       'connection_id': connectionId,
-      'prefix': prefix?.toJson(),
+      'prefix': config.encodeMessage(prefix),
     };
   }
 
-  factory Counterparty.fromJson(Map<String, dynamic> json) {
+  factory Counterparty.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Counterparty(
-      clientId: json.valueAsString<String?>('client_id', acceptCamelCase: true),
+      clientId: json.valueAsString<String?>(
+        'client_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       connectionId: json.valueAsString<String?>(
         'connection_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      prefix: json.valueTo<
-        ibc_core_commitment_v1_commitment.MerklePrefix?,
-        Map<String, dynamic>
-      >(
-        key: 'prefix',
-        parse:
-            (v) => ibc_core_commitment_v1_commitment.MerklePrefix.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      prefix: json
+          .valueTo<ibc_core_commitment_v1_commitment.MerklePrefix?, Object>(
+            key: 'prefix',
+            parse:
+                (v) => ibc_core_commitment_v1_commitment.MerklePrefix.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -403,23 +463,29 @@ class Version extends CosmosProtoMessage {
   List<Object?> get protoValues => [identifier, features];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'identifier': identifier,
       'features': features.map((e) => e).toList(),
     };
   }
 
-  factory Version.fromJson(Map<String, dynamic> json) {
+  factory Version.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Version(
       identifier: json.valueAsString<String?>(
         'identifier',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       features:
           (json.valueEnsureAsList<dynamic>(
             'features',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
     );
   }
@@ -461,15 +527,24 @@ class Params extends CosmosProtoMessage {
   List<Object?> get protoValues => [maxExpectedTimePerBlock];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'max_expected_time_per_block': maxExpectedTimePerBlock?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'max_expected_time_per_block': config.encodeBigint(
+        maxExpectedTimePerBlock,
+      ),
+    };
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
       maxExpectedTimePerBlock: json.valueAsBigInt<BigInt?>(
         'max_expected_time_per_block',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

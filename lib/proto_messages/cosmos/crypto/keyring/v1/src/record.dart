@@ -65,44 +65,61 @@ class Record extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'name': name,
-      'pub_key': pubKey?.toJson(),
-      'local': local?.toJson(),
-      'ledger': ledger?.toJson(),
-      'multi': multi?.toJson(),
-      'offline': offline?.toJson(),
+      'pub_key': config.encodeMessage(pubKey),
+      'local': config.encodeMessage(local),
+      'ledger': config.encodeMessage(ledger),
+      'multi': config.encodeMessage(multi),
+      'offline': config.encodeMessage(offline),
     };
   }
 
-  factory Record.fromJson(Map<String, dynamic> json) {
+  factory Record.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Record(
-      name: json.valueAsString<String?>('name', acceptCamelCase: true),
-      pubKey: json.valueTo<google_protobuf_any.Any?, Map<String, dynamic>>(
+      name: json.valueAsString<String?>(
+        'name',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      pubKey: json.valueTo<google_protobuf_any.Any?, Object>(
         key: 'pub_key',
-        parse: (v) => google_protobuf_any.Any.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_any.Any.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      local: json.valueTo<RecordLocal?, Map<String, dynamic>>(
+      local: json.valueTo<RecordLocal?, Object>(
         key: 'local',
-        parse: (v) => RecordLocal.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => RecordLocal.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      ledger: json.valueTo<RecordLedger?, Map<String, dynamic>>(
+      ledger: json.valueTo<RecordLedger?, Object>(
         key: 'ledger',
-        parse: (v) => RecordLedger.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => RecordLedger.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      multi: json.valueTo<RecordMulti?, Map<String, dynamic>>(
+      multi: json.valueTo<RecordMulti?, Object>(
         key: 'multi',
-        parse: (v) => RecordMulti.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => RecordMulti.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      offline: json.valueTo<RecordOffline?, Map<String, dynamic>>(
+      offline: json.valueTo<RecordOffline?, Object>(
         key: 'offline',
-        parse: (v) => RecordOffline.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) =>
+                RecordOffline.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -161,16 +178,25 @@ class RecordLocal extends CosmosProtoMessage {
   List<Object?> get protoValues => [privKey];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'priv_key': privKey?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'priv_key': config.encodeMessage(privKey)};
   }
 
-  factory RecordLocal.fromJson(Map<String, dynamic> json) {
+  factory RecordLocal.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return RecordLocal(
-      privKey: json.valueTo<google_protobuf_any.Any?, Map<String, dynamic>>(
+      privKey: json.valueTo<google_protobuf_any.Any?, Object>(
         key: 'priv_key',
-        parse: (v) => google_protobuf_any.Any.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_any.Any.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -211,18 +237,26 @@ class RecordLedger extends CosmosProtoMessage {
   List<Object?> get protoValues => [path];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'path': path?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'path': config.encodeMessage(path)};
   }
 
-  factory RecordLedger.fromJson(Map<String, dynamic> json) {
+  factory RecordLedger.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return RecordLedger(
-      path: json
-          .valueTo<cosmos_crypto_hd_v1_hd.BIP44Params?, Map<String, dynamic>>(
-            key: 'path',
-            parse: (v) => cosmos_crypto_hd_v1_hd.BIP44Params.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      path: json.valueTo<cosmos_crypto_hd_v1_hd.BIP44Params?, Object>(
+        key: 'path',
+        parse:
+            (v) => cosmos_crypto_hd_v1_hd.BIP44Params.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -260,11 +294,16 @@ class RecordMulti extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory RecordMulti.fromJson(Map<String, dynamic> json) {
+  factory RecordMulti.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return RecordMulti();
   }
 
@@ -296,11 +335,16 @@ class RecordOffline extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory RecordOffline.fromJson(Map<String, dynamic> json) {
+  factory RecordOffline.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return RecordOffline();
   }
 

@@ -1,3 +1,4 @@
+import 'package:blockchain_utils/blockchain_utils.dart';
 import 'package:cosmos_sdk/sdk/crypto/ed25519/private_key.dart';
 import 'package:cosmos_sdk/sdk/crypto/ethSecp256k1/private_key.dart';
 import 'package:cosmos_sdk/sdk/crypto/keypair/public_key.dart';
@@ -6,9 +7,11 @@ import 'package:cosmos_sdk/sdk/crypto/secp256r1/private_key.dart';
 import 'package:cosmos_sdk/sdk/crypto/types/types.dart';
 import 'package:cosmos_sdk/sdk/serialization/src/protobuf.dart';
 
-abstract class CosmosPrivateKey extends CosmosProtoMessage {
+abstract class CosmosPrivateKey<P extends CosmosPublicKey>
+    extends CosmosProtoMessage
+    with Equality, SecretState {
   const CosmosPrivateKey();
-  factory CosmosPrivateKey.fromBytes({
+  static CosmosPrivateKey fromBytes({
     required List<int> keyBytes,
     required CosmosKeysAlgs algorithm,
   }) {
@@ -31,7 +34,7 @@ abstract class CosmosPrivateKey extends CosmosProtoMessage {
     }
   }
 
-  List<int> sign(List<int> digest);
-  List<int> toBytes();
-  CosmosPublicKey toPublicKey();
+  BuBytes sign(List<int> digest);
+  SecretBytes toBytes();
+  P toPublicKey();
 }

@@ -24,7 +24,7 @@ class ThorNodeRequestPools
   Map<String, String?> get parameters => {"height": height?.toString()};
 
   @override
-  List<AssetPoolInformationResponse> onResonse(
+  List<AssetPoolInformationResponse> onResponse(
     List<Map<String, dynamic>> result,
   ) {
     return result.map((e) => AssetPoolInformationResponse.fromJson(e)).toList();

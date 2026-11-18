@@ -6,9 +6,10 @@ import 'package:cosmos_sdk/sdk/serialization/serialization.dart';
 /// The constructed key from the Path and the key will be append(Path.KeyPath,
 /// append(Path.KeyPrefix, key...))
 class MerklePrefix extends CosmosProtoMessage {
-  final List<int>? keyPrefix;
+  final BuBytes? keyPrefix;
 
-  const MerklePrefix({this.keyPrefix});
+  MerklePrefix({List<int>? keyPrefix})
+    : keyPrefix = keyPrefix?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -25,24 +26,19 @@ class MerklePrefix extends CosmosProtoMessage {
   List<Object?> get protoValues => [keyPrefix];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {
-      'key_prefix': switch (keyPrefix) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-    };
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'key_prefix': config.encodeBinary(keyPrefix)};
   }
 
-  factory MerklePrefix.fromJson(Map<String, dynamic> json) {
+  factory MerklePrefix.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MerklePrefix(
-      keyPrefix: json.valueAsBytes<List<int>?>(
-        'key_prefix',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      keyPrefix: config.decodeBinary<List<int>?>(
+        json.valueAs('key_prefix', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }

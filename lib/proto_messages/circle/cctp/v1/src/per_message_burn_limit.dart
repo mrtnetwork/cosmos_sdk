@@ -48,14 +48,25 @@ class PerMessageBurnLimit extends CosmosProtoMessage {
   List<Object?> get protoValues => [denom, amount];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'denom': denom, 'amount': amount};
   }
 
-  factory PerMessageBurnLimit.fromJson(Map<String, dynamic> json) {
+  factory PerMessageBurnLimit.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return PerMessageBurnLimit(
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
-      amount: json.valueAsString<String?>('amount', acceptCamelCase: true),
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      amount: json.valueAsString<String?>(
+        'amount',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

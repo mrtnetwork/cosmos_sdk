@@ -35,11 +35,16 @@ class QueryParamsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryParamsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsRequest();
   }
 
@@ -83,16 +88,25 @@ class QueryParamsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [params];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'params': params?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'params': config.encodeMessage(params)};
   }
 
-  factory QueryParamsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsResponse(
-      params: json.valueTo<secret_cron_params.Params?, Map<String, dynamic>>(
+      params: json.valueTo<secret_cron_params.Params?, Object>(
         key: 'params',
-        parse: (v) => secret_cron_params.Params.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => secret_cron_params.Params.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -140,13 +154,21 @@ class QueryGetScheduleRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [name];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'name': name};
   }
 
-  factory QueryGetScheduleRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryGetScheduleRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryGetScheduleRequest(
-      name: json.valueAsString<String?>('name', acceptCamelCase: true),
+      name: json.valueAsString<String?>(
+        'name',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -190,18 +212,26 @@ class QueryGetScheduleResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [schedule];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'schedule': schedule?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'schedule': config.encodeMessage(schedule)};
   }
 
-  factory QueryGetScheduleResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryGetScheduleResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryGetScheduleResponse(
-      schedule: json
-          .valueTo<secret_cron_schedule.Schedule?, Map<String, dynamic>>(
-            key: 'schedule',
-            parse: (v) => secret_cron_schedule.Schedule.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      schedule: json.valueTo<secret_cron_schedule.Schedule?, Object>(
+        key: 'schedule',
+        parse:
+            (v) => secret_cron_schedule.Schedule.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -248,21 +278,28 @@ class QuerySchedulesRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [pagination];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'pagination': pagination?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'pagination': config.encodeMessage(pagination)};
   }
 
-  factory QuerySchedulesRequest.fromJson(Map<String, dynamic> json) {
+  factory QuerySchedulesRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QuerySchedulesRequest(
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageRequest?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) => cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageRequest?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -322,37 +359,49 @@ class QuerySchedulesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [schedules, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'schedules': schedules.map((e) => e.toJson()).toList(),
-      'pagination': pagination?.toJson(),
+      'schedules': schedules.map((e) => config.encodeMessage(e)).toList(),
+      'pagination': config.encodeMessage(pagination),
     };
   }
 
-  factory QuerySchedulesResponse.fromJson(Map<String, dynamic> json) {
+  factory QuerySchedulesResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QuerySchedulesResponse(
       schedules:
-          (json.valueEnsureAsList<dynamic>('schedules', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'schedules',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  secret_cron_schedule.Schedule,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => secret_cron_schedule.Schedule.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<secret_cron_schedule.Schedule, Object>(
+                      value: e,
+                      parse:
+                          (v) => secret_cron_schedule.Schedule.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageResponse?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) =>
-                cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageResponse?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 

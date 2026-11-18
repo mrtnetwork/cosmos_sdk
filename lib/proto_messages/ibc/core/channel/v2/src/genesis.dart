@@ -14,9 +14,10 @@ class PacketState extends CosmosProtoMessage {
   final BigInt? sequence;
 
   /// embedded data that represents packet state.
-  final List<int>? data;
+  final BuBytes? data;
 
-  const PacketState({this.clientId, this.sequence, this.data});
+  PacketState({this.clientId, this.sequence, List<int>? data})
+    : data = data?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -37,28 +38,31 @@ class PacketState extends CosmosProtoMessage {
   List<Object?> get protoValues => [clientId, sequence, data];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'client_id': clientId,
-      'sequence': sequence?.toString(),
-      'data': switch (data) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'sequence': config.encodeBigint(sequence),
+      'data': config.encodeBinary(data),
     };
   }
 
-  factory PacketState.fromJson(Map<String, dynamic> json) {
+  factory PacketState.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return PacketState(
-      clientId: json.valueAsString<String?>('client_id', acceptCamelCase: true),
-      sequence: json.valueAsBigInt<BigInt?>('sequence', acceptCamelCase: true),
-      data: json.valueAsBytes<List<int>?>(
-        'data',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      clientId: json.valueAsString<String?>(
+        'client_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      sequence: json.valueAsBigInt<BigInt?>(
+        'sequence',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      data: config.decodeBinary<List<int>?>(
+        json.valueAs('data', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }

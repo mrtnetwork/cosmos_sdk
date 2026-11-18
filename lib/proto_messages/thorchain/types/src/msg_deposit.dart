@@ -14,11 +14,17 @@ class MsgDeposit extends CosmosProtoMessage
 
   final String? memo;
 
-  final List<int>? signer;
+  final BuBytes? signer;
 
-  final List<int>? salt;
+  final BuBytes? salt;
 
-  const MsgDeposit({this.coins = const [], this.memo, this.signer, this.salt});
+  MsgDeposit({
+    this.coins = const [],
+    this.memo,
+    List<int>? signer,
+    List<int>? salt,
+  }) : signer = signer?.asImmutableBytes,
+       salt = salt?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -49,48 +55,48 @@ class MsgDeposit extends CosmosProtoMessage
   List<Object?> get protoValues => [coins, memo, signer, salt];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'coins': coins.map((e) => e.toJson()).toList(),
+      'coins': coins.map((e) => config.encodeMessage(e)).toList(),
       'memo': memo,
-      'signer': switch (signer) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'salt': switch (salt) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'signer': config.encodeBinary(signer),
+      'salt': config.encodeBinary(salt),
     };
   }
 
-  factory MsgDeposit.fromJson(Map<String, dynamic> json) {
+  factory MsgDeposit.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgDeposit(
       coins:
-          (json.valueEnsureAsList<dynamic>('coins', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'coins',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  common_common.Coin,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => common_common.Coin.fromJson(v)),
+                (e) => JsonParser.valueTo<common_common.Coin, Object>(
+                  value: e,
+                  parse:
+                      (v) => common_common.Coin.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
-      memo: json.valueAsString<String?>('memo', acceptCamelCase: true),
-      signer: json.valueAsBytes<List<int>?>(
-        'signer',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      memo: json.valueAsString<String?>(
+        'memo',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      salt: json.valueAsBytes<List<int>?>(
-        'salt',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      signer: config.decodeBinary<List<int>?>(
+        json.valueAs('signer', normalizeKeyLookup: config.normalizeKeys),
+      ),
+      salt: config.decodeBinary<List<int>?>(
+        json.valueAs('salt', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }

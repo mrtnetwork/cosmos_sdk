@@ -39,11 +39,16 @@ class ModuleToDistributeCoinsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory ModuleToDistributeCoinsRequest.fromJson(Map<String, dynamic> json) {
+  factory ModuleToDistributeCoinsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ModuleToDistributeCoinsRequest();
   }
 
@@ -94,22 +99,33 @@ class ModuleToDistributeCoinsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [coins];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'coins': coins.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'coins': coins.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory ModuleToDistributeCoinsResponse.fromJson(Map<String, dynamic> json) {
+  factory ModuleToDistributeCoinsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ModuleToDistributeCoinsResponse(
       coins:
-          (json.valueEnsureAsList<dynamic>('coins', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'coins',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -160,13 +176,21 @@ class GaugeByIDRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [id];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'id': id?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'id': config.encodeBigint(id)};
   }
 
-  factory GaugeByIDRequest.fromJson(Map<String, dynamic> json) {
+  factory GaugeByIDRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GaugeByIDRequest(
-      id: json.valueAsBigInt<BigInt?>('id', acceptCamelCase: true),
+      id: json.valueAsBigInt<BigInt?>(
+        'id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -210,18 +234,26 @@ class GaugeByIDResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [gauge];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'gauge': gauge?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'gauge': config.encodeMessage(gauge)};
   }
 
-  factory GaugeByIDResponse.fromJson(Map<String, dynamic> json) {
+  factory GaugeByIDResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GaugeByIDResponse(
-      gauge: json
-          .valueTo<osmosis_incentives_gauge.Gauge?, Map<String, dynamic>>(
-            key: 'gauge',
-            parse: (v) => osmosis_incentives_gauge.Gauge.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      gauge: json.valueTo<osmosis_incentives_gauge.Gauge?, Object>(
+        key: 'gauge',
+        parse:
+            (v) => osmosis_incentives_gauge.Gauge.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -268,21 +300,28 @@ class GaugesRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [pagination];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'pagination': pagination?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'pagination': config.encodeMessage(pagination)};
   }
 
-  factory GaugesRequest.fromJson(Map<String, dynamic> json) {
+  factory GaugesRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GaugesRequest(
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageRequest?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) => cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageRequest?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -343,37 +382,49 @@ class GaugesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [data, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'data': data.map((e) => e.toJson()).toList(),
-      'pagination': pagination?.toJson(),
+      'data': data.map((e) => config.encodeMessage(e)).toList(),
+      'pagination': config.encodeMessage(pagination),
     };
   }
 
-  factory GaugesResponse.fromJson(Map<String, dynamic> json) {
+  factory GaugesResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GaugesResponse(
       data:
-          (json.valueEnsureAsList<dynamic>('data', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'data',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  osmosis_incentives_gauge.Gauge,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => osmosis_incentives_gauge.Gauge.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<osmosis_incentives_gauge.Gauge, Object>(
+                      value: e,
+                      parse:
+                          (v) => osmosis_incentives_gauge.Gauge.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageResponse?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) =>
-                cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageResponse?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -427,21 +478,28 @@ class ActiveGaugesRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [pagination];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'pagination': pagination?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'pagination': config.encodeMessage(pagination)};
   }
 
-  factory ActiveGaugesRequest.fromJson(Map<String, dynamic> json) {
+  factory ActiveGaugesRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ActiveGaugesRequest(
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageRequest?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) => cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageRequest?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -502,37 +560,49 @@ class ActiveGaugesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [data, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'data': data.map((e) => e.toJson()).toList(),
-      'pagination': pagination?.toJson(),
+      'data': data.map((e) => config.encodeMessage(e)).toList(),
+      'pagination': config.encodeMessage(pagination),
     };
   }
 
-  factory ActiveGaugesResponse.fromJson(Map<String, dynamic> json) {
+  factory ActiveGaugesResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ActiveGaugesResponse(
       data:
-          (json.valueEnsureAsList<dynamic>('data', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'data',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  osmosis_incentives_gauge.Gauge,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => osmosis_incentives_gauge.Gauge.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<osmosis_incentives_gauge.Gauge, Object>(
+                      value: e,
+                      parse:
+                          (v) => osmosis_incentives_gauge.Gauge.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageResponse?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) =>
-                cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageResponse?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -589,22 +659,32 @@ class ActiveGaugesPerDenomRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [denom, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'denom': denom, 'pagination': pagination?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'denom': denom, 'pagination': config.encodeMessage(pagination)};
   }
 
-  factory ActiveGaugesPerDenomRequest.fromJson(Map<String, dynamic> json) {
+  factory ActiveGaugesPerDenomRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ActiveGaugesPerDenomRequest(
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageRequest?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) => cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(v),
-        acceptCamelCase: true,
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageRequest?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -666,37 +746,49 @@ class ActiveGaugesPerDenomResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [data, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'data': data.map((e) => e.toJson()).toList(),
-      'pagination': pagination?.toJson(),
+      'data': data.map((e) => config.encodeMessage(e)).toList(),
+      'pagination': config.encodeMessage(pagination),
     };
   }
 
-  factory ActiveGaugesPerDenomResponse.fromJson(Map<String, dynamic> json) {
+  factory ActiveGaugesPerDenomResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ActiveGaugesPerDenomResponse(
       data:
-          (json.valueEnsureAsList<dynamic>('data', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'data',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  osmosis_incentives_gauge.Gauge,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => osmosis_incentives_gauge.Gauge.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<osmosis_incentives_gauge.Gauge, Object>(
+                      value: e,
+                      parse:
+                          (v) => osmosis_incentives_gauge.Gauge.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageResponse?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) =>
-                cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageResponse?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -750,21 +842,28 @@ class UpcomingGaugesRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [pagination];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'pagination': pagination?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'pagination': config.encodeMessage(pagination)};
   }
 
-  factory UpcomingGaugesRequest.fromJson(Map<String, dynamic> json) {
+  factory UpcomingGaugesRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return UpcomingGaugesRequest(
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageRequest?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) => cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageRequest?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -825,37 +924,49 @@ class UpcomingGaugesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [data, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'data': data.map((e) => e.toJson()).toList(),
-      'pagination': pagination?.toJson(),
+      'data': data.map((e) => config.encodeMessage(e)).toList(),
+      'pagination': config.encodeMessage(pagination),
     };
   }
 
-  factory UpcomingGaugesResponse.fromJson(Map<String, dynamic> json) {
+  factory UpcomingGaugesResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return UpcomingGaugesResponse(
       data:
-          (json.valueEnsureAsList<dynamic>('data', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'data',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  osmosis_incentives_gauge.Gauge,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => osmosis_incentives_gauge.Gauge.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<osmosis_incentives_gauge.Gauge, Object>(
+                      value: e,
+                      parse:
+                          (v) => osmosis_incentives_gauge.Gauge.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageResponse?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) =>
-                cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageResponse?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -912,22 +1023,32 @@ class UpcomingGaugesPerDenomRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [denom, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'denom': denom, 'pagination': pagination?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'denom': denom, 'pagination': config.encodeMessage(pagination)};
   }
 
-  factory UpcomingGaugesPerDenomRequest.fromJson(Map<String, dynamic> json) {
+  factory UpcomingGaugesPerDenomRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return UpcomingGaugesPerDenomRequest(
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageRequest?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) => cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(v),
-        acceptCamelCase: true,
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageRequest?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -994,40 +1115,50 @@ class UpcomingGaugesPerDenomResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [upcomingGauges, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'upcoming_gauges': upcomingGauges.map((e) => e.toJson()).toList(),
-      'pagination': pagination?.toJson(),
+      'upcoming_gauges':
+          upcomingGauges.map((e) => config.encodeMessage(e)).toList(),
+      'pagination': config.encodeMessage(pagination),
     };
   }
 
-  factory UpcomingGaugesPerDenomResponse.fromJson(Map<String, dynamic> json) {
+  factory UpcomingGaugesPerDenomResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return UpcomingGaugesPerDenomResponse(
       upcomingGauges:
           (json.valueEnsureAsList<dynamic>(
                 'upcoming_gauges',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  osmosis_incentives_gauge.Gauge,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => osmosis_incentives_gauge.Gauge.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<osmosis_incentives_gauge.Gauge, Object>(
+                      value: e,
+                      parse:
+                          (v) => osmosis_incentives_gauge.Gauge.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageResponse?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) =>
-                cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageResponse?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -1095,23 +1226,35 @@ class RewardsEstRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [owner, lockIds, endEpoch];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'owner': owner,
-      'lock_ids': lockIds.map((e) => e.toString()).toList(),
-      'end_epoch': endEpoch?.toString(),
+      'lock_ids': lockIds.map((e) => config.encodeBigint(e)).toList(),
+      'end_epoch': config.encodeBigint(endEpoch),
     };
   }
 
-  factory RewardsEstRequest.fromJson(Map<String, dynamic> json) {
+  factory RewardsEstRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return RewardsEstRequest(
-      owner: json.valueAsString<String?>('owner', acceptCamelCase: true),
+      owner: json.valueAsString<String?>(
+        'owner',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       lockIds:
           (json.valueEnsureAsList<dynamic>(
             'lock_ids',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsBigInt<BigInt>(e)).toList(),
-      endEpoch: json.valueAsBigInt<BigInt?>('end_epoch', acceptCamelCase: true),
+      endEpoch: json.valueAsBigInt<BigInt?>(
+        'end_epoch',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1166,22 +1309,33 @@ class RewardsEstResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [coins];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'coins': coins.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'coins': coins.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory RewardsEstResponse.fromJson(Map<String, dynamic> json) {
+  factory RewardsEstResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return RewardsEstResponse(
       coins:
-          (json.valueEnsureAsList<dynamic>('coins', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'coins',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -1228,11 +1382,16 @@ class QueryLockableDurationsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryLockableDurationsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryLockableDurationsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryLockableDurationsRequest();
   }
 
@@ -1283,27 +1442,37 @@ class QueryLockableDurationsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [lockableDurations];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'lockable_durations':
           lockableDurations.map((e) => e.encodeString(asNanos: true)).toList(),
     };
   }
 
-  factory QueryLockableDurationsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryLockableDurationsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryLockableDurationsResponse(
       lockableDurations:
           (json.valueEnsureAsList<dynamic>(
                 'lockable_durations',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   google_protobuf_duration.Duration,
-                  String
+                  Object
                 >(
                   value: e,
-                  parse: (v) => google_protobuf_duration.Duration.fromString(v),
+                  parse:
+                      (v) => google_protobuf_duration.Duration.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -1351,11 +1520,16 @@ class QueryAllGroupsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryAllGroupsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryAllGroupsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryAllGroupsRequest();
   }
 
@@ -1403,22 +1577,33 @@ class QueryAllGroupsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [groups];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'groups': groups.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'groups': groups.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory QueryAllGroupsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryAllGroupsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryAllGroupsResponse(
       groups:
-          (json.valueEnsureAsList<dynamic>('groups', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'groups',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  osmosis_incentives_group.Group,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => osmosis_incentives_group.Group.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<osmosis_incentives_group.Group, Object>(
+                      value: e,
+                      parse:
+                          (v) => osmosis_incentives_group.Group.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -1465,11 +1650,16 @@ class QueryAllGroupsGaugesRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryAllGroupsGaugesRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryAllGroupsGaugesRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryAllGroupsGaugesRequest();
   }
 
@@ -1517,22 +1707,33 @@ class QueryAllGroupsGaugesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [gauges];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'gauges': gauges.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'gauges': gauges.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory QueryAllGroupsGaugesResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryAllGroupsGaugesResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryAllGroupsGaugesResponse(
       gauges:
-          (json.valueEnsureAsList<dynamic>('gauges', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'gauges',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  osmosis_incentives_gauge.Gauge,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => osmosis_incentives_gauge.Gauge.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<osmosis_incentives_gauge.Gauge, Object>(
+                      value: e,
+                      parse:
+                          (v) => osmosis_incentives_gauge.Gauge.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -1579,11 +1780,16 @@ class QueryAllGroupsWithGaugeRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryAllGroupsWithGaugeRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryAllGroupsWithGaugeRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryAllGroupsWithGaugeRequest();
   }
 
@@ -1633,28 +1839,37 @@ class QueryAllGroupsWithGaugeResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [groupsWithGauge];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'groups_with_gauge': groupsWithGauge.map((e) => e.toJson()).toList(),
+      'groups_with_gauge':
+          groupsWithGauge.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory QueryAllGroupsWithGaugeResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryAllGroupsWithGaugeResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryAllGroupsWithGaugeResponse(
       groupsWithGauge:
           (json.valueEnsureAsList<dynamic>(
                 'groups_with_gauge',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   osmosis_incentives_group.GroupsWithGauge,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
-                      (v) =>
-                          osmosis_incentives_group.GroupsWithGauge.fromJson(v),
+                      (v) => osmosis_incentives_group.GroupsWithGauge.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -1707,13 +1922,21 @@ class QueryGroupByGroupGaugeIDRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [id];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'id': id?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'id': config.encodeBigint(id)};
   }
 
-  factory QueryGroupByGroupGaugeIDRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryGroupByGroupGaugeIDRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryGroupByGroupGaugeIDRequest(
-      id: json.valueAsBigInt<BigInt?>('id', acceptCamelCase: true),
+      id: json.valueAsBigInt<BigInt?>(
+        'id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1759,18 +1982,26 @@ class QueryGroupByGroupGaugeIDResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [group];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'group': group?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'group': config.encodeMessage(group)};
   }
 
-  factory QueryGroupByGroupGaugeIDResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryGroupByGroupGaugeIDResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryGroupByGroupGaugeIDResponse(
-      group: json
-          .valueTo<osmosis_incentives_group.Group?, Map<String, dynamic>>(
-            key: 'group',
-            parse: (v) => osmosis_incentives_group.Group.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      group: json.valueTo<osmosis_incentives_group.Group?, Object>(
+        key: 'group',
+        parse:
+            (v) => osmosis_incentives_group.Group.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1818,17 +2049,20 @@ class QueryCurrentWeightByGroupGaugeIDRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [groupGaugeId];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'group_gauge_id': groupGaugeId?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'group_gauge_id': config.encodeBigint(groupGaugeId)};
   }
 
   factory QueryCurrentWeightByGroupGaugeIDRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryCurrentWeightByGroupGaugeIDRequest(
       groupGaugeId: json.valueAsBigInt<BigInt?>(
         'group_gauge_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1883,23 +2117,33 @@ class QueryCurrentWeightByGroupGaugeIDResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [gaugeWeight];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'gauge_weight': gaugeWeight.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'gauge_weight': gaugeWeight.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
   factory QueryCurrentWeightByGroupGaugeIDResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryCurrentWeightByGroupGaugeIDResponse(
       gaugeWeight:
           (json.valueEnsureAsList<dynamic>(
                 'gauge_weight',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<GaugeWeight, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<GaugeWeight, Object>(
                   value: e,
-                  parse: (v) => GaugeWeight.fromJson(v),
+                  parse:
+                      (v) => GaugeWeight.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -1950,16 +2194,27 @@ class GaugeWeight extends CosmosProtoMessage {
   List<Object?> get protoValues => [gaugeId, weightRatio];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'gauge_id': gaugeId?.toString(), 'weight_ratio': weightRatio};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'gauge_id': config.encodeBigint(gaugeId),
+      'weight_ratio': weightRatio,
+    };
   }
 
-  factory GaugeWeight.fromJson(Map<String, dynamic> json) {
+  factory GaugeWeight.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GaugeWeight(
-      gaugeId: json.valueAsBigInt<BigInt?>('gauge_id', acceptCamelCase: true),
+      gaugeId: json.valueAsBigInt<BigInt?>(
+        'gauge_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       weightRatio: json.valueAsString<String?>(
         'weight_ratio',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -2005,21 +2260,28 @@ class QueryInternalGaugesRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [pagination];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'pagination': pagination?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'pagination': config.encodeMessage(pagination)};
   }
 
-  factory QueryInternalGaugesRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryInternalGaugesRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryInternalGaugesRequest(
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageRequest?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) => cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageRequest?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -2079,37 +2341,49 @@ class QueryInternalGaugesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [gauges, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'gauges': gauges.map((e) => e.toJson()).toList(),
-      'pagination': pagination?.toJson(),
+      'gauges': gauges.map((e) => config.encodeMessage(e)).toList(),
+      'pagination': config.encodeMessage(pagination),
     };
   }
 
-  factory QueryInternalGaugesResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryInternalGaugesResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryInternalGaugesResponse(
       gauges:
-          (json.valueEnsureAsList<dynamic>('gauges', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'gauges',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  osmosis_incentives_gauge.Gauge,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => osmosis_incentives_gauge.Gauge.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<osmosis_incentives_gauge.Gauge, Object>(
+                      value: e,
+                      parse:
+                          (v) => osmosis_incentives_gauge.Gauge.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageResponse?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) =>
-                cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageResponse?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -2163,21 +2437,28 @@ class QueryExternalGaugesRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [pagination];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'pagination': pagination?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'pagination': config.encodeMessage(pagination)};
   }
 
-  factory QueryExternalGaugesRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryExternalGaugesRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryExternalGaugesRequest(
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageRequest?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) => cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageRequest?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -2237,37 +2518,49 @@ class QueryExternalGaugesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [gauges, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'gauges': gauges.map((e) => e.toJson()).toList(),
-      'pagination': pagination?.toJson(),
+      'gauges': gauges.map((e) => config.encodeMessage(e)).toList(),
+      'pagination': config.encodeMessage(pagination),
     };
   }
 
-  factory QueryExternalGaugesResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryExternalGaugesResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryExternalGaugesResponse(
       gauges:
-          (json.valueEnsureAsList<dynamic>('gauges', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'gauges',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  osmosis_incentives_gauge.Gauge,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => osmosis_incentives_gauge.Gauge.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<osmosis_incentives_gauge.Gauge, Object>(
+                      value: e,
+                      parse:
+                          (v) => osmosis_incentives_gauge.Gauge.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageResponse?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) =>
-                cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageResponse?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -2323,22 +2616,35 @@ class QueryGaugesByPoolIDRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [id, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'id': id?.toString(), 'pagination': pagination?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'id': config.encodeBigint(id),
+      'pagination': config.encodeMessage(pagination),
+    };
   }
 
-  factory QueryGaugesByPoolIDRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryGaugesByPoolIDRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryGaugesByPoolIDRequest(
-      id: json.valueAsBigInt<BigInt?>('id', acceptCamelCase: true),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageRequest?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) => cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(v),
-        acceptCamelCase: true,
+      id: json.valueAsBigInt<BigInt?>(
+        'id',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageRequest?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -2399,37 +2705,49 @@ class QueryGaugesByPoolIDResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [gauges, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'gauges': gauges.map((e) => e.toJson()).toList(),
-      'pagination': pagination?.toJson(),
+      'gauges': gauges.map((e) => config.encodeMessage(e)).toList(),
+      'pagination': config.encodeMessage(pagination),
     };
   }
 
-  factory QueryGaugesByPoolIDResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryGaugesByPoolIDResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryGaugesByPoolIDResponse(
       gauges:
-          (json.valueEnsureAsList<dynamic>('gauges', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'gauges',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  osmosis_incentives_gauge.Gauge,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => osmosis_incentives_gauge.Gauge.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<osmosis_incentives_gauge.Gauge, Object>(
+                      value: e,
+                      parse:
+                          (v) => osmosis_incentives_gauge.Gauge.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageResponse?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) =>
-                cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageResponse?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -2480,11 +2798,16 @@ class ParamsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory ParamsRequest.fromJson(Map<String, dynamic> json) {
+  factory ParamsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ParamsRequest();
   }
 
@@ -2526,18 +2849,26 @@ class ParamsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [params];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'params': params?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'params': config.encodeMessage(params)};
   }
 
-  factory ParamsResponse.fromJson(Map<String, dynamic> json) {
+  factory ParamsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ParamsResponse(
-      params: json
-          .valueTo<osmosis_incentives_params.Params?, Map<String, dynamic>>(
-            key: 'params',
-            parse: (v) => osmosis_incentives_params.Params.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      params: json.valueTo<osmosis_incentives_params.Params?, Object>(
+        key: 'params',
+        parse:
+            (v) => osmosis_incentives_params.Params.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

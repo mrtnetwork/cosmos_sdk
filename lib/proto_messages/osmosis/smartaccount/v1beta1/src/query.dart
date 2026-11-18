@@ -32,11 +32,16 @@ class QueryParamsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryParamsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsRequest();
   }
 
@@ -80,19 +85,25 @@ class QueryParamsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [params];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'params': params?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'params': config.encodeMessage(params)};
   }
 
-  factory QueryParamsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsResponse(
-      params: json.valueTo<
-        osmosis_smartaccount_v1beta1_params.Params?,
-        Map<String, dynamic>
-      >(
+      params: json.valueTo<osmosis_smartaccount_v1beta1_params.Params?, Object>(
         key: 'params',
-        parse: (v) => osmosis_smartaccount_v1beta1_params.Params.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => osmosis_smartaccount_v1beta1_params.Params.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -140,13 +151,21 @@ class GetAuthenticatorsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [account];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'account': account};
   }
 
-  factory GetAuthenticatorsRequest.fromJson(Map<String, dynamic> json) {
+  factory GetAuthenticatorsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GetAuthenticatorsRequest(
-      account: json.valueAsString<String?>('account', acceptCamelCase: true),
+      account: json.valueAsString<String?>(
+        'account',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -197,29 +216,38 @@ class GetAuthenticatorsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [accountAuthenticators];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'account_authenticators':
-          accountAuthenticators.map((e) => e.toJson()).toList(),
+          accountAuthenticators.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory GetAuthenticatorsResponse.fromJson(Map<String, dynamic> json) {
+  factory GetAuthenticatorsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GetAuthenticatorsResponse(
       accountAuthenticators:
           (json.valueEnsureAsList<dynamic>(
                 'account_authenticators',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   osmosis_smartaccount_v1beta1_models.AccountAuthenticator,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => osmosis_smartaccount_v1beta1_models
-                          .AccountAuthenticator.fromJson(v),
+                          .AccountAuthenticator.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -277,19 +305,27 @@ class GetAuthenticatorRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [account, authenticatorId];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'account': account,
-      'authenticator_id': authenticatorId?.toString(),
+      'authenticator_id': config.encodeBigint(authenticatorId),
     };
   }
 
-  factory GetAuthenticatorRequest.fromJson(Map<String, dynamic> json) {
+  factory GetAuthenticatorRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GetAuthenticatorRequest(
-      account: json.valueAsString<String?>('account', acceptCamelCase: true),
+      account: json.valueAsString<String?>(
+        'account',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       authenticatorId: json.valueAsBigInt<BigInt?>(
         'authenticator_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -339,21 +375,31 @@ class GetAuthenticatorResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [accountAuthenticator];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'account_authenticator': accountAuthenticator?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'account_authenticator': config.encodeMessage(accountAuthenticator),
+    };
   }
 
-  factory GetAuthenticatorResponse.fromJson(Map<String, dynamic> json) {
+  factory GetAuthenticatorResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GetAuthenticatorResponse(
       accountAuthenticator: json.valueTo<
         osmosis_smartaccount_v1beta1_models.AccountAuthenticator?,
-        Map<String, dynamic>
+        Object
       >(
         key: 'account_authenticator',
         parse:
             (v) => osmosis_smartaccount_v1beta1_models
-                .AccountAuthenticator.fromJson(v),
-        acceptCamelCase: true,
+                .AccountAuthenticator.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

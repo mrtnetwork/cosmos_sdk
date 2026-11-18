@@ -29,11 +29,16 @@ class QueryStrdBurnerAddressRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryStrdBurnerAddressRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryStrdBurnerAddressRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryStrdBurnerAddressRequest();
   }
 
@@ -79,13 +84,21 @@ class QueryStrdBurnerAddressResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [address];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'address': address};
   }
 
-  factory QueryStrdBurnerAddressResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryStrdBurnerAddressResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryStrdBurnerAddressResponse(
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -128,11 +141,16 @@ class QueryTotalStrdBurnedRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryTotalStrdBurnedRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryTotalStrdBurnedRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTotalStrdBurnedRequest();
   }
 
@@ -192,7 +210,9 @@ class QueryTotalStrdBurnedResponse extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'total_burned': totalBurned,
       'protocol_burned': protocolBurned,
@@ -200,19 +220,22 @@ class QueryTotalStrdBurnedResponse extends CosmosProtoMessage {
     };
   }
 
-  factory QueryTotalStrdBurnedResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryTotalStrdBurnedResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTotalStrdBurnedResponse(
       totalBurned: json.valueAsString<String?>(
         'total_burned',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       protocolBurned: json.valueAsString<String?>(
         'protocol_burned',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       totalUserBurned: json.valueAsString<String?>(
         'total_user_burned',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -260,13 +283,21 @@ class QueryStrdBurnedByAddressRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [address];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'address': address};
   }
 
-  factory QueryStrdBurnedByAddressRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryStrdBurnedByAddressRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryStrdBurnedByAddressRequest(
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -315,15 +346,20 @@ class QueryStrdBurnedByAddressResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [burnedAmount];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'burned_amount': burnedAmount};
   }
 
-  factory QueryStrdBurnedByAddressResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryStrdBurnedByAddressResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryStrdBurnedByAddressResponse(
       burnedAmount: json.valueAsString<String?>(
         'burned_amount',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -370,15 +406,20 @@ class QueryLinkedAddressRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [strideAddress];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'stride_address': strideAddress};
   }
 
-  factory QueryLinkedAddressRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryLinkedAddressRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryLinkedAddressRequest(
       strideAddress: json.valueAsString<String?>(
         'stride_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -426,15 +467,20 @@ class QueryLinkedAddressResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [linkedAddress];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'linked_address': linkedAddress};
   }
 
-  factory QueryLinkedAddressResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryLinkedAddressResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryLinkedAddressResponse(
       linkedAddress: json.valueAsString<String?>(
         'linked_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

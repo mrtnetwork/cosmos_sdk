@@ -3,6 +3,13 @@ import 'package:cosmos_sdk/sdk/provider/thornode/core/thorenode.dart';
 import 'package:cosmos_sdk/sdk/provider/thornode/models/models/quote_response.dart';
 
 /// Provide a quote estimate for the provided swap.
+@Deprecated(
+  "Use ThorRequestQuoteswap/MayaRequestQuoteswap (ThorProvider/MayaProvider in on_chain_swap) instead.",
+)
+/// Legacy THORNode swap-quote request, superseded by the OpenAPI-generated
+/// `ThorRequestQuoteswap` / `MayaRequestQuoteswap` in on_chain_swap.
+/// Kept for backward compatibility; new code must use `ThorProvider` or
+/// `MayaProvider` instead.
 class ThorNodeRequestSwapQuote
     extends
         ThorNodeRequestParam<ThoreNodeQouteSwapResponse, Map<String, dynamic>> {
@@ -37,7 +44,7 @@ class ThorNodeRequestSwapQuote
   /// the destination address, required to generate memo
   final String? destination;
 
-  /// he refund address, refunds will be sent here if the swap fails
+  /// the refund address, refunds will be sent here if the swap fails
   final String? refundAddress;
 
   /// the interval in which streaming swaps are swapped
@@ -83,7 +90,7 @@ class ThorNodeRequestSwapQuote
   }..removeWhere((k, v) => v == null);
 
   @override
-  ThoreNodeQouteSwapResponse onResonse(Map<String, dynamic> result) {
+  ThoreNodeQouteSwapResponse onResponse(Map<String, dynamic> result) {
     return ThoreNodeQouteSwapResponse.fromJson(result);
   }
 }

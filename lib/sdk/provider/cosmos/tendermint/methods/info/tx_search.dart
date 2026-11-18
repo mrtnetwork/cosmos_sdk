@@ -53,7 +53,7 @@ class TendermintRequestTxSearch
   };
 
   @override
-  TendermintTxSearchResponseResult onResonse(Map<String, dynamic> result) {
+  TendermintTxSearchResponseResult onResponse(Map<String, dynamic> result) {
     return TendermintTxSearchResponseResult.fromJson(result);
   }
 }

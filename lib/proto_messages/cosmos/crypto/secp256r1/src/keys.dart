@@ -6,9 +6,9 @@ import 'package:cosmos_sdk/sdk/serialization/serialization.dart';
 class PubKey extends CosmosProtoMessage {
   /// Point on secp256r1 curve in a compressed representation as specified in section
   /// 4.3.6 of ANSI X9.62: https://webstore.ansi.org/standards/ascx9/ansix9621998
-  final List<int>? key;
+  final BuBytes? key;
 
-  const PubKey({this.key});
+  PubKey({List<int>? key}) : key = key?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -25,24 +25,19 @@ class PubKey extends CosmosProtoMessage {
   List<Object?> get protoValues => [key];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {
-      'key': switch (key) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-    };
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'key': config.encodeBinary(key)};
   }
 
-  factory PubKey.fromJson(Map<String, dynamic> json) {
+  factory PubKey.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return PubKey(
-      key: json.valueAsBytes<List<int>?>(
-        'key',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      key: config.decodeBinary<List<int>?>(
+        json.valueAs('key', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }
@@ -60,9 +55,9 @@ class PubKey extends CosmosProtoMessage {
 /// PrivKey defines a secp256r1 ECDSA private key.
 class PrivKey extends CosmosProtoMessage {
   /// secret number serialized using big-endian encoding
-  final List<int>? secret;
+  final BuBytes? secret;
 
-  const PrivKey({this.secret});
+  PrivKey({List<int>? secret}) : secret = secret?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -79,24 +74,19 @@ class PrivKey extends CosmosProtoMessage {
   List<Object?> get protoValues => [secret];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {
-      'secret': switch (secret) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-    };
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'secret': config.encodeBinary(secret)};
   }
 
-  factory PrivKey.fromJson(Map<String, dynamic> json) {
+  factory PrivKey.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return PrivKey(
-      secret: json.valueAsBytes<List<int>?>(
-        'secret',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      secret: config.decodeBinary<List<int>?>(
+        json.valueAs('secret', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }

@@ -29,11 +29,16 @@ class QueryPendingQueriesRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryPendingQueriesRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryPendingQueriesRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryPendingQueriesRequest();
   }
 
@@ -82,26 +87,37 @@ class QueryPendingQueriesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [pendingQueries];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'pending_queries': pendingQueries.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'pending_queries':
+          pendingQueries.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
-  factory QueryPendingQueriesResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryPendingQueriesResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryPendingQueriesResponse(
       pendingQueries:
           (json.valueEnsureAsList<dynamic>(
                 'pending_queries',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   stride_interchainquery_v1_genesis.Query,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
-                      (v) =>
-                          stride_interchainquery_v1_genesis.Query.fromJson(v),
+                      (v) => stride_interchainquery_v1_genesis.Query.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),

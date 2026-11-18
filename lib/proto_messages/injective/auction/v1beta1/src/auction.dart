@@ -55,33 +55,39 @@ class Params extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'auction_period': auctionPeriod?.toString(),
+      'auction_period': config.encodeBigint(auctionPeriod),
       'min_next_bid_increment_rate': minNextBidIncrementRate,
       'inj_basket_max_cap': injBasketMaxCap,
       'bidders_whitelist': biddersWhitelist.map((e) => e).toList(),
     };
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
       auctionPeriod: json.valueAsBigInt<BigInt?>(
         'auction_period',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       minNextBidIncrementRate: json.valueAsString<String?>(
         'min_next_bid_increment_rate',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       injBasketMaxCap: json.valueAsString<String?>(
         'inj_basket_max_cap',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       biddersWhitelist:
           (json.valueEnsureAsList<dynamic>(
             'bidders_whitelist',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
     );
   }
@@ -126,19 +132,30 @@ class Bid extends CosmosProtoMessage {
   List<Object?> get protoValues => [bidder, amount];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'bidder': bidder, 'amount': amount?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'bidder': bidder, 'amount': config.encodeMessage(amount)};
   }
 
-  factory Bid.fromJson(Map<String, dynamic> json) {
+  factory Bid.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Bid(
-      bidder: json.valueAsString<String?>('bidder', acceptCamelCase: true),
-      amount: json
-          .valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
-            key: 'amount',
-            parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      bidder: json.valueAsString<String?>(
+        'bidder',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      amount: json.valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
+        key: 'amount',
+        parse:
+            (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -189,24 +206,38 @@ class LastAuctionResult extends CosmosProtoMessage {
   List<Object?> get protoValues => [winner, amount, round];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'winner': winner,
-      'amount': amount?.toJson(),
-      'round': round?.toString(),
+      'amount': config.encodeMessage(amount),
+      'round': config.encodeBigint(round),
     };
   }
 
-  factory LastAuctionResult.fromJson(Map<String, dynamic> json) {
+  factory LastAuctionResult.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return LastAuctionResult(
-      winner: json.valueAsString<String?>('winner', acceptCamelCase: true),
-      amount: json
-          .valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
-            key: 'amount',
-            parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-            acceptCamelCase: true,
-          ),
-      round: json.valueAsBigInt<BigInt?>('round', acceptCamelCase: true),
+      winner: json.valueAsString<String?>(
+        'winner',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      amount: json.valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
+        key: 'amount',
+        parse:
+            (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      round: json.valueAsBigInt<BigInt?>(
+        'round',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

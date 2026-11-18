@@ -34,14 +34,25 @@ class QueryOraclePriceRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height, symbol];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'height': height, 'symbol': symbol};
   }
 
-  factory QueryOraclePriceRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryOraclePriceRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryOraclePriceRequest(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
-      symbol: json.valueAsString<String?>('symbol', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      symbol: json.valueAsString<String?>(
+        'symbol',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -87,18 +98,26 @@ class QueryOraclePriceResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [price];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'price': price?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'price': config.encodeMessage(price)};
   }
 
-  factory QueryOraclePriceResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryOraclePriceResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryOraclePriceResponse(
-      price: json
-          .valueTo<types_type_oracle_price.OraclePrice?, Map<String, dynamic>>(
-            key: 'price',
-            parse: (v) => types_type_oracle_price.OraclePrice.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      price: json.valueTo<types_type_oracle_price.OraclePrice?, Object>(
+        key: 'price',
+        parse:
+            (v) => types_type_oracle_price.OraclePrice.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -145,13 +164,21 @@ class QueryOraclePricesRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'height': height};
   }
 
-  factory QueryOraclePricesRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryOraclePricesRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryOraclePricesRequest(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -199,21 +226,34 @@ class QueryOraclePricesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [prices];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'prices': prices.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'prices': prices.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory QueryOraclePricesResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryOraclePricesResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryOraclePricesResponse(
       prices:
-          (json.valueEnsureAsList<dynamic>('prices', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'prices',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   types_type_oracle_price.OraclePrice,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
-                  parse: (v) => types_type_oracle_price.OraclePrice.fromJson(v),
+                  parse:
+                      (v) => types_type_oracle_price.OraclePrice.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),

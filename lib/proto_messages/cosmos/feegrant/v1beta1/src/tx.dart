@@ -46,22 +46,37 @@ class MsgGrantAllowance extends CosmosProtoMessage
   List<Object?> get protoValues => [granter, grantee, allowance];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'granter': granter,
       'grantee': grantee,
-      'allowance': allowance?.toJson(),
+      'allowance': config.encodeMessage(allowance),
     };
   }
 
-  factory MsgGrantAllowance.fromJson(Map<String, dynamic> json) {
+  factory MsgGrantAllowance.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgGrantAllowance(
-      granter: json.valueAsString<String?>('granter', acceptCamelCase: true),
-      grantee: json.valueAsString<String?>('grantee', acceptCamelCase: true),
-      allowance: json.valueTo<google_protobuf_any.Any?, Map<String, dynamic>>(
+      granter: json.valueAsString<String?>(
+        'granter',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      grantee: json.valueAsString<String?>(
+        'grantee',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      allowance: json.valueTo<google_protobuf_any.Any?, Object>(
         key: 'allowance',
-        parse: (v) => google_protobuf_any.Any.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_any.Any.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -111,11 +126,16 @@ class MsgGrantAllowanceResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgGrantAllowanceResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgGrantAllowanceResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgGrantAllowanceResponse();
   }
 
@@ -165,14 +185,25 @@ class MsgRevokeAllowance extends CosmosProtoMessage
   List<Object?> get protoValues => [granter, grantee];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'granter': granter, 'grantee': grantee};
   }
 
-  factory MsgRevokeAllowance.fromJson(Map<String, dynamic> json) {
+  factory MsgRevokeAllowance.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgRevokeAllowance(
-      granter: json.valueAsString<String?>('granter', acceptCamelCase: true),
-      grantee: json.valueAsString<String?>('grantee', acceptCamelCase: true),
+      granter: json.valueAsString<String?>(
+        'granter',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      grantee: json.valueAsString<String?>(
+        'grantee',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -217,11 +248,16 @@ class MsgRevokeAllowanceResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgRevokeAllowanceResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgRevokeAllowanceResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgRevokeAllowanceResponse();
   }
 
@@ -259,13 +295,21 @@ class MsgPruneAllowances extends CosmosProtoMessage
   List<Object?> get protoValues => [pruner];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'pruner': pruner};
   }
 
-  factory MsgPruneAllowances.fromJson(Map<String, dynamic> json) {
+  factory MsgPruneAllowances.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgPruneAllowances(
-      pruner: json.valueAsString<String?>('pruner', acceptCamelCase: true),
+      pruner: json.valueAsString<String?>(
+        'pruner',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -307,11 +351,16 @@ class MsgPruneAllowancesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgPruneAllowancesResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgPruneAllowancesResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgPruneAllowancesResponse();
   }
 

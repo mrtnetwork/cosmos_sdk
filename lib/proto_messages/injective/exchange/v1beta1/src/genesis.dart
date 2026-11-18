@@ -371,547 +371,703 @@ class GenesisState extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'params': params?.toJson(),
-      'spot_markets': spotMarkets.map((e) => e.toJson()).toList(),
-      'derivative_markets': derivativeMarkets.map((e) => e.toJson()).toList(),
-      'spot_orderbook': spotOrderbook.map((e) => e.toJson()).toList(),
+      'params': config.encodeMessage(params),
+      'spot_markets': spotMarkets.map((e) => config.encodeMessage(e)).toList(),
+      'derivative_markets':
+          derivativeMarkets.map((e) => config.encodeMessage(e)).toList(),
+      'spot_orderbook':
+          spotOrderbook.map((e) => config.encodeMessage(e)).toList(),
       'derivative_orderbook':
-          derivativeOrderbook.map((e) => e.toJson()).toList(),
-      'balances': balances.map((e) => e.toJson()).toList(),
-      'positions': positions.map((e) => e.toJson()).toList(),
+          derivativeOrderbook.map((e) => config.encodeMessage(e)).toList(),
+      'balances': balances.map((e) => config.encodeMessage(e)).toList(),
+      'positions': positions.map((e) => config.encodeMessage(e)).toList(),
       'subaccount_trade_nonces':
-          subaccountTradeNonces.map((e) => e.toJson()).toList(),
+          subaccountTradeNonces.map((e) => config.encodeMessage(e)).toList(),
       'expiry_futures_market_info_state':
-          expiryFuturesMarketInfoState.map((e) => e.toJson()).toList(),
+          expiryFuturesMarketInfoState
+              .map((e) => config.encodeMessage(e))
+              .toList(),
       'perpetual_market_info':
-          perpetualMarketInfo.map((e) => e.toJson()).toList(),
+          perpetualMarketInfo.map((e) => config.encodeMessage(e)).toList(),
       'perpetual_market_funding_state':
-          perpetualMarketFundingState.map((e) => e.toJson()).toList(),
+          perpetualMarketFundingState
+              .map((e) => config.encodeMessage(e))
+              .toList(),
       'derivative_market_settlement_scheduled':
-          derivativeMarketSettlementScheduled.map((e) => e.toJson()).toList(),
+          derivativeMarketSettlementScheduled
+              .map((e) => config.encodeMessage(e))
+              .toList(),
       'is_spot_exchange_enabled': isSpotExchangeEnabled,
       'is_derivatives_exchange_enabled': isDerivativesExchangeEnabled,
-      'trading_reward_campaign_info': tradingRewardCampaignInfo?.toJson(),
+      'trading_reward_campaign_info': config.encodeMessage(
+        tradingRewardCampaignInfo,
+      ),
       'trading_reward_pool_campaign_schedule':
-          tradingRewardPoolCampaignSchedule.map((e) => e.toJson()).toList(),
+          tradingRewardPoolCampaignSchedule
+              .map((e) => config.encodeMessage(e))
+              .toList(),
       'trading_reward_campaign_account_points':
-          tradingRewardCampaignAccountPoints.map((e) => e.toJson()).toList(),
-      'fee_discount_schedule': feeDiscountSchedule?.toJson(),
+          tradingRewardCampaignAccountPoints
+              .map((e) => config.encodeMessage(e))
+              .toList(),
+      'fee_discount_schedule': config.encodeMessage(feeDiscountSchedule),
       'fee_discount_account_tier_ttl':
-          feeDiscountAccountTierTtl.map((e) => e.toJson()).toList(),
+          feeDiscountAccountTierTtl
+              .map((e) => config.encodeMessage(e))
+              .toList(),
       'fee_discount_bucket_volume_accounts':
-          feeDiscountBucketVolumeAccounts.map((e) => e.toJson()).toList(),
+          feeDiscountBucketVolumeAccounts
+              .map((e) => config.encodeMessage(e))
+              .toList(),
       'is_first_fee_cycle_finished': isFirstFeeCycleFinished,
       'pending_trading_reward_pool_campaign_schedule':
           pendingTradingRewardPoolCampaignSchedule
-              .map((e) => e.toJson())
+              .map((e) => config.encodeMessage(e))
               .toList(),
       'pending_trading_reward_campaign_account_points':
           pendingTradingRewardCampaignAccountPoints
-              .map((e) => e.toJson())
+              .map((e) => config.encodeMessage(e))
               .toList(),
       'rewards_opt_out_addresses':
           rewardsOptOutAddresses.map((e) => e).toList(),
       'historical_trade_records':
-          historicalTradeRecords.map((e) => e.toJson()).toList(),
+          historicalTradeRecords.map((e) => config.encodeMessage(e)).toList(),
       'binary_options_markets':
-          binaryOptionsMarkets.map((e) => e.toJson()).toList(),
+          binaryOptionsMarkets.map((e) => config.encodeMessage(e)).toList(),
       'binary_options_market_ids_scheduled_for_settlement':
           binaryOptionsMarketIdsScheduledForSettlement.map((e) => e).toList(),
       'spot_market_ids_scheduled_to_force_close':
           spotMarketIdsScheduledToForceClose.map((e) => e).toList(),
-      'denom_decimals': denomDecimals.map((e) => e.toJson()).toList(),
+      'denom_decimals':
+          denomDecimals.map((e) => config.encodeMessage(e)).toList(),
       'conditional_derivative_orderbooks':
-          conditionalDerivativeOrderbooks.map((e) => e.toJson()).toList(),
+          conditionalDerivativeOrderbooks
+              .map((e) => config.encodeMessage(e))
+              .toList(),
       'market_fee_multipliers':
-          marketFeeMultipliers.map((e) => e.toJson()).toList(),
-      'orderbook_sequences': orderbookSequences.map((e) => e.toJson()).toList(),
-      'subaccount_volumes': subaccountVolumes.map((e) => e.toJson()).toList(),
-      'market_volumes': marketVolumes.map((e) => e.toJson()).toList(),
+          marketFeeMultipliers.map((e) => config.encodeMessage(e)).toList(),
+      'orderbook_sequences':
+          orderbookSequences.map((e) => config.encodeMessage(e)).toList(),
+      'subaccount_volumes':
+          subaccountVolumes.map((e) => config.encodeMessage(e)).toList(),
+      'market_volumes':
+          marketVolumes.map((e) => config.encodeMessage(e)).toList(),
       'grant_authorizations':
-          grantAuthorizations.map((e) => e.toJson()).toList(),
-      'active_grants': activeGrants.map((e) => e.toJson()).toList(),
-      'denom_min_notionals': denomMinNotionals.map((e) => e.toJson()).toList(),
+          grantAuthorizations.map((e) => config.encodeMessage(e)).toList(),
+      'active_grants':
+          activeGrants.map((e) => config.encodeMessage(e)).toList(),
+      'denom_min_notionals':
+          denomMinNotionals.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory GenesisState.fromJson(Map<String, dynamic> json) {
+  factory GenesisState.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GenesisState(
-      params: json.valueTo<
-        injective_exchange_v1beta1_exchange.Params?,
-        Map<String, dynamic>
-      >(
+      params: json.valueTo<injective_exchange_v1beta1_exchange.Params?, Object>(
         key: 'params',
-        parse: (v) => injective_exchange_v1beta1_exchange.Params.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => injective_exchange_v1beta1_exchange.Params.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       spotMarkets:
           (json.valueEnsureAsList<dynamic>(
                 'spot_markets',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_exchange_v1beta1_exchange.SpotMarket,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => injective_exchange_v1beta1_exchange
-                          .SpotMarket.fromJson(v),
+                          .SpotMarket.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       derivativeMarkets:
           (json.valueEnsureAsList<dynamic>(
                 'derivative_markets',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_exchange_v1beta1_exchange.DerivativeMarket,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => injective_exchange_v1beta1_exchange
-                          .DerivativeMarket.fromJson(v),
+                          .DerivativeMarket.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       spotOrderbook:
           (json.valueEnsureAsList<dynamic>(
                 'spot_orderbook',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<SpotOrderBook, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<SpotOrderBook, Object>(
                   value: e,
-                  parse: (v) => SpotOrderBook.fromJson(v),
+                  parse:
+                      (v) => SpotOrderBook.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       derivativeOrderbook:
           (json.valueEnsureAsList<dynamic>(
                 'derivative_orderbook',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  DerivativeOrderBook,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => DerivativeOrderBook.fromJson(v)),
+                (e) => JsonParser.valueTo<DerivativeOrderBook, Object>(
+                  value: e,
+                  parse:
+                      (v) => DerivativeOrderBook.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
       balances:
-          (json.valueEnsureAsList<dynamic>('balances', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'balances',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<Balance, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<Balance, Object>(
                   value: e,
-                  parse: (v) => Balance.fromJson(v),
+                  parse:
+                      (v) => Balance.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       positions:
-          (json.valueEnsureAsList<dynamic>('positions', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'positions',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  DerivativePosition,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => DerivativePosition.fromJson(v)),
+                (e) => JsonParser.valueTo<DerivativePosition, Object>(
+                  value: e,
+                  parse:
+                      (v) => DerivativePosition.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
       subaccountTradeNonces:
           (json.valueEnsureAsList<dynamic>(
                 'subaccount_trade_nonces',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) =>
-                    JsonParser.valueTo<SubaccountNonce, Map<String, dynamic>>(
-                      value: e,
-                      parse: (v) => SubaccountNonce.fromJson(v),
-                    ),
+                (e) => JsonParser.valueTo<SubaccountNonce, Object>(
+                  value: e,
+                  parse:
+                      (v) => SubaccountNonce.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
       expiryFuturesMarketInfoState:
           (json.valueEnsureAsList<dynamic>(
                 'expiry_futures_market_info_state',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  ExpiryFuturesMarketInfoState,
-                  Map<String, dynamic>
-                >(
+                (e) => JsonParser.valueTo<ExpiryFuturesMarketInfoState, Object>(
                   value: e,
-                  parse: (v) => ExpiryFuturesMarketInfoState.fromJson(v),
+                  parse:
+                      (v) => ExpiryFuturesMarketInfoState.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       perpetualMarketInfo:
           (json.valueEnsureAsList<dynamic>(
                 'perpetual_market_info',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_exchange_v1beta1_exchange.PerpetualMarketInfo,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => injective_exchange_v1beta1_exchange
-                          .PerpetualMarketInfo.fromJson(v),
+                          .PerpetualMarketInfo.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       perpetualMarketFundingState:
           (json.valueEnsureAsList<dynamic>(
                 'perpetual_market_funding_state',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  PerpetualMarketFundingState,
-                  Map<String, dynamic>
-                >(
+                (e) => JsonParser.valueTo<PerpetualMarketFundingState, Object>(
                   value: e,
-                  parse: (v) => PerpetualMarketFundingState.fromJson(v),
+                  parse:
+                      (v) => PerpetualMarketFundingState.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       derivativeMarketSettlementScheduled:
           (json.valueEnsureAsList<dynamic>(
                 'derivative_market_settlement_scheduled',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_exchange_v1beta1_exchange.DerivativeMarketSettlementInfo,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => injective_exchange_v1beta1_exchange
-                          .DerivativeMarketSettlementInfo.fromJson(v),
+                          .DerivativeMarketSettlementInfo.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       isSpotExchangeEnabled: json.valueAsBool<bool?>(
         'is_spot_exchange_enabled',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       isDerivativesExchangeEnabled: json.valueAsBool<bool?>(
         'is_derivatives_exchange_enabled',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       tradingRewardCampaignInfo: json.valueTo<
         injective_exchange_v1beta1_exchange.TradingRewardCampaignInfo?,
-        Map<String, dynamic>
+        Object
       >(
         key: 'trading_reward_campaign_info',
         parse:
             (v) => injective_exchange_v1beta1_exchange
-                .TradingRewardCampaignInfo.fromJson(v),
-        acceptCamelCase: true,
+                .TradingRewardCampaignInfo.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       tradingRewardPoolCampaignSchedule:
           (json.valueEnsureAsList<dynamic>(
                 'trading_reward_pool_campaign_schedule',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_exchange_v1beta1_exchange.CampaignRewardPool,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => injective_exchange_v1beta1_exchange
-                          .CampaignRewardPool.fromJson(v),
+                          .CampaignRewardPool.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       tradingRewardCampaignAccountPoints:
           (json.valueEnsureAsList<dynamic>(
                 'trading_reward_campaign_account_points',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   TradingRewardCampaignAccountPoints,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
-                  parse: (v) => TradingRewardCampaignAccountPoints.fromJson(v),
+                  parse:
+                      (v) => TradingRewardCampaignAccountPoints.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       feeDiscountSchedule: json.valueTo<
         injective_exchange_v1beta1_exchange.FeeDiscountSchedule?,
-        Map<String, dynamic>
+        Object
       >(
         key: 'fee_discount_schedule',
         parse:
             (v) => injective_exchange_v1beta1_exchange
-                .FeeDiscountSchedule.fromJson(v),
-        acceptCamelCase: true,
+                .FeeDiscountSchedule.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       feeDiscountAccountTierTtl:
           (json.valueEnsureAsList<dynamic>(
                 'fee_discount_account_tier_ttl',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  FeeDiscountAccountTierTTL,
-                  Map<String, dynamic>
-                >(
+                (e) => JsonParser.valueTo<FeeDiscountAccountTierTTL, Object>(
                   value: e,
-                  parse: (v) => FeeDiscountAccountTierTTL.fromJson(v),
+                  parse:
+                      (v) => FeeDiscountAccountTierTTL.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       feeDiscountBucketVolumeAccounts:
           (json.valueEnsureAsList<dynamic>(
                 'fee_discount_bucket_volume_accounts',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  FeeDiscountBucketVolumeAccounts,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => FeeDiscountBucketVolumeAccounts.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<FeeDiscountBucketVolumeAccounts, Object>(
+                      value: e,
+                      parse:
+                          (v) => FeeDiscountBucketVolumeAccounts.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
       isFirstFeeCycleFinished: json.valueAsBool<bool?>(
         'is_first_fee_cycle_finished',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       pendingTradingRewardPoolCampaignSchedule:
           (json.valueEnsureAsList<dynamic>(
                 'pending_trading_reward_pool_campaign_schedule',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_exchange_v1beta1_exchange.CampaignRewardPool,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => injective_exchange_v1beta1_exchange
-                          .CampaignRewardPool.fromJson(v),
+                          .CampaignRewardPool.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       pendingTradingRewardCampaignAccountPoints:
           (json.valueEnsureAsList<dynamic>(
                 'pending_trading_reward_campaign_account_points',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   TradingRewardCampaignAccountPendingPoints,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
-                      (v) =>
-                          TradingRewardCampaignAccountPendingPoints.fromJson(v),
+                      (v) => TradingRewardCampaignAccountPendingPoints.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       rewardsOptOutAddresses:
           (json.valueEnsureAsList<dynamic>(
             'rewards_opt_out_addresses',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
       historicalTradeRecords:
           (json.valueEnsureAsList<dynamic>(
                 'historical_trade_records',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_exchange_v1beta1_exchange.TradeRecords,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => injective_exchange_v1beta1_exchange
-                          .TradeRecords.fromJson(v),
+                          .TradeRecords.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       binaryOptionsMarkets:
           (json.valueEnsureAsList<dynamic>(
                 'binary_options_markets',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_exchange_v1beta1_exchange.BinaryOptionsMarket,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => injective_exchange_v1beta1_exchange
-                          .BinaryOptionsMarket.fromJson(v),
+                          .BinaryOptionsMarket.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       binaryOptionsMarketIdsScheduledForSettlement:
           (json.valueEnsureAsList<dynamic>(
             'binary_options_market_ids_scheduled_for_settlement',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
       spotMarketIdsScheduledToForceClose:
           (json.valueEnsureAsList<dynamic>(
             'spot_market_ids_scheduled_to_force_close',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
       denomDecimals:
           (json.valueEnsureAsList<dynamic>(
                 'denom_decimals',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_exchange_v1beta1_exchange.DenomDecimals,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => injective_exchange_v1beta1_exchange
-                          .DenomDecimals.fromJson(v),
+                          .DenomDecimals.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       conditionalDerivativeOrderbooks:
           (json.valueEnsureAsList<dynamic>(
                 'conditional_derivative_orderbooks',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  ConditionalDerivativeOrderBook,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => ConditionalDerivativeOrderBook.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<ConditionalDerivativeOrderBook, Object>(
+                      value: e,
+                      parse:
+                          (v) => ConditionalDerivativeOrderBook.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
       marketFeeMultipliers:
           (json.valueEnsureAsList<dynamic>(
                 'market_fee_multipliers',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_exchange_v1beta1_exchange.MarketFeeMultiplier,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => injective_exchange_v1beta1_exchange
-                          .MarketFeeMultiplier.fromJson(v),
+                          .MarketFeeMultiplier.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       orderbookSequences:
           (json.valueEnsureAsList<dynamic>(
                 'orderbook_sequences',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) =>
-                    JsonParser.valueTo<OrderbookSequence, Map<String, dynamic>>(
-                      value: e,
-                      parse: (v) => OrderbookSequence.fromJson(v),
-                    ),
+                (e) => JsonParser.valueTo<OrderbookSequence, Object>(
+                  value: e,
+                  parse:
+                      (v) => OrderbookSequence.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
       subaccountVolumes:
           (json.valueEnsureAsList<dynamic>(
                 'subaccount_volumes',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_exchange_v1beta1_exchange.AggregateSubaccountVolumeRecord,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => injective_exchange_v1beta1_exchange
-                          .AggregateSubaccountVolumeRecord.fromJson(v),
+                          .AggregateSubaccountVolumeRecord.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       marketVolumes:
           (json.valueEnsureAsList<dynamic>(
                 'market_volumes',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_exchange_v1beta1_exchange.MarketVolume,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => injective_exchange_v1beta1_exchange
-                          .MarketVolume.fromJson(v),
+                          .MarketVolume.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       grantAuthorizations:
           (json.valueEnsureAsList<dynamic>(
                 'grant_authorizations',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  FullGrantAuthorizations,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => FullGrantAuthorizations.fromJson(v)),
+                (e) => JsonParser.valueTo<FullGrantAuthorizations, Object>(
+                  value: e,
+                  parse:
+                      (v) => FullGrantAuthorizations.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
       activeGrants:
           (json.valueEnsureAsList<dynamic>(
                 'active_grants',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) =>
-                    JsonParser.valueTo<FullActiveGrant, Map<String, dynamic>>(
-                      value: e,
-                      parse: (v) => FullActiveGrant.fromJson(v),
-                    ),
+                (e) => JsonParser.valueTo<FullActiveGrant, Object>(
+                  value: e,
+                  parse:
+                      (v) => FullActiveGrant.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
       denomMinNotionals:
           (json.valueEnsureAsList<dynamic>(
                 'denom_min_notionals',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_exchange_v1beta1_exchange.DenomMinNotional,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => injective_exchange_v1beta1_exchange
-                          .DenomMinNotional.fromJson(v),
+                          .DenomMinNotional.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -1153,14 +1309,25 @@ class OrderbookSequence extends CosmosProtoMessage {
   List<Object?> get protoValues => [sequence, marketId];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'sequence': sequence?.toString(), 'market_id': marketId};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'sequence': config.encodeBigint(sequence), 'market_id': marketId};
   }
 
-  factory OrderbookSequence.fromJson(Map<String, dynamic> json) {
+  factory OrderbookSequence.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return OrderbookSequence(
-      sequence: json.valueAsBigInt<BigInt?>('sequence', acceptCamelCase: true),
-      marketId: json.valueAsString<String?>('market_id', acceptCamelCase: true),
+      sequence: json.valueAsBigInt<BigInt?>(
+        'sequence',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      marketId: json.valueAsString<String?>(
+        'market_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1199,22 +1366,33 @@ class FeeDiscountAccountTierTTL extends CosmosProtoMessage {
   List<Object?> get protoValues => [account, tierTtl];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'account': account, 'tier_ttl': tierTtl?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'account': account, 'tier_ttl': config.encodeMessage(tierTtl)};
   }
 
-  factory FeeDiscountAccountTierTTL.fromJson(Map<String, dynamic> json) {
+  factory FeeDiscountAccountTierTTL.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return FeeDiscountAccountTierTTL(
-      account: json.valueAsString<String?>('account', acceptCamelCase: true),
+      account: json.valueAsString<String?>(
+        'account',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       tierTtl: json.valueTo<
         injective_exchange_v1beta1_exchange.FeeDiscountTierTTL?,
-        Map<String, dynamic>
+        Object
       >(
         key: 'tier_ttl',
         parse:
-            (v) => injective_exchange_v1beta1_exchange
-                .FeeDiscountTierTTL.fromJson(v),
-        acceptCamelCase: true,
+            (v) =>
+                injective_exchange_v1beta1_exchange.FeeDiscountTierTTL.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1269,28 +1447,39 @@ class FeeDiscountBucketVolumeAccounts extends CosmosProtoMessage {
   List<Object?> get protoValues => [bucketStartTimestamp, accountVolume];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'bucket_start_timestamp': bucketStartTimestamp?.toString(),
-      'account_volume': accountVolume.map((e) => e.toJson()).toList(),
+      'bucket_start_timestamp': config.encodeBigint(bucketStartTimestamp),
+      'account_volume':
+          accountVolume.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory FeeDiscountBucketVolumeAccounts.fromJson(Map<String, dynamic> json) {
+  factory FeeDiscountBucketVolumeAccounts.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return FeeDiscountBucketVolumeAccounts(
       bucketStartTimestamp: json.valueAsBigInt<BigInt?>(
         'bucket_start_timestamp',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       accountVolume:
           (json.valueEnsureAsList<dynamic>(
                 'account_volume',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<AccountVolume, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<AccountVolume, Object>(
                   value: e,
-                  parse: (v) => AccountVolume.fromJson(v),
+                  parse:
+                      (v) => AccountVolume.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -1340,14 +1529,25 @@ class AccountVolume extends CosmosProtoMessage {
   List<Object?> get protoValues => [account, volume];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'account': account, 'volume': volume};
   }
 
-  factory AccountVolume.fromJson(Map<String, dynamic> json) {
+  factory AccountVolume.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AccountVolume(
-      account: json.valueAsString<String?>('account', acceptCamelCase: true),
-      volume: json.valueAsString<String?>('volume', acceptCamelCase: true),
+      account: json.valueAsString<String?>(
+        'account',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      volume: json.valueAsString<String?>(
+        'volume',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1389,16 +1589,25 @@ class TradingRewardCampaignAccountPoints extends CosmosProtoMessage {
   List<Object?> get protoValues => [account, points];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'account': account, 'points': points};
   }
 
   factory TradingRewardCampaignAccountPoints.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return TradingRewardCampaignAccountPoints(
-      account: json.valueAsString<String?>('account', acceptCamelCase: true),
-      points: json.valueAsString<String?>('points', acceptCamelCase: true),
+      account: json.valueAsString<String?>(
+        'account',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      points: json.valueAsString<String?>(
+        'points',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1447,33 +1656,44 @@ class TradingRewardCampaignAccountPendingPoints extends CosmosProtoMessage {
   List<Object?> get protoValues => [rewardPoolStartTimestamp, accountPoints];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'reward_pool_start_timestamp': rewardPoolStartTimestamp?.toString(),
-      'account_points': accountPoints.map((e) => e.toJson()).toList(),
+      'reward_pool_start_timestamp': config.encodeBigint(
+        rewardPoolStartTimestamp,
+      ),
+      'account_points':
+          accountPoints.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
   factory TradingRewardCampaignAccountPendingPoints.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return TradingRewardCampaignAccountPendingPoints(
       rewardPoolStartTimestamp: json.valueAsBigInt<BigInt?>(
         'reward_pool_start_timestamp',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       accountPoints:
           (json.valueEnsureAsList<dynamic>(
                 'account_points',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   TradingRewardCampaignAccountPoints,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
-                  parse: (v) => TradingRewardCampaignAccountPoints.fromJson(v),
+                  parse:
+                      (v) => TradingRewardCampaignAccountPoints.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -1532,29 +1752,47 @@ class SpotOrderBook extends CosmosProtoMessage {
   List<Object?> get protoValues => [marketId, isBuySide, orders];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'market_id': marketId,
       'isBuySide': isBuySide,
-      'orders': orders.map((e) => e.toJson()).toList(),
+      'orders': orders.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory SpotOrderBook.fromJson(Map<String, dynamic> json) {
+  factory SpotOrderBook.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SpotOrderBook(
-      marketId: json.valueAsString<String?>('market_id', acceptCamelCase: true),
-      isBuySide: json.valueAsBool<bool?>('isBuySide', acceptCamelCase: true),
+      marketId: json.valueAsString<String?>(
+        'market_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      isBuySide: json.valueAsBool<bool?>(
+        'isBuySide',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       orders:
-          (json.valueEnsureAsList<dynamic>('orders', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'orders',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_exchange_v1beta1_exchange.SpotLimitOrder,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => injective_exchange_v1beta1_exchange
-                          .SpotLimitOrder.fromJson(v),
+                          .SpotLimitOrder.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -1618,29 +1856,47 @@ class DerivativeOrderBook extends CosmosProtoMessage {
   List<Object?> get protoValues => [marketId, isBuySide, orders];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'market_id': marketId,
       'isBuySide': isBuySide,
-      'orders': orders.map((e) => e.toJson()).toList(),
+      'orders': orders.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory DerivativeOrderBook.fromJson(Map<String, dynamic> json) {
+  factory DerivativeOrderBook.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return DerivativeOrderBook(
-      marketId: json.valueAsString<String?>('market_id', acceptCamelCase: true),
-      isBuySide: json.valueAsBool<bool?>('isBuySide', acceptCamelCase: true),
+      marketId: json.valueAsString<String?>(
+        'market_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      isBuySide: json.valueAsBool<bool?>(
+        'isBuySide',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       orders:
-          (json.valueEnsureAsList<dynamic>('orders', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'orders',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_exchange_v1beta1_exchange.DerivativeLimitOrder,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => injective_exchange_v1beta1_exchange
-                          .DerivativeLimitOrder.fromJson(v),
+                          .DerivativeLimitOrder.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -1731,84 +1987,112 @@ class ConditionalDerivativeOrderBook extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'market_id': marketId,
-      'limit_buy_orders': limitBuyOrders.map((e) => e.toJson()).toList(),
-      'market_buy_orders': marketBuyOrders.map((e) => e.toJson()).toList(),
-      'limit_sell_orders': limitSellOrders.map((e) => e.toJson()).toList(),
-      'market_sell_orders': marketSellOrders.map((e) => e.toJson()).toList(),
+      'limit_buy_orders':
+          limitBuyOrders.map((e) => config.encodeMessage(e)).toList(),
+      'market_buy_orders':
+          marketBuyOrders.map((e) => config.encodeMessage(e)).toList(),
+      'limit_sell_orders':
+          limitSellOrders.map((e) => config.encodeMessage(e)).toList(),
+      'market_sell_orders':
+          marketSellOrders.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory ConditionalDerivativeOrderBook.fromJson(Map<String, dynamic> json) {
+  factory ConditionalDerivativeOrderBook.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ConditionalDerivativeOrderBook(
-      marketId: json.valueAsString<String?>('market_id', acceptCamelCase: true),
+      marketId: json.valueAsString<String?>(
+        'market_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       limitBuyOrders:
           (json.valueEnsureAsList<dynamic>(
                 'limit_buy_orders',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_exchange_v1beta1_exchange.DerivativeLimitOrder,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => injective_exchange_v1beta1_exchange
-                          .DerivativeLimitOrder.fromJson(v),
+                          .DerivativeLimitOrder.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       marketBuyOrders:
           (json.valueEnsureAsList<dynamic>(
                 'market_buy_orders',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_exchange_v1beta1_exchange.DerivativeMarketOrder,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => injective_exchange_v1beta1_exchange
-                          .DerivativeMarketOrder.fromJson(v),
+                          .DerivativeMarketOrder.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       limitSellOrders:
           (json.valueEnsureAsList<dynamic>(
                 'limit_sell_orders',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_exchange_v1beta1_exchange.DerivativeLimitOrder,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => injective_exchange_v1beta1_exchange
-                          .DerivativeLimitOrder.fromJson(v),
+                          .DerivativeLimitOrder.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       marketSellOrders:
           (json.valueEnsureAsList<dynamic>(
                 'market_sell_orders',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_exchange_v1beta1_exchange.DerivativeMarketOrder,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => injective_exchange_v1beta1_exchange
-                          .DerivativeMarketOrder.fromJson(v),
+                          .DerivativeMarketOrder.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -1891,29 +2175,39 @@ class Balance extends CosmosProtoMessage {
   List<Object?> get protoValues => [subaccountId, denom, deposits];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'subaccount_id': subaccountId,
       'denom': denom,
-      'deposits': deposits?.toJson(),
+      'deposits': config.encodeMessage(deposits),
     };
   }
 
-  factory Balance.fromJson(Map<String, dynamic> json) {
+  factory Balance.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Balance(
       subaccountId: json.valueAsString<String?>(
         'subaccount_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
-      deposits: json.valueTo<
-        injective_exchange_v1beta1_exchange.Deposit?,
-        Map<String, dynamic>
-      >(
-        key: 'deposits',
-        parse: (v) => injective_exchange_v1beta1_exchange.Deposit.fromJson(v),
-        acceptCamelCase: true,
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
+      deposits: json
+          .valueTo<injective_exchange_v1beta1_exchange.Deposit?, Object>(
+            key: 'deposits',
+            parse:
+                (v) => injective_exchange_v1beta1_exchange.Deposit.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -1965,29 +2259,39 @@ class DerivativePosition extends CosmosProtoMessage {
   List<Object?> get protoValues => [subaccountId, marketId, position];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'subaccount_id': subaccountId,
       'market_id': marketId,
-      'position': position?.toJson(),
+      'position': config.encodeMessage(position),
     };
   }
 
-  factory DerivativePosition.fromJson(Map<String, dynamic> json) {
+  factory DerivativePosition.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return DerivativePosition(
       subaccountId: json.valueAsString<String?>(
         'subaccount_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      marketId: json.valueAsString<String?>('market_id', acceptCamelCase: true),
-      position: json.valueTo<
-        injective_exchange_v1beta1_exchange.Position?,
-        Map<String, dynamic>
-      >(
-        key: 'position',
-        parse: (v) => injective_exchange_v1beta1_exchange.Position.fromJson(v),
-        acceptCamelCase: true,
+      marketId: json.valueAsString<String?>(
+        'market_id',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
+      position: json
+          .valueTo<injective_exchange_v1beta1_exchange.Position?, Object>(
+            key: 'position',
+            parse:
+                (v) => injective_exchange_v1beta1_exchange.Position.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -2036,28 +2340,36 @@ class SubaccountNonce extends CosmosProtoMessage {
   List<Object?> get protoValues => [subaccountId, subaccountTradeNonce];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'subaccount_id': subaccountId,
-      'subaccount_trade_nonce': subaccountTradeNonce?.toJson(),
+      'subaccount_trade_nonce': config.encodeMessage(subaccountTradeNonce),
     };
   }
 
-  factory SubaccountNonce.fromJson(Map<String, dynamic> json) {
+  factory SubaccountNonce.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SubaccountNonce(
       subaccountId: json.valueAsString<String?>(
         'subaccount_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       subaccountTradeNonce: json.valueTo<
         injective_exchange_v1beta1_exchange.SubaccountTradeNonce?,
-        Map<String, dynamic>
+        Object
       >(
         key: 'subaccount_trade_nonce',
         parse:
             (v) => injective_exchange_v1beta1_exchange
-                .SubaccountTradeNonce.fromJson(v),
-        acceptCamelCase: true,
+                .SubaccountTradeNonce.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -2102,22 +2414,36 @@ class ExpiryFuturesMarketInfoState extends CosmosProtoMessage {
   List<Object?> get protoValues => [marketId, marketInfo];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'market_id': marketId, 'market_info': marketInfo?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'market_id': marketId,
+      'market_info': config.encodeMessage(marketInfo),
+    };
   }
 
-  factory ExpiryFuturesMarketInfoState.fromJson(Map<String, dynamic> json) {
+  factory ExpiryFuturesMarketInfoState.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ExpiryFuturesMarketInfoState(
-      marketId: json.valueAsString<String?>('market_id', acceptCamelCase: true),
+      marketId: json.valueAsString<String?>(
+        'market_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       marketInfo: json.valueTo<
         injective_exchange_v1beta1_exchange.ExpiryFuturesMarketInfo?,
-        Map<String, dynamic>
+        Object
       >(
         key: 'market_info',
         parse:
             (v) => injective_exchange_v1beta1_exchange
-                .ExpiryFuturesMarketInfo.fromJson(v),
-        acceptCamelCase: true,
+                .ExpiryFuturesMarketInfo.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -2164,22 +2490,33 @@ class PerpetualMarketFundingState extends CosmosProtoMessage {
   List<Object?> get protoValues => [marketId, funding];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'market_id': marketId, 'funding': funding?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'market_id': marketId, 'funding': config.encodeMessage(funding)};
   }
 
-  factory PerpetualMarketFundingState.fromJson(Map<String, dynamic> json) {
+  factory PerpetualMarketFundingState.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return PerpetualMarketFundingState(
-      marketId: json.valueAsString<String?>('market_id', acceptCamelCase: true),
+      marketId: json.valueAsString<String?>(
+        'market_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       funding: json.valueTo<
         injective_exchange_v1beta1_exchange.PerpetualMarketFunding?,
-        Map<String, dynamic>
+        Object
       >(
         key: 'funding',
         parse:
             (v) => injective_exchange_v1beta1_exchange
-                .PerpetualMarketFunding.fromJson(v),
-        acceptCamelCase: true,
+                .PerpetualMarketFunding.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -2248,37 +2585,54 @@ class FullGrantAuthorizations extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'granter': granter,
       'total_grant_amount': totalGrantAmount,
-      'last_delegations_checked_time': lastDelegationsCheckedTime?.toString(),
-      'grants': grants.map((e) => e.toJson()).toList(),
+      'last_delegations_checked_time': config.encodeBigint(
+        lastDelegationsCheckedTime,
+      ),
+      'grants': grants.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory FullGrantAuthorizations.fromJson(Map<String, dynamic> json) {
+  factory FullGrantAuthorizations.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return FullGrantAuthorizations(
-      granter: json.valueAsString<String?>('granter', acceptCamelCase: true),
+      granter: json.valueAsString<String?>(
+        'granter',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       totalGrantAmount: json.valueAsString<String?>(
         'total_grant_amount',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       lastDelegationsCheckedTime: json.valueAsBigInt<BigInt?>(
         'last_delegations_checked_time',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       grants:
-          (json.valueEnsureAsList<dynamic>('grants', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'grants',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_exchange_v1beta1_exchange.GrantAuthorization,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => injective_exchange_v1beta1_exchange
-                          .GrantAuthorization.fromJson(v),
+                          .GrantAuthorization.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -2329,22 +2683,34 @@ class FullActiveGrant extends CosmosProtoMessage {
   List<Object?> get protoValues => [grantee, activeGrant];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'grantee': grantee, 'active_grant': activeGrant?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'grantee': grantee,
+      'active_grant': config.encodeMessage(activeGrant),
+    };
   }
 
-  factory FullActiveGrant.fromJson(Map<String, dynamic> json) {
+  factory FullActiveGrant.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return FullActiveGrant(
-      grantee: json.valueAsString<String?>('grantee', acceptCamelCase: true),
-      activeGrant: json.valueTo<
-        injective_exchange_v1beta1_exchange.ActiveGrant?,
-        Map<String, dynamic>
-      >(
-        key: 'active_grant',
-        parse:
-            (v) => injective_exchange_v1beta1_exchange.ActiveGrant.fromJson(v),
-        acceptCamelCase: true,
+      grantee: json.valueAsString<String?>(
+        'grantee',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
+      activeGrant: json
+          .valueTo<injective_exchange_v1beta1_exchange.ActiveGrant?, Object>(
+            key: 'active_grant',
+            parse:
+                (v) => injective_exchange_v1beta1_exchange.ActiveGrant.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 

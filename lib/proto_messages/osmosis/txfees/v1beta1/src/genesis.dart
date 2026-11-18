@@ -36,30 +36,43 @@ class TxFeesTracker extends CosmosProtoMessage {
   List<Object?> get protoValues => [txFees, heightAccountingStartsFrom];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'tx_fees': txFees.map((e) => e.toJson()).toList(),
-      'height_accounting_starts_from': heightAccountingStartsFrom?.toString(),
+      'tx_fees': txFees.map((e) => config.encodeMessage(e)).toList(),
+      'height_accounting_starts_from': config.encodeBigint(
+        heightAccountingStartsFrom,
+      ),
     };
   }
 
-  factory TxFeesTracker.fromJson(Map<String, dynamic> json) {
+  factory TxFeesTracker.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return TxFeesTracker(
       txFees:
-          (json.valueEnsureAsList<dynamic>('tx_fees', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'tx_fees',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
       heightAccountingStartsFrom: json.valueAsBigInt<BigInt?>(
         'height_accounting_starts_from',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

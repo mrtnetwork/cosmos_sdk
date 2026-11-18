@@ -37,13 +37,21 @@ class QueryAccountRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [address];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'address': address};
   }
 
-  factory QueryAccountRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryAccountRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryAccountRequest(
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -98,19 +106,33 @@ class QueryAccountResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [balance, codeHash, nonce];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'balance': balance,
       'code_hash': codeHash,
-      'nonce': nonce?.toString(),
+      'nonce': config.encodeBigint(nonce),
     };
   }
 
-  factory QueryAccountResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryAccountResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryAccountResponse(
-      balance: json.valueAsString<String?>('balance', acceptCamelCase: true),
-      codeHash: json.valueAsString<String?>('code_hash', acceptCamelCase: true),
-      nonce: json.valueAsBigInt<BigInt?>('nonce', acceptCamelCase: true),
+      balance: json.valueAsString<String?>(
+        'balance',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      codeHash: json.valueAsString<String?>(
+        'code_hash',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      nonce: json.valueAsBigInt<BigInt?>(
+        'nonce',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -158,13 +180,21 @@ class QueryCosmosAccountRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [address];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'address': address};
   }
 
-  factory QueryCosmosAccountRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryCosmosAccountRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryCosmosAccountRequest(
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -224,24 +254,32 @@ class QueryCosmosAccountResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [cosmosAddress, sequence, accountNumber];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'cosmos_address': cosmosAddress,
-      'sequence': sequence?.toString(),
-      'account_number': accountNumber?.toString(),
+      'sequence': config.encodeBigint(sequence),
+      'account_number': config.encodeBigint(accountNumber),
     };
   }
 
-  factory QueryCosmosAccountResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryCosmosAccountResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryCosmosAccountResponse(
       cosmosAddress: json.valueAsString<String?>(
         'cosmos_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      sequence: json.valueAsBigInt<BigInt?>('sequence', acceptCamelCase: true),
+      sequence: json.valueAsBigInt<BigInt?>(
+        'sequence',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       accountNumber: json.valueAsBigInt<BigInt?>(
         'account_number',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -290,15 +328,20 @@ class QueryValidatorAccountRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [consAddress];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'cons_address': consAddress};
   }
 
-  factory QueryValidatorAccountRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryValidatorAccountRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryValidatorAccountRequest(
       consAddress: json.valueAsString<String?>(
         'cons_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -361,24 +404,32 @@ class QueryValidatorAccountResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [accountAddress, sequence, accountNumber];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'account_address': accountAddress,
-      'sequence': sequence?.toString(),
-      'account_number': accountNumber?.toString(),
+      'sequence': config.encodeBigint(sequence),
+      'account_number': config.encodeBigint(accountNumber),
     };
   }
 
-  factory QueryValidatorAccountResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryValidatorAccountResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryValidatorAccountResponse(
       accountAddress: json.valueAsString<String?>(
         'account_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      sequence: json.valueAsBigInt<BigInt?>('sequence', acceptCamelCase: true),
+      sequence: json.valueAsBigInt<BigInt?>(
+        'sequence',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       accountNumber: json.valueAsBigInt<BigInt?>(
         'account_number',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -426,13 +477,21 @@ class QueryBalanceRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [address];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'address': address};
   }
 
-  factory QueryBalanceRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryBalanceRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryBalanceRequest(
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -477,13 +536,21 @@ class QueryBalanceResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [balance];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'balance': balance};
   }
 
-  factory QueryBalanceResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryBalanceResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryBalanceResponse(
-      balance: json.valueAsString<String?>('balance', acceptCamelCase: true),
+      balance: json.valueAsString<String?>(
+        'balance',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -529,14 +596,25 @@ class QueryStorageRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [address, key];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'address': address, 'key': key};
   }
 
-  factory QueryStorageRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryStorageRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryStorageRequest(
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
-      key: json.valueAsString<String?>('key', acceptCamelCase: true),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      key: json.valueAsString<String?>(
+        'key',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -585,13 +663,21 @@ class QueryStorageResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [value];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'value': value};
   }
 
-  factory QueryStorageResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryStorageResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryStorageResponse(
-      value: json.valueAsString<String?>('value', acceptCamelCase: true),
+      value: json.valueAsString<String?>(
+        'value',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -634,13 +720,21 @@ class QueryCodeRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [address];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'address': address};
   }
 
-  factory QueryCodeRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryCodeRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryCodeRequest(
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -667,9 +761,9 @@ class QueryCodeRequest extends CosmosProtoMessage
 /// method.
 class QueryCodeResponse extends CosmosProtoMessage {
   /// code represents the code bytes from an ethereum address.
-  final List<int>? code;
+  final BuBytes? code;
 
-  const QueryCodeResponse({this.code});
+  QueryCodeResponse({List<int>? code}) : code = code?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -686,24 +780,19 @@ class QueryCodeResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [code];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {
-      'code': switch (code) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-    };
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'code': config.encodeBinary(code)};
   }
 
-  factory QueryCodeResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryCodeResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryCodeResponse(
-      code: json.valueAsBytes<List<int>?>(
-        'code',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      code: config.decodeBinary<List<int>?>(
+        json.valueAs('code', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }
@@ -744,11 +833,16 @@ class QueryParamsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryParamsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsRequest();
   }
 
@@ -797,16 +891,25 @@ class QueryParamsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [params];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'params': params?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'params': config.encodeMessage(params)};
   }
 
-  factory QueryParamsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsResponse(
-      params: json.valueTo<ethermint_evm_v1_evm.Params?, Map<String, dynamic>>(
+      params: json.valueTo<ethermint_evm_v1_evm.Params?, Object>(
         key: 'params',
-        parse: (v) => ethermint_evm_v1_evm.Params.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => ethermint_evm_v1_evm.Params.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -830,23 +933,24 @@ class QueryParamsResponse extends CosmosProtoMessage {
 class EthCallRequest extends CosmosProtoMessage
     with ICosmosProtoQueryMessage<ethermint_evm_v1_tx.MsgEthereumTxResponse> {
   /// args uses the same json format as the json rpc api.
-  final List<int>? args;
+  final BuBytes? args;
 
   /// gas_cap defines the default gas cap to be used
   final BigInt? gasCap;
 
   /// proposer_address of the requested block in hex format
-  final List<int>? proposerAddress;
+  final BuBytes? proposerAddress;
 
   /// chain_id is the eip155 chain id parsed from the requested block header
   final BigInt? chainId;
 
-  const EthCallRequest({
-    this.args,
+  EthCallRequest({
+    List<int>? args,
     this.gasCap,
-    this.proposerAddress,
+    List<int>? proposerAddress,
     this.chainId,
-  });
+  }) : args = args?.asImmutableBytes,
+       proposerAddress = proposerAddress?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -879,41 +983,39 @@ class EthCallRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [args, gasCap, proposerAddress, chainId];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'args': switch (args) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'gas_cap': gasCap?.toString(),
-      'proposer_address': switch (proposerAddress) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'chain_id': chainId?.toString(),
+      'args': config.encodeBinary(args),
+      'gas_cap': config.encodeBigint(gasCap),
+      'proposer_address': config.encodeBinary(proposerAddress),
+      'chain_id': config.encodeBigint(chainId),
     };
   }
 
-  factory EthCallRequest.fromJson(Map<String, dynamic> json) {
+  factory EthCallRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return EthCallRequest(
-      args: json.valueAsBytes<List<int>?>(
-        'args',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      args: config.decodeBinary<List<int>?>(
+        json.valueAs('args', normalizeKeyLookup: config.normalizeKeys),
       ),
-      gasCap: json.valueAsBigInt<BigInt?>('gas_cap', acceptCamelCase: true),
-      proposerAddress: json.valueAsBytes<List<int>?>(
-        'proposer_address',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      gasCap: json.valueAsBigInt<BigInt?>(
+        'gas_cap',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      chainId: json.valueAsBigInt<BigInt?>('chain_id', acceptCamelCase: true),
+      proposerAddress: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'proposer_address',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
+      ),
+      chainId: json.valueAsBigInt<BigInt?>(
+        'chain_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -950,12 +1052,13 @@ class EstimateGasResponse extends CosmosProtoMessage {
 
   /// ret is the returned data from evm function (result or data supplied with revert
   /// opcode)
-  final List<int>? ret;
+  final BuBytes? ret;
 
   /// vm_error is the error returned by vm execution
   final String? vmError;
 
-  const EstimateGasResponse({this.gas, this.ret, this.vmError});
+  EstimateGasResponse({this.gas, List<int>? ret, this.vmError})
+    : ret = ret?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -976,29 +1079,32 @@ class EstimateGasResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [gas, ret, vmError];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'gas': gas?.toString(),
-      'ret': switch (ret) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'gas': config.encodeBigint(gas),
+      'ret': config.encodeBinary(ret),
       'vm_error': vmError,
     };
   }
 
-  factory EstimateGasResponse.fromJson(Map<String, dynamic> json) {
+  factory EstimateGasResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return EstimateGasResponse(
-      gas: json.valueAsBigInt<BigInt?>('gas', acceptCamelCase: true),
-      ret: json.valueAsBytes<List<int>?>(
-        'ret',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      gas: json.valueAsBigInt<BigInt?>(
+        'gas',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      vmError: json.valueAsString<String?>('vm_error', acceptCamelCase: true),
+      ret: config.decodeBinary<List<int>?>(
+        json.valueAs('ret', normalizeKeyLookup: config.normalizeKeys),
+      ),
+      vmError: json.valueAsString<String?>(
+        'vm_error',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1040,7 +1146,7 @@ class QueryTraceTxRequest extends CosmosProtoMessage
   final google_protobuf_timestamp.Timestamp? blockTime;
 
   /// proposer_address is the proposer of the requested block
-  final List<int>? proposerAddress;
+  final BuBytes? proposerAddress;
 
   /// chain_id is the eip155 chain id parsed from the requested block header
   final BigInt? chainId;
@@ -1048,17 +1154,17 @@ class QueryTraceTxRequest extends CosmosProtoMessage
   /// block_max_gas of the block of the requested transaction
   final BigInt? blockMaxGas;
 
-  const QueryTraceTxRequest({
+  QueryTraceTxRequest({
     this.msg,
     this.traceConfig,
     this.predecessors = const [],
     this.blockNumber,
     this.blockHash,
     this.blockTime,
-    this.proposerAddress,
+    List<int>? proposerAddress,
     this.chainId,
     this.blockMaxGas,
-  });
+  }) : proposerAddress = proposerAddress?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -1107,77 +1213,95 @@ class QueryTraceTxRequest extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'msg': msg?.toJson(),
-      'trace_config': traceConfig?.toJson(),
-      'predecessors': predecessors.map((e) => e.toJson()).toList(),
-      'block_number': blockNumber?.toString(),
+      'msg': config.encodeMessage(msg),
+      'trace_config': config.encodeMessage(traceConfig),
+      'predecessors': predecessors.map((e) => config.encodeMessage(e)).toList(),
+      'block_number': config.encodeBigint(blockNumber),
       'block_hash': blockHash,
       'block_time': blockTime?.toRfc3339(),
-      'proposer_address': switch (proposerAddress) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'chain_id': chainId?.toString(),
-      'block_max_gas': blockMaxGas?.toString(),
+      'proposer_address': config.encodeBinary(proposerAddress),
+      'chain_id': config.encodeBigint(chainId),
+      'block_max_gas': config.encodeBigint(blockMaxGas),
     };
   }
 
-  factory QueryTraceTxRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryTraceTxRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTraceTxRequest(
-      msg: json
-          .valueTo<ethermint_evm_v1_tx.MsgEthereumTx?, Map<String, dynamic>>(
-            key: 'msg',
-            parse: (v) => ethermint_evm_v1_tx.MsgEthereumTx.fromJson(v),
-            acceptCamelCase: true,
-          ),
-      traceConfig: json
-          .valueTo<ethermint_evm_v1_evm.TraceConfig?, Map<String, dynamic>>(
-            key: 'trace_config',
-            parse: (v) => ethermint_evm_v1_evm.TraceConfig.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      msg: json.valueTo<ethermint_evm_v1_tx.MsgEthereumTx?, Object>(
+        key: 'msg',
+        parse:
+            (v) => ethermint_evm_v1_tx.MsgEthereumTx.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      traceConfig: json.valueTo<ethermint_evm_v1_evm.TraceConfig?, Object>(
+        key: 'trace_config',
+        parse:
+            (v) => ethermint_evm_v1_evm.TraceConfig.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       predecessors:
           (json.valueEnsureAsList<dynamic>(
                 'predecessors',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   ethermint_evm_v1_tx.MsgEthereumTx,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
-                  parse: (v) => ethermint_evm_v1_tx.MsgEthereumTx.fromJson(v),
+                  parse:
+                      (v) => ethermint_evm_v1_tx.MsgEthereumTx.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       blockNumber: json.valueAsBigInt<BigInt?>(
         'block_number',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       blockHash: json.valueAsString<String?>(
         'block_hash',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      blockTime: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      blockTime: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'block_time',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      proposerAddress: json.valueAsBytes<List<int>?>(
-        'proposer_address',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      proposerAddress: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'proposer_address',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
-      chainId: json.valueAsBigInt<BigInt?>('chain_id', acceptCamelCase: true),
+      chainId: json.valueAsBigInt<BigInt?>(
+        'chain_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       blockMaxGas: json.valueAsBigInt<BigInt?>(
         'block_max_gas',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1227,9 +1351,9 @@ class QueryTraceTxRequest extends CosmosProtoMessage
 /// QueryTraceTxResponse defines TraceTx response
 class QueryTraceTxResponse extends CosmosProtoMessage {
   /// data is the response serialized in bytes
-  final List<int>? data;
+  final BuBytes? data;
 
-  const QueryTraceTxResponse({this.data});
+  QueryTraceTxResponse({List<int>? data}) : data = data?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -1246,24 +1370,19 @@ class QueryTraceTxResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [data];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {
-      'data': switch (data) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-    };
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'data': config.encodeBinary(data)};
   }
 
-  factory QueryTraceTxResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryTraceTxResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTraceTxResponse(
-      data: json.valueAsBytes<List<int>?>(
-        'data',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      data: config.decodeBinary<List<int>?>(
+        json.valueAs('data', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }
@@ -1297,7 +1416,7 @@ class QueryTraceBlockRequest extends CosmosProtoMessage
   final google_protobuf_timestamp.Timestamp? blockTime;
 
   /// proposer_address is the address of the requested block
-  final List<int>? proposerAddress;
+  final BuBytes? proposerAddress;
 
   /// chain_id is the eip155 chain id parsed from the requested block header
   final BigInt? chainId;
@@ -1305,16 +1424,16 @@ class QueryTraceBlockRequest extends CosmosProtoMessage
   /// block_max_gas of the traced block
   final BigInt? blockMaxGas;
 
-  const QueryTraceBlockRequest({
+  QueryTraceBlockRequest({
     this.txs = const [],
     this.traceConfig,
     this.blockNumber,
     this.blockHash,
     this.blockTime,
-    this.proposerAddress,
+    List<int>? proposerAddress,
     this.chainId,
     this.blockMaxGas,
-  });
+  }) : proposerAddress = proposerAddress?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -1361,67 +1480,85 @@ class QueryTraceBlockRequest extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'txs': txs.map((e) => e.toJson()).toList(),
-      'trace_config': traceConfig?.toJson(),
-      'block_number': blockNumber?.toString(),
+      'txs': txs.map((e) => config.encodeMessage(e)).toList(),
+      'trace_config': config.encodeMessage(traceConfig),
+      'block_number': config.encodeBigint(blockNumber),
       'block_hash': blockHash,
       'block_time': blockTime?.toRfc3339(),
-      'proposer_address': switch (proposerAddress) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'chain_id': chainId?.toString(),
-      'block_max_gas': blockMaxGas?.toString(),
+      'proposer_address': config.encodeBinary(proposerAddress),
+      'chain_id': config.encodeBigint(chainId),
+      'block_max_gas': config.encodeBigint(blockMaxGas),
     };
   }
 
-  factory QueryTraceBlockRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryTraceBlockRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTraceBlockRequest(
       txs:
-          (json.valueEnsureAsList<dynamic>('txs', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'txs',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   ethermint_evm_v1_tx.MsgEthereumTx,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
-                  parse: (v) => ethermint_evm_v1_tx.MsgEthereumTx.fromJson(v),
+                  parse:
+                      (v) => ethermint_evm_v1_tx.MsgEthereumTx.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
-      traceConfig: json
-          .valueTo<ethermint_evm_v1_evm.TraceConfig?, Map<String, dynamic>>(
-            key: 'trace_config',
-            parse: (v) => ethermint_evm_v1_evm.TraceConfig.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      traceConfig: json.valueTo<ethermint_evm_v1_evm.TraceConfig?, Object>(
+        key: 'trace_config',
+        parse:
+            (v) => ethermint_evm_v1_evm.TraceConfig.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       blockNumber: json.valueAsBigInt<BigInt?>(
         'block_number',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       blockHash: json.valueAsString<String?>(
         'block_hash',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      blockTime: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      blockTime: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'block_time',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      proposerAddress: json.valueAsBytes<List<int>?>(
-        'proposer_address',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      proposerAddress: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'proposer_address',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
-      chainId: json.valueAsBigInt<BigInt?>('chain_id', acceptCamelCase: true),
+      chainId: json.valueAsBigInt<BigInt?>(
+        'chain_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       blockMaxGas: json.valueAsBigInt<BigInt?>(
         'block_max_gas',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1467,9 +1604,9 @@ class QueryTraceBlockRequest extends CosmosProtoMessage
 /// QueryTraceBlockResponse defines TraceBlock response
 class QueryTraceBlockResponse extends CosmosProtoMessage {
   /// data is the response serialized in bytes
-  final List<int>? data;
+  final BuBytes? data;
 
-  const QueryTraceBlockResponse({this.data});
+  QueryTraceBlockResponse({List<int>? data}) : data = data?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -1486,24 +1623,19 @@ class QueryTraceBlockResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [data];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {
-      'data': switch (data) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-    };
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'data': config.encodeBinary(data)};
   }
 
-  factory QueryTraceBlockResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryTraceBlockResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTraceBlockResponse(
-      data: json.valueAsBytes<List<int>?>(
-        'data',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      data: config.decodeBinary<List<int>?>(
+        json.valueAs('data', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }
@@ -1545,11 +1677,16 @@ class QueryBaseFeeRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryBaseFeeRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryBaseFeeRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryBaseFeeRequest();
   }
 
@@ -1593,13 +1730,21 @@ class QueryBaseFeeResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [baseFee];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'base_fee': baseFee};
   }
 
-  factory QueryBaseFeeResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryBaseFeeResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryBaseFeeResponse(
-      baseFee: json.valueAsString<String?>('base_fee', acceptCamelCase: true),
+      baseFee: json.valueAsString<String?>(
+        'base_fee',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1639,11 +1784,16 @@ class QueryGlobalMinGasPriceRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryGlobalMinGasPriceRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryGlobalMinGasPriceRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryGlobalMinGasPriceRequest();
   }
 
@@ -1689,15 +1839,20 @@ class QueryGlobalMinGasPriceResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [minGasPrice];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'min_gas_price': minGasPrice};
   }
 
-  factory QueryGlobalMinGasPriceResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryGlobalMinGasPriceResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryGlobalMinGasPriceResponse(
       minGasPrice: json.valueAsString<String?>(
         'min_gas_price',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1740,11 +1895,16 @@ class QueryConfigRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryConfigRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryConfigRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryConfigRequest();
   }
 
@@ -1788,18 +1948,26 @@ class QueryConfigResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [config];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'config': config?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'config': config.encodeMessage(this.config)};
   }
 
-  factory QueryConfigResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryConfigResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryConfigResponse(
-      config: json
-          .valueTo<ethermint_evm_v1_evm.ChainConfig?, Map<String, dynamic>>(
-            key: 'config',
-            parse: (v) => ethermint_evm_v1_evm.ChainConfig.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      config: json.valueTo<ethermint_evm_v1_evm.ChainConfig?, Object>(
+        key: 'config',
+        parse:
+            (v) => ethermint_evm_v1_evm.ChainConfig.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

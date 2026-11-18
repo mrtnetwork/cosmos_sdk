@@ -27,20 +27,32 @@ enum CampaignType implements ProtoEnumVariant {
 
   /// Looks up a value by its proto wire int. Throws if not found.
   static CampaignType fromValue(int? value) {
+    value ??= 0;
     return CampaignType.values.firstWhere(
       (e) => e.value == value,
       orElse:
-          () => throw ItemNotFoundException(name: "CampaignType", value: value),
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching CampaignType found for the given value. $value",
+                details: {"name": "CampaignType", "value": value?.toString()},
+              ),
     );
   }
 
   /// Looks up a value by wire int, Dart enum name, or original proto
   /// name (whichever [value] happens to be). Throws if not found.
   static CampaignType from(Object? value) {
+    value ??= 0;
     return CampaignType.values.firstWhere(
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
-          () => throw ItemNotFoundException(name: "CampaignType", value: value),
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching CampaignType found for the given value. $value",
+                details: {"name": "CampaignType", "value": value?.toString()},
+              ),
     );
   }
 }
@@ -161,13 +173,15 @@ class Campaign extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'id': id?.toString(),
+      'id': config.encodeBigint(id),
       'owner': owner,
       'name': name,
       'description': description,
-      'campaignType': campaignType?.protoName,
+      'campaignType': config.encodeEnum(campaignType),
       'removable_claim_records': removableClaimRecords,
       'feegrant_amount': feegrantAmount,
       'initial_claim_free_amount': initialClaimFreeAmount,
@@ -179,20 +193,32 @@ class Campaign extends CosmosProtoMessage {
       'vesting_period': vestingPeriod?.encodeString(asNanos: true),
       'vestingPoolName': vestingPoolName,
       'campaign_total_amount':
-          campaignTotalAmount.map((e) => e.toJson()).toList(),
+          campaignTotalAmount.map((e) => config.encodeMessage(e)).toList(),
       'campaign_current_amount':
-          campaignCurrentAmount.map((e) => e.toJson()).toList(),
+          campaignCurrentAmount.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory Campaign.fromJson(Map<String, dynamic> json) {
+  factory Campaign.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Campaign(
-      id: json.valueAsBigInt<BigInt?>('id', acceptCamelCase: true),
-      owner: json.valueAsString<String?>('owner', acceptCamelCase: true),
-      name: json.valueAsString<String?>('name', acceptCamelCase: true),
+      id: json.valueAsBigInt<BigInt?>(
+        'id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      owner: json.valueAsString<String?>(
+        'owner',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      name: json.valueAsString<String?>(
+        'name',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       description: json.valueAsString<String?>(
         'description',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       campaignType: json.valueTo<CampaignType?, Object?>(
         key: 'campaignType',
@@ -200,70 +226,98 @@ class Campaign extends CosmosProtoMessage {
       ),
       removableClaimRecords: json.valueAsBool<bool?>(
         'removable_claim_records',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       feegrantAmount: json.valueAsString<String?>(
         'feegrant_amount',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       initialClaimFreeAmount: json.valueAsString<String?>(
         'initial_claim_free_amount',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      free: json.valueAsString<String?>('free', acceptCamelCase: true),
-      enabled: json.valueAsBool<bool?>('enabled', acceptCamelCase: true),
-      startTime: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      free: json.valueAsString<String?>(
+        'free',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      enabled: json.valueAsBool<bool?>(
+        'enabled',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      startTime: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'start_time',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      endTime: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      endTime: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'end_time',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      lockupPeriod: json.valueTo<google_protobuf_duration.Duration?, String>(
+      lockupPeriod: json.valueTo<google_protobuf_duration.Duration?, Object>(
         key: 'lockup_period',
-        parse: (v) => google_protobuf_duration.Duration.fromString(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_duration.Duration.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      vestingPeriod: json.valueTo<google_protobuf_duration.Duration?, String>(
+      vestingPeriod: json.valueTo<google_protobuf_duration.Duration?, Object>(
         key: 'vesting_period',
-        parse: (v) => google_protobuf_duration.Duration.fromString(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_duration.Duration.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       vestingPoolName: json.valueAsString<String?>(
         'vestingPoolName',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       campaignTotalAmount:
           (json.valueEnsureAsList<dynamic>(
                 'campaign_total_amount',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
       campaignCurrentAmount:
           (json.valueEnsureAsList<dynamic>(
                 'campaign_current_amount',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );

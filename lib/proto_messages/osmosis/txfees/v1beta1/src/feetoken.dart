@@ -31,14 +31,25 @@ class FeeToken extends CosmosProtoMessage {
   List<Object?> get protoValues => [denom, poolID];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'denom': denom, 'poolID': poolID?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'denom': denom, 'poolID': config.encodeBigint(poolID)};
   }
 
-  factory FeeToken.fromJson(Map<String, dynamic> json) {
+  factory FeeToken.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return FeeToken(
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
-      poolID: json.valueAsBigInt<BigInt?>('poolID', acceptCamelCase: true),
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      poolID: json.valueAsBigInt<BigInt?>(
+        'poolID',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

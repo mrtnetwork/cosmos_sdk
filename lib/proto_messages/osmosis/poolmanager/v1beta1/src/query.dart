@@ -38,11 +38,16 @@ class ParamsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory ParamsRequest.fromJson(Map<String, dynamic> json) {
+  factory ParamsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ParamsRequest();
   }
 
@@ -84,19 +89,25 @@ class ParamsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [params];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'params': params?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'params': config.encodeMessage(params)};
   }
 
-  factory ParamsResponse.fromJson(Map<String, dynamic> json) {
+  factory ParamsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ParamsResponse(
-      params: json.valueTo<
-        osmosis_poolmanager_v1beta1_genesis.Params?,
-        Map<String, dynamic>
-      >(
+      params: json.valueTo<osmosis_poolmanager_v1beta1_genesis.Params?, Object>(
         key: 'params',
-        parse: (v) => osmosis_poolmanager_v1beta1_genesis.Params.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => osmosis_poolmanager_v1beta1_genesis.Params.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -172,31 +183,52 @@ class EstimateSwapExactAmountInRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [sender, poolId, tokenIn, routes];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'sender': sender,
-      'pool_id': poolId?.toString(),
+      'pool_id': config.encodeBigint(poolId),
       'token_in': tokenIn,
-      'routes': routes.map((e) => e.toJson()).toList(),
+      'routes': routes.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory EstimateSwapExactAmountInRequest.fromJson(Map<String, dynamic> json) {
+  factory EstimateSwapExactAmountInRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return EstimateSwapExactAmountInRequest(
-      sender: json.valueAsString<String?>('sender', acceptCamelCase: true),
-      poolId: json.valueAsBigInt<BigInt?>('pool_id', acceptCamelCase: true),
-      tokenIn: json.valueAsString<String?>('token_in', acceptCamelCase: true),
+      sender: json.valueAsString<String?>(
+        'sender',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      poolId: json.valueAsBigInt<BigInt?>(
+        'pool_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      tokenIn: json.valueAsString<String?>(
+        'token_in',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       routes:
-          (json.valueEnsureAsList<dynamic>('routes', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'routes',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   osmosis_poolmanager_v1beta1_swap_route.SwapAmountInRoute,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => osmosis_poolmanager_v1beta1_swap_route
-                          .SwapAmountInRoute.fromJson(v),
+                          .SwapAmountInRoute.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -298,30 +330,42 @@ class EstimateSwapExactAmountInWithPrimitiveTypesRequest
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'pool_id': poolId?.toString(),
+      'pool_id': config.encodeBigint(poolId),
       'token_in': tokenIn,
-      'routes_pool_id': routesPoolId.map((e) => e.toString()).toList(),
+      'routes_pool_id':
+          routesPoolId.map((e) => config.encodeBigint(e)).toList(),
       'routes_token_out_denom': routesTokenOutDenom.map((e) => e).toList(),
     };
   }
 
   factory EstimateSwapExactAmountInWithPrimitiveTypesRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return EstimateSwapExactAmountInWithPrimitiveTypesRequest(
-      poolId: json.valueAsBigInt<BigInt?>('pool_id', acceptCamelCase: true),
-      tokenIn: json.valueAsString<String?>('token_in', acceptCamelCase: true),
+      poolId: json.valueAsBigInt<BigInt?>(
+        'pool_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      tokenIn: json.valueAsString<String?>(
+        'token_in',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       routesPoolId:
           (json.valueEnsureAsList<dynamic>(
             'routes_pool_id',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsBigInt<BigInt>(e)).toList(),
       routesTokenOutDenom:
           (json.valueEnsureAsList<dynamic>(
             'routes_token_out_denom',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
     );
   }
@@ -395,23 +439,32 @@ class EstimateSinglePoolSwapExactAmountInRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [poolId, tokenIn, tokenOutDenom];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'pool_id': poolId?.toString(),
+      'pool_id': config.encodeBigint(poolId),
       'token_in': tokenIn,
       'token_out_denom': tokenOutDenom,
     };
   }
 
   factory EstimateSinglePoolSwapExactAmountInRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return EstimateSinglePoolSwapExactAmountInRequest(
-      poolId: json.valueAsBigInt<BigInt?>('pool_id', acceptCamelCase: true),
-      tokenIn: json.valueAsString<String?>('token_in', acceptCamelCase: true),
+      poolId: json.valueAsBigInt<BigInt?>(
+        'pool_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      tokenIn: json.valueAsString<String?>(
+        'token_in',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       tokenOutDenom: json.valueAsString<String?>(
         'token_out_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -464,17 +517,20 @@ class EstimateSwapExactAmountInResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [tokenOutAmount];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'token_out_amount': tokenOutAmount};
   }
 
   factory EstimateSwapExactAmountInResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return EstimateSwapExactAmountInResponse(
       tokenOutAmount: json.valueAsString<String?>(
         'token_out_amount',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -548,36 +604,55 @@ class EstimateSwapExactAmountOutRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [sender, poolId, routes, tokenOut];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'sender': sender,
-      'pool_id': poolId?.toString(),
-      'routes': routes.map((e) => e.toJson()).toList(),
+      'pool_id': config.encodeBigint(poolId),
+      'routes': routes.map((e) => config.encodeMessage(e)).toList(),
       'token_out': tokenOut,
     };
   }
 
   factory EstimateSwapExactAmountOutRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return EstimateSwapExactAmountOutRequest(
-      sender: json.valueAsString<String?>('sender', acceptCamelCase: true),
-      poolId: json.valueAsBigInt<BigInt?>('pool_id', acceptCamelCase: true),
+      sender: json.valueAsString<String?>(
+        'sender',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      poolId: json.valueAsBigInt<BigInt?>(
+        'pool_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       routes:
-          (json.valueEnsureAsList<dynamic>('routes', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'routes',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   osmosis_poolmanager_v1beta1_swap_route.SwapAmountOutRoute,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => osmosis_poolmanager_v1beta1_swap_route
-                          .SwapAmountOutRoute.fromJson(v),
+                          .SwapAmountOutRoute.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
-      tokenOut: json.valueAsString<String?>('token_out', acceptCamelCase: true),
+      tokenOut: json.valueAsString<String?>(
+        'token_out',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -676,31 +751,43 @@ class EstimateSwapExactAmountOutWithPrimitiveTypesRequest
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'pool_id': poolId?.toString(),
-      'routes_pool_id': routesPoolId.map((e) => e.toString()).toList(),
+      'pool_id': config.encodeBigint(poolId),
+      'routes_pool_id':
+          routesPoolId.map((e) => config.encodeBigint(e)).toList(),
       'routes_token_in_denom': routesTokenInDenom.map((e) => e).toList(),
       'token_out': tokenOut,
     };
   }
 
   factory EstimateSwapExactAmountOutWithPrimitiveTypesRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return EstimateSwapExactAmountOutWithPrimitiveTypesRequest(
-      poolId: json.valueAsBigInt<BigInt?>('pool_id', acceptCamelCase: true),
+      poolId: json.valueAsBigInt<BigInt?>(
+        'pool_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       routesPoolId:
           (json.valueEnsureAsList<dynamic>(
             'routes_pool_id',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsBigInt<BigInt>(e)).toList(),
       routesTokenInDenom:
           (json.valueEnsureAsList<dynamic>(
             'routes_token_in_denom',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
-      tokenOut: json.valueAsString<String?>('token_out', acceptCamelCase: true),
+      tokenOut: json.valueAsString<String?>(
+        'token_out',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -773,24 +860,33 @@ class EstimateSinglePoolSwapExactAmountOutRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [poolId, tokenInDenom, tokenOut];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'pool_id': poolId?.toString(),
+      'pool_id': config.encodeBigint(poolId),
       'token_in_denom': tokenInDenom,
       'token_out': tokenOut,
     };
   }
 
   factory EstimateSinglePoolSwapExactAmountOutRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return EstimateSinglePoolSwapExactAmountOutRequest(
-      poolId: json.valueAsBigInt<BigInt?>('pool_id', acceptCamelCase: true),
+      poolId: json.valueAsBigInt<BigInt?>(
+        'pool_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       tokenInDenom: json.valueAsString<String?>(
         'token_in_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      tokenOut: json.valueAsString<String?>('token_out', acceptCamelCase: true),
+      tokenOut: json.valueAsString<String?>(
+        'token_out',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -842,17 +938,20 @@ class EstimateSwapExactAmountOutResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [tokenInAmount];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'token_in_amount': tokenInAmount};
   }
 
   factory EstimateSwapExactAmountOutResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return EstimateSwapExactAmountOutResponse(
       tokenInAmount: json.valueAsString<String?>(
         'token_in_amount',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -896,11 +995,16 @@ class NumPoolsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory NumPoolsRequest.fromJson(Map<String, dynamic> json) {
+  factory NumPoolsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return NumPoolsRequest();
   }
 
@@ -942,13 +1046,21 @@ class NumPoolsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [numPools];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'num_pools': numPools?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'num_pools': config.encodeBigint(numPools)};
   }
 
-  factory NumPoolsResponse.fromJson(Map<String, dynamic> json) {
+  factory NumPoolsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return NumPoolsResponse(
-      numPools: json.valueAsBigInt<BigInt?>('num_pools', acceptCamelCase: true),
+      numPools: json.valueAsBigInt<BigInt?>(
+        'num_pools',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -990,13 +1102,21 @@ class PoolRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [poolId];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'pool_id': poolId?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'pool_id': config.encodeBigint(poolId)};
   }
 
-  factory PoolRequest.fromJson(Map<String, dynamic> json) {
+  factory PoolRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return PoolRequest(
-      poolId: json.valueAsBigInt<BigInt?>('pool_id', acceptCamelCase: true),
+      poolId: json.valueAsBigInt<BigInt?>(
+        'pool_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1039,16 +1159,25 @@ class PoolResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [pool];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'pool': pool?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'pool': config.encodeMessage(pool)};
   }
 
-  factory PoolResponse.fromJson(Map<String, dynamic> json) {
+  factory PoolResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return PoolResponse(
-      pool: json.valueTo<google_protobuf_any.Any?, Map<String, dynamic>>(
+      pool: json.valueTo<google_protobuf_any.Any?, Object>(
         key: 'pool',
-        parse: (v) => google_protobuf_any.Any.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_any.Any.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1094,11 +1223,16 @@ class AllPoolsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory AllPoolsRequest.fromJson(Map<String, dynamic> json) {
+  factory AllPoolsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AllPoolsRequest();
   }
 
@@ -1146,19 +1280,32 @@ class AllPoolsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [pools];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'pools': pools.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'pools': pools.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory AllPoolsResponse.fromJson(Map<String, dynamic> json) {
+  factory AllPoolsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AllPoolsResponse(
       pools:
-          (json.valueEnsureAsList<dynamic>('pools', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'pools',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  google_protobuf_any.Any,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => google_protobuf_any.Any.fromJson(v)),
+                (e) => JsonParser.valueTo<google_protobuf_any.Any, Object>(
+                  value: e,
+                  parse:
+                      (v) => google_protobuf_any.Any.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );
@@ -1209,13 +1356,21 @@ class ListPoolsByDenomRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [denom];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'denom': denom};
   }
 
-  factory ListPoolsByDenomRequest.fromJson(Map<String, dynamic> json) {
+  factory ListPoolsByDenomRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ListPoolsByDenomRequest(
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1265,19 +1420,32 @@ class ListPoolsByDenomResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [pools];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'pools': pools.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'pools': pools.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory ListPoolsByDenomResponse.fromJson(Map<String, dynamic> json) {
+  factory ListPoolsByDenomResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ListPoolsByDenomResponse(
       pools:
-          (json.valueEnsureAsList<dynamic>('pools', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'pools',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  google_protobuf_any.Any,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => google_protobuf_any.Any.fromJson(v)),
+                (e) => JsonParser.valueTo<google_protobuf_any.Any, Object>(
+                  value: e,
+                  parse:
+                      (v) => google_protobuf_any.Any.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );
@@ -1342,24 +1510,32 @@ class SpotPriceRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [poolId, baseAssetDenom, quoteAssetDenom];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'pool_id': poolId?.toString(),
+      'pool_id': config.encodeBigint(poolId),
       'base_asset_denom': baseAssetDenom,
       'quote_asset_denom': quoteAssetDenom,
     };
   }
 
-  factory SpotPriceRequest.fromJson(Map<String, dynamic> json) {
+  factory SpotPriceRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SpotPriceRequest(
-      poolId: json.valueAsBigInt<BigInt?>('pool_id', acceptCamelCase: true),
+      poolId: json.valueAsBigInt<BigInt?>(
+        'pool_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       baseAssetDenom: json.valueAsString<String?>(
         'base_asset_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       quoteAssetDenom: json.valueAsString<String?>(
         'quote_asset_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1410,15 +1586,20 @@ class SpotPriceResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [spotPrice];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'spot_price': spotPrice};
   }
 
-  factory SpotPriceResponse.fromJson(Map<String, dynamic> json) {
+  factory SpotPriceResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SpotPriceResponse(
       spotPrice: json.valueAsString<String?>(
         'spot_price',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1462,13 +1643,21 @@ class TotalPoolLiquidityRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [poolId];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'pool_id': poolId?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'pool_id': config.encodeBigint(poolId)};
   }
 
-  factory TotalPoolLiquidityRequest.fromJson(Map<String, dynamic> json) {
+  factory TotalPoolLiquidityRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return TotalPoolLiquidityRequest(
-      poolId: json.valueAsBigInt<BigInt?>('pool_id', acceptCamelCase: true),
+      poolId: json.valueAsBigInt<BigInt?>(
+        'pool_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1518,22 +1707,35 @@ class TotalPoolLiquidityResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [liquidity];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'liquidity': liquidity.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'liquidity': liquidity.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
-  factory TotalPoolLiquidityResponse.fromJson(Map<String, dynamic> json) {
+  factory TotalPoolLiquidityResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return TotalPoolLiquidityResponse(
       liquidity:
-          (json.valueEnsureAsList<dynamic>('liquidity', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'liquidity',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -1582,11 +1784,16 @@ class TotalLiquidityRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory TotalLiquidityRequest.fromJson(Map<String, dynamic> json) {
+  factory TotalLiquidityRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return TotalLiquidityRequest();
   }
 
@@ -1634,22 +1841,35 @@ class TotalLiquidityResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [liquidity];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'liquidity': liquidity.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'liquidity': liquidity.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
-  factory TotalLiquidityResponse.fromJson(Map<String, dynamic> json) {
+  factory TotalLiquidityResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return TotalLiquidityResponse(
       liquidity:
-          (json.valueEnsureAsList<dynamic>('liquidity', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'liquidity',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -1699,13 +1919,21 @@ class TotalVolumeForPoolRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [poolId];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'pool_id': poolId?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'pool_id': config.encodeBigint(poolId)};
   }
 
-  factory TotalVolumeForPoolRequest.fromJson(Map<String, dynamic> json) {
+  factory TotalVolumeForPoolRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return TotalVolumeForPoolRequest(
-      poolId: json.valueAsBigInt<BigInt?>('pool_id', acceptCamelCase: true),
+      poolId: json.valueAsBigInt<BigInt?>(
+        'pool_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1755,22 +1983,33 @@ class TotalVolumeForPoolResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [volume];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'volume': volume.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'volume': volume.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory TotalVolumeForPoolResponse.fromJson(Map<String, dynamic> json) {
+  factory TotalVolumeForPoolResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return TotalVolumeForPoolResponse(
       volume:
-          (json.valueEnsureAsList<dynamic>('volume', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'volume',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -1826,14 +2065,25 @@ class TradingPairTakerFeeRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [denom0, denom1];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'denom_0': denom0, 'denom_1': denom1};
   }
 
-  factory TradingPairTakerFeeRequest.fromJson(Map<String, dynamic> json) {
+  factory TradingPairTakerFeeRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return TradingPairTakerFeeRequest(
-      denom0: json.valueAsString<String?>('denom_0', acceptCamelCase: true),
-      denom1: json.valueAsString<String?>('denom_1', acceptCamelCase: true),
+      denom0: json.valueAsString<String?>(
+        'denom_0',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      denom1: json.valueAsString<String?>(
+        'denom_1',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1880,13 +2130,21 @@ class TradingPairTakerFeeResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [takerFee];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'taker_fee': takerFee};
   }
 
-  factory TradingPairTakerFeeResponse.fromJson(Map<String, dynamic> json) {
+  factory TradingPairTakerFeeResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return TradingPairTakerFeeResponse(
-      takerFee: json.valueAsString<String?>('taker_fee', acceptCamelCase: true),
+      takerFee: json.valueAsString<String?>(
+        'taker_fee',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1968,38 +2226,47 @@ class EstimateTradeBasedOnPriceImpactRequest extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'from_coin': fromCoin?.toJson(),
+      'from_coin': config.encodeMessage(fromCoin),
       'to_coin_denom': toCoinDenom,
-      'pool_id': poolId?.toString(),
+      'pool_id': config.encodeBigint(poolId),
       'max_price_impact': maxPriceImpact,
       'external_price': externalPrice,
     };
   }
 
   factory EstimateTradeBasedOnPriceImpactRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return EstimateTradeBasedOnPriceImpactRequest(
-      fromCoin: json
-          .valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
-            key: 'from_coin',
-            parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      fromCoin: json.valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
+        key: 'from_coin',
+        parse:
+            (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       toCoinDenom: json.valueAsString<String?>(
         'to_coin_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      poolId: json.valueAsBigInt<BigInt?>('pool_id', acceptCamelCase: true),
+      poolId: json.valueAsBigInt<BigInt?>(
+        'pool_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       maxPriceImpact: json.valueAsString<String?>(
         'max_price_impact',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       externalPrice: json.valueAsString<String?>(
         'external_price',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -2071,29 +2338,38 @@ class EstimateTradeBasedOnPriceImpactResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [inputCoin, outputCoin];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'input_coin': inputCoin?.toJson(),
-      'output_coin': outputCoin?.toJson(),
+      'input_coin': config.encodeMessage(inputCoin),
+      'output_coin': config.encodeMessage(outputCoin),
     };
   }
 
   factory EstimateTradeBasedOnPriceImpactResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return EstimateTradeBasedOnPriceImpactResponse(
-      inputCoin: json
-          .valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
-            key: 'input_coin',
-            parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-            acceptCamelCase: true,
-          ),
-      outputCoin: json
-          .valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
-            key: 'output_coin',
-            parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      inputCoin: json.valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
+        key: 'input_coin',
+        parse:
+            (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      outputCoin: json.valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
+        key: 'output_coin',
+        parse:
+            (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -2143,13 +2419,16 @@ class AllTakerFeeShareAgreementsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
   factory AllTakerFeeShareAgreementsRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AllTakerFeeShareAgreementsRequest();
   }
 
@@ -2203,31 +2482,38 @@ class AllTakerFeeShareAgreementsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [takerFeeShareAgreements];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'taker_fee_share_agreements':
-          takerFeeShareAgreements.map((e) => e.toJson()).toList(),
+          takerFeeShareAgreements.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
   factory AllTakerFeeShareAgreementsResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AllTakerFeeShareAgreementsResponse(
       takerFeeShareAgreements:
           (json.valueEnsureAsList<dynamic>(
                 'taker_fee_share_agreements',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   osmosis_poolmanager_v1beta1_taker_fee_share.TakerFeeShareAgreement,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => osmosis_poolmanager_v1beta1_taker_fee_share
-                          .TakerFeeShareAgreement.fromJson(v),
+                          .TakerFeeShareAgreement.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -2283,15 +2569,21 @@ class TakerFeeShareAgreementFromDenomRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [denom];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'denom': denom};
   }
 
   factory TakerFeeShareAgreementFromDenomRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return TakerFeeShareAgreementFromDenomRequest(
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -2340,23 +2632,31 @@ class TakerFeeShareAgreementFromDenomResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [takerFeeShareAgreement];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'taker_fee_share_agreement': takerFeeShareAgreement?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'taker_fee_share_agreement': config.encodeMessage(takerFeeShareAgreement),
+    };
   }
 
   factory TakerFeeShareAgreementFromDenomResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return TakerFeeShareAgreementFromDenomResponse(
       takerFeeShareAgreement: json.valueTo<
         osmosis_poolmanager_v1beta1_taker_fee_share.TakerFeeShareAgreement?,
-        Map<String, dynamic>
+        Object
       >(
         key: 'taker_fee_share_agreement',
         parse:
             (v) => osmosis_poolmanager_v1beta1_taker_fee_share
-                .TakerFeeShareAgreement.fromJson(v),
-        acceptCamelCase: true,
+                .TakerFeeShareAgreement.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -2414,18 +2714,24 @@ class TakerFeeShareDenomsToAccruedValueRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [denom, takerFeeDenom];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'denom': denom, 'takerFeeDenom': takerFeeDenom};
   }
 
   factory TakerFeeShareDenomsToAccruedValueRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return TakerFeeShareDenomsToAccruedValueRequest(
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       takerFeeDenom: json.valueAsString<String?>(
         'takerFeeDenom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -2477,15 +2783,21 @@ class TakerFeeShareDenomsToAccruedValueResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [amount];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'amount': amount};
   }
 
   factory TakerFeeShareDenomsToAccruedValueResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return TakerFeeShareDenomsToAccruedValueResponse(
-      amount: json.valueAsString<String?>('amount', acceptCamelCase: true),
+      amount: json.valueAsString<String?>(
+        'amount',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -2530,13 +2842,16 @@ class AllTakerFeeShareAccumulatorsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
   factory AllTakerFeeShareAccumulatorsRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AllTakerFeeShareAccumulatorsRequest();
   }
 
@@ -2592,31 +2907,38 @@ class AllTakerFeeShareAccumulatorsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [takerFeeSkimAccumulators];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'taker_fee_skim_accumulators':
-          takerFeeSkimAccumulators.map((e) => e.toJson()).toList(),
+          takerFeeSkimAccumulators.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
   factory AllTakerFeeShareAccumulatorsResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AllTakerFeeShareAccumulatorsResponse(
       takerFeeSkimAccumulators:
           (json.valueEnsureAsList<dynamic>(
                 'taker_fee_skim_accumulators',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   osmosis_poolmanager_v1beta1_taker_fee_share.TakerFeeSkimAccumulator,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => osmosis_poolmanager_v1beta1_taker_fee_share
-                          .TakerFeeSkimAccumulator.fromJson(v),
+                          .TakerFeeSkimAccumulator.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -2672,15 +2994,21 @@ class RegisteredAlloyedPoolFromDenomRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [denom];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'denom': denom};
   }
 
   factory RegisteredAlloyedPoolFromDenomRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return RegisteredAlloyedPoolFromDenomRequest(
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -2729,23 +3057,29 @@ class RegisteredAlloyedPoolFromDenomResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [contractState];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'contract_state': contractState?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'contract_state': config.encodeMessage(contractState)};
   }
 
   factory RegisteredAlloyedPoolFromDenomResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return RegisteredAlloyedPoolFromDenomResponse(
       contractState: json.valueTo<
         osmosis_poolmanager_v1beta1_taker_fee_share.AlloyContractTakerFeeShareState?,
-        Map<String, dynamic>
+        Object
       >(
         key: 'contract_state',
         parse:
             (v) => osmosis_poolmanager_v1beta1_taker_fee_share
-                .AlloyContractTakerFeeShareState.fromJson(v),
-        acceptCamelCase: true,
+                .AlloyContractTakerFeeShareState.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -2798,15 +3132,21 @@ class RegisteredAlloyedPoolFromPoolIdRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [poolId];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'pool_id': poolId?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'pool_id': config.encodeBigint(poolId)};
   }
 
   factory RegisteredAlloyedPoolFromPoolIdRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return RegisteredAlloyedPoolFromPoolIdRequest(
-      poolId: json.valueAsBigInt<BigInt?>('pool_id', acceptCamelCase: true),
+      poolId: json.valueAsBigInt<BigInt?>(
+        'pool_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -2855,23 +3195,29 @@ class RegisteredAlloyedPoolFromPoolIdResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [contractState];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'contract_state': contractState?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'contract_state': config.encodeMessage(contractState)};
   }
 
   factory RegisteredAlloyedPoolFromPoolIdResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return RegisteredAlloyedPoolFromPoolIdResponse(
       contractState: json.valueTo<
         osmosis_poolmanager_v1beta1_taker_fee_share.AlloyContractTakerFeeShareState?,
-        Map<String, dynamic>
+        Object
       >(
         key: 'contract_state',
         parse:
             (v) => osmosis_poolmanager_v1beta1_taker_fee_share
-                .AlloyContractTakerFeeShareState.fromJson(v),
-        acceptCamelCase: true,
+                .AlloyContractTakerFeeShareState.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -2921,11 +3267,16 @@ class AllRegisteredAlloyedPoolsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory AllRegisteredAlloyedPoolsRequest.fromJson(Map<String, dynamic> json) {
+  factory AllRegisteredAlloyedPoolsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AllRegisteredAlloyedPoolsRequest();
   }
 
@@ -2979,28 +3330,38 @@ class AllRegisteredAlloyedPoolsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [contractStates];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'contract_states': contractStates.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'contract_states':
+          contractStates.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
   factory AllRegisteredAlloyedPoolsResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AllRegisteredAlloyedPoolsResponse(
       contractStates:
           (json.valueEnsureAsList<dynamic>(
                 'contract_states',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   osmosis_poolmanager_v1beta1_taker_fee_share.AlloyContractTakerFeeShareState,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => osmosis_poolmanager_v1beta1_taker_fee_share
-                          .AlloyContractTakerFeeShareState.fromJson(v),
+                          .AlloyContractTakerFeeShareState.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),

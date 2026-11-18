@@ -37,42 +37,58 @@ class Block extends CosmosProtoMessage {
   List<Object?> get protoValues => [header, data, evidence, lastCommit];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'header': header?.toJson(),
-      'data': data?.toJson(),
-      'evidence': evidence?.toJson(),
-      'last_commit': lastCommit?.toJson(),
+      'header': config.encodeMessage(header),
+      'data': config.encodeMessage(data),
+      'evidence': config.encodeMessage(evidence),
+      'last_commit': config.encodeMessage(lastCommit),
     };
   }
 
-  factory Block.fromJson(Map<String, dynamic> json) {
+  factory Block.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Block(
-      header: json
-          .valueTo<tendermint_types_types.Header?, Map<String, dynamic>>(
-            key: 'header',
-            parse: (v) => tendermint_types_types.Header.fromJson(v),
-            acceptCamelCase: true,
-          ),
-      data: json.valueTo<tendermint_types_types.Data?, Map<String, dynamic>>(
+      header: json.valueTo<tendermint_types_types.Header?, Object>(
+        key: 'header',
+        parse:
+            (v) => tendermint_types_types.Header.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      data: json.valueTo<tendermint_types_types.Data?, Object>(
         key: 'data',
-        parse: (v) => tendermint_types_types.Data.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => tendermint_types_types.Data.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      evidence: json.valueTo<
-        tendermint_types_evidence.EvidenceList?,
-        Map<String, dynamic>
-      >(
+      evidence: json.valueTo<tendermint_types_evidence.EvidenceList?, Object>(
         key: 'evidence',
-        parse: (v) => tendermint_types_evidence.EvidenceList.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => tendermint_types_evidence.EvidenceList.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      lastCommit: json
-          .valueTo<tendermint_types_types.Commit?, Map<String, dynamic>>(
-            key: 'last_commit',
-            parse: (v) => tendermint_types_types.Commit.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      lastCommit: json.valueTo<tendermint_types_types.Commit?, Object>(
+        key: 'last_commit',
+        parse:
+            (v) => tendermint_types_types.Commit.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

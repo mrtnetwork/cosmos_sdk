@@ -73,50 +73,63 @@ class RateLimit extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'token_address': tokenAddress,
       'token_decimals': tokenDecimals,
       'token_price_id': tokenPriceId,
-      'rate_limit_window': rateLimitWindow?.toString(),
+      'rate_limit_window': config.encodeBigint(rateLimitWindow),
       'rate_limit_usd': rateLimitUsd,
       'absolute_mint_limit': absoluteMintLimit,
-      'transfers': transfers.map((e) => e.toJson()).toList(),
+      'transfers': transfers.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory RateLimit.fromJson(Map<String, dynamic> json) {
+  factory RateLimit.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return RateLimit(
       tokenAddress: json.valueAsString<String?>(
         'token_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       tokenDecimals: json.valueAsInt<int?>(
         'token_decimals',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       tokenPriceId: json.valueAsString<String?>(
         'token_price_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       rateLimitWindow: json.valueAsBigInt<BigInt?>(
         'rate_limit_window',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       rateLimitUsd: json.valueAsString<String?>(
         'rate_limit_usd',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       absoluteMintLimit: json.valueAsString<String?>(
         'absolute_mint_limit',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       transfers:
-          (json.valueEnsureAsList<dynamic>('transfers', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'transfers',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<BridgeTransfer, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<BridgeTransfer, Object>(
                   value: e,
-                  parse: (v) => BridgeTransfer.fromJson(v),
+                  parse:
+                      (v) => BridgeTransfer.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -176,22 +189,33 @@ class BridgeTransfer extends CosmosProtoMessage {
   List<Object?> get protoValues => [amount, blockNumber, isDeposit];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'amount': amount,
-      'block_number': blockNumber?.toString(),
+      'block_number': config.encodeBigint(blockNumber),
       'is_deposit': isDeposit,
     };
   }
 
-  factory BridgeTransfer.fromJson(Map<String, dynamic> json) {
+  factory BridgeTransfer.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return BridgeTransfer(
-      amount: json.valueAsString<String?>('amount', acceptCamelCase: true),
+      amount: json.valueAsString<String?>(
+        'amount',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       blockNumber: json.valueAsBigInt<BigInt?>(
         'block_number',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      isDeposit: json.valueAsBool<bool?>('is_deposit', acceptCamelCase: true),
+      isDeposit: json.valueAsBool<bool?>(
+        'is_deposit',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -250,33 +274,57 @@ class RateLimitTransfers extends CosmosProtoMessage {
   List<Object?> get protoValues => [token, inflows, outflows];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'token': token,
-      'inflows': inflows.map((e) => e.toJson()).toList(),
-      'outflows': outflows.map((e) => e.toJson()).toList(),
+      'inflows': inflows.map((e) => config.encodeMessage(e)).toList(),
+      'outflows': outflows.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory RateLimitTransfers.fromJson(Map<String, dynamic> json) {
+  factory RateLimitTransfers.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return RateLimitTransfers(
-      token: json.valueAsString<String?>('token', acceptCamelCase: true),
+      token: json.valueAsString<String?>(
+        'token',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       inflows:
-          (json.valueEnsureAsList<dynamic>('inflows', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'inflows',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  BlockTransferRecord,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => BlockTransferRecord.fromJson(v)),
+                (e) => JsonParser.valueTo<BlockTransferRecord, Object>(
+                  value: e,
+                  parse:
+                      (v) => BlockTransferRecord.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
       outflows:
-          (json.valueEnsureAsList<dynamic>('outflows', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'outflows',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  BlockTransferRecord,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => BlockTransferRecord.fromJson(v)),
+                (e) => JsonParser.valueTo<BlockTransferRecord, Object>(
+                  value: e,
+                  parse:
+                      (v) => BlockTransferRecord.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );
@@ -331,17 +379,25 @@ class BlockTransferRecord extends CosmosProtoMessage {
   List<Object?> get protoValues => [blockNumber, amount];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'block_number': blockNumber?.toString(), 'amount': amount};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'block_number': config.encodeBigint(blockNumber), 'amount': amount};
   }
 
-  factory BlockTransferRecord.fromJson(Map<String, dynamic> json) {
+  factory BlockTransferRecord.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return BlockTransferRecord(
       blockNumber: json.valueAsBigInt<BigInt?>(
         'block_number',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      amount: json.valueAsString<String?>('amount', acceptCamelCase: true),
+      amount: json.valueAsString<String?>(
+        'amount',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -385,14 +441,25 @@ class MintAmount extends CosmosProtoMessage {
   List<Object?> get protoValues => [token, amount];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'token': token, 'amount': amount};
   }
 
-  factory MintAmount.fromJson(Map<String, dynamic> json) {
+  factory MintAmount.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MintAmount(
-      token: json.valueAsString<String?>('token', acceptCamelCase: true),
-      amount: json.valueAsString<String?>('amount', acceptCamelCase: true),
+      token: json.valueAsString<String?>(
+        'token',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      amount: json.valueAsString<String?>(
+        'amount',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

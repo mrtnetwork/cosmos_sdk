@@ -107,17 +107,17 @@ class Params extends CosmosProtoMessage {
 
   final BigInt? averageEthereumBlockTime;
 
-  final List<int>? slashFractionValset;
+  final BuBytes? slashFractionValset;
 
-  final List<int>? slashFractionBatch;
+  final BuBytes? slashFractionBatch;
 
-  final List<int>? slashFractionClaim;
+  final BuBytes? slashFractionClaim;
 
-  final List<int>? slashFractionConflictingClaim;
+  final BuBytes? slashFractionConflictingClaim;
 
   final BigInt? unbondSlashingValsetsWindow;
 
-  final List<int>? slashFractionBadEthSignature;
+  final BuBytes? slashFractionBadEthSignature;
 
   final String? cosmosCoinDenom;
 
@@ -134,7 +134,7 @@ class Params extends CosmosProtoMessage {
   /// address for receiving Peggy Deposits from sanctioned Ethereum addresses
   final String? segregatedWalletAddress;
 
-  const Params({
+  Params({
     this.peggyId,
     this.contractSourceHash,
     this.bridgeEthereumAddress,
@@ -145,12 +145,12 @@ class Params extends CosmosProtoMessage {
     this.targetBatchTimeout,
     this.averageBlockTime,
     this.averageEthereumBlockTime,
-    this.slashFractionValset,
-    this.slashFractionBatch,
-    this.slashFractionClaim,
-    this.slashFractionConflictingClaim,
+    List<int>? slashFractionValset,
+    List<int>? slashFractionBatch,
+    List<int>? slashFractionClaim,
+    List<int>? slashFractionConflictingClaim,
     this.unbondSlashingValsetsWindow,
-    this.slashFractionBadEthSignature,
+    List<int>? slashFractionBadEthSignature,
     this.cosmosCoinDenom,
     this.cosmosCoinErc20Contract,
     this.claimSlashingEnabled,
@@ -158,7 +158,13 @@ class Params extends CosmosProtoMessage {
     this.valsetReward,
     this.admins = const [],
     this.segregatedWalletAddress,
-  });
+  }) : slashFractionValset = slashFractionValset?.asImmutableBytes,
+       slashFractionBatch = slashFractionBatch?.asImmutableBytes,
+       slashFractionClaim = slashFractionClaim?.asImmutableBytes,
+       slashFractionConflictingClaim =
+           slashFractionConflictingClaim?.asImmutableBytes,
+       slashFractionBadEthSignature =
+           slashFractionBadEthSignature?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -244,164 +250,159 @@ class Params extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'peggy_id': peggyId,
       'contract_source_hash': contractSourceHash,
       'bridge_ethereum_address': bridgeEthereumAddress,
-      'bridge_chain_id': bridgeChainId?.toString(),
-      'signed_valsets_window': signedValsetsWindow?.toString(),
-      'signed_batches_window': signedBatchesWindow?.toString(),
-      'signed_claims_window': signedClaimsWindow?.toString(),
-      'target_batch_timeout': targetBatchTimeout?.toString(),
-      'average_block_time': averageBlockTime?.toString(),
-      'average_ethereum_block_time': averageEthereumBlockTime?.toString(),
-      'slash_fraction_valset': switch (slashFractionValset) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'slash_fraction_batch': switch (slashFractionBatch) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'slash_fraction_claim': switch (slashFractionClaim) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'slash_fraction_conflicting_claim':
-          switch (slashFractionConflictingClaim) {
-            List<int> bytes => StringUtils.decode(
-              bytes,
-              encoding: StringEncoding.base64,
-            ),
-            _ => null,
-          },
-      'unbond_slashing_valsets_window': unbondSlashingValsetsWindow?.toString(),
-      'slash_fraction_bad_eth_signature':
-          switch (slashFractionBadEthSignature) {
-            List<int> bytes => StringUtils.decode(
-              bytes,
-              encoding: StringEncoding.base64,
-            ),
-            _ => null,
-          },
+      'bridge_chain_id': config.encodeBigint(bridgeChainId),
+      'signed_valsets_window': config.encodeBigint(signedValsetsWindow),
+      'signed_batches_window': config.encodeBigint(signedBatchesWindow),
+      'signed_claims_window': config.encodeBigint(signedClaimsWindow),
+      'target_batch_timeout': config.encodeBigint(targetBatchTimeout),
+      'average_block_time': config.encodeBigint(averageBlockTime),
+      'average_ethereum_block_time': config.encodeBigint(
+        averageEthereumBlockTime,
+      ),
+      'slash_fraction_valset': config.encodeBinary(slashFractionValset),
+      'slash_fraction_batch': config.encodeBinary(slashFractionBatch),
+      'slash_fraction_claim': config.encodeBinary(slashFractionClaim),
+      'slash_fraction_conflicting_claim': config.encodeBinary(
+        slashFractionConflictingClaim,
+      ),
+      'unbond_slashing_valsets_window': config.encodeBigint(
+        unbondSlashingValsetsWindow,
+      ),
+      'slash_fraction_bad_eth_signature': config.encodeBinary(
+        slashFractionBadEthSignature,
+      ),
       'cosmos_coin_denom': cosmosCoinDenom,
       'cosmos_coin_erc20_contract': cosmosCoinErc20Contract,
       'claim_slashing_enabled': claimSlashingEnabled,
-      'bridge_contract_start_height': bridgeContractStartHeight?.toString(),
-      'valset_reward': valsetReward?.toJson(),
+      'bridge_contract_start_height': config.encodeBigint(
+        bridgeContractStartHeight,
+      ),
+      'valset_reward': config.encodeMessage(valsetReward),
       'admins': admins.map((e) => e).toList(),
       'segregated_wallet_address': segregatedWalletAddress,
     };
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
-      peggyId: json.valueAsString<String?>('peggy_id', acceptCamelCase: true),
+      peggyId: json.valueAsString<String?>(
+        'peggy_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       contractSourceHash: json.valueAsString<String?>(
         'contract_source_hash',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       bridgeEthereumAddress: json.valueAsString<String?>(
         'bridge_ethereum_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       bridgeChainId: json.valueAsBigInt<BigInt?>(
         'bridge_chain_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       signedValsetsWindow: json.valueAsBigInt<BigInt?>(
         'signed_valsets_window',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       signedBatchesWindow: json.valueAsBigInt<BigInt?>(
         'signed_batches_window',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       signedClaimsWindow: json.valueAsBigInt<BigInt?>(
         'signed_claims_window',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       targetBatchTimeout: json.valueAsBigInt<BigInt?>(
         'target_batch_timeout',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       averageBlockTime: json.valueAsBigInt<BigInt?>(
         'average_block_time',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       averageEthereumBlockTime: json.valueAsBigInt<BigInt?>(
         'average_ethereum_block_time',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      slashFractionValset: json.valueAsBytes<List<int>?>(
-        'slash_fraction_valset',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      slashFractionValset: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'slash_fraction_valset',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
-      slashFractionBatch: json.valueAsBytes<List<int>?>(
-        'slash_fraction_batch',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      slashFractionBatch: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'slash_fraction_batch',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
-      slashFractionClaim: json.valueAsBytes<List<int>?>(
-        'slash_fraction_claim',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      slashFractionClaim: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'slash_fraction_claim',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
-      slashFractionConflictingClaim: json.valueAsBytes<List<int>?>(
-        'slash_fraction_conflicting_claim',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      slashFractionConflictingClaim: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'slash_fraction_conflicting_claim',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
       unbondSlashingValsetsWindow: json.valueAsBigInt<BigInt?>(
         'unbond_slashing_valsets_window',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      slashFractionBadEthSignature: json.valueAsBytes<List<int>?>(
-        'slash_fraction_bad_eth_signature',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      slashFractionBadEthSignature: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'slash_fraction_bad_eth_signature',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
       cosmosCoinDenom: json.valueAsString<String?>(
         'cosmos_coin_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       cosmosCoinErc20Contract: json.valueAsString<String?>(
         'cosmos_coin_erc20_contract',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       claimSlashingEnabled: json.valueAsBool<bool?>(
         'claim_slashing_enabled',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       bridgeContractStartHeight: json.valueAsBigInt<BigInt?>(
         'bridge_contract_start_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      valsetReward: json
-          .valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
-            key: 'valset_reward',
-            parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      valsetReward: json.valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
+        key: 'valset_reward',
+        parse:
+            (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       admins:
           (json.valueEnsureAsList<dynamic>(
             'admins',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
       segregatedWalletAddress: json.valueAsString<String?>(
         'segregated_wallet_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

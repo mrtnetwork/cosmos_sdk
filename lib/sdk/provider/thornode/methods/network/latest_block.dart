@@ -22,7 +22,7 @@ class ThorNodeRequestLatestBlock
   @override
   Map<String, String?> get parameters => {"height": height?.toString()};
   @override
-  List<ThorLatestBlockResponse> onResonse(List<Map<String, dynamic>> result) {
+  List<ThorLatestBlockResponse> onResponse(List<Map<String, dynamic>> result) {
     return result.map((e) => ThorLatestBlockResponse.fromJson(e)).toList();
   }
 }

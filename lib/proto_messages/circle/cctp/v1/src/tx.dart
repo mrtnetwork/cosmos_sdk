@@ -33,14 +33,25 @@ class MsgUpdateOwner extends CosmosProtoMessage
   List<Object?> get protoValues => [from, newOwner];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'from': from, 'new_owner': newOwner};
   }
 
-  factory MsgUpdateOwner.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateOwner.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateOwner(
-      from: json.valueAsString<String?>('from', acceptCamelCase: true),
-      newOwner: json.valueAsString<String?>('new_owner', acceptCamelCase: true),
+      from: json.valueAsString<String?>(
+        'from',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      newOwner: json.valueAsString<String?>(
+        'new_owner',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -84,11 +95,16 @@ class MsgUpdateOwnerResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgUpdateOwnerResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateOwnerResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateOwnerResponse();
   }
 
@@ -135,16 +151,24 @@ class MsgUpdateAttesterManager extends CosmosProtoMessage
   List<Object?> get protoValues => [from, newAttesterManager];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'from': from, 'new_attester_manager': newAttesterManager};
   }
 
-  factory MsgUpdateAttesterManager.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateAttesterManager.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateAttesterManager(
-      from: json.valueAsString<String?>('from', acceptCamelCase: true),
+      from: json.valueAsString<String?>(
+        'from',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       newAttesterManager: json.valueAsString<String?>(
         'new_attester_manager',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -191,11 +215,16 @@ class MsgUpdateAttesterManagerResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgUpdateAttesterManagerResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateAttesterManagerResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateAttesterManagerResponse();
   }
 
@@ -242,16 +271,24 @@ class MsgUpdateTokenController extends CosmosProtoMessage
   List<Object?> get protoValues => [from, newTokenController];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'from': from, 'new_token_controller': newTokenController};
   }
 
-  factory MsgUpdateTokenController.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateTokenController.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateTokenController(
-      from: json.valueAsString<String?>('from', acceptCamelCase: true),
+      from: json.valueAsString<String?>(
+        'from',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       newTokenController: json.valueAsString<String?>(
         'new_token_controller',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -298,11 +335,16 @@ class MsgUpdateTokenControllerResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgUpdateTokenControllerResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateTokenControllerResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateTokenControllerResponse();
   }
 
@@ -346,16 +388,24 @@ class MsgUpdatePauser extends CosmosProtoMessage
   List<Object?> get protoValues => [from, newPauser];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'from': from, 'new_pauser': newPauser};
   }
 
-  factory MsgUpdatePauser.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdatePauser.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdatePauser(
-      from: json.valueAsString<String?>('from', acceptCamelCase: true),
+      from: json.valueAsString<String?>(
+        'from',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       newPauser: json.valueAsString<String?>(
         'new_pauser',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -400,11 +450,16 @@ class MsgUpdatePauserResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgUpdatePauserResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdatePauserResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdatePauserResponse();
   }
 
@@ -443,13 +498,21 @@ class MsgAcceptOwner extends CosmosProtoMessage
   List<Object?> get protoValues => [from];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'from': from};
   }
 
-  factory MsgAcceptOwner.fromJson(Map<String, dynamic> json) {
+  factory MsgAcceptOwner.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgAcceptOwner(
-      from: json.valueAsString<String?>('from', acceptCamelCase: true),
+      from: json.valueAsString<String?>(
+        'from',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -490,11 +553,16 @@ class MsgAcceptOwnerResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgAcceptOwnerResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgAcceptOwnerResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgAcceptOwnerResponse();
   }
 
@@ -538,14 +606,25 @@ class MsgEnableAttester extends CosmosProtoMessage
   List<Object?> get protoValues => [from, attester];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'from': from, 'attester': attester};
   }
 
-  factory MsgEnableAttester.fromJson(Map<String, dynamic> json) {
+  factory MsgEnableAttester.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgEnableAttester(
-      from: json.valueAsString<String?>('from', acceptCamelCase: true),
-      attester: json.valueAsString<String?>('attester', acceptCamelCase: true),
+      from: json.valueAsString<String?>(
+        'from',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      attester: json.valueAsString<String?>(
+        'attester',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -589,11 +668,16 @@ class MsgEnableAttesterResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgEnableAttesterResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgEnableAttesterResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgEnableAttesterResponse();
   }
 
@@ -637,14 +721,25 @@ class MsgDisableAttester extends CosmosProtoMessage
   List<Object?> get protoValues => [from, attester];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'from': from, 'attester': attester};
   }
 
-  factory MsgDisableAttester.fromJson(Map<String, dynamic> json) {
+  factory MsgDisableAttester.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgDisableAttester(
-      from: json.valueAsString<String?>('from', acceptCamelCase: true),
-      attester: json.valueAsString<String?>('attester', acceptCamelCase: true),
+      from: json.valueAsString<String?>(
+        'from',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      attester: json.valueAsString<String?>(
+        'attester',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -688,11 +783,16 @@ class MsgDisableAttesterResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgDisableAttesterResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgDisableAttesterResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgDisableAttesterResponse();
   }
 
@@ -734,13 +834,21 @@ class MsgPauseBurningAndMinting extends CosmosProtoMessage
   List<Object?> get protoValues => [from];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'from': from};
   }
 
-  factory MsgPauseBurningAndMinting.fromJson(Map<String, dynamic> json) {
+  factory MsgPauseBurningAndMinting.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgPauseBurningAndMinting(
-      from: json.valueAsString<String?>('from', acceptCamelCase: true),
+      from: json.valueAsString<String?>(
+        'from',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -783,13 +891,16 @@ class MsgPauseBurningAndMintingResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
   factory MsgPauseBurningAndMintingResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgPauseBurningAndMintingResponse();
   }
 
@@ -831,13 +942,21 @@ class MsgUnpauseBurningAndMinting extends CosmosProtoMessage
   List<Object?> get protoValues => [from];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'from': from};
   }
 
-  factory MsgUnpauseBurningAndMinting.fromJson(Map<String, dynamic> json) {
+  factory MsgUnpauseBurningAndMinting.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUnpauseBurningAndMinting(
-      from: json.valueAsString<String?>('from', acceptCamelCase: true),
+      from: json.valueAsString<String?>(
+        'from',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -880,13 +999,16 @@ class MsgUnpauseBurningAndMintingResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
   factory MsgUnpauseBurningAndMintingResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUnpauseBurningAndMintingResponse();
   }
 
@@ -928,15 +1050,21 @@ class MsgPauseSendingAndReceivingMessages extends CosmosProtoMessage
   List<Object?> get protoValues => [from];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'from': from};
   }
 
   factory MsgPauseSendingAndReceivingMessages.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgPauseSendingAndReceivingMessages(
-      from: json.valueAsString<String?>('from', acceptCamelCase: true),
+      from: json.valueAsString<String?>(
+        'from',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -983,13 +1111,16 @@ class MsgPauseSendingAndReceivingMessagesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
   factory MsgPauseSendingAndReceivingMessagesResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgPauseSendingAndReceivingMessagesResponse();
   }
 
@@ -1036,15 +1167,21 @@ class MsgUnpauseSendingAndReceivingMessages extends CosmosProtoMessage
   List<Object?> get protoValues => [from];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'from': from};
   }
 
   factory MsgUnpauseSendingAndReceivingMessages.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUnpauseSendingAndReceivingMessages(
-      from: json.valueAsString<String?>('from', acceptCamelCase: true),
+      from: json.valueAsString<String?>(
+        'from',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1092,13 +1229,16 @@ class MsgUnpauseSendingAndReceivingMessagesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
   factory MsgUnpauseSendingAndReceivingMessagesResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUnpauseSendingAndReceivingMessagesResponse();
   }
 
@@ -1148,16 +1288,24 @@ class MsgUpdateMaxMessageBodySize extends CosmosProtoMessage
   List<Object?> get protoValues => [from, messageSize];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'from': from, 'message_size': messageSize?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'from': from, 'message_size': config.encodeBigint(messageSize)};
   }
 
-  factory MsgUpdateMaxMessageBodySize.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateMaxMessageBodySize.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateMaxMessageBodySize(
-      from: json.valueAsString<String?>('from', acceptCamelCase: true),
+      from: json.valueAsString<String?>(
+        'from',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       messageSize: json.valueAsBigInt<BigInt?>(
         'message_size',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1204,13 +1352,16 @@ class MsgUpdateMaxMessageBodySizeResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
   factory MsgUpdateMaxMessageBodySizeResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateMaxMessageBodySizeResponse();
   }
 
@@ -1264,18 +1415,29 @@ class MsgSetMaxBurnAmountPerMessage extends CosmosProtoMessage
   List<Object?> get protoValues => [from, localToken, amount];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'from': from, 'local_token': localToken, 'amount': amount};
   }
 
-  factory MsgSetMaxBurnAmountPerMessage.fromJson(Map<String, dynamic> json) {
+  factory MsgSetMaxBurnAmountPerMessage.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSetMaxBurnAmountPerMessage(
-      from: json.valueAsString<String?>('from', acceptCamelCase: true),
+      from: json.valueAsString<String?>(
+        'from',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       localToken: json.valueAsString<String?>(
         'local_token',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      amount: json.valueAsString<String?>('amount', acceptCamelCase: true),
+      amount: json.valueAsString<String?>(
+        'amount',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1322,13 +1484,16 @@ class MsgSetMaxBurnAmountPerMessageResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
   factory MsgSetMaxBurnAmountPerMessageResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSetMaxBurnAmountPerMessageResponse();
   }
 
@@ -1352,17 +1517,17 @@ class MsgDepositForBurn extends CosmosProtoMessage
 
   final int? destinationDomain;
 
-  final List<int>? mintRecipient;
+  final BuBytes? mintRecipient;
 
   final String? burnToken;
 
-  const MsgDepositForBurn({
+  MsgDepositForBurn({
     this.from,
     this.amount,
     this.destinationDomain,
-    this.mintRecipient,
+    List<int>? mintRecipient,
     this.burnToken,
-  });
+  }) : mintRecipient = mintRecipient?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -1394,38 +1559,44 @@ class MsgDepositForBurn extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'from': from,
       'amount': amount,
       'destination_domain': destinationDomain,
-      'mint_recipient': switch (mintRecipient) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'mint_recipient': config.encodeBinary(mintRecipient),
       'burn_token': burnToken,
     };
   }
 
-  factory MsgDepositForBurn.fromJson(Map<String, dynamic> json) {
+  factory MsgDepositForBurn.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgDepositForBurn(
-      from: json.valueAsString<String?>('from', acceptCamelCase: true),
-      amount: json.valueAsString<String?>('amount', acceptCamelCase: true),
+      from: json.valueAsString<String?>(
+        'from',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      amount: json.valueAsString<String?>(
+        'amount',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       destinationDomain: json.valueAsInt<int?>(
         'destination_domain',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      mintRecipient: json.valueAsBytes<List<int>?>(
-        'mint_recipient',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      mintRecipient: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'mint_recipient',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
       burnToken: json.valueAsString<String?>(
         'burn_token',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1475,13 +1646,21 @@ class MsgDepositForBurnResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [nonce];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'nonce': nonce?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'nonce': config.encodeBigint(nonce)};
   }
 
-  factory MsgDepositForBurnResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgDepositForBurnResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgDepositForBurnResponse(
-      nonce: json.valueAsBigInt<BigInt?>('nonce', acceptCamelCase: true),
+      nonce: json.valueAsBigInt<BigInt?>(
+        'nonce',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1505,20 +1684,21 @@ class MsgDepositForBurnWithCaller extends CosmosProtoMessage
 
   final int? destinationDomain;
 
-  final List<int>? mintRecipient;
+  final BuBytes? mintRecipient;
 
   final String? burnToken;
 
-  final List<int>? destinationCaller;
+  final BuBytes? destinationCaller;
 
-  const MsgDepositForBurnWithCaller({
+  MsgDepositForBurnWithCaller({
     this.from,
     this.amount,
     this.destinationDomain,
-    this.mintRecipient,
+    List<int>? mintRecipient,
     this.burnToken,
-    this.destinationCaller,
-  });
+    List<int>? destinationCaller,
+  }) : mintRecipient = mintRecipient?.asImmutableBytes,
+       destinationCaller = destinationCaller?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -1555,50 +1735,51 @@ class MsgDepositForBurnWithCaller extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'from': from,
       'amount': amount,
       'destination_domain': destinationDomain,
-      'mint_recipient': switch (mintRecipient) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'mint_recipient': config.encodeBinary(mintRecipient),
       'burn_token': burnToken,
-      'destination_caller': switch (destinationCaller) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'destination_caller': config.encodeBinary(destinationCaller),
     };
   }
 
-  factory MsgDepositForBurnWithCaller.fromJson(Map<String, dynamic> json) {
+  factory MsgDepositForBurnWithCaller.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgDepositForBurnWithCaller(
-      from: json.valueAsString<String?>('from', acceptCamelCase: true),
-      amount: json.valueAsString<String?>('amount', acceptCamelCase: true),
+      from: json.valueAsString<String?>(
+        'from',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      amount: json.valueAsString<String?>(
+        'amount',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       destinationDomain: json.valueAsInt<int?>(
         'destination_domain',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      mintRecipient: json.valueAsBytes<List<int>?>(
-        'mint_recipient',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      mintRecipient: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'mint_recipient',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
       burnToken: json.valueAsString<String?>(
         'burn_token',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      destinationCaller: json.valueAsBytes<List<int>?>(
-        'destination_caller',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      destinationCaller: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'destination_caller',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
     );
   }
@@ -1651,15 +1832,21 @@ class MsgDepositForBurnWithCallerResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [nonce];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'nonce': nonce?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'nonce': config.encodeBigint(nonce)};
   }
 
   factory MsgDepositForBurnWithCallerResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgDepositForBurnWithCallerResponse(
-      nonce: json.valueAsBigInt<BigInt?>('nonce', acceptCamelCase: true),
+      nonce: json.valueAsBigInt<BigInt?>(
+        'nonce',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1681,21 +1868,24 @@ class MsgReplaceDepositForBurn extends CosmosProtoMessage
         ICosmosProtoAminoMessage {
   final String? from;
 
-  final List<int>? originalMessage;
+  final BuBytes? originalMessage;
 
-  final List<int>? originalAttestation;
+  final BuBytes? originalAttestation;
 
-  final List<int>? newDestinationCaller;
+  final BuBytes? newDestinationCaller;
 
-  final List<int>? newMintRecipient;
+  final BuBytes? newMintRecipient;
 
-  const MsgReplaceDepositForBurn({
+  MsgReplaceDepositForBurn({
     this.from,
-    this.originalMessage,
-    this.originalAttestation,
-    this.newDestinationCaller,
-    this.newMintRecipient,
-  });
+    List<int>? originalMessage,
+    List<int>? originalAttestation,
+    List<int>? newDestinationCaller,
+    List<int>? newMintRecipient,
+  }) : originalMessage = originalMessage?.asImmutableBytes,
+       originalAttestation = originalAttestation?.asImmutableBytes,
+       newDestinationCaller = newDestinationCaller?.asImmutableBytes,
+       newMintRecipient = newMintRecipient?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -1730,62 +1920,50 @@ class MsgReplaceDepositForBurn extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'from': from,
-      'original_message': switch (originalMessage) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'original_attestation': switch (originalAttestation) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'new_destination_caller': switch (newDestinationCaller) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'new_mint_recipient': switch (newMintRecipient) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'original_message': config.encodeBinary(originalMessage),
+      'original_attestation': config.encodeBinary(originalAttestation),
+      'new_destination_caller': config.encodeBinary(newDestinationCaller),
+      'new_mint_recipient': config.encodeBinary(newMintRecipient),
     };
   }
 
-  factory MsgReplaceDepositForBurn.fromJson(Map<String, dynamic> json) {
+  factory MsgReplaceDepositForBurn.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgReplaceDepositForBurn(
-      from: json.valueAsString<String?>('from', acceptCamelCase: true),
-      originalMessage: json.valueAsBytes<List<int>?>(
-        'original_message',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      from: json.valueAsString<String?>(
+        'from',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      originalAttestation: json.valueAsBytes<List<int>?>(
-        'original_attestation',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      originalMessage: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'original_message',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
-      newDestinationCaller: json.valueAsBytes<List<int>?>(
-        'new_destination_caller',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      originalAttestation: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'original_attestation',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
-      newMintRecipient: json.valueAsBytes<List<int>?>(
-        'new_mint_recipient',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      newDestinationCaller: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'new_destination_caller',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
+      ),
+      newMintRecipient: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'new_mint_recipient',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
     );
   }
@@ -1835,11 +2013,16 @@ class MsgReplaceDepositForBurnResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgReplaceDepositForBurnResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgReplaceDepositForBurnResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgReplaceDepositForBurnResponse();
   }
 
@@ -1858,11 +2041,13 @@ class MsgReceiveMessage extends CosmosProtoMessage
         ICosmosProtoAminoMessage {
   final String? from;
 
-  final List<int>? message;
+  final BuBytes? message;
 
-  final List<int>? attestation;
+  final BuBytes? attestation;
 
-  const MsgReceiveMessage({this.from, this.message, this.attestation});
+  MsgReceiveMessage({this.from, List<int>? message, List<int>? attestation})
+    : message = message?.asImmutableBytes,
+      attestation = attestation?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -1886,38 +2071,30 @@ class MsgReceiveMessage extends CosmosProtoMessage
   List<Object?> get protoValues => [from, message, attestation];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'from': from,
-      'message': switch (message) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'attestation': switch (attestation) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'message': config.encodeBinary(message),
+      'attestation': config.encodeBinary(attestation),
     };
   }
 
-  factory MsgReceiveMessage.fromJson(Map<String, dynamic> json) {
+  factory MsgReceiveMessage.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgReceiveMessage(
-      from: json.valueAsString<String?>('from', acceptCamelCase: true),
-      message: json.valueAsBytes<List<int>?>(
-        'message',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      from: json.valueAsString<String?>(
+        'from',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      attestation: json.valueAsBytes<List<int>?>(
-        'attestation',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      message: config.decodeBinary<List<int>?>(
+        json.valueAs('message', normalizeKeyLookup: config.normalizeKeys),
+      ),
+      attestation: config.decodeBinary<List<int>?>(
+        json.valueAs('attestation', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }
@@ -1965,13 +2142,21 @@ class MsgReceiveMessageResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [success];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'success': success};
   }
 
-  factory MsgReceiveMessageResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgReceiveMessageResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgReceiveMessageResponse(
-      success: json.valueAsBool<bool?>('success', acceptCamelCase: true),
+      success: json.valueAsBool<bool?>(
+        'success',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1993,16 +2178,17 @@ class MsgSendMessage extends CosmosProtoMessage
 
   final int? destinationDomain;
 
-  final List<int>? recipient;
+  final BuBytes? recipient;
 
-  final List<int>? messageBody;
+  final BuBytes? messageBody;
 
-  const MsgSendMessage({
+  MsgSendMessage({
     this.from,
     this.destinationDomain,
-    this.recipient,
-    this.messageBody,
-  });
+    List<int>? recipient,
+    List<int>? messageBody,
+  }) : recipient = recipient?.asImmutableBytes,
+       messageBody = messageBody?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -2032,43 +2218,35 @@ class MsgSendMessage extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'from': from,
       'destination_domain': destinationDomain,
-      'recipient': switch (recipient) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'message_body': switch (messageBody) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'recipient': config.encodeBinary(recipient),
+      'message_body': config.encodeBinary(messageBody),
     };
   }
 
-  factory MsgSendMessage.fromJson(Map<String, dynamic> json) {
+  factory MsgSendMessage.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSendMessage(
-      from: json.valueAsString<String?>('from', acceptCamelCase: true),
+      from: json.valueAsString<String?>(
+        'from',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       destinationDomain: json.valueAsInt<int?>(
         'destination_domain',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      recipient: json.valueAsBytes<List<int>?>(
-        'recipient',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      recipient: config.decodeBinary<List<int>?>(
+        json.valueAs('recipient', normalizeKeyLookup: config.normalizeKeys),
       ),
-      messageBody: json.valueAsBytes<List<int>?>(
-        'message_body',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      messageBody: config.decodeBinary<List<int>?>(
+        json.valueAs('message_body', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }
@@ -2117,13 +2295,21 @@ class MsgSendMessageResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [nonce];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'nonce': nonce?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'nonce': config.encodeBigint(nonce)};
   }
 
-  factory MsgSendMessageResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgSendMessageResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSendMessageResponse(
-      nonce: json.valueAsBigInt<BigInt?>('nonce', acceptCamelCase: true),
+      nonce: json.valueAsBigInt<BigInt?>(
+        'nonce',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -2145,19 +2331,21 @@ class MsgSendMessageWithCaller extends CosmosProtoMessage
 
   final int? destinationDomain;
 
-  final List<int>? recipient;
+  final BuBytes? recipient;
 
-  final List<int>? messageBody;
+  final BuBytes? messageBody;
 
-  final List<int>? destinationCaller;
+  final BuBytes? destinationCaller;
 
-  const MsgSendMessageWithCaller({
+  MsgSendMessageWithCaller({
     this.from,
     this.destinationDomain,
-    this.recipient,
-    this.messageBody,
-    this.destinationCaller,
-  });
+    List<int>? recipient,
+    List<int>? messageBody,
+    List<int>? destinationCaller,
+  }) : recipient = recipient?.asImmutableBytes,
+       messageBody = messageBody?.asImmutableBytes,
+       destinationCaller = destinationCaller?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -2192,55 +2380,42 @@ class MsgSendMessageWithCaller extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'from': from,
       'destination_domain': destinationDomain,
-      'recipient': switch (recipient) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'message_body': switch (messageBody) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'destination_caller': switch (destinationCaller) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'recipient': config.encodeBinary(recipient),
+      'message_body': config.encodeBinary(messageBody),
+      'destination_caller': config.encodeBinary(destinationCaller),
     };
   }
 
-  factory MsgSendMessageWithCaller.fromJson(Map<String, dynamic> json) {
+  factory MsgSendMessageWithCaller.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSendMessageWithCaller(
-      from: json.valueAsString<String?>('from', acceptCamelCase: true),
+      from: json.valueAsString<String?>(
+        'from',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       destinationDomain: json.valueAsInt<int?>(
         'destination_domain',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      recipient: json.valueAsBytes<List<int>?>(
-        'recipient',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      recipient: config.decodeBinary<List<int>?>(
+        json.valueAs('recipient', normalizeKeyLookup: config.normalizeKeys),
       ),
-      messageBody: json.valueAsBytes<List<int>?>(
-        'message_body',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      messageBody: config.decodeBinary<List<int>?>(
+        json.valueAs('message_body', normalizeKeyLookup: config.normalizeKeys),
       ),
-      destinationCaller: json.valueAsBytes<List<int>?>(
-        'destination_caller',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      destinationCaller: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'destination_caller',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
     );
   }
@@ -2292,13 +2467,21 @@ class MsgSendMessageWithCallerResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [nonce];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'nonce': nonce?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'nonce': config.encodeBigint(nonce)};
   }
 
-  factory MsgSendMessageWithCallerResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgSendMessageWithCallerResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSendMessageWithCallerResponse(
-      nonce: json.valueAsBigInt<BigInt?>('nonce', acceptCamelCase: true),
+      nonce: json.valueAsBigInt<BigInt?>(
+        'nonce',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -2320,21 +2503,24 @@ class MsgReplaceMessage extends CosmosProtoMessage
         ICosmosProtoAminoMessage {
   final String? from;
 
-  final List<int>? originalMessage;
+  final BuBytes? originalMessage;
 
-  final List<int>? originalAttestation;
+  final BuBytes? originalAttestation;
 
-  final List<int>? newMessageBody;
+  final BuBytes? newMessageBody;
 
-  final List<int>? newDestinationCaller;
+  final BuBytes? newDestinationCaller;
 
-  const MsgReplaceMessage({
+  MsgReplaceMessage({
     this.from,
-    this.originalMessage,
-    this.originalAttestation,
-    this.newMessageBody,
-    this.newDestinationCaller,
-  });
+    List<int>? originalMessage,
+    List<int>? originalAttestation,
+    List<int>? newMessageBody,
+    List<int>? newDestinationCaller,
+  }) : originalMessage = originalMessage?.asImmutableBytes,
+       originalAttestation = originalAttestation?.asImmutableBytes,
+       newMessageBody = newMessageBody?.asImmutableBytes,
+       newDestinationCaller = newDestinationCaller?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -2366,62 +2552,50 @@ class MsgReplaceMessage extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'from': from,
-      'original_message': switch (originalMessage) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'original_attestation': switch (originalAttestation) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'new_message_body': switch (newMessageBody) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'new_destination_caller': switch (newDestinationCaller) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'original_message': config.encodeBinary(originalMessage),
+      'original_attestation': config.encodeBinary(originalAttestation),
+      'new_message_body': config.encodeBinary(newMessageBody),
+      'new_destination_caller': config.encodeBinary(newDestinationCaller),
     };
   }
 
-  factory MsgReplaceMessage.fromJson(Map<String, dynamic> json) {
+  factory MsgReplaceMessage.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgReplaceMessage(
-      from: json.valueAsString<String?>('from', acceptCamelCase: true),
-      originalMessage: json.valueAsBytes<List<int>?>(
-        'original_message',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      from: json.valueAsString<String?>(
+        'from',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      originalAttestation: json.valueAsBytes<List<int>?>(
-        'original_attestation',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      originalMessage: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'original_message',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
-      newMessageBody: json.valueAsBytes<List<int>?>(
-        'new_message_body',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      originalAttestation: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'original_attestation',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
-      newDestinationCaller: json.valueAsBytes<List<int>?>(
-        'new_destination_caller',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      newMessageBody: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'new_message_body',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
+      ),
+      newDestinationCaller: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'new_destination_caller',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
     );
   }
@@ -2469,11 +2643,16 @@ class MsgReplaceMessageResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgReplaceMessageResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgReplaceMessageResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgReplaceMessageResponse();
   }
 
@@ -2520,14 +2699,25 @@ class MsgUpdateSignatureThreshold extends CosmosProtoMessage
   List<Object?> get protoValues => [from, amount];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'from': from, 'amount': amount};
   }
 
-  factory MsgUpdateSignatureThreshold.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateSignatureThreshold.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateSignatureThreshold(
-      from: json.valueAsString<String?>('from', acceptCamelCase: true),
-      amount: json.valueAsInt<int?>('amount', acceptCamelCase: true),
+      from: json.valueAsString<String?>(
+        'from',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      amount: json.valueAsInt<int?>(
+        'amount',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -2573,13 +2763,16 @@ class MsgUpdateSignatureThresholdResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
   factory MsgUpdateSignatureThresholdResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateSignatureThresholdResponse();
   }
 
@@ -2600,16 +2793,16 @@ class MsgLinkTokenPair extends CosmosProtoMessage
 
   final int? remoteDomain;
 
-  final List<int>? remoteToken;
+  final BuBytes? remoteToken;
 
   final String? localToken;
 
-  const MsgLinkTokenPair({
+  MsgLinkTokenPair({
     this.from,
     this.remoteDomain,
-    this.remoteToken,
+    List<int>? remoteToken,
     this.localToken,
-  });
+  }) : remoteToken = remoteToken?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -2639,36 +2832,36 @@ class MsgLinkTokenPair extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'from': from,
       'remote_domain': remoteDomain,
-      'remote_token': switch (remoteToken) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'remote_token': config.encodeBinary(remoteToken),
       'local_token': localToken,
     };
   }
 
-  factory MsgLinkTokenPair.fromJson(Map<String, dynamic> json) {
+  factory MsgLinkTokenPair.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgLinkTokenPair(
-      from: json.valueAsString<String?>('from', acceptCamelCase: true),
+      from: json.valueAsString<String?>(
+        'from',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       remoteDomain: json.valueAsInt<int?>(
         'remote_domain',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      remoteToken: json.valueAsBytes<List<int>?>(
-        'remote_token',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      remoteToken: config.decodeBinary<List<int>?>(
+        json.valueAs('remote_token', normalizeKeyLookup: config.normalizeKeys),
       ),
       localToken: json.valueAsString<String?>(
         'local_token',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -2715,11 +2908,16 @@ class MsgLinkTokenPairResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgLinkTokenPairResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgLinkTokenPairResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgLinkTokenPairResponse();
   }
 
@@ -2740,16 +2938,16 @@ class MsgUnlinkTokenPair extends CosmosProtoMessage
 
   final int? remoteDomain;
 
-  final List<int>? remoteToken;
+  final BuBytes? remoteToken;
 
   final String? localToken;
 
-  const MsgUnlinkTokenPair({
+  MsgUnlinkTokenPair({
     this.from,
     this.remoteDomain,
-    this.remoteToken,
+    List<int>? remoteToken,
     this.localToken,
-  });
+  }) : remoteToken = remoteToken?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -2779,36 +2977,36 @@ class MsgUnlinkTokenPair extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'from': from,
       'remote_domain': remoteDomain,
-      'remote_token': switch (remoteToken) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'remote_token': config.encodeBinary(remoteToken),
       'local_token': localToken,
     };
   }
 
-  factory MsgUnlinkTokenPair.fromJson(Map<String, dynamic> json) {
+  factory MsgUnlinkTokenPair.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUnlinkTokenPair(
-      from: json.valueAsString<String?>('from', acceptCamelCase: true),
+      from: json.valueAsString<String?>(
+        'from',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       remoteDomain: json.valueAsInt<int?>(
         'remote_domain',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      remoteToken: json.valueAsBytes<List<int>?>(
-        'remote_token',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      remoteToken: config.decodeBinary<List<int>?>(
+        json.valueAs('remote_token', normalizeKeyLookup: config.normalizeKeys),
       ),
       localToken: json.valueAsString<String?>(
         'local_token',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -2855,11 +3053,16 @@ class MsgUnlinkTokenPairResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgUnlinkTokenPairResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgUnlinkTokenPairResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUnlinkTokenPairResponse();
   }
 
@@ -2880,9 +3083,10 @@ class MsgAddRemoteTokenMessenger extends CosmosProtoMessage
 
   final int? domainId;
 
-  final List<int>? address;
+  final BuBytes? address;
 
-  const MsgAddRemoteTokenMessenger({this.from, this.domainId, this.address});
+  MsgAddRemoteTokenMessenger({this.from, this.domainId, List<int>? address})
+    : address = address?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -2909,28 +3113,31 @@ class MsgAddRemoteTokenMessenger extends CosmosProtoMessage
   List<Object?> get protoValues => [from, domainId, address];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'from': from,
       'domain_id': domainId,
-      'address': switch (address) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'address': config.encodeBinary(address),
     };
   }
 
-  factory MsgAddRemoteTokenMessenger.fromJson(Map<String, dynamic> json) {
+  factory MsgAddRemoteTokenMessenger.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgAddRemoteTokenMessenger(
-      from: json.valueAsString<String?>('from', acceptCamelCase: true),
-      domainId: json.valueAsInt<int?>('domain_id', acceptCamelCase: true),
-      address: json.valueAsBytes<List<int>?>(
-        'address',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      from: json.valueAsString<String?>(
+        'from',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      domainId: json.valueAsInt<int?>(
+        'domain_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      address: config.decodeBinary<List<int>?>(
+        json.valueAs('address', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }
@@ -2978,13 +3185,16 @@ class MsgAddRemoteTokenMessengerResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
   factory MsgAddRemoteTokenMessengerResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgAddRemoteTokenMessengerResponse();
   }
 
@@ -3031,14 +3241,25 @@ class MsgRemoveRemoteTokenMessenger extends CosmosProtoMessage
   List<Object?> get protoValues => [from, domainId];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'from': from, 'domain_id': domainId};
   }
 
-  factory MsgRemoveRemoteTokenMessenger.fromJson(Map<String, dynamic> json) {
+  factory MsgRemoveRemoteTokenMessenger.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgRemoveRemoteTokenMessenger(
-      from: json.valueAsString<String?>('from', acceptCamelCase: true),
-      domainId: json.valueAsInt<int?>('domain_id', acceptCamelCase: true),
+      from: json.valueAsString<String?>(
+        'from',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      domainId: json.valueAsInt<int?>(
+        'domain_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -3084,13 +3305,16 @@ class MsgRemoveRemoteTokenMessengerResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
   factory MsgRemoveRemoteTokenMessengerResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgRemoveRemoteTokenMessengerResponse();
   }
 

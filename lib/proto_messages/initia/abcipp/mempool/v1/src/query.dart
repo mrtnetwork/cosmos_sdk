@@ -29,11 +29,16 @@ class QueryTxDistributionRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryTxDistributionRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryTxDistributionRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTxDistributionRequest();
   }
 
@@ -84,18 +89,24 @@ class QueryTxDistributionResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [distribution];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'distribution': distribution.map((k, v) => MapEntry(k, v.toString())),
+      'distribution': config.encodeMap(
+        distribution,
+        (k, v) => MapEntry(k, config.encodeBigint(v)),
+      ),
     };
   }
 
-  factory QueryTxDistributionResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryTxDistributionResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTxDistributionResponse(
-      distribution: (json.valueAsMap<Map<dynamic, dynamic>>(
-        'distribution',
-        acceptCamelCase: true,
-      )).map(
+      distribution: config.decodeMap(
+        json.valueAs('distribution', normalizeKeyLookup: config.normalizeKeys),
         (k, v) => MapEntry(
           JsonParser.valueAsString<String>(k),
           JsonParser.valueAsBigInt<BigInt>(v),
@@ -148,14 +159,25 @@ class QueryTxHashRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [sender, sequence];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'sender': sender, 'sequence': sequence};
   }
 
-  factory QueryTxHashRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryTxHashRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTxHashRequest(
-      sender: json.valueAsString<String?>('sender', acceptCamelCase: true),
-      sequence: json.valueAsString<String?>('sequence', acceptCamelCase: true),
+      sender: json.valueAsString<String?>(
+        'sender',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      sequence: json.valueAsString<String?>(
+        'sequence',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -203,13 +225,21 @@ class QueryTxHashResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [txHash];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'txHash': txHash};
   }
 
-  factory QueryTxHashResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryTxHashResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTxHashResponse(
-      txHash: json.valueAsString<String?>('txHash', acceptCamelCase: true),
+      txHash: json.valueAsString<String?>(
+        'txHash',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

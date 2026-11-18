@@ -28,20 +28,32 @@ enum CheckTxType implements ProtoEnumVariant {
 
   /// Looks up a value by its proto wire int. Throws if not found.
   static CheckTxType fromValue(int? value) {
+    value ??= 0;
     return CheckTxType.values.firstWhere(
       (e) => e.value == value,
       orElse:
-          () => throw ItemNotFoundException(name: "CheckTxType", value: value),
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching CheckTxType found for the given value. $value",
+                details: {"name": "CheckTxType", "value": value?.toString()},
+              ),
     );
   }
 
   /// Looks up a value by wire int, Dart enum name, or original proto
   /// name (whichever [value] happens to be). Throws if not found.
   static CheckTxType from(Object? value) {
+    value ??= 0;
     return CheckTxType.values.firstWhere(
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
-          () => throw ItemNotFoundException(name: "CheckTxType", value: value),
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching CheckTxType found for the given value. $value",
+                details: {"name": "CheckTxType", "value": value?.toString()},
+              ),
     );
   }
 }
@@ -76,13 +88,18 @@ enum ResponseOfferSnapshotResult implements ProtoEnumVariant {
 
   /// Looks up a value by its proto wire int. Throws if not found.
   static ResponseOfferSnapshotResult fromValue(int? value) {
+    value ??= 0;
     return ResponseOfferSnapshotResult.values.firstWhere(
       (e) => e.value == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "ResponseOfferSnapshotResult",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching ResponseOfferSnapshotResult found for the given value. $value",
+                details: {
+                  "name": "ResponseOfferSnapshotResult",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -90,13 +107,18 @@ enum ResponseOfferSnapshotResult implements ProtoEnumVariant {
   /// Looks up a value by wire int, Dart enum name, or original proto
   /// name (whichever [value] happens to be). Throws if not found.
   static ResponseOfferSnapshotResult from(Object? value) {
+    value ??= 0;
     return ResponseOfferSnapshotResult.values.firstWhere(
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "ResponseOfferSnapshotResult",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching ResponseOfferSnapshotResult found for the given value. $value",
+                details: {
+                  "name": "ResponseOfferSnapshotResult",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -133,13 +155,18 @@ enum ResponseApplySnapshotChunkResult implements ProtoEnumVariant {
 
   /// Looks up a value by its proto wire int. Throws if not found.
   static ResponseApplySnapshotChunkResult fromValue(int? value) {
+    value ??= 0;
     return ResponseApplySnapshotChunkResult.values.firstWhere(
       (e) => e.value == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "ResponseApplySnapshotChunkResult",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching ResponseApplySnapshotChunkResult found for the given value. $value",
+                details: {
+                  "name": "ResponseApplySnapshotChunkResult",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -147,13 +174,18 @@ enum ResponseApplySnapshotChunkResult implements ProtoEnumVariant {
   /// Looks up a value by wire int, Dart enum name, or original proto
   /// name (whichever [value] happens to be). Throws if not found.
   static ResponseApplySnapshotChunkResult from(Object? value) {
+    value ??= 0;
     return ResponseApplySnapshotChunkResult.values.firstWhere(
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "ResponseApplySnapshotChunkResult",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching ResponseApplySnapshotChunkResult found for the given value. $value",
+                details: {
+                  "name": "ResponseApplySnapshotChunkResult",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -176,13 +208,18 @@ enum ResponseProcessProposalProposalStatus implements ProtoEnumVariant {
 
   /// Looks up a value by its proto wire int. Throws if not found.
   static ResponseProcessProposalProposalStatus fromValue(int? value) {
+    value ??= 0;
     return ResponseProcessProposalProposalStatus.values.firstWhere(
       (e) => e.value == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "ResponseProcessProposalProposalStatus",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching ResponseProcessProposalProposalStatus found for the given value. $value",
+                details: {
+                  "name": "ResponseProcessProposalProposalStatus",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -190,13 +227,18 @@ enum ResponseProcessProposalProposalStatus implements ProtoEnumVariant {
   /// Looks up a value by wire int, Dart enum name, or original proto
   /// name (whichever [value] happens to be). Throws if not found.
   static ResponseProcessProposalProposalStatus from(Object? value) {
+    value ??= 0;
     return ResponseProcessProposalProposalStatus.values.firstWhere(
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "ResponseProcessProposalProposalStatus",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching ResponseProcessProposalProposalStatus found for the given value. $value",
+                details: {
+                  "name": "ResponseProcessProposalProposalStatus",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -224,13 +266,18 @@ enum ResponseVerifyVoteExtensionVerifyStatus implements ProtoEnumVariant {
 
   /// Looks up a value by its proto wire int. Throws if not found.
   static ResponseVerifyVoteExtensionVerifyStatus fromValue(int? value) {
+    value ??= 0;
     return ResponseVerifyVoteExtensionVerifyStatus.values.firstWhere(
       (e) => e.value == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "ResponseVerifyVoteExtensionVerifyStatus",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching ResponseVerifyVoteExtensionVerifyStatus found for the given value. $value",
+                details: {
+                  "name": "ResponseVerifyVoteExtensionVerifyStatus",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -238,13 +285,18 @@ enum ResponseVerifyVoteExtensionVerifyStatus implements ProtoEnumVariant {
   /// Looks up a value by wire int, Dart enum name, or original proto
   /// name (whichever [value] happens to be). Throws if not found.
   static ResponseVerifyVoteExtensionVerifyStatus from(Object? value) {
+    value ??= 0;
     return ResponseVerifyVoteExtensionVerifyStatus.values.firstWhere(
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "ResponseVerifyVoteExtensionVerifyStatus",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching ResponseVerifyVoteExtensionVerifyStatus found for the given value. $value",
+                details: {
+                  "name": "ResponseVerifyVoteExtensionVerifyStatus",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -268,13 +320,18 @@ enum MisbehaviorType implements ProtoEnumVariant {
 
   /// Looks up a value by its proto wire int. Throws if not found.
   static MisbehaviorType fromValue(int? value) {
+    value ??= 0;
     return MisbehaviorType.values.firstWhere(
       (e) => e.value == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "MisbehaviorType",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching MisbehaviorType found for the given value. $value",
+                details: {
+                  "name": "MisbehaviorType",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -282,13 +339,18 @@ enum MisbehaviorType implements ProtoEnumVariant {
   /// Looks up a value by wire int, Dart enum name, or original proto
   /// name (whichever [value] happens to be). Throws if not found.
   static MisbehaviorType from(Object? value) {
+    value ??= 0;
     return MisbehaviorType.values.firstWhere(
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "MisbehaviorType",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching MisbehaviorType found for the given value. $value",
+                details: {
+                  "name": "MisbehaviorType",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -316,13 +378,21 @@ class RequestEcho extends CosmosProtoMessage
   List<Object?> get protoValues => [message];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'message': message};
   }
 
-  factory RequestEcho.fromJson(Map<String, dynamic> json) {
+  factory RequestEcho.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return RequestEcho(
-      message: json.valueAsString<String?>('message', acceptCamelCase: true),
+      message: json.valueAsString<String?>(
+        'message',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -364,11 +434,16 @@ class RequestFlush extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory RequestFlush.fromJson(Map<String, dynamic> json) {
+  factory RequestFlush.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return RequestFlush();
   }
 
@@ -432,29 +507,37 @@ class RequestInfo extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'version': version,
-      'block_version': blockVersion?.toString(),
-      'p2p_version': p2pVersion?.toString(),
+      'block_version': config.encodeBigint(blockVersion),
+      'p2p_version': config.encodeBigint(p2pVersion),
       'abci_version': abciVersion,
     };
   }
 
-  factory RequestInfo.fromJson(Map<String, dynamic> json) {
+  factory RequestInfo.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return RequestInfo(
-      version: json.valueAsString<String?>('version', acceptCamelCase: true),
+      version: json.valueAsString<String?>(
+        'version',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       blockVersion: json.valueAsBigInt<BigInt?>(
         'block_version',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       p2pVersion: json.valueAsBigInt<BigInt?>(
         'p2p_version',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       abciVersion: json.valueAsString<String?>(
         'abci_version',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -493,18 +576,18 @@ class RequestInitChain extends CosmosProtoMessage
 
   final List<ValidatorUpdate> validators;
 
-  final List<int>? appStateBytes;
+  final BuBytes? appStateBytes;
 
   final BigInt? initialHeight;
 
-  const RequestInitChain({
+  RequestInitChain({
     this.time,
     this.chainId,
     this.consensusParams,
     this.validators = const [],
-    this.appStateBytes,
+    List<int>? appStateBytes,
     this.initialHeight,
-  });
+  }) : appStateBytes = appStateBytes?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -539,57 +622,73 @@ class RequestInitChain extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'time': time?.toRfc3339(),
       'chain_id': chainId,
-      'consensus_params': consensusParams?.toJson(),
-      'validators': validators.map((e) => e.toJson()).toList(),
-      'app_state_bytes': switch (appStateBytes) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'initial_height': initialHeight?.toString(),
+      'consensus_params': config.encodeMessage(consensusParams),
+      'validators': validators.map((e) => config.encodeMessage(e)).toList(),
+      'app_state_bytes': config.encodeBinary(appStateBytes),
+      'initial_height': config.encodeBigint(initialHeight),
     };
   }
 
-  factory RequestInitChain.fromJson(Map<String, dynamic> json) {
+  factory RequestInitChain.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return RequestInitChain(
-      time: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      time: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'time',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      chainId: json.valueAsString<String?>('chain_id', acceptCamelCase: true),
-      consensusParams: json.valueTo<
-        tendermint_types_params.ConsensusParams?,
-        Map<String, dynamic>
-      >(
-        key: 'consensus_params',
-        parse: (v) => tendermint_types_params.ConsensusParams.fromJson(v),
-        acceptCamelCase: true,
+      chainId: json.valueAsString<String?>(
+        'chain_id',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
+      consensusParams: json
+          .valueTo<tendermint_types_params.ConsensusParams?, Object>(
+            key: 'consensus_params',
+            parse:
+                (v) => tendermint_types_params.ConsensusParams.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
       validators:
-          (json.valueEnsureAsList<dynamic>('validators', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'validators',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) =>
-                    JsonParser.valueTo<ValidatorUpdate, Map<String, dynamic>>(
-                      value: e,
-                      parse: (v) => ValidatorUpdate.fromJson(v),
-                    ),
+                (e) => JsonParser.valueTo<ValidatorUpdate, Object>(
+                  value: e,
+                  parse:
+                      (v) => ValidatorUpdate.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
-      appStateBytes: json.valueAsBytes<List<int>?>(
-        'app_state_bytes',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      appStateBytes: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'app_state_bytes',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
       initialHeight: json.valueAsBigInt<BigInt?>(
         'initial_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -633,7 +732,7 @@ class RequestInitChain extends CosmosProtoMessage
 
 class RequestQuery extends CosmosProtoMessage
     with ICosmosProtoServiceMessage<ResponseQuery> {
-  final List<int>? data;
+  final BuBytes? data;
 
   final String? path;
 
@@ -641,7 +740,8 @@ class RequestQuery extends CosmosProtoMessage
 
   final bool? prove;
 
-  const RequestQuery({this.data, this.path, this.height, this.prove});
+  RequestQuery({List<int>? data, this.path, this.height, this.prove})
+    : data = data?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -663,31 +763,37 @@ class RequestQuery extends CosmosProtoMessage
   List<Object?> get protoValues => [data, path, height, prove];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'data': switch (data) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'data': config.encodeBinary(data),
       'path': path,
-      'height': height?.toString(),
+      'height': config.encodeBigint(height),
       'prove': prove,
     };
   }
 
-  factory RequestQuery.fromJson(Map<String, dynamic> json) {
+  factory RequestQuery.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return RequestQuery(
-      data: json.valueAsBytes<List<int>?>(
-        'data',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      data: config.decodeBinary<List<int>?>(
+        json.valueAs('data', normalizeKeyLookup: config.normalizeKeys),
       ),
-      path: json.valueAsString<String?>('path', acceptCamelCase: true),
-      height: json.valueAsBigInt<BigInt?>('height', acceptCamelCase: true),
-      prove: json.valueAsBool<bool?>('prove', acceptCamelCase: true),
+      path: json.valueAsString<String?>(
+        'path',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      height: json.valueAsBigInt<BigInt?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      prove: json.valueAsBool<bool?>(
+        'prove',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -717,11 +823,11 @@ class RequestQuery extends CosmosProtoMessage
 
 class RequestCheckTx extends CosmosProtoMessage
     with ICosmosProtoServiceMessage<ResponseCheckTx> {
-  final List<int>? tx;
+  final BuBytes? tx;
 
   final CheckTxType? type;
 
-  const RequestCheckTx({this.tx, this.type});
+  RequestCheckTx({List<int>? tx, this.type}) : tx = tx?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -738,25 +844,19 @@ class RequestCheckTx extends CosmosProtoMessage
   List<Object?> get protoValues => [tx, type];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {
-      'tx': switch (tx) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'type': type?.protoName,
-    };
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'tx': config.encodeBinary(tx), 'type': config.encodeEnum(type)};
   }
 
-  factory RequestCheckTx.fromJson(Map<String, dynamic> json) {
+  factory RequestCheckTx.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return RequestCheckTx(
-      tx: json.valueAsBytes<List<int>?>(
-        'tx',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      tx: config.decodeBinary<List<int>?>(
+        json.valueAs('tx', normalizeKeyLookup: config.normalizeKeys),
       ),
       type: json.valueTo<CheckTxType?, Object?>(
         key: 'type',
@@ -806,11 +906,16 @@ class RequestCommit extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory RequestCommit.fromJson(Map<String, dynamic> json) {
+  factory RequestCommit.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return RequestCommit();
   }
 
@@ -852,11 +957,16 @@ class RequestListSnapshots extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory RequestListSnapshots.fromJson(Map<String, dynamic> json) {
+  factory RequestListSnapshots.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return RequestListSnapshots();
   }
 
@@ -884,9 +994,10 @@ class RequestOfferSnapshot extends CosmosProtoMessage
   final Snapshot? snapshot;
 
   /// snapshot offered by peers
-  final List<int>? appHash;
+  final BuBytes? appHash;
 
-  const RequestOfferSnapshot({this.snapshot, this.appHash});
+  RequestOfferSnapshot({this.snapshot, List<int>? appHash})
+    : appHash = appHash?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -903,30 +1014,27 @@ class RequestOfferSnapshot extends CosmosProtoMessage
   List<Object?> get protoValues => [snapshot, appHash];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'snapshot': snapshot?.toJson(),
-      'app_hash': switch (appHash) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'snapshot': config.encodeMessage(snapshot),
+      'app_hash': config.encodeBinary(appHash),
     };
   }
 
-  factory RequestOfferSnapshot.fromJson(Map<String, dynamic> json) {
+  factory RequestOfferSnapshot.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return RequestOfferSnapshot(
-      snapshot: json.valueTo<Snapshot?, Map<String, dynamic>>(
+      snapshot: json.valueTo<Snapshot?, Object>(
         key: 'snapshot',
-        parse: (v) => Snapshot.fromJson(v),
-        acceptCamelCase: true,
+        parse: (v) => Snapshot.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      appHash: json.valueAsBytes<List<int>?>(
-        'app_hash',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      appHash: config.decodeBinary<List<int>?>(
+        json.valueAs('app_hash', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }
@@ -984,15 +1092,33 @@ class RequestLoadSnapshotChunk extends CosmosProtoMessage
   List<Object?> get protoValues => [height, format, chunk];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'height': height?.toString(), 'format': format, 'chunk': chunk};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'height': config.encodeBigint(height),
+      'format': format,
+      'chunk': chunk,
+    };
   }
 
-  factory RequestLoadSnapshotChunk.fromJson(Map<String, dynamic> json) {
+  factory RequestLoadSnapshotChunk.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return RequestLoadSnapshotChunk(
-      height: json.valueAsBigInt<BigInt?>('height', acceptCamelCase: true),
-      format: json.valueAsInt<int?>('format', acceptCamelCase: true),
-      chunk: json.valueAsInt<int?>('chunk', acceptCamelCase: true),
+      height: json.valueAsBigInt<BigInt?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      format: json.valueAsInt<int?>(
+        'format',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      chunk: json.valueAsInt<int?>(
+        'chunk',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1024,11 +1150,12 @@ class RequestApplySnapshotChunk extends CosmosProtoMessage
     with ICosmosProtoServiceMessage<ResponseApplySnapshotChunk> {
   final int? index;
 
-  final List<int>? chunk;
+  final BuBytes? chunk;
 
   final String? sender;
 
-  const RequestApplySnapshotChunk({this.index, this.chunk, this.sender});
+  RequestApplySnapshotChunk({this.index, List<int>? chunk, this.sender})
+    : chunk = chunk?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -1049,29 +1176,32 @@ class RequestApplySnapshotChunk extends CosmosProtoMessage
   List<Object?> get protoValues => [index, chunk, sender];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'index': index,
-      'chunk': switch (chunk) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'chunk': config.encodeBinary(chunk),
       'sender': sender,
     };
   }
 
-  factory RequestApplySnapshotChunk.fromJson(Map<String, dynamic> json) {
+  factory RequestApplySnapshotChunk.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return RequestApplySnapshotChunk(
-      index: json.valueAsInt<int?>('index', acceptCamelCase: true),
-      chunk: json.valueAsBytes<List<int>?>(
-        'chunk',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      index: json.valueAsInt<int?>(
+        'index',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      sender: json.valueAsString<String?>('sender', acceptCamelCase: true),
+      chunk: config.decodeBinary<List<int>?>(
+        json.valueAs('chunk', normalizeKeyLookup: config.normalizeKeys),
+      ),
+      sender: json.valueAsString<String?>(
+        'sender',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1105,7 +1235,7 @@ class RequestPrepareProposal extends CosmosProtoMessage
 
   /// txs is an array of transactions that will be included in a block,
   /// sent to the app for possible modifications.
-  final List<List<int>> txs;
+  final List<BuBytes> txs;
 
   final ExtendedCommitInfo? localLastCommit;
 
@@ -1115,21 +1245,23 @@ class RequestPrepareProposal extends CosmosProtoMessage
 
   final google_protobuf_timestamp.Timestamp? time;
 
-  final List<int>? nextValidatorsHash;
+  final BuBytes? nextValidatorsHash;
 
   /// address of the public key of the validator proposing the block.
-  final List<int>? proposerAddress;
+  final BuBytes? proposerAddress;
 
-  const RequestPrepareProposal({
+  RequestPrepareProposal({
     this.maxTxBytes,
-    this.txs = const [],
+    List<List<int>> txs = const [],
     this.localLastCommit,
     this.misbehavior = const [],
     this.height,
     this.time,
-    this.nextValidatorsHash,
-    this.proposerAddress,
-  });
+    List<int>? nextValidatorsHash,
+    List<int>? proposerAddress,
+  }) : txs = txs.map((e) => e.asImmutableBytes).toImutableList,
+       nextValidatorsHash = nextValidatorsHash?.asImmutableBytes,
+       proposerAddress = proposerAddress?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -1171,83 +1303,86 @@ class RequestPrepareProposal extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'max_tx_bytes': maxTxBytes?.toString(),
-      'txs':
-          txs
-              .map(
-                (e) => StringUtils.decode(e, encoding: StringEncoding.base64),
-              )
-              .toList(),
-      'local_last_commit': localLastCommit?.toJson(),
-      'misbehavior': misbehavior.map((e) => e.toJson()).toList(),
-      'height': height?.toString(),
+      'max_tx_bytes': config.encodeBigint(maxTxBytes),
+      'txs': txs.map((e) => config.encodeBinary(e)).toList(),
+      'local_last_commit': config.encodeMessage(localLastCommit),
+      'misbehavior': misbehavior.map((e) => config.encodeMessage(e)).toList(),
+      'height': config.encodeBigint(height),
       'time': time?.toRfc3339(),
-      'next_validators_hash': switch (nextValidatorsHash) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'proposer_address': switch (proposerAddress) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'next_validators_hash': config.encodeBinary(nextValidatorsHash),
+      'proposer_address': config.encodeBinary(proposerAddress),
     };
   }
 
-  factory RequestPrepareProposal.fromJson(Map<String, dynamic> json) {
+  factory RequestPrepareProposal.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return RequestPrepareProposal(
       maxTxBytes: json.valueAsBigInt<BigInt?>(
         'max_tx_bytes',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       txs:
-          (json.valueEnsureAsList<dynamic>('txs', acceptCamelCase: true))
-              .map(
-                (e) => JsonParser.valueAsBytes<List<int>>(
-                  e,
-                  encoding: StringEncoding.base64,
-                ),
-              )
-              .toList(),
-      localLastCommit: json.valueTo<ExtendedCommitInfo?, Map<String, dynamic>>(
+          (json.valueEnsureAsList<dynamic>(
+            'txs',
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
+          )).map((e) => config.decodeBinary<List<int>>(e)).toList(),
+      localLastCommit: json.valueTo<ExtendedCommitInfo?, Object>(
         key: 'local_last_commit',
-        parse: (v) => ExtendedCommitInfo.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => ExtendedCommitInfo.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       misbehavior:
           (json.valueEnsureAsList<dynamic>(
                 'misbehavior',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<Misbehavior, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<Misbehavior, Object>(
                   value: e,
-                  parse: (v) => Misbehavior.fromJson(v),
+                  parse:
+                      (v) => Misbehavior.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
-      height: json.valueAsBigInt<BigInt?>('height', acceptCamelCase: true),
-      time: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      height: json.valueAsBigInt<BigInt?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      time: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'time',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      nextValidatorsHash: json.valueAsBytes<List<int>?>(
-        'next_validators_hash',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      nextValidatorsHash: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'next_validators_hash',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
-      proposerAddress: json.valueAsBytes<List<int>?>(
-        'proposer_address',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      proposerAddress: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'proposer_address',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
     );
   }
@@ -1292,34 +1427,37 @@ class RequestPrepareProposal extends CosmosProtoMessage
 
 class RequestProcessProposal extends CosmosProtoMessage
     with ICosmosProtoServiceMessage<ResponseProcessProposal> {
-  final List<List<int>> txs;
+  final List<BuBytes> txs;
 
   final CommitInfo? proposedLastCommit;
 
   final List<Misbehavior> misbehavior;
 
   /// hash is the merkle root hash of the fields of the proposed block.
-  final List<int>? hash;
+  final BuBytes? hash;
 
   final BigInt? height;
 
   final google_protobuf_timestamp.Timestamp? time;
 
-  final List<int>? nextValidatorsHash;
+  final BuBytes? nextValidatorsHash;
 
   /// address of the public key of the original proposer of the block.
-  final List<int>? proposerAddress;
+  final BuBytes? proposerAddress;
 
-  const RequestProcessProposal({
-    this.txs = const [],
+  RequestProcessProposal({
+    List<List<int>> txs = const [],
     this.proposedLastCommit,
     this.misbehavior = const [],
-    this.hash,
+    List<int>? hash,
     this.height,
     this.time,
-    this.nextValidatorsHash,
-    this.proposerAddress,
-  });
+    List<int>? nextValidatorsHash,
+    List<int>? proposerAddress,
+  }) : txs = txs.map((e) => e.asImmutableBytes).toImutableList,
+       hash = hash?.asImmutableBytes,
+       nextValidatorsHash = nextValidatorsHash?.asImmutableBytes,
+       proposerAddress = proposerAddress?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -1361,90 +1499,82 @@ class RequestProcessProposal extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'txs':
-          txs
-              .map(
-                (e) => StringUtils.decode(e, encoding: StringEncoding.base64),
-              )
-              .toList(),
-      'proposed_last_commit': proposedLastCommit?.toJson(),
-      'misbehavior': misbehavior.map((e) => e.toJson()).toList(),
-      'hash': switch (hash) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'height': height?.toString(),
+      'txs': txs.map((e) => config.encodeBinary(e)).toList(),
+      'proposed_last_commit': config.encodeMessage(proposedLastCommit),
+      'misbehavior': misbehavior.map((e) => config.encodeMessage(e)).toList(),
+      'hash': config.encodeBinary(hash),
+      'height': config.encodeBigint(height),
       'time': time?.toRfc3339(),
-      'next_validators_hash': switch (nextValidatorsHash) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'proposer_address': switch (proposerAddress) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'next_validators_hash': config.encodeBinary(nextValidatorsHash),
+      'proposer_address': config.encodeBinary(proposerAddress),
     };
   }
 
-  factory RequestProcessProposal.fromJson(Map<String, dynamic> json) {
+  factory RequestProcessProposal.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return RequestProcessProposal(
       txs:
-          (json.valueEnsureAsList<dynamic>('txs', acceptCamelCase: true))
-              .map(
-                (e) => JsonParser.valueAsBytes<List<int>>(
-                  e,
-                  encoding: StringEncoding.base64,
-                ),
-              )
-              .toList(),
-      proposedLastCommit: json.valueTo<CommitInfo?, Map<String, dynamic>>(
+          (json.valueEnsureAsList<dynamic>(
+            'txs',
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
+          )).map((e) => config.decodeBinary<List<int>>(e)).toList(),
+      proposedLastCommit: json.valueTo<CommitInfo?, Object>(
         key: 'proposed_last_commit',
-        parse: (v) => CommitInfo.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => CommitInfo.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       misbehavior:
           (json.valueEnsureAsList<dynamic>(
                 'misbehavior',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<Misbehavior, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<Misbehavior, Object>(
                   value: e,
-                  parse: (v) => Misbehavior.fromJson(v),
+                  parse:
+                      (v) => Misbehavior.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
-      hash: json.valueAsBytes<List<int>?>(
-        'hash',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      hash: config.decodeBinary<List<int>?>(
+        json.valueAs('hash', normalizeKeyLookup: config.normalizeKeys),
       ),
-      height: json.valueAsBigInt<BigInt?>('height', acceptCamelCase: true),
-      time: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      height: json.valueAsBigInt<BigInt?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      time: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'time',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      nextValidatorsHash: json.valueAsBytes<List<int>?>(
-        'next_validators_hash',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      nextValidatorsHash: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'next_validators_hash',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
-      proposerAddress: json.valueAsBytes<List<int>?>(
-        'proposer_address',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      proposerAddress: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'proposer_address',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
     );
   }
@@ -1491,7 +1621,7 @@ class RequestProcessProposal extends CosmosProtoMessage
 class RequestExtendVote extends CosmosProtoMessage
     with ICosmosProtoServiceMessage<ResponseExtendVote> {
   /// the hash of the block that this vote may be referring to
-  final List<int>? hash;
+  final BuBytes? hash;
 
   /// the height of the extended vote
   final BigInt? height;
@@ -1499,27 +1629,30 @@ class RequestExtendVote extends CosmosProtoMessage
   /// info of the block that this vote may be referring to
   final google_protobuf_timestamp.Timestamp? time;
 
-  final List<List<int>> txs;
+  final List<BuBytes> txs;
 
   final CommitInfo? proposedLastCommit;
 
   final List<Misbehavior> misbehavior;
 
-  final List<int>? nextValidatorsHash;
+  final BuBytes? nextValidatorsHash;
 
   /// address of the public key of the original proposer of the block.
-  final List<int>? proposerAddress;
+  final BuBytes? proposerAddress;
 
-  const RequestExtendVote({
-    this.hash,
+  RequestExtendVote({
+    List<int>? hash,
     this.height,
     this.time,
-    this.txs = const [],
+    List<List<int>> txs = const [],
     this.proposedLastCommit,
     this.misbehavior = const [],
-    this.nextValidatorsHash,
-    this.proposerAddress,
-  });
+    List<int>? nextValidatorsHash,
+    List<int>? proposerAddress,
+  }) : hash = hash?.asImmutableBytes,
+       txs = txs.map((e) => e.asImmutableBytes).toImutableList,
+       nextValidatorsHash = nextValidatorsHash?.asImmutableBytes,
+       proposerAddress = proposerAddress?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -1561,90 +1694,82 @@ class RequestExtendVote extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'hash': switch (hash) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'height': height?.toString(),
+      'hash': config.encodeBinary(hash),
+      'height': config.encodeBigint(height),
       'time': time?.toRfc3339(),
-      'txs':
-          txs
-              .map(
-                (e) => StringUtils.decode(e, encoding: StringEncoding.base64),
-              )
-              .toList(),
-      'proposed_last_commit': proposedLastCommit?.toJson(),
-      'misbehavior': misbehavior.map((e) => e.toJson()).toList(),
-      'next_validators_hash': switch (nextValidatorsHash) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'proposer_address': switch (proposerAddress) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'txs': txs.map((e) => config.encodeBinary(e)).toList(),
+      'proposed_last_commit': config.encodeMessage(proposedLastCommit),
+      'misbehavior': misbehavior.map((e) => config.encodeMessage(e)).toList(),
+      'next_validators_hash': config.encodeBinary(nextValidatorsHash),
+      'proposer_address': config.encodeBinary(proposerAddress),
     };
   }
 
-  factory RequestExtendVote.fromJson(Map<String, dynamic> json) {
+  factory RequestExtendVote.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return RequestExtendVote(
-      hash: json.valueAsBytes<List<int>?>(
-        'hash',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      hash: config.decodeBinary<List<int>?>(
+        json.valueAs('hash', normalizeKeyLookup: config.normalizeKeys),
       ),
-      height: json.valueAsBigInt<BigInt?>('height', acceptCamelCase: true),
-      time: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      height: json.valueAsBigInt<BigInt?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      time: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'time',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       txs:
-          (json.valueEnsureAsList<dynamic>('txs', acceptCamelCase: true))
-              .map(
-                (e) => JsonParser.valueAsBytes<List<int>>(
-                  e,
-                  encoding: StringEncoding.base64,
-                ),
-              )
-              .toList(),
-      proposedLastCommit: json.valueTo<CommitInfo?, Map<String, dynamic>>(
+          (json.valueEnsureAsList<dynamic>(
+            'txs',
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
+          )).map((e) => config.decodeBinary<List<int>>(e)).toList(),
+      proposedLastCommit: json.valueTo<CommitInfo?, Object>(
         key: 'proposed_last_commit',
-        parse: (v) => CommitInfo.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => CommitInfo.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       misbehavior:
           (json.valueEnsureAsList<dynamic>(
                 'misbehavior',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<Misbehavior, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<Misbehavior, Object>(
                   value: e,
-                  parse: (v) => Misbehavior.fromJson(v),
+                  parse:
+                      (v) => Misbehavior.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
-      nextValidatorsHash: json.valueAsBytes<List<int>?>(
-        'next_validators_hash',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      nextValidatorsHash: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'next_validators_hash',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
-      proposerAddress: json.valueAsBytes<List<int>?>(
-        'proposer_address',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      proposerAddress: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'proposer_address',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
     );
   }
@@ -1691,21 +1816,23 @@ class RequestExtendVote extends CosmosProtoMessage
 class RequestVerifyVoteExtension extends CosmosProtoMessage
     with ICosmosProtoServiceMessage<ResponseVerifyVoteExtension> {
   /// the hash of the block that this received vote corresponds to
-  final List<int>? hash;
+  final BuBytes? hash;
 
   /// the validator that signed the vote extension
-  final List<int>? validatorAddress;
+  final BuBytes? validatorAddress;
 
   final BigInt? height;
 
-  final List<int>? voteExtension;
+  final BuBytes? voteExtension;
 
-  const RequestVerifyVoteExtension({
-    this.hash,
-    this.validatorAddress,
+  RequestVerifyVoteExtension({
+    List<int>? hash,
+    List<int>? validatorAddress,
     this.height,
-    this.voteExtension,
-  });
+    List<int>? voteExtension,
+  }) : hash = hash?.asImmutableBytes,
+       validatorAddress = validatorAddress?.asImmutableBytes,
+       voteExtension = voteExtension?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -1732,50 +1859,40 @@ class RequestVerifyVoteExtension extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'hash': switch (hash) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'validator_address': switch (validatorAddress) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'height': height?.toString(),
-      'vote_extension': switch (voteExtension) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'hash': config.encodeBinary(hash),
+      'validator_address': config.encodeBinary(validatorAddress),
+      'height': config.encodeBigint(height),
+      'vote_extension': config.encodeBinary(voteExtension),
     };
   }
 
-  factory RequestVerifyVoteExtension.fromJson(Map<String, dynamic> json) {
+  factory RequestVerifyVoteExtension.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return RequestVerifyVoteExtension(
-      hash: json.valueAsBytes<List<int>?>(
-        'hash',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      hash: config.decodeBinary<List<int>?>(
+        json.valueAs('hash', normalizeKeyLookup: config.normalizeKeys),
       ),
-      validatorAddress: json.valueAsBytes<List<int>?>(
-        'validator_address',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      validatorAddress: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'validator_address',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
-      height: json.valueAsBigInt<BigInt?>('height', acceptCamelCase: true),
-      voteExtension: json.valueAsBytes<List<int>?>(
-        'vote_extension',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      height: json.valueAsBigInt<BigInt?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      voteExtension: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'vote_extension',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
     );
   }
@@ -1806,34 +1923,37 @@ class RequestVerifyVoteExtension extends CosmosProtoMessage
 
 class RequestFinalizeBlock extends CosmosProtoMessage
     with ICosmosProtoServiceMessage<ResponseFinalizeBlock> {
-  final List<List<int>> txs;
+  final List<BuBytes> txs;
 
   final CommitInfo? decidedLastCommit;
 
   final List<Misbehavior> misbehavior;
 
   /// hash is the merkle root hash of the fields of the decided block.
-  final List<int>? hash;
+  final BuBytes? hash;
 
   final BigInt? height;
 
   final google_protobuf_timestamp.Timestamp? time;
 
-  final List<int>? nextValidatorsHash;
+  final BuBytes? nextValidatorsHash;
 
   /// proposer_address is the address of the public key of the original proposer of the block.
-  final List<int>? proposerAddress;
+  final BuBytes? proposerAddress;
 
-  const RequestFinalizeBlock({
-    this.txs = const [],
+  RequestFinalizeBlock({
+    List<List<int>> txs = const [],
     this.decidedLastCommit,
     this.misbehavior = const [],
-    this.hash,
+    List<int>? hash,
     this.height,
     this.time,
-    this.nextValidatorsHash,
-    this.proposerAddress,
-  });
+    List<int>? nextValidatorsHash,
+    List<int>? proposerAddress,
+  }) : txs = txs.map((e) => e.asImmutableBytes).toImutableList,
+       hash = hash?.asImmutableBytes,
+       nextValidatorsHash = nextValidatorsHash?.asImmutableBytes,
+       proposerAddress = proposerAddress?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -1875,90 +1995,82 @@ class RequestFinalizeBlock extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'txs':
-          txs
-              .map(
-                (e) => StringUtils.decode(e, encoding: StringEncoding.base64),
-              )
-              .toList(),
-      'decided_last_commit': decidedLastCommit?.toJson(),
-      'misbehavior': misbehavior.map((e) => e.toJson()).toList(),
-      'hash': switch (hash) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'height': height?.toString(),
+      'txs': txs.map((e) => config.encodeBinary(e)).toList(),
+      'decided_last_commit': config.encodeMessage(decidedLastCommit),
+      'misbehavior': misbehavior.map((e) => config.encodeMessage(e)).toList(),
+      'hash': config.encodeBinary(hash),
+      'height': config.encodeBigint(height),
       'time': time?.toRfc3339(),
-      'next_validators_hash': switch (nextValidatorsHash) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'proposer_address': switch (proposerAddress) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'next_validators_hash': config.encodeBinary(nextValidatorsHash),
+      'proposer_address': config.encodeBinary(proposerAddress),
     };
   }
 
-  factory RequestFinalizeBlock.fromJson(Map<String, dynamic> json) {
+  factory RequestFinalizeBlock.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return RequestFinalizeBlock(
       txs:
-          (json.valueEnsureAsList<dynamic>('txs', acceptCamelCase: true))
-              .map(
-                (e) => JsonParser.valueAsBytes<List<int>>(
-                  e,
-                  encoding: StringEncoding.base64,
-                ),
-              )
-              .toList(),
-      decidedLastCommit: json.valueTo<CommitInfo?, Map<String, dynamic>>(
+          (json.valueEnsureAsList<dynamic>(
+            'txs',
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
+          )).map((e) => config.decodeBinary<List<int>>(e)).toList(),
+      decidedLastCommit: json.valueTo<CommitInfo?, Object>(
         key: 'decided_last_commit',
-        parse: (v) => CommitInfo.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => CommitInfo.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       misbehavior:
           (json.valueEnsureAsList<dynamic>(
                 'misbehavior',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<Misbehavior, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<Misbehavior, Object>(
                   value: e,
-                  parse: (v) => Misbehavior.fromJson(v),
+                  parse:
+                      (v) => Misbehavior.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
-      hash: json.valueAsBytes<List<int>?>(
-        'hash',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      hash: config.decodeBinary<List<int>?>(
+        json.valueAs('hash', normalizeKeyLookup: config.normalizeKeys),
       ),
-      height: json.valueAsBigInt<BigInt?>('height', acceptCamelCase: true),
-      time: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      height: json.valueAsBigInt<BigInt?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      time: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'time',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      nextValidatorsHash: json.valueAsBytes<List<int>?>(
-        'next_validators_hash',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      nextValidatorsHash: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'next_validators_hash',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
-      proposerAddress: json.valueAsBytes<List<int>?>(
-        'proposer_address',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      proposerAddress: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'proposer_address',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
     );
   }
@@ -2021,13 +2133,21 @@ class ResponseEcho extends CosmosProtoMessage {
   List<Object?> get protoValues => [message];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'message': message};
   }
 
-  factory ResponseEcho.fromJson(Map<String, dynamic> json) {
+  factory ResponseEcho.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ResponseEcho(
-      message: json.valueAsString<String?>('message', acceptCamelCase: true),
+      message: json.valueAsString<String?>(
+        'message',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -2059,11 +2179,16 @@ class ResponseFlush extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory ResponseFlush.fromJson(Map<String, dynamic> json) {
+  factory ResponseFlush.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ResponseFlush();
   }
 
@@ -2085,15 +2210,15 @@ class ResponseInfo extends CosmosProtoMessage {
 
   final BigInt? lastBlockHeight;
 
-  final List<int>? lastBlockAppHash;
+  final BuBytes? lastBlockAppHash;
 
-  const ResponseInfo({
+  ResponseInfo({
     this.data,
     this.version,
     this.appVersion,
     this.lastBlockHeight,
-    this.lastBlockAppHash,
-  });
+    List<int>? lastBlockAppHash,
+  }) : lastBlockAppHash = lastBlockAppHash?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -2122,38 +2247,44 @@ class ResponseInfo extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'data': data,
       'version': version,
-      'app_version': appVersion?.toString(),
-      'last_block_height': lastBlockHeight?.toString(),
-      'last_block_app_hash': switch (lastBlockAppHash) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'app_version': config.encodeBigint(appVersion),
+      'last_block_height': config.encodeBigint(lastBlockHeight),
+      'last_block_app_hash': config.encodeBinary(lastBlockAppHash),
     };
   }
 
-  factory ResponseInfo.fromJson(Map<String, dynamic> json) {
+  factory ResponseInfo.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ResponseInfo(
-      data: json.valueAsString<String?>('data', acceptCamelCase: true),
-      version: json.valueAsString<String?>('version', acceptCamelCase: true),
+      data: json.valueAsString<String?>(
+        'data',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      version: json.valueAsString<String?>(
+        'version',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       appVersion: json.valueAsBigInt<BigInt?>(
         'app_version',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       lastBlockHeight: json.valueAsBigInt<BigInt?>(
         'last_block_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      lastBlockAppHash: json.valueAsBytes<List<int>?>(
-        'last_block_app_hash',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      lastBlockAppHash: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'last_block_app_hash',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
     );
   }
@@ -2179,13 +2310,13 @@ class ResponseInitChain extends CosmosProtoMessage {
 
   final List<ValidatorUpdate> validators;
 
-  final List<int>? appHash;
+  final BuBytes? appHash;
 
-  const ResponseInitChain({
+  ResponseInitChain({
     this.consensusParams,
     this.validators = const [],
-    this.appHash,
-  });
+    List<int>? appHash,
+  }) : appHash = appHash?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -2210,44 +2341,50 @@ class ResponseInitChain extends CosmosProtoMessage {
   List<Object?> get protoValues => [consensusParams, validators, appHash];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'consensus_params': consensusParams?.toJson(),
-      'validators': validators.map((e) => e.toJson()).toList(),
-      'app_hash': switch (appHash) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'consensus_params': config.encodeMessage(consensusParams),
+      'validators': validators.map((e) => config.encodeMessage(e)).toList(),
+      'app_hash': config.encodeBinary(appHash),
     };
   }
 
-  factory ResponseInitChain.fromJson(Map<String, dynamic> json) {
+  factory ResponseInitChain.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ResponseInitChain(
-      consensusParams: json.valueTo<
-        tendermint_types_params.ConsensusParams?,
-        Map<String, dynamic>
-      >(
-        key: 'consensus_params',
-        parse: (v) => tendermint_types_params.ConsensusParams.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      consensusParams: json
+          .valueTo<tendermint_types_params.ConsensusParams?, Object>(
+            key: 'consensus_params',
+            parse:
+                (v) => tendermint_types_params.ConsensusParams.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
       validators:
-          (json.valueEnsureAsList<dynamic>('validators', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'validators',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) =>
-                    JsonParser.valueTo<ValidatorUpdate, Map<String, dynamic>>(
-                      value: e,
-                      parse: (v) => ValidatorUpdate.fromJson(v),
-                    ),
+                (e) => JsonParser.valueTo<ValidatorUpdate, Object>(
+                  value: e,
+                  parse:
+                      (v) => ValidatorUpdate.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
-      appHash: json.valueAsBytes<List<int>?>(
-        'app_hash',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      appHash: config.decodeBinary<List<int>?>(
+        json.valueAs('app_hash', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }
@@ -2286,9 +2423,9 @@ class ResponseQuery extends CosmosProtoMessage {
   /// nondeterministic
   final BigInt? index;
 
-  final List<int>? key;
+  final BuBytes? key;
 
-  final List<int>? value;
+  final BuBytes? value;
 
   final tendermint_crypto_proof.ProofOps? proofOps;
 
@@ -2296,17 +2433,18 @@ class ResponseQuery extends CosmosProtoMessage {
 
   final String? codespace;
 
-  const ResponseQuery({
+  ResponseQuery({
     this.code,
     this.log,
     this.info,
     this.index,
-    this.key,
-    this.value,
+    List<int>? key,
+    List<int>? value,
     this.proofOps,
     this.height,
     this.codespace,
-  });
+  }) : key = key?.asImmutableBytes,
+       value = value?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -2343,58 +2481,65 @@ class ResponseQuery extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'code': code,
       'log': log,
       'info': info,
-      'index': index?.toString(),
-      'key': switch (key) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'value': switch (value) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'proof_ops': proofOps?.toJson(),
-      'height': height?.toString(),
+      'index': config.encodeBigint(index),
+      'key': config.encodeBinary(key),
+      'value': config.encodeBinary(value),
+      'proof_ops': config.encodeMessage(proofOps),
+      'height': config.encodeBigint(height),
       'codespace': codespace,
     };
   }
 
-  factory ResponseQuery.fromJson(Map<String, dynamic> json) {
+  factory ResponseQuery.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ResponseQuery(
-      code: json.valueAsInt<int?>('code', acceptCamelCase: true),
-      log: json.valueAsString<String?>('log', acceptCamelCase: true),
-      info: json.valueAsString<String?>('info', acceptCamelCase: true),
-      index: json.valueAsBigInt<BigInt?>('index', acceptCamelCase: true),
-      key: json.valueAsBytes<List<int>?>(
-        'key',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      code: json.valueAsInt<int?>(
+        'code',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      value: json.valueAsBytes<List<int>?>(
-        'value',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      log: json.valueAsString<String?>(
+        'log',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      proofOps: json
-          .valueTo<tendermint_crypto_proof.ProofOps?, Map<String, dynamic>>(
-            key: 'proof_ops',
-            parse: (v) => tendermint_crypto_proof.ProofOps.fromJson(v),
-            acceptCamelCase: true,
-          ),
-      height: json.valueAsBigInt<BigInt?>('height', acceptCamelCase: true),
+      info: json.valueAsString<String?>(
+        'info',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      index: json.valueAsBigInt<BigInt?>(
+        'index',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      key: config.decodeBinary<List<int>?>(
+        json.valueAs('key', normalizeKeyLookup: config.normalizeKeys),
+      ),
+      value: config.decodeBinary<List<int>?>(
+        json.valueAs('value', normalizeKeyLookup: config.normalizeKeys),
+      ),
+      proofOps: json.valueTo<tendermint_crypto_proof.ProofOps?, Object>(
+        key: 'proof_ops',
+        parse:
+            (v) => tendermint_crypto_proof.ProofOps.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      height: json.valueAsBigInt<BigInt?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       codespace: json.valueAsString<String?>(
         'codespace',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -2425,7 +2570,7 @@ class ResponseQuery extends CosmosProtoMessage {
 class ResponseCheckTx extends CosmosProtoMessage {
   final int? code;
 
-  final List<int>? data;
+  final BuBytes? data;
 
   final String? log;
 
@@ -2441,16 +2586,16 @@ class ResponseCheckTx extends CosmosProtoMessage {
 
   final String? codespace;
 
-  const ResponseCheckTx({
+  ResponseCheckTx({
     this.code,
-    this.data,
+    List<int>? data,
     this.log,
     this.info,
     this.gasWanted,
     this.gasUsed,
     this.events = const [],
     this.codespace,
-  });
+  }) : data = data?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -2495,52 +2640,67 @@ class ResponseCheckTx extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'code': code,
-      'data': switch (data) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'data': config.encodeBinary(data),
       'log': log,
       'info': info,
-      'gas_wanted': gasWanted?.toString(),
-      'gas_used': gasUsed?.toString(),
-      'events': events.map((e) => e.toJson()).toList(),
+      'gas_wanted': config.encodeBigint(gasWanted),
+      'gas_used': config.encodeBigint(gasUsed),
+      'events': events.map((e) => config.encodeMessage(e)).toList(),
       'codespace': codespace,
     };
   }
 
-  factory ResponseCheckTx.fromJson(Map<String, dynamic> json) {
+  factory ResponseCheckTx.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ResponseCheckTx(
-      code: json.valueAsInt<int?>('code', acceptCamelCase: true),
-      data: json.valueAsBytes<List<int>?>(
-        'data',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      code: json.valueAsInt<int?>(
+        'code',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      log: json.valueAsString<String?>('log', acceptCamelCase: true),
-      info: json.valueAsString<String?>('info', acceptCamelCase: true),
+      data: config.decodeBinary<List<int>?>(
+        json.valueAs('data', normalizeKeyLookup: config.normalizeKeys),
+      ),
+      log: json.valueAsString<String?>(
+        'log',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      info: json.valueAsString<String?>(
+        'info',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       gasWanted: json.valueAsBigInt<BigInt?>(
         'gas_wanted',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      gasUsed: json.valueAsBigInt<BigInt?>('gas_used', acceptCamelCase: true),
+      gasUsed: json.valueAsBigInt<BigInt?>(
+        'gas_used',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       events:
-          (json.valueEnsureAsList<dynamic>('events', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'events',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<Event, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<Event, Object>(
                   value: e,
-                  parse: (v) => Event.fromJson(v),
+                  parse:
+                      (v) =>
+                          Event.fromJson(JsonParser.valueAs(v), config: config),
                 ),
               )
               .toList(),
       codespace: json.valueAsString<String?>(
         'codespace',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -2588,15 +2748,20 @@ class ResponseCommit extends CosmosProtoMessage {
   List<Object?> get protoValues => [retainHeight];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'retain_height': retainHeight?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'retain_height': config.encodeBigint(retainHeight)};
   }
 
-  factory ResponseCommit.fromJson(Map<String, dynamic> json) {
+  factory ResponseCommit.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ResponseCommit(
       retainHeight: json.valueAsBigInt<BigInt?>(
         'retain_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -2636,18 +2801,33 @@ class ResponseListSnapshots extends CosmosProtoMessage {
   List<Object?> get protoValues => [snapshots];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'snapshots': snapshots.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'snapshots': snapshots.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
-  factory ResponseListSnapshots.fromJson(Map<String, dynamic> json) {
+  factory ResponseListSnapshots.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ResponseListSnapshots(
       snapshots:
-          (json.valueEnsureAsList<dynamic>('snapshots', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'snapshots',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<Snapshot, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<Snapshot, Object>(
                   value: e,
-                  parse: (v) => Snapshot.fromJson(v),
+                  parse:
+                      (v) => Snapshot.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -2687,11 +2867,16 @@ class ResponseOfferSnapshot extends CosmosProtoMessage {
   List<Object?> get protoValues => [result];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'result': result?.protoName};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'result': config.encodeEnum(result)};
   }
 
-  factory ResponseOfferSnapshot.fromJson(Map<String, dynamic> json) {
+  factory ResponseOfferSnapshot.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ResponseOfferSnapshot(
       result: json.valueTo<ResponseOfferSnapshotResult?, Object?>(
         key: 'result',
@@ -2717,9 +2902,10 @@ class ResponseOfferSnapshot extends CosmosProtoMessage {
 
 /// Reject all snapshots from the sender(s), try others
 class ResponseLoadSnapshotChunk extends CosmosProtoMessage {
-  final List<int>? chunk;
+  final BuBytes? chunk;
 
-  const ResponseLoadSnapshotChunk({this.chunk});
+  ResponseLoadSnapshotChunk({List<int>? chunk})
+    : chunk = chunk?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -2736,24 +2922,19 @@ class ResponseLoadSnapshotChunk extends CosmosProtoMessage {
   List<Object?> get protoValues => [chunk];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {
-      'chunk': switch (chunk) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-    };
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'chunk': config.encodeBinary(chunk)};
   }
 
-  factory ResponseLoadSnapshotChunk.fromJson(Map<String, dynamic> json) {
+  factory ResponseLoadSnapshotChunk.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ResponseLoadSnapshotChunk(
-      chunk: json.valueAsBytes<List<int>?>(
-        'chunk',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      chunk: config.decodeBinary<List<int>?>(
+        json.valueAs('chunk', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }
@@ -2807,15 +2988,20 @@ class ResponseApplySnapshotChunk extends CosmosProtoMessage {
   List<Object?> get protoValues => [result, refetchChunks, rejectSenders];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'result': result?.protoName,
+      'result': config.encodeEnum(result),
       'refetch_chunks': refetchChunks.map((e) => e).toList(),
       'reject_senders': rejectSenders.map((e) => e).toList(),
     };
   }
 
-  factory ResponseApplySnapshotChunk.fromJson(Map<String, dynamic> json) {
+  factory ResponseApplySnapshotChunk.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ResponseApplySnapshotChunk(
       result: json.valueTo<ResponseApplySnapshotChunkResult?, Object?>(
         key: 'result',
@@ -2824,12 +3010,14 @@ class ResponseApplySnapshotChunk extends CosmosProtoMessage {
       refetchChunks:
           (json.valueEnsureAsList<dynamic>(
             'refetch_chunks',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsInt<int>(e)).toList(),
       rejectSenders:
           (json.valueEnsureAsList<dynamic>(
             'reject_senders',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
     );
   }
@@ -2853,9 +3041,10 @@ class ResponseApplySnapshotChunk extends CosmosProtoMessage {
 
 /// Reject this snapshot, try others
 class ResponsePrepareProposal extends CosmosProtoMessage {
-  final List<List<int>> txs;
+  final List<BuBytes> txs;
 
-  const ResponsePrepareProposal({this.txs = const []});
+  ResponsePrepareProposal({List<List<int>> txs = const []})
+    : txs = txs.map((e) => e.asImmutableBytes).toImutableList;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -2877,28 +3066,23 @@ class ResponsePrepareProposal extends CosmosProtoMessage {
   List<Object?> get protoValues => [txs];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {
-      'txs':
-          txs
-              .map(
-                (e) => StringUtils.decode(e, encoding: StringEncoding.base64),
-              )
-              .toList(),
-    };
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'txs': txs.map((e) => config.encodeBinary(e)).toList()};
   }
 
-  factory ResponsePrepareProposal.fromJson(Map<String, dynamic> json) {
+  factory ResponsePrepareProposal.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ResponsePrepareProposal(
       txs:
-          (json.valueEnsureAsList<dynamic>('txs', acceptCamelCase: true))
-              .map(
-                (e) => JsonParser.valueAsBytes<List<int>>(
-                  e,
-                  encoding: StringEncoding.base64,
-                ),
-              )
-              .toList(),
+          (json.valueEnsureAsList<dynamic>(
+            'txs',
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
+          )).map((e) => config.decodeBinary<List<int>>(e)).toList(),
     );
   }
 
@@ -2932,11 +3116,16 @@ class ResponseProcessProposal extends CosmosProtoMessage {
   List<Object?> get protoValues => [status];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'status': status?.protoName};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'status': config.encodeEnum(status)};
   }
 
-  factory ResponseProcessProposal.fromJson(Map<String, dynamic> json) {
+  factory ResponseProcessProposal.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ResponseProcessProposal(
       status: json.valueTo<ResponseProcessProposalProposalStatus?, Object?>(
         key: 'status',
@@ -2961,9 +3150,10 @@ class ResponseProcessProposal extends CosmosProtoMessage {
 }
 
 class ResponseExtendVote extends CosmosProtoMessage {
-  final List<int>? voteExtension;
+  final BuBytes? voteExtension;
 
-  const ResponseExtendVote({this.voteExtension});
+  ResponseExtendVote({List<int>? voteExtension})
+    : voteExtension = voteExtension?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -2980,24 +3170,22 @@ class ResponseExtendVote extends CosmosProtoMessage {
   List<Object?> get protoValues => [voteExtension];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {
-      'vote_extension': switch (voteExtension) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-    };
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'vote_extension': config.encodeBinary(voteExtension)};
   }
 
-  factory ResponseExtendVote.fromJson(Map<String, dynamic> json) {
+  factory ResponseExtendVote.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ResponseExtendVote(
-      voteExtension: json.valueAsBytes<List<int>?>(
-        'vote_extension',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      voteExtension: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'vote_extension',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
     );
   }
@@ -3032,11 +3220,16 @@ class ResponseVerifyVoteExtension extends CosmosProtoMessage {
   List<Object?> get protoValues => [status];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'status': status?.protoName};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'status': config.encodeEnum(status)};
   }
 
-  factory ResponseVerifyVoteExtension.fromJson(Map<String, dynamic> json) {
+  factory ResponseVerifyVoteExtension.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ResponseVerifyVoteExtension(
       status: json.valueTo<ResponseVerifyVoteExtensionVerifyStatus?, Object?>(
         key: 'status',
@@ -3077,15 +3270,15 @@ class ResponseFinalizeBlock extends CosmosProtoMessage {
 
   /// app_hash is the hash of the applications' state which is used to confirm that execution of the transactions was
   /// deterministic. It is up to the application to decide which algorithm to use.
-  final List<int>? appHash;
+  final BuBytes? appHash;
 
-  const ResponseFinalizeBlock({
+  ResponseFinalizeBlock({
     this.events = const [],
     this.txResults = const [],
     this.validatorUpdates = const [],
     this.consensusParamUpdates,
-    this.appHash,
-  });
+    List<int>? appHash,
+  }) : appHash = appHash?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -3125,67 +3318,85 @@ class ResponseFinalizeBlock extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'events': events.map((e) => e.toJson()).toList(),
-      'tx_results': txResults.map((e) => e.toJson()).toList(),
-      'validator_updates': validatorUpdates.map((e) => e.toJson()).toList(),
-      'consensus_param_updates': consensusParamUpdates?.toJson(),
-      'app_hash': switch (appHash) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'events': events.map((e) => config.encodeMessage(e)).toList(),
+      'tx_results': txResults.map((e) => config.encodeMessage(e)).toList(),
+      'validator_updates':
+          validatorUpdates.map((e) => config.encodeMessage(e)).toList(),
+      'consensus_param_updates': config.encodeMessage(consensusParamUpdates),
+      'app_hash': config.encodeBinary(appHash),
     };
   }
 
-  factory ResponseFinalizeBlock.fromJson(Map<String, dynamic> json) {
+  factory ResponseFinalizeBlock.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ResponseFinalizeBlock(
       events:
-          (json.valueEnsureAsList<dynamic>('events', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'events',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<Event, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<Event, Object>(
                   value: e,
-                  parse: (v) => Event.fromJson(v),
+                  parse:
+                      (v) =>
+                          Event.fromJson(JsonParser.valueAs(v), config: config),
                 ),
               )
               .toList(),
       txResults:
-          (json.valueEnsureAsList<dynamic>('tx_results', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'tx_results',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<ExecTxResult, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<ExecTxResult, Object>(
                   value: e,
-                  parse: (v) => ExecTxResult.fromJson(v),
+                  parse:
+                      (v) => ExecTxResult.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       validatorUpdates:
           (json.valueEnsureAsList<dynamic>(
                 'validator_updates',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) =>
-                    JsonParser.valueTo<ValidatorUpdate, Map<String, dynamic>>(
-                      value: e,
-                      parse: (v) => ValidatorUpdate.fromJson(v),
-                    ),
+                (e) => JsonParser.valueTo<ValidatorUpdate, Object>(
+                  value: e,
+                  parse:
+                      (v) => ValidatorUpdate.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
-      consensusParamUpdates: json.valueTo<
-        tendermint_types_params.ConsensusParams?,
-        Map<String, dynamic>
-      >(
-        key: 'consensus_param_updates',
-        parse: (v) => tendermint_types_params.ConsensusParams.fromJson(v),
-        acceptCamelCase: true,
-      ),
-      appHash: json.valueAsBytes<List<int>?>(
-        'app_hash',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      consensusParamUpdates: json
+          .valueTo<tendermint_types_params.ConsensusParams?, Object>(
+            key: 'consensus_param_updates',
+            parse:
+                (v) => tendermint_types_params.ConsensusParams.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
+      appHash: config.decodeBinary<List<int>?>(
+        json.valueAs('app_hash', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }
@@ -3250,19 +3461,38 @@ class CommitInfo extends CosmosProtoMessage {
   List<Object?> get protoValues => [round, votes];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'round': round, 'votes': votes.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'round': round,
+      'votes': votes.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
-  factory CommitInfo.fromJson(Map<String, dynamic> json) {
+  factory CommitInfo.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return CommitInfo(
-      round: json.valueAsInt<int?>('round', acceptCamelCase: true),
+      round: json.valueAsInt<int?>(
+        'round',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       votes:
-          (json.valueEnsureAsList<dynamic>('votes', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'votes',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<VoteInfo, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<VoteInfo, Object>(
                   value: e,
-                  parse: (v) => VoteInfo.fromJson(v),
+                  parse:
+                      (v) => VoteInfo.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -3318,21 +3548,39 @@ class ExtendedCommitInfo extends CosmosProtoMessage {
   List<Object?> get protoValues => [round, votes];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'round': round, 'votes': votes.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'round': round,
+      'votes': votes.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
-  factory ExtendedCommitInfo.fromJson(Map<String, dynamic> json) {
+  factory ExtendedCommitInfo.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ExtendedCommitInfo(
-      round: json.valueAsInt<int?>('round', acceptCamelCase: true),
+      round: json.valueAsInt<int?>(
+        'round',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       votes:
-          (json.valueEnsureAsList<dynamic>('votes', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'votes',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) =>
-                    JsonParser.valueTo<ExtendedVoteInfo, Map<String, dynamic>>(
-                      value: e,
-                      parse: (v) => ExtendedVoteInfo.fromJson(v),
-                    ),
+                (e) => JsonParser.valueTo<ExtendedVoteInfo, Object>(
+                  value: e,
+                  parse:
+                      (v) => ExtendedVoteInfo.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );
@@ -3387,22 +3635,38 @@ class Event extends CosmosProtoMessage {
   List<Object?> get protoValues => [type, attributes];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'type': type,
-      'attributes': attributes.map((e) => e.toJson()).toList(),
+      'attributes': attributes.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory Event.fromJson(Map<String, dynamic> json) {
+  factory Event.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Event(
-      type: json.valueAsString<String?>('type', acceptCamelCase: true),
+      type: json.valueAsString<String?>(
+        'type',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       attributes:
-          (json.valueEnsureAsList<dynamic>('attributes', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'attributes',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<EventAttribute, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<EventAttribute, Object>(
                   value: e,
-                  parse: (v) => EventAttribute.fromJson(v),
+                  parse:
+                      (v) => EventAttribute.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -3455,15 +3719,29 @@ class EventAttribute extends CosmosProtoMessage {
   List<Object?> get protoValues => [key, value, index];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'key': key, 'value': value, 'index': index};
   }
 
-  factory EventAttribute.fromJson(Map<String, dynamic> json) {
+  factory EventAttribute.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return EventAttribute(
-      key: json.valueAsString<String?>('key', acceptCamelCase: true),
-      value: json.valueAsString<String?>('value', acceptCamelCase: true),
-      index: json.valueAsBool<bool?>('index', acceptCamelCase: true),
+      key: json.valueAsString<String?>(
+        'key',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      value: json.valueAsString<String?>(
+        'value',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      index: json.valueAsBool<bool?>(
+        'index',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -3488,7 +3766,7 @@ class EventAttribute extends CosmosProtoMessage {
 class ExecTxResult extends CosmosProtoMessage {
   final int? code;
 
-  final List<int>? data;
+  final BuBytes? data;
 
   final String? log;
 
@@ -3505,16 +3783,16 @@ class ExecTxResult extends CosmosProtoMessage {
   /// nondeterministic
   final String? codespace;
 
-  const ExecTxResult({
+  ExecTxResult({
     this.code,
-    this.data,
+    List<int>? data,
     this.log,
     this.info,
     this.gasWanted,
     this.gasUsed,
     this.events = const [],
     this.codespace,
-  });
+  }) : data = data?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -3559,52 +3837,67 @@ class ExecTxResult extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'code': code,
-      'data': switch (data) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'data': config.encodeBinary(data),
       'log': log,
       'info': info,
-      'gas_wanted': gasWanted?.toString(),
-      'gas_used': gasUsed?.toString(),
-      'events': events.map((e) => e.toJson()).toList(),
+      'gas_wanted': config.encodeBigint(gasWanted),
+      'gas_used': config.encodeBigint(gasUsed),
+      'events': events.map((e) => config.encodeMessage(e)).toList(),
       'codespace': codespace,
     };
   }
 
-  factory ExecTxResult.fromJson(Map<String, dynamic> json) {
+  factory ExecTxResult.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ExecTxResult(
-      code: json.valueAsInt<int?>('code', acceptCamelCase: true),
-      data: json.valueAsBytes<List<int>?>(
-        'data',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      code: json.valueAsInt<int?>(
+        'code',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      log: json.valueAsString<String?>('log', acceptCamelCase: true),
-      info: json.valueAsString<String?>('info', acceptCamelCase: true),
+      data: config.decodeBinary<List<int>?>(
+        json.valueAs('data', normalizeKeyLookup: config.normalizeKeys),
+      ),
+      log: json.valueAsString<String?>(
+        'log',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      info: json.valueAsString<String?>(
+        'info',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       gasWanted: json.valueAsBigInt<BigInt?>(
         'gas_wanted',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      gasUsed: json.valueAsBigInt<BigInt?>('gas_used', acceptCamelCase: true),
+      gasUsed: json.valueAsBigInt<BigInt?>(
+        'gas_used',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       events:
-          (json.valueEnsureAsList<dynamic>('events', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'events',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<Event, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<Event, Object>(
                   value: e,
-                  parse: (v) => Event.fromJson(v),
+                  parse:
+                      (v) =>
+                          Event.fromJson(JsonParser.valueAs(v), config: config),
                 ),
               )
               .toList(),
       codespace: json.valueAsString<String?>(
         'codespace',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -3632,13 +3925,14 @@ class ExecTxResult extends CosmosProtoMessage {
 /// ----------------------------------------
 /// Blockchain Types
 class Validator extends CosmosProtoMessage {
-  final List<int>? address;
+  final BuBytes? address;
 
   /// The first 20 bytes of SHA256(public key)
   /// PubKey pub_key = 2 [(gogoproto.nullable)=false];
   final BigInt? power;
 
-  const Validator({this.address, this.power});
+  Validator({List<int>? address, this.power})
+    : address = address?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -3655,27 +3949,27 @@ class Validator extends CosmosProtoMessage {
   List<Object?> get protoValues => [address, power];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'address': switch (address) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'power': power?.toString(),
+      'address': config.encodeBinary(address),
+      'power': config.encodeBigint(power),
     };
   }
 
-  factory Validator.fromJson(Map<String, dynamic> json) {
+  factory Validator.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Validator(
-      address: json.valueAsBytes<List<int>?>(
-        'address',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      address: config.decodeBinary<List<int>?>(
+        json.valueAs('address', normalizeKeyLookup: config.normalizeKeys),
       ),
-      power: json.valueAsBigInt<BigInt?>('power', acceptCamelCase: true),
+      power: json.valueAsBigInt<BigInt?>(
+        'power',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -3718,19 +4012,33 @@ class ValidatorUpdate extends CosmosProtoMessage {
   List<Object?> get protoValues => [pubKey, power];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'pub_key': pubKey?.toJson(), 'power': power?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'pub_key': config.encodeMessage(pubKey),
+      'power': config.encodeBigint(power),
+    };
   }
 
-  factory ValidatorUpdate.fromJson(Map<String, dynamic> json) {
+  factory ValidatorUpdate.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ValidatorUpdate(
-      pubKey: json
-          .valueTo<tendermint_crypto_keys.PublicKey?, Map<String, dynamic>>(
-            key: 'pub_key',
-            parse: (v) => tendermint_crypto_keys.PublicKey.fromJson(v),
-            acceptCamelCase: true,
-          ),
-      power: json.valueAsBigInt<BigInt?>('power', acceptCamelCase: true),
+      pubKey: json.valueTo<tendermint_crypto_keys.PublicKey?, Object>(
+        key: 'pub_key',
+        parse:
+            (v) => tendermint_crypto_keys.PublicKey.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      power: json.valueAsBigInt<BigInt?>(
+        'power',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -3775,19 +4083,24 @@ class VoteInfo extends CosmosProtoMessage {
   List<Object?> get protoValues => [validator, blockIdFlag];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'validator': validator?.toJson(),
-      'block_id_flag': blockIdFlag?.protoName,
+      'validator': config.encodeMessage(validator),
+      'block_id_flag': config.encodeEnum(blockIdFlag),
     };
   }
 
-  factory VoteInfo.fromJson(Map<String, dynamic> json) {
+  factory VoteInfo.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return VoteInfo(
-      validator: json.valueTo<Validator?, Map<String, dynamic>>(
+      validator: json.valueTo<Validator?, Object>(
         key: 'validator',
-        parse: (v) => Validator.fromJson(v),
-        acceptCamelCase: true,
+        parse: (v) => Validator.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       blockIdFlag: json
           .valueTo<tendermint_types_validator.BlockIDFlag?, Object?>(
@@ -3822,20 +4135,21 @@ class ExtendedVoteInfo extends CosmosProtoMessage {
   final Validator? validator;
 
   /// Non-deterministic extension provided by the sending validator's application.
-  final List<int>? voteExtension;
+  final BuBytes? voteExtension;
 
   /// Vote extension signature created by CometBFT
-  final List<int>? extensionSignature;
+  final BuBytes? extensionSignature;
 
   /// block_id_flag indicates whether the validator voted for a block, nil, or did not vote at all
   final tendermint_types_validator.BlockIDFlag? blockIdFlag;
 
-  const ExtendedVoteInfo({
+  ExtendedVoteInfo({
     this.validator,
-    this.voteExtension,
-    this.extensionSignature,
+    List<int>? voteExtension,
+    List<int>? extensionSignature,
     this.blockIdFlag,
-  });
+  }) : voteExtension = voteExtension?.asImmutableBytes,
+       extensionSignature = extensionSignature?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -3862,43 +4176,38 @@ class ExtendedVoteInfo extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'validator': validator?.toJson(),
-      'vote_extension': switch (voteExtension) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'extension_signature': switch (extensionSignature) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'block_id_flag': blockIdFlag?.protoName,
+      'validator': config.encodeMessage(validator),
+      'vote_extension': config.encodeBinary(voteExtension),
+      'extension_signature': config.encodeBinary(extensionSignature),
+      'block_id_flag': config.encodeEnum(blockIdFlag),
     };
   }
 
-  factory ExtendedVoteInfo.fromJson(Map<String, dynamic> json) {
+  factory ExtendedVoteInfo.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ExtendedVoteInfo(
-      validator: json.valueTo<Validator?, Map<String, dynamic>>(
+      validator: json.valueTo<Validator?, Object>(
         key: 'validator',
-        parse: (v) => Validator.fromJson(v),
-        acceptCamelCase: true,
+        parse: (v) => Validator.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      voteExtension: json.valueAsBytes<List<int>?>(
-        'vote_extension',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      voteExtension: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'vote_extension',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
-      extensionSignature: json.valueAsBytes<List<int>?>(
-        'extension_signature',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      extensionSignature: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'extension_signature',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
       blockIdFlag: json
           .valueTo<tendermint_types_validator.BlockIDFlag?, Object?>(
@@ -3981,36 +4290,48 @@ class Misbehavior extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'type': type?.protoName,
-      'validator': validator?.toJson(),
-      'height': height?.toString(),
+      'type': config.encodeEnum(type),
+      'validator': config.encodeMessage(validator),
+      'height': config.encodeBigint(height),
       'time': time?.toRfc3339(),
-      'total_voting_power': totalVotingPower?.toString(),
+      'total_voting_power': config.encodeBigint(totalVotingPower),
     };
   }
 
-  factory Misbehavior.fromJson(Map<String, dynamic> json) {
+  factory Misbehavior.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Misbehavior(
       type: json.valueTo<MisbehaviorType?, Object?>(
         key: 'type',
         parse: (v) => MisbehaviorType.from(v),
       ),
-      validator: json.valueTo<Validator?, Map<String, dynamic>>(
+      validator: json.valueTo<Validator?, Object>(
         key: 'validator',
-        parse: (v) => Validator.fromJson(v),
-        acceptCamelCase: true,
+        parse: (v) => Validator.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      height: json.valueAsBigInt<BigInt?>('height', acceptCamelCase: true),
-      time: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      height: json.valueAsBigInt<BigInt?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      time: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'time',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       totalVotingPower: json.valueAsBigInt<BigInt?>(
         'total_voting_power',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -4049,18 +4370,19 @@ class Snapshot extends CosmosProtoMessage {
   final int? chunks;
 
   /// Number of chunks in the snapshot
-  final List<int>? hash;
+  final BuBytes? hash;
 
   /// Arbitrary snapshot hash, equal only if identical
-  final List<int>? metadata;
+  final BuBytes? metadata;
 
-  const Snapshot({
+  Snapshot({
     this.height,
     this.format,
     this.chunks,
-    this.hash,
-    this.metadata,
-  });
+    List<int>? hash,
+    List<int>? metadata,
+  }) : hash = hash?.asImmutableBytes,
+       metadata = metadata?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -4083,42 +4405,40 @@ class Snapshot extends CosmosProtoMessage {
   List<Object?> get protoValues => [height, format, chunks, hash, metadata];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'height': height?.toString(),
+      'height': config.encodeBigint(height),
       'format': format,
       'chunks': chunks,
-      'hash': switch (hash) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'metadata': switch (metadata) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'hash': config.encodeBinary(hash),
+      'metadata': config.encodeBinary(metadata),
     };
   }
 
-  factory Snapshot.fromJson(Map<String, dynamic> json) {
+  factory Snapshot.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Snapshot(
-      height: json.valueAsBigInt<BigInt?>('height', acceptCamelCase: true),
-      format: json.valueAsInt<int?>('format', acceptCamelCase: true),
-      chunks: json.valueAsInt<int?>('chunks', acceptCamelCase: true),
-      hash: json.valueAsBytes<List<int>?>(
-        'hash',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      height: json.valueAsBigInt<BigInt?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      metadata: json.valueAsBytes<List<int>?>(
-        'metadata',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      format: json.valueAsInt<int?>(
+        'format',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      chunks: json.valueAsInt<int?>(
+        'chunks',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      hash: config.decodeBinary<List<int>?>(
+        json.valueAs('hash', normalizeKeyLookup: config.normalizeKeys),
+      ),
+      metadata: config.decodeBinary<List<int>?>(
+        json.valueAs('metadata', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }

@@ -24,9 +24,10 @@ class Tx extends CosmosProtoMessage {
   /// signatures is a list of signatures that matches the length and order of
   /// AuthInfo's signer_infos to allow connecting signature meta information like
   /// public key and signing mode by position.
-  final List<List<int>> signatures;
+  final List<BuBytes> signatures;
 
-  const Tx({this.body, this.authInfo, this.signatures = const []});
+  Tx({this.body, this.authInfo, List<List<int>> signatures = const []})
+    : signatures = signatures.map((e) => e.asImmutableBytes).toImutableList;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -50,40 +51,37 @@ class Tx extends CosmosProtoMessage {
   List<Object?> get protoValues => [body, authInfo, signatures];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'body': body?.toJson(),
-      'auth_info': authInfo?.toJson(),
-      'signatures':
-          signatures
-              .map(
-                (e) => StringUtils.decode(e, encoding: StringEncoding.base64),
-              )
-              .toList(),
+      'body': config.encodeMessage(body),
+      'auth_info': config.encodeMessage(authInfo),
+      'signatures': signatures.map((e) => config.encodeBinary(e)).toList(),
     };
   }
 
-  factory Tx.fromJson(Map<String, dynamic> json) {
+  factory Tx.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Tx(
-      body: json.valueTo<TxBody?, Map<String, dynamic>>(
+      body: json.valueTo<TxBody?, Object>(
         key: 'body',
-        parse: (v) => TxBody.fromJson(v),
-        acceptCamelCase: true,
+        parse: (v) => TxBody.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      authInfo: json.valueTo<AuthInfo?, Map<String, dynamic>>(
+      authInfo: json.valueTo<AuthInfo?, Object>(
         key: 'auth_info',
-        parse: (v) => AuthInfo.fromJson(v),
-        acceptCamelCase: true,
+        parse: (v) => AuthInfo.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       signatures:
-          (json.valueEnsureAsList<dynamic>('signatures', acceptCamelCase: true))
-              .map(
-                (e) => JsonParser.valueAsBytes<List<int>>(
-                  e,
-                  encoding: StringEncoding.base64,
-                ),
-              )
-              .toList(),
+          (json.valueEnsureAsList<dynamic>(
+            'signatures',
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
+          )).map((e) => config.decodeBinary<List<int>>(e)).toList(),
     );
   }
 
@@ -109,18 +107,24 @@ class Tx extends CosmosProtoMessage {
 class TxRaw extends CosmosProtoMessage {
   /// body_bytes is a protobuf serialization of a TxBody that matches the
   /// representation in SignDoc.
-  final List<int>? bodyBytes;
+  final BuBytes? bodyBytes;
 
   /// auth_info_bytes is a protobuf serialization of an AuthInfo that matches the
   /// representation in SignDoc.
-  final List<int>? authInfoBytes;
+  final BuBytes? authInfoBytes;
 
   /// signatures is a list of signatures that matches the length and order of
   /// AuthInfo's signer_infos to allow connecting signature meta information like
   /// public key and signing mode by position.
-  final List<List<int>> signatures;
+  final List<BuBytes> signatures;
 
-  const TxRaw({this.bodyBytes, this.authInfoBytes, this.signatures = const []});
+  TxRaw({
+    List<int>? bodyBytes,
+    List<int>? authInfoBytes,
+    List<List<int>> signatures = const [],
+  }) : bodyBytes = bodyBytes?.asImmutableBytes,
+       authInfoBytes = authInfoBytes?.asImmutableBytes,
+       signatures = signatures.map((e) => e.asImmutableBytes).toImutableList;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -144,52 +148,36 @@ class TxRaw extends CosmosProtoMessage {
   List<Object?> get protoValues => [bodyBytes, authInfoBytes, signatures];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'body_bytes': switch (bodyBytes) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'auth_info_bytes': switch (authInfoBytes) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'signatures':
-          signatures
-              .map(
-                (e) => StringUtils.decode(e, encoding: StringEncoding.base64),
-              )
-              .toList(),
+      'body_bytes': config.encodeBinary(bodyBytes),
+      'auth_info_bytes': config.encodeBinary(authInfoBytes),
+      'signatures': signatures.map((e) => config.encodeBinary(e)).toList(),
     };
   }
 
-  factory TxRaw.fromJson(Map<String, dynamic> json) {
+  factory TxRaw.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return TxRaw(
-      bodyBytes: json.valueAsBytes<List<int>?>(
-        'body_bytes',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      bodyBytes: config.decodeBinary<List<int>?>(
+        json.valueAs('body_bytes', normalizeKeyLookup: config.normalizeKeys),
       ),
-      authInfoBytes: json.valueAsBytes<List<int>?>(
-        'auth_info_bytes',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      authInfoBytes: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'auth_info_bytes',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
       signatures:
-          (json.valueEnsureAsList<dynamic>('signatures', acceptCamelCase: true))
-              .map(
-                (e) => JsonParser.valueAsBytes<List<int>>(
-                  e,
-                  encoding: StringEncoding.base64,
-                ),
-              )
-              .toList(),
+          (json.valueEnsureAsList<dynamic>(
+            'signatures',
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
+          )).map((e) => config.decodeBinary<List<int>>(e)).toList(),
     );
   }
 
@@ -211,11 +199,11 @@ class TxRaw extends CosmosProtoMessage {
 class SignDoc extends CosmosProtoMessage {
   /// body_bytes is protobuf serialization of a TxBody that matches the
   /// representation in TxRaw.
-  final List<int>? bodyBytes;
+  final BuBytes? bodyBytes;
 
   /// auth_info_bytes is a protobuf serialization of an AuthInfo that matches the
   /// representation in TxRaw.
-  final List<int>? authInfoBytes;
+  final BuBytes? authInfoBytes;
 
   /// chain_id is the unique identifier of the chain this transaction targets.
   /// It prevents signed transactions from being used on another chain by an
@@ -225,12 +213,13 @@ class SignDoc extends CosmosProtoMessage {
   /// account_number is the account number of the account in state
   final BigInt? accountNumber;
 
-  const SignDoc({
-    this.bodyBytes,
-    this.authInfoBytes,
+  SignDoc({
+    List<int>? bodyBytes,
+    List<int>? authInfoBytes,
     this.chainId,
     this.accountNumber,
-  });
+  }) : bodyBytes = bodyBytes?.asImmutableBytes,
+       authInfoBytes = authInfoBytes?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -257,43 +246,38 @@ class SignDoc extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'body_bytes': switch (bodyBytes) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'auth_info_bytes': switch (authInfoBytes) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'body_bytes': config.encodeBinary(bodyBytes),
+      'auth_info_bytes': config.encodeBinary(authInfoBytes),
       'chain_id': chainId,
-      'account_number': accountNumber?.toString(),
+      'account_number': config.encodeBigint(accountNumber),
     };
   }
 
-  factory SignDoc.fromJson(Map<String, dynamic> json) {
+  factory SignDoc.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SignDoc(
-      bodyBytes: json.valueAsBytes<List<int>?>(
-        'body_bytes',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      bodyBytes: config.decodeBinary<List<int>?>(
+        json.valueAs('body_bytes', normalizeKeyLookup: config.normalizeKeys),
       ),
-      authInfoBytes: json.valueAsBytes<List<int>?>(
-        'auth_info_bytes',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      authInfoBytes: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'auth_info_bytes',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
-      chainId: json.valueAsString<String?>('chain_id', acceptCamelCase: true),
+      chainId: json.valueAsString<String?>(
+        'chain_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       accountNumber: json.valueAsBigInt<BigInt?>(
         'account_number',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -318,7 +302,7 @@ class SignDoc extends CosmosProtoMessage {
 class SignDocDirectAux extends CosmosProtoMessage {
   /// body_bytes is protobuf serialization of a TxBody that matches the
   /// representation in TxRaw.
-  final List<int>? bodyBytes;
+  final BuBytes? bodyBytes;
 
   /// public_key is the public key of the signing account.
   final google_protobuf_any.Any? publicKey;
@@ -337,14 +321,14 @@ class SignDocDirectAux extends CosmosProtoMessage {
   /// tips have been deprecated and should not be used
   final Tip? tip;
 
-  const SignDocDirectAux({
-    this.bodyBytes,
+  SignDocDirectAux({
+    List<int>? bodyBytes,
     this.publicKey,
     this.chainId,
     this.accountNumber,
     this.sequence,
     this.tip,
-  });
+  }) : bodyBytes = bodyBytes?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -378,45 +362,52 @@ class SignDocDirectAux extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'body_bytes': switch (bodyBytes) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'public_key': publicKey?.toJson(),
+      'body_bytes': config.encodeBinary(bodyBytes),
+      'public_key': config.encodeMessage(publicKey),
       'chain_id': chainId,
-      'account_number': accountNumber?.toString(),
-      'sequence': sequence?.toString(),
-      'tip': tip?.toJson(),
+      'account_number': config.encodeBigint(accountNumber),
+      'sequence': config.encodeBigint(sequence),
+      'tip': config.encodeMessage(tip),
     };
   }
 
-  factory SignDocDirectAux.fromJson(Map<String, dynamic> json) {
+  factory SignDocDirectAux.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SignDocDirectAux(
-      bodyBytes: json.valueAsBytes<List<int>?>(
-        'body_bytes',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      bodyBytes: config.decodeBinary<List<int>?>(
+        json.valueAs('body_bytes', normalizeKeyLookup: config.normalizeKeys),
       ),
-      publicKey: json.valueTo<google_protobuf_any.Any?, Map<String, dynamic>>(
+      publicKey: json.valueTo<google_protobuf_any.Any?, Object>(
         key: 'public_key',
-        parse: (v) => google_protobuf_any.Any.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_any.Any.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      chainId: json.valueAsString<String?>('chain_id', acceptCamelCase: true),
+      chainId: json.valueAsString<String?>(
+        'chain_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       accountNumber: json.valueAsBigInt<BigInt?>(
         'account_number',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      sequence: json.valueAsBigInt<BigInt?>('sequence', acceptCamelCase: true),
-      tip: json.valueTo<Tip?, Map<String, dynamic>>(
+      sequence: json.valueAsBigInt<BigInt?>(
+        'sequence',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      tip: json.valueTo<Tip?, Object>(
         key: 'tip',
-        parse: (v) => Tip.fromJson(v),
-        acceptCamelCase: true,
+        parse: (v) => Tip.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -561,64 +552,100 @@ class TxBody extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'messages': messages.map((e) => e.toJson()).toList(),
+      'messages': messages.map((e) => config.encodeMessage(e)).toList(),
       'memo': memo,
-      'timeout_height': timeoutHeight?.toString(),
+      'timeout_height': config.encodeBigint(timeoutHeight),
       'unordered': unordered,
       'timeout_timestamp': timeoutTimestamp?.toRfc3339(),
-      'extension_options': extensionOptions.map((e) => e.toJson()).toList(),
+      'extension_options':
+          extensionOptions.map((e) => config.encodeMessage(e)).toList(),
       'non_critical_extension_options':
-          nonCriticalExtensionOptions.map((e) => e.toJson()).toList(),
+          nonCriticalExtensionOptions
+              .map((e) => config.encodeMessage(e))
+              .toList(),
     };
   }
 
-  factory TxBody.fromJson(Map<String, dynamic> json) {
+  factory TxBody.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return TxBody(
       messages:
-          (json.valueEnsureAsList<dynamic>('messages', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'messages',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  google_protobuf_any.Any,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => google_protobuf_any.Any.fromJson(v)),
+                (e) => JsonParser.valueTo<google_protobuf_any.Any, Object>(
+                  value: e,
+                  parse:
+                      (v) => google_protobuf_any.Any.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
-      memo: json.valueAsString<String?>('memo', acceptCamelCase: true),
+      memo: json.valueAsString<String?>(
+        'memo',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       timeoutHeight: json.valueAsBigInt<BigInt?>(
         'timeout_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      unordered: json.valueAsBool<bool?>('unordered', acceptCamelCase: true),
+      unordered: json.valueAsBool<bool?>(
+        'unordered',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       timeoutTimestamp: json
-          .valueTo<google_protobuf_timestamp.Timestamp?, String>(
+          .valueTo<google_protobuf_timestamp.Timestamp?, Object>(
             key: 'timeout_timestamp',
-            parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => google_protobuf_timestamp.Timestamp.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
       extensionOptions:
           (json.valueEnsureAsList<dynamic>(
                 'extension_options',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  google_protobuf_any.Any,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => google_protobuf_any.Any.fromJson(v)),
+                (e) => JsonParser.valueTo<google_protobuf_any.Any, Object>(
+                  value: e,
+                  parse:
+                      (v) => google_protobuf_any.Any.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
       nonCriticalExtensionOptions:
           (json.valueEnsureAsList<dynamic>(
                 'non_critical_extension_options',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  google_protobuf_any.Any,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => google_protobuf_any.Any.fromJson(v)),
+                (e) => JsonParser.valueTo<google_protobuf_any.Any, Object>(
+                  value: e,
+                  parse:
+                      (v) => google_protobuf_any.Any.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );
@@ -711,37 +738,47 @@ class AuthInfo extends CosmosProtoMessage {
   List<Object?> get protoValues => [signerInfos, fee, tip];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'signer_infos': signerInfos.map((e) => e.toJson()).toList(),
-      'fee': fee?.toJson(),
-      'tip': tip?.toJson(),
+      'signer_infos': signerInfos.map((e) => config.encodeMessage(e)).toList(),
+      'fee': config.encodeMessage(fee),
+      'tip': config.encodeMessage(tip),
     };
   }
 
-  factory AuthInfo.fromJson(Map<String, dynamic> json) {
+  factory AuthInfo.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AuthInfo(
       signerInfos:
           (json.valueEnsureAsList<dynamic>(
                 'signer_infos',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<SignerInfo, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<SignerInfo, Object>(
                   value: e,
-                  parse: (v) => SignerInfo.fromJson(v),
+                  parse:
+                      (v) => SignerInfo.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
-      fee: json.valueTo<Fee?, Map<String, dynamic>>(
+      fee: json.valueTo<Fee?, Object>(
         key: 'fee',
-        parse: (v) => Fee.fromJson(v),
-        acceptCamelCase: true,
+        parse: (v) => Fee.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      tip: json.valueTo<Tip?, Map<String, dynamic>>(
+      tip: json.valueTo<Tip?, Object>(
         key: 'tip',
-        parse: (v) => Tip.fromJson(v),
-        acceptCamelCase: true,
+        parse: (v) => Tip.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -802,27 +839,39 @@ class SignerInfo extends CosmosProtoMessage {
   List<Object?> get protoValues => [publicKey, modeInfo, sequence];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'public_key': publicKey?.toJson(),
-      'mode_info': modeInfo?.toJson(),
-      'sequence': sequence?.toString(),
+      'public_key': config.encodeMessage(publicKey),
+      'mode_info': config.encodeMessage(modeInfo),
+      'sequence': config.encodeBigint(sequence),
     };
   }
 
-  factory SignerInfo.fromJson(Map<String, dynamic> json) {
+  factory SignerInfo.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SignerInfo(
-      publicKey: json.valueTo<google_protobuf_any.Any?, Map<String, dynamic>>(
+      publicKey: json.valueTo<google_protobuf_any.Any?, Object>(
         key: 'public_key',
-        parse: (v) => google_protobuf_any.Any.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_any.Any.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      modeInfo: json.valueTo<ModeInfo?, Map<String, dynamic>>(
+      modeInfo: json.valueTo<ModeInfo?, Object>(
         key: 'mode_info',
-        parse: (v) => ModeInfo.fromJson(v),
-        acceptCamelCase: true,
+        parse: (v) => ModeInfo.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      sequence: json.valueAsBigInt<BigInt?>('sequence', acceptCamelCase: true),
+      sequence: json.valueAsBigInt<BigInt?>(
+        'sequence',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -870,21 +919,33 @@ class ModeInfo extends CosmosProtoMessage {
   List<Object?> get protoValues => [single, multi];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'single': single?.toJson(), 'multi': multi?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'single': config.encodeMessage(single),
+      'multi': config.encodeMessage(multi),
+    };
   }
 
-  factory ModeInfo.fromJson(Map<String, dynamic> json) {
+  factory ModeInfo.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ModeInfo(
-      single: json.valueTo<ModeInfoSingle?, Map<String, dynamic>>(
+      single: json.valueTo<ModeInfoSingle?, Object>(
         key: 'single',
-        parse: (v) => ModeInfoSingle.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) =>
+                ModeInfoSingle.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      multi: json.valueTo<ModeInfoMulti?, Map<String, dynamic>>(
+      multi: json.valueTo<ModeInfoMulti?, Object>(
         key: 'multi',
-        parse: (v) => ModeInfoMulti.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) =>
+                ModeInfoMulti.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -932,11 +993,16 @@ class ModeInfoSingle extends CosmosProtoMessage {
   List<Object?> get protoValues => [mode];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'mode': mode?.protoName};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'mode': config.encodeEnum(mode)};
   }
 
-  factory ModeInfoSingle.fromJson(Map<String, dynamic> json) {
+  factory ModeInfoSingle.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ModeInfoSingle(
       mode: json.valueTo<cosmos_tx_signing_v1beta1_signing.SignMode?, Object?>(
         key: 'mode',
@@ -992,31 +1058,47 @@ class ModeInfoMulti extends CosmosProtoMessage {
   List<Object?> get protoValues => [bitarray, modeInfos];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'bitarray': bitarray?.toJson(),
-      'mode_infos': modeInfos.map((e) => e.toJson()).toList(),
+      'bitarray': config.encodeMessage(bitarray),
+      'mode_infos': modeInfos.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory ModeInfoMulti.fromJson(Map<String, dynamic> json) {
+  factory ModeInfoMulti.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ModeInfoMulti(
       bitarray: json.valueTo<
         cosmos_crypto_multisig_v1beta1_multisig.CompactBitArray?,
-        Map<String, dynamic>
+        Object
       >(
         key: 'bitarray',
         parse:
             (v) => cosmos_crypto_multisig_v1beta1_multisig
-                .CompactBitArray.fromJson(v),
-        acceptCamelCase: true,
+                .CompactBitArray.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       modeInfos:
-          (json.valueEnsureAsList<dynamic>('mode_infos', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'mode_infos',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<ModeInfo, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<ModeInfo, Object>(
                   value: e,
-                  parse: (v) => ModeInfo.fromJson(v),
+                  parse:
+                      (v) => ModeInfo.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -1094,32 +1176,52 @@ class Fee extends CosmosProtoMessage {
   List<Object?> get protoValues => [amount, gasLimit, payer, granter];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'amount': amount.map((e) => e.toJson()).toList(),
-      'gas_limit': gasLimit?.toString(),
+      'amount': amount.map((e) => config.encodeMessage(e)).toList(),
+      'gas_limit': config.encodeBigint(gasLimit),
       'payer': payer,
       'granter': granter,
     };
   }
 
-  factory Fee.fromJson(Map<String, dynamic> json) {
+  factory Fee.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Fee(
       amount:
-          (json.valueEnsureAsList<dynamic>('amount', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'amount',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
-      gasLimit: json.valueAsBigInt<BigInt?>('gas_limit', acceptCamelCase: true),
-      payer: json.valueAsString<String?>('payer', acceptCamelCase: true),
-      granter: json.valueAsString<String?>('granter', acceptCamelCase: true),
+      gasLimit: json.valueAsBigInt<BigInt?>(
+        'gas_limit',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      payer: json.valueAsString<String?>(
+        'payer',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      granter: json.valueAsString<String?>(
+        'granter',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1177,25 +1279,42 @@ class Tip extends CosmosProtoMessage {
   List<Object?> get protoValues => [amount, tipper];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'amount': amount.map((e) => e.toJson()).toList(), 'tipper': tipper};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'amount': amount.map((e) => config.encodeMessage(e)).toList(),
+      'tipper': tipper,
+    };
   }
 
-  factory Tip.fromJson(Map<String, dynamic> json) {
+  factory Tip.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Tip(
       amount:
-          (json.valueEnsureAsList<dynamic>('amount', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'amount',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
-      tipper: json.valueAsString<String?>('tipper', acceptCamelCase: true),
+      tipper: json.valueAsString<String?>(
+        'tipper',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1235,9 +1354,10 @@ class AuxSignerData extends CosmosProtoMessage {
   final cosmos_tx_signing_v1beta1_signing.SignMode? mode;
 
   /// sig is the signature of the sign doc.
-  final List<int>? sig;
+  final BuBytes? sig;
 
-  const AuxSignerData({this.address, this.signDoc, this.mode, this.sig});
+  AuxSignerData({this.address, this.signDoc, this.mode, List<int>? sig})
+    : sig = sig?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -1259,37 +1379,41 @@ class AuxSignerData extends CosmosProtoMessage {
   List<Object?> get protoValues => [address, signDoc, mode, sig];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'address': address,
-      'sign_doc': signDoc?.toJson(),
-      'mode': mode?.protoName,
-      'sig': switch (sig) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'sign_doc': config.encodeMessage(signDoc),
+      'mode': config.encodeEnum(mode),
+      'sig': config.encodeBinary(sig),
     };
   }
 
-  factory AuxSignerData.fromJson(Map<String, dynamic> json) {
+  factory AuxSignerData.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AuxSignerData(
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
-      signDoc: json.valueTo<SignDocDirectAux?, Map<String, dynamic>>(
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      signDoc: json.valueTo<SignDocDirectAux?, Object>(
         key: 'sign_doc',
-        parse: (v) => SignDocDirectAux.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => SignDocDirectAux.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       mode: json.valueTo<cosmos_tx_signing_v1beta1_signing.SignMode?, Object?>(
         key: 'mode',
         parse: (v) => cosmos_tx_signing_v1beta1_signing.SignMode.from(v),
       ),
-      sig: json.valueAsBytes<List<int>?>(
-        'sig',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      sig: config.decodeBinary<List<int>?>(
+        json.valueAs('sig', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }

@@ -1,8 +1,13 @@
 import 'package:blockchain_utils/blockchain_utils.dart';
 import 'package:cosmos_sdk/cosmos_sdk.dart';
 import 'package:test/test.dart';
+import 'utils.dart';
 
 void main() {
+  CosmosTestApi.runTest(addressTest, 'Address');
+}
+
+void addressTest() {
   test("IAddress encoding", () {
     final addr = CosmosBaseAddress.fromBytes(
       QuickCrypto.generateRandom(),

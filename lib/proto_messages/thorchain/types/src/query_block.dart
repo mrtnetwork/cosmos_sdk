@@ -29,13 +29,21 @@ class QueryBlockRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'height': height};
   }
 
-  factory QueryBlockRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryBlockRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryBlockRequest(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -125,72 +133,108 @@ class QueryBlockResponse extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'id': id?.toJson(),
-      'header': header?.toJson(),
-      'begin_block_events': beginBlockEvents.map((e) => e.toJson()).toList(),
-      'end_block_events': endBlockEvents.map((e) => e.toJson()).toList(),
+      'id': config.encodeMessage(id),
+      'header': config.encodeMessage(header),
+      'begin_block_events':
+          beginBlockEvents.map((e) => config.encodeMessage(e)).toList(),
+      'end_block_events':
+          endBlockEvents.map((e) => config.encodeMessage(e)).toList(),
       'finalize_block_events':
-          finalizeBlockEvents.map((e) => e.toJson()).toList(),
-      'txs': txs.map((e) => e.toJson()).toList(),
+          finalizeBlockEvents.map((e) => config.encodeMessage(e)).toList(),
+      'txs': txs.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory QueryBlockResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryBlockResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryBlockResponse(
-      id: json.valueTo<BlockResponseId?, Map<String, dynamic>>(
+      id: json.valueTo<BlockResponseId?, Object>(
         key: 'id',
-        parse: (v) => BlockResponseId.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) =>
+                BlockResponseId.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      header: json.valueTo<BlockResponseHeader?, Map<String, dynamic>>(
+      header: json.valueTo<BlockResponseHeader?, Object>(
         key: 'header',
-        parse: (v) => BlockResponseHeader.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => BlockResponseHeader.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       beginBlockEvents:
           (json.valueEnsureAsList<dynamic>(
                 'begin_block_events',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<BlockEvent, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<BlockEvent, Object>(
                   value: e,
-                  parse: (v) => BlockEvent.fromJson(v),
+                  parse:
+                      (v) => BlockEvent.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       endBlockEvents:
           (json.valueEnsureAsList<dynamic>(
                 'end_block_events',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<BlockEvent, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<BlockEvent, Object>(
                   value: e,
-                  parse: (v) => BlockEvent.fromJson(v),
+                  parse:
+                      (v) => BlockEvent.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       finalizeBlockEvents:
           (json.valueEnsureAsList<dynamic>(
                 'finalize_block_events',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<BlockEvent, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<BlockEvent, Object>(
                   value: e,
-                  parse: (v) => BlockEvent.fromJson(v),
+                  parse:
+                      (v) => BlockEvent.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       txs:
-          (json.valueEnsureAsList<dynamic>('txs', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'txs',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<QueryBlockTx, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<QueryBlockTx, Object>(
                   value: e,
-                  parse: (v) => QueryBlockTx.fromJson(v),
+                  parse:
+                      (v) => QueryBlockTx.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -261,17 +305,29 @@ class BlockResponseId extends CosmosProtoMessage {
   List<Object?> get protoValues => [hash, parts];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'hash': hash, 'parts': parts?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'hash': hash, 'parts': config.encodeMessage(parts)};
   }
 
-  factory BlockResponseId.fromJson(Map<String, dynamic> json) {
+  factory BlockResponseId.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return BlockResponseId(
-      hash: json.valueAsString<String?>('hash', acceptCamelCase: true),
-      parts: json.valueTo<BlockResponseIdParts?, Map<String, dynamic>>(
+      hash: json.valueAsString<String?>(
+        'hash',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      parts: json.valueTo<BlockResponseIdParts?, Object>(
         key: 'parts',
-        parse: (v) => BlockResponseIdParts.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => BlockResponseIdParts.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -317,14 +373,25 @@ class BlockResponseIdParts extends CosmosProtoMessage {
   List<Object?> get protoValues => [total, hash];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'total': total?.toString(), 'hash': hash};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'total': config.encodeBigint(total), 'hash': hash};
   }
 
-  factory BlockResponseIdParts.fromJson(Map<String, dynamic> json) {
+  factory BlockResponseIdParts.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return BlockResponseIdParts(
-      total: json.valueAsBigInt<BigInt?>('total', acceptCamelCase: true),
-      hash: json.valueAsString<String?>('hash', acceptCamelCase: true),
+      total: json.valueAsBigInt<BigInt?>(
+        'total',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      hash: json.valueAsString<String?>(
+        'hash',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -432,13 +499,15 @@ class BlockResponseHeader extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'version': version?.toJson(),
+      'version': config.encodeMessage(version),
       'chain_id': chainId,
-      'height': height?.toString(),
+      'height': config.encodeBigint(height),
       'time': time,
-      'last_block_id': lastBlockId?.toJson(),
+      'last_block_id': config.encodeMessage(lastBlockId),
       'last_commit_hash': lastCommitHash,
       'data_hash': dataHash,
       'validators_hash': validatorsHash,
@@ -451,50 +520,74 @@ class BlockResponseHeader extends CosmosProtoMessage {
     };
   }
 
-  factory BlockResponseHeader.fromJson(Map<String, dynamic> json) {
+  factory BlockResponseHeader.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return BlockResponseHeader(
-      version: json.valueTo<BlockResponseHeaderVersion?, Map<String, dynamic>>(
+      version: json.valueTo<BlockResponseHeaderVersion?, Object>(
         key: 'version',
-        parse: (v) => BlockResponseHeaderVersion.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => BlockResponseHeaderVersion.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      chainId: json.valueAsString<String?>('chain_id', acceptCamelCase: true),
-      height: json.valueAsBigInt<BigInt?>('height', acceptCamelCase: true),
-      time: json.valueAsString<String?>('time', acceptCamelCase: true),
-      lastBlockId: json.valueTo<BlockResponseId?, Map<String, dynamic>>(
+      chainId: json.valueAsString<String?>(
+        'chain_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      height: json.valueAsBigInt<BigInt?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      time: json.valueAsString<String?>(
+        'time',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      lastBlockId: json.valueTo<BlockResponseId?, Object>(
         key: 'last_block_id',
-        parse: (v) => BlockResponseId.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) =>
+                BlockResponseId.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       lastCommitHash: json.valueAsString<String?>(
         'last_commit_hash',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      dataHash: json.valueAsString<String?>('data_hash', acceptCamelCase: true),
+      dataHash: json.valueAsString<String?>(
+        'data_hash',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       validatorsHash: json.valueAsString<String?>(
         'validators_hash',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       nextValidatorsHash: json.valueAsString<String?>(
         'next_validators_hash',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       consensusHash: json.valueAsString<String?>(
         'consensus_hash',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      appHash: json.valueAsString<String?>('app_hash', acceptCamelCase: true),
+      appHash: json.valueAsString<String?>(
+        'app_hash',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       lastResultsHash: json.valueAsString<String?>(
         'last_results_hash',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       evidenceHash: json.valueAsString<String?>(
         'evidence_hash',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       proposerAddress: json.valueAsString<String?>(
         'proposer_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -555,14 +648,25 @@ class BlockResponseHeaderVersion extends CosmosProtoMessage {
   List<Object?> get protoValues => [block, app];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'block': block, 'app': app};
   }
 
-  factory BlockResponseHeaderVersion.fromJson(Map<String, dynamic> json) {
+  factory BlockResponseHeaderVersion.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return BlockResponseHeaderVersion(
-      block: json.valueAsString<String?>('block', acceptCamelCase: true),
-      app: json.valueAsString<String?>('app', acceptCamelCase: true),
+      block: json.valueAsString<String?>(
+        'block',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      app: json.valueAsString<String?>(
+        'app',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -604,23 +708,34 @@ class BlockEvent extends CosmosProtoMessage {
   List<Object?> get protoValues => [eventKvPair];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'event_kv_pair': eventKvPair.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'event_kv_pair': eventKvPair.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
-  factory BlockEvent.fromJson(Map<String, dynamic> json) {
+  factory BlockEvent.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return BlockEvent(
       eventKvPair:
           (json.valueEnsureAsList<dynamic>(
                 'event_kv_pair',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) =>
-                    JsonParser.valueTo<EventKeyValuePair, Map<String, dynamic>>(
-                      value: e,
-                      parse: (v) => EventKeyValuePair.fromJson(v),
-                    ),
+                (e) => JsonParser.valueTo<EventKeyValuePair, Object>(
+                  value: e,
+                  parse:
+                      (v) => EventKeyValuePair.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );
@@ -664,14 +779,25 @@ class EventKeyValuePair extends CosmosProtoMessage {
   List<Object?> get protoValues => [key, value];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'key': key, 'value': value};
   }
 
-  factory EventKeyValuePair.fromJson(Map<String, dynamic> json) {
+  factory EventKeyValuePair.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return EventKeyValuePair(
-      key: json.valueAsString<String?>('key', acceptCamelCase: true),
-      value: json.valueAsString<String?>('value', acceptCamelCase: true),
+      key: json.valueAsString<String?>(
+        'key',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      value: json.valueAsString<String?>(
+        'value',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -691,11 +817,12 @@ class EventKeyValuePair extends CosmosProtoMessage {
 class QueryBlockTx extends CosmosProtoMessage {
   final String? hash;
 
-  final List<int>? tx;
+  final BuBytes? tx;
 
   final BlockTxResult? result;
 
-  const QueryBlockTx({this.hash, this.tx, this.result});
+  QueryBlockTx({this.hash, List<int>? tx, this.result})
+    : tx = tx?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -716,32 +843,34 @@ class QueryBlockTx extends CosmosProtoMessage {
   List<Object?> get protoValues => [hash, tx, result];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'hash': hash,
-      'tx': switch (tx) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'result': result?.toJson(),
+      'tx': config.encodeBinary(tx),
+      'result': config.encodeMessage(result),
     };
   }
 
-  factory QueryBlockTx.fromJson(Map<String, dynamic> json) {
+  factory QueryBlockTx.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryBlockTx(
-      hash: json.valueAsString<String?>('hash', acceptCamelCase: true),
-      tx: json.valueAsBytes<List<int>?>(
-        'tx',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      hash: json.valueAsString<String?>(
+        'hash',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      result: json.valueTo<BlockTxResult?, Map<String, dynamic>>(
+      tx: config.decodeBinary<List<int>?>(
+        json.valueAs('tx', normalizeKeyLookup: config.normalizeKeys),
+      ),
+      result: json.valueTo<BlockTxResult?, Object>(
         key: 'result',
-        parse: (v) => BlockTxResult.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) =>
+                BlockTxResult.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -827,42 +956,70 @@ class BlockTxResult extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'code': code?.toString(),
+      'code': config.encodeBigint(code),
       'data': data,
       'log': log,
       'info': info,
       'gas_wanted': gasWanted,
       'gas_used': gasUsed,
-      'events': events.map((e) => e.toJson()).toList(),
+      'events': events.map((e) => config.encodeMessage(e)).toList(),
       'codespace': codespace,
     };
   }
 
-  factory BlockTxResult.fromJson(Map<String, dynamic> json) {
+  factory BlockTxResult.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return BlockTxResult(
-      code: json.valueAsBigInt<BigInt?>('code', acceptCamelCase: true),
-      data: json.valueAsString<String?>('data', acceptCamelCase: true),
-      log: json.valueAsString<String?>('log', acceptCamelCase: true),
-      info: json.valueAsString<String?>('info', acceptCamelCase: true),
+      code: json.valueAsBigInt<BigInt?>(
+        'code',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      data: json.valueAsString<String?>(
+        'data',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      log: json.valueAsString<String?>(
+        'log',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      info: json.valueAsString<String?>(
+        'info',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       gasWanted: json.valueAsString<String?>(
         'gas_wanted',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      gasUsed: json.valueAsString<String?>('gas_used', acceptCamelCase: true),
+      gasUsed: json.valueAsString<String?>(
+        'gas_used',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       events:
-          (json.valueEnsureAsList<dynamic>('events', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'events',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<BlockEvent, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<BlockEvent, Object>(
                   value: e,
-                  parse: (v) => BlockEvent.fromJson(v),
+                  parse:
+                      (v) => BlockEvent.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       codespace: json.valueAsString<String?>(
         'codespace',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

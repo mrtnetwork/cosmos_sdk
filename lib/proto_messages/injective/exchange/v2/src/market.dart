@@ -24,20 +24,32 @@ enum MarketStatus implements ProtoEnumVariant {
 
   /// Looks up a value by its proto wire int. Throws if not found.
   static MarketStatus fromValue(int? value) {
+    value ??= 0;
     return MarketStatus.values.firstWhere(
       (e) => e.value == value,
       orElse:
-          () => throw ItemNotFoundException(name: "MarketStatus", value: value),
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching MarketStatus found for the given value. $value",
+                details: {"name": "MarketStatus", "value": value?.toString()},
+              ),
     );
   }
 
   /// Looks up a value by wire int, Dart enum name, or original proto
   /// name (whichever [value] happens to be). Throws if not found.
   static MarketStatus from(Object? value) {
+    value ??= 0;
     return MarketStatus.values.firstWhere(
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
-          () => throw ItemNotFoundException(name: "MarketStatus", value: value),
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching MarketStatus found for the given value. $value",
+                details: {"name": "MarketStatus", "value": value?.toString()},
+              ),
     );
   }
 }
@@ -57,13 +69,18 @@ enum ForcePausedReason implements ProtoEnumVariant {
 
   /// Looks up a value by its proto wire int. Throws if not found.
   static ForcePausedReason fromValue(int? value) {
+    value ??= 0;
     return ForcePausedReason.values.firstWhere(
       (e) => e.value == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "ForcePausedReason",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching ForcePausedReason found for the given value. $value",
+                details: {
+                  "name": "ForcePausedReason",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -71,13 +88,18 @@ enum ForcePausedReason implements ProtoEnumVariant {
   /// Looks up a value by wire int, Dart enum name, or original proto
   /// name (whichever [value] happens to be). Throws if not found.
   static ForcePausedReason from(Object? value) {
+    value ??= 0;
     return ForcePausedReason.values.firstWhere(
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "ForcePausedReason",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching ForcePausedReason found for the given value. $value",
+                details: {
+                  "name": "ForcePausedReason",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -108,14 +130,19 @@ class ForcePausedInfo extends CosmosProtoMessage {
   List<Object?> get protoValues => [reason, markPriceAtPausing];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'reason': reason?.protoName,
+      'reason': config.encodeEnum(reason),
       'mark_price_at_pausing': markPriceAtPausing,
     };
   }
 
-  factory ForcePausedInfo.fromJson(Map<String, dynamic> json) {
+  factory ForcePausedInfo.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ForcePausedInfo(
       reason: json.valueTo<ForcePausedReason?, Object?>(
         key: 'reason',
@@ -123,7 +150,7 @@ class ForcePausedInfo extends CosmosProtoMessage {
       ),
       markPriceAtPausing: json.valueAsString<String?>(
         'mark_price_at_pausing',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -187,21 +214,37 @@ class OpenNotionalCap extends CosmosProtoMessage {
   List<Object?> get protoValues => [uncapped, capped];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'uncapped': uncapped?.toJson(), 'capped': capped?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'uncapped': config.encodeMessage(uncapped),
+      'capped': config.encodeMessage(capped),
+    };
   }
 
-  factory OpenNotionalCap.fromJson(Map<String, dynamic> json) {
+  factory OpenNotionalCap.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return OpenNotionalCap(
-      uncapped: json.valueTo<OpenNotionalCapUncapped?, Map<String, dynamic>>(
+      uncapped: json.valueTo<OpenNotionalCapUncapped?, Object>(
         key: 'uncapped',
-        parse: (v) => OpenNotionalCapUncapped.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => OpenNotionalCapUncapped.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      capped: json.valueTo<OpenNotionalCapCapped?, Map<String, dynamic>>(
+      capped: json.valueTo<OpenNotionalCapCapped?, Object>(
         key: 'capped',
-        parse: (v) => OpenNotionalCapCapped.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => OpenNotionalCapCapped.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -248,11 +291,16 @@ class OpenNotionalCapUncapped extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory OpenNotionalCapUncapped.fromJson(Map<String, dynamic> json) {
+  factory OpenNotionalCapUncapped.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return OpenNotionalCapUncapped();
   }
 
@@ -290,13 +338,21 @@ class OpenNotionalCapCapped extends CosmosProtoMessage {
   List<Object?> get protoValues => [value];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'value': value};
   }
 
-  factory OpenNotionalCapCapped.fromJson(Map<String, dynamic> json) {
+  factory OpenNotionalCapCapped.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return OpenNotionalCapCapped(
-      value: json.valueAsString<String?>('value', acceptCamelCase: true),
+      value: json.valueAsString<String?>(
+        'value',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -335,16 +391,24 @@ class MarketFeeMultiplier extends CosmosProtoMessage {
   List<Object?> get protoValues => [marketId, feeMultiplier];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'market_id': marketId, 'fee_multiplier': feeMultiplier};
   }
 
-  factory MarketFeeMultiplier.fromJson(Map<String, dynamic> json) {
+  factory MarketFeeMultiplier.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MarketFeeMultiplier(
-      marketId: json.valueAsString<String?>('market_id', acceptCamelCase: true),
+      marketId: json.valueAsString<String?>(
+        'market_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       feeMultiplier: json.valueAsString<String?>(
         'fee_multiplier',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -486,7 +550,9 @@ class SpotMarket extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'ticker': ticker,
       'base_denom': baseDenom,
@@ -495,7 +561,7 @@ class SpotMarket extends CosmosProtoMessage {
       'taker_fee_rate': takerFeeRate,
       'relayer_fee_share_rate': relayerFeeShareRate,
       'market_id': marketId,
-      'status': status?.protoName,
+      'status': config.encodeEnum(status),
       'min_price_tick_size': minPriceTickSize,
       'min_quantity_tick_size': minQuantityTickSize,
       'min_notional': minNotional,
@@ -507,62 +573,74 @@ class SpotMarket extends CosmosProtoMessage {
     };
   }
 
-  factory SpotMarket.fromJson(Map<String, dynamic> json) {
+  factory SpotMarket.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SpotMarket(
-      ticker: json.valueAsString<String?>('ticker', acceptCamelCase: true),
+      ticker: json.valueAsString<String?>(
+        'ticker',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       baseDenom: json.valueAsString<String?>(
         'base_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       quoteDenom: json.valueAsString<String?>(
         'quote_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       makerFeeRate: json.valueAsString<String?>(
         'maker_fee_rate',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       takerFeeRate: json.valueAsString<String?>(
         'taker_fee_rate',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       relayerFeeShareRate: json.valueAsString<String?>(
         'relayer_fee_share_rate',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      marketId: json.valueAsString<String?>('market_id', acceptCamelCase: true),
+      marketId: json.valueAsString<String?>(
+        'market_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       status: json.valueTo<MarketStatus?, Object?>(
         key: 'status',
         parse: (v) => MarketStatus.from(v),
       ),
       minPriceTickSize: json.valueAsString<String?>(
         'min_price_tick_size',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       minQuantityTickSize: json.valueAsString<String?>(
         'min_quantity_tick_size',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       minNotional: json.valueAsString<String?>(
         'min_notional',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      admin: json.valueAsString<String?>('admin', acceptCamelCase: true),
+      admin: json.valueAsString<String?>(
+        'admin',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       adminPermissions: json.valueAsInt<int?>(
         'admin_permissions',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       baseDecimals: json.valueAsInt<int?>(
         'base_decimals',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       quoteDecimals: json.valueAsInt<int?>(
         'quote_decimals',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       hasDisabledMinimalProtocolFee: json.valueAsBool<bool?>(
         'has_disabled_minimal_protocol_fee',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -761,44 +839,52 @@ class BinaryOptionsMarket extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'ticker': ticker,
       'oracle_symbol': oracleSymbol,
       'oracle_provider': oracleProvider,
-      'oracle_type': oracleType?.protoName,
+      'oracle_type': config.encodeEnum(oracleType),
       'oracle_scale_factor': oracleScaleFactor,
-      'expiration_timestamp': expirationTimestamp?.toString(),
-      'settlement_timestamp': settlementTimestamp?.toString(),
+      'expiration_timestamp': config.encodeBigint(expirationTimestamp),
+      'settlement_timestamp': config.encodeBigint(settlementTimestamp),
       'admin': admin,
       'quote_denom': quoteDenom,
       'market_id': marketId,
       'maker_fee_rate': makerFeeRate,
       'taker_fee_rate': takerFeeRate,
       'relayer_fee_share_rate': relayerFeeShareRate,
-      'status': status?.protoName,
+      'status': config.encodeEnum(status),
       'min_price_tick_size': minPriceTickSize,
       'min_quantity_tick_size': minQuantityTickSize,
       'settlement_price': settlementPrice,
       'min_notional': minNotional,
       'admin_permissions': adminPermissions,
       'quote_decimals': quoteDecimals,
-      'open_notional_cap': openNotionalCap?.toJson(),
+      'open_notional_cap': config.encodeMessage(openNotionalCap),
       'has_disabled_minimal_protocol_fee': hasDisabledMinimalProtocolFee,
-      'force_paused_info': forcePausedInfo?.toJson(),
+      'force_paused_info': config.encodeMessage(forcePausedInfo),
     };
   }
 
-  factory BinaryOptionsMarket.fromJson(Map<String, dynamic> json) {
+  factory BinaryOptionsMarket.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return BinaryOptionsMarket(
-      ticker: json.valueAsString<String?>('ticker', acceptCamelCase: true),
+      ticker: json.valueAsString<String?>(
+        'ticker',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       oracleSymbol: json.valueAsString<String?>(
         'oracle_symbol',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       oracleProvider: json.valueAsString<String?>(
         'oracle_provider',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       oracleType: json
           .valueTo<injective_oracle_v1beta1_oracle.OracleType?, Object?>(
@@ -807,33 +893,39 @@ class BinaryOptionsMarket extends CosmosProtoMessage {
           ),
       oracleScaleFactor: json.valueAsInt<int?>(
         'oracle_scale_factor',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       expirationTimestamp: json.valueAsBigInt<BigInt?>(
         'expiration_timestamp',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       settlementTimestamp: json.valueAsBigInt<BigInt?>(
         'settlement_timestamp',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      admin: json.valueAsString<String?>('admin', acceptCamelCase: true),
+      admin: json.valueAsString<String?>(
+        'admin',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       quoteDenom: json.valueAsString<String?>(
         'quote_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      marketId: json.valueAsString<String?>('market_id', acceptCamelCase: true),
+      marketId: json.valueAsString<String?>(
+        'market_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       makerFeeRate: json.valueAsString<String?>(
         'maker_fee_rate',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       takerFeeRate: json.valueAsString<String?>(
         'taker_fee_rate',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       relayerFeeShareRate: json.valueAsString<String?>(
         'relayer_fee_share_rate',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       status: json.valueTo<MarketStatus?, Object?>(
         key: 'status',
@@ -841,41 +933,45 @@ class BinaryOptionsMarket extends CosmosProtoMessage {
       ),
       minPriceTickSize: json.valueAsString<String?>(
         'min_price_tick_size',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       minQuantityTickSize: json.valueAsString<String?>(
         'min_quantity_tick_size',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       settlementPrice: json.valueAsString<String?>(
         'settlement_price',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       minNotional: json.valueAsString<String?>(
         'min_notional',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       adminPermissions: json.valueAsInt<int?>(
         'admin_permissions',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       quoteDecimals: json.valueAsInt<int?>(
         'quote_decimals',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      openNotionalCap: json.valueTo<OpenNotionalCap?, Map<String, dynamic>>(
+      openNotionalCap: json.valueTo<OpenNotionalCap?, Object>(
         key: 'open_notional_cap',
-        parse: (v) => OpenNotionalCap.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) =>
+                OpenNotionalCap.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       hasDisabledMinimalProtocolFee: json.valueAsBool<bool?>(
         'has_disabled_minimal_protocol_fee',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      forcePausedInfo: json.valueTo<ForcePausedInfo?, Map<String, dynamic>>(
+      forcePausedInfo: json.valueTo<ForcePausedInfo?, Object>(
         key: 'force_paused_info',
-        parse: (v) => ForcePausedInfo.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) =>
+                ForcePausedInfo.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1106,12 +1202,14 @@ class DerivativeMarket extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'ticker': ticker,
       'oracle_base': oracleBase,
       'oracle_quote': oracleQuote,
-      'oracle_type': oracleType?.protoName,
+      'oracle_type': config.encodeEnum(oracleType),
       'oracle_scale_factor': oracleScaleFactor,
       'quote_denom': quoteDenom,
       'market_id': marketId,
@@ -1121,7 +1219,7 @@ class DerivativeMarket extends CosmosProtoMessage {
       'taker_fee_rate': takerFeeRate,
       'relayer_fee_share_rate': relayerFeeShareRate,
       'isPerpetual': isPerpetual,
-      'status': status?.protoName,
+      'status': config.encodeEnum(status),
       'min_price_tick_size': minPriceTickSize,
       'min_quantity_tick_size': minQuantityTickSize,
       'min_notional': minNotional,
@@ -1129,23 +1227,29 @@ class DerivativeMarket extends CosmosProtoMessage {
       'admin_permissions': adminPermissions,
       'quote_decimals': quoteDecimals,
       'reduce_margin_ratio': reduceMarginRatio,
-      'open_notional_cap': openNotionalCap?.toJson(),
+      'open_notional_cap': config.encodeMessage(openNotionalCap),
       'has_disabled_minimal_protocol_fee': hasDisabledMinimalProtocolFee,
-      'force_paused_info': forcePausedInfo?.toJson(),
+      'force_paused_info': config.encodeMessage(forcePausedInfo),
       'cross_margin_eligible': crossMarginEligible,
     };
   }
 
-  factory DerivativeMarket.fromJson(Map<String, dynamic> json) {
+  factory DerivativeMarket.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return DerivativeMarket(
-      ticker: json.valueAsString<String?>('ticker', acceptCamelCase: true),
+      ticker: json.valueAsString<String?>(
+        'ticker',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       oracleBase: json.valueAsString<String?>(
         'oracle_base',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       oracleQuote: json.valueAsString<String?>(
         'oracle_quote',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       oracleType: json
           .valueTo<injective_oracle_v1beta1_oracle.OracleType?, Object?>(
@@ -1154,36 +1258,39 @@ class DerivativeMarket extends CosmosProtoMessage {
           ),
       oracleScaleFactor: json.valueAsInt<int?>(
         'oracle_scale_factor',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       quoteDenom: json.valueAsString<String?>(
         'quote_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      marketId: json.valueAsString<String?>('market_id', acceptCamelCase: true),
+      marketId: json.valueAsString<String?>(
+        'market_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       initialMarginRatio: json.valueAsString<String?>(
         'initial_margin_ratio',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       maintenanceMarginRatio: json.valueAsString<String?>(
         'maintenance_margin_ratio',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       makerFeeRate: json.valueAsString<String?>(
         'maker_fee_rate',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       takerFeeRate: json.valueAsString<String?>(
         'taker_fee_rate',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       relayerFeeShareRate: json.valueAsString<String?>(
         'relayer_fee_share_rate',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       isPerpetual: json.valueAsBool<bool?>(
         'isPerpetual',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       status: json.valueTo<MarketStatus?, Object?>(
         key: 'status',
@@ -1191,46 +1298,53 @@ class DerivativeMarket extends CosmosProtoMessage {
       ),
       minPriceTickSize: json.valueAsString<String?>(
         'min_price_tick_size',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       minQuantityTickSize: json.valueAsString<String?>(
         'min_quantity_tick_size',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       minNotional: json.valueAsString<String?>(
         'min_notional',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      admin: json.valueAsString<String?>('admin', acceptCamelCase: true),
+      admin: json.valueAsString<String?>(
+        'admin',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       adminPermissions: json.valueAsInt<int?>(
         'admin_permissions',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       quoteDecimals: json.valueAsInt<int?>(
         'quote_decimals',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       reduceMarginRatio: json.valueAsString<String?>(
         'reduce_margin_ratio',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      openNotionalCap: json.valueTo<OpenNotionalCap?, Map<String, dynamic>>(
+      openNotionalCap: json.valueTo<OpenNotionalCap?, Object>(
         key: 'open_notional_cap',
-        parse: (v) => OpenNotionalCap.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) =>
+                OpenNotionalCap.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       hasDisabledMinimalProtocolFee: json.valueAsBool<bool?>(
         'has_disabled_minimal_protocol_fee',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      forcePausedInfo: json.valueTo<ForcePausedInfo?, Map<String, dynamic>>(
+      forcePausedInfo: json.valueTo<ForcePausedInfo?, Object>(
         key: 'force_paused_info',
-        parse: (v) => ForcePausedInfo.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) =>
+                ForcePausedInfo.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       crossMarginEligible: json.valueAsBool<bool?>(
         'cross_margin_eligible',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1320,7 +1434,9 @@ class DerivativeMarketSettlementInfo extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'market_id': marketId,
       'settlement_price': settlementPrice,
@@ -1328,16 +1444,22 @@ class DerivativeMarketSettlementInfo extends CosmosProtoMessage {
     };
   }
 
-  factory DerivativeMarketSettlementInfo.fromJson(Map<String, dynamic> json) {
+  factory DerivativeMarketSettlementInfo.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return DerivativeMarketSettlementInfo(
-      marketId: json.valueAsString<String?>('market_id', acceptCamelCase: true),
+      marketId: json.valueAsString<String?>(
+        'market_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       settlementPrice: json.valueAsString<String?>(
         'settlement_price',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       isForcedSettlement: json.valueAsBool<bool?>(
         'is_forced_settlement',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1384,17 +1506,26 @@ class MarketVolume extends CosmosProtoMessage {
   List<Object?> get protoValues => [marketId, volume];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'market_id': marketId, 'volume': volume?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'market_id': marketId, 'volume': config.encodeMessage(volume)};
   }
 
-  factory MarketVolume.fromJson(Map<String, dynamic> json) {
+  factory MarketVolume.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MarketVolume(
-      marketId: json.valueAsString<String?>('market_id', acceptCamelCase: true),
-      volume: json.valueTo<VolumeRecord?, Map<String, dynamic>>(
+      marketId: json.valueAsString<String?>(
+        'market_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      volume: json.valueTo<VolumeRecord?, Object>(
         key: 'volume',
-        parse: (v) => VolumeRecord.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => VolumeRecord.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1442,19 +1573,24 @@ class VolumeRecord extends CosmosProtoMessage {
   List<Object?> get protoValues => [makerVolume, takerVolume];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'maker_volume': makerVolume, 'taker_volume': takerVolume};
   }
 
-  factory VolumeRecord.fromJson(Map<String, dynamic> json) {
+  factory VolumeRecord.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return VolumeRecord(
       makerVolume: json.valueAsString<String?>(
         'maker_volume',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       takerVolume: json.valueAsString<String?>(
         'taker_volume',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1494,17 +1630,32 @@ class ExpiryFuturesMarketInfoState extends CosmosProtoMessage {
   List<Object?> get protoValues => [marketId, marketInfo];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'market_id': marketId, 'market_info': marketInfo?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'market_id': marketId,
+      'market_info': config.encodeMessage(marketInfo),
+    };
   }
 
-  factory ExpiryFuturesMarketInfoState.fromJson(Map<String, dynamic> json) {
+  factory ExpiryFuturesMarketInfoState.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ExpiryFuturesMarketInfoState(
-      marketId: json.valueAsString<String?>('market_id', acceptCamelCase: true),
-      marketInfo: json.valueTo<ExpiryFuturesMarketInfo?, Map<String, dynamic>>(
+      marketId: json.valueAsString<String?>(
+        'market_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      marketInfo: json.valueTo<ExpiryFuturesMarketInfo?, Object>(
         key: 'market_info',
-        parse: (v) => ExpiryFuturesMarketInfo.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => ExpiryFuturesMarketInfo.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1547,17 +1698,29 @@ class PerpetualMarketFundingState extends CosmosProtoMessage {
   List<Object?> get protoValues => [marketId, funding];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'market_id': marketId, 'funding': funding?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'market_id': marketId, 'funding': config.encodeMessage(funding)};
   }
 
-  factory PerpetualMarketFundingState.fromJson(Map<String, dynamic> json) {
+  factory PerpetualMarketFundingState.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return PerpetualMarketFundingState(
-      marketId: json.valueAsString<String?>('market_id', acceptCamelCase: true),
-      funding: json.valueTo<PerpetualMarketFunding?, Map<String, dynamic>>(
+      marketId: json.valueAsString<String?>(
+        'market_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      funding: json.valueTo<PerpetualMarketFunding?, Object>(
         key: 'funding',
-        parse: (v) => PerpetualMarketFunding.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => PerpetualMarketFunding.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1657,11 +1820,13 @@ class ExpiryFuturesMarketInfo extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'market_id': marketId,
-      'expiration_timestamp': expirationTimestamp?.toString(),
-      'twap_start_timestamp': twapStartTimestamp?.toString(),
+      'expiration_timestamp': config.encodeBigint(expirationTimestamp),
+      'twap_start_timestamp': config.encodeBigint(twapStartTimestamp),
       'expiration_twap_start_price_cumulative':
           expirationTwapStartPriceCumulative,
       'settlement_price': settlementPrice,
@@ -1672,32 +1837,38 @@ class ExpiryFuturesMarketInfo extends CosmosProtoMessage {
     };
   }
 
-  factory ExpiryFuturesMarketInfo.fromJson(Map<String, dynamic> json) {
+  factory ExpiryFuturesMarketInfo.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ExpiryFuturesMarketInfo(
-      marketId: json.valueAsString<String?>('market_id', acceptCamelCase: true),
+      marketId: json.valueAsString<String?>(
+        'market_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       expirationTimestamp: json.valueAsBigInt<BigInt?>(
         'expiration_timestamp',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       twapStartTimestamp: json.valueAsBigInt<BigInt?>(
         'twap_start_timestamp',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       expirationTwapStartPriceCumulative: json.valueAsString<String?>(
         'expiration_twap_start_price_cumulative',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       settlementPrice: json.valueAsString<String?>(
         'settlement_price',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       expirationTwapStartBaseCumulativePrice: json.valueAsString<String?>(
         'expiration_twap_start_base_cumulative_price',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       expirationTwapStartQuoteCumulativePrice: json.valueAsString<String?>(
         'expiration_twap_start_quote_cumulative_price',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1774,34 +1945,42 @@ class PerpetualMarketInfo extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'market_id': marketId,
       'hourly_funding_rate_cap': hourlyFundingRateCap,
       'hourly_interest_rate': hourlyInterestRate,
-      'next_funding_timestamp': nextFundingTimestamp?.toString(),
-      'funding_interval': fundingInterval?.toString(),
+      'next_funding_timestamp': config.encodeBigint(nextFundingTimestamp),
+      'funding_interval': config.encodeBigint(fundingInterval),
     };
   }
 
-  factory PerpetualMarketInfo.fromJson(Map<String, dynamic> json) {
+  factory PerpetualMarketInfo.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return PerpetualMarketInfo(
-      marketId: json.valueAsString<String?>('market_id', acceptCamelCase: true),
+      marketId: json.valueAsString<String?>(
+        'market_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       hourlyFundingRateCap: json.valueAsString<String?>(
         'hourly_funding_rate_cap',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       hourlyInterestRate: json.valueAsString<String?>(
         'hourly_interest_rate',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       nextFundingTimestamp: json.valueAsBigInt<BigInt?>(
         'next_funding_timestamp',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       fundingInterval: json.valueAsBigInt<BigInt?>(
         'funding_interval',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1863,27 +2042,32 @@ class PerpetualMarketFunding extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'cumulative_funding': cumulativeFunding,
       'cumulative_price': cumulativePrice,
-      'last_timestamp': lastTimestamp?.toString(),
+      'last_timestamp': config.encodeBigint(lastTimestamp),
     };
   }
 
-  factory PerpetualMarketFunding.fromJson(Map<String, dynamic> json) {
+  factory PerpetualMarketFunding.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return PerpetualMarketFunding(
       cumulativeFunding: json.valueAsString<String?>(
         'cumulative_funding',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       cumulativePrice: json.valueAsString<String?>(
         'cumulative_price',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       lastTimestamp: json.valueAsBigInt<BigInt?>(
         'last_timestamp',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

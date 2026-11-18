@@ -27,7 +27,7 @@ class TendermintRequestCommit
   Map<String, String?> get parameters => {"height": height?.toString()};
 
   @override
-  TendermintCommitResponseResult onResonse(Map<String, dynamic> result) {
+  TendermintCommitResponseResult onResponse(Map<String, dynamic> result) {
     return TendermintCommitResponseResult.fromJson(result);
   }
 }

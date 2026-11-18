@@ -33,22 +33,27 @@ class CommunityPoolRebate extends CosmosProtoMessage {
   List<Object?> get protoValues => [rebateRate, liquidStakedStTokenAmount];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'rebate_rate': rebateRate,
       'liquid_staked_st_token_amount': liquidStakedStTokenAmount,
     };
   }
 
-  factory CommunityPoolRebate.fromJson(Map<String, dynamic> json) {
+  factory CommunityPoolRebate.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return CommunityPoolRebate(
       rebateRate: json.valueAsString<String?>(
         'rebate_rate',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       liquidStakedStTokenAmount: json.valueAsString<String?>(
         'liquid_staked_st_token_amount',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -296,7 +301,9 @@ class HostZone extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'chain_id': chainId,
       'bech32prefix': bech32prefix,
@@ -304,8 +311,8 @@ class HostZone extends CosmosProtoMessage {
       'transfer_channel_id': transferChannelId,
       'ibc_denom': ibcDenom,
       'host_denom': hostDenom,
-      'unbonding_period': unbondingPeriod?.toString(),
-      'validators': validators.map((e) => e.toJson()).toList(),
+      'unbonding_period': config.encodeBigint(unbondingPeriod),
+      'validators': validators.map((e) => config.encodeMessage(e)).toList(),
       'deposit_address': depositAddress,
       'withdrawal_ica_address': withdrawalIcaAddress,
       'fee_ica_address': feeIcaAddress,
@@ -324,139 +331,165 @@ class HostZone extends CosmosProtoMessage {
       'max_redemption_rate': maxRedemptionRate,
       'min_inner_redemption_rate': minInnerRedemptionRate,
       'max_inner_redemption_rate': maxInnerRedemptionRate,
-      'max_messages_per_ica_tx': maxMessagesPerIcaTx?.toString(),
+      'max_messages_per_ica_tx': config.encodeBigint(maxMessagesPerIcaTx),
       'redemptions_enabled': redemptionsEnabled,
-      'community_pool_rebate': communityPoolRebate?.toJson(),
+      'community_pool_rebate': config.encodeMessage(communityPoolRebate),
       'lsm_liquid_stake_enabled': lsmLiquidStakeEnabled,
       'halted': halted,
       'deprecated': deprecated,
     };
   }
 
-  factory HostZone.fromJson(Map<String, dynamic> json) {
+  factory HostZone.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return HostZone(
-      chainId: json.valueAsString<String?>('chain_id', acceptCamelCase: true),
+      chainId: json.valueAsString<String?>(
+        'chain_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       bech32prefix: json.valueAsString<String?>(
         'bech32prefix',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       connectionId: json.valueAsString<String?>(
         'connection_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       transferChannelId: json.valueAsString<String?>(
         'transfer_channel_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      ibcDenom: json.valueAsString<String?>('ibc_denom', acceptCamelCase: true),
+      ibcDenom: json.valueAsString<String?>(
+        'ibc_denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       hostDenom: json.valueAsString<String?>(
         'host_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       unbondingPeriod: json.valueAsBigInt<BigInt?>(
         'unbonding_period',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       validators:
-          (json.valueEnsureAsList<dynamic>('validators', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'validators',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   stride_stakeibc_validator.Validator,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
-                  parse: (v) => stride_stakeibc_validator.Validator.fromJson(v),
+                  parse:
+                      (v) => stride_stakeibc_validator.Validator.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       depositAddress: json.valueAsString<String?>(
         'deposit_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       withdrawalIcaAddress: json.valueAsString<String?>(
         'withdrawal_ica_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       feeIcaAddress: json.valueAsString<String?>(
         'fee_ica_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       delegationIcaAddress: json.valueAsString<String?>(
         'delegation_ica_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       redemptionIcaAddress: json.valueAsString<String?>(
         'redemption_ica_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       communityPoolDepositIcaAddress: json.valueAsString<String?>(
         'community_pool_deposit_ica_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       communityPoolReturnIcaAddress: json.valueAsString<String?>(
         'community_pool_return_ica_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       communityPoolStakeHoldingAddress: json.valueAsString<String?>(
         'community_pool_stake_holding_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       communityPoolRedeemHoldingAddress: json.valueAsString<String?>(
         'community_pool_redeem_holding_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       communityPoolTreasuryAddress: json.valueAsString<String?>(
         'community_pool_treasury_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       totalDelegations: json.valueAsString<String?>(
         'total_delegations',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       lastRedemptionRate: json.valueAsString<String?>(
         'last_redemption_rate',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       redemptionRate: json.valueAsString<String?>(
         'redemption_rate',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       minRedemptionRate: json.valueAsString<String?>(
         'min_redemption_rate',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       maxRedemptionRate: json.valueAsString<String?>(
         'max_redemption_rate',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       minInnerRedemptionRate: json.valueAsString<String?>(
         'min_inner_redemption_rate',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       maxInnerRedemptionRate: json.valueAsString<String?>(
         'max_inner_redemption_rate',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       maxMessagesPerIcaTx: json.valueAsBigInt<BigInt?>(
         'max_messages_per_ica_tx',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       redemptionsEnabled: json.valueAsBool<bool?>(
         'redemptions_enabled',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      communityPoolRebate: json
-          .valueTo<CommunityPoolRebate?, Map<String, dynamic>>(
-            key: 'community_pool_rebate',
-            parse: (v) => CommunityPoolRebate.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      communityPoolRebate: json.valueTo<CommunityPoolRebate?, Object>(
+        key: 'community_pool_rebate',
+        parse:
+            (v) => CommunityPoolRebate.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       lsmLiquidStakeEnabled: json.valueAsBool<bool?>(
         'lsm_liquid_stake_enabled',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      halted: json.valueAsBool<bool?>('halted', acceptCamelCase: true),
-      deprecated: json.valueAsBool<bool?>('deprecated', acceptCamelCase: true),
+      halted: json.valueAsBool<bool?>(
+        'halted',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      deprecated: json.valueAsBool<bool?>(
+        'deprecated',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

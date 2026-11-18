@@ -24,11 +24,16 @@ class QueryConfigRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryConfigRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryConfigRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryConfigRequest();
   }
 
@@ -72,18 +77,26 @@ class QueryConfigResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [config];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'config': config?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'config': config.encodeMessage(this.config)};
   }
 
-  factory QueryConfigResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryConfigResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryConfigResponse(
-      config: json
-          .valueTo<cosmos_app_v1alpha1_config.Config?, Map<String, dynamic>>(
-            key: 'config',
-            parse: (v) => cosmos_app_v1alpha1_config.Config.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      config: json.valueTo<cosmos_app_v1alpha1_config.Config?, Object>(
+        key: 'config',
+        parse:
+            (v) => cosmos_app_v1alpha1_config.Config.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

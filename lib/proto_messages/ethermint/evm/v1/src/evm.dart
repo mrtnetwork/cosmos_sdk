@@ -25,20 +25,32 @@ enum AccessType implements ProtoEnumVariant {
 
   /// Looks up a value by its proto wire int. Throws if not found.
   static AccessType fromValue(int? value) {
+    value ??= 0;
     return AccessType.values.firstWhere(
       (e) => e.value == value,
       orElse:
-          () => throw ItemNotFoundException(name: "AccessType", value: value),
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching AccessType found for the given value. $value",
+                details: {"name": "AccessType", "value": value?.toString()},
+              ),
     );
   }
 
   /// Looks up a value by wire int, Dart enum name, or original proto
   /// name (whichever [value] happens to be). Throws if not found.
   static AccessType from(Object? value) {
+    value ??= 0;
     return AccessType.values.firstWhere(
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
-          () => throw ItemNotFoundException(name: "AccessType", value: value),
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching AccessType found for the given value. $value",
+                details: {"name": "AccessType", "value": value?.toString()},
+              ),
     );
   }
 }
@@ -114,42 +126,52 @@ class Params extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'extra_eips': extraEips.map((e) => e).toList(),
       'allow_unprotected_txs': allowUnprotectedTxs,
       'evm_channels': evmChannels.map((e) => e).toList(),
-      'access_control': accessControl?.toJson(),
+      'access_control': config.encodeMessage(accessControl),
       'active_static_precompiles':
           activeStaticPrecompiles.map((e) => e).toList(),
     };
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
       extraEips:
           (json.valueEnsureAsList<dynamic>(
             'extra_eips',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
       allowUnprotectedTxs: json.valueAsBool<bool?>(
         'allow_unprotected_txs',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       evmChannels:
           (json.valueEnsureAsList<dynamic>(
             'evm_channels',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
-      accessControl: json.valueTo<AccessControl?, Map<String, dynamic>>(
+      accessControl: json.valueTo<AccessControl?, Object>(
         key: 'access_control',
-        parse: (v) => AccessControl.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) =>
+                AccessControl.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       activeStaticPrecompiles:
           (json.valueEnsureAsList<dynamic>(
             'active_static_precompiles',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
     );
   }
@@ -202,21 +224,37 @@ class AccessControl extends CosmosProtoMessage {
   List<Object?> get protoValues => [create, call];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'create': create?.toJson(), 'call': call?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'create': config.encodeMessage(create),
+      'call': config.encodeMessage(call),
+    };
   }
 
-  factory AccessControl.fromJson(Map<String, dynamic> json) {
+  factory AccessControl.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AccessControl(
-      create: json.valueTo<AccessControlType?, Map<String, dynamic>>(
+      create: json.valueTo<AccessControlType?, Object>(
         key: 'create',
-        parse: (v) => AccessControlType.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => AccessControlType.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      call: json.valueTo<AccessControlType?, Map<String, dynamic>>(
+      call: json.valueTo<AccessControlType?, Object>(
         key: 'call',
-        parse: (v) => AccessControlType.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => AccessControlType.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -275,14 +313,19 @@ class AccessControlType extends CosmosProtoMessage {
   List<Object?> get protoValues => [accessType, accessControlList];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'access_type': accessType?.protoName,
+      'access_type': config.encodeEnum(accessType),
       'access_control_list': accessControlList.map((e) => e).toList(),
     };
   }
 
-  factory AccessControlType.fromJson(Map<String, dynamic> json) {
+  factory AccessControlType.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AccessControlType(
       accessType: json.valueTo<AccessType?, Object?>(
         key: 'access_type',
@@ -291,7 +334,8 @@ class AccessControlType extends CosmosProtoMessage {
       accessControlList:
           (json.valueEnsureAsList<dynamic>(
             'access_control_list',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
     );
   }
@@ -467,7 +511,9 @@ class ChainConfig extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'homestead_block': homesteadBlock,
       'dao_fork_block': daoForkBlock,
@@ -488,93 +534,105 @@ class ChainConfig extends CosmosProtoMessage {
       'merge_netsplit_block': mergeNetsplitBlock,
       'shanghai_block': shanghaiBlock,
       'cancun_block': cancunBlock,
-      'chain_id': chainId?.toString(),
+      'chain_id': config.encodeBigint(chainId),
       'denom': denom,
-      'decimals': decimals?.toString(),
+      'decimals': config.encodeBigint(decimals),
     };
   }
 
-  factory ChainConfig.fromJson(Map<String, dynamic> json) {
+  factory ChainConfig.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ChainConfig(
       homesteadBlock: json.valueAsString<String?>(
         'homestead_block',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       daoForkBlock: json.valueAsString<String?>(
         'dao_fork_block',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       daoForkSupport: json.valueAsBool<bool?>(
         'dao_fork_support',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       eip150Block: json.valueAsString<String?>(
         'eip150_block',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       eip150Hash: json.valueAsString<String?>(
         'eip150_hash',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       eip155Block: json.valueAsString<String?>(
         'eip155_block',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       eip158Block: json.valueAsString<String?>(
         'eip158_block',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       byzantiumBlock: json.valueAsString<String?>(
         'byzantium_block',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       constantinopleBlock: json.valueAsString<String?>(
         'constantinople_block',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       petersburgBlock: json.valueAsString<String?>(
         'petersburg_block',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       istanbulBlock: json.valueAsString<String?>(
         'istanbul_block',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       muirGlacierBlock: json.valueAsString<String?>(
         'muir_glacier_block',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       berlinBlock: json.valueAsString<String?>(
         'berlin_block',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       londonBlock: json.valueAsString<String?>(
         'london_block',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       arrowGlacierBlock: json.valueAsString<String?>(
         'arrow_glacier_block',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       grayGlacierBlock: json.valueAsString<String?>(
         'gray_glacier_block',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       mergeNetsplitBlock: json.valueAsString<String?>(
         'merge_netsplit_block',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       shanghaiBlock: json.valueAsString<String?>(
         'shanghai_block',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       cancunBlock: json.valueAsString<String?>(
         'cancun_block',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      chainId: json.valueAsBigInt<BigInt?>('chain_id', acceptCamelCase: true),
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
-      decimals: json.valueAsBigInt<BigInt?>('decimals', acceptCamelCase: true),
+      chainId: json.valueAsBigInt<BigInt?>(
+        'chain_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      decimals: json.valueAsBigInt<BigInt?>(
+        'decimals',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -625,7 +683,7 @@ class Log extends CosmosProtoMessage {
   final List<String> topics;
 
   /// data which is supplied by the contract, usually ABI-encoded
-  final List<int>? data;
+  final BuBytes? data;
 
   /// block_number of the block in which the transaction was included
   final BigInt? blockNumber;
@@ -647,17 +705,17 @@ class Log extends CosmosProtoMessage {
   /// through a filter query.
   final bool? removed;
 
-  const Log({
+  Log({
     this.address,
     this.topics = const [],
-    this.data,
+    List<int>? data,
     this.blockNumber,
     this.txHash,
     this.txIndex,
     this.blockHash,
     this.index,
     this.removed,
-  });
+  }) : data = data?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -697,51 +755,64 @@ class Log extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'address': address,
       'topics': topics.map((e) => e).toList(),
-      'data': switch (data) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'block_number': blockNumber?.toString(),
+      'data': config.encodeBinary(data),
+      'block_number': config.encodeBigint(blockNumber),
       'tx_hash': txHash,
-      'tx_index': txIndex?.toString(),
+      'tx_index': config.encodeBigint(txIndex),
       'block_hash': blockHash,
-      'index': index?.toString(),
+      'index': config.encodeBigint(index),
       'removed': removed,
     };
   }
 
-  factory Log.fromJson(Map<String, dynamic> json) {
+  factory Log.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Log(
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       topics:
           (json.valueEnsureAsList<dynamic>(
             'topics',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
-      data: json.valueAsBytes<List<int>?>(
-        'data',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      data: config.decodeBinary<List<int>?>(
+        json.valueAs('data', normalizeKeyLookup: config.normalizeKeys),
       ),
       blockNumber: json.valueAsBigInt<BigInt?>(
         'block_number',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      txHash: json.valueAsString<String?>('tx_hash', acceptCamelCase: true),
-      txIndex: json.valueAsBigInt<BigInt?>('tx_index', acceptCamelCase: true),
+      txHash: json.valueAsString<String?>(
+        'tx_hash',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      txIndex: json.valueAsBigInt<BigInt?>(
+        'tx_index',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       blockHash: json.valueAsString<String?>(
         'block_hash',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      index: json.valueAsBigInt<BigInt?>('index', acceptCamelCase: true),
-      removed: json.valueAsBool<bool?>('removed', acceptCamelCase: true),
+      index: json.valueAsBigInt<BigInt?>(
+        'index',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      removed: json.valueAsBool<bool?>(
+        'removed',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -856,53 +927,74 @@ class TraceConfig extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'tracer': tracer,
       'timeout': timeout,
-      'reexec': reexec?.toString(),
+      'reexec': config.encodeBigint(reexec),
       'disable_stack': disableStack,
       'disable_storage': disableStorage,
       'debug': debug,
       'limit': limit,
-      'overrides': overrides?.toJson(),
+      'overrides': config.encodeMessage(overrides),
       'enable_memory': enableMemory,
       'enable_return_data': enableReturnData,
       'tracer_json_config': tracerJsonConfig,
     };
   }
 
-  factory TraceConfig.fromJson(Map<String, dynamic> json) {
+  factory TraceConfig.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return TraceConfig(
-      tracer: json.valueAsString<String?>('tracer', acceptCamelCase: true),
-      timeout: json.valueAsString<String?>('timeout', acceptCamelCase: true),
-      reexec: json.valueAsBigInt<BigInt?>('reexec', acceptCamelCase: true),
+      tracer: json.valueAsString<String?>(
+        'tracer',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      timeout: json.valueAsString<String?>(
+        'timeout',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      reexec: json.valueAsBigInt<BigInt?>(
+        'reexec',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       disableStack: json.valueAsBool<bool?>(
         'disable_stack',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       disableStorage: json.valueAsBool<bool?>(
         'disable_storage',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      debug: json.valueAsBool<bool?>('debug', acceptCamelCase: true),
-      limit: json.valueAsInt<int?>('limit', acceptCamelCase: true),
-      overrides: json.valueTo<ChainConfig?, Map<String, dynamic>>(
+      debug: json.valueAsBool<bool?>(
+        'debug',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      limit: json.valueAsInt<int?>(
+        'limit',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      overrides: json.valueTo<ChainConfig?, Object>(
         key: 'overrides',
-        parse: (v) => ChainConfig.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => ChainConfig.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       enableMemory: json.valueAsBool<bool?>(
         'enable_memory',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       enableReturnData: json.valueAsBool<bool?>(
         'enable_return_data',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       tracerJsonConfig: json.valueAsString<String?>(
         'tracer_json_config',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

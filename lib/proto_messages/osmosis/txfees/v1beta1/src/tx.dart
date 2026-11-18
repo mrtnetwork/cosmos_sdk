@@ -40,30 +40,44 @@ class MsgSetFeeTokens extends CosmosProtoMessage
   List<Object?> get protoValues => [feeTokens, sender];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'fee_tokens': feeTokens.map((e) => e.toJson()).toList(),
+      'fee_tokens': feeTokens.map((e) => config.encodeMessage(e)).toList(),
       'sender': sender,
     };
   }
 
-  factory MsgSetFeeTokens.fromJson(Map<String, dynamic> json) {
+  factory MsgSetFeeTokens.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSetFeeTokens(
       feeTokens:
-          (json.valueEnsureAsList<dynamic>('fee_tokens', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'fee_tokens',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   osmosis_txfees_v1beta1_feetoken.FeeToken,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
-                      (v) =>
-                          osmosis_txfees_v1beta1_feetoken.FeeToken.fromJson(v),
+                      (v) => osmosis_txfees_v1beta1_feetoken.FeeToken.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
-      sender: json.valueAsString<String?>('sender', acceptCamelCase: true),
+      sender: json.valueAsString<String?>(
+        'sender',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -113,11 +127,16 @@ class MsgSetFeeTokensResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgSetFeeTokensResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgSetFeeTokensResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSetFeeTokensResponse();
   }
 

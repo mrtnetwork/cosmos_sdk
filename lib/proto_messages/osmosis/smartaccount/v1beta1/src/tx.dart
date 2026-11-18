@@ -11,9 +11,10 @@ class MsgAddAuthenticator extends CosmosProtoMessage
 
   final String? authenticatorType;
 
-  final List<int>? data;
+  final BuBytes? data;
 
-  const MsgAddAuthenticator({this.sender, this.authenticatorType, this.data});
+  MsgAddAuthenticator({this.sender, this.authenticatorType, List<int>? data})
+    : data = data?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -40,31 +41,31 @@ class MsgAddAuthenticator extends CosmosProtoMessage
   List<Object?> get protoValues => [sender, authenticatorType, data];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'sender': sender,
       'authenticator_type': authenticatorType,
-      'data': switch (data) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'data': config.encodeBinary(data),
     };
   }
 
-  factory MsgAddAuthenticator.fromJson(Map<String, dynamic> json) {
+  factory MsgAddAuthenticator.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgAddAuthenticator(
-      sender: json.valueAsString<String?>('sender', acceptCamelCase: true),
+      sender: json.valueAsString<String?>(
+        'sender',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       authenticatorType: json.valueAsString<String?>(
         'authenticator_type',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      data: json.valueAsBytes<List<int>?>(
-        'data',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      data: config.decodeBinary<List<int>?>(
+        json.valueAs('data', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }
@@ -113,13 +114,21 @@ class MsgAddAuthenticatorResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [success];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'success': success};
   }
 
-  factory MsgAddAuthenticatorResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgAddAuthenticatorResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgAddAuthenticatorResponse(
-      success: json.valueAsBool<bool?>('success', acceptCamelCase: true),
+      success: json.valueAsBool<bool?>(
+        'success',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -167,14 +176,25 @@ class MsgRemoveAuthenticator extends CosmosProtoMessage
   List<Object?> get protoValues => [sender, id];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'sender': sender, 'id': id?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'sender': sender, 'id': config.encodeBigint(id)};
   }
 
-  factory MsgRemoveAuthenticator.fromJson(Map<String, dynamic> json) {
+  factory MsgRemoveAuthenticator.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgRemoveAuthenticator(
-      sender: json.valueAsString<String?>('sender', acceptCamelCase: true),
-      id: json.valueAsBigInt<BigInt?>('id', acceptCamelCase: true),
+      sender: json.valueAsString<String?>(
+        'sender',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      id: json.valueAsBigInt<BigInt?>(
+        'id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -225,13 +245,21 @@ class MsgRemoveAuthenticatorResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [success];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'success': success};
   }
 
-  factory MsgRemoveAuthenticatorResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgRemoveAuthenticatorResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgRemoveAuthenticatorResponse(
-      success: json.valueAsBool<bool?>('success', acceptCamelCase: true),
+      success: json.valueAsBool<bool?>(
+        'success',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -277,14 +305,25 @@ class MsgSetActiveState extends CosmosProtoMessage
   List<Object?> get protoValues => [sender, active];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'sender': sender, 'active': active};
   }
 
-  factory MsgSetActiveState.fromJson(Map<String, dynamic> json) {
+  factory MsgSetActiveState.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSetActiveState(
-      sender: json.valueAsString<String?>('sender', acceptCamelCase: true),
-      active: json.valueAsBool<bool?>('active', acceptCamelCase: true),
+      sender: json.valueAsString<String?>(
+        'sender',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      active: json.valueAsBool<bool?>(
+        'active',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -328,11 +367,16 @@ class MsgSetActiveStateResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgSetActiveStateResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgSetActiveStateResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSetActiveStateResponse();
   }
 

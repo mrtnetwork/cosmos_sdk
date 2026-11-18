@@ -46,24 +46,31 @@ class MsgUpdateParams extends CosmosProtoMessage
   List<Object?> get protoValues => [authority, params];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'authority': authority, 'params': params?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'authority': authority, 'params': config.encodeMessage(params)};
   }
 
-  factory MsgUpdateParams.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateParams.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateParams(
       authority: json.valueAsString<String?>(
         'authority',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      params: json.valueTo<
-        injective_permissions_v1beta1_params.Params?,
-        Map<String, dynamic>
-      >(
-        key: 'params',
-        parse: (v) => injective_permissions_v1beta1_params.Params.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      params: json
+          .valueTo<injective_permissions_v1beta1_params.Params?, Object>(
+            key: 'params',
+            parse:
+                (v) => injective_permissions_v1beta1_params.Params.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -110,11 +117,16 @@ class MsgUpdateParamsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgUpdateParamsResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateParamsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateParamsResponse();
   }
 
@@ -164,22 +176,32 @@ class MsgCreateNamespace extends CosmosProtoMessage
   List<Object?> get protoValues => [sender, namespace];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'sender': sender, 'namespace': namespace?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'sender': sender, 'namespace': config.encodeMessage(namespace)};
   }
 
-  factory MsgCreateNamespace.fromJson(Map<String, dynamic> json) {
+  factory MsgCreateNamespace.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgCreateNamespace(
-      sender: json.valueAsString<String?>('sender', acceptCamelCase: true),
+      sender: json.valueAsString<String?>(
+        'sender',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       namespace: json.valueTo<
         injective_permissions_v1beta1_permissions.Namespace?,
-        Map<String, dynamic>
+        Object
       >(
         key: 'namespace',
         parse:
-            (v) =>
-                injective_permissions_v1beta1_permissions.Namespace.fromJson(v),
-        acceptCamelCase: true,
+            (v) => injective_permissions_v1beta1_permissions.Namespace.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -229,11 +251,16 @@ class MsgCreateNamespaceResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgCreateNamespaceResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgCreateNamespaceResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgCreateNamespaceResponse();
   }
 
@@ -340,104 +367,139 @@ class MsgUpdateNamespace extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'sender': sender,
       'denom': denom,
-      'wasm_hook': wasmHook?.toJson(),
-      'role_permissions': rolePermissions.map((e) => e.toJson()).toList(),
-      'role_managers': roleManagers.map((e) => e.toJson()).toList(),
-      'policy_statuses': policyStatuses.map((e) => e.toJson()).toList(),
+      'wasm_hook': config.encodeMessage(wasmHook),
+      'role_permissions':
+          rolePermissions.map((e) => config.encodeMessage(e)).toList(),
+      'role_managers':
+          roleManagers.map((e) => config.encodeMessage(e)).toList(),
+      'policy_statuses':
+          policyStatuses.map((e) => config.encodeMessage(e)).toList(),
       'policy_manager_capabilities':
-          policyManagerCapabilities.map((e) => e.toJson()).toList(),
-      'evm_hook': evmHook?.toJson(),
+          policyManagerCapabilities
+              .map((e) => config.encodeMessage(e))
+              .toList(),
+      'evm_hook': config.encodeMessage(evmHook),
     };
   }
 
-  factory MsgUpdateNamespace.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateNamespace.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateNamespace(
-      sender: json.valueAsString<String?>('sender', acceptCamelCase: true),
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
-      wasmHook: json
-          .valueTo<MsgUpdateNamespaceSetContractHook?, Map<String, dynamic>>(
-            key: 'wasm_hook',
-            parse: (v) => MsgUpdateNamespaceSetContractHook.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      sender: json.valueAsString<String?>(
+        'sender',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      wasmHook: json.valueTo<MsgUpdateNamespaceSetContractHook?, Object>(
+        key: 'wasm_hook',
+        parse:
+            (v) => MsgUpdateNamespaceSetContractHook.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       rolePermissions:
           (json.valueEnsureAsList<dynamic>(
                 'role_permissions',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_permissions_v1beta1_permissions.Role,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => injective_permissions_v1beta1_permissions
-                          .Role.fromJson(v),
+                          .Role.fromJson(JsonParser.valueAs(v), config: config),
                 ),
               )
               .toList(),
       roleManagers:
           (json.valueEnsureAsList<dynamic>(
                 'role_managers',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_permissions_v1beta1_permissions.RoleManager,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => injective_permissions_v1beta1_permissions
-                          .RoleManager.fromJson(v),
+                          .RoleManager.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       policyStatuses:
           (json.valueEnsureAsList<dynamic>(
                 'policy_statuses',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_permissions_v1beta1_permissions.PolicyStatus,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => injective_permissions_v1beta1_permissions
-                          .PolicyStatus.fromJson(v),
+                          .PolicyStatus.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       policyManagerCapabilities:
           (json.valueEnsureAsList<dynamic>(
                 'policy_manager_capabilities',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_permissions_v1beta1_permissions.PolicyManagerCapability,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => injective_permissions_v1beta1_permissions
-                          .PolicyManagerCapability.fromJson(v),
+                          .PolicyManagerCapability.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
-      evmHook: json
-          .valueTo<MsgUpdateNamespaceSetContractHook?, Map<String, dynamic>>(
-            key: 'evm_hook',
-            parse: (v) => MsgUpdateNamespaceSetContractHook.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      evmHook: json.valueTo<MsgUpdateNamespaceSetContractHook?, Object>(
+        key: 'evm_hook',
+        parse:
+            (v) => MsgUpdateNamespaceSetContractHook.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -523,15 +585,21 @@ class MsgUpdateNamespaceSetContractHook extends CosmosProtoMessage {
   List<Object?> get protoValues => [newValue];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'new_value': newValue};
   }
 
   factory MsgUpdateNamespaceSetContractHook.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateNamespaceSetContractHook(
-      newValue: json.valueAsString<String?>('new_value', acceptCamelCase: true),
+      newValue: json.valueAsString<String?>(
+        'new_value',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -566,11 +634,16 @@ class MsgUpdateNamespaceResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgUpdateNamespaceResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateNamespaceResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateNamespaceResponse();
   }
 
@@ -646,51 +719,71 @@ class MsgUpdateActorRoles extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'sender': sender,
       'denom': denom,
-      'role_actors_to_add': roleActorsToAdd.map((e) => e.toJson()).toList(),
+      'role_actors_to_add':
+          roleActorsToAdd.map((e) => config.encodeMessage(e)).toList(),
       'role_actors_to_revoke':
-          roleActorsToRevoke.map((e) => e.toJson()).toList(),
+          roleActorsToRevoke.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory MsgUpdateActorRoles.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateActorRoles.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateActorRoles(
-      sender: json.valueAsString<String?>('sender', acceptCamelCase: true),
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
+      sender: json.valueAsString<String?>(
+        'sender',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       roleActorsToAdd:
           (json.valueEnsureAsList<dynamic>(
                 'role_actors_to_add',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_permissions_v1beta1_permissions.RoleActors,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => injective_permissions_v1beta1_permissions
-                          .RoleActors.fromJson(v),
+                          .RoleActors.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       roleActorsToRevoke:
           (json.valueEnsureAsList<dynamic>(
                 'role_actors_to_revoke',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_permissions_v1beta1_permissions.RoleActors,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => injective_permissions_v1beta1_permissions
-                          .RoleActors.fromJson(v),
+                          .RoleActors.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -753,11 +846,16 @@ class MsgUpdateActorRolesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgUpdateActorRolesResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateActorRolesResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateActorRolesResponse();
   }
 
@@ -807,14 +905,25 @@ class MsgClaimVoucher extends CosmosProtoMessage
   List<Object?> get protoValues => [sender, denom];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'sender': sender, 'denom': denom};
   }
 
-  factory MsgClaimVoucher.fromJson(Map<String, dynamic> json) {
+  factory MsgClaimVoucher.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgClaimVoucher(
-      sender: json.valueAsString<String?>('sender', acceptCamelCase: true),
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
+      sender: json.valueAsString<String?>(
+        'sender',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -858,11 +967,16 @@ class MsgClaimVoucherResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgClaimVoucherResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgClaimVoucherResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgClaimVoucherResponse();
   }
 

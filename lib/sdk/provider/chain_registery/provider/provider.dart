@@ -27,7 +27,7 @@ class ChainRegistryProvider<SERVICE extends IServiceProvider>
       request,
       timeout: timeout,
     );
-    return request.onResonse(r);
+    return request.onResponse(r);
   }
 
   int _id = 0;
@@ -38,7 +38,7 @@ class ChainRegistryProvider<SERVICE extends IServiceProvider>
     request, {
     Duration? timeout,
   }) async {
-    final params = request.buildRequest(_id++);
+    final params = await request.buildRequest(_id++);
     final response = await service.doRequest(params, timeout: timeout);
     return _findError<SERVICERESPONSE>(
       params: params,

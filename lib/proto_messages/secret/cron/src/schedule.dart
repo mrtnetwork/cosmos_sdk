@@ -47,31 +47,50 @@ class Schedule extends CosmosProtoMessage {
   List<Object?> get protoValues => [name, period, msgs, lastExecuteHeight];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'name': name,
-      'period': period?.toString(),
-      'msgs': msgs.map((e) => e.toJson()).toList(),
-      'last_execute_height': lastExecuteHeight?.toString(),
+      'period': config.encodeBigint(period),
+      'msgs': msgs.map((e) => config.encodeMessage(e)).toList(),
+      'last_execute_height': config.encodeBigint(lastExecuteHeight),
     };
   }
 
-  factory Schedule.fromJson(Map<String, dynamic> json) {
+  factory Schedule.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Schedule(
-      name: json.valueAsString<String?>('name', acceptCamelCase: true),
-      period: json.valueAsBigInt<BigInt?>('period', acceptCamelCase: true),
+      name: json.valueAsString<String?>(
+        'name',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      period: json.valueAsBigInt<BigInt?>(
+        'period',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       msgs:
-          (json.valueEnsureAsList<dynamic>('msgs', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'msgs',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  MsgExecuteContract,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => MsgExecuteContract.fromJson(v)),
+                (e) => JsonParser.valueTo<MsgExecuteContract, Object>(
+                  value: e,
+                  parse:
+                      (v) => MsgExecuteContract.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
       lastExecuteHeight: json.valueAsBigInt<BigInt?>(
         'last_execute_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -120,14 +139,25 @@ class MsgExecuteContract extends CosmosProtoMessage {
   List<Object?> get protoValues => [contract, msg];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'contract': contract, 'msg': msg};
   }
 
-  factory MsgExecuteContract.fromJson(Map<String, dynamic> json) {
+  factory MsgExecuteContract.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgExecuteContract(
-      contract: json.valueAsString<String?>('contract', acceptCamelCase: true),
-      msg: json.valueAsString<String?>('msg', acceptCamelCase: true),
+      contract: json.valueAsString<String?>(
+        'contract',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      msg: json.valueAsString<String?>(
+        'msg',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

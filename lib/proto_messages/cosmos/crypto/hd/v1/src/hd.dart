@@ -60,7 +60,9 @@ class BIP44Params extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'purpose': purpose,
       'coin_type': coinType,
@@ -70,15 +72,30 @@ class BIP44Params extends CosmosProtoMessage {
     };
   }
 
-  factory BIP44Params.fromJson(Map<String, dynamic> json) {
+  factory BIP44Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return BIP44Params(
-      purpose: json.valueAsInt<int?>('purpose', acceptCamelCase: true),
-      coinType: json.valueAsInt<int?>('coin_type', acceptCamelCase: true),
-      account: json.valueAsInt<int?>('account', acceptCamelCase: true),
-      change: json.valueAsBool<bool?>('change', acceptCamelCase: true),
+      purpose: json.valueAsInt<int?>(
+        'purpose',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      coinType: json.valueAsInt<int?>(
+        'coin_type',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      account: json.valueAsInt<int?>(
+        'account',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      change: json.valueAsBool<bool?>(
+        'change',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       addressIndex: json.valueAsInt<int?>(
         'address_index',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

@@ -34,19 +34,36 @@ class Denom extends CosmosProtoMessage {
   List<Object?> get protoValues => [base, trace];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'base': base, 'trace': trace.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'base': base,
+      'trace': trace.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
-  factory Denom.fromJson(Map<String, dynamic> json) {
+  factory Denom.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Denom(
-      base: json.valueAsString<String?>('base', acceptCamelCase: true),
+      base: json.valueAsString<String?>(
+        'base',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       trace:
-          (json.valueEnsureAsList<dynamic>('trace', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'trace',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<Hop, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<Hop, Object>(
                   value: e,
-                  parse: (v) => Hop.fromJson(v),
+                  parse:
+                      (v) =>
+                          Hop.fromJson(JsonParser.valueAs(v), config: config),
                 ),
               )
               .toList(),
@@ -89,16 +106,24 @@ class Hop extends CosmosProtoMessage {
   List<Object?> get protoValues => [portId, channelId];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'port_id': portId, 'channel_id': channelId};
   }
 
-  factory Hop.fromJson(Map<String, dynamic> json) {
+  factory Hop.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Hop(
-      portId: json.valueAsString<String?>('port_id', acceptCamelCase: true),
+      portId: json.valueAsString<String?>(
+        'port_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       channelId: json.valueAsString<String?>(
         'channel_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

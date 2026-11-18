@@ -85,52 +85,67 @@ class Params extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'evm_denom': evmDenom,
       'enable_create': enableCreate,
       'enable_call': enableCall,
-      'extra_eips': extraEips.map((e) => e.toString()).toList(),
-      'chain_config': chainConfig?.toJson(),
+      'extra_eips': extraEips.map((e) => config.encodeBigint(e)).toList(),
+      'chain_config': config.encodeMessage(chainConfig),
       'allow_unprotected_txs': allowUnprotectedTxs,
       'authorized_deployers': authorizedDeployers.map((e) => e).toList(),
       'permissioned': permissioned,
     };
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
-      evmDenom: json.valueAsString<String?>('evm_denom', acceptCamelCase: true),
+      evmDenom: json.valueAsString<String?>(
+        'evm_denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       enableCreate: json.valueAsBool<bool?>(
         'enable_create',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      enableCall: json.valueAsBool<bool?>('enable_call', acceptCamelCase: true),
+      enableCall: json.valueAsBool<bool?>(
+        'enable_call',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       extraEips:
           (json.valueEnsureAsList<dynamic>(
             'extra_eips',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsBigInt<BigInt>(e)).toList(),
-      chainConfig: json.valueTo<
-        injective_evm_v1_chain_config.ChainConfig?,
-        Map<String, dynamic>
-      >(
-        key: 'chain_config',
-        parse: (v) => injective_evm_v1_chain_config.ChainConfig.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      chainConfig: json
+          .valueTo<injective_evm_v1_chain_config.ChainConfig?, Object>(
+            key: 'chain_config',
+            parse:
+                (v) => injective_evm_v1_chain_config.ChainConfig.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
       allowUnprotectedTxs: json.valueAsBool<bool?>(
         'allow_unprotected_txs',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       authorizedDeployers:
           (json.valueEnsureAsList<dynamic>(
             'authorized_deployers',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
       permissioned: json.valueAsBool<bool?>(
         'permissioned',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

@@ -1,4 +1,4 @@
-import 'package:cosmos_sdk/sdk/exception/exception.dart';
+import 'package:blockchain_utils/blockchain_utils.dart';
 
 import 'asset_list.dart';
 import 'chain.dart';
@@ -21,7 +21,12 @@ enum RegisteryPingPubItemType {
   static RegisteryPingPubItemType fromName(String name) {
     return values.firstWhere(
       (e) => e.name == name,
-      orElse: () => throw DartCosmosSdkPluginException("unknown type."),
+      orElse:
+          () =>
+              throw BuError(
+                DefaultErrorType.invalidArgument,
+                'Unknown RegisteryPingPubItemType "$name".',
+              ),
     );
   }
 }

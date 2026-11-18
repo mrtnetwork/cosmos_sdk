@@ -3,11 +3,12 @@ import 'package:cosmos_sdk/proto_messages/types.dart';
 import 'package:cosmos_sdk/sdk/serialization/serialization.dart';
 
 class NodeTssTime extends CosmosProtoMessage {
-  final List<int>? address;
+  final BuBytes? address;
 
   final BigInt? tssTime;
 
-  const NodeTssTime({this.address, this.tssTime});
+  NodeTssTime({List<int>? address, this.tssTime})
+    : address = address?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -27,27 +28,27 @@ class NodeTssTime extends CosmosProtoMessage {
   List<Object?> get protoValues => [address, tssTime];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'address': switch (address) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'tss_time': tssTime?.toString(),
+      'address': config.encodeBinary(address),
+      'tss_time': config.encodeBigint(tssTime),
     };
   }
 
-  factory NodeTssTime.fromJson(Map<String, dynamic> json) {
+  factory NodeTssTime.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return NodeTssTime(
-      address: json.valueAsBytes<List<int>?>(
-        'address',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      address: config.decodeBinary<List<int>?>(
+        json.valueAs('address', normalizeKeyLookup: config.normalizeKeys),
       ),
-      tssTime: json.valueAsBigInt<BigInt?>('tss_time', acceptCamelCase: true),
+      tssTime: json.valueAsBigInt<BigInt?>(
+        'tss_time',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -93,25 +94,39 @@ class TssKeygenMetric extends CosmosProtoMessage {
   List<Object?> get protoValues => [pubKey, nodeTssTimes];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'pub_key': pubKey,
-      'node_tss_times': nodeTssTimes.map((e) => e.toJson()).toList(),
+      'node_tss_times':
+          nodeTssTimes.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory TssKeygenMetric.fromJson(Map<String, dynamic> json) {
+  factory TssKeygenMetric.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return TssKeygenMetric(
-      pubKey: json.valueAsString<String?>('pub_key', acceptCamelCase: true),
+      pubKey: json.valueAsString<String?>(
+        'pub_key',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       nodeTssTimes:
           (json.valueEnsureAsList<dynamic>(
                 'node_tss_times',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<NodeTssTime, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<NodeTssTime, Object>(
                   value: e,
-                  parse: (v) => NodeTssTime.fromJson(v),
+                  parse:
+                      (v) => NodeTssTime.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -164,25 +179,39 @@ class TssKeysignMetric extends CosmosProtoMessage {
   List<Object?> get protoValues => [txId, nodeTssTimes];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'tx_id': txId,
-      'node_tss_times': nodeTssTimes.map((e) => e.toJson()).toList(),
+      'node_tss_times':
+          nodeTssTimes.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory TssKeysignMetric.fromJson(Map<String, dynamic> json) {
+  factory TssKeysignMetric.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return TssKeysignMetric(
-      txId: json.valueAsString<String?>('tx_id', acceptCamelCase: true),
+      txId: json.valueAsString<String?>(
+        'tx_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       nodeTssTimes:
           (json.valueEnsureAsList<dynamic>(
                 'node_tss_times',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<NodeTssTime, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<NodeTssTime, Object>(
                   value: e,
-                  parse: (v) => NodeTssTime.fromJson(v),
+                  parse:
+                      (v) => NodeTssTime.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),

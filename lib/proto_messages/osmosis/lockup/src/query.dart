@@ -37,11 +37,16 @@ class ModuleBalanceRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory ModuleBalanceRequest.fromJson(Map<String, dynamic> json) {
+  factory ModuleBalanceRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ModuleBalanceRequest();
   }
 
@@ -89,22 +94,33 @@ class ModuleBalanceResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [coins];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'coins': coins.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'coins': coins.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory ModuleBalanceResponse.fromJson(Map<String, dynamic> json) {
+  factory ModuleBalanceResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ModuleBalanceResponse(
       coins:
-          (json.valueEnsureAsList<dynamic>('coins', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'coins',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -151,11 +167,16 @@ class ModuleLockedAmountRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory ModuleLockedAmountRequest.fromJson(Map<String, dynamic> json) {
+  factory ModuleLockedAmountRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ModuleLockedAmountRequest();
   }
 
@@ -203,22 +224,33 @@ class ModuleLockedAmountResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [coins];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'coins': coins.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'coins': coins.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory ModuleLockedAmountResponse.fromJson(Map<String, dynamic> json) {
+  factory ModuleLockedAmountResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ModuleLockedAmountResponse(
       coins:
-          (json.valueEnsureAsList<dynamic>('coins', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'coins',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -267,13 +299,21 @@ class AccountUnlockableCoinsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [owner];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'owner': owner};
   }
 
-  factory AccountUnlockableCoinsRequest.fromJson(Map<String, dynamic> json) {
+  factory AccountUnlockableCoinsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AccountUnlockableCoinsRequest(
-      owner: json.valueAsString<String?>('owner', acceptCamelCase: true),
+      owner: json.valueAsString<String?>(
+        'owner',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -324,22 +364,33 @@ class AccountUnlockableCoinsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [coins];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'coins': coins.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'coins': coins.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory AccountUnlockableCoinsResponse.fromJson(Map<String, dynamic> json) {
+  factory AccountUnlockableCoinsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AccountUnlockableCoinsResponse(
       coins:
-          (json.valueEnsureAsList<dynamic>('coins', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'coins',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -388,13 +439,21 @@ class AccountUnlockingCoinsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [owner];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'owner': owner};
   }
 
-  factory AccountUnlockingCoinsRequest.fromJson(Map<String, dynamic> json) {
+  factory AccountUnlockingCoinsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AccountUnlockingCoinsRequest(
-      owner: json.valueAsString<String?>('owner', acceptCamelCase: true),
+      owner: json.valueAsString<String?>(
+        'owner',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -443,22 +502,33 @@ class AccountUnlockingCoinsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [coins];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'coins': coins.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'coins': coins.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory AccountUnlockingCoinsResponse.fromJson(Map<String, dynamic> json) {
+  factory AccountUnlockingCoinsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AccountUnlockingCoinsResponse(
       coins:
-          (json.valueEnsureAsList<dynamic>('coins', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'coins',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -507,13 +577,21 @@ class AccountLockedCoinsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [owner];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'owner': owner};
   }
 
-  factory AccountLockedCoinsRequest.fromJson(Map<String, dynamic> json) {
+  factory AccountLockedCoinsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AccountLockedCoinsRequest(
-      owner: json.valueAsString<String?>('owner', acceptCamelCase: true),
+      owner: json.valueAsString<String?>(
+        'owner',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -562,22 +640,33 @@ class AccountLockedCoinsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [coins];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'coins': coins.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'coins': coins.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory AccountLockedCoinsResponse.fromJson(Map<String, dynamic> json) {
+  factory AccountLockedCoinsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AccountLockedCoinsResponse(
       coins:
-          (json.valueEnsureAsList<dynamic>('coins', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'coins',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -631,17 +720,29 @@ class AccountLockedPastTimeRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [owner, timestamp];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'owner': owner, 'timestamp': timestamp?.toRfc3339()};
   }
 
-  factory AccountLockedPastTimeRequest.fromJson(Map<String, dynamic> json) {
+  factory AccountLockedPastTimeRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AccountLockedPastTimeRequest(
-      owner: json.valueAsString<String?>('owner', acceptCamelCase: true),
-      timestamp: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      owner: json.valueAsString<String?>(
+        'owner',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      timestamp: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'timestamp',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -697,22 +798,33 @@ class AccountLockedPastTimeResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [locks];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'locks': locks.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'locks': locks.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory AccountLockedPastTimeResponse.fromJson(Map<String, dynamic> json) {
+  factory AccountLockedPastTimeResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AccountLockedPastTimeResponse(
       locks:
-          (json.valueEnsureAsList<dynamic>('locks', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'locks',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  osmosis_lockup_lock.PeriodLock,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => osmosis_lockup_lock.PeriodLock.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<osmosis_lockup_lock.PeriodLock, Object>(
+                      value: e,
+                      parse:
+                          (v) => osmosis_lockup_lock.PeriodLock.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -773,19 +885,29 @@ class AccountLockedPastTimeNotUnlockingOnlyRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [owner, timestamp];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'owner': owner, 'timestamp': timestamp?.toRfc3339()};
   }
 
   factory AccountLockedPastTimeNotUnlockingOnlyRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AccountLockedPastTimeNotUnlockingOnlyRequest(
-      owner: json.valueAsString<String?>('owner', acceptCamelCase: true),
-      timestamp: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      owner: json.valueAsString<String?>(
+        'owner',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      timestamp: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'timestamp',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -848,24 +970,33 @@ class AccountLockedPastTimeNotUnlockingOnlyResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [locks];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'locks': locks.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'locks': locks.map((e) => config.encodeMessage(e)).toList()};
   }
 
   factory AccountLockedPastTimeNotUnlockingOnlyResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AccountLockedPastTimeNotUnlockingOnlyResponse(
       locks:
-          (json.valueEnsureAsList<dynamic>('locks', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'locks',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  osmosis_lockup_lock.PeriodLock,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => osmosis_lockup_lock.PeriodLock.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<osmosis_lockup_lock.PeriodLock, Object>(
+                      value: e,
+                      parse:
+                          (v) => osmosis_lockup_lock.PeriodLock.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -922,17 +1053,29 @@ class AccountUnlockedBeforeTimeRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [owner, timestamp];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'owner': owner, 'timestamp': timestamp?.toRfc3339()};
   }
 
-  factory AccountUnlockedBeforeTimeRequest.fromJson(Map<String, dynamic> json) {
+  factory AccountUnlockedBeforeTimeRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AccountUnlockedBeforeTimeRequest(
-      owner: json.valueAsString<String?>('owner', acceptCamelCase: true),
-      timestamp: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      owner: json.valueAsString<String?>(
+        'owner',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      timestamp: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'timestamp',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -990,24 +1133,33 @@ class AccountUnlockedBeforeTimeResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [locks];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'locks': locks.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'locks': locks.map((e) => config.encodeMessage(e)).toList()};
   }
 
   factory AccountUnlockedBeforeTimeResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AccountUnlockedBeforeTimeResponse(
       locks:
-          (json.valueEnsureAsList<dynamic>('locks', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'locks',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  osmosis_lockup_lock.PeriodLock,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => osmosis_lockup_lock.PeriodLock.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<osmosis_lockup_lock.PeriodLock, Object>(
+                      value: e,
+                      parse:
+                          (v) => osmosis_lockup_lock.PeriodLock.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -1068,7 +1220,9 @@ class AccountLockedPastTimeDenomRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [owner, timestamp, denom];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'owner': owner,
       'timestamp': timestamp?.toRfc3339(),
@@ -1077,16 +1231,27 @@ class AccountLockedPastTimeDenomRequest extends CosmosProtoMessage
   }
 
   factory AccountLockedPastTimeDenomRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AccountLockedPastTimeDenomRequest(
-      owner: json.valueAsString<String?>('owner', acceptCamelCase: true),
-      timestamp: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
-        key: 'timestamp',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+      owner: json.valueAsString<String?>(
+        'owner',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
+      timestamp: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
+        key: 'timestamp',
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1144,24 +1309,33 @@ class AccountLockedPastTimeDenomResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [locks];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'locks': locks.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'locks': locks.map((e) => config.encodeMessage(e)).toList()};
   }
 
   factory AccountLockedPastTimeDenomResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AccountLockedPastTimeDenomResponse(
       locks:
-          (json.valueEnsureAsList<dynamic>('locks', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'locks',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  osmosis_lockup_lock.PeriodLock,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => osmosis_lockup_lock.PeriodLock.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<osmosis_lockup_lock.PeriodLock, Object>(
+                      value: e,
+                      parse:
+                          (v) => osmosis_lockup_lock.PeriodLock.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -1215,17 +1389,29 @@ class LockedDenomRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [denom, duration];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'denom': denom, 'duration': duration?.encodeString(asNanos: true)};
   }
 
-  factory LockedDenomRequest.fromJson(Map<String, dynamic> json) {
+  factory LockedDenomRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return LockedDenomRequest(
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
-      duration: json.valueTo<google_protobuf_duration.Duration?, String>(
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      duration: json.valueTo<google_protobuf_duration.Duration?, Object>(
         key: 'duration',
-        parse: (v) => google_protobuf_duration.Duration.fromString(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_duration.Duration.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1275,13 +1461,21 @@ class LockedDenomResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [amount];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'amount': amount};
   }
 
-  factory LockedDenomResponse.fromJson(Map<String, dynamic> json) {
+  factory LockedDenomResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return LockedDenomResponse(
-      amount: json.valueAsString<String?>('amount', acceptCamelCase: true),
+      amount: json.valueAsString<String?>(
+        'amount',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1322,13 +1516,21 @@ class LockedRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [lockId];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'lock_id': lockId?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'lock_id': config.encodeBigint(lockId)};
   }
 
-  factory LockedRequest.fromJson(Map<String, dynamic> json) {
+  factory LockedRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return LockedRequest(
-      lockId: json.valueAsBigInt<BigInt?>('lock_id', acceptCamelCase: true),
+      lockId: json.valueAsBigInt<BigInt?>(
+        'lock_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1371,16 +1573,25 @@ class LockedResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [lock];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'lock': lock?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'lock': config.encodeMessage(lock)};
   }
 
-  factory LockedResponse.fromJson(Map<String, dynamic> json) {
+  factory LockedResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return LockedResponse(
-      lock: json.valueTo<osmosis_lockup_lock.PeriodLock?, Map<String, dynamic>>(
+      lock: json.valueTo<osmosis_lockup_lock.PeriodLock?, Object>(
         key: 'lock',
-        parse: (v) => osmosis_lockup_lock.PeriodLock.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => osmosis_lockup_lock.PeriodLock.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1427,13 +1638,21 @@ class LockRewardReceiverRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [lockId];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'lock_id': lockId?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'lock_id': config.encodeBigint(lockId)};
   }
 
-  factory LockRewardReceiverRequest.fromJson(Map<String, dynamic> json) {
+  factory LockRewardReceiverRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return LockRewardReceiverRequest(
-      lockId: json.valueAsBigInt<BigInt?>('lock_id', acceptCamelCase: true),
+      lockId: json.valueAsBigInt<BigInt?>(
+        'lock_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1476,15 +1695,20 @@ class LockRewardReceiverResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [rewardReceiver];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'reward_receiver': rewardReceiver};
   }
 
-  factory LockRewardReceiverResponse.fromJson(Map<String, dynamic> json) {
+  factory LockRewardReceiverResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return LockRewardReceiverResponse(
       rewardReceiver: json.valueAsString<String?>(
         'reward_receiver',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1526,11 +1750,16 @@ class NextLockIDRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory NextLockIDRequest.fromJson(Map<String, dynamic> json) {
+  factory NextLockIDRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return NextLockIDRequest();
   }
 
@@ -1572,13 +1801,21 @@ class NextLockIDResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [lockId];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'lock_id': lockId?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'lock_id': config.encodeBigint(lockId)};
   }
 
-  factory NextLockIDResponse.fromJson(Map<String, dynamic> json) {
+  factory NextLockIDResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return NextLockIDResponse(
-      lockId: json.valueAsBigInt<BigInt?>('lock_id', acceptCamelCase: true),
+      lockId: json.valueAsBigInt<BigInt?>(
+        'lock_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1622,15 +1859,21 @@ class SyntheticLockupsByLockupIDRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [lockId];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'lock_id': lockId?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'lock_id': config.encodeBigint(lockId)};
   }
 
   factory SyntheticLockupsByLockupIDRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SyntheticLockupsByLockupIDRequest(
-      lockId: json.valueAsBigInt<BigInt?>('lock_id', acceptCamelCase: true),
+      lockId: json.valueAsBigInt<BigInt?>(
+        'lock_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1683,26 +1926,37 @@ class SyntheticLockupsByLockupIDResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [syntheticLocks];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'synthetic_locks': syntheticLocks.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'synthetic_locks':
+          syntheticLocks.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
   factory SyntheticLockupsByLockupIDResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SyntheticLockupsByLockupIDResponse(
       syntheticLocks:
           (json.valueEnsureAsList<dynamic>(
                 'synthetic_locks',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   osmosis_lockup_lock.SyntheticLock,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
-                  parse: (v) => osmosis_lockup_lock.SyntheticLock.fromJson(v),
+                  parse:
+                      (v) => osmosis_lockup_lock.SyntheticLock.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -1752,13 +2006,21 @@ class SyntheticLockupByLockupIDRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [lockId];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'lock_id': lockId?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'lock_id': config.encodeBigint(lockId)};
   }
 
-  factory SyntheticLockupByLockupIDRequest.fromJson(Map<String, dynamic> json) {
+  factory SyntheticLockupByLockupIDRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SyntheticLockupByLockupIDRequest(
-      lockId: json.valueAsBigInt<BigInt?>('lock_id', acceptCamelCase: true),
+      lockId: json.valueAsBigInt<BigInt?>(
+        'lock_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1805,20 +2067,26 @@ class SyntheticLockupByLockupIDResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [syntheticLock];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'synthetic_lock': syntheticLock?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'synthetic_lock': config.encodeMessage(syntheticLock)};
   }
 
   factory SyntheticLockupByLockupIDResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SyntheticLockupByLockupIDResponse(
-      syntheticLock: json
-          .valueTo<osmosis_lockup_lock.SyntheticLock?, Map<String, dynamic>>(
-            key: 'synthetic_lock',
-            parse: (v) => osmosis_lockup_lock.SyntheticLock.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      syntheticLock: json.valueTo<osmosis_lockup_lock.SyntheticLock?, Object>(
+        key: 'synthetic_lock',
+        parse:
+            (v) => osmosis_lockup_lock.SyntheticLock.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1870,19 +2138,29 @@ class AccountLockedLongerDurationRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [owner, duration];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'owner': owner, 'duration': duration?.encodeString(asNanos: true)};
   }
 
   factory AccountLockedLongerDurationRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AccountLockedLongerDurationRequest(
-      owner: json.valueAsString<String?>('owner', acceptCamelCase: true),
-      duration: json.valueTo<google_protobuf_duration.Duration?, String>(
+      owner: json.valueAsString<String?>(
+        'owner',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      duration: json.valueTo<google_protobuf_duration.Duration?, Object>(
         key: 'duration',
-        parse: (v) => google_protobuf_duration.Duration.fromString(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_duration.Duration.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1940,24 +2218,33 @@ class AccountLockedLongerDurationResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [locks];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'locks': locks.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'locks': locks.map((e) => config.encodeMessage(e)).toList()};
   }
 
   factory AccountLockedLongerDurationResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AccountLockedLongerDurationResponse(
       locks:
-          (json.valueEnsureAsList<dynamic>('locks', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'locks',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  osmosis_lockup_lock.PeriodLock,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => osmosis_lockup_lock.PeriodLock.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<osmosis_lockup_lock.PeriodLock, Object>(
+                      value: e,
+                      parse:
+                          (v) => osmosis_lockup_lock.PeriodLock.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -2012,17 +2299,29 @@ class AccountLockedDurationRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [owner, duration];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'owner': owner, 'duration': duration?.encodeString(asNanos: true)};
   }
 
-  factory AccountLockedDurationRequest.fromJson(Map<String, dynamic> json) {
+  factory AccountLockedDurationRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AccountLockedDurationRequest(
-      owner: json.valueAsString<String?>('owner', acceptCamelCase: true),
-      duration: json.valueTo<google_protobuf_duration.Duration?, String>(
+      owner: json.valueAsString<String?>(
+        'owner',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      duration: json.valueTo<google_protobuf_duration.Duration?, Object>(
         key: 'duration',
-        parse: (v) => google_protobuf_duration.Duration.fromString(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_duration.Duration.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -2078,22 +2377,33 @@ class AccountLockedDurationResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [locks];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'locks': locks.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'locks': locks.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory AccountLockedDurationResponse.fromJson(Map<String, dynamic> json) {
+  factory AccountLockedDurationResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AccountLockedDurationResponse(
       locks:
-          (json.valueEnsureAsList<dynamic>('locks', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'locks',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  osmosis_lockup_lock.PeriodLock,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => osmosis_lockup_lock.PeriodLock.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<osmosis_lockup_lock.PeriodLock, Object>(
+                      value: e,
+                      parse:
+                          (v) => osmosis_lockup_lock.PeriodLock.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -2155,19 +2465,29 @@ class AccountLockedLongerDurationNotUnlockingOnlyRequest
   List<Object?> get protoValues => [owner, duration];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'owner': owner, 'duration': duration?.encodeString(asNanos: true)};
   }
 
   factory AccountLockedLongerDurationNotUnlockingOnlyRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AccountLockedLongerDurationNotUnlockingOnlyRequest(
-      owner: json.valueAsString<String?>('owner', acceptCamelCase: true),
-      duration: json.valueTo<google_protobuf_duration.Duration?, String>(
+      owner: json.valueAsString<String?>(
+        'owner',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      duration: json.valueTo<google_protobuf_duration.Duration?, Object>(
         key: 'duration',
-        parse: (v) => google_protobuf_duration.Duration.fromString(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_duration.Duration.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -2235,24 +2555,33 @@ class AccountLockedLongerDurationNotUnlockingOnlyResponse
   List<Object?> get protoValues => [locks];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'locks': locks.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'locks': locks.map((e) => config.encodeMessage(e)).toList()};
   }
 
   factory AccountLockedLongerDurationNotUnlockingOnlyResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AccountLockedLongerDurationNotUnlockingOnlyResponse(
       locks:
-          (json.valueEnsureAsList<dynamic>('locks', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'locks',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  osmosis_lockup_lock.PeriodLock,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => osmosis_lockup_lock.PeriodLock.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<osmosis_lockup_lock.PeriodLock, Object>(
+                      value: e,
+                      parse:
+                          (v) => osmosis_lockup_lock.PeriodLock.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -2317,7 +2646,9 @@ class AccountLockedLongerDurationDenomRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [owner, duration, denom];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'owner': owner,
       'duration': duration?.encodeString(asNanos: true),
@@ -2326,16 +2657,27 @@ class AccountLockedLongerDurationDenomRequest extends CosmosProtoMessage
   }
 
   factory AccountLockedLongerDurationDenomRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AccountLockedLongerDurationDenomRequest(
-      owner: json.valueAsString<String?>('owner', acceptCamelCase: true),
-      duration: json.valueTo<google_protobuf_duration.Duration?, String>(
-        key: 'duration',
-        parse: (v) => google_protobuf_duration.Duration.fromString(v),
-        acceptCamelCase: true,
+      owner: json.valueAsString<String?>(
+        'owner',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
+      duration: json.valueTo<google_protobuf_duration.Duration?, Object>(
+        key: 'duration',
+        parse:
+            (v) => google_protobuf_duration.Duration.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -2394,24 +2736,33 @@ class AccountLockedLongerDurationDenomResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [locks];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'locks': locks.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'locks': locks.map((e) => config.encodeMessage(e)).toList()};
   }
 
   factory AccountLockedLongerDurationDenomResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AccountLockedLongerDurationDenomResponse(
       locks:
-          (json.valueEnsureAsList<dynamic>('locks', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'locks',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  osmosis_lockup_lock.PeriodLock,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => osmosis_lockup_lock.PeriodLock.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<osmosis_lockup_lock.PeriodLock, Object>(
+                      value: e,
+                      parse:
+                          (v) => osmosis_lockup_lock.PeriodLock.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -2461,11 +2812,16 @@ class QueryParamsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryParamsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsRequest();
   }
 
@@ -2507,16 +2863,25 @@ class QueryParamsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [params];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'params': params?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'params': config.encodeMessage(params)};
   }
 
-  factory QueryParamsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsResponse(
-      params: json.valueTo<osmosis_lockup_params.Params?, Map<String, dynamic>>(
+      params: json.valueTo<osmosis_lockup_params.Params?, Object>(
         key: 'params',
-        parse: (v) => osmosis_lockup_params.Params.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => osmosis_lockup_params.Params.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

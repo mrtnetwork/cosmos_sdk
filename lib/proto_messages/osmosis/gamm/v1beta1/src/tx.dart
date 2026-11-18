@@ -59,36 +59,50 @@ class MsgJoinPool extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'sender': sender,
-      'pool_id': poolId?.toString(),
+      'pool_id': config.encodeBigint(poolId),
       'share_out_amount': shareOutAmount,
-      'token_in_maxs': tokenInMaxs.map((e) => e.toJson()).toList(),
+      'token_in_maxs': tokenInMaxs.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory MsgJoinPool.fromJson(Map<String, dynamic> json) {
+  factory MsgJoinPool.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgJoinPool(
-      sender: json.valueAsString<String?>('sender', acceptCamelCase: true),
-      poolId: json.valueAsBigInt<BigInt?>('pool_id', acceptCamelCase: true),
+      sender: json.valueAsString<String?>(
+        'sender',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      poolId: json.valueAsBigInt<BigInt?>(
+        'pool_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       shareOutAmount: json.valueAsString<String?>(
         'share_out_amount',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       tokenInMaxs:
           (json.valueEnsureAsList<dynamic>(
                 'token_in_maxs',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -151,29 +165,40 @@ class MsgJoinPoolResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [shareOutAmount, tokenIn];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'share_out_amount': shareOutAmount,
-      'token_in': tokenIn.map((e) => e.toJson()).toList(),
+      'token_in': tokenIn.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory MsgJoinPoolResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgJoinPoolResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgJoinPoolResponse(
       shareOutAmount: json.valueAsString<String?>(
         'share_out_amount',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       tokenIn:
-          (json.valueEnsureAsList<dynamic>('token_in', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'token_in',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -248,36 +273,51 @@ class MsgExitPool extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'sender': sender,
-      'pool_id': poolId?.toString(),
+      'pool_id': config.encodeBigint(poolId),
       'share_in_amount': shareInAmount,
-      'token_out_mins': tokenOutMins.map((e) => e.toJson()).toList(),
+      'token_out_mins':
+          tokenOutMins.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory MsgExitPool.fromJson(Map<String, dynamic> json) {
+  factory MsgExitPool.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgExitPool(
-      sender: json.valueAsString<String?>('sender', acceptCamelCase: true),
-      poolId: json.valueAsBigInt<BigInt?>('pool_id', acceptCamelCase: true),
+      sender: json.valueAsString<String?>(
+        'sender',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      poolId: json.valueAsBigInt<BigInt?>(
+        'pool_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       shareInAmount: json.valueAsString<String?>(
         'share_in_amount',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       tokenOutMins:
           (json.valueEnsureAsList<dynamic>(
                 'token_out_mins',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -337,22 +377,33 @@ class MsgExitPoolResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [tokenOut];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'token_out': tokenOut.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'token_out': tokenOut.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory MsgExitPoolResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgExitPoolResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgExitPoolResponse(
       tokenOut:
-          (json.valueEnsureAsList<dynamic>('token_out', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'token_out',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -424,41 +475,59 @@ class MsgSwapExactAmountIn extends CosmosProtoMessage
   List<Object?> get protoValues => [sender, routes, tokenIn, tokenOutMinAmount];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'sender': sender,
-      'routes': routes.map((e) => e.toJson()).toList(),
-      'token_in': tokenIn?.toJson(),
+      'routes': routes.map((e) => config.encodeMessage(e)).toList(),
+      'token_in': config.encodeMessage(tokenIn),
       'token_out_min_amount': tokenOutMinAmount,
     };
   }
 
-  factory MsgSwapExactAmountIn.fromJson(Map<String, dynamic> json) {
+  factory MsgSwapExactAmountIn.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSwapExactAmountIn(
-      sender: json.valueAsString<String?>('sender', acceptCamelCase: true),
+      sender: json.valueAsString<String?>(
+        'sender',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       routes:
-          (json.valueEnsureAsList<dynamic>('routes', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'routes',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   osmosis_poolmanager_v1beta1_swap_route.SwapAmountInRoute,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => osmosis_poolmanager_v1beta1_swap_route
-                          .SwapAmountInRoute.fromJson(v),
+                          .SwapAmountInRoute.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
-      tokenIn: json
-          .valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
-            key: 'token_in',
-            parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      tokenIn: json.valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
+        key: 'token_in',
+        parse:
+            (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       tokenOutMinAmount: json.valueAsString<String?>(
         'token_out_min_amount',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -519,15 +588,20 @@ class MsgSwapExactAmountInResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [tokenOutAmount];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'token_out_amount': tokenOutAmount};
   }
 
-  factory MsgSwapExactAmountInResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgSwapExactAmountInResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSwapExactAmountInResponse(
       tokenOutAmount: json.valueAsString<String?>(
         'token_out_amount',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -593,42 +667,60 @@ class MsgSwapExactAmountOut extends CosmosProtoMessage
   List<Object?> get protoValues => [sender, routes, tokenInMaxAmount, tokenOut];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'sender': sender,
-      'routes': routes.map((e) => e.toJson()).toList(),
+      'routes': routes.map((e) => config.encodeMessage(e)).toList(),
       'token_in_max_amount': tokenInMaxAmount,
-      'token_out': tokenOut?.toJson(),
+      'token_out': config.encodeMessage(tokenOut),
     };
   }
 
-  factory MsgSwapExactAmountOut.fromJson(Map<String, dynamic> json) {
+  factory MsgSwapExactAmountOut.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSwapExactAmountOut(
-      sender: json.valueAsString<String?>('sender', acceptCamelCase: true),
+      sender: json.valueAsString<String?>(
+        'sender',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       routes:
-          (json.valueEnsureAsList<dynamic>('routes', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'routes',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   osmosis_poolmanager_v1beta1_swap_route.SwapAmountOutRoute,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => osmosis_poolmanager_v1beta1_swap_route
-                          .SwapAmountOutRoute.fromJson(v),
+                          .SwapAmountOutRoute.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       tokenInMaxAmount: json.valueAsString<String?>(
         'token_in_max_amount',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      tokenOut: json
-          .valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
-            key: 'token_out',
-            parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      tokenOut: json.valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
+        key: 'token_out',
+        parse:
+            (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -688,15 +780,20 @@ class MsgSwapExactAmountOutResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [tokenInAmount];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'token_in_amount': tokenInAmount};
   }
 
-  factory MsgSwapExactAmountOutResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgSwapExactAmountOutResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSwapExactAmountOutResponse(
       tokenInAmount: json.valueAsString<String?>(
         'token_in_amount',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -759,28 +856,42 @@ class MsgJoinSwapExternAmountIn extends CosmosProtoMessage
   List<Object?> get protoValues => [sender, poolId, tokenIn, shareOutMinAmount];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'sender': sender,
-      'pool_id': poolId?.toString(),
-      'token_in': tokenIn?.toJson(),
+      'pool_id': config.encodeBigint(poolId),
+      'token_in': config.encodeMessage(tokenIn),
       'share_out_min_amount': shareOutMinAmount,
     };
   }
 
-  factory MsgJoinSwapExternAmountIn.fromJson(Map<String, dynamic> json) {
+  factory MsgJoinSwapExternAmountIn.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgJoinSwapExternAmountIn(
-      sender: json.valueAsString<String?>('sender', acceptCamelCase: true),
-      poolId: json.valueAsBigInt<BigInt?>('pool_id', acceptCamelCase: true),
-      tokenIn: json
-          .valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
-            key: 'token_in',
-            parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      sender: json.valueAsString<String?>(
+        'sender',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      poolId: json.valueAsBigInt<BigInt?>(
+        'pool_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      tokenIn: json.valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
+        key: 'token_in',
+        parse:
+            (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       shareOutMinAmount: json.valueAsString<String?>(
         'share_out_min_amount',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -838,17 +949,20 @@ class MsgJoinSwapExternAmountInResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [shareOutAmount];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'share_out_amount': shareOutAmount};
   }
 
   factory MsgJoinSwapExternAmountInResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgJoinSwapExternAmountInResponse(
       shareOutAmount: json.valueAsString<String?>(
         'share_out_amount',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -922,31 +1036,42 @@ class MsgJoinSwapShareAmountOut extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'sender': sender,
-      'pool_id': poolId?.toString(),
+      'pool_id': config.encodeBigint(poolId),
       'token_in_denom': tokenInDenom,
       'share_out_amount': shareOutAmount,
       'token_in_max_amount': tokenInMaxAmount,
     };
   }
 
-  factory MsgJoinSwapShareAmountOut.fromJson(Map<String, dynamic> json) {
+  factory MsgJoinSwapShareAmountOut.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgJoinSwapShareAmountOut(
-      sender: json.valueAsString<String?>('sender', acceptCamelCase: true),
-      poolId: json.valueAsBigInt<BigInt?>('pool_id', acceptCamelCase: true),
+      sender: json.valueAsString<String?>(
+        'sender',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      poolId: json.valueAsBigInt<BigInt?>(
+        'pool_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       tokenInDenom: json.valueAsString<String?>(
         'token_in_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       shareOutAmount: json.valueAsString<String?>(
         'share_out_amount',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       tokenInMaxAmount: json.valueAsString<String?>(
         'token_in_max_amount',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -998,17 +1123,20 @@ class MsgJoinSwapShareAmountOutResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [tokenInAmount];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'token_in_amount': tokenInAmount};
   }
 
   factory MsgJoinSwapShareAmountOutResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgJoinSwapShareAmountOutResponse(
       tokenInAmount: json.valueAsString<String?>(
         'token_in_amount',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1082,31 +1210,42 @@ class MsgExitSwapShareAmountIn extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'sender': sender,
-      'pool_id': poolId?.toString(),
+      'pool_id': config.encodeBigint(poolId),
       'token_out_denom': tokenOutDenom,
       'share_in_amount': shareInAmount,
       'token_out_min_amount': tokenOutMinAmount,
     };
   }
 
-  factory MsgExitSwapShareAmountIn.fromJson(Map<String, dynamic> json) {
+  factory MsgExitSwapShareAmountIn.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgExitSwapShareAmountIn(
-      sender: json.valueAsString<String?>('sender', acceptCamelCase: true),
-      poolId: json.valueAsBigInt<BigInt?>('pool_id', acceptCamelCase: true),
+      sender: json.valueAsString<String?>(
+        'sender',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      poolId: json.valueAsBigInt<BigInt?>(
+        'pool_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       tokenOutDenom: json.valueAsString<String?>(
         'token_out_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       shareInAmount: json.valueAsString<String?>(
         'share_in_amount',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       tokenOutMinAmount: json.valueAsString<String?>(
         'token_out_min_amount',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1158,15 +1297,20 @@ class MsgExitSwapShareAmountInResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [tokenOutAmount];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'token_out_amount': tokenOutAmount};
   }
 
-  factory MsgExitSwapShareAmountInResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgExitSwapShareAmountInResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgExitSwapShareAmountInResponse(
       tokenOutAmount: json.valueAsString<String?>(
         'token_out_amount',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1230,28 +1374,42 @@ class MsgExitSwapExternAmountOut extends CosmosProtoMessage
   List<Object?> get protoValues => [sender, poolId, tokenOut, shareInMaxAmount];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'sender': sender,
-      'pool_id': poolId?.toString(),
-      'token_out': tokenOut?.toJson(),
+      'pool_id': config.encodeBigint(poolId),
+      'token_out': config.encodeMessage(tokenOut),
       'share_in_max_amount': shareInMaxAmount,
     };
   }
 
-  factory MsgExitSwapExternAmountOut.fromJson(Map<String, dynamic> json) {
+  factory MsgExitSwapExternAmountOut.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgExitSwapExternAmountOut(
-      sender: json.valueAsString<String?>('sender', acceptCamelCase: true),
-      poolId: json.valueAsBigInt<BigInt?>('pool_id', acceptCamelCase: true),
-      tokenOut: json
-          .valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
-            key: 'token_out',
-            parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      sender: json.valueAsString<String?>(
+        'sender',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      poolId: json.valueAsBigInt<BigInt?>(
+        'pool_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      tokenOut: json.valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
+        key: 'token_out',
+        parse:
+            (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       shareInMaxAmount: json.valueAsString<String?>(
         'share_in_max_amount',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1305,17 +1463,20 @@ class MsgExitSwapExternAmountOutResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [shareInAmount];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'share_in_amount': shareInAmount};
   }
 
   factory MsgExitSwapExternAmountOutResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgExitSwapExternAmountOutResponse(
       shareInAmount: json.valueAsString<String?>(
         'share_in_amount',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

@@ -27,19 +27,24 @@ class Params extends CosmosProtoMessage {
   List<Object?> get protoValues => [stakeibcActive, claimActive];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'stakeibc_active': stakeibcActive, 'claim_active': claimActive};
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
       stakeibcActive: json.valueAsBool<bool?>(
         'stakeibc_active',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       claimActive: json.valueAsBool<bool?>(
         'claim_active',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

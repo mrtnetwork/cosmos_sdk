@@ -29,13 +29,21 @@ class QueryLastBlocksRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'height': height};
   }
 
-  factory QueryLastBlocksRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryLastBlocksRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryLastBlocksRequest(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -87,14 +95,25 @@ class QueryChainsLastBlockRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [chain, height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'chain': chain, 'height': height};
   }
 
-  factory QueryChainsLastBlockRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryChainsLastBlockRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryChainsLastBlockRequest(
-      chain: json.valueAsString<String?>('chain', acceptCamelCase: true),
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      chain: json.valueAsString<String?>(
+        'chain',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -145,23 +164,34 @@ class QueryLastBlocksResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [lastBlocks];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'last_blocks': lastBlocks.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'last_blocks': lastBlocks.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
-  factory QueryLastBlocksResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryLastBlocksResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryLastBlocksResponse(
       lastBlocks:
           (json.valueEnsureAsList<dynamic>(
                 'last_blocks',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) =>
-                    JsonParser.valueTo<ChainsLastBlock, Map<String, dynamic>>(
-                      value: e,
-                      parse: (v) => ChainsLastBlock.fromJson(v),
-                    ),
+                (e) => JsonParser.valueTo<ChainsLastBlock, Object>(
+                  value: e,
+                  parse:
+                      (v) => ChainsLastBlock.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );
@@ -224,29 +254,37 @@ class ChainsLastBlock extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'chain': chain,
-      'last_observed_in': lastObservedIn?.toString(),
-      'last_signed_out': lastSignedOut?.toString(),
-      'thorchain': thorchain?.toString(),
+      'last_observed_in': config.encodeBigint(lastObservedIn),
+      'last_signed_out': config.encodeBigint(lastSignedOut),
+      'thorchain': config.encodeBigint(thorchain),
     };
   }
 
-  factory ChainsLastBlock.fromJson(Map<String, dynamic> json) {
+  factory ChainsLastBlock.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ChainsLastBlock(
-      chain: json.valueAsString<String?>('chain', acceptCamelCase: true),
+      chain: json.valueAsString<String?>(
+        'chain',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       lastObservedIn: json.valueAsBigInt<BigInt?>(
         'last_observed_in',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       lastSignedOut: json.valueAsBigInt<BigInt?>(
         'last_signed_out',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       thorchain: json.valueAsBigInt<BigInt?>(
         'thorchain',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

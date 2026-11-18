@@ -1,3 +1,3 @@
-export 'src/query.dart';
-export 'src/tx.dart';
 export 'src/staketia.dart';
+export 'src/tx.dart';
+export 'src/query.dart';

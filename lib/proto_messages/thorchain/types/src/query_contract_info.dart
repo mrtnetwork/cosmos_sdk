@@ -34,14 +34,25 @@ class QueryContractInfoRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height, address];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'height': height, 'address': address};
   }
 
-  factory QueryContractInfoRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryContractInfoRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryContractInfoRequest(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -87,19 +98,25 @@ class QueryContractInfoResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [info];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'info': info?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'info': config.encodeMessage(info)};
   }
 
-  factory QueryContractInfoResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryContractInfoResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryContractInfoResponse(
-      info: json.valueTo<
-        types_type_contract_info.ContractInfo?,
-        Map<String, dynamic>
-      >(
+      info: json.valueTo<types_type_contract_info.ContractInfo?, Object>(
         key: 'info',
-        parse: (v) => types_type_contract_info.ContractInfo.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => types_type_contract_info.ContractInfo.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -155,15 +172,29 @@ class QueryContractInfosRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height, contract, version];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'height': height, 'contract': contract, 'version': version};
   }
 
-  factory QueryContractInfosRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryContractInfosRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryContractInfosRequest(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
-      contract: json.valueAsString<String?>('contract', acceptCamelCase: true),
-      version: json.valueAsString<String?>('version', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      contract: json.valueAsString<String?>(
+        'contract',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      version: json.valueAsString<String?>(
+        'version',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -215,22 +246,34 @@ class QueryContractInfosResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [infos];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'infos': infos.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'infos': infos.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory QueryContractInfosResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryContractInfosResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryContractInfosResponse(
       infos:
-          (json.valueEnsureAsList<dynamic>('infos', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'infos',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   types_type_contract_info.ContractInfo,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
-                      (v) => types_type_contract_info.ContractInfo.fromJson(v),
+                      (v) => types_type_contract_info.ContractInfo.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),

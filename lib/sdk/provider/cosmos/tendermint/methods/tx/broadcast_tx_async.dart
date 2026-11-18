@@ -26,7 +26,7 @@ class TendermintRequestBroadcastTxAsync
   Map<String, String?> get parameters => {"tx": tx};
 
   @override
-  TendermintBroadcastTxResponseResult onResonse(Map<String, dynamic> result) {
+  TendermintBroadcastTxResponseResult onResponse(Map<String, dynamic> result) {
     return TendermintBroadcastTxResponseResult.fromJson(result);
   }
 }

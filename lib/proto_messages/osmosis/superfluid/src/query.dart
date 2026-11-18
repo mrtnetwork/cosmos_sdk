@@ -39,11 +39,16 @@ class QueryParamsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryParamsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsRequest();
   }
 
@@ -86,18 +91,26 @@ class QueryParamsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [params];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'params': params?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'params': config.encodeMessage(params)};
   }
 
-  factory QueryParamsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsResponse(
-      params: json
-          .valueTo<osmosis_superfluid_params.Params?, Map<String, dynamic>>(
-            key: 'params',
-            parse: (v) => osmosis_superfluid_params.Params.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      params: json.valueTo<osmosis_superfluid_params.Params?, Object>(
+        key: 'params',
+        parse:
+            (v) => osmosis_superfluid_params.Params.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -143,13 +156,21 @@ class AssetTypeRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [denom];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'denom': denom};
   }
 
-  factory AssetTypeRequest.fromJson(Map<String, dynamic> json) {
+  factory AssetTypeRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AssetTypeRequest(
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -192,11 +213,16 @@ class AssetTypeResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [assetType];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'asset_type': assetType?.protoName};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'asset_type': config.encodeEnum(assetType)};
   }
 
-  factory AssetTypeResponse.fromJson(Map<String, dynamic> json) {
+  factory AssetTypeResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AssetTypeResponse(
       assetType: json.valueTo<
         osmosis_superfluid_superfluid.SuperfluidAssetType?,
@@ -249,11 +275,16 @@ class AllAssetsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory AllAssetsRequest.fromJson(Map<String, dynamic> json) {
+  factory AllAssetsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AllAssetsRequest();
   }
 
@@ -301,23 +332,35 @@ class AllAssetsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [assets];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'assets': assets.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'assets': assets.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory AllAssetsResponse.fromJson(Map<String, dynamic> json) {
+  factory AllAssetsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AllAssetsResponse(
       assets:
-          (json.valueEnsureAsList<dynamic>('assets', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'assets',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   osmosis_superfluid_superfluid.SuperfluidAsset,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => osmosis_superfluid_superfluid
-                          .SuperfluidAsset.fromJson(v),
+                          .SuperfluidAsset.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -370,13 +413,21 @@ class AssetMultiplierRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [denom];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'denom': denom};
   }
 
-  factory AssetMultiplierRequest.fromJson(Map<String, dynamic> json) {
+  factory AssetMultiplierRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AssetMultiplierRequest(
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -420,21 +471,33 @@ class AssetMultiplierResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [osmoEquivalentMultiplier];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'osmo_equivalent_multiplier': osmoEquivalentMultiplier?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'osmo_equivalent_multiplier': config.encodeMessage(
+        osmoEquivalentMultiplier,
+      ),
+    };
   }
 
-  factory AssetMultiplierResponse.fromJson(Map<String, dynamic> json) {
+  factory AssetMultiplierResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AssetMultiplierResponse(
       osmoEquivalentMultiplier: json.valueTo<
         osmosis_superfluid_superfluid.OsmoEquivalentMultiplierRecord?,
-        Map<String, dynamic>
+        Object
       >(
         key: 'osmo_equivalent_multiplier',
         parse:
             (v) => osmosis_superfluid_superfluid
-                .OsmoEquivalentMultiplierRecord.fromJson(v),
-        acceptCamelCase: true,
+                .OsmoEquivalentMultiplierRecord.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -493,23 +556,38 @@ class SuperfluidIntermediaryAccountInfo extends CosmosProtoMessage {
   List<Object?> get protoValues => [denom, valAddr, gaugeId, address];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'denom': denom,
       'val_addr': valAddr,
-      'gauge_id': gaugeId?.toString(),
+      'gauge_id': config.encodeBigint(gaugeId),
       'address': address,
     };
   }
 
   factory SuperfluidIntermediaryAccountInfo.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SuperfluidIntermediaryAccountInfo(
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
-      valAddr: json.valueAsString<String?>('val_addr', acceptCamelCase: true),
-      gaugeId: json.valueAsBigInt<BigInt?>('gauge_id', acceptCamelCase: true),
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      valAddr: json.valueAsString<String?>(
+        'val_addr',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      gaugeId: json.valueAsBigInt<BigInt?>(
+        'gauge_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -556,21 +634,28 @@ class AllIntermediaryAccountsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [pagination];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'pagination': pagination?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'pagination': config.encodeMessage(pagination)};
   }
 
-  factory AllIntermediaryAccountsRequest.fromJson(Map<String, dynamic> json) {
+  factory AllIntermediaryAccountsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AllIntermediaryAccountsRequest(
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageRequest?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) => cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageRequest?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -634,37 +719,51 @@ class AllIntermediaryAccountsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [accounts, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'accounts': accounts.map((e) => e.toJson()).toList(),
-      'pagination': pagination?.toJson(),
+      'accounts': accounts.map((e) => config.encodeMessage(e)).toList(),
+      'pagination': config.encodeMessage(pagination),
     };
   }
 
-  factory AllIntermediaryAccountsResponse.fromJson(Map<String, dynamic> json) {
+  factory AllIntermediaryAccountsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AllIntermediaryAccountsResponse(
       accounts:
-          (json.valueEnsureAsList<dynamic>('accounts', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'accounts',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   SuperfluidIntermediaryAccountInfo,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
-                  parse: (v) => SuperfluidIntermediaryAccountInfo.fromJson(v),
+                  parse:
+                      (v) => SuperfluidIntermediaryAccountInfo.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageResponse?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) =>
-                cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageResponse?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -719,15 +818,21 @@ class ConnectedIntermediaryAccountRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [lockId];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'lock_id': lockId?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'lock_id': config.encodeBigint(lockId)};
   }
 
   factory ConnectedIntermediaryAccountRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ConnectedIntermediaryAccountRequest(
-      lockId: json.valueAsBigInt<BigInt?>('lock_id', acceptCamelCase: true),
+      lockId: json.valueAsBigInt<BigInt?>(
+        'lock_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -775,20 +880,26 @@ class ConnectedIntermediaryAccountResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [account];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'account': account?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'account': config.encodeMessage(account)};
   }
 
   factory ConnectedIntermediaryAccountResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ConnectedIntermediaryAccountResponse(
-      account: json
-          .valueTo<SuperfluidIntermediaryAccountInfo?, Map<String, dynamic>>(
-            key: 'account',
-            parse: (v) => SuperfluidIntermediaryAccountInfo.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      account: json.valueTo<SuperfluidIntermediaryAccountInfo?, Object>(
+        key: 'account',
+        parse:
+            (v) => SuperfluidIntermediaryAccountInfo.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -832,15 +943,21 @@ class QueryTotalDelegationByValidatorForDenomRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [denom];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'denom': denom};
   }
 
   factory QueryTotalDelegationByValidatorForDenomRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTotalDelegationByValidatorForDenomRequest(
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -901,20 +1018,31 @@ class QueryTotalDelegationByValidatorForDenomResponse
   List<Object?> get protoValues => [assets];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'assets': assets.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'assets': assets.map((e) => config.encodeMessage(e)).toList()};
   }
 
   factory QueryTotalDelegationByValidatorForDenomResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTotalDelegationByValidatorForDenomResponse(
       assets:
-          (json.valueEnsureAsList<dynamic>('assets', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'assets',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<Delegations, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<Delegations, Object>(
                   value: e,
-                  parse: (v) => Delegations.fromJson(v),
+                  parse:
+                      (v) => Delegations.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -968,7 +1096,9 @@ class Delegations extends CosmosProtoMessage {
   List<Object?> get protoValues => [valAddr, amountSfsd, osmoEquivalent];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'val_addr': valAddr,
       'amount_sfsd': amountSfsd,
@@ -976,16 +1106,22 @@ class Delegations extends CosmosProtoMessage {
     };
   }
 
-  factory Delegations.fromJson(Map<String, dynamic> json) {
+  factory Delegations.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Delegations(
-      valAddr: json.valueAsString<String?>('val_addr', acceptCamelCase: true),
+      valAddr: json.valueAsString<String?>(
+        'val_addr',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       amountSfsd: json.valueAsString<String?>(
         'amount_sfsd',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       osmoEquivalent: json.valueAsString<String?>(
         'osmo_equivalent',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1029,13 +1165,16 @@ class TotalSuperfluidDelegationsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
   factory TotalSuperfluidDelegationsRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return TotalSuperfluidDelegationsRequest();
   }
 
@@ -1080,17 +1219,20 @@ class TotalSuperfluidDelegationsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [totalDelegations];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'total_delegations': totalDelegations};
   }
 
   factory TotalSuperfluidDelegationsResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return TotalSuperfluidDelegationsResponse(
       totalDelegations: json.valueAsString<String?>(
         'total_delegations',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1147,7 +1289,9 @@ class SuperfluidDelegationAmountRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [delegatorAddress, validatorAddress, denom];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'delegator_address': delegatorAddress,
       'validator_address': validatorAddress,
@@ -1156,18 +1300,22 @@ class SuperfluidDelegationAmountRequest extends CosmosProtoMessage
   }
 
   factory SuperfluidDelegationAmountRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SuperfluidDelegationAmountRequest(
       delegatorAddress: json.valueAsString<String?>(
         'delegator_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       validatorAddress: json.valueAsString<String?>(
         'validator_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1223,24 +1371,33 @@ class SuperfluidDelegationAmountResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [amount];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'amount': amount.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'amount': amount.map((e) => config.encodeMessage(e)).toList()};
   }
 
   factory SuperfluidDelegationAmountResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SuperfluidDelegationAmountResponse(
       amount:
-          (json.valueEnsureAsList<dynamic>('amount', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'amount',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -1291,17 +1448,20 @@ class SuperfluidDelegationsByDelegatorRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [delegatorAddress];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'delegator_address': delegatorAddress};
   }
 
   factory SuperfluidDelegationsByDelegatorRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SuperfluidDelegationsByDelegatorRequest(
       delegatorAddress: json.valueAsString<String?>(
         'delegator_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1375,57 +1535,75 @@ class SuperfluidDelegationsByDelegatorResponse extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'superfluid_delegation_records':
-          superfluidDelegationRecords.map((e) => e.toJson()).toList(),
+          superfluidDelegationRecords
+              .map((e) => config.encodeMessage(e))
+              .toList(),
       'total_delegated_coins':
-          totalDelegatedCoins.map((e) => e.toJson()).toList(),
-      'total_equivalent_staked_amount': totalEquivalentStakedAmount?.toJson(),
+          totalDelegatedCoins.map((e) => config.encodeMessage(e)).toList(),
+      'total_equivalent_staked_amount': config.encodeMessage(
+        totalEquivalentStakedAmount,
+      ),
     };
   }
 
   factory SuperfluidDelegationsByDelegatorResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SuperfluidDelegationsByDelegatorResponse(
       superfluidDelegationRecords:
           (json.valueEnsureAsList<dynamic>(
                 'superfluid_delegation_records',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   osmosis_superfluid_superfluid.SuperfluidDelegationRecord,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => osmosis_superfluid_superfluid
-                          .SuperfluidDelegationRecord.fromJson(v),
+                          .SuperfluidDelegationRecord.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       totalDelegatedCoins:
           (json.valueEnsureAsList<dynamic>(
                 'total_delegated_coins',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
       totalEquivalentStakedAmount: json
-          .valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
+          .valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
             key: 'total_equivalent_staked_amount',
-            parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
     );
   }
@@ -1495,19 +1673,25 @@ class SuperfluidUndelegationsByDelegatorRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [delegatorAddress, denom];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'delegator_address': delegatorAddress, 'denom': denom};
   }
 
   factory SuperfluidUndelegationsByDelegatorRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SuperfluidUndelegationsByDelegatorRequest(
       delegatorAddress: json.valueAsString<String?>(
         'delegator_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1587,64 +1771,82 @@ class SuperfluidUndelegationsByDelegatorResponse extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'superfluid_delegation_records':
-          superfluidDelegationRecords.map((e) => e.toJson()).toList(),
+          superfluidDelegationRecords
+              .map((e) => config.encodeMessage(e))
+              .toList(),
       'total_undelegated_coins':
-          totalUndelegatedCoins.map((e) => e.toJson()).toList(),
-      'synthetic_locks': syntheticLocks.map((e) => e.toJson()).toList(),
+          totalUndelegatedCoins.map((e) => config.encodeMessage(e)).toList(),
+      'synthetic_locks':
+          syntheticLocks.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
   factory SuperfluidUndelegationsByDelegatorResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SuperfluidUndelegationsByDelegatorResponse(
       superfluidDelegationRecords:
           (json.valueEnsureAsList<dynamic>(
                 'superfluid_delegation_records',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   osmosis_superfluid_superfluid.SuperfluidDelegationRecord,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => osmosis_superfluid_superfluid
-                          .SuperfluidDelegationRecord.fromJson(v),
+                          .SuperfluidDelegationRecord.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       totalUndelegatedCoins:
           (json.valueEnsureAsList<dynamic>(
                 'total_undelegated_coins',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
       syntheticLocks:
           (json.valueEnsureAsList<dynamic>(
                 'synthetic_locks',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   osmosis_lockup_lock.SyntheticLock,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
-                  parse: (v) => osmosis_lockup_lock.SyntheticLock.fromJson(v),
+                  parse:
+                      (v) => osmosis_lockup_lock.SyntheticLock.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -1719,19 +1921,25 @@ class SuperfluidDelegationsByValidatorDenomRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [validatorAddress, denom];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'validator_address': validatorAddress, 'denom': denom};
   }
 
   factory SuperfluidDelegationsByValidatorDenomRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SuperfluidDelegationsByValidatorDenomRequest(
       validatorAddress: json.valueAsString<String?>(
         'validator_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1793,31 +2001,40 @@ class SuperfluidDelegationsByValidatorDenomResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [superfluidDelegationRecords];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'superfluid_delegation_records':
-          superfluidDelegationRecords.map((e) => e.toJson()).toList(),
+          superfluidDelegationRecords
+              .map((e) => config.encodeMessage(e))
+              .toList(),
     };
   }
 
   factory SuperfluidDelegationsByValidatorDenomResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SuperfluidDelegationsByValidatorDenomResponse(
       superfluidDelegationRecords:
           (json.valueEnsureAsList<dynamic>(
                 'superfluid_delegation_records',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   osmosis_superfluid_superfluid.SuperfluidDelegationRecord,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => osmosis_superfluid_superfluid
-                          .SuperfluidDelegationRecord.fromJson(v),
+                          .SuperfluidDelegationRecord.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -1883,19 +2100,25 @@ class EstimateSuperfluidDelegatedAmountByValidatorDenomRequest
   List<Object?> get protoValues => [validatorAddress, denom];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'validator_address': validatorAddress, 'denom': denom};
   }
 
   factory EstimateSuperfluidDelegatedAmountByValidatorDenomRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return EstimateSuperfluidDelegatedAmountByValidatorDenomRequest(
       validatorAddress: json.valueAsString<String?>(
         'validator_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1961,30 +2184,36 @@ class EstimateSuperfluidDelegatedAmountByValidatorDenomResponse
   List<Object?> get protoValues => [totalDelegatedCoins];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'total_delegated_coins':
-          totalDelegatedCoins.map((e) => e.toJson()).toList(),
+          totalDelegatedCoins.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
   factory EstimateSuperfluidDelegatedAmountByValidatorDenomResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return EstimateSuperfluidDelegatedAmountByValidatorDenomResponse(
       totalDelegatedCoins:
           (json.valueEnsureAsList<dynamic>(
                 'total_delegated_coins',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -2037,17 +2266,20 @@ class QueryTotalDelegationByDelegatorRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [delegatorAddress];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'delegator_address': delegatorAddress};
   }
 
   factory QueryTotalDelegationByDelegatorRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTotalDelegationByDelegatorRequest(
       delegatorAddress: json.valueAsString<String?>(
         'delegator_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -2131,75 +2363,98 @@ class QueryTotalDelegationByDelegatorResponse extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'superfluid_delegation_records':
-          superfluidDelegationRecords.map((e) => e.toJson()).toList(),
-      'delegation_response': delegationResponse.map((e) => e.toJson()).toList(),
+          superfluidDelegationRecords
+              .map((e) => config.encodeMessage(e))
+              .toList(),
+      'delegation_response':
+          delegationResponse.map((e) => config.encodeMessage(e)).toList(),
       'total_delegated_coins':
-          totalDelegatedCoins.map((e) => e.toJson()).toList(),
-      'total_equivalent_staked_amount': totalEquivalentStakedAmount?.toJson(),
+          totalDelegatedCoins.map((e) => config.encodeMessage(e)).toList(),
+      'total_equivalent_staked_amount': config.encodeMessage(
+        totalEquivalentStakedAmount,
+      ),
     };
   }
 
   factory QueryTotalDelegationByDelegatorResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTotalDelegationByDelegatorResponse(
       superfluidDelegationRecords:
           (json.valueEnsureAsList<dynamic>(
                 'superfluid_delegation_records',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   osmosis_superfluid_superfluid.SuperfluidDelegationRecord,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => osmosis_superfluid_superfluid
-                          .SuperfluidDelegationRecord.fromJson(v),
+                          .SuperfluidDelegationRecord.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       delegationResponse:
           (json.valueEnsureAsList<dynamic>(
                 'delegation_response',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   cosmos_staking_v1beta1_staking.DelegationResponse,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => cosmos_staking_v1beta1_staking
-                          .DelegationResponse.fromJson(v),
+                          .DelegationResponse.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       totalDelegatedCoins:
           (json.valueEnsureAsList<dynamic>(
                 'total_delegated_coins',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
       totalEquivalentStakedAmount: json
-          .valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
+          .valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
             key: 'total_equivalent_staked_amount',
-            parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
     );
   }
@@ -2267,11 +2522,16 @@ class QueryUnpoolWhitelistRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryUnpoolWhitelistRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryUnpoolWhitelistRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryUnpoolWhitelistRequest();
   }
 
@@ -2318,16 +2578,22 @@ class QueryUnpoolWhitelistResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [poolIds];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'pool_ids': poolIds.map((e) => e.toString()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'pool_ids': poolIds.map((e) => config.encodeBigint(e)).toList()};
   }
 
-  factory QueryUnpoolWhitelistResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryUnpoolWhitelistResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryUnpoolWhitelistResponse(
       poolIds:
           (json.valueEnsureAsList<dynamic>(
             'pool_ids',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsBigInt<BigInt>(e)).toList(),
     );
   }
@@ -2378,17 +2644,20 @@ class UserConcentratedSuperfluidPositionsDelegatedRequest
   List<Object?> get protoValues => [delegatorAddress];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'delegator_address': delegatorAddress};
   }
 
   factory UserConcentratedSuperfluidPositionsDelegatedRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return UserConcentratedSuperfluidPositionsDelegatedRequest(
       delegatorAddress: json.valueAsString<String?>(
         'delegator_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -2453,31 +2722,40 @@ class UserConcentratedSuperfluidPositionsDelegatedResponse
   List<Object?> get protoValues => [clPoolUserPositionRecords];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'cl_pool_user_position_records':
-          clPoolUserPositionRecords.map((e) => e.toJson()).toList(),
+          clPoolUserPositionRecords
+              .map((e) => config.encodeMessage(e))
+              .toList(),
     };
   }
 
   factory UserConcentratedSuperfluidPositionsDelegatedResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return UserConcentratedSuperfluidPositionsDelegatedResponse(
       clPoolUserPositionRecords:
           (json.valueEnsureAsList<dynamic>(
                 'cl_pool_user_position_records',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   osmosis_superfluid_superfluid.ConcentratedPoolUserPositionRecord,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => osmosis_superfluid_superfluid
-                          .ConcentratedPoolUserPositionRecord.fromJson(v),
+                          .ConcentratedPoolUserPositionRecord.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -2540,17 +2818,20 @@ class UserConcentratedSuperfluidPositionsUndelegatingRequest
   List<Object?> get protoValues => [delegatorAddress];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'delegator_address': delegatorAddress};
   }
 
   factory UserConcentratedSuperfluidPositionsUndelegatingRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return UserConcentratedSuperfluidPositionsUndelegatingRequest(
       delegatorAddress: json.valueAsString<String?>(
         'delegator_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -2617,31 +2898,40 @@ class UserConcentratedSuperfluidPositionsUndelegatingResponse
   List<Object?> get protoValues => [clPoolUserPositionRecords];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'cl_pool_user_position_records':
-          clPoolUserPositionRecords.map((e) => e.toJson()).toList(),
+          clPoolUserPositionRecords
+              .map((e) => config.encodeMessage(e))
+              .toList(),
     };
   }
 
   factory UserConcentratedSuperfluidPositionsUndelegatingResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return UserConcentratedSuperfluidPositionsUndelegatingResponse(
       clPoolUserPositionRecords:
           (json.valueEnsureAsList<dynamic>(
                 'cl_pool_user_position_records',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   osmosis_superfluid_superfluid.ConcentratedPoolUserPositionRecord,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => osmosis_superfluid_superfluid
-                          .ConcentratedPoolUserPositionRecord.fromJson(v),
+                          .ConcentratedPoolUserPositionRecord.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -2698,13 +2988,21 @@ class QueryRestSupplyRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [denom];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'denom': denom};
   }
 
-  factory QueryRestSupplyRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryRestSupplyRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryRestSupplyRequest(
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -2748,18 +3046,26 @@ class QueryRestSupplyResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [amount];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'amount': amount?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'amount': config.encodeMessage(amount)};
   }
 
-  factory QueryRestSupplyResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryRestSupplyResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryRestSupplyResponse(
-      amount: json
-          .valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
-            key: 'amount',
-            parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      amount: json.valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
+        key: 'amount',
+        parse:
+            (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

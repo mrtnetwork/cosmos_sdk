@@ -39,20 +39,32 @@ enum VoteOption implements ProtoEnumVariant {
 
   /// Looks up a value by its proto wire int. Throws if not found.
   static VoteOption fromValue(int? value) {
+    value ??= 0;
     return VoteOption.values.firstWhere(
       (e) => e.value == value,
       orElse:
-          () => throw ItemNotFoundException(name: "VoteOption", value: value),
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching VoteOption found for the given value. $value",
+                details: {"name": "VoteOption", "value": value?.toString()},
+              ),
     );
   }
 
   /// Looks up a value by wire int, Dart enum name, or original proto
   /// name (whichever [value] happens to be). Throws if not found.
   static VoteOption from(Object? value) {
+    value ??= 0;
     return VoteOption.values.firstWhere(
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
-          () => throw ItemNotFoundException(name: "VoteOption", value: value),
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching VoteOption found for the given value. $value",
+                details: {"name": "VoteOption", "value": value?.toString()},
+              ),
     );
   }
 }
@@ -94,22 +106,32 @@ enum ProposalStatus implements ProtoEnumVariant {
 
   /// Looks up a value by its proto wire int. Throws if not found.
   static ProposalStatus fromValue(int? value) {
+    value ??= 0;
     return ProposalStatus.values.firstWhere(
       (e) => e.value == value,
       orElse:
           () =>
-              throw ItemNotFoundException(name: "ProposalStatus", value: value),
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching ProposalStatus found for the given value. $value",
+                details: {"name": "ProposalStatus", "value": value?.toString()},
+              ),
     );
   }
 
   /// Looks up a value by wire int, Dart enum name, or original proto
   /// name (whichever [value] happens to be). Throws if not found.
   static ProposalStatus from(Object? value) {
+    value ??= 0;
     return ProposalStatus.values.firstWhere(
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
           () =>
-              throw ItemNotFoundException(name: "ProposalStatus", value: value),
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching ProposalStatus found for the given value. $value",
+                details: {"name": "ProposalStatus", "value": value?.toString()},
+              ),
     );
   }
 }
@@ -145,17 +167,25 @@ class WeightedVoteOption extends CosmosProtoMessage {
   List<Object?> get protoValues => [option, weight];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'option': option?.protoName, 'weight': weight};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'option': config.encodeEnum(option), 'weight': weight};
   }
 
-  factory WeightedVoteOption.fromJson(Map<String, dynamic> json) {
+  factory WeightedVoteOption.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return WeightedVoteOption(
       option: json.valueTo<VoteOption?, Object?>(
         key: 'option',
         parse: (v) => VoteOption.from(v),
       ),
-      weight: json.valueAsString<String?>('weight', acceptCamelCase: true),
+      weight: json.valueAsString<String?>(
+        'weight',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -209,34 +239,45 @@ class Deposit extends CosmosProtoMessage {
   List<Object?> get protoValues => [proposalId, depositor, amount];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'proposal_id': proposalId?.toString(),
+      'proposal_id': config.encodeBigint(proposalId),
       'depositor': depositor,
-      'amount': amount.map((e) => e.toJson()).toList(),
+      'amount': amount.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory Deposit.fromJson(Map<String, dynamic> json) {
+  factory Deposit.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Deposit(
       proposalId: json.valueAsBigInt<BigInt?>(
         'proposal_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       depositor: json.valueAsString<String?>(
         'depositor',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       amount:
-          (json.valueEnsureAsList<dynamic>('amount', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'amount',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -357,76 +398,106 @@ class Proposal extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'proposal_id': proposalId?.toString(),
-      'content': content?.toJson(),
-      'status': status?.protoName,
-      'final_tally_result': finalTallyResult?.toJson(),
+      'proposal_id': config.encodeBigint(proposalId),
+      'content': config.encodeMessage(content),
+      'status': config.encodeEnum(status),
+      'final_tally_result': config.encodeMessage(finalTallyResult),
       'submit_time': submitTime?.toRfc3339(),
       'deposit_end_time': depositEndTime?.toRfc3339(),
-      'total_deposit': totalDeposit.map((e) => e.toJson()).toList(),
+      'total_deposit':
+          totalDeposit.map((e) => config.encodeMessage(e)).toList(),
       'voting_start_time': votingStartTime?.toRfc3339(),
       'voting_end_time': votingEndTime?.toRfc3339(),
     };
   }
 
-  factory Proposal.fromJson(Map<String, dynamic> json) {
+  factory Proposal.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Proposal(
       proposalId: json.valueAsBigInt<BigInt?>(
         'proposal_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      content: json.valueTo<google_protobuf_any.Any?, Map<String, dynamic>>(
+      content: json.valueTo<google_protobuf_any.Any?, Object>(
         key: 'content',
-        parse: (v) => google_protobuf_any.Any.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_any.Any.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       status: json.valueTo<ProposalStatus?, Object?>(
         key: 'status',
         parse: (v) => ProposalStatus.from(v),
       ),
-      finalTallyResult: json.valueTo<TallyResult?, Map<String, dynamic>>(
+      finalTallyResult: json.valueTo<TallyResult?, Object>(
         key: 'final_tally_result',
-        parse: (v) => TallyResult.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => TallyResult.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      submitTime: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      submitTime: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'submit_time',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       depositEndTime: json
-          .valueTo<google_protobuf_timestamp.Timestamp?, String>(
+          .valueTo<google_protobuf_timestamp.Timestamp?, Object>(
             key: 'deposit_end_time',
-            parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => google_protobuf_timestamp.Timestamp.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
       totalDeposit:
           (json.valueEnsureAsList<dynamic>(
                 'total_deposit',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
       votingStartTime: json
-          .valueTo<google_protobuf_timestamp.Timestamp?, String>(
+          .valueTo<google_protobuf_timestamp.Timestamp?, Object>(
             key: 'voting_start_time',
-            parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => google_protobuf_timestamp.Timestamp.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
-      votingEndTime: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      votingEndTime: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'voting_end_time',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -509,7 +580,9 @@ class TallyResult extends CosmosProtoMessage {
   List<Object?> get protoValues => [yes, abstain, no, noWithVeto];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'yes': yes,
       'abstain': abstain,
@@ -518,14 +591,26 @@ class TallyResult extends CosmosProtoMessage {
     };
   }
 
-  factory TallyResult.fromJson(Map<String, dynamic> json) {
+  factory TallyResult.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return TallyResult(
-      yes: json.valueAsString<String?>('yes', acceptCamelCase: true),
-      abstain: json.valueAsString<String?>('abstain', acceptCamelCase: true),
-      no: json.valueAsString<String?>('no', acceptCamelCase: true),
+      yes: json.valueAsString<String?>(
+        'yes',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      abstain: json.valueAsString<String?>(
+        'abstain',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      no: json.valueAsString<String?>(
+        'no',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       noWithVeto: json.valueAsString<String?>(
         'no_with_veto',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -608,33 +693,49 @@ class Vote extends CosmosProtoMessage {
   List<Object?> get protoValues => [proposalId, voter, option, options];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'proposal_id': proposalId?.toString(),
+      'proposal_id': config.encodeBigint(proposalId),
       'voter': voter,
-      'option': option?.protoName,
-      'options': options.map((e) => e.toJson()).toList(),
+      'option': config.encodeEnum(option),
+      'options': options.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory Vote.fromJson(Map<String, dynamic> json) {
+  factory Vote.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Vote(
       proposalId: json.valueAsBigInt<BigInt?>(
         'proposal_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      voter: json.valueAsString<String?>('voter', acceptCamelCase: true),
+      voter: json.valueAsString<String?>(
+        'voter',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       option: json.valueTo<VoteOption?, Object?>(
         key: 'option',
         parse: (v) => VoteOption.from(v),
       ),
       options:
-          (json.valueEnsureAsList<dynamic>('options', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'options',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  WeightedVoteOption,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => WeightedVoteOption.fromJson(v)),
+                (e) => JsonParser.valueTo<WeightedVoteOption, Object>(
+                  value: e,
+                  parse:
+                      (v) => WeightedVoteOption.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );
@@ -692,35 +793,47 @@ class DepositParams extends CosmosProtoMessage {
   List<Object?> get protoValues => [minDeposit, maxDepositPeriod];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'min_deposit': minDeposit.map((e) => e.toJson()).toList(),
+      'min_deposit': minDeposit.map((e) => config.encodeMessage(e)).toList(),
       'max_deposit_period': maxDepositPeriod?.encodeString(asNanos: true),
     };
   }
 
-  factory DepositParams.fromJson(Map<String, dynamic> json) {
+  factory DepositParams.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return DepositParams(
       minDeposit:
           (json.valueEnsureAsList<dynamic>(
                 'min_deposit',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
       maxDepositPeriod: json
-          .valueTo<google_protobuf_duration.Duration?, String>(
+          .valueTo<google_protobuf_duration.Duration?, Object>(
             key: 'max_deposit_period',
-            parse: (v) => google_protobuf_duration.Duration.fromString(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => google_protobuf_duration.Duration.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
     );
   }
@@ -767,16 +880,25 @@ class VotingParams extends CosmosProtoMessage {
   List<Object?> get protoValues => [votingPeriod];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'voting_period': votingPeriod?.encodeString(asNanos: true)};
   }
 
-  factory VotingParams.fromJson(Map<String, dynamic> json) {
+  factory VotingParams.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return VotingParams(
-      votingPeriod: json.valueTo<google_protobuf_duration.Duration?, String>(
+      votingPeriod: json.valueTo<google_protobuf_duration.Duration?, Object>(
         key: 'voting_period',
-        parse: (v) => google_protobuf_duration.Duration.fromString(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_duration.Duration.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -800,16 +922,22 @@ class VotingParams extends CosmosProtoMessage {
 class TallyParams extends CosmosProtoMessage {
   /// Minimum percentage of total stake needed to vote for a result to be
   /// considered valid.
-  final List<int>? quorum;
+  final BuBytes? quorum;
 
   /// Minimum proportion of Yes votes for proposal to pass. Default value: 0.5.
-  final List<int>? threshold;
+  final BuBytes? threshold;
 
   /// Minimum value of Veto votes to Total votes ratio for proposal to be
   /// vetoed. Default value: 1/3.
-  final List<int>? vetoThreshold;
+  final BuBytes? vetoThreshold;
 
-  const TallyParams({this.quorum, this.threshold, this.vetoThreshold});
+  TallyParams({
+    List<int>? quorum,
+    List<int>? threshold,
+    List<int>? vetoThreshold,
+  }) : quorum = quorum?.asImmutableBytes,
+       threshold = threshold?.asImmutableBytes,
+       vetoThreshold = vetoThreshold?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -830,48 +958,32 @@ class TallyParams extends CosmosProtoMessage {
   List<Object?> get protoValues => [quorum, threshold, vetoThreshold];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'quorum': switch (quorum) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'threshold': switch (threshold) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'veto_threshold': switch (vetoThreshold) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'quorum': config.encodeBinary(quorum),
+      'threshold': config.encodeBinary(threshold),
+      'veto_threshold': config.encodeBinary(vetoThreshold),
     };
   }
 
-  factory TallyParams.fromJson(Map<String, dynamic> json) {
+  factory TallyParams.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return TallyParams(
-      quorum: json.valueAsBytes<List<int>?>(
-        'quorum',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      quorum: config.decodeBinary<List<int>?>(
+        json.valueAs('quorum', normalizeKeyLookup: config.normalizeKeys),
       ),
-      threshold: json.valueAsBytes<List<int>?>(
-        'threshold',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      threshold: config.decodeBinary<List<int>?>(
+        json.valueAs('threshold', normalizeKeyLookup: config.normalizeKeys),
       ),
-      vetoThreshold: json.valueAsBytes<List<int>?>(
-        'veto_threshold',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      vetoThreshold: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'veto_threshold',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
     );
   }

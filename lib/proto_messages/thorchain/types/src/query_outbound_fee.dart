@@ -31,14 +31,25 @@ class QueryOutboundFeeRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [asset, height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'asset': asset, 'height': height};
   }
 
-  factory QueryOutboundFeeRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryOutboundFeeRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryOutboundFeeRequest(
-      asset: json.valueAsString<String?>('asset', acceptCamelCase: true),
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      asset: json.valueAsString<String?>(
+        'asset',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -124,7 +135,9 @@ class QueryOutboundFeeResponse extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'asset': asset,
       'outbound_fee': outboundFee,
@@ -135,28 +148,34 @@ class QueryOutboundFeeResponse extends CosmosProtoMessage {
     };
   }
 
-  factory QueryOutboundFeeResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryOutboundFeeResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryOutboundFeeResponse(
-      asset: json.valueAsString<String?>('asset', acceptCamelCase: true),
+      asset: json.valueAsString<String?>(
+        'asset',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       outboundFee: json.valueAsString<String?>(
         'outbound_fee',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       feeWithheldRune: json.valueAsString<String?>(
         'fee_withheld_rune',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       feeSpentRune: json.valueAsString<String?>(
         'fee_spent_rune',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       surplusRune: json.valueAsString<String?>(
         'surplus_rune',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       dynamicMultiplierBasisPoints: json.valueAsString<String?>(
         'dynamic_multiplier_basis_points',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -205,13 +224,21 @@ class QueryOutboundFeesRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'height': height};
   }
 
-  factory QueryOutboundFeesRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryOutboundFeesRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryOutboundFeesRequest(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -259,22 +286,35 @@ class QueryOutboundFeesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [outboundFees];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'outbound_fees': outboundFees.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'outbound_fees':
+          outboundFees.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
-  factory QueryOutboundFeesResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryOutboundFeesResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryOutboundFeesResponse(
       outboundFees:
           (json.valueEnsureAsList<dynamic>(
                 'outbound_fees',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  QueryOutboundFeeResponse,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => QueryOutboundFeeResponse.fromJson(v)),
+                (e) => JsonParser.valueTo<QueryOutboundFeeResponse, Object>(
+                  value: e,
+                  parse:
+                      (v) => QueryOutboundFeeResponse.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );

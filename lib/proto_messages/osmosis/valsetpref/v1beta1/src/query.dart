@@ -33,13 +33,21 @@ class UserValidatorPreferencesRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [address];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'address': address};
   }
 
-  factory UserValidatorPreferencesRequest.fromJson(Map<String, dynamic> json) {
+  factory UserValidatorPreferencesRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return UserValidatorPreferencesRequest(
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -94,26 +102,37 @@ class UserValidatorPreferencesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [preferences];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'preferences': preferences.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'preferences': preferences.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
-  factory UserValidatorPreferencesResponse.fromJson(Map<String, dynamic> json) {
+  factory UserValidatorPreferencesResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return UserValidatorPreferencesResponse(
       preferences:
           (json.valueEnsureAsList<dynamic>(
                 'preferences',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   osmosis_valsetpref_v1beta1_state.ValidatorPreference,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => osmosis_valsetpref_v1beta1_state
-                          .ValidatorPreference.fromJson(v),
+                          .ValidatorPreference.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),

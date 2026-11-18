@@ -13,16 +13,16 @@ class CallbackData extends CosmosProtoMessage {
 
   final String? callbackId;
 
-  final List<int>? callbackArgs;
+  final BuBytes? callbackArgs;
 
-  const CallbackData({
+  CallbackData({
     this.callbackKey,
     this.portId,
     this.channelId,
     this.sequence,
     this.callbackId,
-    this.callbackArgs,
-  });
+    List<int>? callbackArgs,
+  }) : callbackArgs = callbackArgs?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -53,43 +53,46 @@ class CallbackData extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'callback_key': callbackKey,
       'port_id': portId,
       'channel_id': channelId,
-      'sequence': sequence?.toString(),
+      'sequence': config.encodeBigint(sequence),
       'callback_id': callbackId,
-      'callback_args': switch (callbackArgs) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'callback_args': config.encodeBinary(callbackArgs),
     };
   }
 
-  factory CallbackData.fromJson(Map<String, dynamic> json) {
+  factory CallbackData.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return CallbackData(
       callbackKey: json.valueAsString<String?>(
         'callback_key',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      portId: json.valueAsString<String?>('port_id', acceptCamelCase: true),
+      portId: json.valueAsString<String?>(
+        'port_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       channelId: json.valueAsString<String?>(
         'channel_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      sequence: json.valueAsBigInt<BigInt?>('sequence', acceptCamelCase: true),
+      sequence: json.valueAsBigInt<BigInt?>(
+        'sequence',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       callbackId: json.valueAsString<String?>(
         'callback_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      callbackArgs: json.valueAsBytes<List<int>?>(
-        'callback_args',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      callbackArgs: config.decodeBinary<List<int>?>(
+        json.valueAs('callback_args', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }

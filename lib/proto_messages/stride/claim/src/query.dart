@@ -34,17 +34,25 @@ class ClaimStatus extends CosmosProtoMessage {
   List<Object?> get protoValues => [airdropIdentifier, claimed];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'airdrop_identifier': airdropIdentifier, 'claimed': claimed};
   }
 
-  factory ClaimStatus.fromJson(Map<String, dynamic> json) {
+  factory ClaimStatus.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ClaimStatus(
       airdropIdentifier: json.valueAsString<String?>(
         'airdrop_identifier',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      claimed: json.valueAsBool<bool?>('claimed', acceptCamelCase: true),
+      claimed: json.valueAsBool<bool?>(
+        'claimed',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -88,13 +96,21 @@ class QueryClaimStatusRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [address];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'address': address};
   }
 
-  factory QueryClaimStatusRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryClaimStatusRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryClaimStatusRequest(
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -143,21 +159,33 @@ class QueryClaimStatusResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [claimStatus];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'claim_status': claimStatus.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'claim_status': claimStatus.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
-  factory QueryClaimStatusResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryClaimStatusResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryClaimStatusResponse(
       claimStatus:
           (json.valueEnsureAsList<dynamic>(
                 'claim_status',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<ClaimStatus, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<ClaimStatus, Object>(
                   value: e,
-                  parse: (v) => ClaimStatus.fromJson(v),
+                  parse:
+                      (v) => ClaimStatus.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -221,7 +249,9 @@ class ClaimMetadata extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'airdrop_identifier': airdropIdentifier,
       'current_round': currentRound,
@@ -230,27 +260,38 @@ class ClaimMetadata extends CosmosProtoMessage {
     };
   }
 
-  factory ClaimMetadata.fromJson(Map<String, dynamic> json) {
+  factory ClaimMetadata.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ClaimMetadata(
       airdropIdentifier: json.valueAsString<String?>(
         'airdrop_identifier',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       currentRound: json.valueAsString<String?>(
         'current_round',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       currentRoundStart: json
-          .valueTo<google_protobuf_timestamp.Timestamp?, String>(
+          .valueTo<google_protobuf_timestamp.Timestamp?, Object>(
             key: 'current_round_start',
-            parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => google_protobuf_timestamp.Timestamp.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
       currentRoundEnd: json
-          .valueTo<google_protobuf_timestamp.Timestamp?, String>(
+          .valueTo<google_protobuf_timestamp.Timestamp?, Object>(
             key: 'current_round_end',
-            parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => google_protobuf_timestamp.Timestamp.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
     );
   }
@@ -301,11 +342,16 @@ class QueryClaimMetadataRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryClaimMetadataRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryClaimMetadataRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryClaimMetadataRequest();
   }
 
@@ -353,21 +399,34 @@ class QueryClaimMetadataResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [claimMetadata];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'claim_metadata': claimMetadata.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'claim_metadata':
+          claimMetadata.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
-  factory QueryClaimMetadataResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryClaimMetadataResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryClaimMetadataResponse(
       claimMetadata:
           (json.valueEnsureAsList<dynamic>(
                 'claim_metadata',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<ClaimMetadata, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<ClaimMetadata, Object>(
                   value: e,
-                  parse: (v) => ClaimMetadata.fromJson(v),
+                  parse:
+                      (v) => ClaimMetadata.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -418,17 +477,20 @@ class QueryDistributorAccountBalanceRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [airdropIdentifier];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'airdrop_identifier': airdropIdentifier};
   }
 
   factory QueryDistributorAccountBalanceRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryDistributorAccountBalanceRequest(
       airdropIdentifier: json.valueAsString<String?>(
         'airdrop_identifier',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -487,30 +549,38 @@ class QueryDistributorAccountBalanceResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [distributorAccountBalance];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'distributor_account_balance':
-          distributorAccountBalance.map((e) => e.toJson()).toList(),
+          distributorAccountBalance
+              .map((e) => config.encodeMessage(e))
+              .toList(),
     };
   }
 
   factory QueryDistributorAccountBalanceResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryDistributorAccountBalanceResponse(
       distributorAccountBalance:
           (json.valueEnsureAsList<dynamic>(
                 'distributor_account_balance',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -559,11 +629,16 @@ class QueryParamsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryParamsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsRequest();
   }
 
@@ -607,16 +682,25 @@ class QueryParamsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [params];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'params': params?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'params': config.encodeMessage(params)};
   }
 
-  factory QueryParamsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsResponse(
-      params: json.valueTo<stride_claim_params.Params?, Map<String, dynamic>>(
+      params: json.valueTo<stride_claim_params.Params?, Object>(
         key: 'params',
-        parse: (v) => stride_claim_params.Params.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => stride_claim_params.Params.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -668,17 +752,25 @@ class QueryClaimRecordRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [airdropIdentifier, address];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'airdrop_identifier': airdropIdentifier, 'address': address};
   }
 
-  factory QueryClaimRecordRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryClaimRecordRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryClaimRecordRequest(
       airdropIdentifier: json.valueAsString<String?>(
         'airdrop_identifier',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -724,18 +816,26 @@ class QueryClaimRecordResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [claimRecord];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'claim_record': claimRecord?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'claim_record': config.encodeMessage(claimRecord)};
   }
 
-  factory QueryClaimRecordResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryClaimRecordResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryClaimRecordResponse(
-      claimRecord: json
-          .valueTo<stride_claim_claim.ClaimRecord?, Map<String, dynamic>>(
-            key: 'claim_record',
-            parse: (v) => stride_claim_claim.ClaimRecord.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      claimRecord: json.valueTo<stride_claim_claim.ClaimRecord?, Object>(
+        key: 'claim_record',
+        parse:
+            (v) => stride_claim_claim.ClaimRecord.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -793,21 +893,29 @@ class QueryClaimableForActionRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [airdropIdentifier, address, action];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'airdrop_identifier': airdropIdentifier,
       'address': address,
-      'action': action?.protoName,
+      'action': config.encodeEnum(action),
     };
   }
 
-  factory QueryClaimableForActionRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryClaimableForActionRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryClaimableForActionRequest(
       airdropIdentifier: json.valueAsString<String?>(
         'airdrop_identifier',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       action: json.valueTo<stride_claim_claim.Action?, Object?>(
         key: 'action',
         parse: (v) => stride_claim_claim.Action.from(v),
@@ -869,22 +977,33 @@ class QueryClaimableForActionResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [coins];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'coins': coins.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'coins': coins.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory QueryClaimableForActionResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryClaimableForActionResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryClaimableForActionResponse(
       coins:
-          (json.valueEnsureAsList<dynamic>('coins', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'coins',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -945,7 +1064,9 @@ class QueryTotalClaimableRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [airdropIdentifier, address, includeClaimed];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'airdrop_identifier': airdropIdentifier,
       'address': address,
@@ -953,16 +1074,22 @@ class QueryTotalClaimableRequest extends CosmosProtoMessage
     };
   }
 
-  factory QueryTotalClaimableRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryTotalClaimableRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTotalClaimableRequest(
       airdropIdentifier: json.valueAsString<String?>(
         'airdrop_identifier',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       includeClaimed: json.valueAsBool<bool?>(
         'include_claimed',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1016,22 +1143,33 @@ class QueryTotalClaimableResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [coins];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'coins': coins.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'coins': coins.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory QueryTotalClaimableResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryTotalClaimableResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTotalClaimableResponse(
       coins:
-          (json.valueEnsureAsList<dynamic>('coins', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'coins',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -1080,13 +1218,21 @@ class QueryUserVestingsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [address];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'address': address};
   }
 
-  factory QueryUserVestingsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryUserVestingsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryUserVestingsRequest(
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1145,40 +1291,55 @@ class QueryUserVestingsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [spendableCoins, periods];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'spendable_coins': spendableCoins.map((e) => e.toJson()).toList(),
-      'periods': periods.map((e) => e.toJson()).toList(),
+      'spendable_coins':
+          spendableCoins.map((e) => config.encodeMessage(e)).toList(),
+      'periods': periods.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory QueryUserVestingsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryUserVestingsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryUserVestingsResponse(
       spendableCoins:
           (json.valueEnsureAsList<dynamic>(
                 'spendable_coins',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
       periods:
-          (json.valueEnsureAsList<dynamic>('periods', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'periods',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  stride_vesting_vesting.Period,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => stride_vesting_vesting.Period.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<stride_vesting_vesting.Period, Object>(
+                      value: e,
+                      parse:
+                          (v) => stride_vesting_vesting.Period.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );

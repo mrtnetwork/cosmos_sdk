@@ -52,41 +52,54 @@ class Block extends CosmosProtoMessage {
   List<Object?> get protoValues => [header, data, evidence, lastCommit];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'header': header?.toJson(),
-      'data': data?.toJson(),
-      'evidence': evidence?.toJson(),
-      'last_commit': lastCommit?.toJson(),
+      'header': config.encodeMessage(header),
+      'data': config.encodeMessage(data),
+      'evidence': config.encodeMessage(evidence),
+      'last_commit': config.encodeMessage(lastCommit),
     };
   }
 
-  factory Block.fromJson(Map<String, dynamic> json) {
+  factory Block.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Block(
-      header: json.valueTo<Header?, Map<String, dynamic>>(
+      header: json.valueTo<Header?, Object>(
         key: 'header',
-        parse: (v) => Header.fromJson(v),
-        acceptCamelCase: true,
+        parse: (v) => Header.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      data: json.valueTo<tendermint_types_types.Data?, Map<String, dynamic>>(
+      data: json.valueTo<tendermint_types_types.Data?, Object>(
         key: 'data',
-        parse: (v) => tendermint_types_types.Data.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => tendermint_types_types.Data.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      evidence: json.valueTo<
-        tendermint_types_evidence.EvidenceList?,
-        Map<String, dynamic>
-      >(
+      evidence: json.valueTo<tendermint_types_evidence.EvidenceList?, Object>(
         key: 'evidence',
-        parse: (v) => tendermint_types_evidence.EvidenceList.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => tendermint_types_evidence.EvidenceList.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      lastCommit: json
-          .valueTo<tendermint_types_types.Commit?, Map<String, dynamic>>(
-            key: 'last_commit',
-            parse: (v) => tendermint_types_types.Commit.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      lastCommit: json.valueTo<tendermint_types_types.Commit?, Object>(
+        key: 'last_commit',
+        parse:
+            (v) => tendermint_types_types.Commit.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -129,30 +142,30 @@ class Header extends CosmosProtoMessage {
   final tendermint_types_types.BlockID? lastBlockId;
 
   /// hashes of block data
-  final List<int>? lastCommitHash;
+  final BuBytes? lastCommitHash;
 
   /// commit from validators from the last block
-  final List<int>? dataHash;
+  final BuBytes? dataHash;
 
   /// transactions
   /// hashes from the app output from the prev block
-  final List<int>? validatorsHash;
+  final BuBytes? validatorsHash;
 
   /// validators for the current block
-  final List<int>? nextValidatorsHash;
+  final BuBytes? nextValidatorsHash;
 
   /// validators for the next block
-  final List<int>? consensusHash;
+  final BuBytes? consensusHash;
 
   /// consensus params for current block
-  final List<int>? appHash;
+  final BuBytes? appHash;
 
   /// state after txs from the previous block
-  final List<int>? lastResultsHash;
+  final BuBytes? lastResultsHash;
 
   /// root hash of all results from the txs from the previous block
   /// consensus info
-  final List<int>? evidenceHash;
+  final BuBytes? evidenceHash;
 
   /// evidence included in the block
   /// proposer_address is the original block proposer address, formatted as a Bech32 string.
@@ -160,22 +173,29 @@ class Header extends CosmosProtoMessage {
   /// for better UX.
   final String? proposerAddress;
 
-  const Header({
+  Header({
     this.version,
     this.chainId,
     this.height,
     this.time,
     this.lastBlockId,
-    this.lastCommitHash,
-    this.dataHash,
-    this.validatorsHash,
-    this.nextValidatorsHash,
-    this.consensusHash,
-    this.appHash,
-    this.lastResultsHash,
-    this.evidenceHash,
+    List<int>? lastCommitHash,
+    List<int>? dataHash,
+    List<int>? validatorsHash,
+    List<int>? nextValidatorsHash,
+    List<int>? consensusHash,
+    List<int>? appHash,
+    List<int>? lastResultsHash,
+    List<int>? evidenceHash,
     this.proposerAddress,
-  });
+  }) : lastCommitHash = lastCommitHash?.asImmutableBytes,
+       dataHash = dataHash?.asImmutableBytes,
+       validatorsHash = validatorsHash?.asImmutableBytes,
+       nextValidatorsHash = nextValidatorsHash?.asImmutableBytes,
+       consensusHash = consensusHash?.asImmutableBytes,
+       appHash = appHash?.asImmutableBytes,
+       lastResultsHash = lastResultsHash?.asImmutableBytes,
+       evidenceHash = evidenceHash?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -231,137 +251,109 @@ class Header extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'version': version?.toJson(),
+      'version': config.encodeMessage(version),
       'chain_id': chainId,
-      'height': height?.toString(),
+      'height': config.encodeBigint(height),
       'time': time?.toRfc3339(),
-      'last_block_id': lastBlockId?.toJson(),
-      'last_commit_hash': switch (lastCommitHash) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'data_hash': switch (dataHash) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'validators_hash': switch (validatorsHash) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'next_validators_hash': switch (nextValidatorsHash) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'consensus_hash': switch (consensusHash) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'app_hash': switch (appHash) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'last_results_hash': switch (lastResultsHash) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'evidence_hash': switch (evidenceHash) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'last_block_id': config.encodeMessage(lastBlockId),
+      'last_commit_hash': config.encodeBinary(lastCommitHash),
+      'data_hash': config.encodeBinary(dataHash),
+      'validators_hash': config.encodeBinary(validatorsHash),
+      'next_validators_hash': config.encodeBinary(nextValidatorsHash),
+      'consensus_hash': config.encodeBinary(consensusHash),
+      'app_hash': config.encodeBinary(appHash),
+      'last_results_hash': config.encodeBinary(lastResultsHash),
+      'evidence_hash': config.encodeBinary(evidenceHash),
       'proposer_address': proposerAddress,
     };
   }
 
-  factory Header.fromJson(Map<String, dynamic> json) {
+  factory Header.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Header(
-      version: json
-          .valueTo<tendermint_version_types.Consensus?, Map<String, dynamic>>(
-            key: 'version',
-            parse: (v) => tendermint_version_types.Consensus.fromJson(v),
-            acceptCamelCase: true,
-          ),
-      chainId: json.valueAsString<String?>('chain_id', acceptCamelCase: true),
-      height: json.valueAsBigInt<BigInt?>('height', acceptCamelCase: true),
-      time: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      version: json.valueTo<tendermint_version_types.Consensus?, Object>(
+        key: 'version',
+        parse:
+            (v) => tendermint_version_types.Consensus.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      chainId: json.valueAsString<String?>(
+        'chain_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      height: json.valueAsBigInt<BigInt?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      time: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'time',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      lastBlockId: json
-          .valueTo<tendermint_types_types.BlockID?, Map<String, dynamic>>(
-            key: 'last_block_id',
-            parse: (v) => tendermint_types_types.BlockID.fromJson(v),
-            acceptCamelCase: true,
-          ),
-      lastCommitHash: json.valueAsBytes<List<int>?>(
-        'last_commit_hash',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      lastBlockId: json.valueTo<tendermint_types_types.BlockID?, Object>(
+        key: 'last_block_id',
+        parse:
+            (v) => tendermint_types_types.BlockID.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      dataHash: json.valueAsBytes<List<int>?>(
-        'data_hash',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      lastCommitHash: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'last_commit_hash',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
-      validatorsHash: json.valueAsBytes<List<int>?>(
-        'validators_hash',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      dataHash: config.decodeBinary<List<int>?>(
+        json.valueAs('data_hash', normalizeKeyLookup: config.normalizeKeys),
       ),
-      nextValidatorsHash: json.valueAsBytes<List<int>?>(
-        'next_validators_hash',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      validatorsHash: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'validators_hash',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
-      consensusHash: json.valueAsBytes<List<int>?>(
-        'consensus_hash',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      nextValidatorsHash: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'next_validators_hash',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
-      appHash: json.valueAsBytes<List<int>?>(
-        'app_hash',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      consensusHash: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'consensus_hash',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
-      lastResultsHash: json.valueAsBytes<List<int>?>(
-        'last_results_hash',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      appHash: config.decodeBinary<List<int>?>(
+        json.valueAs('app_hash', normalizeKeyLookup: config.normalizeKeys),
       ),
-      evidenceHash: json.valueAsBytes<List<int>?>(
-        'evidence_hash',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      lastResultsHash: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'last_results_hash',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
+      ),
+      evidenceHash: config.decodeBinary<List<int>?>(
+        json.valueAs('evidence_hash', normalizeKeyLookup: config.normalizeKeys),
       ),
       proposerAddress: json.valueAsString<String?>(
         'proposer_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

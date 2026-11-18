@@ -1,9 +1,4 @@
-import 'package:blockchain_utils/cbor/cbor.dart';
-import 'package:blockchain_utils/helper/extensions/extensions.dart';
-import 'package:blockchain_utils/networks/types/network.dart';
-import 'package:blockchain_utils/service/service.dart';
-import 'package:blockchain_utils/utils/utils.dart';
-import 'package:cosmos_sdk/sdk/exception/exception.dart';
+import 'package:blockchain_utils/blockchain_utils.dart';
 import 'package:cosmos_sdk/sdk/provider/cosmos/constants/const.dart';
 import 'package:cosmos_sdk/sdk/provider/types/types.dart';
 
@@ -34,11 +29,12 @@ abstract class TendermintRequest<RESULT, RESPONSE>
   TendermintRequestDetails buildRequest(int id) {
     final pathParams = CosmosProviderUtils.extractParams(method);
     if (pathParams.length != pathParameters.length) {
-      throw DartCosmosSdkPluginException(
-        "Invalid Path Parameters.",
+      throw BuError(
+        DefaultErrorType.invalidArgument,
+        "Invalid path parameters: expected ${pathParams.length}, received ${pathParameters.length}.",
         details: {
           "pathParams": pathParameters.join(","),
-          "ExceptedPathParametersLength": pathParams.length.toString(),
+          "expectedPathParametersLength": pathParams.length.toString(),
         },
       );
     }
@@ -71,7 +67,7 @@ abstract class TendermintRequest<RESULT, RESPONSE>
   RequestMethod get requestMethod => RequestMethod.get;
 }
 
-/// An abstract class representing request parameters for tendermint API calls.
+/// An abstract class representing request parameters for Cosmos REST API calls.
 abstract class CosmosRestRequest<RESULT, RESPONSE>
     extends CosmosRequest<RESULT, RESPONSE, CosmosRestRequestDetails> {
   CosmosRestRequest();
@@ -81,7 +77,7 @@ abstract class CosmosRestRequest<RESULT, RESPONSE>
   Map<String, dynamic> get parameters;
   Map<String, dynamic>? get body => null;
 
-  /// Converts the request parameters to [TendermintRequestDetails] with a unique identifier.
+  /// Converts the request parameters to [CosmosRestRequestDetails] with a unique identifier.
   @override
   CosmosRestRequestDetails buildRequest(int id) {
     final body = this.body;

@@ -36,20 +36,32 @@ enum BondStatus implements ProtoEnumVariant {
 
   /// Looks up a value by its proto wire int. Throws if not found.
   static BondStatus fromValue(int? value) {
+    value ??= 0;
     return BondStatus.values.firstWhere(
       (e) => e.value == value,
       orElse:
-          () => throw ItemNotFoundException(name: "BondStatus", value: value),
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching BondStatus found for the given value. $value",
+                details: {"name": "BondStatus", "value": value?.toString()},
+              ),
     );
   }
 
   /// Looks up a value by wire int, Dart enum name, or original proto
   /// name (whichever [value] happens to be). Throws if not found.
   static BondStatus from(Object? value) {
+    value ??= 0;
     return BondStatus.values.firstWhere(
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
-          () => throw ItemNotFoundException(name: "BondStatus", value: value),
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching BondStatus found for the given value. $value",
+                details: {"name": "BondStatus", "value": value?.toString()},
+              ),
     );
   }
 }
@@ -96,7 +108,9 @@ class CommissionRates extends CosmosProtoMessage {
   List<Object?> get protoValues => [rate, maxRate, maxChangeRate];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'rate': rate,
       'max_rate': maxRate,
@@ -104,13 +118,22 @@ class CommissionRates extends CosmosProtoMessage {
     };
   }
 
-  factory CommissionRates.fromJson(Map<String, dynamic> json) {
+  factory CommissionRates.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return CommissionRates(
-      rate: json.valueAsString<String?>('rate', acceptCamelCase: true),
-      maxRate: json.valueAsString<String?>('max_rate', acceptCamelCase: true),
+      rate: json.valueAsString<String?>(
+        'rate',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      maxRate: json.valueAsString<String?>(
+        'max_rate',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       maxChangeRate: json.valueAsString<String?>(
         'max_change_rate',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -157,24 +180,35 @@ class Commission extends CosmosProtoMessage {
   List<Object?> get protoValues => [commissionRates, updateTime];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'commission_rates': commissionRates?.toJson(),
+      'commission_rates': config.encodeMessage(commissionRates),
       'update_time': updateTime?.toRfc3339(),
     };
   }
 
-  factory Commission.fromJson(Map<String, dynamic> json) {
+  factory Commission.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Commission(
-      commissionRates: json.valueTo<CommissionRates?, Map<String, dynamic>>(
+      commissionRates: json.valueTo<CommissionRates?, Object>(
         key: 'commission_rates',
-        parse: (v) => CommissionRates.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) =>
+                CommissionRates.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      updateTime: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      updateTime: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'update_time',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -250,7 +284,9 @@ class Description extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'moniker': moniker,
       'identity': identity,
@@ -260,16 +296,31 @@ class Description extends CosmosProtoMessage {
     };
   }
 
-  factory Description.fromJson(Map<String, dynamic> json) {
+  factory Description.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Description(
-      moniker: json.valueAsString<String?>('moniker', acceptCamelCase: true),
-      identity: json.valueAsString<String?>('identity', acceptCamelCase: true),
-      website: json.valueAsString<String?>('website', acceptCamelCase: true),
+      moniker: json.valueAsString<String?>(
+        'moniker',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      identity: json.valueAsString<String?>(
+        'identity',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      website: json.valueAsString<String?>(
+        'website',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       securityContact: json.valueAsString<String?>(
         'security_contact',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      details: json.valueAsString<String?>('details', acceptCamelCase: true),
+      details: json.valueAsString<String?>(
+        'details',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -414,114 +465,149 @@ class Validator extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'operator_address': operatorAddress,
-      'consensus_pubkey': consensusPubkey?.toJson(),
+      'consensus_pubkey': config.encodeMessage(consensusPubkey),
       'jailed': jailed,
-      'status': status?.protoName,
-      'tokens': tokens.map((e) => e.toJson()).toList(),
-      'delegator_shares': delegatorShares.map((e) => e.toJson()).toList(),
-      'description': description?.toJson(),
-      'unbonding_height': unbondingHeight?.toString(),
+      'status': config.encodeEnum(status),
+      'tokens': tokens.map((e) => config.encodeMessage(e)).toList(),
+      'delegator_shares':
+          delegatorShares.map((e) => config.encodeMessage(e)).toList(),
+      'description': config.encodeMessage(description),
+      'unbonding_height': config.encodeBigint(unbondingHeight),
       'unbonding_time': unbondingTime?.toRfc3339(),
-      'commission': commission?.toJson(),
-      'voting_powers': votingPowers.map((e) => e.toJson()).toList(),
+      'commission': config.encodeMessage(commission),
+      'voting_powers':
+          votingPowers.map((e) => config.encodeMessage(e)).toList(),
       'voting_power': votingPower,
-      'unbonding_on_hold_ref_count': unbondingOnHoldRefCount?.toString(),
-      'unbonding_id': unbondingId?.toString(),
+      'unbonding_on_hold_ref_count': config.encodeBigint(
+        unbondingOnHoldRefCount,
+      ),
+      'unbonding_id': config.encodeBigint(unbondingId),
     };
   }
 
-  factory Validator.fromJson(Map<String, dynamic> json) {
+  factory Validator.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Validator(
       operatorAddress: json.valueAsString<String?>(
         'operator_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      consensusPubkey: json
-          .valueTo<google_protobuf_any.Any?, Map<String, dynamic>>(
-            key: 'consensus_pubkey',
-            parse: (v) => google_protobuf_any.Any.fromJson(v),
-            acceptCamelCase: true,
-          ),
-      jailed: json.valueAsBool<bool?>('jailed', acceptCamelCase: true),
+      consensusPubkey: json.valueTo<google_protobuf_any.Any?, Object>(
+        key: 'consensus_pubkey',
+        parse:
+            (v) => google_protobuf_any.Any.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      jailed: json.valueAsBool<bool?>(
+        'jailed',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       status: json.valueTo<BondStatus?, Object?>(
         key: 'status',
         parse: (v) => BondStatus.from(v),
       ),
       tokens:
-          (json.valueEnsureAsList<dynamic>('tokens', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'tokens',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
       delegatorShares:
           (json.valueEnsureAsList<dynamic>(
                 'delegator_shares',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   cosmos_base_v1beta1_coin.DecCoin,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.DecCoin.fromJson(v),
+                  parse:
+                      (v) => cosmos_base_v1beta1_coin.DecCoin.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
-      description: json.valueTo<Description?, Map<String, dynamic>>(
+      description: json.valueTo<Description?, Object>(
         key: 'description',
-        parse: (v) => Description.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => Description.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       unbondingHeight: json.valueAsBigInt<BigInt?>(
         'unbonding_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      unbondingTime: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      unbondingTime: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'unbonding_time',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      commission: json.valueTo<Commission?, Map<String, dynamic>>(
+      commission: json.valueTo<Commission?, Object>(
         key: 'commission',
-        parse: (v) => Commission.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => Commission.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       votingPowers:
           (json.valueEnsureAsList<dynamic>(
                 'voting_powers',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
       votingPower: json.valueAsString<String?>(
         'voting_power',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       unbondingOnHoldRefCount: json.valueAsBigInt<BigInt?>(
         'unbonding_on_hold_ref_count',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       unbondingId: json.valueAsBigInt<BigInt?>(
         'unbonding_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -617,33 +703,46 @@ class Delegation extends CosmosProtoMessage {
   List<Object?> get protoValues => [delegatorAddress, validatorAddress, shares];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'delegator_address': delegatorAddress,
       'validator_address': validatorAddress,
-      'shares': shares.map((e) => e.toJson()).toList(),
+      'shares': shares.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory Delegation.fromJson(Map<String, dynamic> json) {
+  factory Delegation.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Delegation(
       delegatorAddress: json.valueAsString<String?>(
         'delegator_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       validatorAddress: json.valueAsString<String?>(
         'validator_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       shares:
-          (json.valueEnsureAsList<dynamic>('shares', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'shares',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   cosmos_base_v1beta1_coin.DecCoin,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.DecCoin.fromJson(v),
+                  parse:
+                      (v) => cosmos_base_v1beta1_coin.DecCoin.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -713,31 +812,44 @@ class UnbondingDelegation extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'delegator_address': delegatorAddress,
       'validator_address': validatorAddress,
-      'entries': entries.map((e) => e.toJson()).toList(),
+      'entries': entries.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory UnbondingDelegation.fromJson(Map<String, dynamic> json) {
+  factory UnbondingDelegation.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return UnbondingDelegation(
       delegatorAddress: json.valueAsString<String?>(
         'delegator_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       validatorAddress: json.valueAsString<String?>(
         'validator_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       entries:
-          (json.valueEnsureAsList<dynamic>('entries', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'entries',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  UnbondingDelegationEntry,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => UnbondingDelegationEntry.fromJson(v)),
+                (e) => JsonParser.valueTo<UnbondingDelegationEntry, Object>(
+                  value: e,
+                  parse:
+                      (v) => UnbondingDelegationEntry.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );
@@ -828,63 +940,84 @@ class UnbondingDelegationEntry extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'creation_height': creationHeight?.toString(),
+      'creation_height': config.encodeBigint(creationHeight),
       'completion_time': completionTime?.toRfc3339(),
-      'initial_balance': initialBalance.map((e) => e.toJson()).toList(),
-      'balance': balance.map((e) => e.toJson()).toList(),
-      'unbonding_id': unbondingId?.toString(),
-      'unbonding_on_hold_ref_count': unbondingOnHoldRefCount?.toString(),
+      'initial_balance':
+          initialBalance.map((e) => config.encodeMessage(e)).toList(),
+      'balance': balance.map((e) => config.encodeMessage(e)).toList(),
+      'unbonding_id': config.encodeBigint(unbondingId),
+      'unbonding_on_hold_ref_count': config.encodeBigint(
+        unbondingOnHoldRefCount,
+      ),
     };
   }
 
-  factory UnbondingDelegationEntry.fromJson(Map<String, dynamic> json) {
+  factory UnbondingDelegationEntry.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return UnbondingDelegationEntry(
       creationHeight: json.valueAsBigInt<BigInt?>(
         'creation_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       completionTime: json
-          .valueTo<google_protobuf_timestamp.Timestamp?, String>(
+          .valueTo<google_protobuf_timestamp.Timestamp?, Object>(
             key: 'completion_time',
-            parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => google_protobuf_timestamp.Timestamp.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
       initialBalance:
           (json.valueEnsureAsList<dynamic>(
                 'initial_balance',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
       balance:
-          (json.valueEnsureAsList<dynamic>('balance', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'balance',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
       unbondingId: json.valueAsBigInt<BigInt?>(
         'unbonding_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       unbondingOnHoldRefCount: json.valueAsBigInt<BigInt?>(
         'unbonding_on_hold_ref_count',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -983,63 +1116,86 @@ class RedelegationEntry extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'creation_height': creationHeight?.toString(),
+      'creation_height': config.encodeBigint(creationHeight),
       'completion_time': completionTime?.toRfc3339(),
-      'initial_balance': initialBalance.map((e) => e.toJson()).toList(),
-      'shares_dst': sharesDst.map((e) => e.toJson()).toList(),
-      'unbonding_id': unbondingId?.toString(),
-      'unbonding_on_hold_ref_count': unbondingOnHoldRefCount?.toString(),
+      'initial_balance':
+          initialBalance.map((e) => config.encodeMessage(e)).toList(),
+      'shares_dst': sharesDst.map((e) => config.encodeMessage(e)).toList(),
+      'unbonding_id': config.encodeBigint(unbondingId),
+      'unbonding_on_hold_ref_count': config.encodeBigint(
+        unbondingOnHoldRefCount,
+      ),
     };
   }
 
-  factory RedelegationEntry.fromJson(Map<String, dynamic> json) {
+  factory RedelegationEntry.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return RedelegationEntry(
       creationHeight: json.valueAsBigInt<BigInt?>(
         'creation_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       completionTime: json
-          .valueTo<google_protobuf_timestamp.Timestamp?, String>(
+          .valueTo<google_protobuf_timestamp.Timestamp?, Object>(
             key: 'completion_time',
-            parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => google_protobuf_timestamp.Timestamp.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
       initialBalance:
           (json.valueEnsureAsList<dynamic>(
                 'initial_balance',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
       sharesDst:
-          (json.valueEnsureAsList<dynamic>('shares_dst', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'shares_dst',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   cosmos_base_v1beta1_coin.DecCoin,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.DecCoin.fromJson(v),
+                  parse:
+                      (v) => cosmos_base_v1beta1_coin.DecCoin.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       unbondingId: json.valueAsBigInt<BigInt?>(
         'unbonding_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       unbondingOnHoldRefCount: json.valueAsBigInt<BigInt?>(
         'unbonding_on_hold_ref_count',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1123,37 +1279,49 @@ class Redelegation extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'delegator_address': delegatorAddress,
       'validator_src_address': validatorSrcAddress,
       'validator_dst_address': validatorDstAddress,
-      'entries': entries.map((e) => e.toJson()).toList(),
+      'entries': entries.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory Redelegation.fromJson(Map<String, dynamic> json) {
+  factory Redelegation.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Redelegation(
       delegatorAddress: json.valueAsString<String?>(
         'delegator_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       validatorSrcAddress: json.valueAsString<String?>(
         'validator_src_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       validatorDstAddress: json.valueAsString<String?>(
         'validator_dst_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       entries:
-          (json.valueEnsureAsList<dynamic>('entries', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'entries',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) =>
-                    JsonParser.valueTo<RedelegationEntry, Map<String, dynamic>>(
-                      value: e,
-                      parse: (v) => RedelegationEntry.fromJson(v),
-                    ),
+                (e) => JsonParser.valueTo<RedelegationEntry, Object>(
+                  value: e,
+                  parse:
+                      (v) => RedelegationEntry.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );
@@ -1250,46 +1418,59 @@ class Params extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'unbonding_time': unbondingTime?.encodeString(asNanos: true),
       'max_validators': maxValidators,
       'max_entries': maxEntries,
       'historical_entries': historicalEntries,
       'bond_denoms': bondDenoms.map((e) => e).toList(),
-      'min_voting_power': minVotingPower?.toString(),
+      'min_voting_power': config.encodeBigint(minVotingPower),
       'min_commission_rate': minCommissionRate,
     };
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
-      unbondingTime: json.valueTo<google_protobuf_duration.Duration?, String>(
+      unbondingTime: json.valueTo<google_protobuf_duration.Duration?, Object>(
         key: 'unbonding_time',
-        parse: (v) => google_protobuf_duration.Duration.fromString(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_duration.Duration.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       maxValidators: json.valueAsInt<int?>(
         'max_validators',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      maxEntries: json.valueAsInt<int?>('max_entries', acceptCamelCase: true),
+      maxEntries: json.valueAsInt<int?>(
+        'max_entries',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       historicalEntries: json.valueAsInt<int?>(
         'historical_entries',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       bondDenoms:
           (json.valueEnsureAsList<dynamic>(
             'bond_denoms',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
       minVotingPower: json.valueAsBigInt<BigInt?>(
         'min_voting_power',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       minCommissionRate: json.valueAsString<String?>(
         'min_commission_rate',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1346,30 +1527,42 @@ class DelegationResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [delegation, balance];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'delegation': delegation?.toJson(),
-      'balance': balance.map((e) => e.toJson()).toList(),
+      'delegation': config.encodeMessage(delegation),
+      'balance': balance.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory DelegationResponse.fromJson(Map<String, dynamic> json) {
+  factory DelegationResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return DelegationResponse(
-      delegation: json.valueTo<Delegation?, Map<String, dynamic>>(
+      delegation: json.valueTo<Delegation?, Object>(
         key: 'delegation',
-        parse: (v) => Delegation.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => Delegation.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       balance:
-          (json.valueEnsureAsList<dynamic>('balance', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'balance',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -1430,30 +1623,45 @@ class RedelegationEntryResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [redelegationEntry, balance];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'redelegation_entry': redelegationEntry?.toJson(),
-      'balance': balance.map((e) => e.toJson()).toList(),
+      'redelegation_entry': config.encodeMessage(redelegationEntry),
+      'balance': balance.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory RedelegationEntryResponse.fromJson(Map<String, dynamic> json) {
+  factory RedelegationEntryResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return RedelegationEntryResponse(
-      redelegationEntry: json.valueTo<RedelegationEntry?, Map<String, dynamic>>(
+      redelegationEntry: json.valueTo<RedelegationEntry?, Object>(
         key: 'redelegation_entry',
-        parse: (v) => RedelegationEntry.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => RedelegationEntry.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       balance:
-          (json.valueEnsureAsList<dynamic>('balance', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'balance',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -1511,29 +1719,40 @@ class RedelegationResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [redelegation, entries];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'redelegation': redelegation?.toJson(),
-      'entries': entries.map((e) => e.toJson()).toList(),
+      'redelegation': config.encodeMessage(redelegation),
+      'entries': entries.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory RedelegationResponse.fromJson(Map<String, dynamic> json) {
+  factory RedelegationResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return RedelegationResponse(
-      redelegation: json.valueTo<Redelegation?, Map<String, dynamic>>(
+      redelegation: json.valueTo<Redelegation?, Object>(
         key: 'redelegation',
-        parse: (v) => Redelegation.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => Redelegation.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       entries:
-          (json.valueEnsureAsList<dynamic>('entries', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'entries',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  RedelegationEntryResponse,
-                  Map<String, dynamic>
-                >(
+                (e) => JsonParser.valueTo<RedelegationEntryResponse, Object>(
                   value: e,
-                  parse: (v) => RedelegationEntryResponse.fromJson(v),
+                  parse:
+                      (v) => RedelegationEntryResponse.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -1610,59 +1829,77 @@ class Pool extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'not_bonded_tokens': notBondedTokens.map((e) => e.toJson()).toList(),
-      'bonded_tokens': bondedTokens.map((e) => e.toJson()).toList(),
+      'not_bonded_tokens':
+          notBondedTokens.map((e) => config.encodeMessage(e)).toList(),
+      'bonded_tokens':
+          bondedTokens.map((e) => config.encodeMessage(e)).toList(),
       'voting_power_weights':
-          votingPowerWeights.map((e) => e.toJson()).toList(),
+          votingPowerWeights.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory Pool.fromJson(Map<String, dynamic> json) {
+  factory Pool.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Pool(
       notBondedTokens:
           (json.valueEnsureAsList<dynamic>(
                 'not_bonded_tokens',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
       bondedTokens:
           (json.valueEnsureAsList<dynamic>(
                 'bonded_tokens',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
       votingPowerWeights:
           (json.valueEnsureAsList<dynamic>(
                 'voting_power_weights',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   cosmos_base_v1beta1_coin.DecCoin,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.DecCoin.fromJson(v),
+                  parse:
+                      (v) => cosmos_base_v1beta1_coin.DecCoin.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),

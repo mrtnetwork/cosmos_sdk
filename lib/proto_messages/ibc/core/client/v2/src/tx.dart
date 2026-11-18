@@ -11,7 +11,7 @@ class MsgRegisterCounterparty extends CosmosProtoMessage
   final String? clientId;
 
   /// counterparty merkle prefix
-  final List<List<int>> counterpartyMerklePrefix;
+  final List<BuBytes> counterpartyMerklePrefix;
 
   /// counterparty client identifier
   final String? counterpartyClientId;
@@ -19,12 +19,15 @@ class MsgRegisterCounterparty extends CosmosProtoMessage
   /// signer address
   final String? signer;
 
-  const MsgRegisterCounterparty({
+  MsgRegisterCounterparty({
     this.clientId,
-    this.counterpartyMerklePrefix = const [],
+    List<List<int>> counterpartyMerklePrefix = const [],
     this.counterpartyClientId,
     this.signer,
-  });
+  }) : counterpartyMerklePrefix =
+           counterpartyMerklePrefix
+               .map((e) => e.asImmutableBytes)
+               .toImutableList;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -56,40 +59,41 @@ class MsgRegisterCounterparty extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'client_id': clientId,
       'counterparty_merkle_prefix':
-          counterpartyMerklePrefix
-              .map(
-                (e) => StringUtils.decode(e, encoding: StringEncoding.base64),
-              )
-              .toList(),
+          counterpartyMerklePrefix.map((e) => config.encodeBinary(e)).toList(),
       'counterparty_client_id': counterpartyClientId,
       'signer': signer,
     };
   }
 
-  factory MsgRegisterCounterparty.fromJson(Map<String, dynamic> json) {
+  factory MsgRegisterCounterparty.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgRegisterCounterparty(
-      clientId: json.valueAsString<String?>('client_id', acceptCamelCase: true),
+      clientId: json.valueAsString<String?>(
+        'client_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       counterpartyMerklePrefix:
           (json.valueEnsureAsList<dynamic>(
-                'counterparty_merkle_prefix',
-                acceptCamelCase: true,
-              ))
-              .map(
-                (e) => JsonParser.valueAsBytes<List<int>>(
-                  e,
-                  encoding: StringEncoding.base64,
-                ),
-              )
-              .toList(),
+            'counterparty_merkle_prefix',
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
+          )).map((e) => config.decodeBinary<List<int>>(e)).toList(),
       counterpartyClientId: json.valueAsString<String?>(
         'counterparty_client_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      signer: json.valueAsString<String?>('signer', acceptCamelCase: true),
+      signer: json.valueAsString<String?>(
+        'signer',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -138,11 +142,16 @@ class MsgRegisterCounterpartyResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgRegisterCounterpartyResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgRegisterCounterpartyResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgRegisterCounterpartyResponse();
   }
 
@@ -192,24 +201,38 @@ class MsgUpdateClientConfig extends CosmosProtoMessage
   List<Object?> get protoValues => [clientId, config, signer];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'client_id': clientId,
-      'config': config?.toJson(),
+      'config': config.encodeMessage(this.config),
       'signer': signer,
     };
   }
 
-  factory MsgUpdateClientConfig.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateClientConfig.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateClientConfig(
-      clientId: json.valueAsString<String?>('client_id', acceptCamelCase: true),
-      config: json
-          .valueTo<ibc_core_client_v2_config.Config?, Map<String, dynamic>>(
-            key: 'config',
-            parse: (v) => ibc_core_client_v2_config.Config.fromJson(v),
-            acceptCamelCase: true,
-          ),
-      signer: json.valueAsString<String?>('signer', acceptCamelCase: true),
+      clientId: json.valueAsString<String?>(
+        'client_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      config: json.valueTo<ibc_core_client_v2_config.Config?, Object>(
+        key: 'config',
+        parse:
+            (v) => ibc_core_client_v2_config.Config.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      signer: json.valueAsString<String?>(
+        'signer',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -260,11 +283,16 @@ class MsgUpdateClientConfigResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgUpdateClientConfigResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateClientConfigResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateClientConfigResponse();
   }
 

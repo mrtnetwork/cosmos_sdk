@@ -18,9 +18,10 @@ class AccountAuthenticator extends CosmosProtoMessage {
   /// account authenticator to facilitate complex authentication processes.
   /// The interpretation of this field is overloaded, enabling multiple
   /// authenticators to utilize it for their respective purposes.
-  final List<int>? config;
+  final BuBytes? config;
 
-  const AccountAuthenticator({this.id, this.type, this.config});
+  AccountAuthenticator({this.id, this.type, List<int>? config})
+    : config = config?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -41,28 +42,31 @@ class AccountAuthenticator extends CosmosProtoMessage {
   List<Object?> get protoValues => [id, type, config];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'id': id?.toString(),
+      'id': config.encodeBigint(id),
       'type': type,
-      'config': switch (config) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'config': config.encodeBinary(this.config),
     };
   }
 
-  factory AccountAuthenticator.fromJson(Map<String, dynamic> json) {
+  factory AccountAuthenticator.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AccountAuthenticator(
-      id: json.valueAsBigInt<BigInt?>('id', acceptCamelCase: true),
-      type: json.valueAsString<String?>('type', acceptCamelCase: true),
-      config: json.valueAsBytes<List<int>?>(
-        'config',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      id: json.valueAsBigInt<BigInt?>(
+        'id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      type: json.valueAsString<String?>(
+        'type',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      config: config.decodeBinary<List<int>?>(
+        json.valueAs('config', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }

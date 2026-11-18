@@ -1,14 +1,12 @@
-import 'package:blockchain_utils/proto/proto.dart';
-import 'package:blockchain_utils/service/service.dart';
-import 'package:blockchain_utils/utils/string/string.dart';
-import 'package:cosmos_sdk/sdk/exception/exception.dart';
+import 'package:blockchain_utils/blockchain_utils.dart';
 import 'package:cosmos_sdk/sdk/serialization/buffer/any.dart';
 import 'package:cosmos_sdk/sdk/amino/src/utils.dart';
 import 'package:cosmos_sdk/sdk/types/bech32_config.dart';
 
 enum CosmosToJsonEncoding { amino, native }
 
-abstract class CosmosProtoMessage extends IProtoMessage {
+abstract class CosmosProtoMessage
+    extends IProtoMessage<CosmosProtoJsonConfing> {
   const CosmosProtoMessage();
 
   static ProtoBufferDecoderResult decode(
@@ -22,14 +20,15 @@ abstract class CosmosProtoMessage extends IProtoMessage {
     return result;
   }
 
-  /// Dont change order of toJson
-  /// the key index must be equal to [protoConfig] fields.
-  Map<String, dynamic> toJson();
-
   @override
   String toString() {
     return "$runtimeType${toJson()}";
   }
+
+  @override
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  });
 
   CosmosProtoTypeUrl get declarationId;
 
@@ -44,10 +43,16 @@ abstract class CosmosProtoMessage extends IProtoMessage {
     final keys = toJson.keys.toList();
     final values = protoValues;
 
-    assert(
-      keys.length == values.length,
-      "$runtimeType: toJson() and protoValues must have the same length/order.",
-    );
+    if (keys.length != values.length) {
+      throw BuError(
+        DefaultErrorType.invalidArgument,
+        "$runtimeType: toJson() and protoValues must have the same length and order.",
+        details: {
+          "toJsonLength": keys.length.toString(),
+          "protoValuesLength": values.length.toString(),
+        },
+      );
+    }
 
     final protoConfig = this.protoConfig();
     final json = <String, dynamic>{};
@@ -56,12 +61,15 @@ abstract class CosmosProtoMessage extends IProtoMessage {
     for (var i = 0; i < keys.length; i++) {
       final key = keys[i];
       final fieldConfig = protoConfig.fields.elementAtOrNull(i)?.options;
-      assert(
-        fieldConfig != null,
-        "Missing field options. maybe json customized.",
-      );
+      if (fieldConfig == null) {
+        throw BuError(
+          DefaultErrorType.invalidArgument,
+          "Missing field options for proto field.",
+          details: {"field": key, "message": "$runtimeType"},
+        );
+      }
 
-      optionsMap[key] = fieldConfig ?? const <ProtoOption>[];
+      optionsMap[key] = fieldConfig;
       json[key] = _encodeValue(values[i], encoding, config);
     }
 
@@ -110,8 +118,9 @@ mixin ICosmosProtoQueryMessage<RESPONSE extends CosmosProtoMessage>
     final config = protoConfig();
     final http = config.options.whereType<ProtoOptionHttp>().firstOrNull;
     if (http == null) {
-      throw DartCosmosSdkPluginException(
-        "Missing request google http config.",
+      throw BuError(
+        DefaultErrorType.invalidArgument,
+        "Missing ProtoOptionHttp annotation for query request.",
         details: {"typeUrl": declarationId.typeUrl},
       );
     }
@@ -151,7 +160,8 @@ abstract class CosmosProtoTypeUrl {
 class UnknownAminoProtoTypeUrl implements CosmosProtoTypeUrl {
   @override
   String get typeUrl {
-    throw DartCosmosSdkPluginException(
+    throw BuError(
+      DefaultErrorType.invalidArgument,
       "Missing type url.",
       details: {"amino_type": aminoType},
     );
@@ -167,9 +177,10 @@ class UnknownAminoProtoTypeUrl implements CosmosProtoTypeUrl {
   String getServiceUrl() {
     final serviceUrl = this.serviceUrl;
     if (serviceUrl == null) {
-      throw DartCosmosSdkPluginException(
+      throw BuError(
+        DefaultErrorType.invalidArgument,
         "Missing service url.",
-        details: {"type_url": typeUrl},
+        details: {"amino_type": aminoType, "service_url": "$serviceUrl"},
       );
     }
     return serviceUrl;
@@ -179,4 +190,9 @@ class UnknownAminoProtoTypeUrl implements CosmosProtoTypeUrl {
   String getAminoType() {
     return aminoType;
   }
+}
+
+class CosmosProtoJsonConfing extends DefaultProtoJsonConfig {
+  const CosmosProtoJsonConfing();
+  static const CosmosProtoJsonConfing defaultConfig = CosmosProtoJsonConfing();
 }

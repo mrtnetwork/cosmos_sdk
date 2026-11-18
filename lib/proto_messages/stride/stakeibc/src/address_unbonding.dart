@@ -58,7 +58,9 @@ class AddressUnbonding extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'address': address,
       'receiver': receiver,
@@ -66,27 +68,42 @@ class AddressUnbonding extends CosmosProtoMessage {
       'amount': amount,
       'denom': denom,
       'claim_is_pending': claimIsPending,
-      'epoch_number': epochNumber?.toString(),
+      'epoch_number': config.encodeBigint(epochNumber),
     };
   }
 
-  factory AddressUnbonding.fromJson(Map<String, dynamic> json) {
+  factory AddressUnbonding.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AddressUnbonding(
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
-      receiver: json.valueAsString<String?>('receiver', acceptCamelCase: true),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      receiver: json.valueAsString<String?>(
+        'receiver',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       unbondingEstimatedTime: json.valueAsString<String?>(
         'unbonding_estimated_time',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      amount: json.valueAsString<String?>('amount', acceptCamelCase: true),
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
+      amount: json.valueAsString<String?>(
+        'amount',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       claimIsPending: json.valueAsBool<bool?>(
         'claim_is_pending',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       epochNumber: json.valueAsBigInt<BigInt?>(
         'epoch_number',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

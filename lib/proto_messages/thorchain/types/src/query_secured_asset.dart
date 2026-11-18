@@ -31,14 +31,25 @@ class QuerySecuredAssetRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [asset, height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'asset': asset, 'height': height};
   }
 
-  factory QuerySecuredAssetRequest.fromJson(Map<String, dynamic> json) {
+  factory QuerySecuredAssetRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QuerySecuredAssetRequest(
-      asset: json.valueAsString<String?>('asset', acceptCamelCase: true),
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      asset: json.valueAsString<String?>(
+        'asset',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -95,15 +106,29 @@ class QuerySecuredAssetResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [asset, supply, depth];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'asset': asset, 'supply': supply, 'depth': depth};
   }
 
-  factory QuerySecuredAssetResponse.fromJson(Map<String, dynamic> json) {
+  factory QuerySecuredAssetResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QuerySecuredAssetResponse(
-      asset: json.valueAsString<String?>('asset', acceptCamelCase: true),
-      supply: json.valueAsString<String?>('supply', acceptCamelCase: true),
-      depth: json.valueAsString<String?>('depth', acceptCamelCase: true),
+      asset: json.valueAsString<String?>(
+        'asset',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      supply: json.valueAsString<String?>(
+        'supply',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      depth: json.valueAsString<String?>(
+        'depth',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -148,13 +173,21 @@ class QuerySecuredAssetsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'height': height};
   }
 
-  factory QuerySecuredAssetsRequest.fromJson(Map<String, dynamic> json) {
+  factory QuerySecuredAssetsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QuerySecuredAssetsRequest(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -202,21 +235,31 @@ class QuerySecuredAssetsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [assets];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'assets': assets.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'assets': assets.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory QuerySecuredAssetsResponse.fromJson(Map<String, dynamic> json) {
+  factory QuerySecuredAssetsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QuerySecuredAssetsResponse(
       assets:
-          (json.valueEnsureAsList<dynamic>('assets', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'assets',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  QuerySecuredAssetResponse,
-                  Map<String, dynamic>
-                >(
+                (e) => JsonParser.valueTo<QuerySecuredAssetResponse, Object>(
                   value: e,
-                  parse: (v) => QuerySecuredAssetResponse.fromJson(v),
+                  parse:
+                      (v) => QuerySecuredAssetResponse.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),

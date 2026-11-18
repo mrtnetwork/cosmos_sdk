@@ -18,5 +18,5 @@ class TendermintRequestUnSubscribeAll
   Map<String, String?> get parameters => {};
 
   @override
-  void onResonse(Map<String, dynamic> result) {}
+  void onResponse(Map<String, dynamic> result) {}
 }

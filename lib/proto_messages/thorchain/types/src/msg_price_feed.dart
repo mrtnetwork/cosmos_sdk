@@ -12,9 +12,10 @@ class MsgPriceFeedQuorumBatch extends CosmosProtoMessage
         ICosmosProtoAminoMessage {
   final List<common_common.QuorumPriceFeed> quoPriceFeeds;
 
-  final List<int>? signer;
+  final BuBytes? signer;
 
-  const MsgPriceFeedQuorumBatch({this.quoPriceFeeds = const [], this.signer});
+  MsgPriceFeedQuorumBatch({this.quoPriceFeeds = const [], List<int>? signer})
+    : signer = signer?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -45,40 +46,41 @@ class MsgPriceFeedQuorumBatch extends CosmosProtoMessage
   List<Object?> get protoValues => [quoPriceFeeds, signer];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'quoPriceFeeds': quoPriceFeeds.map((e) => e.toJson()).toList(),
-      'signer': switch (signer) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'quoPriceFeeds':
+          quoPriceFeeds.map((e) => config.encodeMessage(e)).toList(),
+      'signer': config.encodeBinary(signer),
     };
   }
 
-  factory MsgPriceFeedQuorumBatch.fromJson(Map<String, dynamic> json) {
+  factory MsgPriceFeedQuorumBatch.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgPriceFeedQuorumBatch(
       quoPriceFeeds:
           (json.valueEnsureAsList<dynamic>(
                 'quoPriceFeeds',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  common_common.QuorumPriceFeed,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => common_common.QuorumPriceFeed.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<common_common.QuorumPriceFeed, Object>(
+                      value: e,
+                      parse:
+                          (v) => common_common.QuorumPriceFeed.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
-      signer: json.valueAsBytes<List<int>?>(
-        'signer',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      signer: config.decodeBinary<List<int>?>(
+        json.valueAs('signer', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }

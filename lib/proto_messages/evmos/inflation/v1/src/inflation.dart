@@ -66,7 +66,9 @@ class InflationDistribution extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'staking_rewards': stakingRewards,
       'usage_incentives': usageIncentives,
@@ -74,19 +76,22 @@ class InflationDistribution extends CosmosProtoMessage {
     };
   }
 
-  factory InflationDistribution.fromJson(Map<String, dynamic> json) {
+  factory InflationDistribution.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return InflationDistribution(
       stakingRewards: json.valueAsString<String?>(
         'staking_rewards',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       usageIncentives: json.valueAsString<String?>(
         'usage_incentives',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       communityPool: json.valueAsString<String?>(
         'community_pool',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -170,7 +175,9 @@ class ExponentialCalculation extends CosmosProtoMessage {
   List<Object?> get protoValues => [a, r, c, bondingTarget, maxVariance];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'a': a,
       'r': r,
@@ -180,18 +187,30 @@ class ExponentialCalculation extends CosmosProtoMessage {
     };
   }
 
-  factory ExponentialCalculation.fromJson(Map<String, dynamic> json) {
+  factory ExponentialCalculation.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ExponentialCalculation(
-      a: json.valueAsString<String?>('a', acceptCamelCase: true),
-      r: json.valueAsString<String?>('r', acceptCamelCase: true),
-      c: json.valueAsString<String?>('c', acceptCamelCase: true),
+      a: json.valueAsString<String?>(
+        'a',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      r: json.valueAsString<String?>(
+        'r',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      c: json.valueAsString<String?>(
+        'c',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       bondingTarget: json.valueAsString<String?>(
         'bonding_target',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       maxVariance: json.valueAsString<String?>(
         'max_variance',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

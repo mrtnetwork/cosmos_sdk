@@ -3,13 +3,14 @@ import 'package:cosmos_sdk/proto_messages/types.dart';
 import 'package:cosmos_sdk/sdk/serialization/serialization.dart';
 
 class BanVoter extends CosmosProtoMessage {
-  final List<int>? nodeAddress;
+  final BuBytes? nodeAddress;
 
   final BigInt? blockHeight;
 
   final List<String> signers;
 
-  const BanVoter({this.nodeAddress, this.blockHeight, this.signers = const []});
+  BanVoter({List<int>? nodeAddress, this.blockHeight, this.signers = const []})
+    : nodeAddress = nodeAddress?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -33,35 +34,33 @@ class BanVoter extends CosmosProtoMessage {
   List<Object?> get protoValues => [nodeAddress, blockHeight, signers];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'node_address': switch (nodeAddress) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'block_height': blockHeight?.toString(),
+      'node_address': config.encodeBinary(nodeAddress),
+      'block_height': config.encodeBigint(blockHeight),
       'signers': signers.map((e) => e).toList(),
     };
   }
 
-  factory BanVoter.fromJson(Map<String, dynamic> json) {
+  factory BanVoter.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return BanVoter(
-      nodeAddress: json.valueAsBytes<List<int>?>(
-        'node_address',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      nodeAddress: config.decodeBinary<List<int>?>(
+        json.valueAs('node_address', normalizeKeyLookup: config.normalizeKeys),
       ),
       blockHeight: json.valueAsBigInt<BigInt?>(
         'block_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       signers:
           (json.valueEnsureAsList<dynamic>(
             'signers',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
     );
   }

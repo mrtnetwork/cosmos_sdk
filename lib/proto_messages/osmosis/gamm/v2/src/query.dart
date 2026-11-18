@@ -57,29 +57,37 @@ class QuerySpotPriceRequest extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'pool_id': poolId?.toString(),
+      'pool_id': config.encodeBigint(poolId),
       'base_asset_denom': baseAssetDenom,
       'quote_asset_denom': quoteAssetDenom,
       'withSwapFee': withSwapFee,
     };
   }
 
-  factory QuerySpotPriceRequest.fromJson(Map<String, dynamic> json) {
+  factory QuerySpotPriceRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QuerySpotPriceRequest(
-      poolId: json.valueAsBigInt<BigInt?>('pool_id', acceptCamelCase: true),
+      poolId: json.valueAsBigInt<BigInt?>(
+        'pool_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       baseAssetDenom: json.valueAsString<String?>(
         'base_asset_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       quoteAssetDenom: json.valueAsString<String?>(
         'quote_asset_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       withSwapFee: json.valueAsBool<bool?>(
         'withSwapFee',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -130,15 +138,20 @@ class QuerySpotPriceResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [spotPrice];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'spot_price': spotPrice};
   }
 
-  factory QuerySpotPriceResponse.fromJson(Map<String, dynamic> json) {
+  factory QuerySpotPriceResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QuerySpotPriceResponse(
       spotPrice: json.valueAsString<String?>(
         'spot_price',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

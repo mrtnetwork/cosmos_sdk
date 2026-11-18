@@ -19,7 +19,7 @@ class TendermintRequestStatus
   Map<String, String> get parameters => {};
 
   @override
-  TendermintStatus onResonse(Map<String, dynamic> result) {
+  TendermintStatus onResponse(Map<String, dynamic> result) {
     return TendermintStatus.fromJson(result);
   }
 }

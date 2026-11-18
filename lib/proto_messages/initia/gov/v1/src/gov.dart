@@ -215,9 +215,11 @@ class Params extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'min_deposit': minDeposit.map((e) => e.toJson()).toList(),
+      'min_deposit': minDeposit.map((e) => config.encodeMessage(e)).toList(),
       'max_deposit_period': maxDepositPeriod?.encodeString(asNanos: true),
       'voting_period': votingPeriod?.encodeString(asNanos: true),
       'quorum': quorum,
@@ -231,147 +233,180 @@ class Params extends CosmosProtoMessage {
       ),
       'expedited_threshold': expeditedThreshold,
       'expedited_min_deposit':
-          expeditedMinDeposit.map((e) => e.toJson()).toList(),
+          expeditedMinDeposit.map((e) => config.encodeMessage(e)).toList(),
       'burn_vote_quorum': burnVoteQuorum,
       'burn_proposal_deposit_prevote': burnProposalDepositPrevote,
       'burn_vote_veto': burnVoteVeto,
       'min_deposit_ratio': minDepositRatio,
       'emergency_min_deposit':
-          emergencyMinDeposit.map((e) => e.toJson()).toList(),
+          emergencyMinDeposit.map((e) => config.encodeMessage(e)).toList(),
       'emergency_tally_interval': emergencyTallyInterval?.encodeString(
         asNanos: true,
       ),
       'low_threshold_functions': lowThresholdFunctions.map((e) => e).toList(),
-      'vesting': vesting?.toJson(),
+      'vesting': config.encodeMessage(vesting),
       'emergency_submitters': emergencySubmitters.map((e) => e).toList(),
     };
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
       minDeposit:
           (json.valueEnsureAsList<dynamic>(
                 'min_deposit',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
       maxDepositPeriod: json
-          .valueTo<google_protobuf_duration.Duration?, String>(
+          .valueTo<google_protobuf_duration.Duration?, Object>(
             key: 'max_deposit_period',
-            parse: (v) => google_protobuf_duration.Duration.fromString(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => google_protobuf_duration.Duration.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
-      votingPeriod: json.valueTo<google_protobuf_duration.Duration?, String>(
+      votingPeriod: json.valueTo<google_protobuf_duration.Duration?, Object>(
         key: 'voting_period',
-        parse: (v) => google_protobuf_duration.Duration.fromString(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_duration.Duration.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      quorum: json.valueAsString<String?>('quorum', acceptCamelCase: true),
+      quorum: json.valueAsString<String?>(
+        'quorum',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       threshold: json.valueAsString<String?>(
         'threshold',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       vetoThreshold: json.valueAsString<String?>(
         'veto_threshold',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       minInitialDepositRatio: json.valueAsString<String?>(
         'min_initial_deposit_ratio',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       proposalCancelRatio: json.valueAsString<String?>(
         'proposal_cancel_ratio',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       proposalCancelDest: json.valueAsString<String?>(
         'proposal_cancel_dest',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       expeditedVotingPeriod: json
-          .valueTo<google_protobuf_duration.Duration?, String>(
+          .valueTo<google_protobuf_duration.Duration?, Object>(
             key: 'expedited_voting_period',
-            parse: (v) => google_protobuf_duration.Duration.fromString(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => google_protobuf_duration.Duration.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
       expeditedThreshold: json.valueAsString<String?>(
         'expedited_threshold',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       expeditedMinDeposit:
           (json.valueEnsureAsList<dynamic>(
                 'expedited_min_deposit',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
       burnVoteQuorum: json.valueAsBool<bool?>(
         'burn_vote_quorum',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       burnProposalDepositPrevote: json.valueAsBool<bool?>(
         'burn_proposal_deposit_prevote',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       burnVoteVeto: json.valueAsBool<bool?>(
         'burn_vote_veto',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       minDepositRatio: json.valueAsString<String?>(
         'min_deposit_ratio',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       emergencyMinDeposit:
           (json.valueEnsureAsList<dynamic>(
                 'emergency_min_deposit',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
       emergencyTallyInterval: json
-          .valueTo<google_protobuf_duration.Duration?, String>(
+          .valueTo<google_protobuf_duration.Duration?, Object>(
             key: 'emergency_tally_interval',
-            parse: (v) => google_protobuf_duration.Duration.fromString(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => google_protobuf_duration.Duration.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
       lowThresholdFunctions:
           (json.valueEnsureAsList<dynamic>(
             'low_threshold_functions',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
-      vesting: json.valueTo<Vesting?, Map<String, dynamic>>(
+      vesting: json.valueTo<Vesting?, Object>(
         key: 'vesting',
-        parse: (v) => Vesting.fromJson(v),
-        acceptCamelCase: true,
+        parse: (v) => Vesting.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       emergencySubmitters:
           (json.valueEnsureAsList<dynamic>(
             'emergency_submitters',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
     );
   }
@@ -467,7 +502,9 @@ class Vesting extends CosmosProtoMessage {
   List<Object?> get protoValues => [moduleAddr, moduleName, creatorAddr];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'module_addr': moduleAddr,
       'module_name': moduleName,
@@ -475,19 +512,22 @@ class Vesting extends CosmosProtoMessage {
     };
   }
 
-  factory Vesting.fromJson(Map<String, dynamic> json) {
+  factory Vesting.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Vesting(
       moduleAddr: json.valueAsString<String?>(
         'module_addr',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       moduleName: json.valueAsString<String?>(
         'module_name',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       creatorAddr: json.valueAsString<String?>(
         'creator_addr',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -550,35 +590,43 @@ class TallyResult extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'tally_height': tallyHeight?.toString(),
+      'tally_height': config.encodeBigint(tallyHeight),
       'total_staking_power': totalStakingPower,
       'total_vesting_power': totalVestingPower,
-      'v1_tally_result': v1TallyResult?.toJson(),
+      'v1_tally_result': config.encodeMessage(v1TallyResult),
     };
   }
 
-  factory TallyResult.fromJson(Map<String, dynamic> json) {
+  factory TallyResult.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return TallyResult(
       tallyHeight: json.valueAsBigInt<BigInt?>(
         'tally_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       totalStakingPower: json.valueAsString<String?>(
         'total_staking_power',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       totalVestingPower: json.valueAsString<String?>(
         'total_vesting_power',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      v1TallyResult: json
-          .valueTo<cosmos_gov_v1_gov.TallyResult?, Map<String, dynamic>>(
-            key: 'v1_tally_result',
-            parse: (v) => cosmos_gov_v1_gov.TallyResult.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      v1TallyResult: json.valueTo<cosmos_gov_v1_gov.TallyResult?, Object>(
+        key: 'v1_tally_result',
+        parse:
+            (v) => cosmos_gov_v1_gov.TallyResult.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -751,15 +799,18 @@ class Proposal extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'id': id?.toString(),
-      'messages': messages.map((e) => e.toJson()).toList(),
-      'status': status?.protoName,
-      'final_tally_result': finalTallyResult?.toJson(),
+      'id': config.encodeBigint(id),
+      'messages': messages.map((e) => config.encodeMessage(e)).toList(),
+      'status': config.encodeEnum(status),
+      'final_tally_result': config.encodeMessage(finalTallyResult),
       'submit_time': submitTime?.toRfc3339(),
       'deposit_end_time': depositEndTime?.toRfc3339(),
-      'total_deposit': totalDeposit.map((e) => e.toJson()).toList(),
+      'total_deposit':
+          totalDeposit.map((e) => config.encodeMessage(e)).toList(),
       'voting_start_time': votingStartTime?.toRfc3339(),
       'voting_end_time': votingEndTime?.toRfc3339(),
       'emergency_start_time': emergencyStartTime?.toRfc3339(),
@@ -774,85 +825,145 @@ class Proposal extends CosmosProtoMessage {
     };
   }
 
-  factory Proposal.fromJson(Map<String, dynamic> json) {
+  factory Proposal.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Proposal(
-      id: json.valueAsBigInt<BigInt?>('id', acceptCamelCase: true),
+      id: json.valueAsBigInt<BigInt?>(
+        'id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       messages:
-          (json.valueEnsureAsList<dynamic>('messages', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'messages',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  google_protobuf_any.Any,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => google_protobuf_any.Any.fromJson(v)),
+                (e) => JsonParser.valueTo<google_protobuf_any.Any, Object>(
+                  value: e,
+                  parse:
+                      (v) => google_protobuf_any.Any.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
       status: json.valueTo<cosmos_gov_v1_gov.ProposalStatus?, Object?>(
         key: 'status',
         parse: (v) => cosmos_gov_v1_gov.ProposalStatus.from(v),
       ),
-      finalTallyResult: json.valueTo<TallyResult?, Map<String, dynamic>>(
+      finalTallyResult: json.valueTo<TallyResult?, Object>(
         key: 'final_tally_result',
-        parse: (v) => TallyResult.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => TallyResult.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      submitTime: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      submitTime: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'submit_time',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       depositEndTime: json
-          .valueTo<google_protobuf_timestamp.Timestamp?, String>(
+          .valueTo<google_protobuf_timestamp.Timestamp?, Object>(
             key: 'deposit_end_time',
-            parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => google_protobuf_timestamp.Timestamp.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
       totalDeposit:
           (json.valueEnsureAsList<dynamic>(
                 'total_deposit',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
       votingStartTime: json
-          .valueTo<google_protobuf_timestamp.Timestamp?, String>(
+          .valueTo<google_protobuf_timestamp.Timestamp?, Object>(
             key: 'voting_start_time',
-            parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => google_protobuf_timestamp.Timestamp.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
-      votingEndTime: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      votingEndTime: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'voting_end_time',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       emergencyStartTime: json
-          .valueTo<google_protobuf_timestamp.Timestamp?, String>(
+          .valueTo<google_protobuf_timestamp.Timestamp?, Object>(
             key: 'emergency_start_time',
-            parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => google_protobuf_timestamp.Timestamp.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
       emergencyNextTallyTime: json
-          .valueTo<google_protobuf_timestamp.Timestamp?, String>(
+          .valueTo<google_protobuf_timestamp.Timestamp?, Object>(
             key: 'emergency_next_tally_time',
-            parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => google_protobuf_timestamp.Timestamp.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
-      metadata: json.valueAsString<String?>('metadata', acceptCamelCase: true),
-      title: json.valueAsString<String?>('title', acceptCamelCase: true),
-      summary: json.valueAsString<String?>('summary', acceptCamelCase: true),
-      proposer: json.valueAsString<String?>('proposer', acceptCamelCase: true),
-      expedited: json.valueAsBool<bool?>('expedited', acceptCamelCase: true),
-      emergency: json.valueAsBool<bool?>('emergency', acceptCamelCase: true),
+      metadata: json.valueAsString<String?>(
+        'metadata',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      title: json.valueAsString<String?>(
+        'title',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      summary: json.valueAsString<String?>(
+        'summary',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      proposer: json.valueAsString<String?>(
+        'proposer',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      expedited: json.valueAsBool<bool?>(
+        'expedited',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      emergency: json.valueAsBool<bool?>(
+        'emergency',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       failedReason: json.valueAsString<String?>(
         'failed_reason',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

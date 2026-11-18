@@ -34,11 +34,16 @@ class QueryParamsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryParamsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsRequest();
   }
 
@@ -82,20 +87,27 @@ class QueryParamsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [params];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'params': params?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'params': config.encodeMessage(params)};
   }
 
-  factory QueryParamsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsResponse(
-      params: json.valueTo<
-        injective_tokenfactory_v1beta1_params.Params?,
-        Map<String, dynamic>
-      >(
-        key: 'params',
-        parse: (v) => injective_tokenfactory_v1beta1_params.Params.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      params: json
+          .valueTo<injective_tokenfactory_v1beta1_params.Params?, Object>(
+            key: 'params',
+            parse:
+                (v) => injective_tokenfactory_v1beta1_params.Params.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -151,16 +163,25 @@ class QueryDenomAuthorityMetadataRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [creator, subDenom];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'creator': creator, 'sub_denom': subDenom};
   }
 
   factory QueryDenomAuthorityMetadataRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryDenomAuthorityMetadataRequest(
-      creator: json.valueAsString<String?>('creator', acceptCamelCase: true),
-      subDenom: json.valueAsString<String?>('sub_denom', acceptCamelCase: true),
+      creator: json.valueAsString<String?>(
+        'creator',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      subDenom: json.valueAsString<String?>(
+        'sub_denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -213,23 +234,29 @@ class QueryDenomAuthorityMetadataResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [authorityMetadata];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'authority_metadata': authorityMetadata?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'authority_metadata': config.encodeMessage(authorityMetadata)};
   }
 
   factory QueryDenomAuthorityMetadataResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryDenomAuthorityMetadataResponse(
       authorityMetadata: json.valueTo<
         injective_tokenfactory_v1beta1_authority_metadata.DenomAuthorityMetadata?,
-        Map<String, dynamic>
+        Object
       >(
         key: 'authority_metadata',
         parse:
             (v) => injective_tokenfactory_v1beta1_authority_metadata
-                .DenomAuthorityMetadata.fromJson(v),
-        acceptCamelCase: true,
+                .DenomAuthorityMetadata.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -283,13 +310,21 @@ class QueryDenomsFromCreatorRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [creator];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'creator': creator};
   }
 
-  factory QueryDenomsFromCreatorRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryDenomsFromCreatorRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryDenomsFromCreatorRequest(
-      creator: json.valueAsString<String?>('creator', acceptCamelCase: true),
+      creator: json.valueAsString<String?>(
+        'creator',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -344,16 +379,22 @@ class QueryDenomsFromCreatorResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [denoms];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'denoms': denoms.map((e) => e).toList()};
   }
 
-  factory QueryDenomsFromCreatorResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryDenomsFromCreatorResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryDenomsFromCreatorResponse(
       denoms:
           (json.valueEnsureAsList<dynamic>(
             'denoms',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
     );
   }
@@ -398,11 +439,16 @@ class QueryModuleStateRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryModuleStateRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryModuleStateRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryModuleStateRequest();
   }
 
@@ -448,21 +494,28 @@ class QueryModuleStateResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [state];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'state': state?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'state': config.encodeMessage(state)};
   }
 
-  factory QueryModuleStateResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryModuleStateResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryModuleStateResponse(
       state: json.valueTo<
         injective_tokenfactory_v1beta1_genesis.GenesisState?,
-        Map<String, dynamic>
+        Object
       >(
         key: 'state',
         parse:
-            (v) =>
-                injective_tokenfactory_v1beta1_genesis.GenesisState.fromJson(v),
-        acceptCamelCase: true,
+            (v) => injective_tokenfactory_v1beta1_genesis.GenesisState.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

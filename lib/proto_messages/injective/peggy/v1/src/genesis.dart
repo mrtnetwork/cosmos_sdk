@@ -164,241 +164,304 @@ class GenesisState extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'params': params?.toJson(),
-      'last_observed_nonce': lastObservedNonce?.toString(),
-      'valsets': valsets.map((e) => e.toJson()).toList(),
-      'valset_confirms': valsetConfirms.map((e) => e.toJson()).toList(),
-      'batches': batches.map((e) => e.toJson()).toList(),
-      'batch_confirms': batchConfirms.map((e) => e.toJson()).toList(),
-      'attestations': attestations.map((e) => e.toJson()).toList(),
+      'params': config.encodeMessage(params),
+      'last_observed_nonce': config.encodeBigint(lastObservedNonce),
+      'valsets': valsets.map((e) => config.encodeMessage(e)).toList(),
+      'valset_confirms':
+          valsetConfirms.map((e) => config.encodeMessage(e)).toList(),
+      'batches': batches.map((e) => config.encodeMessage(e)).toList(),
+      'batch_confirms':
+          batchConfirms.map((e) => config.encodeMessage(e)).toList(),
+      'attestations': attestations.map((e) => config.encodeMessage(e)).toList(),
       'orchestrator_addresses':
-          orchestratorAddresses.map((e) => e.toJson()).toList(),
-      'erc20_to_denoms': erc20ToDenoms.map((e) => e.toJson()).toList(),
-      'unbatched_transfers': unbatchedTransfers.map((e) => e.toJson()).toList(),
-      'last_observed_ethereum_height': lastObservedEthereumHeight?.toString(),
-      'last_outgoing_batch_id': lastOutgoingBatchId?.toString(),
-      'last_outgoing_pool_id': lastOutgoingPoolId?.toString(),
-      'last_observed_valset': lastObservedValset?.toJson(),
+          orchestratorAddresses.map((e) => config.encodeMessage(e)).toList(),
+      'erc20_to_denoms':
+          erc20ToDenoms.map((e) => config.encodeMessage(e)).toList(),
+      'unbatched_transfers':
+          unbatchedTransfers.map((e) => config.encodeMessage(e)).toList(),
+      'last_observed_ethereum_height': config.encodeBigint(
+        lastObservedEthereumHeight,
+      ),
+      'last_outgoing_batch_id': config.encodeBigint(lastOutgoingBatchId),
+      'last_outgoing_pool_id': config.encodeBigint(lastOutgoingPoolId),
+      'last_observed_valset': config.encodeMessage(lastObservedValset),
       'ethereum_blacklist': ethereumBlacklist.map((e) => e).toList(),
-      'rate_limits': rateLimits.map((e) => e.toJson()).toList(),
+      'rate_limits': rateLimits.map((e) => config.encodeMessage(e)).toList(),
       'rate_limit_transfers':
-          rateLimitTransfers.map((e) => e.toJson()).toList(),
-      'mint_amounts': mintAmounts.map((e) => e.toJson()).toList(),
+          rateLimitTransfers.map((e) => config.encodeMessage(e)).toList(),
+      'mint_amounts': mintAmounts.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory GenesisState.fromJson(Map<String, dynamic> json) {
+  factory GenesisState.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GenesisState(
-      params: json
-          .valueTo<injective_peggy_v1_params.Params?, Map<String, dynamic>>(
-            key: 'params',
-            parse: (v) => injective_peggy_v1_params.Params.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      params: json.valueTo<injective_peggy_v1_params.Params?, Object>(
+        key: 'params',
+        parse:
+            (v) => injective_peggy_v1_params.Params.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       lastObservedNonce: json.valueAsBigInt<BigInt?>(
         'last_observed_nonce',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       valsets:
-          (json.valueEnsureAsList<dynamic>('valsets', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'valsets',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  injective_peggy_v1_types.Valset,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => injective_peggy_v1_types.Valset.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<injective_peggy_v1_types.Valset, Object>(
+                      value: e,
+                      parse:
+                          (v) => injective_peggy_v1_types.Valset.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
       valsetConfirms:
           (json.valueEnsureAsList<dynamic>(
                 'valset_confirms',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_peggy_v1_msgs.MsgValsetConfirm,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
-                      (v) =>
-                          injective_peggy_v1_msgs.MsgValsetConfirm.fromJson(v),
+                      (v) => injective_peggy_v1_msgs.MsgValsetConfirm.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       batches:
-          (json.valueEnsureAsList<dynamic>('batches', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'batches',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_peggy_v1_batch.OutgoingTxBatch,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
-                      (v) =>
-                          injective_peggy_v1_batch.OutgoingTxBatch.fromJson(v),
+                      (v) => injective_peggy_v1_batch.OutgoingTxBatch.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       batchConfirms:
           (json.valueEnsureAsList<dynamic>(
                 'batch_confirms',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_peggy_v1_msgs.MsgConfirmBatch,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
-                      (v) =>
-                          injective_peggy_v1_msgs.MsgConfirmBatch.fromJson(v),
+                      (v) => injective_peggy_v1_msgs.MsgConfirmBatch.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       attestations:
           (json.valueEnsureAsList<dynamic>(
                 'attestations',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_peggy_v1_attestation.Attestation,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
-                      (v) => injective_peggy_v1_attestation
-                          .Attestation.fromJson(v),
+                      (v) =>
+                          injective_peggy_v1_attestation.Attestation.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
                 ),
               )
               .toList(),
       orchestratorAddresses:
           (json.valueEnsureAsList<dynamic>(
                 'orchestrator_addresses',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_peggy_v1_msgs.MsgSetOrchestratorAddresses,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => injective_peggy_v1_msgs
-                          .MsgSetOrchestratorAddresses.fromJson(v),
+                          .MsgSetOrchestratorAddresses.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       erc20ToDenoms:
           (json.valueEnsureAsList<dynamic>(
                 'erc20_to_denoms',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_peggy_v1_types.ERC20ToDenom,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
-                      (v) => injective_peggy_v1_types.ERC20ToDenom.fromJson(v),
+                      (v) => injective_peggy_v1_types.ERC20ToDenom.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       unbatchedTransfers:
           (json.valueEnsureAsList<dynamic>(
                 'unbatched_transfers',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_peggy_v1_batch.OutgoingTransferTx,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
-                      (v) => injective_peggy_v1_batch
-                          .OutgoingTransferTx.fromJson(v),
+                      (v) =>
+                          injective_peggy_v1_batch.OutgoingTransferTx.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
                 ),
               )
               .toList(),
       lastObservedEthereumHeight: json.valueAsBigInt<BigInt?>(
         'last_observed_ethereum_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       lastOutgoingBatchId: json.valueAsBigInt<BigInt?>(
         'last_outgoing_batch_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       lastOutgoingPoolId: json.valueAsBigInt<BigInt?>(
         'last_outgoing_pool_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       lastObservedValset: json
-          .valueTo<injective_peggy_v1_types.Valset?, Map<String, dynamic>>(
+          .valueTo<injective_peggy_v1_types.Valset?, Object>(
             key: 'last_observed_valset',
-            parse: (v) => injective_peggy_v1_types.Valset.fromJson(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => injective_peggy_v1_types.Valset.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
       ethereumBlacklist:
           (json.valueEnsureAsList<dynamic>(
             'ethereum_blacklist',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
       rateLimits:
           (json.valueEnsureAsList<dynamic>(
                 'rate_limits',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_peggy_v1_rate_limit.RateLimit,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
-                      (v) =>
-                          injective_peggy_v1_rate_limit.RateLimit.fromJson(v),
+                      (v) => injective_peggy_v1_rate_limit.RateLimit.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       rateLimitTransfers:
           (json.valueEnsureAsList<dynamic>(
                 'rate_limit_transfers',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_peggy_v1_rate_limit.RateLimitTransfers,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => injective_peggy_v1_rate_limit
-                          .RateLimitTransfers.fromJson(v),
+                          .RateLimitTransfers.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       mintAmounts:
           (json.valueEnsureAsList<dynamic>(
                 'mint_amounts',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_peggy_v1_rate_limit.MintAmount,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
-                      (v) =>
-                          injective_peggy_v1_rate_limit.MintAmount.fromJson(v),
+                      (v) => injective_peggy_v1_rate_limit.MintAmount.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),

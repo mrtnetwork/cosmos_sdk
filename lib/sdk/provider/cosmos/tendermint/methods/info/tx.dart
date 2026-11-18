@@ -29,7 +29,7 @@ class TendermintRequestTx
     "prove": prove?.toString(),
   };
   @override
-  TendermintTxResponseResult onResonse(Map<String, dynamic> result) {
+  TendermintTxResponseResult onResponse(Map<String, dynamic> result) {
     return TendermintTxResponseResult.fromJson(result);
   }
 }

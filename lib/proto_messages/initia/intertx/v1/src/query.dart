@@ -36,16 +36,24 @@ class QueryInterchainAccountRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [owner, connectionId];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'owner': owner, 'connection_id': connectionId};
   }
 
-  factory QueryInterchainAccountRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryInterchainAccountRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryInterchainAccountRequest(
-      owner: json.valueAsString<String?>('owner', acceptCamelCase: true),
+      owner: json.valueAsString<String?>(
+        'owner',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       connectionId: json.valueAsString<String?>(
         'connection_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -95,15 +103,20 @@ class QueryInterchainAccountResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [interchainAccountAddress];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'interchain_account_address': interchainAccountAddress};
   }
 
-  factory QueryInterchainAccountResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryInterchainAccountResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryInterchainAccountResponse(
       interchainAccountAddress: json.valueAsString<String?>(
         'interchain_account_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

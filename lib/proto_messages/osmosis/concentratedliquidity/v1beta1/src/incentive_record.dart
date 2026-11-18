@@ -58,32 +58,47 @@ class IncentiveRecord extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'incentive_id': incentiveId?.toString(),
-      'pool_id': poolId?.toString(),
-      'incentive_record_body': incentiveRecordBody?.toJson(),
+      'incentive_id': config.encodeBigint(incentiveId),
+      'pool_id': config.encodeBigint(poolId),
+      'incentive_record_body': config.encodeMessage(incentiveRecordBody),
       'min_uptime': minUptime?.encodeString(asNanos: true),
     };
   }
 
-  factory IncentiveRecord.fromJson(Map<String, dynamic> json) {
+  factory IncentiveRecord.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return IncentiveRecord(
       incentiveId: json.valueAsBigInt<BigInt?>(
         'incentive_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      poolId: json.valueAsBigInt<BigInt?>('pool_id', acceptCamelCase: true),
-      incentiveRecordBody: json
-          .valueTo<IncentiveRecordBody?, Map<String, dynamic>>(
-            key: 'incentive_record_body',
-            parse: (v) => IncentiveRecordBody.fromJson(v),
-            acceptCamelCase: true,
-          ),
-      minUptime: json.valueTo<google_protobuf_duration.Duration?, String>(
+      poolId: json.valueAsBigInt<BigInt?>(
+        'pool_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      incentiveRecordBody: json.valueTo<IncentiveRecordBody?, Object>(
+        key: 'incentive_record_body',
+        parse:
+            (v) => IncentiveRecordBody.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      minUptime: json.valueTo<google_protobuf_duration.Duration?, Object>(
         key: 'min_uptime',
-        parse: (v) => google_protobuf_duration.Duration.fromString(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_duration.Duration.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -147,30 +162,42 @@ class IncentiveRecordBody extends CosmosProtoMessage {
   List<Object?> get protoValues => [remainingCoin, emissionRate, startTime];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'remaining_coin': remainingCoin?.toJson(),
+      'remaining_coin': config.encodeMessage(remainingCoin),
       'emission_rate': emissionRate,
       'start_time': startTime?.toRfc3339(),
     };
   }
 
-  factory IncentiveRecordBody.fromJson(Map<String, dynamic> json) {
+  factory IncentiveRecordBody.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return IncentiveRecordBody(
-      remainingCoin: json
-          .valueTo<cosmos_base_v1beta1_coin.DecCoin?, Map<String, dynamic>>(
-            key: 'remaining_coin',
-            parse: (v) => cosmos_base_v1beta1_coin.DecCoin.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      remainingCoin: json.valueTo<cosmos_base_v1beta1_coin.DecCoin?, Object>(
+        key: 'remaining_coin',
+        parse:
+            (v) => cosmos_base_v1beta1_coin.DecCoin.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       emissionRate: json.valueAsString<String?>(
         'emission_rate',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      startTime: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      startTime: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'start_time',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

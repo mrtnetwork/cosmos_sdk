@@ -1,13 +1,6 @@
-import 'package:blockchain_utils/bip/address/addr_key_validator.dart';
-import 'package:blockchain_utils/bip/address/atom_addr.dart';
-import 'package:blockchain_utils/cbor/cbor.dart';
-import 'package:blockchain_utils/crypto/quick_crypto.dart';
-import 'package:blockchain_utils/networks/types/address.dart';
-import 'package:blockchain_utils/networks/types/network.dart';
-import 'package:blockchain_utils/utils/utils.dart';
+import 'package:blockchain_utils/blockchain_utils.dart';
 import 'package:cosmos_sdk/sdk/address/address/address_const.dart';
 import 'package:cosmos_sdk/sdk/crypto/crypto.dart';
-import 'package:cosmos_sdk/sdk/exception/exception.dart';
 
 /// This class represents a base address in the Cosmos network.
 class CosmosBaseAddress with Equality, CborTagSerializable implements IAddress {
@@ -39,7 +32,7 @@ class CosmosBaseAddress with Equality, CborTagSerializable implements IAddress {
     List<int> addrBytes, {
     String hrp = CosmosAddrConst.accHRP,
   }) {
-    /// Create a CosmosBaseAddress instance by converting byte data to an address string.
+    // Encode the raw bytes to a bech32 address string.
     return CosmosBaseAddress._(
       AtomAddressUtils.encodeAddressBytes(addressBytes: addrBytes, hrp: hrp),
       hrp,
@@ -53,15 +46,9 @@ class CosmosBaseAddress with Equality, CborTagSerializable implements IAddress {
     String hrp = CosmosAddrConst.accHRP,
   }) {
     final addressBytes = switch (algorithm) {
-      CosmosKeysAlgs.ed25519 => () {
-        final pubkey = AddrKeyValidator.validateAndGetEd25519Key(pubkeyBytes);
-        if (pubkey.compressed.length != 33) {
-          throw DartCosmosSdkPluginException("Invalid public key bytes.");
-        }
-        return QuickCrypto.sha256Hash(
-          pubkey.compressed.sublist(1),
-        ).sublist(0, 20);
-      }(),
+      CosmosKeysAlgs.ed25519 => AtomAddressUtils.ed25519PubkeyToAddress(
+        pubkeyBytes,
+      ),
       CosmosKeysAlgs.secp256k1 => AtomAddressUtils.secp256k1PubKeyToAddress(
         pubkeyBytes,
       ),
@@ -76,7 +63,7 @@ class CosmosBaseAddress with Equality, CborTagSerializable implements IAddress {
         AtomAddressUtils.ethSecp256k1PubKeyToAddress(pubkeyBytes),
     };
 
-    /// Create a CosmosBaseAddress instance by converting byte data to an address string.
+    // Derive the bech32 address from the public key bytes.
     return CosmosBaseAddress._(
       AtomAddressUtils.encodeAddressBytes(addressBytes: addressBytes, hrp: hrp),
       hrp,
@@ -85,18 +72,18 @@ class CosmosBaseAddress with Equality, CborTagSerializable implements IAddress {
 
   /// Factory constructor to create a CosmosBaseAddress from a string.
   factory CosmosBaseAddress(String addr, {String? forceHrp}) {
-    /// Decode the address string and ensure it's valid.
+    // Decode the address string and ensure it's valid.
     final decode = AtomAddressUtils.decode(addr, hrp: forceHrp);
 
-    /// Create a CosmosBaseAddress instance with the provided address string.
+    // Keep the original string with its decoded hrp.
     return CosmosBaseAddress._(addr, decode.hrp);
   }
 
   /// Module is a specialized version of a composed address for modules. Each module account
   /// is constructed from a module name and a sequence of derivation keys (at least one
   /// derivation key must be provided). The derivation keys must be unique
-  /// in the module scope, and is usually constructed from some object id. Example, let's
-  /// a x/dao module, and a new DAO object.
+  /// in the module scope, and are usually constructed from some object id
+  /// (for example, a x/dao module address for a new DAO object).
   factory CosmosBaseAddress.module(
     String moduleName, {
     List<List<int>> derivationKeys = const [],
@@ -122,7 +109,7 @@ class CosmosBaseAddress with Equality, CborTagSerializable implements IAddress {
   BlockchainNetwork get blockchainNetwork => BlockchainNetwork.cosmosAndRelated;
 
   @override
-  List<int> encodeAsIAddress() {
+  BuBytes encodeAsIAddress() {
     return toCbor().encode();
   }
 

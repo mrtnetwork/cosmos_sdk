@@ -1,7 +1,5 @@
-import 'package:blockchain_utils/utils/json/extension/json.dart';
-import 'package:cosmos_sdk/sdk/exception/exception.dart';
+import 'package:blockchain_utils/blockchain_utils.dart';
 import 'package:cosmos_sdk/sdk/serialization/serialization.dart';
-import 'package:blockchain_utils/proto/proto.dart';
 import 'package:cosmos_sdk/sdk/types/bech32_config.dart';
 
 class UnknownAminoService extends CosmosProtoMessage
@@ -15,7 +13,8 @@ class UnknownAminoService extends CosmosProtoMessage
   });
   factory UnknownAminoService(Map<String, dynamic> json) {
     if (!json.hasValue("type") || !json.hasValue("value")) {
-      throw const AminoJsonParserException(
+      throw BuError(
+        DefaultErrorType.invalidArgument,
         "Invalid amino message: 'type' or 'value' field is missing.",
       );
     }
@@ -28,7 +27,9 @@ class UnknownAminoService extends CosmosProtoMessage
   }
 
   @override
-  Map<String, dynamic> toJson() => value;
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) => value;
 
   @override
   Map<String, dynamic> toAminoJson({CosmosBech32Config? config}) {
@@ -37,14 +38,16 @@ class UnknownAminoService extends CosmosProtoMessage
 
   @override
   ProtoMessageConfig protoConfig() {
-    throw DartCosmosSdkPluginException(
+    throw BuError(
+      DefaultErrorType.unsupported,
       "Unsupported Protobuf format. Unable to convert unknown Amino message to Protobuf.",
     );
   }
 
   @override
   List<Object?> get protoValues =>
-      throw DartCosmosSdkPluginException(
+      throw BuError(
+        DefaultErrorType.unsupported,
         "Unsupported Protobuf format. Unable to convert unknown Amino message to Protobuf.",
       );
 }

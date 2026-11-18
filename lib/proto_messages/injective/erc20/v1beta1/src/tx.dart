@@ -41,23 +41,29 @@ class MsgUpdateParams extends CosmosProtoMessage
   List<Object?> get protoValues => [authority, params];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'authority': authority, 'params': params?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'authority': authority, 'params': config.encodeMessage(params)};
   }
 
-  factory MsgUpdateParams.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateParams.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateParams(
       authority: json.valueAsString<String?>(
         'authority',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      params: json.valueTo<
-        injective_erc20_v1beta1_params.Params?,
-        Map<String, dynamic>
-      >(
+      params: json.valueTo<injective_erc20_v1beta1_params.Params?, Object>(
         key: 'params',
-        parse: (v) => injective_erc20_v1beta1_params.Params.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => injective_erc20_v1beta1_params.Params.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -105,11 +111,16 @@ class MsgUpdateParamsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgUpdateParamsResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateParamsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateParamsResponse();
   }
 
@@ -156,20 +167,29 @@ class MsgCreateTokenPair extends CosmosProtoMessage
   List<Object?> get protoValues => [sender, tokenPair];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'sender': sender, 'token_pair': tokenPair?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'sender': sender, 'token_pair': config.encodeMessage(tokenPair)};
   }
 
-  factory MsgCreateTokenPair.fromJson(Map<String, dynamic> json) {
+  factory MsgCreateTokenPair.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgCreateTokenPair(
-      sender: json.valueAsString<String?>('sender', acceptCamelCase: true),
-      tokenPair: json.valueTo<
-        injective_erc20_v1beta1_erc20.TokenPair?,
-        Map<String, dynamic>
-      >(
+      sender: json.valueAsString<String?>(
+        'sender',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      tokenPair: json.valueTo<injective_erc20_v1beta1_erc20.TokenPair?, Object>(
         key: 'token_pair',
-        parse: (v) => injective_erc20_v1beta1_erc20.TokenPair.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => injective_erc20_v1beta1_erc20.TokenPair.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -219,19 +239,25 @@ class MsgCreateTokenPairResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [tokenPair];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'token_pair': tokenPair?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'token_pair': config.encodeMessage(tokenPair)};
   }
 
-  factory MsgCreateTokenPairResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgCreateTokenPairResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgCreateTokenPairResponse(
-      tokenPair: json.valueTo<
-        injective_erc20_v1beta1_erc20.TokenPair?,
-        Map<String, dynamic>
-      >(
+      tokenPair: json.valueTo<injective_erc20_v1beta1_erc20.TokenPair?, Object>(
         key: 'token_pair',
-        parse: (v) => injective_erc20_v1beta1_erc20.TokenPair.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => injective_erc20_v1beta1_erc20.TokenPair.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -285,16 +311,24 @@ class MsgDeleteTokenPair extends CosmosProtoMessage
   List<Object?> get protoValues => [sender, bankDenom];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'sender': sender, 'bank_denom': bankDenom};
   }
 
-  factory MsgDeleteTokenPair.fromJson(Map<String, dynamic> json) {
+  factory MsgDeleteTokenPair.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgDeleteTokenPair(
-      sender: json.valueAsString<String?>('sender', acceptCamelCase: true),
+      sender: json.valueAsString<String?>(
+        'sender',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       bankDenom: json.valueAsString<String?>(
         'bank_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -340,11 +374,16 @@ class MsgDeleteTokenPairResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgDeleteTokenPairResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgDeleteTokenPairResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgDeleteTokenPairResponse();
   }
 

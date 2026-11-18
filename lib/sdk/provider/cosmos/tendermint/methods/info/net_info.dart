@@ -2,13 +2,13 @@ import 'package:cosmos_sdk/sdk/provider/cosmos/core/core.dart';
 import 'package:cosmos_sdk/sdk/provider/cosmos/core/tendermint.dart';
 import 'package:cosmos_sdk/sdk/provider/cosmos/tendermint/types/tendermint.dart';
 
-/// Network informations
+/// Network information
 /// https://docs.tendermint.com/v0.34/rpc/#/Info/net_info
 class TendermintRequestNetInfo
     extends TendermintRequest<TendermintNetInfo, Map<String, dynamic>> {
   TendermintRequestNetInfo();
 
-  /// Network informations
+  /// Network information
   @override
   String get method => TendermintMethods.netInfo.url;
 
@@ -19,7 +19,7 @@ class TendermintRequestNetInfo
   Map<String, String> get parameters => {};
 
   @override
-  TendermintNetInfo onResonse(Map<String, dynamic> result) {
+  TendermintNetInfo onResponse(Map<String, dynamic> result) {
     return TendermintNetInfo.fromJson(result);
   }
 }

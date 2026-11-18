@@ -33,14 +33,25 @@ class QuerySwapDetailsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [txId, height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'tx_id': txId, 'height': height};
   }
 
-  factory QuerySwapDetailsRequest.fromJson(Map<String, dynamic> json) {
+  factory QuerySwapDetailsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QuerySwapDetailsRequest(
-      txId: json.valueAsString<String?>('tx_id', acceptCamelCase: true),
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      txId: json.valueAsString<String?>(
+        'tx_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -94,21 +105,37 @@ class QuerySwapDetailsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [swap, status, queueType];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'swap': swap?.toJson(), 'status': status, 'queue_type': queueType};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'swap': config.encodeMessage(swap),
+      'status': status,
+      'queue_type': queueType,
+    };
   }
 
-  factory QuerySwapDetailsResponse.fromJson(Map<String, dynamic> json) {
+  factory QuerySwapDetailsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QuerySwapDetailsResponse(
-      swap: json.valueTo<types_msg_swap.MsgSwap?, Map<String, dynamic>>(
+      swap: json.valueTo<types_msg_swap.MsgSwap?, Object>(
         key: 'swap',
-        parse: (v) => types_msg_swap.MsgSwap.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => types_msg_swap.MsgSwap.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      status: json.valueAsString<String?>('status', acceptCamelCase: true),
+      status: json.valueAsString<String?>(
+        'status',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       queueType: json.valueAsString<String?>(
         'queue_type',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

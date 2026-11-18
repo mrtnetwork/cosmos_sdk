@@ -106,95 +106,109 @@ class Params extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'rewards_interval': rewardsInterval?.toString(),
-      'delegate_interval': delegateInterval?.toString(),
-      'deposit_interval': depositInterval?.toString(),
-      'redemption_rate_interval': redemptionRateInterval?.toString(),
-      'stride_commission': strideCommission?.toString(),
-      'reinvest_interval': reinvestInterval?.toString(),
-      'ica_timeout_nanos': icaTimeoutNanos?.toString(),
-      'buffer_size': bufferSize?.toString(),
-      'ibc_timeout_blocks': ibcTimeoutBlocks?.toString(),
-      'fee_transfer_timeout_nanos': feeTransferTimeoutNanos?.toString(),
-      'max_stake_ica_calls_per_epoch': maxStakeIcaCallsPerEpoch?.toString(),
-      'default_min_redemption_rate_threshold':
-          defaultMinRedemptionRateThreshold?.toString(),
-      'default_max_redemption_rate_threshold':
-          defaultMaxRedemptionRateThreshold?.toString(),
-      'ibc_transfer_timeout_nanos': ibcTransferTimeoutNanos?.toString(),
-      'validator_slash_query_threshold':
-          validatorSlashQueryThreshold?.toString(),
-      'validator_weight_cap': validatorWeightCap?.toString(),
+      'rewards_interval': config.encodeBigint(rewardsInterval),
+      'delegate_interval': config.encodeBigint(delegateInterval),
+      'deposit_interval': config.encodeBigint(depositInterval),
+      'redemption_rate_interval': config.encodeBigint(redemptionRateInterval),
+      'stride_commission': config.encodeBigint(strideCommission),
+      'reinvest_interval': config.encodeBigint(reinvestInterval),
+      'ica_timeout_nanos': config.encodeBigint(icaTimeoutNanos),
+      'buffer_size': config.encodeBigint(bufferSize),
+      'ibc_timeout_blocks': config.encodeBigint(ibcTimeoutBlocks),
+      'fee_transfer_timeout_nanos': config.encodeBigint(
+        feeTransferTimeoutNanos,
+      ),
+      'max_stake_ica_calls_per_epoch': config.encodeBigint(
+        maxStakeIcaCallsPerEpoch,
+      ),
+      'default_min_redemption_rate_threshold': config.encodeBigint(
+        defaultMinRedemptionRateThreshold,
+      ),
+      'default_max_redemption_rate_threshold': config.encodeBigint(
+        defaultMaxRedemptionRateThreshold,
+      ),
+      'ibc_transfer_timeout_nanos': config.encodeBigint(
+        ibcTransferTimeoutNanos,
+      ),
+      'validator_slash_query_threshold': config.encodeBigint(
+        validatorSlashQueryThreshold,
+      ),
+      'validator_weight_cap': config.encodeBigint(validatorWeightCap),
     };
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
       rewardsInterval: json.valueAsBigInt<BigInt?>(
         'rewards_interval',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       delegateInterval: json.valueAsBigInt<BigInt?>(
         'delegate_interval',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       depositInterval: json.valueAsBigInt<BigInt?>(
         'deposit_interval',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       redemptionRateInterval: json.valueAsBigInt<BigInt?>(
         'redemption_rate_interval',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       strideCommission: json.valueAsBigInt<BigInt?>(
         'stride_commission',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       reinvestInterval: json.valueAsBigInt<BigInt?>(
         'reinvest_interval',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       icaTimeoutNanos: json.valueAsBigInt<BigInt?>(
         'ica_timeout_nanos',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       bufferSize: json.valueAsBigInt<BigInt?>(
         'buffer_size',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       ibcTimeoutBlocks: json.valueAsBigInt<BigInt?>(
         'ibc_timeout_blocks',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       feeTransferTimeoutNanos: json.valueAsBigInt<BigInt?>(
         'fee_transfer_timeout_nanos',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       maxStakeIcaCallsPerEpoch: json.valueAsBigInt<BigInt?>(
         'max_stake_ica_calls_per_epoch',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       defaultMinRedemptionRateThreshold: json.valueAsBigInt<BigInt?>(
         'default_min_redemption_rate_threshold',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       defaultMaxRedemptionRateThreshold: json.valueAsBigInt<BigInt?>(
         'default_max_redemption_rate_threshold',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       ibcTransferTimeoutNanos: json.valueAsBigInt<BigInt?>(
         'ibc_transfer_timeout_nanos',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       validatorSlashQueryThreshold: json.valueAsBigInt<BigInt?>(
         'validator_slash_query_threshold',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       validatorWeightCap: json.valueAsBigInt<BigInt?>(
         'validator_weight_cap',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

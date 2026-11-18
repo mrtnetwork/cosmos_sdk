@@ -68,48 +68,64 @@ class Validator extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'name': name,
       'address': address,
-      'weight': weight?.toString(),
+      'weight': config.encodeBigint(weight),
       'delegation': delegation,
       'slash_query_progress_tracker': slashQueryProgressTracker,
       'slash_query_checkpoint': slashQueryCheckpoint,
       'shares_to_tokens_rate': sharesToTokensRate,
-      'delegation_changes_in_progress': delegationChangesInProgress?.toString(),
+      'delegation_changes_in_progress': config.encodeBigint(
+        delegationChangesInProgress,
+      ),
       'slash_query_in_progress': slashQueryInProgress,
     };
   }
 
-  factory Validator.fromJson(Map<String, dynamic> json) {
+  factory Validator.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Validator(
-      name: json.valueAsString<String?>('name', acceptCamelCase: true),
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
-      weight: json.valueAsBigInt<BigInt?>('weight', acceptCamelCase: true),
+      name: json.valueAsString<String?>(
+        'name',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      weight: json.valueAsBigInt<BigInt?>(
+        'weight',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       delegation: json.valueAsString<String?>(
         'delegation',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       slashQueryProgressTracker: json.valueAsString<String?>(
         'slash_query_progress_tracker',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       slashQueryCheckpoint: json.valueAsString<String?>(
         'slash_query_checkpoint',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       sharesToTokensRate: json.valueAsString<String?>(
         'shares_to_tokens_rate',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       delegationChangesInProgress: json.valueAsBigInt<BigInt?>(
         'delegation_changes_in_progress',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       slashQueryInProgress: json.valueAsBool<bool?>(
         'slash_query_in_progress',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

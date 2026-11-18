@@ -36,7 +36,9 @@ class ContinuousFund extends CosmosProtoMessage {
   List<Object?> get protoValues => [recipient, percentage, expiry];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'recipient': recipient,
       'percentage': percentage,
@@ -44,20 +46,27 @@ class ContinuousFund extends CosmosProtoMessage {
     };
   }
 
-  factory ContinuousFund.fromJson(Map<String, dynamic> json) {
+  factory ContinuousFund.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ContinuousFund(
       recipient: json.valueAsString<String?>(
         'recipient',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       percentage: json.valueAsString<String?>(
         'percentage',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      expiry: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      expiry: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'expiry',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -118,24 +127,30 @@ class Params extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'enabled_distribution_denoms':
           enabledDistributionDenoms.map((e) => e).toList(),
-      'distribution_frequency': distributionFrequency?.toString(),
+      'distribution_frequency': config.encodeBigint(distributionFrequency),
     };
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
       enabledDistributionDenoms:
           (json.valueEnsureAsList<dynamic>(
             'enabled_distribution_denoms',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
       distributionFrequency: json.valueAsBigInt<BigInt?>(
         'distribution_frequency',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

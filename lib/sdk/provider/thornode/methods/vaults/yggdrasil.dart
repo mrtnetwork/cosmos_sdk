@@ -22,7 +22,7 @@ class ThorNodeRequestCurrentYggdrasilVaults
   @override
   Map<String, String?> get parameters => {"height": height?.toString()};
   @override
-  List<ThorVaultInfoResponse> onResonse(List<Map<String, dynamic>> result) {
+  List<ThorVaultInfoResponse> onResponse(List<Map<String, dynamic>> result) {
     return result.map((e) => ThorVaultInfoResponse.fromJson(e)).toList();
   }
 }

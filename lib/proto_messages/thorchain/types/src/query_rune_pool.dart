@@ -29,13 +29,21 @@ class QueryRunePoolRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'height': height};
   }
 
-  factory QueryRunePoolRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryRunePoolRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryRunePoolRequest(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -86,30 +94,41 @@ class QueryRunePoolResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [pol, providers, reserve];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'pol': pol?.toJson(),
-      'providers': providers?.toJson(),
-      'reserve': reserve?.toJson(),
+      'pol': config.encodeMessage(pol),
+      'providers': config.encodeMessage(providers),
+      'reserve': config.encodeMessage(reserve),
     };
   }
 
-  factory QueryRunePoolResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryRunePoolResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryRunePoolResponse(
-      pol: json.valueTo<Pol?, Map<String, dynamic>>(
+      pol: json.valueTo<Pol?, Object>(
         key: 'pol',
-        parse: (v) => Pol.fromJson(v),
-        acceptCamelCase: true,
+        parse: (v) => Pol.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      providers: json.valueTo<RunePoolProviders?, Map<String, dynamic>>(
+      providers: json.valueTo<RunePoolProviders?, Object>(
         key: 'providers',
-        parse: (v) => RunePoolProviders.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => RunePoolProviders.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      reserve: json.valueTo<RunePoolReserve?, Map<String, dynamic>>(
+      reserve: json.valueTo<RunePoolReserve?, Object>(
         key: 'reserve',
-        parse: (v) => RunePoolReserve.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) =>
+                RunePoolReserve.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -185,7 +204,9 @@ class Pol extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'rune_deposited': runeDeposited,
       'rune_withdrawn': runeWithdrawn,
@@ -195,21 +216,30 @@ class Pol extends CosmosProtoMessage {
     };
   }
 
-  factory Pol.fromJson(Map<String, dynamic> json) {
+  factory Pol.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Pol(
       runeDeposited: json.valueAsString<String?>(
         'rune_deposited',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       runeWithdrawn: json.valueAsString<String?>(
         'rune_withdrawn',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      value: json.valueAsString<String?>('value', acceptCamelCase: true),
-      pnl: json.valueAsString<String?>('pnl', acceptCamelCase: true),
+      value: json.valueAsString<String?>(
+        'value',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      pnl: json.valueAsString<String?>(
+        'pnl',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       currentDeposit: json.valueAsString<String?>(
         'current_deposit',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -287,7 +317,9 @@ class RunePoolProviders extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'units': units,
       'pending_units': pendingUnits,
@@ -298,22 +330,34 @@ class RunePoolProviders extends CosmosProtoMessage {
     };
   }
 
-  factory RunePoolProviders.fromJson(Map<String, dynamic> json) {
+  factory RunePoolProviders.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return RunePoolProviders(
-      units: json.valueAsString<String?>('units', acceptCamelCase: true),
+      units: json.valueAsString<String?>(
+        'units',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       pendingUnits: json.valueAsString<String?>(
         'pending_units',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       pendingRune: json.valueAsString<String?>(
         'pending_rune',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      value: json.valueAsString<String?>('value', acceptCamelCase: true),
-      pnl: json.valueAsString<String?>('pnl', acceptCamelCase: true),
+      value: json.valueAsString<String?>(
+        'value',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      pnl: json.valueAsString<String?>(
+        'pnl',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       currentDeposit: json.valueAsString<String?>(
         'current_deposit',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -375,7 +419,9 @@ class RunePoolReserve extends CosmosProtoMessage {
   List<Object?> get protoValues => [units, value, pnl, currentDeposit];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'units': units,
       'value': value,
@@ -384,14 +430,26 @@ class RunePoolReserve extends CosmosProtoMessage {
     };
   }
 
-  factory RunePoolReserve.fromJson(Map<String, dynamic> json) {
+  factory RunePoolReserve.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return RunePoolReserve(
-      units: json.valueAsString<String?>('units', acceptCamelCase: true),
-      value: json.valueAsString<String?>('value', acceptCamelCase: true),
-      pnl: json.valueAsString<String?>('pnl', acceptCamelCase: true),
+      units: json.valueAsString<String?>(
+        'units',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      value: json.valueAsString<String?>(
+        'value',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      pnl: json.valueAsString<String?>(
+        'pnl',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       currentDeposit: json.valueAsString<String?>(
         'current_deposit',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

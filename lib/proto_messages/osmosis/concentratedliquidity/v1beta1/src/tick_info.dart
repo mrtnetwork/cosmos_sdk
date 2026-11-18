@@ -30,27 +30,37 @@ class UptimeTracker extends CosmosProtoMessage {
   List<Object?> get protoValues => [uptimeGrowthOutside];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'uptime_growth_outside':
-          uptimeGrowthOutside.map((e) => e.toJson()).toList(),
+          uptimeGrowthOutside.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory UptimeTracker.fromJson(Map<String, dynamic> json) {
+  factory UptimeTracker.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return UptimeTracker(
       uptimeGrowthOutside:
           (json.valueEnsureAsList<dynamic>(
                 'uptime_growth_outside',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   cosmos_base_v1beta1_coin.DecCoin,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.DecCoin.fromJson(v),
+                  parse:
+                      (v) => cosmos_base_v1beta1_coin.DecCoin.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),

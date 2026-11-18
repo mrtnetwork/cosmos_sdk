@@ -31,14 +31,25 @@ class QueryPoolRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [asset, height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'asset': asset, 'height': height};
   }
 
-  factory QueryPoolRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryPoolRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryPoolRequest(
-      asset: json.valueAsString<String?>('asset', acceptCamelCase: true),
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      asset: json.valueAsString<String?>(
+        'asset',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -229,12 +240,14 @@ class QueryPoolResponse extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'asset': asset,
       'short_code': shortCode,
       'status': status,
-      'decimals': decimals?.toString(),
+      'decimals': config.encodeBigint(decimals),
       'pending_inbound_asset': pendingInboundAsset,
       'pending_inbound_rune': pendingInboundRune,
       'balance_asset': balanceAsset,
@@ -259,95 +272,110 @@ class QueryPoolResponse extends CosmosProtoMessage {
     };
   }
 
-  factory QueryPoolResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryPoolResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryPoolResponse(
-      asset: json.valueAsString<String?>('asset', acceptCamelCase: true),
+      asset: json.valueAsString<String?>(
+        'asset',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       shortCode: json.valueAsString<String?>(
         'short_code',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      status: json.valueAsString<String?>('status', acceptCamelCase: true),
-      decimals: json.valueAsBigInt<BigInt?>('decimals', acceptCamelCase: true),
+      status: json.valueAsString<String?>(
+        'status',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      decimals: json.valueAsBigInt<BigInt?>(
+        'decimals',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       pendingInboundAsset: json.valueAsString<String?>(
         'pending_inbound_asset',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       pendingInboundRune: json.valueAsString<String?>(
         'pending_inbound_rune',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       balanceAsset: json.valueAsString<String?>(
         'balance_asset',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       balanceRune: json.valueAsString<String?>(
         'balance_rune',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       assetTorPrice: json.valueAsString<String?>(
         'asset_tor_price',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       poolUnits: json.valueAsString<String?>(
         'pool_units',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      lpUnits: json.valueAsString<String?>('LP_units', acceptCamelCase: true),
+      lpUnits: json.valueAsString<String?>(
+        'LP_units',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       synthUnits: json.valueAsString<String?>(
         'synth_units',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       synthSupply: json.valueAsString<String?>(
         'synth_supply',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       saversDepth: json.valueAsString<String?>(
         'savers_depth',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       saversUnits: json.valueAsString<String?>(
         'savers_units',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       saversFillBps: json.valueAsString<String?>(
         'savers_fill_bps',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       saversCapacityRemaining: json.valueAsString<String?>(
         'savers_capacity_remaining',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       synthMintPaused: json.valueAsBool<bool?>(
         'synth_mint_paused',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       synthSupplyRemaining: json.valueAsString<String?>(
         'synth_supply_remaining',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       derivedDepthBps: json.valueAsString<String?>(
         'derived_depth_bps',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       tradingHalted: json.valueAsBool<bool?>(
         'trading_halted',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       volumeRune: json.valueAsString<String?>(
         'volume_rune',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       volumeAsset: json.valueAsString<String?>(
         'volume_asset',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       polReserveRuneDeposited: json.valueAsString<String?>(
         'pol_reserve_rune_deposited',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       rollingPoolLiquidityFeeRune: json.valueAsString<String?>(
         'rolling_pool_liquidity_fee_rune',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -415,13 +443,21 @@ class QueryPoolsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'height': height};
   }
 
-  factory QueryPoolsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryPoolsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryPoolsRequest(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -469,20 +505,32 @@ class QueryPoolsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [pools];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'pools': pools.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'pools': pools.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory QueryPoolsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryPoolsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryPoolsResponse(
       pools:
-          (json.valueEnsureAsList<dynamic>('pools', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'pools',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) =>
-                    JsonParser.valueTo<QueryPoolResponse, Map<String, dynamic>>(
-                      value: e,
-                      parse: (v) => QueryPoolResponse.fromJson(v),
-                    ),
+                (e) => JsonParser.valueTo<QueryPoolResponse, Object>(
+                  value: e,
+                  parse:
+                      (v) => QueryPoolResponse.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );

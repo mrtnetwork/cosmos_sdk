@@ -12,11 +12,13 @@ class StoreKVPair extends CosmosProtoMessage {
   final bool? delete;
 
   /// true indicates a delete operation, false indicates a set operation
-  final List<int>? key;
+  final BuBytes? key;
 
-  final List<int>? value;
+  final BuBytes? value;
 
-  const StoreKVPair({this.storeKey, this.delete, this.key, this.value});
+  StoreKVPair({this.storeKey, this.delete, List<int>? key, List<int>? value})
+    : key = key?.asImmutableBytes,
+      value = value?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -38,40 +40,35 @@ class StoreKVPair extends CosmosProtoMessage {
   List<Object?> get protoValues => [storeKey, delete, key, value];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'store_key': storeKey,
       'delete': delete,
-      'key': switch (key) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'value': switch (value) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'key': config.encodeBinary(key),
+      'value': config.encodeBinary(value),
     };
   }
 
-  factory StoreKVPair.fromJson(Map<String, dynamic> json) {
+  factory StoreKVPair.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return StoreKVPair(
-      storeKey: json.valueAsString<String?>('store_key', acceptCamelCase: true),
-      delete: json.valueAsBool<bool?>('delete', acceptCamelCase: true),
-      key: json.valueAsBytes<List<int>?>(
-        'key',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      storeKey: json.valueAsString<String?>(
+        'store_key',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      value: json.valueAsBytes<List<int>?>(
-        'value',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      delete: json.valueAsBool<bool?>(
+        'delete',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      key: config.decodeBinary<List<int>?>(
+        json.valueAs('key', normalizeKeyLookup: config.normalizeKeys),
+      ),
+      value: config.decodeBinary<List<int>?>(
+        json.valueAs('value', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }

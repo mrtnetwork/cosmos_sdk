@@ -5,12 +5,13 @@ import 'package:cosmos_sdk/sdk/serialization/serialization.dart';
 /// CounterpartyInfo defines the key that the counterparty will use to message our client
 class CounterpartyInfo extends CosmosProtoMessage {
   /// merkle prefix key is the prefix that ics provable keys are stored under
-  final List<List<int>> merklePrefix;
+  final List<BuBytes> merklePrefix;
 
   /// client identifier is the identifier used to send packet messages to our client
   final String? clientId;
 
-  const CounterpartyInfo({this.merklePrefix = const [], this.clientId});
+  CounterpartyInfo({List<List<int>> merklePrefix = const [], this.clientId})
+    : merklePrefix = merklePrefix.map((e) => e.asImmutableBytes).toImutableList;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -33,33 +34,30 @@ class CounterpartyInfo extends CosmosProtoMessage {
   List<Object?> get protoValues => [merklePrefix, clientId];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'merkle_prefix':
-          merklePrefix
-              .map(
-                (e) => StringUtils.decode(e, encoding: StringEncoding.base64),
-              )
-              .toList(),
+      'merkle_prefix': merklePrefix.map((e) => config.encodeBinary(e)).toList(),
       'client_id': clientId,
     };
   }
 
-  factory CounterpartyInfo.fromJson(Map<String, dynamic> json) {
+  factory CounterpartyInfo.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return CounterpartyInfo(
       merklePrefix:
           (json.valueEnsureAsList<dynamic>(
-                'merkle_prefix',
-                acceptCamelCase: true,
-              ))
-              .map(
-                (e) => JsonParser.valueAsBytes<List<int>>(
-                  e,
-                  encoding: StringEncoding.base64,
-                ),
-              )
-              .toList(),
-      clientId: json.valueAsString<String?>('client_id', acceptCamelCase: true),
+            'merkle_prefix',
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
+          )).map((e) => config.decodeBinary<List<int>>(e)).toList(),
+      clientId: json.valueAsString<String?>(
+        'client_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

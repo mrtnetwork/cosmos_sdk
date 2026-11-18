@@ -5,17 +5,20 @@ import 'package:cosmos_sdk/sdk/serialization/serialization.dart';
 /// PoolData represents a structure encapsulating an Osmosis liquidity pool.
 class PoolData extends CosmosProtoMessage {
   /// ChainModel is the chain representation model of the pool.
-  final List<int>? chainModel;
+  final BuBytes? chainModel;
 
   /// SqsModel is additional pool data used by the sidecar query server.
-  final List<int>? sqsModel;
+  final BuBytes? sqsModel;
 
   /// TickModel is the tick data of a concentrated liquidity pool.
   /// This field is only valid and set for concentrated pools. It is nil
   /// otherwise.
-  final List<int>? tickModel;
+  final BuBytes? tickModel;
 
-  const PoolData({this.chainModel, this.sqsModel, this.tickModel});
+  PoolData({List<int>? chainModel, List<int>? sqsModel, List<int>? tickModel})
+    : chainModel = chainModel?.asImmutableBytes,
+      sqsModel = sqsModel?.asImmutableBytes,
+      tickModel = tickModel?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -36,48 +39,29 @@ class PoolData extends CosmosProtoMessage {
   List<Object?> get protoValues => [chainModel, sqsModel, tickModel];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'chain_model': switch (chainModel) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'sqs_model': switch (sqsModel) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'tick_model': switch (tickModel) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'chain_model': config.encodeBinary(chainModel),
+      'sqs_model': config.encodeBinary(sqsModel),
+      'tick_model': config.encodeBinary(tickModel),
     };
   }
 
-  factory PoolData.fromJson(Map<String, dynamic> json) {
+  factory PoolData.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return PoolData(
-      chainModel: json.valueAsBytes<List<int>?>(
-        'chain_model',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      chainModel: config.decodeBinary<List<int>?>(
+        json.valueAs('chain_model', normalizeKeyLookup: config.normalizeKeys),
       ),
-      sqsModel: json.valueAsBytes<List<int>?>(
-        'sqs_model',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      sqsModel: config.decodeBinary<List<int>?>(
+        json.valueAs('sqs_model', normalizeKeyLookup: config.normalizeKeys),
       ),
-      tickModel: json.valueAsBytes<List<int>?>(
-        'tick_model',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      tickModel: config.decodeBinary<List<int>?>(
+        json.valueAs('tick_model', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }
@@ -106,16 +90,16 @@ class ProcessBlockRequest extends CosmosProtoMessage
   final BigInt? blockHeight;
 
   /// taker_fees_map is the map of taker fees for the block.
-  final List<int>? takerFeesMap;
+  final BuBytes? takerFeesMap;
 
   /// pools in the block.
   final List<PoolData> pools;
 
-  const ProcessBlockRequest({
+  ProcessBlockRequest({
     this.blockHeight,
-    this.takerFeesMap,
+    List<int>? takerFeesMap,
     this.pools = const [],
-  });
+  }) : takerFeesMap = takerFeesMap?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -139,37 +123,45 @@ class ProcessBlockRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [blockHeight, takerFeesMap, pools];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'block_height': blockHeight?.toString(),
-      'taker_fees_map': switch (takerFeesMap) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'pools': pools.map((e) => e.toJson()).toList(),
+      'block_height': config.encodeBigint(blockHeight),
+      'taker_fees_map': config.encodeBinary(takerFeesMap),
+      'pools': pools.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory ProcessBlockRequest.fromJson(Map<String, dynamic> json) {
+  factory ProcessBlockRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ProcessBlockRequest(
       blockHeight: json.valueAsBigInt<BigInt?>(
         'block_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      takerFeesMap: json.valueAsBytes<List<int>?>(
-        'taker_fees_map',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      takerFeesMap: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'taker_fees_map',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
       pools:
-          (json.valueEnsureAsList<dynamic>('pools', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'pools',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<PoolData, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<PoolData, Object>(
                   value: e,
-                  parse: (v) => PoolData.fromJson(v),
+                  parse:
+                      (v) => PoolData.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -219,11 +211,16 @@ class ProcessBlockReply extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory ProcessBlockReply.fromJson(Map<String, dynamic> json) {
+  factory ProcessBlockReply.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ProcessBlockReply();
   }
 

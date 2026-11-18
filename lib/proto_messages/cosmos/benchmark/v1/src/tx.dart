@@ -9,11 +9,12 @@ class MsgLoadTest extends CosmosProtoMessage
     with
         ICosmosProtoServiceMessage<MsgLoadTestResponse>,
         ICosmosProtoAminoMessage {
-  final List<int>? caller;
+  final BuBytes? caller;
 
   final List<cosmos_benchmark_v1_benchmark.Op> ops;
 
-  const MsgLoadTest({this.caller, this.ops = const []});
+  MsgLoadTest({List<int>? caller, this.ops = const []})
+    : caller = caller?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -42,35 +43,40 @@ class MsgLoadTest extends CosmosProtoMessage
   List<Object?> get protoValues => [caller, ops];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'caller': switch (caller) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'ops': ops.map((e) => e.toJson()).toList(),
+      'caller': config.encodeBinary(caller),
+      'ops': ops.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory MsgLoadTest.fromJson(Map<String, dynamic> json) {
+  factory MsgLoadTest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgLoadTest(
-      caller: json.valueAsBytes<List<int>?>(
-        'caller',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      caller: config.decodeBinary<List<int>?>(
+        json.valueAs('caller', normalizeKeyLookup: config.normalizeKeys),
       ),
       ops:
-          (json.valueEnsureAsList<dynamic>('ops', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'ops',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   cosmos_benchmark_v1_benchmark.Op,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
-                  parse: (v) => cosmos_benchmark_v1_benchmark.Op.fromJson(v),
+                  parse:
+                      (v) => cosmos_benchmark_v1_benchmark.Op.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -126,22 +132,27 @@ class MsgLoadTestResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [totalTime, totalErrors];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'total_time': totalTime?.toString(),
-      'total_errors': totalErrors?.toString(),
+      'total_time': config.encodeBigint(totalTime),
+      'total_errors': config.encodeBigint(totalErrors),
     };
   }
 
-  factory MsgLoadTestResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgLoadTestResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgLoadTestResponse(
       totalTime: json.valueAsBigInt<BigInt?>(
         'total_time',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       totalErrors: json.valueAsBigInt<BigInt?>(
         'total_errors',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

@@ -52,49 +52,70 @@ class GenesisState extends CosmosProtoMessage {
   List<Object?> get protoValues => [params, namespaces, vouchers];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'params': params?.toJson(),
-      'namespaces': namespaces.map((e) => e.toJson()).toList(),
-      'vouchers': vouchers.map((e) => e.toJson()).toList(),
+      'params': config.encodeMessage(params),
+      'namespaces': namespaces.map((e) => config.encodeMessage(e)).toList(),
+      'vouchers': vouchers.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory GenesisState.fromJson(Map<String, dynamic> json) {
+  factory GenesisState.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GenesisState(
-      params: json.valueTo<
-        injective_permissions_v1beta1_params.Params?,
-        Map<String, dynamic>
-      >(
-        key: 'params',
-        parse: (v) => injective_permissions_v1beta1_params.Params.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      params: json
+          .valueTo<injective_permissions_v1beta1_params.Params?, Object>(
+            key: 'params',
+            parse:
+                (v) => injective_permissions_v1beta1_params.Params.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
       namespaces:
-          (json.valueEnsureAsList<dynamic>('namespaces', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'namespaces',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_permissions_v1beta1_permissions.Namespace,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => injective_permissions_v1beta1_permissions
-                          .Namespace.fromJson(v),
+                          .Namespace.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       vouchers:
-          (json.valueEnsureAsList<dynamic>('vouchers', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'vouchers',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_common_vouchers_v1_vouchers.AddressVoucher,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => injective_common_vouchers_v1_vouchers
-                          .AddressVoucher.fromJson(v),
+                          .AddressVoucher.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),

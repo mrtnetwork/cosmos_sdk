@@ -34,9 +34,10 @@ import 'package:cosmos_sdk/sdk/serialization/serialization.dart';
 /// provable store from the MerklePath and appends the ICS24 path to get the final key path to the value being verified
 /// by the client against the root hash in the client's consensus state.
 class MerklePath extends CosmosProtoMessage {
-  final List<List<int>> keyPath;
+  final List<BuBytes> keyPath;
 
-  const MerklePath({this.keyPath = const []});
+  MerklePath({List<List<int>> keyPath = const []})
+    : keyPath = keyPath.map((e) => e.asImmutableBytes).toImutableList;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -58,28 +59,23 @@ class MerklePath extends CosmosProtoMessage {
   List<Object?> get protoValues => [keyPath];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {
-      'key_path':
-          keyPath
-              .map(
-                (e) => StringUtils.decode(e, encoding: StringEncoding.base64),
-              )
-              .toList(),
-    };
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'key_path': keyPath.map((e) => config.encodeBinary(e)).toList()};
   }
 
-  factory MerklePath.fromJson(Map<String, dynamic> json) {
+  factory MerklePath.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MerklePath(
       keyPath:
-          (json.valueEnsureAsList<dynamic>('key_path', acceptCamelCase: true))
-              .map(
-                (e) => JsonParser.valueAsBytes<List<int>>(
-                  e,
-                  encoding: StringEncoding.base64,
-                ),
-              )
-              .toList(),
+          (json.valueEnsureAsList<dynamic>(
+            'key_path',
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
+          )).map((e) => config.decodeBinary<List<int>>(e)).toList(),
     );
   }
 

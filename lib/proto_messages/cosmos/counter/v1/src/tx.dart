@@ -39,14 +39,25 @@ class MsgIncreaseCounter extends CosmosProtoMessage
   List<Object?> get protoValues => [signer, count];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'signer': signer, 'count': count?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'signer': signer, 'count': config.encodeBigint(count)};
   }
 
-  factory MsgIncreaseCounter.fromJson(Map<String, dynamic> json) {
+  factory MsgIncreaseCounter.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgIncreaseCounter(
-      signer: json.valueAsString<String?>('signer', acceptCamelCase: true),
-      count: json.valueAsBigInt<BigInt?>('count', acceptCamelCase: true),
+      signer: json.valueAsString<String?>(
+        'signer',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      count: json.valueAsBigInt<BigInt?>(
+        'count',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -94,13 +105,21 @@ class MsgIncreaseCountResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [newCount];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'new_count': newCount?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'new_count': config.encodeBigint(newCount)};
   }
 
-  factory MsgIncreaseCountResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgIncreaseCountResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgIncreaseCountResponse(
-      newCount: json.valueAsBigInt<BigInt?>('new_count', acceptCamelCase: true),
+      newCount: json.valueAsBigInt<BigInt?>(
+        'new_count',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

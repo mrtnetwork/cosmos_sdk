@@ -44,33 +44,44 @@ class Params extends CosmosProtoMessage {
   List<Object?> get protoValues => [denomCreationFee, denomCreationGasConsume];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'denom_creation_fee': denomCreationFee.map((e) => e.toJson()).toList(),
-      'denom_creation_gas_consume': denomCreationGasConsume?.toString(),
+      'denom_creation_fee':
+          denomCreationFee.map((e) => config.encodeMessage(e)).toList(),
+      'denom_creation_gas_consume': config.encodeBigint(
+        denomCreationGasConsume,
+      ),
     };
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
       denomCreationFee:
           (json.valueEnsureAsList<dynamic>(
                 'denom_creation_fee',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
       denomCreationGasConsume: json.valueAsBigInt<BigInt?>(
         'denom_creation_gas_consume',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

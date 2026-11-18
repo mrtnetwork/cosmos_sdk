@@ -41,7 +41,7 @@ class TendermintRequestBroadcastDialPeers
   };
 
   @override
-  TendermintdialResp onResonse(Map<String, dynamic> result) {
+  TendermintdialResp onResponse(Map<String, dynamic> result) {
     return TendermintdialResp.fromJson(result);
   }
 }

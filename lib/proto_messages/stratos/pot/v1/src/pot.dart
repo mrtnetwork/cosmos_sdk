@@ -68,55 +68,67 @@ class Params extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'bond_denom': bondDenom,
       'reward_denom': rewardDenom,
-      'mature_epoch': matureEpoch?.toString(),
+      'mature_epoch': config.encodeBigint(matureEpoch),
       'mining_reward_params':
-          miningRewardParams.map((e) => e.toJson()).toList(),
+          miningRewardParams.map((e) => config.encodeMessage(e)).toList(),
       'community_tax': communityTax,
-      'initial_total_supply': initialTotalSupply?.toJson(),
+      'initial_total_supply': config.encodeMessage(initialTotalSupply),
     };
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
       bondDenom: json.valueAsString<String?>(
         'bond_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       rewardDenom: json.valueAsString<String?>(
         'reward_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       matureEpoch: json.valueAsBigInt<BigInt?>(
         'mature_epoch',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       miningRewardParams:
           (json.valueEnsureAsList<dynamic>(
                 'mining_reward_params',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) =>
-                    JsonParser.valueTo<MiningRewardParam, Map<String, dynamic>>(
-                      value: e,
-                      parse: (v) => MiningRewardParam.fromJson(v),
-                    ),
+                (e) => JsonParser.valueTo<MiningRewardParam, Object>(
+                  value: e,
+                  parse:
+                      (v) => MiningRewardParam.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
       communityTax: json.valueAsString<String?>(
         'community_tax',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      initialTotalSupply: json
-          .valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
-            key: 'initial_total_supply',
-            parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      initialTotalSupply: json.valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
+        key: 'initial_total_supply',
+        parse:
+            (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -213,48 +225,63 @@ class MiningRewardParam extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'total_mined_valve_start': totalMinedValveStart?.toJson(),
-      'total_mined_valve_end': totalMinedValveEnd?.toJson(),
-      'mining_reward': miningReward?.toJson(),
+      'total_mined_valve_start': config.encodeMessage(totalMinedValveStart),
+      'total_mined_valve_end': config.encodeMessage(totalMinedValveEnd),
+      'mining_reward': config.encodeMessage(miningReward),
       'block_chain_percentage_in_bp': blockChainPercentageInBp,
       'resource_node_percentage_in_bp': resourceNodePercentageInBp,
       'meta_node_percentage_in_bp': metaNodePercentageInBp,
     };
   }
 
-  factory MiningRewardParam.fromJson(Map<String, dynamic> json) {
+  factory MiningRewardParam.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MiningRewardParam(
       totalMinedValveStart: json
-          .valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
+          .valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
             key: 'total_mined_valve_start',
-            parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
-      totalMinedValveEnd: json
-          .valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
-            key: 'total_mined_valve_end',
-            parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-            acceptCamelCase: true,
-          ),
-      miningReward: json
-          .valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
-            key: 'mining_reward',
-            parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      totalMinedValveEnd: json.valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
+        key: 'total_mined_valve_end',
+        parse:
+            (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      miningReward: json.valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
+        key: 'mining_reward',
+        parse:
+            (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       blockChainPercentageInBp: json.valueAsString<String?>(
         'block_chain_percentage_in_bp',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       resourceNodePercentageInBp: json.valueAsString<String?>(
         'resource_node_percentage_in_bp',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       metaNodePercentageInBp: json.valueAsString<String?>(
         'meta_node_percentage_in_bp',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -329,50 +356,61 @@ class Reward extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'wallet_address': walletAddress,
       'reward_from_mining_pool':
-          rewardFromMiningPool.map((e) => e.toJson()).toList(),
+          rewardFromMiningPool.map((e) => config.encodeMessage(e)).toList(),
       'reward_from_traffic_pool':
-          rewardFromTrafficPool.map((e) => e.toJson()).toList(),
+          rewardFromTrafficPool.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory Reward.fromJson(Map<String, dynamic> json) {
+  factory Reward.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Reward(
       walletAddress: json.valueAsString<String?>(
         'wallet_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       rewardFromMiningPool:
           (json.valueEnsureAsList<dynamic>(
                 'reward_from_mining_pool',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
       rewardFromTrafficPool:
           (json.valueEnsureAsList<dynamic>(
                 'reward_from_traffic_pool',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -428,17 +466,25 @@ class SingleWalletVolume extends CosmosProtoMessage {
   List<Object?> get protoValues => [walletAddress, volume];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'wallet_address': walletAddress, 'volume': volume};
   }
 
-  factory SingleWalletVolume.fromJson(Map<String, dynamic> json) {
+  factory SingleWalletVolume.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SingleWalletVolume(
       walletAddress: json.valueAsString<String?>(
         'wallet_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      volume: json.valueAsString<String?>('volume', acceptCamelCase: true),
+      volume: json.valueAsString<String?>(
+        'volume',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -491,43 +537,56 @@ class TotalReward extends CosmosProtoMessage {
   List<Object?> get protoValues => [miningReward, trafficReward];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'mining_reward': miningReward.map((e) => e.toJson()).toList(),
-      'traffic_reward': trafficReward.map((e) => e.toJson()).toList(),
+      'mining_reward':
+          miningReward.map((e) => config.encodeMessage(e)).toList(),
+      'traffic_reward':
+          trafficReward.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory TotalReward.fromJson(Map<String, dynamic> json) {
+  factory TotalReward.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return TotalReward(
       miningReward:
           (json.valueEnsureAsList<dynamic>(
                 'mining_reward',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
       trafficReward:
           (json.valueEnsureAsList<dynamic>(
                 'traffic_reward',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -695,7 +754,9 @@ class Metrics extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'total_supply': totalSupply,
       'total_mining_supply': totalMiningSupply,
@@ -715,67 +776,70 @@ class Metrics extends CosmosProtoMessage {
     };
   }
 
-  factory Metrics.fromJson(Map<String, dynamic> json) {
+  factory Metrics.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Metrics(
       totalSupply: json.valueAsString<String?>(
         'total_supply',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       totalMiningSupply: json.valueAsString<String?>(
         'total_mining_supply',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       totalMinedTokens: json.valueAsString<String?>(
         'total_mined_tokens',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       totalResourceNodesDeposit: json.valueAsString<String?>(
         'total_resource_nodes_deposit',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       totalBondedDelegation: json.valueAsString<String?>(
         'total_bonded_delegation',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       totalUnbondedDelegation: json.valueAsString<String?>(
         'total_unbonded_delegation',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       totalUnbondingDelegation: json.valueAsString<String?>(
         'total_unbonding_delegation',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       circulationSupply: json.valueAsString<String?>(
         'circulation_supply',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       totalMiningReward: json.valueAsString<String?>(
         'total_mining_reward',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       chainMiningReward: json.valueAsString<String?>(
         'chain_mining_reward',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       resourceMiningReward: json.valueAsString<String?>(
         'resource_mining_reward',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       metaMiningReward: json.valueAsString<String?>(
         'meta_mining_reward',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       resourceNodeDeposit: json.valueAsString<String?>(
         'resource_node_deposit',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       metaNodeDeposit: json.valueAsString<String?>(
         'meta_node_deposit',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       unissuedPrepay: json.valueAsString<String?>(
         'unissued_prepay',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

@@ -22,7 +22,7 @@ class ThorNodeRequestAddressCloutScore
   Map<String, String?> get parameters => {"height": height?.toString()};
 
   @override
-  CloutScoreResponse onResonse(Map<String, dynamic> result) {
+  CloutScoreResponse onResponse(Map<String, dynamic> result) {
     return CloutScoreResponse.fromJson(result);
   }
 }

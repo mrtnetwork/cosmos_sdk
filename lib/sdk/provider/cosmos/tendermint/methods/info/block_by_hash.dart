@@ -22,7 +22,7 @@ class TendermintRequestBlockByHash
   Map<String, String?> get parameters => {"hash": hash};
 
   @override
-  TendermintBlockComplete onResonse(Map<String, dynamic> result) {
+  TendermintBlockComplete onResponse(Map<String, dynamic> result) {
     return TendermintBlockComplete.fromJson(result);
   }
 }

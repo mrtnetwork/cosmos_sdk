@@ -100,105 +100,138 @@ class GenesisState extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'params': params?.toJson(),
-      'insurance_funds': insuranceFunds.map((e) => e.toJson()).toList(),
-      'redemption_schedule': redemptionSchedule.map((e) => e.toJson()).toList(),
-      'next_share_denom_id': nextShareDenomId?.toString(),
-      'next_redemption_schedule_id': nextRedemptionScheduleId?.toString(),
+      'params': config.encodeMessage(params),
+      'insurance_funds':
+          insuranceFunds.map((e) => config.encodeMessage(e)).toList(),
+      'redemption_schedule':
+          redemptionSchedule.map((e) => config.encodeMessage(e)).toList(),
+      'next_share_denom_id': config.encodeBigint(nextShareDenomId),
+      'next_redemption_schedule_id': config.encodeBigint(
+        nextRedemptionScheduleId,
+      ),
       'failed_redemption_schedules':
-          failedRedemptionSchedules.map((e) => e.toJson()).toList(),
-      'next_failed_redemption_schedule_id':
-          nextFailedRedemptionScheduleId?.toString(),
-      'vouchers': vouchers.map((e) => e.toJson()).toList(),
+          failedRedemptionSchedules
+              .map((e) => config.encodeMessage(e))
+              .toList(),
+      'next_failed_redemption_schedule_id': config.encodeBigint(
+        nextFailedRedemptionScheduleId,
+      ),
+      'vouchers': vouchers.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory GenesisState.fromJson(Map<String, dynamic> json) {
+  factory GenesisState.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GenesisState(
-      params: json.valueTo<
-        injective_insurance_v1beta1_insurance.Params?,
-        Map<String, dynamic>
-      >(
-        key: 'params',
-        parse: (v) => injective_insurance_v1beta1_insurance.Params.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      params: json
+          .valueTo<injective_insurance_v1beta1_insurance.Params?, Object>(
+            key: 'params',
+            parse:
+                (v) => injective_insurance_v1beta1_insurance.Params.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
       insuranceFunds:
           (json.valueEnsureAsList<dynamic>(
                 'insurance_funds',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_insurance_v1beta1_insurance.InsuranceFund,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => injective_insurance_v1beta1_insurance
-                          .InsuranceFund.fromJson(v),
+                          .InsuranceFund.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       redemptionSchedule:
           (json.valueEnsureAsList<dynamic>(
                 'redemption_schedule',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_insurance_v1beta1_insurance.RedemptionSchedule,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => injective_insurance_v1beta1_insurance
-                          .RedemptionSchedule.fromJson(v),
+                          .RedemptionSchedule.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       nextShareDenomId: json.valueAsBigInt<BigInt?>(
         'next_share_denom_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       nextRedemptionScheduleId: json.valueAsBigInt<BigInt?>(
         'next_redemption_schedule_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       failedRedemptionSchedules:
           (json.valueEnsureAsList<dynamic>(
                 'failed_redemption_schedules',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_insurance_v1beta1_insurance.FailedRedemptionSchedule,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => injective_insurance_v1beta1_insurance
-                          .FailedRedemptionSchedule.fromJson(v),
+                          .FailedRedemptionSchedule.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       nextFailedRedemptionScheduleId: json.valueAsBigInt<BigInt?>(
         'next_failed_redemption_schedule_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       vouchers:
-          (json.valueEnsureAsList<dynamic>('vouchers', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'vouchers',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   injective_common_vouchers_v1_vouchers.AddressVoucher,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => injective_common_vouchers_v1_vouchers
-                          .AddressVoucher.fromJson(v),
+                          .AddressVoucher.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),

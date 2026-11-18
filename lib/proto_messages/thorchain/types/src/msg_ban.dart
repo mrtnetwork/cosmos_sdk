@@ -8,11 +8,13 @@ class MsgBan extends CosmosProtoMessage
     with
         ICosmosProtoServiceMessage<types_tx.MsgEmpty>,
         ICosmosProtoAminoMessage {
-  final List<int>? nodeAddress;
+  final BuBytes? nodeAddress;
 
-  final List<int>? signer;
+  final BuBytes? signer;
 
-  const MsgBan({this.nodeAddress, this.signer});
+  MsgBan({List<int>? nodeAddress, List<int>? signer})
+    : nodeAddress = nodeAddress?.asImmutableBytes,
+      signer = signer?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -40,36 +42,25 @@ class MsgBan extends CosmosProtoMessage
   List<Object?> get protoValues => [nodeAddress, signer];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'node_address': switch (nodeAddress) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'signer': switch (signer) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'node_address': config.encodeBinary(nodeAddress),
+      'signer': config.encodeBinary(signer),
     };
   }
 
-  factory MsgBan.fromJson(Map<String, dynamic> json) {
+  factory MsgBan.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgBan(
-      nodeAddress: json.valueAsBytes<List<int>?>(
-        'node_address',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      nodeAddress: config.decodeBinary<List<int>?>(
+        json.valueAs('node_address', normalizeKeyLookup: config.normalizeKeys),
       ),
-      signer: json.valueAsBytes<List<int>?>(
-        'signer',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      signer: config.decodeBinary<List<int>?>(
+        json.valueAs('signer', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }

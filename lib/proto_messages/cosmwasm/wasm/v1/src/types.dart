@@ -31,20 +31,32 @@ enum AccessType implements ProtoEnumVariant {
 
   /// Looks up a value by its proto wire int. Throws if not found.
   static AccessType fromValue(int? value) {
+    value ??= 0;
     return AccessType.values.firstWhere(
       (e) => e.value == value,
       orElse:
-          () => throw ItemNotFoundException(name: "AccessType", value: value),
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching AccessType found for the given value. $value",
+                details: {"name": "AccessType", "value": value?.toString()},
+              ),
     );
   }
 
   /// Looks up a value by wire int, Dart enum name, or original proto
   /// name (whichever [value] happens to be). Throws if not found.
   static AccessType from(Object? value) {
+    value ??= 0;
     return AccessType.values.firstWhere(
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
-          () => throw ItemNotFoundException(name: "AccessType", value: value),
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching AccessType found for the given value. $value",
+                details: {"name": "AccessType", "value": value?.toString()},
+              ),
     );
   }
 }
@@ -87,13 +99,18 @@ enum ContractCodeHistoryOperationType implements ProtoEnumVariant {
 
   /// Looks up a value by its proto wire int. Throws if not found.
   static ContractCodeHistoryOperationType fromValue(int? value) {
+    value ??= 0;
     return ContractCodeHistoryOperationType.values.firstWhere(
       (e) => e.value == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "ContractCodeHistoryOperationType",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching ContractCodeHistoryOperationType found for the given value. $value",
+                details: {
+                  "name": "ContractCodeHistoryOperationType",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -101,13 +118,18 @@ enum ContractCodeHistoryOperationType implements ProtoEnumVariant {
   /// Looks up a value by wire int, Dart enum name, or original proto
   /// name (whichever [value] happens to be). Throws if not found.
   static ContractCodeHistoryOperationType from(Object? value) {
+    value ??= 0;
     return ContractCodeHistoryOperationType.values.firstWhere(
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "ContractCodeHistoryOperationType",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching ContractCodeHistoryOperationType found for the given value. $value",
+                details: {
+                  "name": "ContractCodeHistoryOperationType",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -144,14 +166,19 @@ class AccessConfig extends CosmosProtoMessage {
   List<Object?> get protoValues => [permission, addresses];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'permission': permission?.protoName,
+      'permission': config.encodeEnum(permission),
       'addresses': addresses.map((e) => e).toList(),
     };
   }
 
-  factory AccessConfig.fromJson(Map<String, dynamic> json) {
+  factory AccessConfig.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AccessConfig(
       permission: json.valueTo<AccessType?, Object?>(
         key: 'permission',
@@ -160,7 +187,8 @@ class AccessConfig extends CosmosProtoMessage {
       addresses:
           (json.valueEnsureAsList<dynamic>(
             'addresses',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
     );
   }
@@ -210,19 +238,27 @@ class Params extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'code_upload_access': codeUploadAccess?.toJson(),
-      'instantiate_default_permission': instantiateDefaultPermission?.protoName,
+      'code_upload_access': config.encodeMessage(codeUploadAccess),
+      'instantiate_default_permission': config.encodeEnum(
+        instantiateDefaultPermission,
+      ),
     };
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
-      codeUploadAccess: json.valueTo<AccessConfig?, Map<String, dynamic>>(
+      codeUploadAccess: json.valueTo<AccessConfig?, Object>(
         key: 'code_upload_access',
-        parse: (v) => AccessConfig.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => AccessConfig.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       instantiateDefaultPermission: json.valueTo<AccessType?, Object?>(
         key: 'instantiate_default_permission',
@@ -319,42 +355,67 @@ class ContractInfo extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'code_id': codeId?.toString(),
+      'code_id': config.encodeBigint(codeId),
       'creator': creator,
       'admin': admin,
       'label': label,
-      'created': created?.toJson(),
+      'created': config.encodeMessage(created),
       'ibc_port_id': ibcPortId,
-      'extension': extension_?.toJson(),
+      'extension': config.encodeMessage(extension_),
       'ibc2_port_id': ibc2PortId,
     };
   }
 
-  factory ContractInfo.fromJson(Map<String, dynamic> json) {
+  factory ContractInfo.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ContractInfo(
-      codeId: json.valueAsBigInt<BigInt?>('code_id', acceptCamelCase: true),
-      creator: json.valueAsString<String?>('creator', acceptCamelCase: true),
-      admin: json.valueAsString<String?>('admin', acceptCamelCase: true),
-      label: json.valueAsString<String?>('label', acceptCamelCase: true),
-      created: json.valueTo<AbsoluteTxPosition?, Map<String, dynamic>>(
+      codeId: json.valueAsBigInt<BigInt?>(
+        'code_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      creator: json.valueAsString<String?>(
+        'creator',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      admin: json.valueAsString<String?>(
+        'admin',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      label: json.valueAsString<String?>(
+        'label',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      created: json.valueTo<AbsoluteTxPosition?, Object>(
         key: 'created',
-        parse: (v) => AbsoluteTxPosition.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => AbsoluteTxPosition.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       ibcPortId: json.valueAsString<String?>(
         'ibc_port_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      extension_: json.valueTo<google_protobuf_any.Any?, Map<String, dynamic>>(
+      extension_: json.valueTo<google_protobuf_any.Any?, Object>(
         key: 'extension',
-        parse: (v) => google_protobuf_any.Any.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_any.Any.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       ibc2PortId: json.valueAsString<String?>(
         'ibc2_port_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -394,14 +455,14 @@ class ContractCodeHistoryEntry extends CosmosProtoMessage {
   /// Updated Tx position when the operation was executed.
   final AbsoluteTxPosition? updated;
 
-  final List<int>? msg;
+  final BuBytes? msg;
 
-  const ContractCodeHistoryEntry({
+  ContractCodeHistoryEntry({
     this.operation,
     this.codeId,
     this.updated,
-    this.msg,
-  });
+    List<int>? msg,
+  }) : msg = msg?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -428,37 +489,41 @@ class ContractCodeHistoryEntry extends CosmosProtoMessage {
   List<Object?> get protoValues => [operation, codeId, updated, msg];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'operation': operation?.protoName,
-      'code_id': codeId?.toString(),
-      'updated': updated?.toJson(),
-      'msg': switch (msg) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'operation': config.encodeEnum(operation),
+      'code_id': config.encodeBigint(codeId),
+      'updated': config.encodeMessage(updated),
+      'msg': config.encodeBinary(msg),
     };
   }
 
-  factory ContractCodeHistoryEntry.fromJson(Map<String, dynamic> json) {
+  factory ContractCodeHistoryEntry.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ContractCodeHistoryEntry(
       operation: json.valueTo<ContractCodeHistoryOperationType?, Object?>(
         key: 'operation',
         parse: (v) => ContractCodeHistoryOperationType.from(v),
       ),
-      codeId: json.valueAsBigInt<BigInt?>('code_id', acceptCamelCase: true),
-      updated: json.valueTo<AbsoluteTxPosition?, Map<String, dynamic>>(
-        key: 'updated',
-        parse: (v) => AbsoluteTxPosition.fromJson(v),
-        acceptCamelCase: true,
+      codeId: json.valueAsBigInt<BigInt?>(
+        'code_id',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      msg: json.valueAsBytes<List<int>?>(
-        'msg',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      updated: json.valueTo<AbsoluteTxPosition?, Object>(
+        key: 'updated',
+        parse:
+            (v) => AbsoluteTxPosition.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      msg: config.decodeBinary<List<int>?>(
+        json.valueAs('msg', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }
@@ -511,20 +576,28 @@ class AbsoluteTxPosition extends CosmosProtoMessage {
   List<Object?> get protoValues => [blockHeight, txIndex];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'block_height': blockHeight?.toString(),
-      'tx_index': txIndex?.toString(),
+      'block_height': config.encodeBigint(blockHeight),
+      'tx_index': config.encodeBigint(txIndex),
     };
   }
 
-  factory AbsoluteTxPosition.fromJson(Map<String, dynamic> json) {
+  factory AbsoluteTxPosition.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AbsoluteTxPosition(
       blockHeight: json.valueAsBigInt<BigInt?>(
         'block_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      txIndex: json.valueAsBigInt<BigInt?>('tx_index', acceptCamelCase: true),
+      txIndex: json.valueAsBigInt<BigInt?>(
+        'tx_index',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -544,12 +617,14 @@ class AbsoluteTxPosition extends CosmosProtoMessage {
 /// Model is a struct that holds a KV pair
 class Model extends CosmosProtoMessage {
   /// hex-encode key to read it better (this is often ascii)
-  final List<int>? key;
+  final BuBytes? key;
 
   /// base64-encode raw value
-  final List<int>? value;
+  final BuBytes? value;
 
-  const Model({this.key, this.value});
+  Model({List<int>? key, List<int>? value})
+    : key = key?.asImmutableBytes,
+      value = value?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -569,36 +644,25 @@ class Model extends CosmosProtoMessage {
   List<Object?> get protoValues => [key, value];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'key': switch (key) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'value': switch (value) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'key': config.encodeBinary(key),
+      'value': config.encodeBinary(value),
     };
   }
 
-  factory Model.fromJson(Map<String, dynamic> json) {
+  factory Model.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Model(
-      key: json.valueAsBytes<List<int>?>(
-        'key',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      key: config.decodeBinary<List<int>?>(
+        json.valueAs('key', normalizeKeyLookup: config.normalizeKeys),
       ),
-      value: json.valueAsBytes<List<int>?>(
-        'value',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      value: config.decodeBinary<List<int>?>(
+        json.valueAs('value', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }

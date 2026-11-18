@@ -35,21 +35,28 @@ class QueryChannelStatesRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [pagination];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'pagination': pagination?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'pagination': config.encodeMessage(pagination)};
   }
 
-  factory QueryChannelStatesRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryChannelStatesRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryChannelStatesRequest(
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageRequest?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) => cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageRequest?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -114,42 +121,53 @@ class QueryChannelStatesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [channelStates, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'channel_states': channelStates.map((e) => e.toJson()).toList(),
-      'pagination': pagination?.toJson(),
+      'channel_states':
+          channelStates.map((e) => config.encodeMessage(e)).toList(),
+      'pagination': config.encodeMessage(pagination),
     };
   }
 
-  factory QueryChannelStatesResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryChannelStatesResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryChannelStatesResponse(
       channelStates:
           (json.valueEnsureAsList<dynamic>(
                 'channel_states',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   ibc_applications_perm_v1_types.ChannelState,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
-                      (v) => ibc_applications_perm_v1_types
-                          .ChannelState.fromJson(v),
+                      (v) =>
+                          ibc_applications_perm_v1_types.ChannelState.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
                 ),
               )
               .toList(),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageResponse?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) =>
-                cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageResponse?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -208,17 +226,25 @@ class QueryChannelStateRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [channelId, portId];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'channel_id': channelId, 'port_id': portId};
   }
 
-  factory QueryChannelStateRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryChannelStateRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryChannelStateRequest(
       channelId: json.valueAsString<String?>(
         'channel_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      portId: json.valueAsString<String?>('port_id', acceptCamelCase: true),
+      portId: json.valueAsString<String?>(
+        'port_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -266,20 +292,27 @@ class QueryChannelStateResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [channelState];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'channel_state': channelState?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'channel_state': config.encodeMessage(channelState)};
   }
 
-  factory QueryChannelStateResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryChannelStateResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryChannelStateResponse(
-      channelState: json.valueTo<
-        ibc_applications_perm_v1_types.ChannelState?,
-        Map<String, dynamic>
-      >(
-        key: 'channel_state',
-        parse: (v) => ibc_applications_perm_v1_types.ChannelState.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      channelState: json
+          .valueTo<ibc_applications_perm_v1_types.ChannelState?, Object>(
+            key: 'channel_state',
+            parse:
+                (v) => ibc_applications_perm_v1_types.ChannelState.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 

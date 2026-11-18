@@ -34,16 +34,24 @@ class MsgAddOracle extends CosmosProtoMessage
   List<Object?> get protoValues => [creator, connectionId];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'creator': creator, 'connection_id': connectionId};
   }
 
-  factory MsgAddOracle.fromJson(Map<String, dynamic> json) {
+  factory MsgAddOracle.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgAddOracle(
-      creator: json.valueAsString<String?>('creator', acceptCamelCase: true),
+      creator: json.valueAsString<String?>(
+        'creator',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       connectionId: json.valueAsString<String?>(
         'connection_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -88,11 +96,16 @@ class MsgAddOracleResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgAddOracleResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgAddOracleResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgAddOracleResponse();
   }
 
@@ -156,29 +169,37 @@ class MsgInstantiateOracle extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'creator': creator,
       'oracle_chain_id': oracleChainId,
-      'contract_code_id': contractCodeId?.toString(),
+      'contract_code_id': config.encodeBigint(contractCodeId),
       'transfer_channel_on_oracle': transferChannelOnOracle,
     };
   }
 
-  factory MsgInstantiateOracle.fromJson(Map<String, dynamic> json) {
+  factory MsgInstantiateOracle.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgInstantiateOracle(
-      creator: json.valueAsString<String?>('creator', acceptCamelCase: true),
+      creator: json.valueAsString<String?>(
+        'creator',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       oracleChainId: json.valueAsString<String?>(
         'oracle_chain_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       contractCodeId: json.valueAsBigInt<BigInt?>(
         'contract_code_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       transferChannelOnOracle: json.valueAsString<String?>(
         'transfer_channel_on_oracle',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -227,11 +248,16 @@ class MsgInstantiateOracleResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgInstantiateOracleResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgInstantiateOracleResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgInstantiateOracleResponse();
   }
 
@@ -279,16 +305,24 @@ class MsgRestoreOracleICA extends CosmosProtoMessage
   List<Object?> get protoValues => [creator, oracleChainId];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'creator': creator, 'oracle_chain_id': oracleChainId};
   }
 
-  factory MsgRestoreOracleICA.fromJson(Map<String, dynamic> json) {
+  factory MsgRestoreOracleICA.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgRestoreOracleICA(
-      creator: json.valueAsString<String?>('creator', acceptCamelCase: true),
+      creator: json.valueAsString<String?>(
+        'creator',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       oracleChainId: json.valueAsString<String?>(
         'oracle_chain_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -333,11 +367,16 @@ class MsgRestoreOracleICAResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgRestoreOracleICAResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgRestoreOracleICAResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgRestoreOracleICAResponse();
   }
 
@@ -390,7 +429,9 @@ class MsgToggleOracle extends CosmosProtoMessage
   List<Object?> get protoValues => [authority, oracleChainId, active];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'authority': authority,
       'oracle_chain_id': oracleChainId,
@@ -398,17 +439,23 @@ class MsgToggleOracle extends CosmosProtoMessage
     };
   }
 
-  factory MsgToggleOracle.fromJson(Map<String, dynamic> json) {
+  factory MsgToggleOracle.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgToggleOracle(
       authority: json.valueAsString<String?>(
         'authority',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       oracleChainId: json.valueAsString<String?>(
         'oracle_chain_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      active: json.valueAsBool<bool?>('active', acceptCamelCase: true),
+      active: json.valueAsBool<bool?>(
+        'active',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -453,11 +500,16 @@ class MsgToggleOracleResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgToggleOracleResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgToggleOracleResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgToggleOracleResponse();
   }
 
@@ -507,19 +559,24 @@ class MsgRemoveOracle extends CosmosProtoMessage
   List<Object?> get protoValues => [authority, oracleChainId];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'authority': authority, 'oracle_chain_id': oracleChainId};
   }
 
-  factory MsgRemoveOracle.fromJson(Map<String, dynamic> json) {
+  factory MsgRemoveOracle.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgRemoveOracle(
       authority: json.valueAsString<String?>(
         'authority',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       oracleChainId: json.valueAsString<String?>(
         'oracle_chain_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -564,11 +621,16 @@ class MsgRemoveOracleResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgRemoveOracleResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgRemoveOracleResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgRemoveOracleResponse();
   }
 

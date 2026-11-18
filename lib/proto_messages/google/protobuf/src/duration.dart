@@ -121,8 +121,10 @@ class Duration extends CosmosProtoMessage {
   List<Object?> get protoValues => [seconds, nanos];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'seconds': seconds?.toString(), 'nanos': nanos};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'seconds': config.encodeBigint(seconds), 'nanos': nanos};
   }
 
   factory Duration.fromString(String duration) {
@@ -138,10 +140,19 @@ class Duration extends CosmosProtoMessage {
     );
   }
 
-  factory Duration.fromJson(Map<String, dynamic> json) {
+  factory Duration.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Duration(
-      seconds: json.valueAsBigInt<BigInt?>('seconds', acceptCamelCase: true),
-      nanos: json.valueAsInt<int?>('nanos', acceptCamelCase: true),
+      seconds: json.valueAsBigInt<BigInt?>(
+        'seconds',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      nanos: json.valueAsInt<int?>(
+        'nanos',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

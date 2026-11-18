@@ -31,11 +31,16 @@ class QueryEpochInfosRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryEpochInfosRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryEpochInfosRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryEpochInfosRequest();
   }
 
@@ -85,23 +90,34 @@ class QueryEpochInfosResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [epochs];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'epochs': epochs.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'epochs': epochs.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory QueryEpochInfosResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryEpochInfosResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryEpochInfosResponse(
       epochs:
-          (json.valueEnsureAsList<dynamic>('epochs', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'epochs',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   cosmos_epochs_v1beta1_genesis.EpochInfo,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
-                      (v) =>
-                          cosmos_epochs_v1beta1_genesis.EpochInfo.fromJson(v),
+                      (v) => cosmos_epochs_v1beta1_genesis.EpochInfo.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -155,15 +171,20 @@ class QueryCurrentEpochRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [identifier];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'identifier': identifier};
   }
 
-  factory QueryCurrentEpochRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryCurrentEpochRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryCurrentEpochRequest(
       identifier: json.valueAsString<String?>(
         'identifier',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -209,15 +230,20 @@ class QueryCurrentEpochResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [currentEpoch];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'current_epoch': currentEpoch?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'current_epoch': config.encodeBigint(currentEpoch)};
   }
 
-  factory QueryCurrentEpochResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryCurrentEpochResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryCurrentEpochResponse(
       currentEpoch: json.valueAsBigInt<BigInt?>(
         'current_epoch',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

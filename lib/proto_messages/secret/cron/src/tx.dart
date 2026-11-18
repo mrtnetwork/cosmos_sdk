@@ -58,34 +58,51 @@ class MsgAddSchedule extends CosmosProtoMessage
   List<Object?> get protoValues => [authority, name, period, msgs];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'authority': authority,
       'name': name,
-      'period': period?.toString(),
-      'msgs': msgs.map((e) => e.toJson()).toList(),
+      'period': config.encodeBigint(period),
+      'msgs': msgs.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory MsgAddSchedule.fromJson(Map<String, dynamic> json) {
+  factory MsgAddSchedule.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgAddSchedule(
       authority: json.valueAsString<String?>(
         'authority',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      name: json.valueAsString<String?>('name', acceptCamelCase: true),
-      period: json.valueAsBigInt<BigInt?>('period', acceptCamelCase: true),
+      name: json.valueAsString<String?>(
+        'name',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      period: json.valueAsBigInt<BigInt?>(
+        'period',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       msgs:
-          (json.valueEnsureAsList<dynamic>('msgs', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'msgs',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   secret_cron_schedule.MsgExecuteContract,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
-                      (v) =>
-                          secret_cron_schedule.MsgExecuteContract.fromJson(v),
+                      (v) => secret_cron_schedule.MsgExecuteContract.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -141,11 +158,16 @@ class MsgAddScheduleResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgAddScheduleResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgAddScheduleResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgAddScheduleResponse();
   }
 
@@ -192,17 +214,25 @@ class MsgRemoveSchedule extends CosmosProtoMessage
   List<Object?> get protoValues => [authority, name];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'authority': authority, 'name': name};
   }
 
-  factory MsgRemoveSchedule.fromJson(Map<String, dynamic> json) {
+  factory MsgRemoveSchedule.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgRemoveSchedule(
       authority: json.valueAsString<String?>(
         'authority',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      name: json.valueAsString<String?>('name', acceptCamelCase: true),
+      name: json.valueAsString<String?>(
+        'name',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -247,11 +277,16 @@ class MsgRemoveScheduleResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgRemoveScheduleResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgRemoveScheduleResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgRemoveScheduleResponse();
   }
 
@@ -306,20 +341,29 @@ class MsgUpdateParams extends CosmosProtoMessage
   List<Object?> get protoValues => [authority, params];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'authority': authority, 'params': params?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'authority': authority, 'params': config.encodeMessage(params)};
   }
 
-  factory MsgUpdateParams.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateParams.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateParams(
       authority: json.valueAsString<String?>(
         'authority',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      params: json.valueTo<secret_cron_params.Params?, Map<String, dynamic>>(
+      params: json.valueTo<secret_cron_params.Params?, Object>(
         key: 'params',
-        parse: (v) => secret_cron_params.Params.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => secret_cron_params.Params.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -370,11 +414,16 @@ class MsgUpdateParamsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgUpdateParamsResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateParamsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateParamsResponse();
   }
 

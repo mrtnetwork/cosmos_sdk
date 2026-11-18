@@ -33,13 +33,21 @@ class QueryKeysignRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'height': height};
   }
 
-  factory QueryKeysignRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryKeysignRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryKeysignRequest(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -91,14 +99,25 @@ class QueryKeysignPubkeyRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height, pubKey];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'height': height, 'pub_key': pubKey};
   }
 
-  factory QueryKeysignPubkeyRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryKeysignPubkeyRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryKeysignPubkeyRequest(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
-      pubKey: json.valueAsString<String?>('pub_key', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      pubKey: json.valueAsString<String?>(
+        'pub_key',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -149,20 +168,29 @@ class QueryKeysignResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [keysign, signature];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'keysign': keysign?.toJson(), 'signature': signature};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'keysign': config.encodeMessage(keysign), 'signature': signature};
   }
 
-  factory QueryKeysignResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryKeysignResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryKeysignResponse(
-      keysign: json.valueTo<types_type_tx_out.TxOut?, Map<String, dynamic>>(
+      keysign: json.valueTo<types_type_tx_out.TxOut?, Object>(
         key: 'keysign',
-        parse: (v) => types_type_tx_out.TxOut.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => types_type_tx_out.TxOut.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       signature: json.valueAsString<String?>(
         'signature',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -212,14 +240,25 @@ class QueryKeygenRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height, pubKey];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'height': height, 'pub_key': pubKey};
   }
 
-  factory QueryKeygenRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryKeygenRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryKeygenRequest(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
-      pubKey: json.valueAsString<String?>('pub_key', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      pubKey: json.valueAsString<String?>(
+        'pub_key',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -270,21 +309,32 @@ class QueryKeygenResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [keygenBlock, signature];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'keygen_block': keygenBlock?.toJson(), 'signature': signature};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'keygen_block': config.encodeMessage(keygenBlock),
+      'signature': signature,
+    };
   }
 
-  factory QueryKeygenResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryKeygenResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryKeygenResponse(
-      keygenBlock: json
-          .valueTo<types_type_keygen.KeygenBlock?, Map<String, dynamic>>(
-            key: 'keygen_block',
-            parse: (v) => types_type_keygen.KeygenBlock.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      keygenBlock: json.valueTo<types_type_keygen.KeygenBlock?, Object>(
+        key: 'keygen_block',
+        parse:
+            (v) => types_type_keygen.KeygenBlock.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       signature: json.valueAsString<String?>(
         'signature',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

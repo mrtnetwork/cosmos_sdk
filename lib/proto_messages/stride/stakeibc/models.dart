@@ -1,9 +1,9 @@
-export 'src/address_unbonding.dart';
-export 'src/validator.dart';
-export 'src/epoch_tracker.dart';
-export 'src/query.dart';
 export 'src/params.dart';
+export 'src/epoch_tracker.dart';
+export 'src/validator.dart';
+export 'src/tx.dart';
 export 'src/host_zone.dart';
 export 'src/ica_account.dart';
+export 'src/address_unbonding.dart';
+export 'src/query.dart';
 export 'src/trade_route.dart';
-export 'src/tx.dart';

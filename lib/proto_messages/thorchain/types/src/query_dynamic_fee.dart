@@ -29,13 +29,21 @@ class QueryDynamicL1FeesRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'height': height};
   }
 
-  factory QueryDynamicL1FeesRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryDynamicL1FeesRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryDynamicL1FeesRequest(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -109,36 +117,47 @@ class DynamicL1FeeEntry extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'thorname': thorname,
       'pair': pair,
-      'dynamic_bps': dynamicBps?.toString(),
-      'whitelist_state': whitelistState?.toString(),
-      'last_active_epoch': lastActiveEpoch?.toString(),
+      'dynamic_bps': config.encodeBigint(dynamicBps),
+      'whitelist_state': config.encodeBigint(whitelistState),
+      'last_active_epoch': config.encodeBigint(lastActiveEpoch),
       'latest_fees_tor': latestFeesTor,
     };
   }
 
-  factory DynamicL1FeeEntry.fromJson(Map<String, dynamic> json) {
+  factory DynamicL1FeeEntry.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return DynamicL1FeeEntry(
-      thorname: json.valueAsString<String?>('thorname', acceptCamelCase: true),
-      pair: json.valueAsString<String?>('pair', acceptCamelCase: true),
+      thorname: json.valueAsString<String?>(
+        'thorname',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      pair: json.valueAsString<String?>(
+        'pair',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       dynamicBps: json.valueAsBigInt<BigInt?>(
         'dynamic_bps',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       whitelistState: json.valueAsBigInt<BigInt?>(
         'whitelist_state',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       lastActiveEpoch: json.valueAsBigInt<BigInt?>(
         'last_active_epoch',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       latestFeesTor: json.valueAsString<String?>(
         'latest_fees_tor',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -186,20 +205,32 @@ class QueryDynamicL1FeesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [entries];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'entries': entries.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'entries': entries.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory QueryDynamicL1FeesResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryDynamicL1FeesResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryDynamicL1FeesResponse(
       entries:
-          (json.valueEnsureAsList<dynamic>('entries', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'entries',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) =>
-                    JsonParser.valueTo<DynamicL1FeeEntry, Map<String, dynamic>>(
-                      value: e,
-                      parse: (v) => DynamicL1FeeEntry.fromJson(v),
-                    ),
+                (e) => JsonParser.valueTo<DynamicL1FeeEntry, Object>(
+                  value: e,
+                  parse:
+                      (v) => DynamicL1FeeEntry.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );
@@ -250,16 +281,25 @@ class QueryDynamicL1FeesByThornameRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [thorname, height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'thorname': thorname, 'height': height};
   }
 
   factory QueryDynamicL1FeesByThornameRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryDynamicL1FeesByThornameRequest(
-      thorname: json.valueAsString<String?>('thorname', acceptCamelCase: true),
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      thorname: json.valueAsString<String?>(
+        'thorname',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -327,33 +367,49 @@ class DynamicL1FeePairDetail extends CosmosProtoMessage {
   List<Object?> get protoValues => [pair, dynamicBps, lastActiveEpoch, history];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'pair': pair,
-      'dynamic_bps': dynamicBps?.toString(),
-      'last_active_epoch': lastActiveEpoch?.toString(),
-      'history': history.map((e) => e.toJson()).toList(),
+      'dynamic_bps': config.encodeBigint(dynamicBps),
+      'last_active_epoch': config.encodeBigint(lastActiveEpoch),
+      'history': history.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory DynamicL1FeePairDetail.fromJson(Map<String, dynamic> json) {
+  factory DynamicL1FeePairDetail.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return DynamicL1FeePairDetail(
-      pair: json.valueAsString<String?>('pair', acceptCamelCase: true),
+      pair: json.valueAsString<String?>(
+        'pair',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       dynamicBps: json.valueAsBigInt<BigInt?>(
         'dynamic_bps',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       lastActiveEpoch: json.valueAsBigInt<BigInt?>(
         'last_active_epoch',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       history:
-          (json.valueEnsureAsList<dynamic>('history', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'history',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  DynamicL1FeeHistoryEntry,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => DynamicL1FeeHistoryEntry.fromJson(v)),
+                (e) => JsonParser.valueTo<DynamicL1FeeHistoryEntry, Object>(
+                  value: e,
+                  parse:
+                      (v) => DynamicL1FeeHistoryEntry.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );
@@ -414,26 +470,37 @@ class DynamicL1FeeHistoryEntry extends CosmosProtoMessage {
   List<Object?> get protoValues => [epoch, volumeTor, feesTor, bpsAtClose];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'epoch': epoch?.toString(),
+      'epoch': config.encodeBigint(epoch),
       'volume_tor': volumeTor,
       'fees_tor': feesTor,
-      'bps_at_close': bpsAtClose?.toString(),
+      'bps_at_close': config.encodeBigint(bpsAtClose),
     };
   }
 
-  factory DynamicL1FeeHistoryEntry.fromJson(Map<String, dynamic> json) {
+  factory DynamicL1FeeHistoryEntry.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return DynamicL1FeeHistoryEntry(
-      epoch: json.valueAsBigInt<BigInt?>('epoch', acceptCamelCase: true),
+      epoch: json.valueAsBigInt<BigInt?>(
+        'epoch',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       volumeTor: json.valueAsString<String?>(
         'volume_tor',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      feesTor: json.valueAsString<String?>('fees_tor', acceptCamelCase: true),
+      feesTor: json.valueAsString<String?>(
+        'fees_tor',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       bpsAtClose: json.valueAsBigInt<BigInt?>(
         'bps_at_close',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -489,30 +556,44 @@ class QueryDynamicL1FeesByThornameResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [thorname, whitelistState, pairs];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'thorname': thorname,
-      'whitelist_state': whitelistState?.toString(),
-      'pairs': pairs.map((e) => e.toJson()).toList(),
+      'whitelist_state': config.encodeBigint(whitelistState),
+      'pairs': pairs.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
   factory QueryDynamicL1FeesByThornameResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryDynamicL1FeesByThornameResponse(
-      thorname: json.valueAsString<String?>('thorname', acceptCamelCase: true),
+      thorname: json.valueAsString<String?>(
+        'thorname',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       whitelistState: json.valueAsBigInt<BigInt?>(
         'whitelist_state',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       pairs:
-          (json.valueEnsureAsList<dynamic>('pairs', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'pairs',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  DynamicL1FeePairDetail,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => DynamicL1FeePairDetail.fromJson(v)),
+                (e) => JsonParser.valueTo<DynamicL1FeePairDetail, Object>(
+                  value: e,
+                  parse:
+                      (v) => DynamicL1FeePairDetail.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );
@@ -563,13 +644,21 @@ class QueryDynamicL1FeesCurrentRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'height': height};
   }
 
-  factory QueryDynamicL1FeesCurrentRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryDynamicL1FeesCurrentRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryDynamicL1FeesCurrentRequest(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -636,26 +725,43 @@ class DynamicL1FeeCurrentEntry extends CosmosProtoMessage {
   List<Object?> get protoValues => [thorname, pair, volumeTor, feesTor, epoch];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'thorname': thorname,
       'pair': pair,
       'volume_tor': volumeTor,
       'fees_tor': feesTor,
-      'epoch': epoch?.toString(),
+      'epoch': config.encodeBigint(epoch),
     };
   }
 
-  factory DynamicL1FeeCurrentEntry.fromJson(Map<String, dynamic> json) {
+  factory DynamicL1FeeCurrentEntry.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return DynamicL1FeeCurrentEntry(
-      thorname: json.valueAsString<String?>('thorname', acceptCamelCase: true),
-      pair: json.valueAsString<String?>('pair', acceptCamelCase: true),
+      thorname: json.valueAsString<String?>(
+        'thorname',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      pair: json.valueAsString<String?>(
+        'pair',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       volumeTor: json.valueAsString<String?>(
         'volume_tor',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      feesTor: json.valueAsString<String?>('fees_tor', acceptCamelCase: true),
-      epoch: json.valueAsBigInt<BigInt?>('epoch', acceptCamelCase: true),
+      feesTor: json.valueAsString<String?>(
+        'fees_tor',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      epoch: json.valueAsBigInt<BigInt?>(
+        'epoch',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -707,25 +813,39 @@ class QueryDynamicL1FeesCurrentResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [epoch, entries];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'epoch': epoch?.toString(),
-      'entries': entries.map((e) => e.toJson()).toList(),
+      'epoch': config.encodeBigint(epoch),
+      'entries': entries.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
   factory QueryDynamicL1FeesCurrentResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryDynamicL1FeesCurrentResponse(
-      epoch: json.valueAsBigInt<BigInt?>('epoch', acceptCamelCase: true),
+      epoch: json.valueAsBigInt<BigInt?>(
+        'epoch',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       entries:
-          (json.valueEnsureAsList<dynamic>('entries', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'entries',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  DynamicL1FeeCurrentEntry,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => DynamicL1FeeCurrentEntry.fromJson(v)),
+                (e) => JsonParser.valueTo<DynamicL1FeeCurrentEntry, Object>(
+                  value: e,
+                  parse:
+                      (v) => DynamicL1FeeCurrentEntry.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );

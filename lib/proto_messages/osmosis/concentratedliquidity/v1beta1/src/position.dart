@@ -70,42 +70,57 @@ class Position extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'position_id': positionId?.toString(),
+      'position_id': config.encodeBigint(positionId),
       'address': address,
-      'pool_id': poolId?.toString(),
-      'lower_tick': lowerTick?.toString(),
-      'upper_tick': upperTick?.toString(),
+      'pool_id': config.encodeBigint(poolId),
+      'lower_tick': config.encodeBigint(lowerTick),
+      'upper_tick': config.encodeBigint(upperTick),
       'join_time': joinTime?.toRfc3339(),
       'liquidity': liquidity,
     };
   }
 
-  factory Position.fromJson(Map<String, dynamic> json) {
+  factory Position.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Position(
       positionId: json.valueAsBigInt<BigInt?>(
         'position_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
-      poolId: json.valueAsBigInt<BigInt?>('pool_id', acceptCamelCase: true),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      poolId: json.valueAsBigInt<BigInt?>(
+        'pool_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       lowerTick: json.valueAsBigInt<BigInt?>(
         'lower_tick',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       upperTick: json.valueAsBigInt<BigInt?>(
         'upper_tick',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      joinTime: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      joinTime: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'join_time',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       liquidity: json.valueAsString<String?>(
         'liquidity',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -201,82 +216,102 @@ class FullPositionBreakdown extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'position': position?.toJson(),
-      'asset0': asset0?.toJson(),
-      'asset1': asset1?.toJson(),
+      'position': config.encodeMessage(position),
+      'asset0': config.encodeMessage(asset0),
+      'asset1': config.encodeMessage(asset1),
       'claimable_spread_rewards':
-          claimableSpreadRewards.map((e) => e.toJson()).toList(),
+          claimableSpreadRewards.map((e) => config.encodeMessage(e)).toList(),
       'claimable_incentives':
-          claimableIncentives.map((e) => e.toJson()).toList(),
+          claimableIncentives.map((e) => config.encodeMessage(e)).toList(),
       'forfeited_incentives':
-          forfeitedIncentives.map((e) => e.toJson()).toList(),
+          forfeitedIncentives.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory FullPositionBreakdown.fromJson(Map<String, dynamic> json) {
+  factory FullPositionBreakdown.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return FullPositionBreakdown(
-      position: json.valueTo<Position?, Map<String, dynamic>>(
+      position: json.valueTo<Position?, Object>(
         key: 'position',
-        parse: (v) => Position.fromJson(v),
-        acceptCamelCase: true,
+        parse: (v) => Position.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      asset0: json
-          .valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
-            key: 'asset0',
-            parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-            acceptCamelCase: true,
-          ),
-      asset1: json
-          .valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
-            key: 'asset1',
-            parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      asset0: json.valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
+        key: 'asset0',
+        parse:
+            (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      asset1: json.valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
+        key: 'asset1',
+        parse:
+            (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       claimableSpreadRewards:
           (json.valueEnsureAsList<dynamic>(
                 'claimable_spread_rewards',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
       claimableIncentives:
           (json.valueEnsureAsList<dynamic>(
                 'claimable_incentives',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
       forfeitedIncentives:
           (json.valueEnsureAsList<dynamic>(
                 'forfeited_incentives',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -343,23 +378,34 @@ class PositionWithPeriodLock extends CosmosProtoMessage {
   List<Object?> get protoValues => [position, locks];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'position': position?.toJson(), 'locks': locks?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'position': config.encodeMessage(position),
+      'locks': config.encodeMessage(locks),
+    };
   }
 
-  factory PositionWithPeriodLock.fromJson(Map<String, dynamic> json) {
+  factory PositionWithPeriodLock.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return PositionWithPeriodLock(
-      position: json.valueTo<Position?, Map<String, dynamic>>(
+      position: json.valueTo<Position?, Object>(
         key: 'position',
-        parse: (v) => Position.fromJson(v),
-        acceptCamelCase: true,
+        parse: (v) => Position.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      locks: json
-          .valueTo<osmosis_lockup_lock.PeriodLock?, Map<String, dynamic>>(
-            key: 'locks',
-            parse: (v) => osmosis_lockup_lock.PeriodLock.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      locks: json.valueTo<osmosis_lockup_lock.PeriodLock?, Object>(
+        key: 'locks',
+        parse:
+            (v) => osmosis_lockup_lock.PeriodLock.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

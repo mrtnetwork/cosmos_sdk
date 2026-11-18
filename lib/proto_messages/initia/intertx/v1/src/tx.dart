@@ -52,23 +52,34 @@ class MsgRegisterAccount extends CosmosProtoMessage
   List<Object?> get protoValues => [owner, connectionId, version, ordering];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'owner': owner,
       'connection_id': connectionId,
       'version': version,
-      'ordering': ordering?.protoName,
+      'ordering': config.encodeEnum(ordering),
     };
   }
 
-  factory MsgRegisterAccount.fromJson(Map<String, dynamic> json) {
+  factory MsgRegisterAccount.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgRegisterAccount(
-      owner: json.valueAsString<String?>('owner', acceptCamelCase: true),
+      owner: json.valueAsString<String?>(
+        'owner',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       connectionId: json.valueAsString<String?>(
         'connection_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      version: json.valueAsString<String?>('version', acceptCamelCase: true),
+      version: json.valueAsString<String?>(
+        'version',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       ordering: json.valueTo<ibc_core_channel_v1_channel.Order?, Object?>(
         key: 'ordering',
         parse: (v) => ibc_core_channel_v1_channel.Order.from(v),
@@ -122,11 +133,16 @@ class MsgRegisterAccountResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgRegisterAccountResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgRegisterAccountResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgRegisterAccountResponse();
   }
 
@@ -174,25 +190,37 @@ class MsgSubmitTx extends CosmosProtoMessage
   List<Object?> get protoValues => [owner, connectionId, msg];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'owner': owner,
       'connection_id': connectionId,
-      'msg': msg?.toJson(),
+      'msg': config.encodeMessage(msg),
     };
   }
 
-  factory MsgSubmitTx.fromJson(Map<String, dynamic> json) {
+  factory MsgSubmitTx.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSubmitTx(
-      owner: json.valueAsString<String?>('owner', acceptCamelCase: true),
+      owner: json.valueAsString<String?>(
+        'owner',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       connectionId: json.valueAsString<String?>(
         'connection_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      msg: json.valueTo<google_protobuf_any.Any?, Map<String, dynamic>>(
+      msg: json.valueTo<google_protobuf_any.Any?, Object>(
         key: 'msg',
-        parse: (v) => google_protobuf_any.Any.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_any.Any.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -242,11 +270,16 @@ class MsgSubmitTxResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgSubmitTxResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgSubmitTxResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSubmitTxResponse();
   }
 

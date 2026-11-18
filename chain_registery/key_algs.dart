@@ -1,3 +1,11 @@
+/// Eth-variant disambiguation overrides, keyed `"${chainId}_${chainName}"`
+/// with fallback to the bare chain name.
+///
+/// The registry `key_algos` is the primary source (see `resolveAlgs` in
+/// `builder.dart`); this file only pins chains where the generic registry
+/// value is ambiguous between the package's eth variants
+/// (ethermint / injective / cosmos.evm / stratos / initia).
+/// Re-check monthly against the registry; entries are not auto-refreshed.
 const Map<String, List<String>> keyAlgs = {
   "lefeef-mainnet_lefeef": ["cosmos.crypto.secp256k1"],
   "tgrade-mainnet-1_tgrade": ["cosmos.crypto.secp256k1"],

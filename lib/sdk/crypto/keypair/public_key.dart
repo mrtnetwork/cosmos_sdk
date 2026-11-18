@@ -1,3 +1,4 @@
+import 'package:blockchain_utils/blockchain_utils.dart';
 import 'package:cosmos_sdk/sdk/address/address/address.dart';
 import 'package:cosmos_sdk/sdk/address/address/address_const.dart';
 import 'package:cosmos_sdk/sdk/crypto/ed25519/public_key.dart';
@@ -7,7 +8,7 @@ import 'package:cosmos_sdk/sdk/crypto/secp256r1/public_key.dart';
 import 'package:cosmos_sdk/sdk/crypto/types/types.dart';
 import 'package:cosmos_sdk/sdk/serialization/src/protobuf.dart';
 
-abstract class CosmosPublicKey extends CosmosProtoMessage {
+abstract class CosmosPublicKey extends CosmosProtoMessage with Equality {
   const CosmosPublicKey();
 
   factory CosmosPublicKey.fromBytes({
@@ -41,6 +42,6 @@ abstract class CosmosPublicKey extends CosmosProtoMessage {
     );
   }
 
-  List<int> toBytes();
+  BuBytes toBytes();
   CosmosKeysAlgs get algorithm;
 }

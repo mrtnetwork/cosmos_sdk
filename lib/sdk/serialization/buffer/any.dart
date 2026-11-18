@@ -1,6 +1,5 @@
 import 'package:blockchain_utils/blockchain_utils.dart';
 import 'package:cosmos_sdk/proto_messages/types.dart';
-import 'package:cosmos_sdk/sdk/exception/exception.dart';
 import 'package:cosmos_sdk/sdk/serialization/serialization.dart';
 
 sealed class Any extends CosmosProtoMessage {
@@ -10,16 +9,16 @@ sealed class Any extends CosmosProtoMessage {
   DefaultCosmosProtoTypeUrl get declarationId =>
       DefaultCosmosProtoTypeUrl.googleProtobufAny;
 
-  factory Any.fromJson(Map<String, dynamic> json) {
+  factory Any.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     final type = json.valueAsString<String>("@type");
     if (json.length == 2 && json.hasValue("value")) {
       final value = json["value"];
       if (value is String) {
         try {
-          final binary = JsonParser.valueAsBytes<List<int>?>(
-            value,
-            encoding: StringEncoding.base64,
-          );
+          final binary = config.decodeBinary(value);
           return AnyBinary(typeUrl: type, value: binary);
         } catch (_) {}
       }
@@ -56,25 +55,17 @@ class AnyBinary extends Any {
   List<Object?> get protoValues => [typeUrl, value];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {
-      '@type': typeUrl,
-      'value': switch (value) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-    };
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'@type': typeUrl, 'value': config.encodeBinary(value)};
   }
 
   factory AnyBinary.fromJson(Map<String, dynamic> json) {
     return AnyBinary(
-      typeUrl: json.valueAsString<String?>('@type', acceptSnakeCase: true),
+      typeUrl: json.valueAsString<String?>('@type'),
       value: json.valueAsBytes<List<int>?>(
         'value',
-        acceptSnakeCase: true,
         encoding: StringEncoding.base64,
       ),
     );
@@ -103,7 +94,8 @@ class AnyJson extends Any {
   ProtoMessageConfig protoConfig() => protoConfigStatic();
 
   static ProtoMessageConfig protoConfigStatic() {
-    throw DartCosmosSdkPluginException(
+    throw BuError(
+      DefaultErrorType.unsupported,
       "google.protobuf.Any requires custom ProtoJSON serialization.",
     );
   }
@@ -112,12 +104,14 @@ class AnyJson extends Any {
   List<Object?> get protoValues => [typeUrl, value];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'@type': typeUrl, ...value};
   }
 
   static Any fromJson(Map<String, dynamic> json) {
-    final type = json.valueAsString<String>('@type', acceptSnakeCase: true);
+    final type = json.valueAsString<String>('@type');
     final j = json.clone().notNullValue;
     j.remove("@type");
     if (j.isEmpty) return AnyBinary(typeUrl: type);

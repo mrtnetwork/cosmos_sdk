@@ -2,7 +2,7 @@ import 'package:cosmos_sdk/sdk/provider/thornode/core/core.dart';
 import 'package:cosmos_sdk/sdk/provider/thornode/core/thorenode.dart';
 import 'package:cosmos_sdk/sdk/provider/thornode/models/models/tx_status.dart';
 
-/// Returns the observed transaction for a provided inbound or outbound hash.
+/// Returns the status for a provided inbound or outbound hash.
 class ThorNodeRequestGetTransactionStatus
     extends ThorNodeRequestParam<TxStatusResponse, Map<String, dynamic>> {
   ThorNodeRequestGetTransactionStatus({required this.hash, this.height});
@@ -21,7 +21,7 @@ class ThorNodeRequestGetTransactionStatus
   @override
   Map<String, String?> get parameters => {"height": height?.toString()};
   @override
-  TxStatusResponse onResonse(Map<String, dynamic> result) {
+  TxStatusResponse onResponse(Map<String, dynamic> result) {
     return TxStatusResponse.fromJson(result);
   }
 }

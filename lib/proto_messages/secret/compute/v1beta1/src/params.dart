@@ -37,22 +37,27 @@ class Params extends CosmosProtoMessage {
   List<Object?> get protoValues => [compileCost, maxContractSize];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'compile_cost': compileCost,
-      'max_contract_size': maxContractSize?.toString(),
+      'max_contract_size': config.encodeBigint(maxContractSize),
     };
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
       compileCost: json.valueAsString<String?>(
         'compile_cost',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       maxContractSize: json.valueAsBigInt<BigInt?>(
         'max_contract_size',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

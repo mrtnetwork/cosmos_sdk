@@ -58,44 +58,52 @@ class Params extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'mint_denom': mintDenom,
-      'exponential_calculation': exponentialCalculation?.toJson(),
-      'inflation_distribution': inflationDistribution?.toJson(),
+      'exponential_calculation': config.encodeMessage(exponentialCalculation),
+      'inflation_distribution': config.encodeMessage(inflationDistribution),
       'enable_inflation': enableInflation,
     };
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
       mintDenom: json.valueAsString<String?>(
         'mint_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       exponentialCalculation: json.valueTo<
         evmos_inflation_v1_inflation.ExponentialCalculation?,
-        Map<String, dynamic>
+        Object
       >(
         key: 'exponential_calculation',
         parse:
-            (v) =>
-                evmos_inflation_v1_inflation.ExponentialCalculation.fromJson(v),
-        acceptCamelCase: true,
+            (v) => evmos_inflation_v1_inflation.ExponentialCalculation.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      inflationDistribution: json.valueTo<
-        evmos_inflation_v1_inflation.InflationDistribution?,
-        Map<String, dynamic>
-      >(
-        key: 'inflation_distribution',
-        parse:
-            (v) =>
-                evmos_inflation_v1_inflation.InflationDistribution.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      inflationDistribution: json
+          .valueTo<evmos_inflation_v1_inflation.InflationDistribution?, Object>(
+            key: 'inflation_distribution',
+            parse:
+                (v) =>
+                    evmos_inflation_v1_inflation.InflationDistribution.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
       enableInflation: json.valueAsBool<bool?>(
         'enable_inflation',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

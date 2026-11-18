@@ -18,15 +18,15 @@ class MsgNetworkFee extends CosmosProtoMessage
 
   final BigInt? transactionFeeRate;
 
-  final List<int>? signer;
+  final BuBytes? signer;
 
-  const MsgNetworkFee({
+  MsgNetworkFee({
     this.blockHeight,
     this.chain,
     this.transactionSize,
     this.transactionFeeRate,
-    this.signer,
-  });
+    List<int>? signer,
+  }) : signer = signer?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -60,41 +60,41 @@ class MsgNetworkFee extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'block_height': blockHeight?.toString(),
+      'block_height': config.encodeBigint(blockHeight),
       'chain': chain,
-      'transaction_size': transactionSize?.toString(),
-      'transaction_fee_rate': transactionFeeRate?.toString(),
-      'signer': switch (signer) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'transaction_size': config.encodeBigint(transactionSize),
+      'transaction_fee_rate': config.encodeBigint(transactionFeeRate),
+      'signer': config.encodeBinary(signer),
     };
   }
 
-  factory MsgNetworkFee.fromJson(Map<String, dynamic> json) {
+  factory MsgNetworkFee.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgNetworkFee(
       blockHeight: json.valueAsBigInt<BigInt?>(
         'block_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      chain: json.valueAsString<String?>('chain', acceptCamelCase: true),
+      chain: json.valueAsString<String?>(
+        'chain',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       transactionSize: json.valueAsBigInt<BigInt?>(
         'transaction_size',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       transactionFeeRate: json.valueAsBigInt<BigInt?>(
         'transaction_fee_rate',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      signer: json.valueAsBytes<List<int>?>(
-        'signer',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      signer: config.decodeBinary<List<int>?>(
+        json.valueAs('signer', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }
@@ -130,9 +130,10 @@ class MsgNetworkFeeQuorum extends CosmosProtoMessage
         ICosmosProtoAminoMessage {
   final common_common.QuorumNetworkFee? quoNetFee;
 
-  final List<int>? signer;
+  final BuBytes? signer;
 
-  const MsgNetworkFeeQuorum({this.quoNetFee, this.signer});
+  MsgNetworkFeeQuorum({this.quoNetFee, List<int>? signer})
+    : signer = signer?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -160,31 +161,31 @@ class MsgNetworkFeeQuorum extends CosmosProtoMessage
   List<Object?> get protoValues => [quoNetFee, signer];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'quoNetFee': quoNetFee?.toJson(),
-      'signer': switch (signer) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'quoNetFee': config.encodeMessage(quoNetFee),
+      'signer': config.encodeBinary(signer),
     };
   }
 
-  factory MsgNetworkFeeQuorum.fromJson(Map<String, dynamic> json) {
+  factory MsgNetworkFeeQuorum.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgNetworkFeeQuorum(
-      quoNetFee: json
-          .valueTo<common_common.QuorumNetworkFee?, Map<String, dynamic>>(
-            key: 'quoNetFee',
-            parse: (v) => common_common.QuorumNetworkFee.fromJson(v),
-            acceptCamelCase: true,
-          ),
-      signer: json.valueAsBytes<List<int>?>(
-        'signer',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      quoNetFee: json.valueTo<common_common.QuorumNetworkFee?, Object>(
+        key: 'quoNetFee',
+        parse:
+            (v) => common_common.QuorumNetworkFee.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      signer: config.decodeBinary<List<int>?>(
+        json.valueAs('signer', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }

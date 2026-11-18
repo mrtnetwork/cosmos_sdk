@@ -38,13 +38,21 @@ class QueryUserEntryRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [address];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'address': address};
   }
 
-  factory QueryUserEntryRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryUserEntryRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryUserEntryRequest(
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -88,21 +96,26 @@ class QueryUserEntryResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [userEntry];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'user_entry': userEntry?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'user_entry': config.encodeMessage(userEntry)};
   }
 
-  factory QueryUserEntryResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryUserEntryResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryUserEntryResponse(
       userEntry: json.valueTo<
         chain4energy_c4echain_cfeclaim_claim_record.UserEntry?,
-        Map<String, dynamic>
+        Object
       >(
         key: 'user_entry',
         parse:
             (v) => chain4energy_c4echain_cfeclaim_claim_record
-                .UserEntry.fromJson(v),
-        acceptCamelCase: true,
+                .UserEntry.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -152,21 +165,28 @@ class QueryUsersEntriesRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [pagination];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'pagination': pagination?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'pagination': config.encodeMessage(pagination)};
   }
 
-  factory QueryUsersEntriesRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryUsersEntriesRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryUsersEntriesRequest(
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageRequest?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) => cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageRequest?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -230,42 +250,53 @@ class QueryUsersEntriesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [usersEntries, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'users_entries': usersEntries.map((e) => e.toJson()).toList(),
-      'pagination': pagination?.toJson(),
+      'users_entries':
+          usersEntries.map((e) => config.encodeMessage(e)).toList(),
+      'pagination': config.encodeMessage(pagination),
     };
   }
 
-  factory QueryUsersEntriesResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryUsersEntriesResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryUsersEntriesResponse(
       usersEntries:
           (json.valueEnsureAsList<dynamic>(
                 'users_entries',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   chain4energy_c4echain_cfeclaim_claim_record.UserEntry,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => chain4energy_c4echain_cfeclaim_claim_record
-                          .UserEntry.fromJson(v),
+                          .UserEntry.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageResponse?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) =>
-                cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageResponse?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -324,22 +355,27 @@ class QueryMissionRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [campaignId, missionId];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'campaign_id': campaignId?.toString(),
-      'mission_id': missionId?.toString(),
+      'campaign_id': config.encodeBigint(campaignId),
+      'mission_id': config.encodeBigint(missionId),
     };
   }
 
-  factory QueryMissionRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryMissionRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryMissionRequest(
       campaignId: json.valueAsBigInt<BigInt?>(
         'campaign_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       missionId: json.valueAsBigInt<BigInt?>(
         'mission_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -386,21 +422,27 @@ class QueryMissionResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [mission];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'mission': mission?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'mission': config.encodeMessage(mission)};
   }
 
-  factory QueryMissionResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryMissionResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryMissionResponse(
-      mission: json.valueTo<
-        chain4energy_c4echain_cfeclaim_mission.Mission?,
-        Map<String, dynamic>
-      >(
-        key: 'mission',
-        parse:
-            (v) => chain4energy_c4echain_cfeclaim_mission.Mission.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      mission: json
+          .valueTo<chain4energy_c4echain_cfeclaim_mission.Mission?, Object>(
+            key: 'mission',
+            parse:
+                (v) => chain4energy_c4echain_cfeclaim_mission.Mission.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -449,21 +491,28 @@ class QueryMissionsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [pagination];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'pagination': pagination?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'pagination': config.encodeMessage(pagination)};
   }
 
-  factory QueryMissionsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryMissionsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryMissionsRequest(
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageRequest?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) => cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageRequest?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -523,39 +572,52 @@ class QueryMissionsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [missions, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'missions': missions.map((e) => e.toJson()).toList(),
-      'pagination': pagination?.toJson(),
+      'missions': missions.map((e) => config.encodeMessage(e)).toList(),
+      'pagination': config.encodeMessage(pagination),
     };
   }
 
-  factory QueryMissionsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryMissionsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryMissionsResponse(
       missions:
-          (json.valueEnsureAsList<dynamic>('missions', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'missions',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   chain4energy_c4echain_cfeclaim_mission.Mission,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => chain4energy_c4echain_cfeclaim_mission
-                          .Mission.fromJson(v),
+                          .Mission.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageResponse?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) =>
-                cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageResponse?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -612,15 +674,20 @@ class QueryCampaignMissionsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [campaignId];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'campaign_id': campaignId?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'campaign_id': config.encodeBigint(campaignId)};
   }
 
-  factory QueryCampaignMissionsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryCampaignMissionsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryCampaignMissionsRequest(
       campaignId: json.valueAsBigInt<BigInt?>(
         'campaign_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -673,23 +740,35 @@ class QueryCampaignMissionsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [missions];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'missions': missions.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'missions': missions.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory QueryCampaignMissionsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryCampaignMissionsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryCampaignMissionsResponse(
       missions:
-          (json.valueEnsureAsList<dynamic>('missions', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'missions',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   chain4energy_c4echain_cfeclaim_mission.Mission,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => chain4energy_c4echain_cfeclaim_mission
-                          .Mission.fromJson(v),
+                          .Mission.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -743,21 +822,28 @@ class QueryCampaignsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [pagination];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'pagination': pagination?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'pagination': config.encodeMessage(pagination)};
   }
 
-  factory QueryCampaignsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryCampaignsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryCampaignsRequest(
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageRequest?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) => cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageRequest?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -817,39 +903,52 @@ class QueryCampaignsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [campaigns, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'campaigns': campaigns.map((e) => e.toJson()).toList(),
-      'pagination': pagination?.toJson(),
+      'campaigns': campaigns.map((e) => config.encodeMessage(e)).toList(),
+      'pagination': config.encodeMessage(pagination),
     };
   }
 
-  factory QueryCampaignsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryCampaignsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryCampaignsResponse(
       campaigns:
-          (json.valueEnsureAsList<dynamic>('campaigns', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'campaigns',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   chain4energy_c4echain_cfeclaim_campaign.Campaign,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => chain4energy_c4echain_cfeclaim_campaign
-                          .Campaign.fromJson(v),
+                          .Campaign.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageResponse?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) =>
-                cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageResponse?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -906,15 +1005,20 @@ class QueryCampaignRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [campaignId];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'campaign_id': campaignId?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'campaign_id': config.encodeBigint(campaignId)};
   }
 
-  factory QueryCampaignRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryCampaignRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryCampaignRequest(
       campaignId: json.valueAsBigInt<BigInt?>(
         'campaign_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -959,21 +1063,25 @@ class QueryCampaignResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [campaign];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'campaign': campaign?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'campaign': config.encodeMessage(campaign)};
   }
 
-  factory QueryCampaignResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryCampaignResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryCampaignResponse(
-      campaign: json.valueTo<
-        chain4energy_c4echain_cfeclaim_campaign.Campaign?,
-        Map<String, dynamic>
-      >(
-        key: 'campaign',
-        parse:
-            (v) => chain4energy_c4echain_cfeclaim_campaign.Campaign.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      campaign: json
+          .valueTo<chain4energy_c4echain_cfeclaim_campaign.Campaign?, Object>(
+            key: 'campaign',
+            parse:
+                (v) => chain4energy_c4echain_cfeclaim_campaign
+                    .Campaign.fromJson(JsonParser.valueAs(v), config: config),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 

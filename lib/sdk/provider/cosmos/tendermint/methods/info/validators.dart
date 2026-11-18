@@ -38,7 +38,7 @@ class TendermintRequestValidators
   };
 
   @override
-  TendermintValidatorsResponseResult onResonse(Map<String, dynamic> result) {
+  TendermintValidatorsResponseResult onResponse(Map<String, dynamic> result) {
     return TendermintValidatorsResponseResult.fromJson(result);
   }
 }

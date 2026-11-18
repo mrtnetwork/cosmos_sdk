@@ -35,13 +35,21 @@ class QueryAuctionRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [name];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'name': name};
   }
 
-  factory QueryAuctionRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryAuctionRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryAuctionRequest(
-      name: json.valueAsString<String?>('name', acceptCamelCase: true),
+      name: json.valueAsString<String?>(
+        'name',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -86,18 +94,26 @@ class QueryAuctionResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [auction];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'auction': auction?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'auction': config.encodeMessage(auction)};
   }
 
-  factory QueryAuctionResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryAuctionResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryAuctionResponse(
-      auction: json
-          .valueTo<stride_auction_auction.Auction?, Map<String, dynamic>>(
-            key: 'auction',
-            parse: (v) => stride_auction_auction.Auction.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      auction: json.valueTo<stride_auction_auction.Auction?, Object>(
+        key: 'auction',
+        parse:
+            (v) => stride_auction_auction.Auction.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -145,21 +161,28 @@ class QueryAuctionsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [pagination];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'pagination': pagination?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'pagination': config.encodeMessage(pagination)};
   }
 
-  factory QueryAuctionsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryAuctionsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryAuctionsRequest(
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageRequest?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) => cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageRequest?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -220,37 +243,49 @@ class QueryAuctionsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [auctions, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'auctions': auctions.map((e) => e.toJson()).toList(),
-      'pagination': pagination?.toJson(),
+      'auctions': auctions.map((e) => config.encodeMessage(e)).toList(),
+      'pagination': config.encodeMessage(pagination),
     };
   }
 
-  factory QueryAuctionsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryAuctionsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryAuctionsResponse(
       auctions:
-          (json.valueEnsureAsList<dynamic>('auctions', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'auctions',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  stride_auction_auction.Auction,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => stride_auction_auction.Auction.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<stride_auction_auction.Auction, Object>(
+                      value: e,
+                      parse:
+                          (v) => stride_auction_auction.Auction.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageResponse?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) =>
-                cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageResponse?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 

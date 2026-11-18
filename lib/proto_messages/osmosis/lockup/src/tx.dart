@@ -49,32 +49,50 @@ class MsgLockTokens extends CosmosProtoMessage
   List<Object?> get protoValues => [owner, duration, coins];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'owner': owner,
       'duration': duration?.encodeString(asNanos: true),
-      'coins': coins.map((e) => e.toJson()).toList(),
+      'coins': coins.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory MsgLockTokens.fromJson(Map<String, dynamic> json) {
+  factory MsgLockTokens.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgLockTokens(
-      owner: json.valueAsString<String?>('owner', acceptCamelCase: true),
-      duration: json.valueTo<google_protobuf_duration.Duration?, String>(
+      owner: json.valueAsString<String?>(
+        'owner',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      duration: json.valueTo<google_protobuf_duration.Duration?, Object>(
         key: 'duration',
-        parse: (v) => google_protobuf_duration.Duration.fromString(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_duration.Duration.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       coins:
-          (json.valueEnsureAsList<dynamic>('coins', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'coins',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -130,13 +148,21 @@ class MsgLockTokensResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [id];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'ID': id?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'ID': config.encodeBigint(id)};
   }
 
-  factory MsgLockTokensResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgLockTokensResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgLockTokensResponse(
-      id: json.valueAsBigInt<BigInt?>('ID', acceptCamelCase: true),
+      id: json.valueAsBigInt<BigInt?>(
+        'ID',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -179,13 +205,21 @@ class MsgBeginUnlockingAll extends CosmosProtoMessage
   List<Object?> get protoValues => [owner];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'owner': owner};
   }
 
-  factory MsgBeginUnlockingAll.fromJson(Map<String, dynamic> json) {
+  factory MsgBeginUnlockingAll.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgBeginUnlockingAll(
-      owner: json.valueAsString<String?>('owner', acceptCamelCase: true),
+      owner: json.valueAsString<String?>(
+        'owner',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -235,22 +269,33 @@ class MsgBeginUnlockingAllResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [unlocks];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'unlocks': unlocks.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'unlocks': unlocks.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory MsgBeginUnlockingAllResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgBeginUnlockingAllResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgBeginUnlockingAllResponse(
       unlocks:
-          (json.valueEnsureAsList<dynamic>('unlocks', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'unlocks',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  osmosis_lockup_lock.PeriodLock,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => osmosis_lockup_lock.PeriodLock.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<osmosis_lockup_lock.PeriodLock, Object>(
+                      value: e,
+                      parse:
+                          (v) => osmosis_lockup_lock.PeriodLock.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -314,28 +359,45 @@ class MsgBeginUnlocking extends CosmosProtoMessage
   List<Object?> get protoValues => [owner, id, coins];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'owner': owner,
-      'ID': id?.toString(),
-      'coins': coins.map((e) => e.toJson()).toList(),
+      'ID': config.encodeBigint(id),
+      'coins': coins.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory MsgBeginUnlocking.fromJson(Map<String, dynamic> json) {
+  factory MsgBeginUnlocking.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgBeginUnlocking(
-      owner: json.valueAsString<String?>('owner', acceptCamelCase: true),
-      id: json.valueAsBigInt<BigInt?>('ID', acceptCamelCase: true),
+      owner: json.valueAsString<String?>(
+        'owner',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      id: json.valueAsBigInt<BigInt?>(
+        'ID',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       coins:
-          (json.valueEnsureAsList<dynamic>('coins', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'coins',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -390,16 +452,27 @@ class MsgBeginUnlockingResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [success, unlockingLockID];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'success': success, 'unlockingLockID': unlockingLockID?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'success': success,
+      'unlockingLockID': config.encodeBigint(unlockingLockID),
+    };
   }
 
-  factory MsgBeginUnlockingResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgBeginUnlockingResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgBeginUnlockingResponse(
-      success: json.valueAsBool<bool?>('success', acceptCamelCase: true),
+      success: json.valueAsBool<bool?>(
+        'success',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       unlockingLockID: json.valueAsBigInt<BigInt?>(
         'unlockingLockID',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -458,22 +531,37 @@ class MsgExtendLockup extends CosmosProtoMessage
   List<Object?> get protoValues => [owner, id, duration];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'owner': owner,
-      'ID': id?.toString(),
+      'ID': config.encodeBigint(id),
       'duration': duration?.encodeString(asNanos: true),
     };
   }
 
-  factory MsgExtendLockup.fromJson(Map<String, dynamic> json) {
+  factory MsgExtendLockup.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgExtendLockup(
-      owner: json.valueAsString<String?>('owner', acceptCamelCase: true),
-      id: json.valueAsBigInt<BigInt?>('ID', acceptCamelCase: true),
-      duration: json.valueTo<google_protobuf_duration.Duration?, String>(
+      owner: json.valueAsString<String?>(
+        'owner',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      id: json.valueAsBigInt<BigInt?>(
+        'ID',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      duration: json.valueTo<google_protobuf_duration.Duration?, Object>(
         key: 'duration',
-        parse: (v) => google_protobuf_duration.Duration.fromString(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_duration.Duration.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -525,13 +613,21 @@ class MsgExtendLockupResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [success];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'success': success};
   }
 
-  factory MsgExtendLockupResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgExtendLockupResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgExtendLockupResponse(
-      success: json.valueAsBool<bool?>('success', acceptCamelCase: true),
+      success: json.valueAsBool<bool?>(
+        'success',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -589,28 +685,45 @@ class MsgForceUnlock extends CosmosProtoMessage
   List<Object?> get protoValues => [owner, id, coins];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'owner': owner,
-      'ID': id?.toString(),
-      'coins': coins.map((e) => e.toJson()).toList(),
+      'ID': config.encodeBigint(id),
+      'coins': coins.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory MsgForceUnlock.fromJson(Map<String, dynamic> json) {
+  factory MsgForceUnlock.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgForceUnlock(
-      owner: json.valueAsString<String?>('owner', acceptCamelCase: true),
-      id: json.valueAsBigInt<BigInt?>('ID', acceptCamelCase: true),
+      owner: json.valueAsString<String?>(
+        'owner',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      id: json.valueAsBigInt<BigInt?>(
+        'ID',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       coins:
-          (json.valueEnsureAsList<dynamic>('coins', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'coins',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -663,13 +776,21 @@ class MsgForceUnlockResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [success];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'success': success};
   }
 
-  factory MsgForceUnlockResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgForceUnlockResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgForceUnlockResponse(
-      success: json.valueAsBool<bool?>('success', acceptCamelCase: true),
+      success: json.valueAsBool<bool?>(
+        'success',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -724,21 +845,32 @@ class MsgSetRewardReceiverAddress extends CosmosProtoMessage
   List<Object?> get protoValues => [owner, lockID, rewardReceiver];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'owner': owner,
-      'lockID': lockID?.toString(),
+      'lockID': config.encodeBigint(lockID),
       'reward_receiver': rewardReceiver,
     };
   }
 
-  factory MsgSetRewardReceiverAddress.fromJson(Map<String, dynamic> json) {
+  factory MsgSetRewardReceiverAddress.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSetRewardReceiverAddress(
-      owner: json.valueAsString<String?>('owner', acceptCamelCase: true),
-      lockID: json.valueAsBigInt<BigInt?>('lockID', acceptCamelCase: true),
+      owner: json.valueAsString<String?>(
+        'owner',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      lockID: json.valueAsBigInt<BigInt?>(
+        'lockID',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       rewardReceiver: json.valueAsString<String?>(
         'reward_receiver',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -788,15 +920,21 @@ class MsgSetRewardReceiverAddressResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [success];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'success': success};
   }
 
   factory MsgSetRewardReceiverAddressResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSetRewardReceiverAddressResponse(
-      success: json.valueAsBool<bool?>('success', acceptCamelCase: true),
+      success: json.valueAsBool<bool?>(
+        'success',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

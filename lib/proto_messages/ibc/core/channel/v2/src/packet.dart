@@ -60,37 +60,53 @@ class Packet extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'sequence': sequence?.toString(),
+      'sequence': config.encodeBigint(sequence),
       'source_client': sourceClient,
       'destination_client': destinationClient,
-      'timeout_timestamp': timeoutTimestamp?.toString(),
-      'payloads': payloads.map((e) => e.toJson()).toList(),
+      'timeout_timestamp': config.encodeBigint(timeoutTimestamp),
+      'payloads': payloads.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory Packet.fromJson(Map<String, dynamic> json) {
+  factory Packet.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Packet(
-      sequence: json.valueAsBigInt<BigInt?>('sequence', acceptCamelCase: true),
+      sequence: json.valueAsBigInt<BigInt?>(
+        'sequence',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       sourceClient: json.valueAsString<String?>(
         'source_client',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       destinationClient: json.valueAsString<String?>(
         'destination_client',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       timeoutTimestamp: json.valueAsBigInt<BigInt?>(
         'timeout_timestamp',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       payloads:
-          (json.valueEnsureAsList<dynamic>('payloads', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'payloads',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<Payload, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<Payload, Object>(
                   value: e,
-                  parse: (v) => Payload.fromJson(v),
+                  parse:
+                      (v) => Payload.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -129,15 +145,15 @@ class Payload extends CosmosProtoMessage {
   final String? encoding;
 
   /// the raw bytes for the payload.
-  final List<int>? value;
+  final BuBytes? value;
 
-  const Payload({
+  Payload({
     this.sourcePort,
     this.destinationPort,
     this.version,
     this.encoding,
-    this.value,
-  });
+    List<int>? value,
+  }) : value = value?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -166,38 +182,41 @@ class Payload extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'source_port': sourcePort,
       'destination_port': destinationPort,
       'version': version,
       'encoding': encoding,
-      'value': switch (value) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'value': config.encodeBinary(value),
     };
   }
 
-  factory Payload.fromJson(Map<String, dynamic> json) {
+  factory Payload.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Payload(
       sourcePort: json.valueAsString<String?>(
         'source_port',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       destinationPort: json.valueAsString<String?>(
         'destination_port',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      version: json.valueAsString<String?>('version', acceptCamelCase: true),
-      encoding: json.valueAsString<String?>('encoding', acceptCamelCase: true),
-      value: json.valueAsBytes<List<int>?>(
-        'value',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      version: json.valueAsString<String?>(
+        'version',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      encoding: json.valueAsString<String?>(
+        'encoding',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      value: config.decodeBinary<List<int>?>(
+        json.valueAs('value', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }
@@ -225,9 +244,11 @@ class Payload extends CosmosProtoMessage {
 /// If the receive is not successful, the acknowledgement will contain a single app acknowledgment
 /// which will be a constant error acknowledgment as defined by the IBC v2 protocol.
 class Acknowledgement extends CosmosProtoMessage {
-  final List<List<int>> appAcknowledgements;
+  final List<BuBytes> appAcknowledgements;
 
-  const Acknowledgement({this.appAcknowledgements = const []});
+  Acknowledgement({List<List<int>> appAcknowledgements = const []})
+    : appAcknowledgements =
+          appAcknowledgements.map((e) => e.asImmutableBytes).toImutableList;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -249,31 +270,26 @@ class Acknowledgement extends CosmosProtoMessage {
   List<Object?> get protoValues => [appAcknowledgements];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'app_acknowledgements':
-          appAcknowledgements
-              .map(
-                (e) => StringUtils.decode(e, encoding: StringEncoding.base64),
-              )
-              .toList(),
+          appAcknowledgements.map((e) => config.encodeBinary(e)).toList(),
     };
   }
 
-  factory Acknowledgement.fromJson(Map<String, dynamic> json) {
+  factory Acknowledgement.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Acknowledgement(
       appAcknowledgements:
           (json.valueEnsureAsList<dynamic>(
-                'app_acknowledgements',
-                acceptCamelCase: true,
-              ))
-              .map(
-                (e) => JsonParser.valueAsBytes<List<int>>(
-                  e,
-                  encoding: StringEncoding.base64,
-                ),
-              )
-              .toList(),
+            'app_acknowledgements',
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
+          )).map((e) => config.decodeBinary<List<int>>(e)).toList(),
     );
   }
 

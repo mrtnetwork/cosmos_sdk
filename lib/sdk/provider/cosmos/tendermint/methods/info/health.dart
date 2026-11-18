@@ -17,7 +17,7 @@ class TendermintRequestHealth
   @override
   Map<String, String> get parameters => {};
   @override
-  bool onResonse(Map<String, dynamic> result) {
+  bool onResponse(Map<String, dynamic> result) {
     return true;
   }
 }

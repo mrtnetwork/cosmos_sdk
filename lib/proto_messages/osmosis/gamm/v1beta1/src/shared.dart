@@ -30,28 +30,38 @@ class MigrationRecords extends CosmosProtoMessage {
   List<Object?> get protoValues => [balancerToConcentratedPoolLinks];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'balancer_to_concentrated_pool_links':
-          balancerToConcentratedPoolLinks.map((e) => e.toJson()).toList(),
+          balancerToConcentratedPoolLinks
+              .map((e) => config.encodeMessage(e))
+              .toList(),
     };
   }
 
-  factory MigrationRecords.fromJson(Map<String, dynamic> json) {
+  factory MigrationRecords.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MigrationRecords(
       balancerToConcentratedPoolLinks:
           (json.valueEnsureAsList<dynamic>(
                 'balancer_to_concentrated_pool_links',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  BalancerToConcentratedPoolLink,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => BalancerToConcentratedPoolLink.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<BalancerToConcentratedPoolLink, Object>(
+                      value: e,
+                      parse:
+                          (v) => BalancerToConcentratedPoolLink.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -101,22 +111,27 @@ class BalancerToConcentratedPoolLink extends CosmosProtoMessage {
   List<Object?> get protoValues => [balancerPoolId, clPoolId];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'balancer_pool_id': balancerPoolId?.toString(),
-      'cl_pool_id': clPoolId?.toString(),
+      'balancer_pool_id': config.encodeBigint(balancerPoolId),
+      'cl_pool_id': config.encodeBigint(clPoolId),
     };
   }
 
-  factory BalancerToConcentratedPoolLink.fromJson(Map<String, dynamic> json) {
+  factory BalancerToConcentratedPoolLink.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return BalancerToConcentratedPoolLink(
       balancerPoolId: json.valueAsBigInt<BigInt?>(
         'balancer_pool_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       clPoolId: json.valueAsBigInt<BigInt?>(
         'cl_pool_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

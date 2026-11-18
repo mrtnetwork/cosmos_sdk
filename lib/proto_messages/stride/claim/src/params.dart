@@ -32,18 +32,31 @@ class Params extends CosmosProtoMessage {
   List<Object?> get protoValues => [airdrops];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'airdrops': airdrops.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'airdrops': airdrops.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
       airdrops:
-          (json.valueEnsureAsList<dynamic>('airdrops', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'airdrops',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<Airdrop, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<Airdrop, Object>(
                   value: e,
-                  parse: (v) => Airdrop.fromJson(v),
+                  parse:
+                      (v) => Airdrop.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -130,7 +143,9 @@ class Airdrop extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'airdrop_identifier': airdropIdentifier,
       'chain_id': chainId,
@@ -143,39 +158,53 @@ class Airdrop extends CosmosProtoMessage {
     };
   }
 
-  factory Airdrop.fromJson(Map<String, dynamic> json) {
+  factory Airdrop.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Airdrop(
       airdropIdentifier: json.valueAsString<String?>(
         'airdrop_identifier',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      chainId: json.valueAsString<String?>('chain_id', acceptCamelCase: true),
+      chainId: json.valueAsString<String?>(
+        'chain_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       airdropStartTime: json
-          .valueTo<google_protobuf_timestamp.Timestamp?, String>(
+          .valueTo<google_protobuf_timestamp.Timestamp?, Object>(
             key: 'airdrop_start_time',
-            parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => google_protobuf_timestamp.Timestamp.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
-      airdropDuration: json.valueTo<google_protobuf_duration.Duration?, String>(
+      airdropDuration: json.valueTo<google_protobuf_duration.Duration?, Object>(
         key: 'airdrop_duration',
-        parse: (v) => google_protobuf_duration.Duration.fromString(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_duration.Duration.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       claimDenom: json.valueAsString<String?>(
         'claim_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       distributorAddress: json.valueAsString<String?>(
         'distributor_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       claimedSoFar: json.valueAsString<String?>(
         'claimed_so_far',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       autopilotEnabled: json.valueAsBool<bool?>(
         'autopilot_enabled',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

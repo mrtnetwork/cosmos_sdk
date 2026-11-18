@@ -43,15 +43,20 @@ class QueryResourceNodeRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [networkAddr];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'network_addr': networkAddr};
   }
 
-  factory QueryResourceNodeRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryResourceNodeRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryResourceNodeRequest(
       networkAddr: json.valueAsString<String?>(
         'network_addr',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -97,19 +102,25 @@ class QueryResourceNodeResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [node];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'node': node?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'node': config.encodeMessage(node)};
   }
 
-  factory QueryResourceNodeResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryResourceNodeResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryResourceNodeResponse(
-      node: json.valueTo<
-        stratos_register_v1_register.ResourceNode?,
-        Map<String, dynamic>
-      >(
+      node: json.valueTo<stratos_register_v1_register.ResourceNode?, Object>(
         key: 'node',
-        parse: (v) => stratos_register_v1_register.ResourceNode.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => stratos_register_v1_register.ResourceNode.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -158,15 +169,20 @@ class QueryMetaNodeRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [networkAddr];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'network_addr': networkAddr};
   }
 
-  factory QueryMetaNodeRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryMetaNodeRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryMetaNodeRequest(
       networkAddr: json.valueAsString<String?>(
         'network_addr',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -212,19 +228,25 @@ class QueryMetaNodeResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [node];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'node': node?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'node': config.encodeMessage(node)};
   }
 
-  factory QueryMetaNodeResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryMetaNodeResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryMetaNodeResponse(
-      node: json.valueTo<
-        stratos_register_v1_register.MetaNode?,
-        Map<String, dynamic>
-      >(
+      node: json.valueTo<stratos_register_v1_register.MetaNode?, Object>(
         key: 'node',
-        parse: (v) => stratos_register_v1_register.MetaNode.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => stratos_register_v1_register.MetaNode.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -276,17 +298,25 @@ class QueryDepositByNodeRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [networkAddr, queryType];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'network_addr': networkAddr, 'query_type': queryType};
   }
 
-  factory QueryDepositByNodeRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryDepositByNodeRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryDepositByNodeRequest(
       networkAddr: json.valueAsString<String?>(
         'network_addr',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      queryType: json.valueAsInt<int?>('query_type', acceptCamelCase: true),
+      queryType: json.valueAsInt<int?>(
+        'query_type',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -334,16 +364,22 @@ class QueryDepositByNodeResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [depositInfo];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'deposit_info': depositInfo?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'deposit_info': config.encodeMessage(depositInfo)};
   }
 
-  factory QueryDepositByNodeResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryDepositByNodeResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryDepositByNodeResponse(
-      depositInfo: json.valueTo<DepositInfo?, Map<String, dynamic>>(
+      depositInfo: json.valueTo<DepositInfo?, Object>(
         key: 'deposit_info',
-        parse: (v) => DepositInfo.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => DepositInfo.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -395,25 +431,35 @@ class QueryDepositByOwnerRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [ownerAddr, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'owner_addr': ownerAddr, 'pagination': pagination?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'owner_addr': ownerAddr,
+      'pagination': config.encodeMessage(pagination),
+    };
   }
 
-  factory QueryDepositByOwnerRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryDepositByOwnerRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryDepositByOwnerRequest(
       ownerAddr: json.valueAsString<String?>(
         'owner_addr',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageRequest?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) => cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageRequest?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -478,37 +524,49 @@ class QueryDepositByOwnerResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [depositInfos, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'deposit_infos': depositInfos.map((e) => e.toJson()).toList(),
-      'pagination': pagination?.toJson(),
+      'deposit_infos':
+          depositInfos.map((e) => config.encodeMessage(e)).toList(),
+      'pagination': config.encodeMessage(pagination),
     };
   }
 
-  factory QueryDepositByOwnerResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryDepositByOwnerResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryDepositByOwnerResponse(
       depositInfos:
           (json.valueEnsureAsList<dynamic>(
                 'deposit_infos',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<DepositInfo, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<DepositInfo, Object>(
                   value: e,
-                  parse: (v) => DepositInfo.fromJson(v),
+                  parse:
+                      (v) => DepositInfo.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageResponse?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) =>
-                cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageResponse?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -560,11 +618,16 @@ class QueryDepositTotalRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryDepositTotalRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryDepositTotalRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryDepositTotalRequest();
   }
 
@@ -633,47 +696,73 @@ class QueryDepositTotalResponse extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'resource_nodes_total_deposit': resourceNodesTotalDeposit?.toJson(),
-      'meta_nodes_total_deposit': metaNodesTotalDeposit?.toJson(),
-      'total_bonded_deposit': totalBondedDeposit?.toJson(),
-      'total_unbonded_deposit': totalUnbondedDeposit?.toJson(),
-      'total_unbonding_deposit': totalUnbondingDeposit?.toJson(),
+      'resource_nodes_total_deposit': config.encodeMessage(
+        resourceNodesTotalDeposit,
+      ),
+      'meta_nodes_total_deposit': config.encodeMessage(metaNodesTotalDeposit),
+      'total_bonded_deposit': config.encodeMessage(totalBondedDeposit),
+      'total_unbonded_deposit': config.encodeMessage(totalUnbondedDeposit),
+      'total_unbonding_deposit': config.encodeMessage(totalUnbondingDeposit),
     };
   }
 
-  factory QueryDepositTotalResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryDepositTotalResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryDepositTotalResponse(
       resourceNodesTotalDeposit: json
-          .valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
+          .valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
             key: 'resource_nodes_total_deposit',
-            parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
       metaNodesTotalDeposit: json
-          .valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
+          .valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
             key: 'meta_nodes_total_deposit',
-            parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
-      totalBondedDeposit: json
-          .valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
-            key: 'total_bonded_deposit',
-            parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      totalBondedDeposit: json.valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
+        key: 'total_bonded_deposit',
+        parse:
+            (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       totalUnbondedDeposit: json
-          .valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
+          .valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
             key: 'total_unbonded_deposit',
-            parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
       totalUnbondingDeposit: json
-          .valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
+          .valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
             key: 'total_unbonding_deposit',
-            parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
     );
   }
@@ -736,11 +825,16 @@ class QueryParamsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryParamsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsRequest();
   }
 
@@ -784,18 +878,26 @@ class QueryParamsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [params];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'params': params?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'params': config.encodeMessage(params)};
   }
 
-  factory QueryParamsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsResponse(
-      params: json
-          .valueTo<stratos_register_v1_register.Params?, Map<String, dynamic>>(
-            key: 'params',
-            parse: (v) => stratos_register_v1_register.Params.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      params: json.valueTo<stratos_register_v1_register.Params?, Object>(
+        key: 'params',
+        parse:
+            (v) => stratos_register_v1_register.Params.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -840,13 +942,16 @@ class QueryBondedResourceNodeCountRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
   factory QueryBondedResourceNodeCountRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryBondedResourceNodeCountRequest();
   }
 
@@ -893,15 +998,21 @@ class QueryBondedResourceNodeCountResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [number];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'number': number?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'number': config.encodeBigint(number)};
   }
 
   factory QueryBondedResourceNodeCountResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryBondedResourceNodeCountResponse(
-      number: json.valueAsBigInt<BigInt?>('number', acceptCamelCase: true),
+      number: json.valueAsBigInt<BigInt?>(
+        'number',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -944,11 +1055,16 @@ class QueryBondedMetaNodeCountRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryBondedMetaNodeCountRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryBondedMetaNodeCountRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryBondedMetaNodeCountRequest();
   }
 
@@ -995,13 +1111,21 @@ class QueryBondedMetaNodeCountResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [number];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'number': number?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'number': config.encodeBigint(number)};
   }
 
-  factory QueryBondedMetaNodeCountResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryBondedMetaNodeCountResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryBondedMetaNodeCountResponse(
-      number: json.valueAsBigInt<BigInt?>('number', acceptCamelCase: true),
+      number: json.valueAsBigInt<BigInt?>(
+        'number',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -1044,11 +1168,16 @@ class QueryRemainingOzoneLimitRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryRemainingOzoneLimitRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryRemainingOzoneLimitRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryRemainingOzoneLimitRequest();
   }
 
@@ -1094,15 +1223,20 @@ class QueryRemainingOzoneLimitResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [ozoneLimit];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'ozone_limit': ozoneLimit};
   }
 
-  factory QueryRemainingOzoneLimitResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryRemainingOzoneLimitResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryRemainingOzoneLimitResponse(
       ozoneLimit: json.valueAsString<String?>(
         'ozone_limit',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -1201,76 +1335,109 @@ class DepositInfo extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'network_address': networkAddress,
-      'pubkey': pubkey?.toJson(),
+      'pubkey': config.encodeMessage(pubkey),
       'suspend': suspend,
-      'status': status?.protoName,
+      'status': config.encodeEnum(status),
       'tokens': tokens,
       'owner_address': ownerAddress,
-      'description': description?.toJson(),
+      'description': config.encodeMessage(description),
       'creation_time': creationTime?.toRfc3339(),
       'node_type': nodeType,
-      'bonded_deposit': bondedDeposit?.toJson(),
-      'un_bonding_deposit': unBondingDeposit?.toJson(),
-      'un_bonded_deposit': unBondedDeposit?.toJson(),
+      'bonded_deposit': config.encodeMessage(bondedDeposit),
+      'un_bonding_deposit': config.encodeMessage(unBondingDeposit),
+      'un_bonded_deposit': config.encodeMessage(unBondedDeposit),
     };
   }
 
-  factory DepositInfo.fromJson(Map<String, dynamic> json) {
+  factory DepositInfo.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return DepositInfo(
       networkAddress: json.valueAsString<String?>(
         'network_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      pubkey: json.valueTo<google_protobuf_any.Any?, Map<String, dynamic>>(
+      pubkey: json.valueTo<google_protobuf_any.Any?, Object>(
         key: 'pubkey',
-        parse: (v) => google_protobuf_any.Any.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_any.Any.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      suspend: json.valueAsBool<bool?>('suspend', acceptCamelCase: true),
+      suspend: json.valueAsBool<bool?>(
+        'suspend',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       status: json.valueTo<cosmos_staking_v1beta1_staking.BondStatus?, Object?>(
         key: 'status',
         parse: (v) => cosmos_staking_v1beta1_staking.BondStatus.from(v),
       ),
-      tokens: json.valueAsString<String?>('tokens', acceptCamelCase: true),
+      tokens: json.valueAsString<String?>(
+        'tokens',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       ownerAddress: json.valueAsString<String?>(
         'owner_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      description: json.valueTo<
-        stratos_register_v1_register.Description?,
-        Map<String, dynamic>
-      >(
-        key: 'description',
-        parse: (v) => stratos_register_v1_register.Description.fromJson(v),
-        acceptCamelCase: true,
-      ),
-      creationTime: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      description: json
+          .valueTo<stratos_register_v1_register.Description?, Object>(
+            key: 'description',
+            parse:
+                (v) => stratos_register_v1_register.Description.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
+      creationTime: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'creation_time',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      nodeType: json.valueAsInt<int?>('node_type', acceptCamelCase: true),
-      bondedDeposit: json
-          .valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
-            key: 'bonded_deposit',
-            parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-            acceptCamelCase: true,
-          ),
-      unBondingDeposit: json
-          .valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
-            key: 'un_bonding_deposit',
-            parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-            acceptCamelCase: true,
-          ),
-      unBondedDeposit: json
-          .valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
-            key: 'un_bonded_deposit',
-            parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      nodeType: json.valueAsInt<int?>(
+        'node_type',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      bondedDeposit: json.valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
+        key: 'bonded_deposit',
+        parse:
+            (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      unBondingDeposit: json.valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
+        key: 'un_bonding_deposit',
+        parse:
+            (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      unBondedDeposit: json.valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
+        key: 'un_bonded_deposit',
+        parse:
+            (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

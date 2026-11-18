@@ -33,7 +33,7 @@ class ThorNodeRequestAddressAssetLiquidityProviderInformation
   Map<String, String?> get parameters => {"height": height?.toString()};
 
   @override
-  AssetLiquidityProviderInformationResponse onResonse(
+  AssetLiquidityProviderInformationResponse onResponse(
     Map<String, dynamic> result,
   ) {
     return AssetLiquidityProviderInformationResponse.fromJson(result);

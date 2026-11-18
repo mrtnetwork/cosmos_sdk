@@ -27,16 +27,24 @@ class BatchFees extends CosmosProtoMessage {
   List<Object?> get protoValues => [token, totalFees];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'token': token, 'total_fees': totalFees};
   }
 
-  factory BatchFees.fromJson(Map<String, dynamic> json) {
+  factory BatchFees.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return BatchFees(
-      token: json.valueAsString<String?>('token', acceptCamelCase: true),
+      token: json.valueAsString<String?>(
+        'token',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       totalFees: json.valueAsString<String?>(
         'total_fees',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

@@ -29,13 +29,21 @@ class QueryExportRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'height': height};
   }
 
-  factory QueryExportRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryExportRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryExportRequest(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -59,9 +67,10 @@ class QueryExportRequest extends CosmosProtoMessage
 }
 
 class QueryExportResponse extends CosmosProtoMessage {
-  final List<int>? content;
+  final BuBytes? content;
 
-  const QueryExportResponse({this.content});
+  QueryExportResponse({List<int>? content})
+    : content = content?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -78,24 +87,19 @@ class QueryExportResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [content];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {
-      'content': switch (content) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-    };
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'content': config.encodeBinary(content)};
   }
 
-  factory QueryExportResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryExportResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryExportResponse(
-      content: json.valueAsBytes<List<int>?>(
-        'content',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      content: config.decodeBinary<List<int>?>(
+        json.valueAs('content', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }

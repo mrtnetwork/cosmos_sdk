@@ -25,18 +25,26 @@ class Params extends CosmosProtoMessage {
   List<Object?> get protoValues => [denomCreationFee];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'denom_creation_fee': denomCreationFee?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'denom_creation_fee': config.encodeMessage(denomCreationFee)};
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
-      denomCreationFee: json
-          .valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
-            key: 'denom_creation_fee',
-            parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      denomCreationFee: json.valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
+        key: 'denom_creation_fee',
+        parse:
+            (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

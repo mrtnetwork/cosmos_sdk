@@ -48,7 +48,7 @@ class TendermintRequestBlockSearch
   };
 
   @override
-  TendermintBlockSearchResponseResult onResonse(Map<String, dynamic> result) {
+  TendermintBlockSearchResponseResult onResponse(Map<String, dynamic> result) {
     return TendermintBlockSearchResponseResult.fromJson(result);
   }
 }

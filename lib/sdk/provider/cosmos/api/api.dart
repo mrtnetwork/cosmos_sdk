@@ -1,11 +1,4 @@
-import 'package:blockchain_utils/exception/exception/rpc_error.dart';
-import 'package:blockchain_utils/helper/extensions/extensions.dart';
-import 'package:blockchain_utils/service/models/params.dart';
-import 'package:blockchain_utils/utils/amount/amount/amount.dart';
-import 'package:blockchain_utils/utils/binary/utils.dart';
-import 'package:blockchain_utils/utils/numbers/rational/big_rational.dart';
-import 'package:blockchain_utils/utils/numbers/utils/bigint_utils.dart';
-import 'package:blockchain_utils/utils/string/string.dart';
+import 'package:blockchain_utils/blockchain_utils.dart';
 import 'package:cosmos_sdk/proto_messages/cosmos/auth/v1beta1/src/auth.dart';
 import 'package:cosmos_sdk/proto_messages/cosmos/auth/v1beta1/src/query.dart';
 import 'package:cosmos_sdk/proto_messages/cosmos/bank/v1beta1/src/query.dart';
@@ -13,7 +6,6 @@ import 'package:cosmos_sdk/proto_messages/cosmos/base/tendermint/v1beta1/src/que
 import 'package:cosmos_sdk/proto_messages/cosmos/base/v1beta1/src/coin.dart';
 import 'package:cosmos_sdk/proto_messages/cosmos/tx/v1beta1/src/service.dart';
 import 'package:cosmos_sdk/sdk/address/address/address.dart';
-import 'package:cosmos_sdk/sdk/exception/exception.dart';
 import 'package:cosmos_sdk/sdk/provider/cosmos/constants/const.dart';
 import 'package:cosmos_sdk/sdk/provider/cosmos/grpc/grpc.dart';
 import 'package:cosmos_sdk/sdk/provider/cosmos/rest/methods/message.dart';
@@ -50,15 +42,17 @@ mixin CosmosQuickServiceApi<PROVIDER extends IProvider> {
       CosmosProviderApi.grpc => () async {
         final provider = this.provider;
         if (provider is! IGrpcProvider) {
-          throw const DartCosmosSdkPluginException(
+          throw BuError(
+            DefaultErrorType.invalidArgument,
             "Unexpected gRPC provider type.",
           );
         }
         return await onGrpc(provider);
       }(),
       _ =>
-        throw DartCosmosSdkPluginException(
-          "Unsupported api.",
+        throw BuError(
+          DefaultErrorType.unsupported,
+          "Unsupported api: only tendermint, rest and gRPC queries are handled here.",
           details: {
             "api": api?.name,
             "supportedApis": CosmosProviderApi.cosmosApis
@@ -168,7 +162,7 @@ mixin CosmosQuickServiceApi<PROVIDER extends IProvider> {
     final chainId = block.block?.header?.chainId;
     if (chainId == null) {
       throw const RPCError(
-        message: "Unexpected service response. missing chaind id.",
+        message: "Unexpected service response. Missing chain id.",
       );
     }
     return chainId;
@@ -196,7 +190,7 @@ mixin CosmosQuickServiceApi<PROVIDER extends IProvider> {
     final result = await query(request, timeout: timeout);
     final account = result.info;
     if (account != null) return account;
-    throw const DartCosmosSdkPluginException("Account not found.");
+    throw BuError(DefaultErrorType.notFound, "Account not found.");
   }
 
   Future<SimulateResponse> simulateTx(
@@ -292,7 +286,7 @@ mixin CosmosQuickServiceApi<PROVIDER extends IProvider> {
           message: "Unexpected service response. missing base fee.",
         );
       }
-      final fee = BigInt.tryParse(baseFee);
+      final fee = BigintUtils.tryParse(baseFee);
       if (fee != null) return BigRational(fee);
       return BigRational(AmountConverter.eth.toUnit(baseFee));
     }

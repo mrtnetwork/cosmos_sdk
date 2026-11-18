@@ -20,7 +20,7 @@ class ThorNodeRequestBanStatus
   Map<String, String?> get parameters => {"height": height?.toString()};
 
   @override
-  ThorBanStatusResponse onResonse(Map<String, dynamic> result) {
+  ThorBanStatusResponse onResponse(Map<String, dynamic> result) {
     return ThorBanStatusResponse.fromJson(result);
   }
 }

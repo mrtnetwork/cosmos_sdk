@@ -43,30 +43,38 @@ class EpochTracker extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'epoch_identifier': epochIdentifier,
-      'epoch_number': epochNumber?.toString(),
-      'next_epoch_start_time': nextEpochStartTime?.toString(),
-      'duration': duration?.toString(),
+      'epoch_number': config.encodeBigint(epochNumber),
+      'next_epoch_start_time': config.encodeBigint(nextEpochStartTime),
+      'duration': config.encodeBigint(duration),
     };
   }
 
-  factory EpochTracker.fromJson(Map<String, dynamic> json) {
+  factory EpochTracker.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return EpochTracker(
       epochIdentifier: json.valueAsString<String?>(
         'epoch_identifier',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       epochNumber: json.valueAsBigInt<BigInt?>(
         'epoch_number',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       nextEpochStartTime: json.valueAsBigInt<BigInt?>(
         'next_epoch_start_time',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      duration: json.valueAsBigInt<BigInt?>('duration', acceptCamelCase: true),
+      duration: json.valueAsBigInt<BigInt?>(
+        'duration',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

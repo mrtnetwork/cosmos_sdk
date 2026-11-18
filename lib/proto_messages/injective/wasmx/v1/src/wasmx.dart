@@ -63,39 +63,48 @@ class Params extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'is_execution_enabled': isExecutionEnabled,
-      'max_begin_block_total_gas': maxBeginBlockTotalGas?.toString(),
-      'max_contract_gas_limit': maxContractGasLimit?.toString(),
-      'min_gas_price': minGasPrice?.toString(),
-      'register_contract_access': registerContractAccess?.toJson(),
+      'max_begin_block_total_gas': config.encodeBigint(maxBeginBlockTotalGas),
+      'max_contract_gas_limit': config.encodeBigint(maxContractGasLimit),
+      'min_gas_price': config.encodeBigint(minGasPrice),
+      'register_contract_access': config.encodeMessage(registerContractAccess),
     };
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
       isExecutionEnabled: json.valueAsBool<bool?>(
         'is_execution_enabled',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       maxBeginBlockTotalGas: json.valueAsBigInt<BigInt?>(
         'max_begin_block_total_gas',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       maxContractGasLimit: json.valueAsBigInt<BigInt?>(
         'max_contract_gas_limit',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       minGasPrice: json.valueAsBigInt<BigInt?>(
         'min_gas_price',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       registerContractAccess: json
-          .valueTo<cosmwasm_wasm_v1_types.AccessConfig?, Map<String, dynamic>>(
+          .valueTo<cosmwasm_wasm_v1_types.AccessConfig?, Object>(
             key: 'register_contract_access',
-            parse: (v) => cosmwasm_wasm_v1_types.AccessConfig.fromJson(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => cosmwasm_wasm_v1_types.AccessConfig.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
     );
   }
@@ -185,34 +194,48 @@ class RegisteredContract extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'gas_limit': gasLimit?.toString(),
-      'gas_price': gasPrice?.toString(),
+      'gas_limit': config.encodeBigint(gasLimit),
+      'gas_price': config.encodeBigint(gasPrice),
       'is_executable': isExecutable,
-      'code_id': codeId?.toString(),
+      'code_id': config.encodeBigint(codeId),
       'admin_address': adminAddress,
       'granter_address': granterAddress,
-      'fund_mode': fundMode?.protoName,
+      'fund_mode': config.encodeEnum(fundMode),
     };
   }
 
-  factory RegisteredContract.fromJson(Map<String, dynamic> json) {
+  factory RegisteredContract.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return RegisteredContract(
-      gasLimit: json.valueAsBigInt<BigInt?>('gas_limit', acceptCamelCase: true),
-      gasPrice: json.valueAsBigInt<BigInt?>('gas_price', acceptCamelCase: true),
+      gasLimit: json.valueAsBigInt<BigInt?>(
+        'gas_limit',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      gasPrice: json.valueAsBigInt<BigInt?>(
+        'gas_price',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       isExecutable: json.valueAsBool<bool?>(
         'is_executable',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      codeId: json.valueAsBigInt<BigInt?>('code_id', acceptCamelCase: true),
+      codeId: json.valueAsBigInt<BigInt?>(
+        'code_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       adminAddress: json.valueAsString<String?>(
         'admin_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       granterAddress: json.valueAsString<String?>(
         'granter_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       fundMode: json.valueTo<injective_wasmx_v1_proposal.FundingMode?, Object?>(
         key: 'fund_mode',

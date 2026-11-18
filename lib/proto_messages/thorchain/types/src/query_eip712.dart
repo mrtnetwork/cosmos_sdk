@@ -4,9 +4,10 @@ import 'package:cosmos_sdk/sdk/serialization/serialization.dart';
 
 class QueryEip712TypedDataRequest extends CosmosProtoMessage
     with ICosmosProtoQueryMessage<QueryEip712TypedDataResponse> {
-  final List<int>? signBytes;
+  final BuBytes? signBytes;
 
-  const QueryEip712TypedDataRequest({this.signBytes});
+  QueryEip712TypedDataRequest({List<int>? signBytes})
+    : signBytes = signBytes?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -29,24 +30,19 @@ class QueryEip712TypedDataRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [signBytes];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {
-      'sign_bytes': switch (signBytes) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-    };
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'sign_bytes': config.encodeBinary(signBytes)};
   }
 
-  factory QueryEip712TypedDataRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryEip712TypedDataRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryEip712TypedDataRequest(
-      signBytes: json.valueAsBytes<List<int>?>(
-        'sign_bytes',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      signBytes: config.decodeBinary<List<int>?>(
+        json.valueAs('sign_bytes', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }
@@ -92,15 +88,20 @@ class QueryEip712TypedDataResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [typedData];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'typed_data': typedData};
   }
 
-  factory QueryEip712TypedDataResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryEip712TypedDataResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryEip712TypedDataResponse(
       typedData: json.valueAsString<String?>(
         'typed_data',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

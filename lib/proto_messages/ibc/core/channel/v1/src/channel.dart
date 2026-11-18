@@ -36,18 +36,32 @@ enum State implements ProtoEnumVariant {
 
   /// Looks up a value by its proto wire int. Throws if not found.
   static State fromValue(int? value) {
+    value ??= 0;
     return State.values.firstWhere(
       (e) => e.value == value,
-      orElse: () => throw ItemNotFoundException(name: "State", value: value),
+      orElse:
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching State found for the given value. $value",
+                details: {"name": "State", "value": value?.toString()},
+              ),
     );
   }
 
   /// Looks up a value by wire int, Dart enum name, or original proto
   /// name (whichever [value] happens to be). Throws if not found.
   static State from(Object? value) {
+    value ??= 0;
     return State.values.firstWhere(
       (e) => e.value == value || e.name == value || e.protoName == value,
-      orElse: () => throw ItemNotFoundException(name: "State", value: value),
+      orElse:
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching State found for the given value. $value",
+                details: {"name": "State", "value": value?.toString()},
+              ),
     );
   }
 }
@@ -76,18 +90,32 @@ enum Order implements ProtoEnumVariant {
 
   /// Looks up a value by its proto wire int. Throws if not found.
   static Order fromValue(int? value) {
+    value ??= 0;
     return Order.values.firstWhere(
       (e) => e.value == value,
-      orElse: () => throw ItemNotFoundException(name: "Order", value: value),
+      orElse:
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching Order found for the given value. $value",
+                details: {"name": "Order", "value": value?.toString()},
+              ),
     );
   }
 
   /// Looks up a value by wire int, Dart enum name, or original proto
   /// name (whichever [value] happens to be). Throws if not found.
   static Order from(Object? value) {
+    value ??= 0;
     return Order.values.firstWhere(
       (e) => e.value == value || e.name == value || e.protoName == value,
-      orElse: () => throw ItemNotFoundException(name: "Order", value: value),
+      orElse:
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching Order found for the given value. $value",
+                details: {"name": "Order", "value": value?.toString()},
+              ),
     );
   }
 }
@@ -150,17 +178,22 @@ class Channel extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'state': state?.protoName,
-      'ordering': ordering?.protoName,
-      'counterparty': counterparty?.toJson(),
+      'state': config.encodeEnum(state),
+      'ordering': config.encodeEnum(ordering),
+      'counterparty': config.encodeMessage(counterparty),
       'connection_hops': connectionHops.map((e) => e).toList(),
       'version': version,
     };
   }
 
-  factory Channel.fromJson(Map<String, dynamic> json) {
+  factory Channel.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Channel(
       state: json.valueTo<State?, Object?>(
         key: 'state',
@@ -170,17 +203,22 @@ class Channel extends CosmosProtoMessage {
         key: 'ordering',
         parse: (v) => Order.from(v),
       ),
-      counterparty: json.valueTo<Counterparty?, Map<String, dynamic>>(
+      counterparty: json.valueTo<Counterparty?, Object>(
         key: 'counterparty',
-        parse: (v) => Counterparty.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => Counterparty.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       connectionHops:
           (json.valueEnsureAsList<dynamic>(
             'connection_hops',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
-      version: json.valueAsString<String?>('version', acceptCamelCase: true),
+      version: json.valueAsString<String?>(
+        'version',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -272,11 +310,13 @@ class IdentifiedChannel extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'state': state?.protoName,
-      'ordering': ordering?.protoName,
-      'counterparty': counterparty?.toJson(),
+      'state': config.encodeEnum(state),
+      'ordering': config.encodeEnum(ordering),
+      'counterparty': config.encodeMessage(counterparty),
       'connection_hops': connectionHops.map((e) => e).toList(),
       'version': version,
       'port_id': portId,
@@ -284,7 +324,10 @@ class IdentifiedChannel extends CosmosProtoMessage {
     };
   }
 
-  factory IdentifiedChannel.fromJson(Map<String, dynamic> json) {
+  factory IdentifiedChannel.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return IdentifiedChannel(
       state: json.valueTo<State?, Object?>(
         key: 'state',
@@ -294,21 +337,29 @@ class IdentifiedChannel extends CosmosProtoMessage {
         key: 'ordering',
         parse: (v) => Order.from(v),
       ),
-      counterparty: json.valueTo<Counterparty?, Map<String, dynamic>>(
+      counterparty: json.valueTo<Counterparty?, Object>(
         key: 'counterparty',
-        parse: (v) => Counterparty.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => Counterparty.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       connectionHops:
           (json.valueEnsureAsList<dynamic>(
             'connection_hops',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
-      version: json.valueAsString<String?>('version', acceptCamelCase: true),
-      portId: json.valueAsString<String?>('port_id', acceptCamelCase: true),
+      version: json.valueAsString<String?>(
+        'version',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      portId: json.valueAsString<String?>(
+        'port_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       channelId: json.valueAsString<String?>(
         'channel_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -359,16 +410,24 @@ class Counterparty extends CosmosProtoMessage {
   List<Object?> get protoValues => [portId, channelId];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'port_id': portId, 'channel_id': channelId};
   }
 
-  factory Counterparty.fromJson(Map<String, dynamic> json) {
+  factory Counterparty.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Counterparty(
-      portId: json.valueAsString<String?>('port_id', acceptCamelCase: true),
+      portId: json.valueAsString<String?>(
+        'port_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       channelId: json.valueAsString<String?>(
         'channel_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -406,7 +465,7 @@ class Packet extends CosmosProtoMessage {
   final String? destinationChannel;
 
   /// actual opaque bytes transferred directly to the application module
-  final List<int>? data;
+  final BuBytes? data;
 
   /// block height after which the packet times out
   final ibc_core_client_v1_client.Height? timeoutHeight;
@@ -414,16 +473,16 @@ class Packet extends CosmosProtoMessage {
   /// block timestamp (in nanoseconds) after which the packet times out
   final BigInt? timeoutTimestamp;
 
-  const Packet({
+  Packet({
     this.sequence,
     this.sourcePort,
     this.sourceChannel,
     this.destinationPort,
     this.destinationChannel,
-    this.data,
+    List<int>? data,
     this.timeoutHeight,
     this.timeoutTimestamp,
-  });
+  }) : data = data?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -458,58 +517,61 @@ class Packet extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'sequence': sequence?.toString(),
+      'sequence': config.encodeBigint(sequence),
       'source_port': sourcePort,
       'source_channel': sourceChannel,
       'destination_port': destinationPort,
       'destination_channel': destinationChannel,
-      'data': switch (data) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'timeout_height': timeoutHeight?.toJson(),
-      'timeout_timestamp': timeoutTimestamp?.toString(),
+      'data': config.encodeBinary(data),
+      'timeout_height': config.encodeMessage(timeoutHeight),
+      'timeout_timestamp': config.encodeBigint(timeoutTimestamp),
     };
   }
 
-  factory Packet.fromJson(Map<String, dynamic> json) {
+  factory Packet.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Packet(
-      sequence: json.valueAsBigInt<BigInt?>('sequence', acceptCamelCase: true),
+      sequence: json.valueAsBigInt<BigInt?>(
+        'sequence',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       sourcePort: json.valueAsString<String?>(
         'source_port',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       sourceChannel: json.valueAsString<String?>(
         'source_channel',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       destinationPort: json.valueAsString<String?>(
         'destination_port',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       destinationChannel: json.valueAsString<String?>(
         'destination_channel',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      data: json.valueAsBytes<List<int>?>(
-        'data',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      data: config.decodeBinary<List<int>?>(
+        json.valueAs('data', normalizeKeyLookup: config.normalizeKeys),
       ),
-      timeoutHeight: json
-          .valueTo<ibc_core_client_v1_client.Height?, Map<String, dynamic>>(
-            key: 'timeout_height',
-            parse: (v) => ibc_core_client_v1_client.Height.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      timeoutHeight: json.valueTo<ibc_core_client_v1_client.Height?, Object>(
+        key: 'timeout_height',
+        parse:
+            (v) => ibc_core_client_v1_client.Height.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       timeoutTimestamp: json.valueAsBigInt<BigInt?>(
         'timeout_timestamp',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -551,9 +613,10 @@ class PacketState extends CosmosProtoMessage {
   final BigInt? sequence;
 
   /// embedded data that represents packet state.
-  final List<int>? data;
+  final BuBytes? data;
 
-  const PacketState({this.portId, this.channelId, this.sequence, this.data});
+  PacketState({this.portId, this.channelId, this.sequence, List<int>? data})
+    : data = data?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -575,33 +638,36 @@ class PacketState extends CosmosProtoMessage {
   List<Object?> get protoValues => [portId, channelId, sequence, data];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'port_id': portId,
       'channel_id': channelId,
-      'sequence': sequence?.toString(),
-      'data': switch (data) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'sequence': config.encodeBigint(sequence),
+      'data': config.encodeBinary(data),
     };
   }
 
-  factory PacketState.fromJson(Map<String, dynamic> json) {
+  factory PacketState.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return PacketState(
-      portId: json.valueAsString<String?>('port_id', acceptCamelCase: true),
+      portId: json.valueAsString<String?>(
+        'port_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       channelId: json.valueAsString<String?>(
         'channel_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      sequence: json.valueAsBigInt<BigInt?>('sequence', acceptCamelCase: true),
-      data: json.valueAsBytes<List<int>?>(
-        'data',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      sequence: json.valueAsBigInt<BigInt?>(
+        'sequence',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      data: config.decodeBinary<List<int>?>(
+        json.valueAs('data', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }

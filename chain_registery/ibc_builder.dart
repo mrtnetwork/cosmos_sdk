@@ -3,6 +3,8 @@ import 'dart:io';
 
 import 'package:blockchain_utils/helper/extensions/extensions.dart';
 import 'package:cosmos_sdk/sdk/provider/chain_registery/models/models/cosmos_sdk.dart';
+import 'package:http/http.dart' as http;
+import 'package:http/io_client.dart' as http_io;
 
 /// =====================================================================
 /// MODELS — raw chain-registry JSON shapes
@@ -123,6 +125,9 @@ Future<Map<String, CosmosSdkChain>> buildChainNameToIdMap(
 /// Parses every `_IBC/*.json` file and builds a `chainId -> List<CosmosChannelInfo>`
 /// index. Each channel produces TWO entries (one per direction), since IBC
 /// channels are bidirectional.
+///
+/// Chain identity comes from the file CONTENT (`chain_1`/`chain_2` blocks),
+/// not the filename, so names containing dashes can't mis-resolve.
 Future<List<CosmosSdkChain>> buildChannelIndex(
   String ibcDirPath,
   Map<String, CosmosSdkChain> chainNameToId,
@@ -139,28 +144,18 @@ Future<List<CosmosSdkChain>> buildChannelIndex(
   );
 
   for (final file in files) {
-    final chainName =
-        file.path
-            .split("/")
-            .last
-            .split(".json")
-            .first
-            .split("-")
-            .map((e) => e.trim())
-            .toList();
     final json = jsonDecode(await file.readAsString()) as Map<String, dynamic>;
     try {
       final registryFile = CosmosIbcRegistryFile.fromJson(json);
-      final c1Id = "${registryFile.chain1.clientId}_${chainName[0]}";
-      final c2Id = "${registryFile.chain2.clientId}_${chainName[1]}";
+      final c1Id =
+          '${registryFile.chain1.clientId}_${registryFile.chain1.chainName}';
+      final c2Id =
+          '${registryFile.chain2.clientId}_${registryFile.chain2.chainName}';
       final chain1Id = chainNameToId[c1Id];
       final chain2Id = chainNameToId[c2Id];
 
       if (chain1Id == null || chain2Id == null) {
-        stderr.writeln(
-          'Skipping '
-          '${registryFile.chain1.chainName} or ${registryFile.chain2.chainName}',
-        );
+        stderr.writeln('Skipping $c1Id <-> $c2Id');
         continue;
       }
 
@@ -273,30 +268,140 @@ List<CosmosChannelInfo> findPreferredChannels(
 /// =====================================================================
 /// EXAMPLE USAGE
 /// =====================================================================
+/// _IBC over HTTP (no local clone needed)
+///
+/// Source: https://github.com/cosmos/chain-registry (`_IBC/` +
+/// `testnets/_IBC/`), listed via the GitHub contents API and downloaded
+/// as raw files into [cacheDir]. Files already on disk are reused —
+/// pass `--refresh-ibc` to refetch (e.g. monthly).
+/// =====================================================================
+
+const String _ibcRepoApi =
+    'https://api.github.com/repos/cosmos/chain-registry/contents';
+
+Future<int> syncIbcDir({
+  required String apiPath,
+  required String cacheSubDir,
+  required bool refresh,
+  String? proxyUrl,
+}) async {
+  final dir = Directory(cacheSubDir)..createSync(recursive: true);
+  final hasCache = dir.listSync().whereType<File>().any(
+    (f) => f.path.endsWith('.json'),
+  );
+  if (hasCache && !refresh) {
+    final n =
+        dir
+            .listSync()
+            .whereType<File>()
+            .where((f) => f.path.endsWith('.json'))
+            .length;
+    // ignore: avoid_print
+    print('ibc cache hit: $cacheSubDir ($n files)');
+    return n;
+  }
+  http.Client client;
+  if (proxyUrl == null || proxyUrl.isEmpty) {
+    client = http.Client();
+  } else {
+    final hc = HttpClient()..findProxy = (_) => 'PROXY $proxyUrl';
+    client = http_io.IOClient(hc);
+  }
+  try {
+    final listing = await client
+        .get(Uri.parse('$_ibcRepoApi/$apiPath'))
+        .timeout(const Duration(seconds: 60));
+    if (listing.statusCode != 200) {
+      throw StateError(
+        'IBC listing $apiPath failed: ${listing.statusCode} ${listing.body}',
+      );
+    }
+    final entries = jsonDecode(listing.body) as List<dynamic>;
+    int ok = 0, failed = 0;
+    for (final e in entries) {
+      final m = e as Map<String, dynamic>;
+      final name = m['name'] as String?;
+      final url = m['download_url'] as String?;
+      if (name == null || !name.endsWith('.json') || url == null) continue;
+      try {
+        final content = await client
+            .get(Uri.parse(url))
+            .timeout(const Duration(seconds: 60));
+        if (content.statusCode != 200) {
+          throw StateError('${content.statusCode}');
+        }
+        File('${dir.path}/$name').writeAsBytesSync(content.bodyBytes);
+        ok++;
+      } catch (err) {
+        failed++;
+        stderr.writeln('IBC download failed $name: $err');
+      }
+      await Future.delayed(const Duration(milliseconds: 150));
+    }
+    // ignore: avoid_print
+    print('ibc sync: $cacheSubDir ok=$ok failed=$failed');
+    return ok;
+  } finally {
+    client.close();
+  }
+}
 
 Future<void> main(List<String> args) async {
-  final file = File('./assets/chains.bin');
+  String chainsPath = './assets/chains.bin';
+  String? outPath;
+  String cacheDir = './build_cache/ibc';
+  bool refreshIbc = false;
+  String? proxyUrl;
+  for (final a in args) {
+    if (a.startsWith('--chains=')) {
+      chainsPath = a.substring('--chains='.length);
+    } else if (a.startsWith('--out=')) {
+      outPath = a.substring('--out='.length);
+    } else if (a.startsWith('--ibc-cache=')) {
+      cacheDir = a.substring('--ibc-cache='.length);
+    } else if (a == '--refresh-ibc') {
+      refreshIbc = true;
+    } else if (a.startsWith('--proxy=')) {
+      proxyUrl = a.substring('--proxy='.length);
+    }
+  }
+  final file = File(chainsPath);
   if (!file.existsSync()) {
-    stderr.writeln("File does not exists.");
+    stderr.writeln('Chains file does not exist: $chainsPath');
     return;
   }
+  await syncIbcDir(
+    apiPath: '_IBC',
+    cacheSubDir: '$cacheDir/mainnet',
+    refresh: refreshIbc,
+    proxyUrl: proxyUrl,
+  );
+  await syncIbcDir(
+    apiPath: 'testnets/_IBC',
+    cacheSubDir: '$cacheDir/testnets',
+    refresh: refreshIbc,
+    proxyUrl: proxyUrl,
+  );
   final decode = CosmosSdkChainChains.deserialize(
     bytes: file.readAsBytesSync(),
   );
   final mainnet = await loadIbcChannelIndex(
     chains: decode.mainnet,
-    ibcDir: '/home/mrhaydari/Downloads/chain-registry-master/_IBC',
+    ibcDir: '$cacheDir/mainnet',
   );
   final testnet = await loadIbcChannelIndex(
     chains: decode.testnet,
-    ibcDir: '/home/mrhaydari/Downloads/chain-registry-master/testnets/_IBC',
+    ibcDir: '$cacheDir/testnets',
   );
   final s = CosmosSdkChainChains(mainnet: mainnet, testnet: testnet);
-  file.writeAsBytesSync(s.toCbor().encode());
-  // print(ibc.expand((e) => e.ibcChannels).toList().length);
+  final out = File(outPath ?? chainsPath)..createSync(recursive: true);
+  out.writeAsBytesSync(s.toCbor().encode());
+  final nChannels =
+      s.mainnet.fold<int>(0, (p, e) => p + e.ibcChannels.length) +
+      s.testnet.fold<int>(0, (p, e) => p + e.ibcChannels.length);
+  // ignore: avoid_print
+  print(
+    'ibc done mainnet=${s.mainnet.length} '
+    'testnet=${s.testnet.length} channels=$nChannels -> ${out.path}',
+  );
 }
-
-// CosmosSdkChainChains.deserialize(bytes: bytes);
-// Loggg.log("unsupported ${unsupported.length}");
-// final file = File('./assets/chains.bin')..createSync(recursive: true);
-// file.writeAsBytesSync(bytes);

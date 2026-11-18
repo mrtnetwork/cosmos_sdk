@@ -29,16 +29,24 @@ class ClassTrace extends CosmosProtoMessage {
   List<Object?> get protoValues => [path, baseClassId];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'path': path, 'base_class_id': baseClassId};
   }
 
-  factory ClassTrace.fromJson(Map<String, dynamic> json) {
+  factory ClassTrace.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ClassTrace(
-      path: json.valueAsString<String?>('path', acceptCamelCase: true),
+      path: json.valueAsString<String?>(
+        'path',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       baseClassId: json.valueAsString<String?>(
         'base_class_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -86,19 +94,24 @@ class Params extends CosmosProtoMessage {
   List<Object?> get protoValues => [sendEnabled, receiveEnabled];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'send_enabled': sendEnabled, 'receive_enabled': receiveEnabled};
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
       sendEnabled: json.valueAsBool<bool?>(
         'send_enabled',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       receiveEnabled: json.valueAsBool<bool?>(
         'receive_enabled',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

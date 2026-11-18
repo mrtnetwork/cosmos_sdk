@@ -10,9 +10,10 @@ class MsgScheduleExecuteContract extends CosmosProtoMessage
 
   final BigInt? after;
 
-  final List<int>? msg;
+  final BuBytes? msg;
 
-  const MsgScheduleExecuteContract({this.sender, this.after, this.msg});
+  MsgScheduleExecuteContract({this.sender, this.after, List<int>? msg})
+    : msg = msg?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -40,28 +41,31 @@ class MsgScheduleExecuteContract extends CosmosProtoMessage
   List<Object?> get protoValues => [sender, after, msg];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'sender': sender,
-      'after': after?.toString(),
-      'msg': switch (msg) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'after': config.encodeBigint(after),
+      'msg': config.encodeBinary(msg),
     };
   }
 
-  factory MsgScheduleExecuteContract.fromJson(Map<String, dynamic> json) {
+  factory MsgScheduleExecuteContract.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgScheduleExecuteContract(
-      sender: json.valueAsString<String?>('sender', acceptCamelCase: true),
-      after: json.valueAsBigInt<BigInt?>('after', acceptCamelCase: true),
-      msg: json.valueAsBytes<List<int>?>(
-        'msg',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      sender: json.valueAsString<String?>(
+        'sender',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      after: json.valueAsBigInt<BigInt?>(
+        'after',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      msg: config.decodeBinary<List<int>?>(
+        json.valueAs('msg', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }
@@ -111,13 +115,16 @@ class MsgScheduleExecuteContractResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
   factory MsgScheduleExecuteContractResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgScheduleExecuteContractResponse();
   }
 

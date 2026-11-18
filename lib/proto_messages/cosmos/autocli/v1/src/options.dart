@@ -27,21 +27,37 @@ class ModuleOptions extends CosmosProtoMessage {
   List<Object?> get protoValues => [tx, query];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'tx': tx?.toJson(), 'query': query?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'tx': config.encodeMessage(tx),
+      'query': config.encodeMessage(query),
+    };
   }
 
-  factory ModuleOptions.fromJson(Map<String, dynamic> json) {
+  factory ModuleOptions.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ModuleOptions(
-      tx: json.valueTo<ServiceCommandDescriptor?, Map<String, dynamic>>(
+      tx: json.valueTo<ServiceCommandDescriptor?, Object>(
         key: 'tx',
-        parse: (v) => ServiceCommandDescriptor.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => ServiceCommandDescriptor.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      query: json.valueTo<ServiceCommandDescriptor?, Map<String, dynamic>>(
+      query: json.valueTo<ServiceCommandDescriptor?, Object>(
         key: 'query',
-        parse: (v) => ServiceCommandDescriptor.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => ServiceCommandDescriptor.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -132,49 +148,70 @@ class ServiceCommandDescriptor extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'service': service,
-      'rpc_command_options': rpcCommandOptions.map((e) => e.toJson()).toList(),
-      'sub_commands': subCommands.map((k, v) => MapEntry(k, v.toJson())),
+      'rpc_command_options':
+          rpcCommandOptions.map((e) => config.encodeMessage(e)).toList(),
+      'sub_commands': config.encodeMap(
+        subCommands,
+        (k, v) => MapEntry(k, config.encodeMessage(v)),
+      ),
       'enhance_custom_command': enhanceCustomCommand,
       'short': short,
     };
   }
 
-  factory ServiceCommandDescriptor.fromJson(Map<String, dynamic> json) {
+  factory ServiceCommandDescriptor.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ServiceCommandDescriptor(
-      service: json.valueAsString<String?>('service', acceptCamelCase: true),
+      service: json.valueAsString<String?>(
+        'service',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       rpcCommandOptions:
           (json.valueEnsureAsList<dynamic>(
                 'rpc_command_options',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) =>
-                    JsonParser.valueTo<RpcCommandOptions, Map<String, dynamic>>(
-                      value: e,
-                      parse: (v) => RpcCommandOptions.fromJson(v),
-                    ),
+                (e) => JsonParser.valueTo<RpcCommandOptions, Object>(
+                  value: e,
+                  parse:
+                      (v) => RpcCommandOptions.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
-      subCommands: (json.valueAsMap<Map<dynamic, dynamic>>(
-        'sub_commands',
-        acceptCamelCase: true,
-      )).map(
+      subCommands: config.decodeMap(
+        json.valueAs('sub_commands', normalizeKeyLookup: config.normalizeKeys),
         (k, v) => MapEntry(
           JsonParser.valueAsString<String>(k),
-          JsonParser.valueTo<ServiceCommandDescriptor, Map<String, dynamic>>(
+          JsonParser.valueTo<ServiceCommandDescriptor, Object>(
             value: v,
-            parse: (v) => ServiceCommandDescriptor.fromJson(v),
+            parse:
+                (v) => ServiceCommandDescriptor.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
           ),
         ),
       ),
       enhanceCustomCommand: json.valueAsBool<bool?>(
         'enhance_custom_command',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      short: json.valueAsString<String?>('short', acceptCamelCase: true),
+      short: json.valueAsString<String?>(
+        'short',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -341,7 +378,9 @@ class RpcCommandOptions extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'rpc_method': rpcMethod,
       'use': use,
@@ -352,66 +391,98 @@ class RpcCommandOptions extends CosmosProtoMessage {
       'suggest_for': suggestFor.map((e) => e).toList(),
       'deprecated': deprecated,
       'version': version,
-      'flag_options': flagOptions.map((k, v) => MapEntry(k, v.toJson())),
-      'positional_args': positionalArgs.map((e) => e.toJson()).toList(),
+      'flag_options': config.encodeMap(
+        flagOptions,
+        (k, v) => MapEntry(k, config.encodeMessage(v)),
+      ),
+      'positional_args':
+          positionalArgs.map((e) => config.encodeMessage(e)).toList(),
       'skip': skip,
       'gov_proposal': govProposal,
     };
   }
 
-  factory RpcCommandOptions.fromJson(Map<String, dynamic> json) {
+  factory RpcCommandOptions.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return RpcCommandOptions(
       rpcMethod: json.valueAsString<String?>(
         'rpc_method',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      use: json.valueAsString<String?>('use', acceptCamelCase: true),
-      long: json.valueAsString<String?>('long', acceptCamelCase: true),
-      short: json.valueAsString<String?>('short', acceptCamelCase: true),
-      example: json.valueAsString<String?>('example', acceptCamelCase: true),
+      use: json.valueAsString<String?>(
+        'use',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      long: json.valueAsString<String?>(
+        'long',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      short: json.valueAsString<String?>(
+        'short',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      example: json.valueAsString<String?>(
+        'example',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       alias:
           (json.valueEnsureAsList<dynamic>(
             'alias',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
       suggestFor:
           (json.valueEnsureAsList<dynamic>(
             'suggest_for',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
       deprecated: json.valueAsString<String?>(
         'deprecated',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      version: json.valueAsString<String?>('version', acceptCamelCase: true),
-      flagOptions: (json.valueAsMap<Map<dynamic, dynamic>>(
-        'flag_options',
-        acceptCamelCase: true,
-      )).map(
+      version: json.valueAsString<String?>(
+        'version',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      flagOptions: config.decodeMap(
+        json.valueAs('flag_options', normalizeKeyLookup: config.normalizeKeys),
         (k, v) => MapEntry(
           JsonParser.valueAsString<String>(k),
-          JsonParser.valueTo<FlagOptions, Map<String, dynamic>>(
+          JsonParser.valueTo<FlagOptions, Object>(
             value: v,
-            parse: (v) => FlagOptions.fromJson(v),
+            parse:
+                (v) =>
+                    FlagOptions.fromJson(JsonParser.valueAs(v), config: config),
           ),
         ),
       ),
       positionalArgs:
           (json.valueEnsureAsList<dynamic>(
                 'positional_args',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  PositionalArgDescriptor,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => PositionalArgDescriptor.fromJson(v)),
+                (e) => JsonParser.valueTo<PositionalArgDescriptor, Object>(
+                  value: e,
+                  parse:
+                      (v) => PositionalArgDescriptor.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
-      skip: json.valueAsBool<bool?>('skip', acceptCamelCase: true),
+      skip: json.valueAsBool<bool?>(
+        'skip',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       govProposal: json.valueAsBool<bool?>(
         'gov_proposal',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -517,7 +588,9 @@ class FlagOptions extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'name': name,
       'shorthand': shorthand,
@@ -529,27 +602,39 @@ class FlagOptions extends CosmosProtoMessage {
     };
   }
 
-  factory FlagOptions.fromJson(Map<String, dynamic> json) {
+  factory FlagOptions.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return FlagOptions(
-      name: json.valueAsString<String?>('name', acceptCamelCase: true),
+      name: json.valueAsString<String?>(
+        'name',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       shorthand: json.valueAsString<String?>(
         'shorthand',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      usage: json.valueAsString<String?>('usage', acceptCamelCase: true),
+      usage: json.valueAsString<String?>(
+        'usage',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       defaultValue: json.valueAsString<String?>(
         'default_value',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       deprecated: json.valueAsString<String?>(
         'deprecated',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       shorthandDeprecated: json.valueAsString<String?>(
         'shorthand_deprecated',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      hidden: json.valueAsBool<bool?>('hidden', acceptCamelCase: true),
+      hidden: json.valueAsBool<bool?>(
+        'hidden',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -607,7 +692,9 @@ class PositionalArgDescriptor extends CosmosProtoMessage {
   List<Object?> get protoValues => [protoField, varargs, optional];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'proto_field': protoField,
       'varargs': varargs,
@@ -615,14 +702,23 @@ class PositionalArgDescriptor extends CosmosProtoMessage {
     };
   }
 
-  factory PositionalArgDescriptor.fromJson(Map<String, dynamic> json) {
+  factory PositionalArgDescriptor.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return PositionalArgDescriptor(
       protoField: json.valueAsString<String?>(
         'proto_field',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      varargs: json.valueAsBool<bool?>('varargs', acceptCamelCase: true),
-      optional: json.valueAsBool<bool?>('optional', acceptCamelCase: true),
+      varargs: json.valueAsBool<bool?>(
+        'varargs',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      optional: json.valueAsBool<bool?>(
+        'optional',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

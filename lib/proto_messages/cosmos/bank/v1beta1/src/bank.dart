@@ -44,30 +44,40 @@ class Params extends CosmosProtoMessage {
   List<Object?> get protoValues => [sendEnabled, defaultSendEnabled];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'send_enabled': sendEnabled.map((e) => e.toJson()).toList(),
+      'send_enabled': sendEnabled.map((e) => config.encodeMessage(e)).toList(),
       'default_send_enabled': defaultSendEnabled,
     };
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
       sendEnabled:
           (json.valueEnsureAsList<dynamic>(
                 'send_enabled',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<SendEnabled, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<SendEnabled, Object>(
                   value: e,
-                  parse: (v) => SendEnabled.fromJson(v),
+                  parse:
+                      (v) => SendEnabled.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       defaultSendEnabled: json.valueAsBool<bool?>(
         'default_send_enabled',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -113,14 +123,25 @@ class SendEnabled extends CosmosProtoMessage {
   List<Object?> get protoValues => [denom, enabled];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'denom': denom, 'enabled': enabled};
   }
 
-  factory SendEnabled.fromJson(Map<String, dynamic> json) {
+  factory SendEnabled.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SendEnabled(
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
-      enabled: json.valueAsBool<bool?>('enabled', acceptCamelCase: true),
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      enabled: json.valueAsBool<bool?>(
+        'enabled',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -172,23 +193,40 @@ class Input extends CosmosProtoMessage {
   List<Object?> get protoValues => [address, coins];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'address': address, 'coins': coins.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'address': address,
+      'coins': coins.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
-  factory Input.fromJson(Map<String, dynamic> json) {
+  factory Input.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Input(
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       coins:
-          (json.valueEnsureAsList<dynamic>('coins', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'coins',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -244,23 +282,40 @@ class Output extends CosmosProtoMessage {
   List<Object?> get protoValues => [address, coins];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'address': address, 'coins': coins.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'address': address,
+      'coins': coins.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
-  factory Output.fromJson(Map<String, dynamic> json) {
+  factory Output.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Output(
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       coins:
-          (json.valueEnsureAsList<dynamic>('coins', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'coins',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -323,7 +378,9 @@ class DenomUnit extends CosmosProtoMessage {
   List<Object?> get protoValues => [denom, exponent, aliases];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'denom': denom,
       'exponent': exponent,
@@ -331,14 +388,24 @@ class DenomUnit extends CosmosProtoMessage {
     };
   }
 
-  factory DenomUnit.fromJson(Map<String, dynamic> json) {
+  factory DenomUnit.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return DenomUnit(
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
-      exponent: json.valueAsInt<int?>('exponent', acceptCamelCase: true),
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      exponent: json.valueAsInt<int?>(
+        'exponent',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       aliases:
           (json.valueEnsureAsList<dynamic>(
             'aliases',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
     );
   }
@@ -465,10 +532,12 @@ class Metadata extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'description': description,
-      'denom_units': denomUnits.map((e) => e.toJson()).toList(),
+      'denom_units': denomUnits.map((e) => config.encodeMessage(e)).toList(),
       'base': base,
       'display': display,
       'name': name,
@@ -478,30 +547,56 @@ class Metadata extends CosmosProtoMessage {
     };
   }
 
-  factory Metadata.fromJson(Map<String, dynamic> json) {
+  factory Metadata.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Metadata(
       description: json.valueAsString<String?>(
         'description',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       denomUnits:
           (json.valueEnsureAsList<dynamic>(
                 'denom_units',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<DenomUnit, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<DenomUnit, Object>(
                   value: e,
-                  parse: (v) => DenomUnit.fromJson(v),
+                  parse:
+                      (v) => DenomUnit.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
-      base: json.valueAsString<String?>('base', acceptCamelCase: true),
-      display: json.valueAsString<String?>('display', acceptCamelCase: true),
-      name: json.valueAsString<String?>('name', acceptCamelCase: true),
-      symbol: json.valueAsString<String?>('symbol', acceptCamelCase: true),
-      uri: json.valueAsString<String?>('uri', acceptCamelCase: true),
-      uriHash: json.valueAsString<String?>('uri_hash', acceptCamelCase: true),
+      base: json.valueAsString<String?>(
+        'base',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      display: json.valueAsString<String?>(
+        'display',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      name: json.valueAsString<String?>(
+        'name',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      symbol: json.valueAsString<String?>(
+        'symbol',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      uri: json.valueAsString<String?>(
+        'uri',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      uriHash: json.valueAsString<String?>(
+        'uri_hash',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

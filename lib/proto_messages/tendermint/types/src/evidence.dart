@@ -33,26 +33,40 @@ class Evidence extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'duplicate_vote_evidence': duplicateVoteEvidence?.toJson(),
-      'light_client_attack_evidence': lightClientAttackEvidence?.toJson(),
+      'duplicate_vote_evidence': config.encodeMessage(duplicateVoteEvidence),
+      'light_client_attack_evidence': config.encodeMessage(
+        lightClientAttackEvidence,
+      ),
     };
   }
 
-  factory Evidence.fromJson(Map<String, dynamic> json) {
+  factory Evidence.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Evidence(
-      duplicateVoteEvidence: json
-          .valueTo<DuplicateVoteEvidence?, Map<String, dynamic>>(
-            key: 'duplicate_vote_evidence',
-            parse: (v) => DuplicateVoteEvidence.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      duplicateVoteEvidence: json.valueTo<DuplicateVoteEvidence?, Object>(
+        key: 'duplicate_vote_evidence',
+        parse:
+            (v) => DuplicateVoteEvidence.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       lightClientAttackEvidence: json
-          .valueTo<LightClientAttackEvidence?, Map<String, dynamic>>(
+          .valueTo<LightClientAttackEvidence?, Object>(
             key: 'light_client_attack_evidence',
-            parse: (v) => LightClientAttackEvidence.fromJson(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => LightClientAttackEvidence.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
     );
   }
@@ -123,40 +137,57 @@ class DuplicateVoteEvidence extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'vote_a': voteA?.toJson(),
-      'vote_b': voteB?.toJson(),
-      'total_voting_power': totalVotingPower?.toString(),
-      'validator_power': validatorPower?.toString(),
+      'vote_a': config.encodeMessage(voteA),
+      'vote_b': config.encodeMessage(voteB),
+      'total_voting_power': config.encodeBigint(totalVotingPower),
+      'validator_power': config.encodeBigint(validatorPower),
       'timestamp': timestamp?.toRfc3339(),
     };
   }
 
-  factory DuplicateVoteEvidence.fromJson(Map<String, dynamic> json) {
+  factory DuplicateVoteEvidence.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return DuplicateVoteEvidence(
-      voteA: json.valueTo<tendermint_types_types.Vote?, Map<String, dynamic>>(
+      voteA: json.valueTo<tendermint_types_types.Vote?, Object>(
         key: 'vote_a',
-        parse: (v) => tendermint_types_types.Vote.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => tendermint_types_types.Vote.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      voteB: json.valueTo<tendermint_types_types.Vote?, Map<String, dynamic>>(
+      voteB: json.valueTo<tendermint_types_types.Vote?, Object>(
         key: 'vote_b',
-        parse: (v) => tendermint_types_types.Vote.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => tendermint_types_types.Vote.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       totalVotingPower: json.valueAsBigInt<BigInt?>(
         'total_voting_power',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       validatorPower: json.valueAsBigInt<BigInt?>(
         'validator_power',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      timestamp: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      timestamp: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'timestamp',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -236,53 +267,70 @@ class LightClientAttackEvidence extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'conflicting_block': conflictingBlock?.toJson(),
-      'common_height': commonHeight?.toString(),
+      'conflicting_block': config.encodeMessage(conflictingBlock),
+      'common_height': config.encodeBigint(commonHeight),
       'byzantine_validators':
-          byzantineValidators.map((e) => e.toJson()).toList(),
-      'total_voting_power': totalVotingPower?.toString(),
+          byzantineValidators.map((e) => config.encodeMessage(e)).toList(),
+      'total_voting_power': config.encodeBigint(totalVotingPower),
       'timestamp': timestamp?.toRfc3339(),
     };
   }
 
-  factory LightClientAttackEvidence.fromJson(Map<String, dynamic> json) {
+  factory LightClientAttackEvidence.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return LightClientAttackEvidence(
       conflictingBlock: json
-          .valueTo<tendermint_types_types.LightBlock?, Map<String, dynamic>>(
+          .valueTo<tendermint_types_types.LightBlock?, Object>(
             key: 'conflicting_block',
-            parse: (v) => tendermint_types_types.LightBlock.fromJson(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => tendermint_types_types.LightBlock.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
       commonHeight: json.valueAsBigInt<BigInt?>(
         'common_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       byzantineValidators:
           (json.valueEnsureAsList<dynamic>(
                 'byzantine_validators',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   tendermint_types_validator.Validator,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
-                      (v) => tendermint_types_validator.Validator.fromJson(v),
+                      (v) => tendermint_types_validator.Validator.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       totalVotingPower: json.valueAsBigInt<BigInt?>(
         'total_voting_power',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      timestamp: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      timestamp: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'timestamp',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -339,18 +387,31 @@ class EvidenceList extends CosmosProtoMessage {
   List<Object?> get protoValues => [evidence];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'evidence': evidence.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'evidence': evidence.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory EvidenceList.fromJson(Map<String, dynamic> json) {
+  factory EvidenceList.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return EvidenceList(
       evidence:
-          (json.valueEnsureAsList<dynamic>('evidence', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'evidence',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<Evidence, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<Evidence, Object>(
                   value: e,
-                  parse: (v) => Evidence.fromJson(v),
+                  parse:
+                      (v) => Evidence.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),

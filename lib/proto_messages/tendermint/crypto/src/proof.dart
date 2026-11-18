@@ -8,11 +8,13 @@ import 'package:cosmos_sdk/sdk/serialization/serialization.dart';
 class ProofOp extends CosmosProtoMessage {
   final String? type;
 
-  final List<int>? key;
+  final BuBytes? key;
 
-  final List<int>? data;
+  final BuBytes? data;
 
-  const ProofOp({this.type, this.key, this.data});
+  ProofOp({this.type, List<int>? key, List<int>? data})
+    : key = key?.asImmutableBytes,
+      data = data?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -33,38 +35,30 @@ class ProofOp extends CosmosProtoMessage {
   List<Object?> get protoValues => [type, key, data];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'type': type,
-      'key': switch (key) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'data': switch (data) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'key': config.encodeBinary(key),
+      'data': config.encodeBinary(data),
     };
   }
 
-  factory ProofOp.fromJson(Map<String, dynamic> json) {
+  factory ProofOp.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ProofOp(
-      type: json.valueAsString<String?>('type', acceptCamelCase: true),
-      key: json.valueAsBytes<List<int>?>(
-        'key',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      type: json.valueAsString<String?>(
+        'type',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      data: json.valueAsBytes<List<int>?>(
-        'data',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      key: config.decodeBinary<List<int>?>(
+        json.valueAs('key', normalizeKeyLookup: config.normalizeKeys),
+      ),
+      data: config.decodeBinary<List<int>?>(
+        json.valueAs('data', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }
@@ -110,18 +104,31 @@ class ProofOps extends CosmosProtoMessage {
   List<Object?> get protoValues => [ops];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'ops': ops.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'ops': ops.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory ProofOps.fromJson(Map<String, dynamic> json) {
+  factory ProofOps.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ProofOps(
       ops:
-          (json.valueEnsureAsList<dynamic>('ops', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'ops',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<ProofOp, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<ProofOp, Object>(
                   value: e,
-                  parse: (v) => ProofOp.fromJson(v),
+                  parse:
+                      (v) => ProofOp.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),

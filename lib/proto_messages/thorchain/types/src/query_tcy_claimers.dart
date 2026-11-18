@@ -31,14 +31,25 @@ class QueryTCYClaimerRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [address, height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'address': address, 'height': height};
   }
 
-  factory QueryTCYClaimerRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryTCYClaimerRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTCYClaimerRequest(
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -90,23 +101,34 @@ class QueryTCYClaimerResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [tcyClaimer];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'tcy_claimer': tcyClaimer.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'tcy_claimer': tcyClaimer.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
-  factory QueryTCYClaimerResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryTCYClaimerResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTCYClaimerResponse(
       tcyClaimer:
           (json.valueEnsureAsList<dynamic>(
                 'tcy_claimer',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) =>
-                    JsonParser.valueTo<QueryTCYClaimer, Map<String, dynamic>>(
-                      value: e,
-                      parse: (v) => QueryTCYClaimer.fromJson(v),
-                    ),
+                (e) => JsonParser.valueTo<QueryTCYClaimer, Object>(
+                  value: e,
+                  parse:
+                      (v) => QueryTCYClaimer.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );
@@ -156,18 +178,29 @@ class QueryTCYClaimer extends CosmosProtoMessage {
   List<Object?> get protoValues => [asset, l1Address, amount];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'asset': asset, 'l1_address': l1Address, 'amount': amount};
   }
 
-  factory QueryTCYClaimer.fromJson(Map<String, dynamic> json) {
+  factory QueryTCYClaimer.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTCYClaimer(
-      asset: json.valueAsString<String?>('asset', acceptCamelCase: true),
+      asset: json.valueAsString<String?>(
+        'asset',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       l1Address: json.valueAsString<String?>(
         'l1_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      amount: json.valueAsString<String?>('amount', acceptCamelCase: true),
+      amount: json.valueAsString<String?>(
+        'amount',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -212,13 +245,21 @@ class QueryTCYClaimersRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'height': height};
   }
 
-  factory QueryTCYClaimersRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryTCYClaimersRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTCYClaimersRequest(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -266,23 +307,34 @@ class QueryTCYClaimersResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [tcyClaimers];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'tcy_claimers': tcyClaimers.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'tcy_claimers': tcyClaimers.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
-  factory QueryTCYClaimersResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryTCYClaimersResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTCYClaimersResponse(
       tcyClaimers:
           (json.valueEnsureAsList<dynamic>(
                 'tcy_claimers',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) =>
-                    JsonParser.valueTo<QueryTCYClaimer, Map<String, dynamic>>(
-                      value: e,
-                      parse: (v) => QueryTCYClaimer.fromJson(v),
-                    ),
+                (e) => JsonParser.valueTo<QueryTCYClaimer, Object>(
+                  value: e,
+                  parse:
+                      (v) => QueryTCYClaimer.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );

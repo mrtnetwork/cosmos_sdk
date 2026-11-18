@@ -32,16 +32,22 @@ class Config extends CosmosProtoMessage {
   List<Object?> get protoValues => [allowedRelayers];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'allowed_relayers': allowedRelayers.map((e) => e).toList()};
   }
 
-  factory Config.fromJson(Map<String, dynamic> json) {
+  factory Config.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Config(
       allowedRelayers:
           (json.valueEnsureAsList<dynamic>(
             'allowed_relayers',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
     );
   }

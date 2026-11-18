@@ -56,7 +56,9 @@ class MsgPlaceBid extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'bidder': bidder,
       'auction_name': auctionName,
@@ -65,20 +67,26 @@ class MsgPlaceBid extends CosmosProtoMessage
     };
   }
 
-  factory MsgPlaceBid.fromJson(Map<String, dynamic> json) {
+  factory MsgPlaceBid.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgPlaceBid(
-      bidder: json.valueAsString<String?>('bidder', acceptCamelCase: true),
+      bidder: json.valueAsString<String?>(
+        'bidder',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       auctionName: json.valueAsString<String?>(
         'auction_name',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       sellingTokenAmount: json.valueAsString<String?>(
         'selling_token_amount',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       paymentTokenAmount: json.valueAsString<String?>(
         'payment_token_amount',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -125,11 +133,16 @@ class MsgPlaceBidResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgPlaceBidResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgPlaceBidResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgPlaceBidResponse();
   }
 
@@ -227,11 +240,13 @@ class MsgCreateAuction extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'admin': admin,
       'auction_name': auctionName,
-      'auction_type': auctionType?.protoName,
+      'auction_type': config.encodeEnum(auctionType),
       'selling_denom': sellingDenom,
       'payment_denom': paymentDenom,
       'enabled': enabled,
@@ -241,12 +256,18 @@ class MsgCreateAuction extends CosmosProtoMessage
     };
   }
 
-  factory MsgCreateAuction.fromJson(Map<String, dynamic> json) {
+  factory MsgCreateAuction.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgCreateAuction(
-      admin: json.valueAsString<String?>('admin', acceptCamelCase: true),
+      admin: json.valueAsString<String?>(
+        'admin',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       auctionName: json.valueAsString<String?>(
         'auction_name',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       auctionType: json.valueTo<stride_auction_auction.AuctionType?, Object?>(
         key: 'auction_type',
@@ -254,24 +275,27 @@ class MsgCreateAuction extends CosmosProtoMessage
       ),
       sellingDenom: json.valueAsString<String?>(
         'selling_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       paymentDenom: json.valueAsString<String?>(
         'payment_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      enabled: json.valueAsBool<bool?>('enabled', acceptCamelCase: true),
+      enabled: json.valueAsBool<bool?>(
+        'enabled',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       minPriceMultiplier: json.valueAsString<String?>(
         'min_price_multiplier',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       minBidAmount: json.valueAsString<String?>(
         'min_bid_amount',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       beneficiary: json.valueAsString<String?>(
         'beneficiary',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -326,11 +350,16 @@ class MsgCreateAuctionResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgCreateAuctionResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgCreateAuctionResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgCreateAuctionResponse();
   }
 
@@ -416,11 +445,13 @@ class MsgUpdateAuction extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'admin': admin,
       'auction_name': auctionName,
-      'auction_type': auctionType?.protoName,
+      'auction_type': config.encodeEnum(auctionType),
       'enabled': enabled,
       'min_price_multiplier': minPriceMultiplier,
       'min_bid_amount': minBidAmount,
@@ -428,29 +459,38 @@ class MsgUpdateAuction extends CosmosProtoMessage
     };
   }
 
-  factory MsgUpdateAuction.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateAuction.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateAuction(
-      admin: json.valueAsString<String?>('admin', acceptCamelCase: true),
+      admin: json.valueAsString<String?>(
+        'admin',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       auctionName: json.valueAsString<String?>(
         'auction_name',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       auctionType: json.valueTo<stride_auction_auction.AuctionType?, Object?>(
         key: 'auction_type',
         parse: (v) => stride_auction_auction.AuctionType.from(v),
       ),
-      enabled: json.valueAsBool<bool?>('enabled', acceptCamelCase: true),
+      enabled: json.valueAsBool<bool?>(
+        'enabled',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       minPriceMultiplier: json.valueAsString<String?>(
         'min_price_multiplier',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       minBidAmount: json.valueAsString<String?>(
         'min_bid_amount',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       beneficiary: json.valueAsString<String?>(
         'beneficiary',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -503,11 +543,16 @@ class MsgUpdateAuctionResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgUpdateAuctionResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateAuctionResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateAuctionResponse();
   }
 

@@ -18,7 +18,7 @@ class ChainRegistryRequestPingPubAssets
     CCRSchemaType.assetlist.pathSegments,
   ];
   @override
-  CCRAssetList onResonse(Map<String, dynamic> result) {
+  CCRAssetList onResponse(Map<String, dynamic> result) {
     return CCRAssetList.fromJson(result);
   }
 }

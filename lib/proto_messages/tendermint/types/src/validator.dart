@@ -29,20 +29,32 @@ enum BlockIDFlag implements ProtoEnumVariant {
 
   /// Looks up a value by its proto wire int. Throws if not found.
   static BlockIDFlag fromValue(int? value) {
+    value ??= 0;
     return BlockIDFlag.values.firstWhere(
       (e) => e.value == value,
       orElse:
-          () => throw ItemNotFoundException(name: "BlockIDFlag", value: value),
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching BlockIDFlag found for the given value. $value",
+                details: {"name": "BlockIDFlag", "value": value?.toString()},
+              ),
     );
   }
 
   /// Looks up a value by wire int, Dart enum name, or original proto
   /// name (whichever [value] happens to be). Throws if not found.
   static BlockIDFlag from(Object? value) {
+    value ??= 0;
     return BlockIDFlag.values.firstWhere(
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
-          () => throw ItemNotFoundException(name: "BlockIDFlag", value: value),
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching BlockIDFlag found for the given value. $value",
+                details: {"name": "BlockIDFlag", "value": value?.toString()},
+              ),
     );
   }
 }
@@ -83,33 +95,46 @@ class ValidatorSet extends CosmosProtoMessage {
   List<Object?> get protoValues => [validators, proposer, totalVotingPower];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'validators': validators.map((e) => e.toJson()).toList(),
-      'proposer': proposer?.toJson(),
-      'total_voting_power': totalVotingPower?.toString(),
+      'validators': validators.map((e) => config.encodeMessage(e)).toList(),
+      'proposer': config.encodeMessage(proposer),
+      'total_voting_power': config.encodeBigint(totalVotingPower),
     };
   }
 
-  factory ValidatorSet.fromJson(Map<String, dynamic> json) {
+  factory ValidatorSet.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ValidatorSet(
       validators:
-          (json.valueEnsureAsList<dynamic>('validators', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'validators',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<Validator, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<Validator, Object>(
                   value: e,
-                  parse: (v) => Validator.fromJson(v),
+                  parse:
+                      (v) => Validator.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
-      proposer: json.valueTo<Validator?, Map<String, dynamic>>(
+      proposer: json.valueTo<Validator?, Object>(
         key: 'proposer',
-        parse: (v) => Validator.fromJson(v),
-        acceptCamelCase: true,
+        parse: (v) => Validator.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       totalVotingPower: json.valueAsBigInt<BigInt?>(
         'total_voting_power',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -136,7 +161,7 @@ class ValidatorSet extends CosmosProtoMessage {
 }
 
 class Validator extends CosmosProtoMessage {
-  final List<int>? address;
+  final BuBytes? address;
 
   final tendermint_crypto_keys.PublicKey? pubKey;
 
@@ -144,12 +169,12 @@ class Validator extends CosmosProtoMessage {
 
   final BigInt? proposerPriority;
 
-  const Validator({
-    this.address,
+  Validator({
+    List<int>? address,
     this.pubKey,
     this.votingPower,
     this.proposerPriority,
-  });
+  }) : address = address?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -176,41 +201,41 @@ class Validator extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'address': switch (address) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'pub_key': pubKey?.toJson(),
-      'voting_power': votingPower?.toString(),
-      'proposer_priority': proposerPriority?.toString(),
+      'address': config.encodeBinary(address),
+      'pub_key': config.encodeMessage(pubKey),
+      'voting_power': config.encodeBigint(votingPower),
+      'proposer_priority': config.encodeBigint(proposerPriority),
     };
   }
 
-  factory Validator.fromJson(Map<String, dynamic> json) {
+  factory Validator.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Validator(
-      address: json.valueAsBytes<List<int>?>(
-        'address',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      address: config.decodeBinary<List<int>?>(
+        json.valueAs('address', normalizeKeyLookup: config.normalizeKeys),
       ),
-      pubKey: json
-          .valueTo<tendermint_crypto_keys.PublicKey?, Map<String, dynamic>>(
-            key: 'pub_key',
-            parse: (v) => tendermint_crypto_keys.PublicKey.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      pubKey: json.valueTo<tendermint_crypto_keys.PublicKey?, Object>(
+        key: 'pub_key',
+        parse:
+            (v) => tendermint_crypto_keys.PublicKey.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       votingPower: json.valueAsBigInt<BigInt?>(
         'voting_power',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       proposerPriority: json.valueAsBigInt<BigInt?>(
         'proposer_priority',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

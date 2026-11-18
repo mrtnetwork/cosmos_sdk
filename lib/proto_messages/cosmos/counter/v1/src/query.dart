@@ -22,11 +22,16 @@ class QueryGetCountRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryGetCountRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryGetCountRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryGetCountRequest();
   }
 
@@ -69,15 +74,20 @@ class QueryGetCountResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [totalCount];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'total_count': totalCount?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'total_count': config.encodeBigint(totalCount)};
   }
 
-  factory QueryGetCountResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryGetCountResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryGetCountResponse(
       totalCount: json.valueAsBigInt<BigInt?>(
         'total_count',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

@@ -88,47 +88,52 @@ class Params extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'mint_denom': mintDenom,
       'inflation_rate_change': inflationRateChange,
       'inflation_max': inflationMax,
       'inflation_min': inflationMin,
       'goal_bonded': goalBonded,
-      'blocks_per_year': blocksPerYear?.toString(),
+      'blocks_per_year': config.encodeBigint(blocksPerYear),
       'max_supply': maxSupply,
     };
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
       mintDenom: json.valueAsString<String?>(
         'mint_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       inflationRateChange: json.valueAsString<String?>(
         'inflation_rate_change',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       inflationMax: json.valueAsString<String?>(
         'inflation_max',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       inflationMin: json.valueAsString<String?>(
         'inflation_min',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       goalBonded: json.valueAsString<String?>(
         'goal_bonded',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       blocksPerYear: json.valueAsBigInt<BigInt?>(
         'blocks_per_year',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       maxSupply: json.valueAsString<String?>(
         'max_supply',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

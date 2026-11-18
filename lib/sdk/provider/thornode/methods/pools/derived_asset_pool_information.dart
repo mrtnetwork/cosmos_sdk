@@ -27,7 +27,7 @@ class ThorNodeRequestDerivedAssetPoolInformation
   Map<String, String?> get parameters => {"height": height?.toString()};
 
   @override
-  DerivedAssetPoolInformationResponse onResonse(Map<String, dynamic> result) {
+  DerivedAssetPoolInformationResponse onResponse(Map<String, dynamic> result) {
     return DerivedAssetPoolInformationResponse.fromJson(result);
   }
 }

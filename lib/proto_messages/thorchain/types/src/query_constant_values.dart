@@ -29,13 +29,21 @@ class QueryConstantValuesRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'height': height};
   }
 
-  factory QueryConstantValuesRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryConstantValuesRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryConstantValuesRequest(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -99,51 +107,71 @@ class QueryConstantValuesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [int64Values, boolValues, stringValues];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'int_64_values': int64Values.map((e) => e.toJson()).toList(),
-      'bool_values': boolValues.map((e) => e.toJson()).toList(),
-      'string_values': stringValues.map((e) => e.toJson()).toList(),
+      'int_64_values': int64Values.map((e) => config.encodeMessage(e)).toList(),
+      'bool_values': boolValues.map((e) => config.encodeMessage(e)).toList(),
+      'string_values':
+          stringValues.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory QueryConstantValuesResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryConstantValuesResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryConstantValuesResponse(
       int64Values:
           (json.valueEnsureAsList<dynamic>(
                 'int_64_values',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<Int64Constants, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<Int64Constants, Object>(
                   value: e,
-                  parse: (v) => Int64Constants.fromJson(v),
+                  parse:
+                      (v) => Int64Constants.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       boolValues:
           (json.valueEnsureAsList<dynamic>(
                 'bool_values',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<BoolConstants, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<BoolConstants, Object>(
                   value: e,
-                  parse: (v) => BoolConstants.fromJson(v),
+                  parse:
+                      (v) => BoolConstants.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       stringValues:
           (json.valueEnsureAsList<dynamic>(
                 'string_values',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) =>
-                    JsonParser.valueTo<StringConstants, Map<String, dynamic>>(
-                      value: e,
-                      parse: (v) => StringConstants.fromJson(v),
-                    ),
+                (e) => JsonParser.valueTo<StringConstants, Object>(
+                  value: e,
+                  parse:
+                      (v) => StringConstants.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );
@@ -197,14 +225,25 @@ class Int64Constants extends CosmosProtoMessage {
   List<Object?> get protoValues => [name, value];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'name': name, 'value': value?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'name': name, 'value': config.encodeBigint(value)};
   }
 
-  factory Int64Constants.fromJson(Map<String, dynamic> json) {
+  factory Int64Constants.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Int64Constants(
-      name: json.valueAsString<String?>('name', acceptCamelCase: true),
-      value: json.valueAsBigInt<BigInt?>('value', acceptCamelCase: true),
+      name: json.valueAsString<String?>(
+        'name',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      value: json.valueAsBigInt<BigInt?>(
+        'value',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -243,14 +282,25 @@ class BoolConstants extends CosmosProtoMessage {
   List<Object?> get protoValues => [name, value];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'name': name, 'value': value};
   }
 
-  factory BoolConstants.fromJson(Map<String, dynamic> json) {
+  factory BoolConstants.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return BoolConstants(
-      name: json.valueAsString<String?>('name', acceptCamelCase: true),
-      value: json.valueAsBool<bool?>('value', acceptCamelCase: true),
+      name: json.valueAsString<String?>(
+        'name',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      value: json.valueAsBool<bool?>(
+        'value',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -289,14 +339,25 @@ class StringConstants extends CosmosProtoMessage {
   List<Object?> get protoValues => [name, value];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'name': name, 'value': value};
   }
 
-  factory StringConstants.fromJson(Map<String, dynamic> json) {
+  factory StringConstants.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return StringConstants(
-      name: json.valueAsString<String?>('name', acceptCamelCase: true),
-      value: json.valueAsString<String?>('value', acceptCamelCase: true),
+      name: json.valueAsString<String?>(
+        'name',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      value: json.valueAsString<String?>(
+        'value',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

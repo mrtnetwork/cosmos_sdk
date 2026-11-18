@@ -27,14 +27,28 @@ class Consensus extends CosmosProtoMessage {
   List<Object?> get protoValues => [block, app];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'block': block?.toString(), 'app': app?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'block': config.encodeBigint(block),
+      'app': config.encodeBigint(app),
+    };
   }
 
-  factory Consensus.fromJson(Map<String, dynamic> json) {
+  factory Consensus.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Consensus(
-      block: json.valueAsBigInt<BigInt?>('block', acceptCamelCase: true),
-      app: json.valueAsBigInt<BigInt?>('app', acceptCamelCase: true),
+      block: json.valueAsBigInt<BigInt?>(
+        'block',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      app: json.valueAsBigInt<BigInt?>(
+        'app',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

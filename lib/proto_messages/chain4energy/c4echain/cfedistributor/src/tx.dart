@@ -38,34 +38,44 @@ class MsgUpdateParams extends CosmosProtoMessage
   List<Object?> get protoValues => [authority, subDistributors];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'authority': authority,
-      'sub_distributors': subDistributors.map((e) => e.toJson()).toList(),
+      'sub_distributors':
+          subDistributors.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory MsgUpdateParams.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateParams.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateParams(
       authority: json.valueAsString<String?>(
         'authority',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       subDistributors:
           (json.valueEnsureAsList<dynamic>(
                 'sub_distributors',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   chain4energy_c4echain_cfedistributor_sub_distributor.SubDistributor,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) =>
                           chain4energy_c4echain_cfedistributor_sub_distributor
-                              .SubDistributor.fromJson(v),
+                              .SubDistributor.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
                 ),
               )
               .toList(),
@@ -120,11 +130,16 @@ class MsgUpdateParamsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgUpdateParamsResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateParamsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateParamsResponse();
   }
 
@@ -163,28 +178,33 @@ class MsgUpdateSubDistributorParam extends CosmosProtoMessage
   List<Object?> get protoValues => [authority, subDistributor];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'authority': authority,
-      'sub_distributor': subDistributor?.toJson(),
+      'sub_distributor': config.encodeMessage(subDistributor),
     };
   }
 
-  factory MsgUpdateSubDistributorParam.fromJson(Map<String, dynamic> json) {
+  factory MsgUpdateSubDistributorParam.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateSubDistributorParam(
       authority: json.valueAsString<String?>(
         'authority',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       subDistributor: json.valueTo<
         chain4energy_c4echain_cfedistributor_sub_distributor.SubDistributor?,
-        Map<String, dynamic>
+        Object
       >(
         key: 'sub_distributor',
         parse:
             (v) => chain4energy_c4echain_cfedistributor_sub_distributor
-                .SubDistributor.fromJson(v),
-        acceptCamelCase: true,
+                .SubDistributor.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -238,13 +258,16 @@ class MsgUpdateSubDistributorParamResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
   factory MsgUpdateSubDistributorParamResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateSubDistributorParamResponse();
   }
 
@@ -303,7 +326,9 @@ class MsgUpdateSubDistributorDestinationShareParam extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'authority': authority,
       'sub_distributor_name': subDistributorName,
@@ -313,22 +338,26 @@ class MsgUpdateSubDistributorDestinationShareParam extends CosmosProtoMessage
   }
 
   factory MsgUpdateSubDistributorDestinationShareParam.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateSubDistributorDestinationShareParam(
       authority: json.valueAsString<String?>(
         'authority',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       subDistributorName: json.valueAsString<String?>(
         'sub_distributor_name',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       destinationName: json.valueAsString<String?>(
         'destination_name',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      share: json.valueAsString<String?>('share', acceptCamelCase: true),
+      share: json.valueAsString<String?>(
+        'share',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -384,13 +413,16 @@ class MsgUpdateSubDistributorDestinationShareParamResponse
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
   factory MsgUpdateSubDistributorDestinationShareParamResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateSubDistributorDestinationShareParamResponse();
   }
 
@@ -442,7 +474,9 @@ class MsgUpdateSubDistributorBurnShareParam extends CosmosProtoMessage
   List<Object?> get protoValues => [authority, subDistributorName, burnShare];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'authority': authority,
       'sub_distributor_name': subDistributorName,
@@ -451,20 +485,21 @@ class MsgUpdateSubDistributorBurnShareParam extends CosmosProtoMessage
   }
 
   factory MsgUpdateSubDistributorBurnShareParam.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateSubDistributorBurnShareParam(
       authority: json.valueAsString<String?>(
         'authority',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       subDistributorName: json.valueAsString<String?>(
         'sub_distributor_name',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       burnShare: json.valueAsString<String?>(
         'burn_share',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -515,13 +550,16 @@ class MsgUpdateSubDistributorBurnShareParamResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
   factory MsgUpdateSubDistributorBurnShareParamResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgUpdateSubDistributorBurnShareParamResponse();
   }
 

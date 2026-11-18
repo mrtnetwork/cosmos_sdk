@@ -24,22 +24,32 @@ enum ICAAccountType implements ProtoEnumVariant {
 
   /// Looks up a value by its proto wire int. Throws if not found.
   static ICAAccountType fromValue(int? value) {
+    value ??= 0;
     return ICAAccountType.values.firstWhere(
       (e) => e.value == value,
       orElse:
           () =>
-              throw ItemNotFoundException(name: "ICAAccountType", value: value),
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching ICAAccountType found for the given value. $value",
+                details: {"name": "ICAAccountType", "value": value?.toString()},
+              ),
     );
   }
 
   /// Looks up a value by wire int, Dart enum name, or original proto
   /// name (whichever [value] happens to be). Throws if not found.
   static ICAAccountType from(Object? value) {
+    value ??= 0;
     return ICAAccountType.values.firstWhere(
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
           () =>
-              throw ItemNotFoundException(name: "ICAAccountType", value: value),
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching ICAAccountType found for the given value. $value",
+                details: {"name": "ICAAccountType", "value": value?.toString()},
+              ),
     );
   }
 }
@@ -75,27 +85,38 @@ class ICAAccount extends CosmosProtoMessage {
   List<Object?> get protoValues => [chainId, type, connectionId, address];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'chain_id': chainId,
-      'type': type?.protoName,
+      'type': config.encodeEnum(type),
       'connection_id': connectionId,
       'address': address,
     };
   }
 
-  factory ICAAccount.fromJson(Map<String, dynamic> json) {
+  factory ICAAccount.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ICAAccount(
-      chainId: json.valueAsString<String?>('chain_id', acceptCamelCase: true),
+      chainId: json.valueAsString<String?>(
+        'chain_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       type: json.valueTo<ICAAccountType?, Object?>(
         key: 'type',
         parse: (v) => ICAAccountType.from(v),
       ),
       connectionId: json.valueAsString<String?>(
         'connection_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

@@ -31,14 +31,25 @@ class QueryTradeAccountRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [address, height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'address': address, 'height': height};
   }
 
-  factory QueryTradeAccountRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryTradeAccountRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTradeAccountRequest(
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -115,28 +126,42 @@ class QueryTradeAccountResponse extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'asset': asset,
       'units': units,
       'owner': owner,
-      'last_add_height': lastAddHeight?.toString(),
-      'last_withdraw_height': lastWithdrawHeight?.toString(),
+      'last_add_height': config.encodeBigint(lastAddHeight),
+      'last_withdraw_height': config.encodeBigint(lastWithdrawHeight),
     };
   }
 
-  factory QueryTradeAccountResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryTradeAccountResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTradeAccountResponse(
-      asset: json.valueAsString<String?>('asset', acceptCamelCase: true),
-      units: json.valueAsString<String?>('units', acceptCamelCase: true),
-      owner: json.valueAsString<String?>('owner', acceptCamelCase: true),
+      asset: json.valueAsString<String?>(
+        'asset',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      units: json.valueAsString<String?>(
+        'units',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      owner: json.valueAsString<String?>(
+        'owner',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       lastAddHeight: json.valueAsBigInt<BigInt?>(
         'last_add_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       lastWithdrawHeight: json.valueAsBigInt<BigInt?>(
         'last_withdraw_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -186,14 +211,25 @@ class QueryTradeAccountsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [asset, height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'asset': asset, 'height': height};
   }
 
-  factory QueryTradeAccountsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryTradeAccountsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTradeAccountsRequest(
-      asset: json.valueAsString<String?>('asset', acceptCamelCase: true),
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      asset: json.valueAsString<String?>(
+        'asset',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -244,24 +280,34 @@ class QueryTradeAccountsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [tradeAccounts];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'trade_accounts': tradeAccounts.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'trade_accounts':
+          tradeAccounts.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
-  factory QueryTradeAccountsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryTradeAccountsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryTradeAccountsResponse(
       tradeAccounts:
           (json.valueEnsureAsList<dynamic>(
                 'trade_accounts',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  QueryTradeAccountResponse,
-                  Map<String, dynamic>
-                >(
+                (e) => JsonParser.valueTo<QueryTradeAccountResponse, Object>(
                   value: e,
-                  parse: (v) => QueryTradeAccountResponse.fromJson(v),
+                  parse:
+                      (v) => QueryTradeAccountResponse.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),

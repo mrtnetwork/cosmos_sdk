@@ -46,42 +46,55 @@ class ConsensusParams extends CosmosProtoMessage {
   List<Object?> get protoValues => [block, evidence, validator, version, abci];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'block': block?.toJson(),
-      'evidence': evidence?.toJson(),
-      'validator': validator?.toJson(),
-      'version': version?.toJson(),
-      'abci': abci?.toJson(),
+      'block': config.encodeMessage(block),
+      'evidence': config.encodeMessage(evidence),
+      'validator': config.encodeMessage(validator),
+      'version': config.encodeMessage(version),
+      'abci': config.encodeMessage(abci),
     };
   }
 
-  factory ConsensusParams.fromJson(Map<String, dynamic> json) {
+  factory ConsensusParams.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ConsensusParams(
-      block: json.valueTo<BlockParams?, Map<String, dynamic>>(
+      block: json.valueTo<BlockParams?, Object>(
         key: 'block',
-        parse: (v) => BlockParams.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => BlockParams.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      evidence: json.valueTo<EvidenceParams?, Map<String, dynamic>>(
+      evidence: json.valueTo<EvidenceParams?, Object>(
         key: 'evidence',
-        parse: (v) => EvidenceParams.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) =>
+                EvidenceParams.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      validator: json.valueTo<ValidatorParams?, Map<String, dynamic>>(
+      validator: json.valueTo<ValidatorParams?, Object>(
         key: 'validator',
-        parse: (v) => ValidatorParams.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) =>
+                ValidatorParams.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      version: json.valueTo<VersionParams?, Map<String, dynamic>>(
+      version: json.valueTo<VersionParams?, Object>(
         key: 'version',
-        parse: (v) => VersionParams.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) =>
+                VersionParams.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      abci: json.valueTo<ABCIParams?, Map<String, dynamic>>(
+      abci: json.valueTo<ABCIParams?, Object>(
         key: 'abci',
-        parse: (v) => ABCIParams.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => ABCIParams.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -141,14 +154,28 @@ class BlockParams extends CosmosProtoMessage {
   List<Object?> get protoValues => [maxBytes, maxGas];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'max_bytes': maxBytes?.toString(), 'max_gas': maxGas?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'max_bytes': config.encodeBigint(maxBytes),
+      'max_gas': config.encodeBigint(maxGas),
+    };
   }
 
-  factory BlockParams.fromJson(Map<String, dynamic> json) {
+  factory BlockParams.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return BlockParams(
-      maxBytes: json.valueAsBigInt<BigInt?>('max_bytes', acceptCamelCase: true),
-      maxGas: json.valueAsBigInt<BigInt?>('max_gas', acceptCamelCase: true),
+      maxBytes: json.valueAsBigInt<BigInt?>(
+        'max_bytes',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      maxGas: json.valueAsBigInt<BigInt?>(
+        'max_gas',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -211,26 +238,38 @@ class EvidenceParams extends CosmosProtoMessage {
   List<Object?> get protoValues => [maxAgeNumBlocks, maxAgeDuration, maxBytes];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'max_age_num_blocks': maxAgeNumBlocks?.toString(),
+      'max_age_num_blocks': config.encodeBigint(maxAgeNumBlocks),
       'max_age_duration': maxAgeDuration?.encodeString(asNanos: true),
-      'max_bytes': maxBytes?.toString(),
+      'max_bytes': config.encodeBigint(maxBytes),
     };
   }
 
-  factory EvidenceParams.fromJson(Map<String, dynamic> json) {
+  factory EvidenceParams.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return EvidenceParams(
       maxAgeNumBlocks: json.valueAsBigInt<BigInt?>(
         'max_age_num_blocks',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      maxAgeDuration: json.valueTo<google_protobuf_duration.Duration?, String>(
+      maxAgeDuration: json.valueTo<google_protobuf_duration.Duration?, Object>(
         key: 'max_age_duration',
-        parse: (v) => google_protobuf_duration.Duration.fromString(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_duration.Duration.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      maxBytes: json.valueAsBigInt<BigInt?>('max_bytes', acceptCamelCase: true),
+      maxBytes: json.valueAsBigInt<BigInt?>(
+        'max_bytes',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -278,16 +317,22 @@ class ValidatorParams extends CosmosProtoMessage {
   List<Object?> get protoValues => [pubKeyTypes];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'pub_key_types': pubKeyTypes.map((e) => e).toList()};
   }
 
-  factory ValidatorParams.fromJson(Map<String, dynamic> json) {
+  factory ValidatorParams.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ValidatorParams(
       pubKeyTypes:
           (json.valueEnsureAsList<dynamic>(
             'pub_key_types',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
     );
   }
@@ -323,13 +368,21 @@ class VersionParams extends CosmosProtoMessage {
   List<Object?> get protoValues => [app];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'app': app?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'app': config.encodeBigint(app)};
   }
 
-  factory VersionParams.fromJson(Map<String, dynamic> json) {
+  factory VersionParams.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return VersionParams(
-      app: json.valueAsBigInt<BigInt?>('app', acceptCamelCase: true),
+      app: json.valueAsBigInt<BigInt?>(
+        'app',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -373,17 +426,24 @@ class ABCIParams extends CosmosProtoMessage {
   List<Object?> get protoValues => [voteExtensionsEnableHeight];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'vote_extensions_enable_height': voteExtensionsEnableHeight?.toString(),
+      'vote_extensions_enable_height': config.encodeBigint(
+        voteExtensionsEnableHeight,
+      ),
     };
   }
 
-  factory ABCIParams.fromJson(Map<String, dynamic> json) {
+  factory ABCIParams.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ABCIParams(
       voteExtensionsEnableHeight: json.valueAsBigInt<BigInt?>(
         'vote_extensions_enable_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

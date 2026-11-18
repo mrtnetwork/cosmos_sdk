@@ -32,11 +32,16 @@ class QueryParamsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryParamsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsRequest();
   }
 
@@ -84,19 +89,25 @@ class QueryParamsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [params];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'params': params?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'params': config.encodeMessage(params)};
   }
 
-  factory QueryParamsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsResponse(
-      params: json.valueTo<
-        cosmos_slashing_v1beta1_slashing.Params?,
-        Map<String, dynamic>
-      >(
+      params: json.valueTo<cosmos_slashing_v1beta1_slashing.Params?, Object>(
         key: 'params',
-        parse: (v) => cosmos_slashing_v1beta1_slashing.Params.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => cosmos_slashing_v1beta1_slashing.Params.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -146,15 +157,20 @@ class QuerySigningInfoRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [consAddress];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'cons_address': consAddress};
   }
 
-  factory QuerySigningInfoRequest.fromJson(Map<String, dynamic> json) {
+  factory QuerySigningInfoRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QuerySigningInfoRequest(
       consAddress: json.valueAsString<String?>(
         'cons_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -206,21 +222,29 @@ class QuerySigningInfoResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [valSigningInfo];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'val_signing_info': valSigningInfo?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'val_signing_info': config.encodeMessage(valSigningInfo)};
   }
 
-  factory QuerySigningInfoResponse.fromJson(Map<String, dynamic> json) {
+  factory QuerySigningInfoResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QuerySigningInfoResponse(
       valSigningInfo: json.valueTo<
         cosmos_slashing_v1beta1_slashing.ValidatorSigningInfo?,
-        Map<String, dynamic>
+        Object
       >(
         key: 'val_signing_info',
         parse:
-            (v) => cosmos_slashing_v1beta1_slashing
-                .ValidatorSigningInfo.fromJson(v),
-        acceptCamelCase: true,
+            (v) =>
+                cosmos_slashing_v1beta1_slashing.ValidatorSigningInfo.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -271,21 +295,28 @@ class QuerySigningInfosRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [pagination];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'pagination': pagination?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'pagination': config.encodeMessage(pagination)};
   }
 
-  factory QuerySigningInfosRequest.fromJson(Map<String, dynamic> json) {
+  factory QuerySigningInfosRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QuerySigningInfosRequest(
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageRequest?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) => cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageRequest?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -347,39 +378,52 @@ class QuerySigningInfosResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [info, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'info': info.map((e) => e.toJson()).toList(),
-      'pagination': pagination?.toJson(),
+      'info': info.map((e) => config.encodeMessage(e)).toList(),
+      'pagination': config.encodeMessage(pagination),
     };
   }
 
-  factory QuerySigningInfosResponse.fromJson(Map<String, dynamic> json) {
+  factory QuerySigningInfosResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QuerySigningInfosResponse(
       info:
-          (json.valueEnsureAsList<dynamic>('info', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'info',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   cosmos_slashing_v1beta1_slashing.ValidatorSigningInfo,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => cosmos_slashing_v1beta1_slashing
-                          .ValidatorSigningInfo.fromJson(v),
+                          .ValidatorSigningInfo.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageResponse?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) =>
-                cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageResponse?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 

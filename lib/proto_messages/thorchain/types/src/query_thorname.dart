@@ -31,14 +31,25 @@ class QueryThornameRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [name, height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'name': name, 'height': height};
   }
 
-  factory QueryThornameRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryThornameRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryThornameRequest(
-      name: json.valueAsString<String?>('name', acceptCamelCase: true),
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      name: json.valueAsString<String?>(
+        'name',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -133,50 +144,70 @@ class QueryThornameResponse extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'name': name,
-      'expire_block_height': expireBlockHeight?.toString(),
+      'expire_block_height': config.encodeBigint(expireBlockHeight),
       'owner': owner,
       'preferred_asset': preferredAsset,
       'preferred_asset_swap_threshold_rune': preferredAssetSwapThresholdRune,
-      'preferred_asset_outbound_fee_multiplier':
-          preferredAssetOutboundFeeMultiplier?.toString(),
+      'preferred_asset_outbound_fee_multiplier': config.encodeBigint(
+        preferredAssetOutboundFeeMultiplier,
+      ),
       'affiliate_collector_rune': affiliateCollectorRune,
-      'aliases': aliases.map((e) => e.toJson()).toList(),
+      'aliases': aliases.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory QueryThornameResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryThornameResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryThornameResponse(
-      name: json.valueAsString<String?>('name', acceptCamelCase: true),
+      name: json.valueAsString<String?>(
+        'name',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       expireBlockHeight: json.valueAsBigInt<BigInt?>(
         'expire_block_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      owner: json.valueAsString<String?>('owner', acceptCamelCase: true),
+      owner: json.valueAsString<String?>(
+        'owner',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       preferredAsset: json.valueAsString<String?>(
         'preferred_asset',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       preferredAssetSwapThresholdRune: json.valueAsString<String?>(
         'preferred_asset_swap_threshold_rune',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       preferredAssetOutboundFeeMultiplier: json.valueAsBigInt<BigInt?>(
         'preferred_asset_outbound_fee_multiplier',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       affiliateCollectorRune: json.valueAsString<String?>(
         'affiliate_collector_rune',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       aliases:
-          (json.valueEnsureAsList<dynamic>('aliases', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'aliases',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<ThornameAlias, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<ThornameAlias, Object>(
                   value: e,
-                  parse: (v) => ThornameAlias.fromJson(v),
+                  parse:
+                      (v) => ThornameAlias.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -228,14 +259,25 @@ class ThornameAlias extends CosmosProtoMessage {
   List<Object?> get protoValues => [chain, address];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'chain': chain, 'address': address};
   }
 
-  factory ThornameAlias.fromJson(Map<String, dynamic> json) {
+  factory ThornameAlias.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ThornameAlias(
-      chain: json.valueAsString<String?>('chain', acceptCamelCase: true),
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
+      chain: json.valueAsString<String?>(
+        'chain',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

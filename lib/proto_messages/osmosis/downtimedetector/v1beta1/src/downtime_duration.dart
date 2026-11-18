@@ -39,18 +39,32 @@ enum Downtime implements ProtoEnumVariant {
 
   /// Looks up a value by its proto wire int. Throws if not found.
   static Downtime fromValue(int? value) {
+    value ??= 0;
     return Downtime.values.firstWhere(
       (e) => e.value == value,
-      orElse: () => throw ItemNotFoundException(name: "Downtime", value: value),
+      orElse:
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching Downtime found for the given value. $value",
+                details: {"name": "Downtime", "value": value?.toString()},
+              ),
     );
   }
 
   /// Looks up a value by wire int, Dart enum name, or original proto
   /// name (whichever [value] happens to be). Throws if not found.
   static Downtime from(Object? value) {
+    value ??= 0;
     return Downtime.values.firstWhere(
       (e) => e.value == value || e.name == value || e.protoName == value,
-      orElse: () => throw ItemNotFoundException(name: "Downtime", value: value),
+      orElse:
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching Downtime found for the given value. $value",
+                details: {"name": "Downtime", "value": value?.toString()},
+              ),
     );
   }
 }

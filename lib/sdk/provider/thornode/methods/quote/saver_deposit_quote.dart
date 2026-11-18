@@ -9,7 +9,7 @@ class ThorNodeRequestSaverDepositQuote
   /// optional block height, defaults to current tip
   final BigInt? height;
 
-  /// tthe asset to deposit
+  /// the asset to deposit
   final String? asset;
 
   /// the source asset amount in 1e8 decimals

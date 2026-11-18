@@ -30,11 +30,16 @@ class QueryParamsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryParamsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsRequest();
   }
 
@@ -83,19 +88,25 @@ class QueryParamsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [params];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'params': params?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'params': config.encodeMessage(params)};
   }
 
-  factory QueryParamsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsResponse(
-      params: json.valueTo<
-        ethermint_feemarket_v1_feemarket.Params?,
-        Map<String, dynamic>
-      >(
+      params: json.valueTo<ethermint_feemarket_v1_feemarket.Params?, Object>(
         key: 'params',
-        parse: (v) => ethermint_feemarket_v1_feemarket.Params.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => ethermint_feemarket_v1_feemarket.Params.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -142,11 +153,16 @@ class QueryBaseFeeRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryBaseFeeRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryBaseFeeRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryBaseFeeRequest();
   }
 
@@ -190,13 +206,21 @@ class QueryBaseFeeResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [baseFee];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'base_fee': baseFee};
   }
 
-  factory QueryBaseFeeResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryBaseFeeResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryBaseFeeResponse(
-      baseFee: json.valueAsString<String?>('base_fee', acceptCamelCase: true),
+      baseFee: json.valueAsString<String?>(
+        'base_fee',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -237,11 +261,16 @@ class QueryBlockGasRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryBlockGasRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryBlockGasRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryBlockGasRequest();
   }
 
@@ -285,13 +314,21 @@ class QueryBlockGasResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [gas];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'gas': gas?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'gas': config.encodeBigint(gas)};
   }
 
-  factory QueryBlockGasResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryBlockGasResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryBlockGasResponse(
-      gas: json.valueAsBigInt<BigInt?>('gas', acceptCamelCase: true),
+      gas: json.valueAsBigInt<BigInt?>(
+        'gas',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

@@ -26,22 +26,32 @@ enum UpgradePolicy implements ProtoEnumVariant {
 
   /// Looks up a value by its proto wire int. Throws if not found.
   static UpgradePolicy fromValue(int? value) {
+    value ??= 0;
     return UpgradePolicy.values.firstWhere(
       (e) => e.value == value,
       orElse:
           () =>
-              throw ItemNotFoundException(name: "UpgradePolicy", value: value),
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching UpgradePolicy found for the given value. $value",
+                details: {"name": "UpgradePolicy", "value": value?.toString()},
+              ),
     );
   }
 
   /// Looks up a value by wire int, Dart enum name, or original proto
   /// name (whichever [value] happens to be). Throws if not found.
   static UpgradePolicy from(Object? value) {
+    value ??= 0;
     return UpgradePolicy.values.firstWhere(
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
           () =>
-              throw ItemNotFoundException(name: "UpgradePolicy", value: value),
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching UpgradePolicy found for the given value. $value",
+                details: {"name": "UpgradePolicy", "value": value?.toString()},
+              ),
     );
   }
 }
@@ -116,7 +126,9 @@ class Params extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'base_denom': baseDenom,
       'base_min_gas_price': baseMinGasPrice,
@@ -127,32 +139,36 @@ class Params extends CosmosProtoMessage {
     };
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
       baseDenom: json.valueAsString<String?>(
         'base_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       baseMinGasPrice: json.valueAsString<String?>(
         'base_min_gas_price',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       contractSharedRevenueRatio: json.valueAsString<String?>(
         'contract_shared_revenue_ratio',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       scriptEnabled: json.valueAsBool<bool?>(
         'script_enabled',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       allowedPublishers:
           (json.valueEnsureAsList<dynamic>(
             'allowed_publishers',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
       clammModuleAddress: json.valueAsString<String?>(
         'clamm_module_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -182,17 +198,17 @@ class Module extends CosmosProtoMessage {
 
   final String? abi;
 
-  final List<int>? rawBytes;
+  final BuBytes? rawBytes;
 
   final UpgradePolicy? upgradePolicy;
 
-  const Module({
+  Module({
     this.address,
     this.moduleName,
     this.abi,
-    this.rawBytes,
+    List<int>? rawBytes,
     this.upgradePolicy,
-  });
+  }) : rawBytes = rawBytes?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -221,34 +237,37 @@ class Module extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'address': address,
       'module_name': moduleName,
       'abi': abi,
-      'raw_bytes': switch (rawBytes) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'upgrade_policy': upgradePolicy?.protoName,
+      'raw_bytes': config.encodeBinary(rawBytes),
+      'upgrade_policy': config.encodeEnum(upgradePolicy),
     };
   }
 
-  factory Module.fromJson(Map<String, dynamic> json) {
+  factory Module.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Module(
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       moduleName: json.valueAsString<String?>(
         'module_name',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      abi: json.valueAsString<String?>('abi', acceptCamelCase: true),
-      rawBytes: json.valueAsBytes<List<int>?>(
-        'raw_bytes',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      abi: json.valueAsString<String?>(
+        'abi',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      rawBytes: config.decodeBinary<List<int>?>(
+        json.valueAs('raw_bytes', normalizeKeyLookup: config.normalizeKeys),
       ),
       upgradePolicy: json.valueTo<UpgradePolicy?, Object?>(
         key: 'upgrade_policy',
@@ -281,14 +300,14 @@ class Resource extends CosmosProtoMessage {
 
   final String? moveResource;
 
-  final List<int>? rawBytes;
+  final BuBytes? rawBytes;
 
-  const Resource({
+  Resource({
     this.address,
     this.structTag,
     this.moveResource,
-    this.rawBytes,
-  });
+    List<int>? rawBytes,
+  }) : rawBytes = rawBytes?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -310,36 +329,36 @@ class Resource extends CosmosProtoMessage {
   List<Object?> get protoValues => [address, structTag, moveResource, rawBytes];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'address': address,
       'struct_tag': structTag,
       'move_resource': moveResource,
-      'raw_bytes': switch (rawBytes) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'raw_bytes': config.encodeBinary(rawBytes),
     };
   }
 
-  factory Resource.fromJson(Map<String, dynamic> json) {
+  factory Resource.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Resource(
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       structTag: json.valueAsString<String?>(
         'struct_tag',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       moveResource: json.valueAsString<String?>(
         'move_resource',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      rawBytes: json.valueAsBytes<List<int>?>(
-        'raw_bytes',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      rawBytes: config.decodeBinary<List<int>?>(
+        json.valueAs('raw_bytes', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }
@@ -388,17 +407,28 @@ class TableInfo extends CosmosProtoMessage {
   List<Object?> get protoValues => [address, keyType, valueType];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'address': address, 'key_type': keyType, 'value_type': valueType};
   }
 
-  factory TableInfo.fromJson(Map<String, dynamic> json) {
+  factory TableInfo.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return TableInfo(
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
-      keyType: json.valueAsString<String?>('key_type', acceptCamelCase: true),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      keyType: json.valueAsString<String?>(
+        'key_type',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       valueType: json.valueAsString<String?>(
         'value_type',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -425,17 +455,18 @@ class TableEntry extends CosmosProtoMessage {
 
   final String? value;
 
-  final List<int>? keyBytes;
+  final BuBytes? keyBytes;
 
-  final List<int>? valueBytes;
+  final BuBytes? valueBytes;
 
-  const TableEntry({
+  TableEntry({
     this.address,
     this.key,
     this.value,
-    this.keyBytes,
-    this.valueBytes,
-  });
+    List<int>? keyBytes,
+    List<int>? valueBytes,
+  }) : keyBytes = keyBytes?.asImmutableBytes,
+       valueBytes = valueBytes?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -458,42 +489,40 @@ class TableEntry extends CosmosProtoMessage {
   List<Object?> get protoValues => [address, key, value, keyBytes, valueBytes];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'address': address,
       'key': key,
       'value': value,
-      'key_bytes': switch (keyBytes) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'value_bytes': switch (valueBytes) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'key_bytes': config.encodeBinary(keyBytes),
+      'value_bytes': config.encodeBinary(valueBytes),
     };
   }
 
-  factory TableEntry.fromJson(Map<String, dynamic> json) {
+  factory TableEntry.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return TableEntry(
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
-      key: json.valueAsString<String?>('key', acceptCamelCase: true),
-      value: json.valueAsString<String?>('value', acceptCamelCase: true),
-      keyBytes: json.valueAsBytes<List<int>?>(
-        'key_bytes',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      valueBytes: json.valueAsBytes<List<int>?>(
-        'value_bytes',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      key: json.valueAsString<String?>(
+        'key',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      value: json.valueAsString<String?>(
+        'value',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      keyBytes: config.decodeBinary<List<int>?>(
+        json.valueAs('key_bytes', normalizeKeyLookup: config.normalizeKeys),
+      ),
+      valueBytes: config.decodeBinary<List<int>?>(
+        json.valueAs('value_bytes', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }
@@ -541,19 +570,24 @@ class DexPair extends CosmosProtoMessage {
   List<Object?> get protoValues => [metadataQuote, metadataLp];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'metadata_quote': metadataQuote, 'metadata_lp': metadataLp};
   }
 
-  factory DexPair.fromJson(Map<String, dynamic> json) {
+  factory DexPair.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return DexPair(
       metadataQuote: json.valueAsString<String?>(
         'metadata_quote',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       metadataLp: json.valueAsString<String?>(
         'metadata_lp',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

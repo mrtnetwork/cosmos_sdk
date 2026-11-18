@@ -65,18 +65,32 @@ enum SignMode implements ProtoEnumVariant {
 
   /// Looks up a value by its proto wire int. Throws if not found.
   static SignMode fromValue(int? value) {
+    value ??= 0;
     return SignMode.values.firstWhere(
       (e) => e.value == value,
-      orElse: () => throw ItemNotFoundException(name: "SignMode", value: value),
+      orElse:
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching SignMode found for the given value. $value",
+                details: {"name": "SignMode", "value": value?.toString()},
+              ),
     );
   }
 
   /// Looks up a value by wire int, Dart enum name, or original proto
   /// name (whichever [value] happens to be). Throws if not found.
   static SignMode from(Object? value) {
+    value ??= 0;
     return SignMode.values.firstWhere(
       (e) => e.value == value || e.name == value || e.protoName == value,
-      orElse: () => throw ItemNotFoundException(name: "SignMode", value: value),
+      orElse:
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching SignMode found for the given value. $value",
+                details: {"name": "SignMode", "value": value?.toString()},
+              ),
     );
   }
 }
@@ -108,19 +122,34 @@ class SignatureDescriptors extends CosmosProtoMessage {
   List<Object?> get protoValues => [signatures];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'signatures': signatures.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'signatures': signatures.map((e) => config.encodeMessage(e)).toList(),
+    };
   }
 
-  factory SignatureDescriptors.fromJson(Map<String, dynamic> json) {
+  factory SignatureDescriptors.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SignatureDescriptors(
       signatures:
-          (json.valueEnsureAsList<dynamic>('signatures', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'signatures',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  SignatureDescriptor,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => SignatureDescriptor.fromJson(v)),
+                (e) => JsonParser.valueTo<SignatureDescriptor, Object>(
+                  value: e,
+                  parse:
+                      (v) => SignatureDescriptor.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );
@@ -178,27 +207,43 @@ class SignatureDescriptor extends CosmosProtoMessage {
   List<Object?> get protoValues => [publicKey, data, sequence];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'public_key': publicKey?.toJson(),
-      'data': data?.toJson(),
-      'sequence': sequence?.toString(),
+      'public_key': config.encodeMessage(publicKey),
+      'data': config.encodeMessage(data),
+      'sequence': config.encodeBigint(sequence),
     };
   }
 
-  factory SignatureDescriptor.fromJson(Map<String, dynamic> json) {
+  factory SignatureDescriptor.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SignatureDescriptor(
-      publicKey: json.valueTo<google_protobuf_any.Any?, Map<String, dynamic>>(
+      publicKey: json.valueTo<google_protobuf_any.Any?, Object>(
         key: 'public_key',
-        parse: (v) => google_protobuf_any.Any.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_any.Any.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      data: json.valueTo<SignatureDescriptorData?, Map<String, dynamic>>(
+      data: json.valueTo<SignatureDescriptorData?, Object>(
         key: 'data',
-        parse: (v) => SignatureDescriptorData.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => SignatureDescriptorData.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      sequence: json.valueAsBigInt<BigInt?>('sequence', acceptCamelCase: true),
+      sequence: json.valueAsBigInt<BigInt?>(
+        'sequence',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -248,22 +293,37 @@ class SignatureDescriptorData extends CosmosProtoMessage {
   List<Object?> get protoValues => [single, multi];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'single': single?.toJson(), 'multi': multi?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'single': config.encodeMessage(single),
+      'multi': config.encodeMessage(multi),
+    };
   }
 
-  factory SignatureDescriptorData.fromJson(Map<String, dynamic> json) {
+  factory SignatureDescriptorData.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SignatureDescriptorData(
-      single: json
-          .valueTo<SignatureDescriptorDataSingle?, Map<String, dynamic>>(
-            key: 'single',
-            parse: (v) => SignatureDescriptorDataSingle.fromJson(v),
-            acceptCamelCase: true,
-          ),
-      multi: json.valueTo<SignatureDescriptorDataMulti?, Map<String, dynamic>>(
+      single: json.valueTo<SignatureDescriptorDataSingle?, Object>(
+        key: 'single',
+        parse:
+            (v) => SignatureDescriptorDataSingle.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      multi: json.valueTo<SignatureDescriptorDataMulti?, Object>(
         key: 'multi',
-        parse: (v) => SignatureDescriptorDataMulti.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => SignatureDescriptorDataMulti.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -293,9 +353,10 @@ class SignatureDescriptorDataSingle extends CosmosProtoMessage {
   final SignMode? mode;
 
   /// signature is the raw signature bytes
-  final List<int>? signature;
+  final BuBytes? signature;
 
-  const SignatureDescriptorDataSingle({this.mode, this.signature});
+  SignatureDescriptorDataSingle({this.mode, List<int>? signature})
+    : signature = signature?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -312,29 +373,26 @@ class SignatureDescriptorDataSingle extends CosmosProtoMessage {
   List<Object?> get protoValues => [mode, signature];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'mode': mode?.protoName,
-      'signature': switch (signature) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'mode': config.encodeEnum(mode),
+      'signature': config.encodeBinary(signature),
     };
   }
 
-  factory SignatureDescriptorDataSingle.fromJson(Map<String, dynamic> json) {
+  factory SignatureDescriptorDataSingle.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SignatureDescriptorDataSingle(
       mode: json.valueTo<SignMode?, Object?>(
         key: 'mode',
         parse: (v) => SignMode.from(v),
       ),
-      signature: json.valueAsBytes<List<int>?>(
-        'signature',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      signature: config.decodeBinary<List<int>?>(
+        json.valueAs('signature', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }
@@ -387,32 +445,48 @@ class SignatureDescriptorDataMulti extends CosmosProtoMessage {
   List<Object?> get protoValues => [bitarray, signatures];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'bitarray': bitarray?.toJson(),
-      'signatures': signatures.map((e) => e.toJson()).toList(),
+      'bitarray': config.encodeMessage(bitarray),
+      'signatures': signatures.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory SignatureDescriptorDataMulti.fromJson(Map<String, dynamic> json) {
+  factory SignatureDescriptorDataMulti.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SignatureDescriptorDataMulti(
       bitarray: json.valueTo<
         cosmos_crypto_multisig_v1beta1_multisig.CompactBitArray?,
-        Map<String, dynamic>
+        Object
       >(
         key: 'bitarray',
         parse:
             (v) => cosmos_crypto_multisig_v1beta1_multisig
-                .CompactBitArray.fromJson(v),
-        acceptCamelCase: true,
+                .CompactBitArray.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       signatures:
-          (json.valueEnsureAsList<dynamic>('signatures', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'signatures',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  SignatureDescriptorData,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => SignatureDescriptorData.fromJson(v)),
+                (e) => JsonParser.valueTo<SignatureDescriptorData, Object>(
+                  value: e,
+                  parse:
+                      (v) => SignatureDescriptorData.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );

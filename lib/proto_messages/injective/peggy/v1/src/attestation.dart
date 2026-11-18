@@ -58,28 +58,44 @@ class Attestation extends CosmosProtoMessage {
   List<Object?> get protoValues => [observed, votes, height, claim];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'observed': observed,
       'votes': votes.map((e) => e).toList(),
-      'height': height?.toString(),
-      'claim': claim?.toJson(),
+      'height': config.encodeBigint(height),
+      'claim': config.encodeMessage(claim),
     };
   }
 
-  factory Attestation.fromJson(Map<String, dynamic> json) {
+  factory Attestation.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Attestation(
-      observed: json.valueAsBool<bool?>('observed', acceptCamelCase: true),
+      observed: json.valueAsBool<bool?>(
+        'observed',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       votes:
           (json.valueEnsureAsList<dynamic>(
             'votes',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
-      height: json.valueAsBigInt<BigInt?>('height', acceptCamelCase: true),
-      claim: json.valueTo<google_protobuf_any.Any?, Map<String, dynamic>>(
+      height: json.valueAsBigInt<BigInt?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      claim: json.valueTo<google_protobuf_any.Any?, Object>(
         key: 'claim',
-        parse: (v) => google_protobuf_any.Any.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_any.Any.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -133,14 +149,25 @@ class ERC20Token extends CosmosProtoMessage {
   List<Object?> get protoValues => [contract, amount];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'contract': contract, 'amount': amount};
   }
 
-  factory ERC20Token.fromJson(Map<String, dynamic> json) {
+  factory ERC20Token.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ERC20Token(
-      contract: json.valueAsString<String?>('contract', acceptCamelCase: true),
-      amount: json.valueAsString<String?>('amount', acceptCamelCase: true),
+      contract: json.valueAsString<String?>(
+        'contract',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      amount: json.valueAsString<String?>(
+        'amount',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

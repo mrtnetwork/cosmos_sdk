@@ -12,9 +12,10 @@ class MsgObservedTxQuorum extends CosmosProtoMessage
         ICosmosProtoAminoMessage {
   final common_common.QuorumTx? quoTx;
 
-  final List<int>? signer;
+  final BuBytes? signer;
 
-  const MsgObservedTxQuorum({this.quoTx, this.signer});
+  MsgObservedTxQuorum({this.quoTx, List<int>? signer})
+    : signer = signer?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -42,30 +43,31 @@ class MsgObservedTxQuorum extends CosmosProtoMessage
   List<Object?> get protoValues => [quoTx, signer];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'quoTx': quoTx?.toJson(),
-      'signer': switch (signer) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'quoTx': config.encodeMessage(quoTx),
+      'signer': config.encodeBinary(signer),
     };
   }
 
-  factory MsgObservedTxQuorum.fromJson(Map<String, dynamic> json) {
+  factory MsgObservedTxQuorum.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgObservedTxQuorum(
-      quoTx: json.valueTo<common_common.QuorumTx?, Map<String, dynamic>>(
+      quoTx: json.valueTo<common_common.QuorumTx?, Object>(
         key: 'quoTx',
-        parse: (v) => common_common.QuorumTx.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => common_common.QuorumTx.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      signer: json.valueAsBytes<List<int>?>(
-        'signer',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      signer: config.decodeBinary<List<int>?>(
+        json.valueAs('signer', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }

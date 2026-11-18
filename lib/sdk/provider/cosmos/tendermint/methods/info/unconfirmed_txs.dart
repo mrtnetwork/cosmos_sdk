@@ -27,7 +27,7 @@ class TendermintRequestUnconfirmedTxs
   Map<String, String?> get parameters => {"limit": limit?.toString()};
 
   @override
-  TendermintUnconfirmedTransactionsResponseResult onResonse(
+  TendermintUnconfirmedTransactionsResponseResult onResponse(
     Map<String, dynamic> result,
   ) {
     return TendermintUnconfirmedTransactionsResponseResult.fromJson(result);

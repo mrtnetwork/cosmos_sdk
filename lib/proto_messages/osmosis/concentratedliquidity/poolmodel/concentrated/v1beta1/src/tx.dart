@@ -58,28 +58,42 @@ class MsgCreateConcentratedPool extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'sender': sender,
       'denom0': denom0,
       'denom1': denom1,
-      'tick_spacing': tickSpacing?.toString(),
+      'tick_spacing': config.encodeBigint(tickSpacing),
       'spread_factor': spreadFactor,
     };
   }
 
-  factory MsgCreateConcentratedPool.fromJson(Map<String, dynamic> json) {
+  factory MsgCreateConcentratedPool.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgCreateConcentratedPool(
-      sender: json.valueAsString<String?>('sender', acceptCamelCase: true),
-      denom0: json.valueAsString<String?>('denom0', acceptCamelCase: true),
-      denom1: json.valueAsString<String?>('denom1', acceptCamelCase: true),
+      sender: json.valueAsString<String?>(
+        'sender',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      denom0: json.valueAsString<String?>(
+        'denom0',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      denom1: json.valueAsString<String?>(
+        'denom1',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       tickSpacing: json.valueAsBigInt<BigInt?>(
         'tick_spacing',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       spreadFactor: json.valueAsString<String?>(
         'spread_factor',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -133,15 +147,21 @@ class MsgCreateConcentratedPoolResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [poolId];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'pool_id': poolId?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'pool_id': config.encodeBigint(poolId)};
   }
 
   factory MsgCreateConcentratedPoolResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgCreateConcentratedPoolResponse(
-      poolId: json.valueAsBigInt<BigInt?>('pool_id', acceptCamelCase: true),
+      poolId: json.valueAsBigInt<BigInt?>(
+        'pool_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

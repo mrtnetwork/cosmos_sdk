@@ -49,7 +49,9 @@ class TakerFeeShareAgreement extends CosmosProtoMessage {
   List<Object?> get protoValues => [denom, skimPercent, skimAddress];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'denom': denom,
       'skim_percent': skimPercent,
@@ -57,16 +59,22 @@ class TakerFeeShareAgreement extends CosmosProtoMessage {
     };
   }
 
-  factory TakerFeeShareAgreement.fromJson(Map<String, dynamic> json) {
+  factory TakerFeeShareAgreement.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return TakerFeeShareAgreement(
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       skimPercent: json.valueAsString<String?>(
         'skim_percent',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       skimAddress: json.valueAsString<String?>(
         'skim_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -118,29 +126,41 @@ class TakerFeeSkimAccumulator extends CosmosProtoMessage {
   List<Object?> get protoValues => [denom, skimmedTakerFees];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'denom': denom,
-      'skimmed_taker_fees': skimmedTakerFees.map((e) => e.toJson()).toList(),
+      'skimmed_taker_fees':
+          skimmedTakerFees.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory TakerFeeSkimAccumulator.fromJson(Map<String, dynamic> json) {
+  factory TakerFeeSkimAccumulator.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return TakerFeeSkimAccumulator(
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       skimmedTakerFees:
           (json.valueEnsureAsList<dynamic>(
                 'skimmed_taker_fees',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -207,30 +227,40 @@ class AlloyContractTakerFeeShareState extends CosmosProtoMessage {
   List<Object?> get protoValues => [contractAddress, takerFeeShareAgreements];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'contract_address': contractAddress,
       'taker_fee_share_agreements':
-          takerFeeShareAgreements.map((e) => e.toJson()).toList(),
+          takerFeeShareAgreements.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory AlloyContractTakerFeeShareState.fromJson(Map<String, dynamic> json) {
+  factory AlloyContractTakerFeeShareState.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AlloyContractTakerFeeShareState(
       contractAddress: json.valueAsString<String?>(
         'contract_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       takerFeeShareAgreements:
           (json.valueEnsureAsList<dynamic>(
                 'taker_fee_share_agreements',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  TakerFeeShareAgreement,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => TakerFeeShareAgreement.fromJson(v)),
+                (e) => JsonParser.valueTo<TakerFeeShareAgreement, Object>(
+                  value: e,
+                  parse:
+                      (v) => TakerFeeShareAgreement.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );

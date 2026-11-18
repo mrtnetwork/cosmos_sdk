@@ -29,13 +29,18 @@ enum DepositRecordStatus implements ProtoEnumVariant {
 
   /// Looks up a value by its proto wire int. Throws if not found.
   static DepositRecordStatus fromValue(int? value) {
+    value ??= 0;
     return DepositRecordStatus.values.firstWhere(
       (e) => e.value == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "DepositRecordStatus",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching DepositRecordStatus found for the given value. $value",
+                details: {
+                  "name": "DepositRecordStatus",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -43,13 +48,18 @@ enum DepositRecordStatus implements ProtoEnumVariant {
   /// Looks up a value by wire int, Dart enum name, or original proto
   /// name (whichever [value] happens to be). Throws if not found.
   static DepositRecordStatus from(Object? value) {
+    value ??= 0;
     return DepositRecordStatus.values.firstWhere(
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "DepositRecordStatus",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching DepositRecordStatus found for the given value. $value",
+                details: {
+                  "name": "DepositRecordStatus",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -71,13 +81,18 @@ enum DepositRecordSource implements ProtoEnumVariant {
 
   /// Looks up a value by its proto wire int. Throws if not found.
   static DepositRecordSource fromValue(int? value) {
+    value ??= 0;
     return DepositRecordSource.values.firstWhere(
       (e) => e.value == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "DepositRecordSource",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching DepositRecordSource found for the given value. $value",
+                details: {
+                  "name": "DepositRecordSource",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -85,13 +100,18 @@ enum DepositRecordSource implements ProtoEnumVariant {
   /// Looks up a value by wire int, Dart enum name, or original proto
   /// name (whichever [value] happens to be). Throws if not found.
   static DepositRecordSource from(Object? value) {
+    value ??= 0;
     return DepositRecordSource.values.firstWhere(
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "DepositRecordSource",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching DepositRecordSource found for the given value. $value",
+                details: {
+                  "name": "DepositRecordSource",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -128,13 +148,18 @@ enum HostZoneUnbondingStatus implements ProtoEnumVariant {
 
   /// Looks up a value by its proto wire int. Throws if not found.
   static HostZoneUnbondingStatus fromValue(int? value) {
+    value ??= 0;
     return HostZoneUnbondingStatus.values.firstWhere(
       (e) => e.value == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "HostZoneUnbondingStatus",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching HostZoneUnbondingStatus found for the given value. $value",
+                details: {
+                  "name": "HostZoneUnbondingStatus",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -142,13 +167,18 @@ enum HostZoneUnbondingStatus implements ProtoEnumVariant {
   /// Looks up a value by wire int, Dart enum name, or original proto
   /// name (whichever [value] happens to be). Throws if not found.
   static HostZoneUnbondingStatus from(Object? value) {
+    value ??= 0;
     return HostZoneUnbondingStatus.values.firstWhere(
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "HostZoneUnbondingStatus",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching HostZoneUnbondingStatus found for the given value. $value",
+                details: {
+                  "name": "HostZoneUnbondingStatus",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -175,13 +205,18 @@ enum LSMTokenDepositStatus implements ProtoEnumVariant {
 
   /// Looks up a value by its proto wire int. Throws if not found.
   static LSMTokenDepositStatus fromValue(int? value) {
+    value ??= 0;
     return LSMTokenDepositStatus.values.firstWhere(
       (e) => e.value == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "LSMTokenDepositStatus",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching LSMTokenDepositStatus found for the given value. $value",
+                details: {
+                  "name": "LSMTokenDepositStatus",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -189,13 +224,18 @@ enum LSMTokenDepositStatus implements ProtoEnumVariant {
   /// Looks up a value by wire int, Dart enum name, or original proto
   /// name (whichever [value] happens to be). Throws if not found.
   static LSMTokenDepositStatus from(Object? value) {
+    value ??= 0;
     return LSMTokenDepositStatus.values.firstWhere(
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "LSMTokenDepositStatus",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching LSMTokenDepositStatus found for the given value. $value",
+                details: {
+                  "name": "LSMTokenDepositStatus",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -263,43 +303,57 @@ class UserRedemptionRecord extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'id': id,
       'receiver': receiver,
       'native_token_amount': nativeTokenAmount,
       'denom': denom,
       'host_zone_id': hostZoneId,
-      'epoch_number': epochNumber?.toString(),
+      'epoch_number': config.encodeBigint(epochNumber),
       'claim_is_pending': claimIsPending,
       'st_token_amount': stTokenAmount,
     };
   }
 
-  factory UserRedemptionRecord.fromJson(Map<String, dynamic> json) {
+  factory UserRedemptionRecord.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return UserRedemptionRecord(
-      id: json.valueAsString<String?>('id', acceptCamelCase: true),
-      receiver: json.valueAsString<String?>('receiver', acceptCamelCase: true),
+      id: json.valueAsString<String?>(
+        'id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      receiver: json.valueAsString<String?>(
+        'receiver',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       nativeTokenAmount: json.valueAsString<String?>(
         'native_token_amount',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       hostZoneId: json.valueAsString<String?>(
         'host_zone_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       epochNumber: json.valueAsBigInt<BigInt?>(
         'epoch_number',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       claimIsPending: json.valueAsBool<bool?>(
         'claim_is_pending',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       stTokenAmount: json.valueAsString<String?>(
         'st_token_amount',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -384,27 +438,43 @@ class DepositRecord extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'id': id?.toString(),
+      'id': config.encodeBigint(id),
       'amount': amount,
       'denom': denom,
       'host_zone_id': hostZoneId,
-      'status': status?.protoName,
-      'deposit_epoch_number': depositEpochNumber?.toString(),
-      'source': source?.protoName,
-      'delegation_txs_in_progress': delegationTxsInProgress?.toString(),
+      'status': config.encodeEnum(status),
+      'deposit_epoch_number': config.encodeBigint(depositEpochNumber),
+      'source': config.encodeEnum(source),
+      'delegation_txs_in_progress': config.encodeBigint(
+        delegationTxsInProgress,
+      ),
     };
   }
 
-  factory DepositRecord.fromJson(Map<String, dynamic> json) {
+  factory DepositRecord.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return DepositRecord(
-      id: json.valueAsBigInt<BigInt?>('id', acceptCamelCase: true),
-      amount: json.valueAsString<String?>('amount', acceptCamelCase: true),
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
+      id: json.valueAsBigInt<BigInt?>(
+        'id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      amount: json.valueAsString<String?>(
+        'amount',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       hostZoneId: json.valueAsString<String?>(
         'host_zone_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       status: json.valueTo<DepositRecordStatus?, Object?>(
         key: 'status',
@@ -412,7 +482,7 @@ class DepositRecord extends CosmosProtoMessage {
       ),
       depositEpochNumber: json.valueAsBigInt<BigInt?>(
         'deposit_epoch_number',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       source: json.valueTo<DepositRecordSource?, Object?>(
         key: 'source',
@@ -420,7 +490,7 @@ class DepositRecord extends CosmosProtoMessage {
       ),
       delegationTxsInProgress: json.valueAsBigInt<BigInt?>(
         'delegation_txs_in_progress',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -529,56 +599,66 @@ class HostZoneUnbonding extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'st_token_amount': stTokenAmount,
       'native_token_amount': nativeTokenAmount,
       'st_tokens_to_burn': stTokensToBurn,
       'native_tokens_to_unbond': nativeTokensToUnbond,
       'claimable_native_tokens': claimableNativeTokens,
-      'undelegation_txs_in_progress': undelegationTxsInProgress?.toString(),
+      'undelegation_txs_in_progress': config.encodeBigint(
+        undelegationTxsInProgress,
+      ),
       'denom': denom,
       'host_zone_id': hostZoneId,
-      'unbonding_time': unbondingTime?.toString(),
-      'status': status?.protoName,
+      'unbonding_time': config.encodeBigint(unbondingTime),
+      'status': config.encodeEnum(status),
       'user_redemption_records': userRedemptionRecords.map((e) => e).toList(),
     };
   }
 
-  factory HostZoneUnbonding.fromJson(Map<String, dynamic> json) {
+  factory HostZoneUnbonding.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return HostZoneUnbonding(
       stTokenAmount: json.valueAsString<String?>(
         'st_token_amount',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       nativeTokenAmount: json.valueAsString<String?>(
         'native_token_amount',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       stTokensToBurn: json.valueAsString<String?>(
         'st_tokens_to_burn',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       nativeTokensToUnbond: json.valueAsString<String?>(
         'native_tokens_to_unbond',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       claimableNativeTokens: json.valueAsString<String?>(
         'claimable_native_tokens',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       undelegationTxsInProgress: json.valueAsBigInt<BigInt?>(
         'undelegation_txs_in_progress',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       hostZoneId: json.valueAsString<String?>(
         'host_zone_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       unbondingTime: json.valueAsBigInt<BigInt?>(
         'unbonding_time',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       status: json.valueTo<HostZoneUnbondingStatus?, Object?>(
         key: 'status',
@@ -587,7 +667,8 @@ class HostZoneUnbonding extends CosmosProtoMessage {
       userRedemptionRecords:
           (json.valueEnsureAsList<dynamic>(
             'user_redemption_records',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
     );
   }
@@ -648,31 +729,40 @@ class EpochUnbondingRecord extends CosmosProtoMessage {
   List<Object?> get protoValues => [epochNumber, hostZoneUnbondings];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'epoch_number': epochNumber?.toString(),
+      'epoch_number': config.encodeBigint(epochNumber),
       'host_zone_unbondings':
-          hostZoneUnbondings.map((e) => e.toJson()).toList(),
+          hostZoneUnbondings.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory EpochUnbondingRecord.fromJson(Map<String, dynamic> json) {
+  factory EpochUnbondingRecord.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return EpochUnbondingRecord(
       epochNumber: json.valueAsBigInt<BigInt?>(
         'epoch_number',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       hostZoneUnbondings:
           (json.valueEnsureAsList<dynamic>(
                 'host_zone_unbondings',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) =>
-                    JsonParser.valueTo<HostZoneUnbonding, Map<String, dynamic>>(
-                      value: e,
-                      parse: (v) => HostZoneUnbonding.fromJson(v),
-                    ),
+                (e) => JsonParser.valueTo<HostZoneUnbonding, Object>(
+                  value: e,
+                  parse:
+                      (v) => HostZoneUnbonding.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );
@@ -761,7 +851,9 @@ class LSMTokenDeposit extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'deposit_id': depositId,
       'chain_id': chainId,
@@ -770,35 +862,53 @@ class LSMTokenDeposit extends CosmosProtoMessage {
       'staker_address': stakerAddress,
       'validator_address': validatorAddress,
       'amount': amount,
-      'st_token': stToken?.toJson(),
-      'status': status?.protoName,
+      'st_token': config.encodeMessage(stToken),
+      'status': config.encodeEnum(status),
     };
   }
 
-  factory LSMTokenDeposit.fromJson(Map<String, dynamic> json) {
+  factory LSMTokenDeposit.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return LSMTokenDeposit(
       depositId: json.valueAsString<String?>(
         'deposit_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      chainId: json.valueAsString<String?>('chain_id', acceptCamelCase: true),
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
-      ibcDenom: json.valueAsString<String?>('ibc_denom', acceptCamelCase: true),
+      chainId: json.valueAsString<String?>(
+        'chain_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      ibcDenom: json.valueAsString<String?>(
+        'ibc_denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       stakerAddress: json.valueAsString<String?>(
         'staker_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       validatorAddress: json.valueAsString<String?>(
         'validator_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      amount: json.valueAsString<String?>('amount', acceptCamelCase: true),
-      stToken: json
-          .valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
-            key: 'st_token',
-            parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      amount: json.valueAsString<String?>(
+        'amount',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      stToken: json.valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
+        key: 'st_token',
+        parse:
+            (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       status: json.valueTo<LSMTokenDepositStatus?, Object?>(
         key: 'status',
         parse: (v) => LSMTokenDepositStatus.from(v),

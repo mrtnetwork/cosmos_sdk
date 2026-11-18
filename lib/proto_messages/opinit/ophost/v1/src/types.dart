@@ -33,13 +33,18 @@ enum BatchInfoChainType implements ProtoEnumVariant {
 
   /// Looks up a value by its proto wire int. Throws if not found.
   static BatchInfoChainType fromValue(int? value) {
+    value ??= 0;
     return BatchInfoChainType.values.firstWhere(
       (e) => e.value == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "BatchInfoChainType",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching BatchInfoChainType found for the given value. $value",
+                details: {
+                  "name": "BatchInfoChainType",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -47,13 +52,18 @@ enum BatchInfoChainType implements ProtoEnumVariant {
   /// Looks up a value by wire int, Dart enum name, or original proto
   /// name (whichever [value] happens to be). Throws if not found.
   static BatchInfoChainType from(Object? value) {
+    value ??= 0;
     return BatchInfoChainType.values.firstWhere(
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "BatchInfoChainType",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching BatchInfoChainType found for the given value. $value",
+                details: {
+                  "name": "BatchInfoChainType",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -87,27 +97,36 @@ class Params extends CosmosProtoMessage {
   List<Object?> get protoValues => [registrationFee];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'registration_fee': registrationFee.map((e) => e.toJson()).toList(),
+      'registration_fee':
+          registrationFee.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
       registrationFee:
           (json.valueEnsureAsList<dynamic>(
                 'registration_fee',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  cosmos_base_v1beta1_coin.Coin,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<cosmos_base_v1beta1_coin.Coin, Object>(
+                      value: e,
+                      parse:
+                          (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -156,7 +175,7 @@ class BridgeConfig extends CosmosProtoMessage {
   /// Normally it is IBC channelID for permissioned IBC relayer.
   /// DEPRECATED: This field is deprecated and kept for backward compatibility.
   /// Use channel_id instead.
-  final List<int>? metadata;
+  final BuBytes? metadata;
 
   /// bridge_disabled is a flag to disable the bridge.
   final bool? bridgeDisabled;
@@ -170,7 +189,7 @@ class BridgeConfig extends CosmosProtoMessage {
   /// channel_id is the IBC channel ID for the opinit port, used for relaying attestor set updates and oracle data to L2.
   final String? channelId;
 
-  const BridgeConfig({
+  BridgeConfig({
     this.challenger,
     this.proposer,
     this.batchInfo,
@@ -178,12 +197,12 @@ class BridgeConfig extends CosmosProtoMessage {
     this.finalizationPeriod,
     this.submissionStartHeight,
     this.oracleEnabled,
-    this.metadata,
+    List<int>? metadata,
     this.bridgeDisabled,
     this.bridgeDisabledAt,
     this.attestorSet = const [],
     this.channelId,
-  });
+  }) : metadata = metadata?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -242,91 +261,108 @@ class BridgeConfig extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'challenger': challenger,
       'proposer': proposer,
-      'batch_info': batchInfo?.toJson(),
+      'batch_info': config.encodeMessage(batchInfo),
       'submission_interval': submissionInterval?.encodeString(asNanos: true),
       'finalization_period': finalizationPeriod?.encodeString(asNanos: true),
-      'submission_start_height': submissionStartHeight?.toString(),
+      'submission_start_height': config.encodeBigint(submissionStartHeight),
       'oracle_enabled': oracleEnabled,
-      'metadata': switch (metadata) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'metadata': config.encodeBinary(metadata),
       'bridge_disabled': bridgeDisabled,
       'bridge_disabled_at': bridgeDisabledAt?.toRfc3339(),
-      'attestor_set': attestorSet.map((e) => e.toJson()).toList(),
+      'attestor_set': attestorSet.map((e) => config.encodeMessage(e)).toList(),
       'channel_id': channelId,
     };
   }
 
-  factory BridgeConfig.fromJson(Map<String, dynamic> json) {
+  factory BridgeConfig.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return BridgeConfig(
       challenger: json.valueAsString<String?>(
         'challenger',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      proposer: json.valueAsString<String?>('proposer', acceptCamelCase: true),
-      batchInfo: json.valueTo<BatchInfo?, Map<String, dynamic>>(
+      proposer: json.valueAsString<String?>(
+        'proposer',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      batchInfo: json.valueTo<BatchInfo?, Object>(
         key: 'batch_info',
-        parse: (v) => BatchInfo.fromJson(v),
-        acceptCamelCase: true,
+        parse: (v) => BatchInfo.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       submissionInterval: json
-          .valueTo<google_protobuf_duration.Duration?, String>(
+          .valueTo<google_protobuf_duration.Duration?, Object>(
             key: 'submission_interval',
-            parse: (v) => google_protobuf_duration.Duration.fromString(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => google_protobuf_duration.Duration.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
       finalizationPeriod: json
-          .valueTo<google_protobuf_duration.Duration?, String>(
+          .valueTo<google_protobuf_duration.Duration?, Object>(
             key: 'finalization_period',
-            parse: (v) => google_protobuf_duration.Duration.fromString(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => google_protobuf_duration.Duration.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
       submissionStartHeight: json.valueAsBigInt<BigInt?>(
         'submission_start_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       oracleEnabled: json.valueAsBool<bool?>(
         'oracle_enabled',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      metadata: json.valueAsBytes<List<int>?>(
-        'metadata',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      metadata: config.decodeBinary<List<int>?>(
+        json.valueAs('metadata', normalizeKeyLookup: config.normalizeKeys),
       ),
       bridgeDisabled: json.valueAsBool<bool?>(
         'bridge_disabled',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       bridgeDisabledAt: json
-          .valueTo<google_protobuf_timestamp.Timestamp?, String>(
+          .valueTo<google_protobuf_timestamp.Timestamp?, Object>(
             key: 'bridge_disabled_at',
-            parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => google_protobuf_timestamp.Timestamp.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
       attestorSet:
           (json.valueEnsureAsList<dynamic>(
                 'attestor_set',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<Attestor, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<Attestor, Object>(
                   value: e,
-                  parse: (v) => Attestor.fromJson(v),
+                  parse:
+                      (v) => Attestor.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       channelId: json.valueAsString<String?>(
         'channel_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -395,15 +431,20 @@ class BatchInfo extends CosmosProtoMessage {
   List<Object?> get protoValues => [submitter, chainType];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'submitter': submitter, 'chain_type': chainType?.protoName};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'submitter': submitter, 'chain_type': config.encodeEnum(chainType)};
   }
 
-  factory BatchInfo.fromJson(Map<String, dynamic> json) {
+  factory BatchInfo.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return BatchInfo(
       submitter: json.valueAsString<String?>(
         'submitter',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       chainType: json.valueTo<BatchInfoChainType?, Object?>(
         key: 'chain_type',
@@ -451,14 +492,25 @@ class TokenPair extends CosmosProtoMessage {
   List<Object?> get protoValues => [l1Denom, l2Denom];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'l1_denom': l1Denom, 'l2_denom': l2Denom};
   }
 
-  factory TokenPair.fromJson(Map<String, dynamic> json) {
+  factory TokenPair.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return TokenPair(
-      l1Denom: json.valueAsString<String?>('l1_denom', acceptCamelCase: true),
-      l2Denom: json.valueAsString<String?>('l2_denom', acceptCamelCase: true),
+      l1Denom: json.valueAsString<String?>(
+        'l1_denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      l2Denom: json.valueAsString<String?>(
+        'l2_denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -478,7 +530,7 @@ class TokenPair extends CosmosProtoMessage {
 /// Output is a l2 block submitted by proposer.
 class Output extends CosmosProtoMessage {
   /// Hash of the l2 output.
-  final List<int>? outputRoot;
+  final BuBytes? outputRoot;
 
   /// The l1 block number that the output root was submitted in.
   final BigInt? l1BlockNumber;
@@ -489,12 +541,12 @@ class Output extends CosmosProtoMessage {
   /// The l2 block number that the output root was submitted in.
   final BigInt? l2BlockNumber;
 
-  const Output({
-    this.outputRoot,
+  Output({
+    List<int>? outputRoot,
     this.l1BlockNumber,
     this.l1BlockTime,
     this.l2BlockNumber,
-  });
+  }) : outputRoot = outputRoot?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -524,40 +576,41 @@ class Output extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'output_root': switch (outputRoot) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'l1_block_number': l1BlockNumber?.toString(),
+      'output_root': config.encodeBinary(outputRoot),
+      'l1_block_number': config.encodeBigint(l1BlockNumber),
       'l1_block_time': l1BlockTime?.toRfc3339(),
-      'l2_block_number': l2BlockNumber?.toString(),
+      'l2_block_number': config.encodeBigint(l2BlockNumber),
     };
   }
 
-  factory Output.fromJson(Map<String, dynamic> json) {
+  factory Output.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Output(
-      outputRoot: json.valueAsBytes<List<int>?>(
-        'output_root',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      outputRoot: config.decodeBinary<List<int>?>(
+        json.valueAs('output_root', normalizeKeyLookup: config.normalizeKeys),
       ),
       l1BlockNumber: json.valueAsBigInt<BigInt?>(
         'l1_block_number',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      l1BlockTime: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      l1BlockTime: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'l1_block_time',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       l2BlockNumber: json.valueAsBigInt<BigInt?>(
         'l2_block_number',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -612,21 +665,29 @@ class BatchInfoWithOutput extends CosmosProtoMessage {
   List<Object?> get protoValues => [batchInfo, output];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'batch_info': batchInfo?.toJson(), 'output': output?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'batch_info': config.encodeMessage(batchInfo),
+      'output': config.encodeMessage(output),
+    };
   }
 
-  factory BatchInfoWithOutput.fromJson(Map<String, dynamic> json) {
+  factory BatchInfoWithOutput.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return BatchInfoWithOutput(
-      batchInfo: json.valueTo<BatchInfo?, Map<String, dynamic>>(
+      batchInfo: json.valueTo<BatchInfo?, Object>(
         key: 'batch_info',
-        parse: (v) => BatchInfo.fromJson(v),
-        acceptCamelCase: true,
+        parse: (v) => BatchInfo.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      output: json.valueTo<Output?, Map<String, dynamic>>(
+      output: json.valueTo<Output?, Object>(
         key: 'output',
-        parse: (v) => Output.fromJson(v),
-        acceptCamelCase: true,
+        parse: (v) => Output.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -688,27 +749,38 @@ class MigrationInfo extends CosmosProtoMessage {
   List<Object?> get protoValues => [bridgeId, ibcChannelId, ibcPortId, l1Denom];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'bridge_id': bridgeId?.toString(),
+      'bridge_id': config.encodeBigint(bridgeId),
       'ibc_channel_id': ibcChannelId,
       'ibc_port_id': ibcPortId,
       'l1_denom': l1Denom,
     };
   }
 
-  factory MigrationInfo.fromJson(Map<String, dynamic> json) {
+  factory MigrationInfo.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MigrationInfo(
-      bridgeId: json.valueAsBigInt<BigInt?>('bridge_id', acceptCamelCase: true),
+      bridgeId: json.valueAsBigInt<BigInt?>(
+        'bridge_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       ibcChannelId: json.valueAsString<String?>(
         'ibc_channel_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       ibcPortId: json.valueAsString<String?>(
         'ibc_port_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      l1Denom: json.valueAsString<String?>('l1_denom', acceptCamelCase: true),
+      l1Denom: json.valueAsString<String?>(
+        'l1_denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -761,27 +833,38 @@ class Attestor extends CosmosProtoMessage {
   List<Object?> get protoValues => [operatorAddress, consensusPubkey, moniker];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'operator_address': operatorAddress,
-      'consensus_pubkey': consensusPubkey?.toJson(),
+      'consensus_pubkey': config.encodeMessage(consensusPubkey),
       'moniker': moniker,
     };
   }
 
-  factory Attestor.fromJson(Map<String, dynamic> json) {
+  factory Attestor.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Attestor(
       operatorAddress: json.valueAsString<String?>(
         'operator_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      consensusPubkey: json
-          .valueTo<google_protobuf_any.Any?, Map<String, dynamic>>(
-            key: 'consensus_pubkey',
-            parse: (v) => google_protobuf_any.Any.fromJson(v),
-            acceptCamelCase: true,
-          ),
-      moniker: json.valueAsString<String?>('moniker', acceptCamelCase: true),
+      consensusPubkey: json.valueTo<google_protobuf_any.Any?, Object>(
+        key: 'consensus_pubkey',
+        parse:
+            (v) => google_protobuf_any.Any.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      moniker: json.valueAsString<String?>(
+        'moniker',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -806,7 +889,7 @@ class Attestor extends CosmosProtoMessage {
 /// This is computed and stored in EndBlock to enable batched oracle price relaying.
 class OraclePriceHash extends CosmosProtoMessage {
   /// hash is the hash of all oracle prices for the bridge.
-  final List<int>? hash;
+  final BuBytes? hash;
 
   /// l1_block_height is the L1 block height at which this hash was computed.
   final BigInt? l1BlockHeight;
@@ -814,7 +897,8 @@ class OraclePriceHash extends CosmosProtoMessage {
   /// l1_block_time is the L1 block timestamp when this hash was computed, in unix nanoseconds.
   final BigInt? l1BlockTime;
 
-  const OraclePriceHash({this.hash, this.l1BlockHeight, this.l1BlockTime});
+  OraclePriceHash({List<int>? hash, this.l1BlockHeight, this.l1BlockTime})
+    : hash = hash?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -835,34 +919,31 @@ class OraclePriceHash extends CosmosProtoMessage {
   List<Object?> get protoValues => [hash, l1BlockHeight, l1BlockTime];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'hash': switch (hash) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'l1_block_height': l1BlockHeight?.toString(),
-      'l1_block_time': l1BlockTime?.toString(),
+      'hash': config.encodeBinary(hash),
+      'l1_block_height': config.encodeBigint(l1BlockHeight),
+      'l1_block_time': config.encodeBigint(l1BlockTime),
     };
   }
 
-  factory OraclePriceHash.fromJson(Map<String, dynamic> json) {
+  factory OraclePriceHash.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return OraclePriceHash(
-      hash: json.valueAsBytes<List<int>?>(
-        'hash',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      hash: config.decodeBinary<List<int>?>(
+        json.valueAs('hash', normalizeKeyLookup: config.normalizeKeys),
       ),
       l1BlockHeight: json.valueAsBigInt<BigInt?>(
         'l1_block_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       l1BlockTime: json.valueAsBigInt<BigInt?>(
         'l1_block_time',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

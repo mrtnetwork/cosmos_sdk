@@ -43,24 +43,32 @@ class SpotPriceRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [poolId, baseAssetDenom, quoteAssetDenom];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'pool_id': poolId?.toString(),
+      'pool_id': config.encodeBigint(poolId),
       'base_asset_denom': baseAssetDenom,
       'quote_asset_denom': quoteAssetDenom,
     };
   }
 
-  factory SpotPriceRequest.fromJson(Map<String, dynamic> json) {
+  factory SpotPriceRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SpotPriceRequest(
-      poolId: json.valueAsBigInt<BigInt?>('pool_id', acceptCamelCase: true),
+      poolId: json.valueAsBigInt<BigInt?>(
+        'pool_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       baseAssetDenom: json.valueAsString<String?>(
         'base_asset_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       quoteAssetDenom: json.valueAsString<String?>(
         'quote_asset_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -111,15 +119,20 @@ class SpotPriceResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [spotPrice];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'spot_price': spotPrice};
   }
 
-  factory SpotPriceResponse.fromJson(Map<String, dynamic> json) {
+  factory SpotPriceResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return SpotPriceResponse(
       spotPrice: json.valueAsString<String?>(
         'spot_price',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

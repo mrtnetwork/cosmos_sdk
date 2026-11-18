@@ -11,12 +11,13 @@ class QueryEvidenceRequest extends CosmosProtoMessage
     with ICosmosProtoQueryMessage<QueryEvidenceResponse> {
   /// evidence_hash defines the hash of the requested evidence.
   /// Deprecated: Use hash, a HEX encoded string, instead.
-  final List<int>? evidenceHash;
+  final BuBytes? evidenceHash;
 
   /// hash defines the evidence hash of the requested evidence.
   final String? hash;
 
-  const QueryEvidenceRequest({this.evidenceHash, this.hash});
+  QueryEvidenceRequest({List<int>? evidenceHash, this.hash})
+    : evidenceHash = evidenceHash?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -53,27 +54,24 @@ class QueryEvidenceRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [evidenceHash, hash];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {
-      'evidence_hash': switch (evidenceHash) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'hash': hash,
-    };
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'evidence_hash': config.encodeBinary(evidenceHash), 'hash': hash};
   }
 
-  factory QueryEvidenceRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryEvidenceRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryEvidenceRequest(
-      evidenceHash: json.valueAsBytes<List<int>?>(
-        'evidence_hash',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      evidenceHash: config.decodeBinary<List<int>?>(
+        json.valueAs('evidence_hash', normalizeKeyLookup: config.normalizeKeys),
       ),
-      hash: json.valueAsString<String?>('hash', acceptCamelCase: true),
+      hash: json.valueAsString<String?>(
+        'hash',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -121,16 +119,25 @@ class QueryEvidenceResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [evidence];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'evidence': evidence?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'evidence': config.encodeMessage(evidence)};
   }
 
-  factory QueryEvidenceResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryEvidenceResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryEvidenceResponse(
-      evidence: json.valueTo<google_protobuf_any.Any?, Map<String, dynamic>>(
+      evidence: json.valueTo<google_protobuf_any.Any?, Object>(
         key: 'evidence',
-        parse: (v) => google_protobuf_any.Any.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_any.Any.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -180,21 +187,28 @@ class QueryAllEvidenceRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [pagination];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'pagination': pagination?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'pagination': config.encodeMessage(pagination)};
   }
 
-  factory QueryAllEvidenceRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryAllEvidenceRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryAllEvidenceRequest(
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageRequest?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) => cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageRequest?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -256,34 +270,48 @@ class QueryAllEvidenceResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [evidence, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'evidence': evidence.map((e) => e.toJson()).toList(),
-      'pagination': pagination?.toJson(),
+      'evidence': evidence.map((e) => config.encodeMessage(e)).toList(),
+      'pagination': config.encodeMessage(pagination),
     };
   }
 
-  factory QueryAllEvidenceResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryAllEvidenceResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryAllEvidenceResponse(
       evidence:
-          (json.valueEnsureAsList<dynamic>('evidence', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'evidence',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  google_protobuf_any.Any,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => google_protobuf_any.Any.fromJson(v)),
+                (e) => JsonParser.valueTo<google_protobuf_any.Any, Object>(
+                  value: e,
+                  parse:
+                      (v) => google_protobuf_any.Any.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageResponse?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) =>
-                cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageResponse?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 

@@ -97,51 +97,70 @@ class EpochInfo extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'identifier': identifier,
       'start_time': startTime?.toRfc3339(),
       'duration': duration?.encodeString(asNanos: true),
-      'current_epoch': currentEpoch?.toString(),
+      'current_epoch': config.encodeBigint(currentEpoch),
       'current_epoch_start_time': currentEpochStartTime?.toRfc3339(),
       'epoch_counting_started': epochCountingStarted,
-      'current_epoch_start_height': currentEpochStartHeight?.toString(),
+      'current_epoch_start_height': config.encodeBigint(
+        currentEpochStartHeight,
+      ),
     };
   }
 
-  factory EpochInfo.fromJson(Map<String, dynamic> json) {
+  factory EpochInfo.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return EpochInfo(
       identifier: json.valueAsString<String?>(
         'identifier',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      startTime: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      startTime: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'start_time',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      duration: json.valueTo<google_protobuf_duration.Duration?, String>(
+      duration: json.valueTo<google_protobuf_duration.Duration?, Object>(
         key: 'duration',
-        parse: (v) => google_protobuf_duration.Duration.fromString(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_duration.Duration.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       currentEpoch: json.valueAsBigInt<BigInt?>(
         'current_epoch',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       currentEpochStartTime: json
-          .valueTo<google_protobuf_timestamp.Timestamp?, String>(
+          .valueTo<google_protobuf_timestamp.Timestamp?, Object>(
             key: 'current_epoch_start_time',
-            parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => google_protobuf_timestamp.Timestamp.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
       epochCountingStarted: json.valueAsBool<bool?>(
         'epoch_counting_started',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       currentEpochStartHeight: json.valueAsBigInt<BigInt?>(
         'current_epoch_start_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

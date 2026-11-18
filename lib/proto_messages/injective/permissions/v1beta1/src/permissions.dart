@@ -52,18 +52,32 @@ enum Action implements ProtoEnumVariant {
 
   /// Looks up a value by its proto wire int. Throws if not found.
   static Action fromValue(int? value) {
+    value ??= 0;
     return Action.values.firstWhere(
       (e) => e.value == value,
-      orElse: () => throw ItemNotFoundException(name: "Action", value: value),
+      orElse:
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching Action found for the given value. $value",
+                details: {"name": "Action", "value": value?.toString()},
+              ),
     );
   }
 
   /// Looks up a value by wire int, Dart enum name, or original proto
   /// name (whichever [value] happens to be). Throws if not found.
   static Action from(Object? value) {
+    value ??= 0;
     return Action.values.firstWhere(
       (e) => e.value == value || e.name == value || e.protoName == value,
-      orElse: () => throw ItemNotFoundException(name: "Action", value: value),
+      orElse:
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching Action found for the given value. $value",
+                details: {"name": "Action", "value": value?.toString()},
+              ),
     );
   }
 }
@@ -153,85 +167,127 @@ class Namespace extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'denom': denom,
       'wasm_hook': wasmHook,
-      'role_permissions': rolePermissions.map((e) => e.toJson()).toList(),
-      'actor_roles': actorRoles.map((e) => e.toJson()).toList(),
-      'role_managers': roleManagers.map((e) => e.toJson()).toList(),
-      'policy_statuses': policyStatuses.map((e) => e.toJson()).toList(),
+      'role_permissions':
+          rolePermissions.map((e) => config.encodeMessage(e)).toList(),
+      'actor_roles': actorRoles.map((e) => config.encodeMessage(e)).toList(),
+      'role_managers':
+          roleManagers.map((e) => config.encodeMessage(e)).toList(),
+      'policy_statuses':
+          policyStatuses.map((e) => config.encodeMessage(e)).toList(),
       'policy_manager_capabilities':
-          policyManagerCapabilities.map((e) => e.toJson()).toList(),
+          policyManagerCapabilities
+              .map((e) => config.encodeMessage(e))
+              .toList(),
       'evm_hook': evmHook,
     };
   }
 
-  factory Namespace.fromJson(Map<String, dynamic> json) {
+  factory Namespace.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Namespace(
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
-      wasmHook: json.valueAsString<String?>('wasm_hook', acceptCamelCase: true),
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      wasmHook: json.valueAsString<String?>(
+        'wasm_hook',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       rolePermissions:
           (json.valueEnsureAsList<dynamic>(
                 'role_permissions',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<Role, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<Role, Object>(
                   value: e,
-                  parse: (v) => Role.fromJson(v),
+                  parse:
+                      (v) =>
+                          Role.fromJson(JsonParser.valueAs(v), config: config),
                 ),
               )
               .toList(),
       actorRoles:
           (json.valueEnsureAsList<dynamic>(
                 'actor_roles',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<ActorRoles, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<ActorRoles, Object>(
                   value: e,
-                  parse: (v) => ActorRoles.fromJson(v),
+                  parse:
+                      (v) => ActorRoles.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       roleManagers:
           (json.valueEnsureAsList<dynamic>(
                 'role_managers',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<RoleManager, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<RoleManager, Object>(
                   value: e,
-                  parse: (v) => RoleManager.fromJson(v),
+                  parse:
+                      (v) => RoleManager.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       policyStatuses:
           (json.valueEnsureAsList<dynamic>(
                 'policy_statuses',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<PolicyStatus, Map<String, dynamic>>(
+                (e) => JsonParser.valueTo<PolicyStatus, Object>(
                   value: e,
-                  parse: (v) => PolicyStatus.fromJson(v),
+                  parse:
+                      (v) => PolicyStatus.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
       policyManagerCapabilities:
           (json.valueEnsureAsList<dynamic>(
                 'policy_manager_capabilities',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  PolicyManagerCapability,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => PolicyManagerCapability.fromJson(v)),
+                (e) => JsonParser.valueTo<PolicyManagerCapability, Object>(
+                  value: e,
+                  parse:
+                      (v) => PolicyManagerCapability.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
-      evmHook: json.valueAsString<String?>('evm_hook', acceptCamelCase: true),
+      evmHook: json.valueAsString<String?>(
+        'evm_hook',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -302,17 +358,26 @@ class ActorRoles extends CosmosProtoMessage {
   List<Object?> get protoValues => [actor, roles];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'actor': actor, 'roles': roles.map((e) => e).toList()};
   }
 
-  factory ActorRoles.fromJson(Map<String, dynamic> json) {
+  factory ActorRoles.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ActorRoles(
-      actor: json.valueAsString<String?>('actor', acceptCamelCase: true),
+      actor: json.valueAsString<String?>(
+        'actor',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       roles:
           (json.valueEnsureAsList<dynamic>(
             'roles',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
     );
   }
@@ -361,17 +426,26 @@ class RoleActors extends CosmosProtoMessage {
   List<Object?> get protoValues => [role, actors];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'role': role, 'actors': actors.map((e) => e).toList()};
   }
 
-  factory RoleActors.fromJson(Map<String, dynamic> json) {
+  factory RoleActors.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return RoleActors(
-      role: json.valueAsString<String?>('role', acceptCamelCase: true),
+      role: json.valueAsString<String?>(
+        'role',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       actors:
           (json.valueEnsureAsList<dynamic>(
             'actors',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
     );
   }
@@ -420,17 +494,26 @@ class RoleManager extends CosmosProtoMessage {
   List<Object?> get protoValues => [manager, roles];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'manager': manager, 'roles': roles.map((e) => e).toList()};
   }
 
-  factory RoleManager.fromJson(Map<String, dynamic> json) {
+  factory RoleManager.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return RoleManager(
-      manager: json.valueAsString<String?>('manager', acceptCamelCase: true),
+      manager: json.valueAsString<String?>(
+        'manager',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       roles:
           (json.valueEnsureAsList<dynamic>(
             'roles',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
     );
   }
@@ -481,22 +564,33 @@ class PolicyStatus extends CosmosProtoMessage {
   List<Object?> get protoValues => [action, isDisabled, isSealed];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'action': action?.protoName,
+      'action': config.encodeEnum(action),
       'is_disabled': isDisabled,
       'is_sealed': isSealed,
     };
   }
 
-  factory PolicyStatus.fromJson(Map<String, dynamic> json) {
+  factory PolicyStatus.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return PolicyStatus(
       action: json.valueTo<Action?, Object?>(
         key: 'action',
         parse: (v) => Action.from(v),
       ),
-      isDisabled: json.valueAsBool<bool?>('is_disabled', acceptCamelCase: true),
-      isSealed: json.valueAsBool<bool?>('is_sealed', acceptCamelCase: true),
+      isDisabled: json.valueAsBool<bool?>(
+        'is_disabled',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      isSealed: json.valueAsBool<bool?>(
+        'is_sealed',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -547,15 +641,29 @@ class Role extends CosmosProtoMessage {
   List<Object?> get protoValues => [name, roleId, permissions];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'name': name, 'role_id': roleId, 'permissions': permissions};
   }
 
-  factory Role.fromJson(Map<String, dynamic> json) {
+  factory Role.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Role(
-      name: json.valueAsString<String?>('name', acceptCamelCase: true),
-      roleId: json.valueAsInt<int?>('role_id', acceptCamelCase: true),
-      permissions: json.valueAsInt<int?>('permissions', acceptCamelCase: true),
+      name: json.valueAsString<String?>(
+        'name',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      roleId: json.valueAsInt<int?>(
+        'role_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      permissions: json.valueAsInt<int?>(
+        'permissions',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -614,24 +722,38 @@ class PolicyManagerCapability extends CosmosProtoMessage {
   List<Object?> get protoValues => [manager, action, canDisable, canSeal];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'manager': manager,
-      'action': action?.protoName,
+      'action': config.encodeEnum(action),
       'can_disable': canDisable,
       'can_seal': canSeal,
     };
   }
 
-  factory PolicyManagerCapability.fromJson(Map<String, dynamic> json) {
+  factory PolicyManagerCapability.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return PolicyManagerCapability(
-      manager: json.valueAsString<String?>('manager', acceptCamelCase: true),
+      manager: json.valueAsString<String?>(
+        'manager',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       action: json.valueTo<Action?, Object?>(
         key: 'action',
         parse: (v) => Action.from(v),
       ),
-      canDisable: json.valueAsBool<bool?>('can_disable', acceptCamelCase: true),
-      canSeal: json.valueAsBool<bool?>('can_seal', acceptCamelCase: true),
+      canDisable: json.valueAsBool<bool?>(
+        'can_disable',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      canSeal: json.valueAsBool<bool?>(
+        'can_seal',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

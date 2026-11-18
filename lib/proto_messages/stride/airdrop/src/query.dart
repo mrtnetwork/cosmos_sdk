@@ -36,13 +36,21 @@ class QueryAirdropRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [id];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'id': id};
   }
 
-  factory QueryAirdropRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryAirdropRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryAirdropRequest(
-      id: json.valueAsString<String?>('id', acceptCamelCase: true),
+      id: json.valueAsString<String?>(
+        'id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -162,7 +170,9 @@ class QueryAirdropResponse extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'id': id,
       'reward_denom': rewardDenom,
@@ -174,64 +184,86 @@ class QueryAirdropResponse extends CosmosProtoMessage {
       'distributor_address': distributorAddress,
       'allocator_address': allocatorAddress,
       'linker_address': linkerAddress,
-      'current_date_index': currentDateIndex?.toString(),
-      'airdrop_length': airdropLength?.toString(),
+      'current_date_index': config.encodeBigint(currentDateIndex),
+      'airdrop_length': config.encodeBigint(airdropLength),
     };
   }
 
-  factory QueryAirdropResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryAirdropResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryAirdropResponse(
-      id: json.valueAsString<String?>('id', acceptCamelCase: true),
+      id: json.valueAsString<String?>(
+        'id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       rewardDenom: json.valueAsString<String?>(
         'reward_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       distributionStartDate: json
-          .valueTo<google_protobuf_timestamp.Timestamp?, String>(
+          .valueTo<google_protobuf_timestamp.Timestamp?, Object>(
             key: 'distribution_start_date',
-            parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => google_protobuf_timestamp.Timestamp.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
       distributionEndDate: json
-          .valueTo<google_protobuf_timestamp.Timestamp?, String>(
+          .valueTo<google_protobuf_timestamp.Timestamp?, Object>(
             key: 'distribution_end_date',
-            parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => google_protobuf_timestamp.Timestamp.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
-      clawbackDate: json.valueTo<google_protobuf_timestamp.Timestamp?, String>(
+      clawbackDate: json.valueTo<google_protobuf_timestamp.Timestamp?, Object>(
         key: 'clawback_date',
-        parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_timestamp.Timestamp.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       claimTypeDeadlineDate: json
-          .valueTo<google_protobuf_timestamp.Timestamp?, String>(
+          .valueTo<google_protobuf_timestamp.Timestamp?, Object>(
             key: 'claim_type_deadline_date',
-            parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => google_protobuf_timestamp.Timestamp.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
       earlyClaimPenalty: json.valueAsString<String?>(
         'early_claim_penalty',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       distributorAddress: json.valueAsString<String?>(
         'distributor_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       allocatorAddress: json.valueAsString<String?>(
         'allocator_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       linkerAddress: json.valueAsString<String?>(
         'linker_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       currentDateIndex: json.valueAsBigInt<BigInt?>(
         'current_date_index',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       airdropLength: json.valueAsBigInt<BigInt?>(
         'airdrop_length',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -300,11 +332,16 @@ class QueryAllAirdropsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryAllAirdropsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryAllAirdropsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryAllAirdropsRequest();
   }
 
@@ -352,22 +389,33 @@ class QueryAllAirdropsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [airdrops];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'airdrops': airdrops.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'airdrops': airdrops.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory QueryAllAirdropsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryAllAirdropsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryAllAirdropsResponse(
       airdrops:
-          (json.valueEnsureAsList<dynamic>('airdrops', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'airdrops',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  stride_airdrop_airdrop.Airdrop,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => stride_airdrop_airdrop.Airdrop.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<stride_airdrop_airdrop.Airdrop, Object>(
+                      value: e,
+                      parse:
+                          (v) => stride_airdrop_airdrop.Airdrop.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );
@@ -423,17 +471,25 @@ class QueryUserAllocationRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [airdropId, address];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'airdrop_id': airdropId, 'address': address};
   }
 
-  factory QueryUserAllocationRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryUserAllocationRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryUserAllocationRequest(
       airdropId: json.valueAsString<String?>(
         'airdrop_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -479,20 +535,27 @@ class QueryUserAllocationResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [userAllocation];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'user_allocation': userAllocation?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'user_allocation': config.encodeMessage(userAllocation)};
   }
 
-  factory QueryUserAllocationResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryUserAllocationResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryUserAllocationResponse(
-      userAllocation: json.valueTo<
-        stride_airdrop_airdrop.UserAllocation?,
-        Map<String, dynamic>
-      >(
-        key: 'user_allocation',
-        parse: (v) => stride_airdrop_airdrop.UserAllocation.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      userAllocation: json
+          .valueTo<stride_airdrop_airdrop.UserAllocation?, Object>(
+            key: 'user_allocation',
+            parse:
+                (v) => stride_airdrop_airdrop.UserAllocation.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -539,13 +602,21 @@ class QueryUserAllocationsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [address];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'address': address};
   }
 
-  factory QueryUserAllocationsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryUserAllocationsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryUserAllocationsRequest(
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -594,27 +665,37 @@ class QueryUserAllocationsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [userAllocations];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'user_allocations': userAllocations.map((e) => e.toJson()).toList(),
+      'user_allocations':
+          userAllocations.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory QueryUserAllocationsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryUserAllocationsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryUserAllocationsResponse(
       userAllocations:
           (json.valueEnsureAsList<dynamic>(
                 'user_allocations',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   stride_airdrop_airdrop.UserAllocation,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
-                      (v) => stride_airdrop_airdrop.UserAllocation.fromJson(v),
+                      (v) => stride_airdrop_airdrop.UserAllocation.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -667,25 +748,35 @@ class QueryAllAllocationsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [airdropId, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'airdrop_id': airdropId, 'pagination': pagination?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'airdrop_id': airdropId,
+      'pagination': config.encodeMessage(pagination),
+    };
   }
 
-  factory QueryAllAllocationsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryAllAllocationsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryAllAllocationsRequest(
       airdropId: json.valueAsString<String?>(
         'airdrop_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageRequest?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) => cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageRequest?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -748,41 +839,51 @@ class QueryAllAllocationsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [allocations, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'allocations': allocations.map((e) => e.toJson()).toList(),
-      'pagination': pagination?.toJson(),
+      'allocations': allocations.map((e) => config.encodeMessage(e)).toList(),
+      'pagination': config.encodeMessage(pagination),
     };
   }
 
-  factory QueryAllAllocationsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryAllAllocationsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryAllAllocationsResponse(
       allocations:
           (json.valueEnsureAsList<dynamic>(
                 'allocations',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   stride_airdrop_airdrop.UserAllocation,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
-                      (v) => stride_airdrop_airdrop.UserAllocation.fromJson(v),
+                      (v) => stride_airdrop_airdrop.UserAllocation.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageResponse?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) =>
-                cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageResponse?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -842,17 +943,25 @@ class QueryUserSummaryRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [airdropId, address];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'airdrop_id': airdropId, 'address': address};
   }
 
-  factory QueryUserSummaryRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryUserSummaryRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryUserSummaryRequest(
       airdropId: json.valueAsString<String?>(
         'airdrop_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -929,7 +1038,9 @@ class QueryUserSummaryResponse extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'claim_type': claimType,
       'claimed': claimed,
@@ -939,24 +1050,30 @@ class QueryUserSummaryResponse extends CosmosProtoMessage {
     };
   }
 
-  factory QueryUserSummaryResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryUserSummaryResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryUserSummaryResponse(
       claimType: json.valueAsString<String?>(
         'claim_type',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      claimed: json.valueAsString<String?>('claimed', acceptCamelCase: true),
+      claimed: json.valueAsString<String?>(
+        'claimed',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       forfeited: json.valueAsString<String?>(
         'forfeited',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       remaining: json.valueAsString<String?>(
         'remaining',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       claimable: json.valueAsString<String?>(
         'claimable',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

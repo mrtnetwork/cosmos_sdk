@@ -29,13 +29,21 @@ class QueryNetworkRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'height': height};
   }
 
-  factory QueryNetworkRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryNetworkRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryNetworkRequest(
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -192,7 +200,9 @@ class QueryNetworkResponse extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'bond_reward_rune': bondRewardRune,
       'total_bond_units': totalBondUnits,
@@ -215,79 +225,82 @@ class QueryNetworkResponse extends CosmosProtoMessage {
     };
   }
 
-  factory QueryNetworkResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryNetworkResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryNetworkResponse(
       bondRewardRune: json.valueAsString<String?>(
         'bond_reward_rune',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       totalBondUnits: json.valueAsString<String?>(
         'total_bond_units',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       availablePoolsRune: json.valueAsString<String?>(
         'available_pools_rune',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       vaultsLiquidityRune: json.valueAsString<String?>(
         'vaults_liquidity_rune',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       effectiveSecurityBond: json.valueAsString<String?>(
         'effective_security_bond',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       totalReserve: json.valueAsString<String?>(
         'total_reserve',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       vaultsMigrating: json.valueAsBool<bool?>(
         'vaults_migrating',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       gasSpentRune: json.valueAsString<String?>(
         'gas_spent_rune',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       gasWithheldRune: json.valueAsString<String?>(
         'gas_withheld_rune',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       outboundFeeMultiplier: json.valueAsString<String?>(
         'outbound_fee_multiplier',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       nativeOutboundFeeRune: json.valueAsString<String?>(
         'native_outbound_fee_rune',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       nativeTxFeeRune: json.valueAsString<String?>(
         'native_tx_fee_rune',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       tnsRegisterFeeRune: json.valueAsString<String?>(
         'tns_register_fee_rune',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       tnsFeePerBlockRune: json.valueAsString<String?>(
         'tns_fee_per_block_rune',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       runePriceInTor: json.valueAsString<String?>(
         'rune_price_in_tor',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       torPriceInRune: json.valueAsString<String?>(
         'tor_price_in_rune',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       torPriceHalted: json.valueAsBool<bool?>(
         'tor_price_halted',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       xmrActiveVaultReady: json.valueAsBool<bool?>(
         'xmr_active_vault_ready',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

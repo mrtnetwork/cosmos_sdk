@@ -20,20 +20,32 @@ enum FundingMode implements ProtoEnumVariant {
 
   /// Looks up a value by its proto wire int. Throws if not found.
   static FundingMode fromValue(int? value) {
+    value ??= 0;
     return FundingMode.values.firstWhere(
       (e) => e.value == value,
       orElse:
-          () => throw ItemNotFoundException(name: "FundingMode", value: value),
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching FundingMode found for the given value. $value",
+                details: {"name": "FundingMode", "value": value?.toString()},
+              ),
     );
   }
 
   /// Looks up a value by wire int, Dart enum name, or original proto
   /// name (whichever [value] happens to be). Throws if not found.
   static FundingMode from(Object? value) {
+    value ??= 0;
     return FundingMode.values.firstWhere(
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
-          () => throw ItemNotFoundException(name: "FundingMode", value: value),
+          () =>
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching FundingMode found for the given value. $value",
+                details: {"name": "FundingMode", "value": value?.toString()},
+              ),
     );
   }
 }
@@ -116,44 +128,58 @@ class ContractRegistrationRequest extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'contract_address': contractAddress,
-      'gas_limit': gasLimit?.toString(),
-      'gas_price': gasPrice?.toString(),
+      'gas_limit': config.encodeBigint(gasLimit),
+      'gas_price': config.encodeBigint(gasPrice),
       'should_pin_contract': shouldPinContract,
       'is_migration_allowed': isMigrationAllowed,
-      'code_id': codeId?.toString(),
+      'code_id': config.encodeBigint(codeId),
       'admin_address': adminAddress,
       'granter_address': granterAddress,
-      'funding_mode': fundingMode?.protoName,
+      'funding_mode': config.encodeEnum(fundingMode),
     };
   }
 
-  factory ContractRegistrationRequest.fromJson(Map<String, dynamic> json) {
+  factory ContractRegistrationRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return ContractRegistrationRequest(
       contractAddress: json.valueAsString<String?>(
         'contract_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      gasLimit: json.valueAsBigInt<BigInt?>('gas_limit', acceptCamelCase: true),
-      gasPrice: json.valueAsBigInt<BigInt?>('gas_price', acceptCamelCase: true),
+      gasLimit: json.valueAsBigInt<BigInt?>(
+        'gas_limit',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      gasPrice: json.valueAsBigInt<BigInt?>(
+        'gas_price',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       shouldPinContract: json.valueAsBool<bool?>(
         'should_pin_contract',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       isMigrationAllowed: json.valueAsBool<bool?>(
         'is_migration_allowed',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      codeId: json.valueAsBigInt<BigInt?>('code_id', acceptCamelCase: true),
+      codeId: json.valueAsBigInt<BigInt?>(
+        'code_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       adminAddress: json.valueAsString<String?>(
         'admin_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       granterAddress: json.valueAsString<String?>(
         'granter_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       fundingMode: json.valueTo<FundingMode?, Object?>(
         key: 'funding_mode',

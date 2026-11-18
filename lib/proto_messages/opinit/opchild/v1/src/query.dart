@@ -36,21 +36,28 @@ class QueryValidatorsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [pagination];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'pagination': pagination?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'pagination': config.encodeMessage(pagination)};
   }
 
-  factory QueryValidatorsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryValidatorsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryValidatorsRequest(
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageRequest?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) => cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageRequest?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageRequest.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -112,37 +119,51 @@ class QueryValidatorsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [validators, pagination];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'validators': validators.map((e) => e.toJson()).toList(),
-      'pagination': pagination?.toJson(),
+      'validators': validators.map((e) => config.encodeMessage(e)).toList(),
+      'pagination': config.encodeMessage(pagination),
     };
   }
 
-  factory QueryValidatorsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryValidatorsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryValidatorsResponse(
       validators:
-          (json.valueEnsureAsList<dynamic>('validators', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'validators',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
                 (e) => JsonParser.valueTo<
                   opinit_opchild_v1_types.Validator,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
-                  parse: (v) => opinit_opchild_v1_types.Validator.fromJson(v),
+                  parse:
+                      (v) => opinit_opchild_v1_types.Validator.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
-      pagination: json.valueTo<
-        cosmos_base_query_v1beta1_pagination.PageResponse?,
-        Map<String, dynamic>
-      >(
-        key: 'pagination',
-        parse:
-            (v) =>
-                cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      pagination: json
+          .valueTo<cosmos_base_query_v1beta1_pagination.PageResponse?, Object>(
+            key: 'pagination',
+            parse:
+                (v) =>
+                    cosmos_base_query_v1beta1_pagination.PageResponse.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -198,15 +219,20 @@ class QueryValidatorRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [validatorAddr];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'validator_addr': validatorAddr};
   }
 
-  factory QueryValidatorRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryValidatorRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryValidatorRequest(
       validatorAddr: json.valueAsString<String?>(
         'validator_addr',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -257,18 +283,26 @@ class QueryValidatorResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [validator];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'validator': validator?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'validator': config.encodeMessage(validator)};
   }
 
-  factory QueryValidatorResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryValidatorResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryValidatorResponse(
-      validator: json
-          .valueTo<opinit_opchild_v1_types.Validator?, Map<String, dynamic>>(
-            key: 'validator',
-            parse: (v) => opinit_opchild_v1_types.Validator.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      validator: json.valueTo<opinit_opchild_v1_types.Validator?, Object>(
+        key: 'validator',
+        parse:
+            (v) => opinit_opchild_v1_types.Validator.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -314,11 +348,16 @@ class QueryBridgeInfoRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryBridgeInfoRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryBridgeInfoRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryBridgeInfoRequest();
   }
 
@@ -367,18 +406,26 @@ class QueryBridgeInfoResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [bridgeInfo];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'bridge_info': bridgeInfo?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'bridge_info': config.encodeMessage(bridgeInfo)};
   }
 
-  factory QueryBridgeInfoResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryBridgeInfoResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryBridgeInfoResponse(
-      bridgeInfo: json
-          .valueTo<opinit_opchild_v1_types.BridgeInfo?, Map<String, dynamic>>(
-            key: 'bridge_info',
-            parse: (v) => opinit_opchild_v1_types.BridgeInfo.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      bridgeInfo: json.valueTo<opinit_opchild_v1_types.BridgeInfo?, Object>(
+        key: 'bridge_info',
+        parse:
+            (v) => opinit_opchild_v1_types.BridgeInfo.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -424,11 +471,16 @@ class QueryParamsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryParamsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsRequest();
   }
 
@@ -477,18 +529,26 @@ class QueryParamsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [params];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'params': params?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'params': config.encodeMessage(params)};
   }
 
-  factory QueryParamsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsResponse(
-      params: json
-          .valueTo<opinit_opchild_v1_types.Params?, Map<String, dynamic>>(
-            key: 'params',
-            parse: (v) => opinit_opchild_v1_types.Params.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      params: json.valueTo<opinit_opchild_v1_types.Params?, Object>(
+        key: 'params',
+        parse:
+            (v) => opinit_opchild_v1_types.Params.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -534,11 +594,16 @@ class QueryNextL1SequenceRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryNextL1SequenceRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryNextL1SequenceRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryNextL1SequenceRequest();
   }
 
@@ -582,15 +647,20 @@ class QueryNextL1SequenceResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [nextL1Sequence];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'next_l1_sequence': nextL1Sequence?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'next_l1_sequence': config.encodeBigint(nextL1Sequence)};
   }
 
-  factory QueryNextL1SequenceResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryNextL1SequenceResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryNextL1SequenceResponse(
       nextL1Sequence: json.valueAsBigInt<BigInt?>(
         'next_l1_sequence',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -634,11 +704,16 @@ class QueryNextL2SequenceRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryNextL2SequenceRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryNextL2SequenceRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryNextL2SequenceRequest();
   }
 
@@ -682,15 +757,20 @@ class QueryNextL2SequenceResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [nextL2Sequence];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'next_l2_sequence': nextL2Sequence?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'next_l2_sequence': config.encodeBigint(nextL2Sequence)};
   }
 
-  factory QueryNextL2SequenceResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryNextL2SequenceResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryNextL2SequenceResponse(
       nextL2Sequence: json.valueAsBigInt<BigInt?>(
         'next_l2_sequence',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -736,13 +816,21 @@ class QueryBaseDenomRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [denom];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'denom': denom};
   }
 
-  factory QueryBaseDenomRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryBaseDenomRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryBaseDenomRequest(
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -786,15 +874,20 @@ class QueryBaseDenomResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [baseDenom];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'base_denom': baseDenom};
   }
 
-  factory QueryBaseDenomResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryBaseDenomResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryBaseDenomResponse(
       baseDenom: json.valueAsString<String?>(
         'base_denom',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -838,13 +931,21 @@ class QueryMigrationInfoRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [denom];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'denom': denom};
   }
 
-  factory QueryMigrationInfoRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryMigrationInfoRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryMigrationInfoRequest(
-      denom: json.valueAsString<String?>('denom', acceptCamelCase: true),
+      denom: json.valueAsString<String?>(
+        'denom',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -896,21 +997,34 @@ class QueryMigrationInfoResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [migrationInfo, ibcDenom];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'migration_info': migrationInfo?.toJson(), 'ibc_denom': ibcDenom};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'migration_info': config.encodeMessage(migrationInfo),
+      'ibc_denom': ibcDenom,
+    };
   }
 
-  factory QueryMigrationInfoResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryMigrationInfoResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryMigrationInfoResponse(
-      migrationInfo: json.valueTo<
-        opinit_opchild_v1_types.MigrationInfo?,
-        Map<String, dynamic>
-      >(
-        key: 'migration_info',
-        parse: (v) => opinit_opchild_v1_types.MigrationInfo.fromJson(v),
-        acceptCamelCase: true,
+      migrationInfo: json
+          .valueTo<opinit_opchild_v1_types.MigrationInfo?, Object>(
+            key: 'migration_info',
+            parse:
+                (v) => opinit_opchild_v1_types.MigrationInfo.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
+      ibcDenom: json.valueAsString<String?>(
+        'ibc_denom',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      ibcDenom: json.valueAsString<String?>('ibc_denom', acceptCamelCase: true),
     );
   }
 

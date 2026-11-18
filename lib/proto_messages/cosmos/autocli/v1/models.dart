@@ -1,2 +1,2 @@
-export 'src/query.dart';
 export 'src/options.dart';
+export 'src/query.dart';

@@ -88,16 +88,18 @@ class Params extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'max_gas_wanted_per_tx': maxGasWantedPerTx?.toString(),
-      'high_gas_tx_threshold': highGasTxThreshold?.toString(),
+      'max_gas_wanted_per_tx': config.encodeBigint(maxGasWantedPerTx),
+      'high_gas_tx_threshold': config.encodeBigint(highGasTxThreshold),
       'min_gas_price_for_high_gas_tx': minGasPriceForHighGasTx,
       'mempool1559_enabled': mempool1559Enabled,
       'min_gas_price': minGasPrice,
       'default_base_fee_multiplier': defaultBaseFeeMultiplier,
       'max_base_fee_multiplier': maxBaseFeeMultiplier,
-      'reset_interval': resetInterval?.toString(),
+      'reset_interval': config.encodeBigint(resetInterval),
       'max_block_change_rate': maxBlockChangeRate,
       'target_block_space_percent_rate': targetBlockSpacePercentRate,
       'recheck_fee_low_base_fee': recheckFeeLowBaseFee,
@@ -107,59 +109,62 @@ class Params extends CosmosProtoMessage {
     };
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
       maxGasWantedPerTx: json.valueAsBigInt<BigInt?>(
         'max_gas_wanted_per_tx',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       highGasTxThreshold: json.valueAsBigInt<BigInt?>(
         'high_gas_tx_threshold',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       minGasPriceForHighGasTx: json.valueAsString<String?>(
         'min_gas_price_for_high_gas_tx',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       mempool1559Enabled: json.valueAsBool<bool?>(
         'mempool1559_enabled',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       minGasPrice: json.valueAsString<String?>(
         'min_gas_price',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       defaultBaseFeeMultiplier: json.valueAsString<String?>(
         'default_base_fee_multiplier',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       maxBaseFeeMultiplier: json.valueAsString<String?>(
         'max_base_fee_multiplier',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       resetInterval: json.valueAsBigInt<BigInt?>(
         'reset_interval',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       maxBlockChangeRate: json.valueAsString<String?>(
         'max_block_change_rate',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       targetBlockSpacePercentRate: json.valueAsString<String?>(
         'target_block_space_percent_rate',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       recheckFeeLowBaseFee: json.valueAsString<String?>(
         'recheck_fee_low_base_fee',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       recheckFeeHighBaseFee: json.valueAsString<String?>(
         'recheck_fee_high_base_fee',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       recheckFeeBaseFeeThresholdMultiplier: json.valueAsString<String?>(
         'recheck_fee_base_fee_threshold_multiplier',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

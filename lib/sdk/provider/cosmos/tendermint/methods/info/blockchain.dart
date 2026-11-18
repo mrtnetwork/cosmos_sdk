@@ -28,7 +28,7 @@ class TendermintRequestBlockchain
   };
 
   @override
-  TendermintBlockchain onResonse(Map<String, dynamic> result) {
+  TendermintBlockchain onResponse(Map<String, dynamic> result) {
     return TendermintBlockchain.fromJson(result);
   }
 }

@@ -20,13 +20,18 @@ enum SplittingPolicy implements ProtoEnumVariant {
 
   /// Looks up a value by its proto wire int. Throws if not found.
   static SplittingPolicy fromValue(int? value) {
+    value ??= 0;
     return SplittingPolicy.values.firstWhere(
       (e) => e.value == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "SplittingPolicy",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching SplittingPolicy found for the given value. $value",
+                details: {
+                  "name": "SplittingPolicy",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -34,13 +39,18 @@ enum SplittingPolicy implements ProtoEnumVariant {
   /// Looks up a value by wire int, Dart enum name, or original proto
   /// name (whichever [value] happens to be). Throws if not found.
   static SplittingPolicy from(Object? value) {
+    value ??= 0;
     return SplittingPolicy.values.firstWhere(
       (e) => e.value == value || e.name == value || e.protoName == value,
       orElse:
           () =>
-              throw ItemNotFoundException(
-                name: "SplittingPolicy",
-                value: value,
+              throw BuError(
+                DefaultErrorType.notFound,
+                "No matching SplittingPolicy found for the given value. $value",
+                details: {
+                  "name": "SplittingPolicy",
+                  "value": value?.toString(),
+                },
               ),
     );
   }
@@ -81,29 +91,40 @@ class InternalGaugeInfo extends CosmosProtoMessage {
   List<Object?> get protoValues => [totalWeight, gaugeRecords];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'total_weight': totalWeight,
-      'gauge_records': gaugeRecords.map((e) => e.toJson()).toList(),
+      'gauge_records':
+          gaugeRecords.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory InternalGaugeInfo.fromJson(Map<String, dynamic> json) {
+  factory InternalGaugeInfo.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return InternalGaugeInfo(
       totalWeight: json.valueAsString<String?>(
         'total_weight',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       gaugeRecords:
           (json.valueEnsureAsList<dynamic>(
                 'gauge_records',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) => JsonParser.valueTo<
-                  InternalGaugeRecord,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => InternalGaugeRecord.fromJson(v)),
+                (e) => JsonParser.valueTo<InternalGaugeRecord, Object>(
+                  value: e,
+                  parse:
+                      (v) => InternalGaugeRecord.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );
@@ -164,24 +185,32 @@ class InternalGaugeRecord extends CosmosProtoMessage {
   List<Object?> get protoValues => [gaugeId, currentWeight, cumulativeWeight];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'gauge_id': gaugeId?.toString(),
+      'gauge_id': config.encodeBigint(gaugeId),
       'current_weight': currentWeight,
       'cumulative_weight': cumulativeWeight,
     };
   }
 
-  factory InternalGaugeRecord.fromJson(Map<String, dynamic> json) {
+  factory InternalGaugeRecord.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return InternalGaugeRecord(
-      gaugeId: json.valueAsBigInt<BigInt?>('gauge_id', acceptCamelCase: true),
+      gaugeId: json.valueAsBigInt<BigInt?>(
+        'gauge_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       currentWeight: json.valueAsString<String?>(
         'current_weight',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       cumulativeWeight: json.valueAsString<String?>(
         'cumulative_weight',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -240,24 +269,33 @@ class Group extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'group_gauge_id': groupGaugeId?.toString(),
-      'internal_gauge_info': internalGaugeInfo?.toJson(),
-      'splitting_policy': splittingPolicy?.protoName,
+      'group_gauge_id': config.encodeBigint(groupGaugeId),
+      'internal_gauge_info': config.encodeMessage(internalGaugeInfo),
+      'splitting_policy': config.encodeEnum(splittingPolicy),
     };
   }
 
-  factory Group.fromJson(Map<String, dynamic> json) {
+  factory Group.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Group(
       groupGaugeId: json.valueAsBigInt<BigInt?>(
         'group_gauge_id',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      internalGaugeInfo: json.valueTo<InternalGaugeInfo?, Map<String, dynamic>>(
+      internalGaugeInfo: json.valueTo<InternalGaugeInfo?, Object>(
         key: 'internal_gauge_info',
-        parse: (v) => InternalGaugeInfo.fromJson(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => InternalGaugeInfo.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       splittingPolicy: json.valueTo<SplittingPolicy?, Object?>(
         key: 'splitting_policy',
@@ -313,23 +351,34 @@ class GroupsWithGauge extends CosmosProtoMessage {
   List<Object?> get protoValues => [group, gauge];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'group': group?.toJson(), 'gauge': gauge?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {
+      'group': config.encodeMessage(group),
+      'gauge': config.encodeMessage(gauge),
+    };
   }
 
-  factory GroupsWithGauge.fromJson(Map<String, dynamic> json) {
+  factory GroupsWithGauge.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return GroupsWithGauge(
-      group: json.valueTo<Group?, Map<String, dynamic>>(
+      group: json.valueTo<Group?, Object>(
         key: 'group',
-        parse: (v) => Group.fromJson(v),
-        acceptCamelCase: true,
+        parse: (v) => Group.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      gauge: json
-          .valueTo<osmosis_incentives_gauge.Gauge?, Map<String, dynamic>>(
-            key: 'gauge',
-            parse: (v) => osmosis_incentives_gauge.Gauge.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      gauge: json.valueTo<osmosis_incentives_gauge.Gauge?, Object>(
+        key: 'gauge',
+        parse:
+            (v) => osmosis_incentives_gauge.Gauge.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

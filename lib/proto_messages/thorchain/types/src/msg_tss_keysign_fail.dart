@@ -24,17 +24,17 @@ class MsgTssKeysignFail extends CosmosProtoMessage
 
   final String? pubKey;
 
-  final List<int>? signer;
+  final BuBytes? signer;
 
-  const MsgTssKeysignFail({
+  MsgTssKeysignFail({
     this.id,
     this.height,
     this.blame,
     this.memo,
     this.coins = const [],
     this.pubKey,
-    this.signer,
-  });
+    List<int>? signer,
+  }) : signer = signer?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -79,48 +79,69 @@ class MsgTssKeysignFail extends CosmosProtoMessage
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'id': id,
-      'height': height?.toString(),
-      'blame': blame?.toJson(),
+      'height': config.encodeBigint(height),
+      'blame': config.encodeMessage(blame),
       'memo': memo,
-      'coins': coins.map((e) => e.toJson()).toList(),
+      'coins': coins.map((e) => config.encodeMessage(e)).toList(),
       'pub_key': pubKey,
-      'signer': switch (signer) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'signer': config.encodeBinary(signer),
     };
   }
 
-  factory MsgTssKeysignFail.fromJson(Map<String, dynamic> json) {
+  factory MsgTssKeysignFail.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgTssKeysignFail(
-      id: json.valueAsString<String?>('id', acceptCamelCase: true),
-      height: json.valueAsBigInt<BigInt?>('height', acceptCamelCase: true),
-      blame: json.valueTo<types_type_blame.Blame?, Map<String, dynamic>>(
-        key: 'blame',
-        parse: (v) => types_type_blame.Blame.fromJson(v),
-        acceptCamelCase: true,
+      id: json.valueAsString<String?>(
+        'id',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      memo: json.valueAsString<String?>('memo', acceptCamelCase: true),
+      height: json.valueAsBigInt<BigInt?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      blame: json.valueTo<types_type_blame.Blame?, Object>(
+        key: 'blame',
+        parse:
+            (v) => types_type_blame.Blame.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      memo: json.valueAsString<String?>(
+        'memo',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       coins:
-          (json.valueEnsureAsList<dynamic>('coins', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'coins',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  common_common.Coin,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => common_common.Coin.fromJson(v)),
+                (e) => JsonParser.valueTo<common_common.Coin, Object>(
+                  value: e,
+                  parse:
+                      (v) => common_common.Coin.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
-      pubKey: json.valueAsString<String?>('pub_key', acceptCamelCase: true),
-      signer: json.valueAsBytes<List<int>?>(
-        'signer',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      pubKey: json.valueAsString<String?>(
+        'pub_key',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      signer: config.decodeBinary<List<int>?>(
+        json.valueAs('signer', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }

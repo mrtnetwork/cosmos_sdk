@@ -32,19 +32,30 @@ class AddressVoucher extends CosmosProtoMessage {
   List<Object?> get protoValues => [address, voucher];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'address': address, 'voucher': voucher?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'address': address, 'voucher': config.encodeMessage(voucher)};
   }
 
-  factory AddressVoucher.fromJson(Map<String, dynamic> json) {
+  factory AddressVoucher.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return AddressVoucher(
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
-      voucher: json
-          .valueTo<cosmos_base_v1beta1_coin.Coin?, Map<String, dynamic>>(
-            key: 'voucher',
-            parse: (v) => cosmos_base_v1beta1_coin.Coin.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      voucher: json.valueTo<cosmos_base_v1beta1_coin.Coin?, Object>(
+        key: 'voucher',
+        parse:
+            (v) => cosmos_base_v1beta1_coin.Coin.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

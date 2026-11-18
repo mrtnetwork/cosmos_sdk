@@ -33,11 +33,16 @@ class QueryParamsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryParamsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsRequest();
   }
 
@@ -81,20 +86,27 @@ class QueryParamsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [params];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'params': params?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'params': config.encodeMessage(params)};
   }
 
-  factory QueryParamsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsResponse(
-      params: json.valueTo<
-        chain4energy_c4echain_cfeminter_params.Params?,
-        Map<String, dynamic>
-      >(
-        key: 'params',
-        parse: (v) => chain4energy_c4echain_cfeminter_params.Params.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      params: json
+          .valueTo<chain4energy_c4echain_cfeminter_params.Params?, Object>(
+            key: 'params',
+            parse:
+                (v) => chain4energy_c4echain_cfeminter_params.Params.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -139,11 +151,16 @@ class QueryInflationRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryInflationRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryInflationRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryInflationRequest();
   }
 
@@ -186,15 +203,20 @@ class QueryInflationResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [inflation];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'inflation': inflation};
   }
 
-  factory QueryInflationResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryInflationResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryInflationResponse(
       inflation: json.valueAsString<String?>(
         'inflation',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -235,11 +257,16 @@ class QueryStateRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryStateRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryStateRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryStateRequest();
   }
 
@@ -289,39 +316,50 @@ class QueryStateResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [minterState, stateHistory];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'minter_state': minterState?.toJson(),
-      'state_history': stateHistory.map((e) => e.toJson()).toList(),
+      'minter_state': config.encodeMessage(minterState),
+      'state_history':
+          stateHistory.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory QueryStateResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryStateResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryStateResponse(
-      minterState: json.valueTo<
-        chain4energy_c4echain_cfeminter_minter.MinterState?,
-        Map<String, dynamic>
-      >(
-        key: 'minter_state',
-        parse:
-            (v) =>
-                chain4energy_c4echain_cfeminter_minter.MinterState.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      minterState: json
+          .valueTo<chain4energy_c4echain_cfeminter_minter.MinterState?, Object>(
+            key: 'minter_state',
+            parse:
+                (v) =>
+                    chain4energy_c4echain_cfeminter_minter.MinterState.fromJson(
+                      JsonParser.valueAs(v),
+                      config: config,
+                    ),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
       stateHistory:
           (json.valueEnsureAsList<dynamic>(
                 'state_history',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   chain4energy_c4echain_cfeminter_minter.MinterState,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
                       (v) => chain4energy_c4echain_cfeminter_minter
-                          .MinterState.fromJson(v),
+                          .MinterState.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),

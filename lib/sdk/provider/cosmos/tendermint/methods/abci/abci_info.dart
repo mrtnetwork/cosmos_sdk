@@ -23,7 +23,7 @@ class TendermintRequestBroadcastAbciInfo
   Map<String, String?> get parameters => {};
 
   @override
-  TendermintABCIInfoResponseResult onResonse(Map<String, dynamic> result) {
+  TendermintABCIInfoResponseResult onResponse(Map<String, dynamic> result) {
     return TendermintABCIInfoResponseResult.fromJson(result);
   }
 }

@@ -19,7 +19,7 @@ class ThorNodeRequestPubkeyVault
   @override
   Map<String, String?> get parameters => {"height": height?.toString()};
   @override
-  ThorVaultInfoResponse onResonse(Map<String, dynamic> result) {
+  ThorVaultInfoResponse onResponse(Map<String, dynamic> result) {
     return ThorVaultInfoResponse.fromJson(result);
   }
 }

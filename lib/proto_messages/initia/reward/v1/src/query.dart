@@ -32,11 +32,16 @@ class QueryParamsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryParamsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsRequest();
   }
 
@@ -80,18 +85,26 @@ class QueryParamsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [params];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'params': params?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'params': config.encodeMessage(params)};
   }
 
-  factory QueryParamsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsResponse(
-      params: json
-          .valueTo<initia_reward_v1_types.Params?, Map<String, dynamic>>(
-            key: 'params',
-            parse: (v) => initia_reward_v1_types.Params.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      params: json.valueTo<initia_reward_v1_types.Params?, Object>(
+        key: 'params',
+        parse:
+            (v) => initia_reward_v1_types.Params.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -137,11 +150,16 @@ class QueryAnnualProvisionsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryAnnualProvisionsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryAnnualProvisionsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryAnnualProvisionsRequest();
   }
 
@@ -167,9 +185,10 @@ class QueryAnnualProvisionsRequest extends CosmosProtoMessage
 /// Query/AnnualProvisions RPC method.
 class QueryAnnualProvisionsResponse extends CosmosProtoMessage {
   /// annual_provisions is the current minting annual provisions value.
-  final List<int>? annualProvisions;
+  final BuBytes? annualProvisions;
 
-  const QueryAnnualProvisionsResponse({this.annualProvisions});
+  QueryAnnualProvisionsResponse({List<int>? annualProvisions})
+    : annualProvisions = annualProvisions?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -191,24 +210,22 @@ class QueryAnnualProvisionsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [annualProvisions];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {
-      'annual_provisions': switch (annualProvisions) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-    };
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'annual_provisions': config.encodeBinary(annualProvisions)};
   }
 
-  factory QueryAnnualProvisionsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryAnnualProvisionsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryAnnualProvisionsResponse(
-      annualProvisions: json.valueAsBytes<List<int>?>(
-        'annual_provisions',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      annualProvisions: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'annual_provisions',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
     );
   }
@@ -252,13 +269,16 @@ class QueryLastDilutionTimestampRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
   factory QueryLastDilutionTimestampRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryLastDilutionTimestampRequest();
   }
 
@@ -305,19 +325,26 @@ class QueryLastDilutionTimestampResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [lastDilutionTimestamp];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'last_dilution_timestamp': lastDilutionTimestamp?.toRfc3339()};
   }
 
   factory QueryLastDilutionTimestampResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryLastDilutionTimestampResponse(
       lastDilutionTimestamp: json
-          .valueTo<google_protobuf_timestamp.Timestamp?, String>(
+          .valueTo<google_protobuf_timestamp.Timestamp?, Object>(
             key: 'last_dilution_timestamp',
-            parse: (v) => google_protobuf_timestamp.Timestamp.fromRfc3339(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => google_protobuf_timestamp.Timestamp.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
     );
   }

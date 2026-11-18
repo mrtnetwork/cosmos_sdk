@@ -4,9 +4,10 @@ import 'package:cosmos_sdk/sdk/serialization/serialization.dart';
 
 class QueryEncryptedSeedRequest extends CosmosProtoMessage
     with ICosmosProtoQueryMessage<QueryEncryptedSeedResponse> {
-  final List<int>? pubKey;
+  final BuBytes? pubKey;
 
-  const QueryEncryptedSeedRequest({this.pubKey});
+  QueryEncryptedSeedRequest({List<int>? pubKey})
+    : pubKey = pubKey?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -29,24 +30,19 @@ class QueryEncryptedSeedRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [pubKey];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {
-      'pub_key': switch (pubKey) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-    };
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'pub_key': config.encodeBinary(pubKey)};
   }
 
-  factory QueryEncryptedSeedRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryEncryptedSeedRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryEncryptedSeedRequest(
-      pubKey: json.valueAsBytes<List<int>?>(
-        'pub_key',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      pubKey: config.decodeBinary<List<int>?>(
+        json.valueAs('pub_key', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }
@@ -72,9 +68,10 @@ class QueryEncryptedSeedRequest extends CosmosProtoMessage
 }
 
 class QueryEncryptedSeedResponse extends CosmosProtoMessage {
-  final List<int>? encryptedSeed;
+  final BuBytes? encryptedSeed;
 
-  const QueryEncryptedSeedResponse({this.encryptedSeed});
+  QueryEncryptedSeedResponse({List<int>? encryptedSeed})
+    : encryptedSeed = encryptedSeed?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -91,24 +88,22 @@ class QueryEncryptedSeedResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [encryptedSeed];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {
-      'encrypted_seed': switch (encryptedSeed) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-    };
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'encrypted_seed': config.encodeBinary(encryptedSeed)};
   }
 
-  factory QueryEncryptedSeedResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryEncryptedSeedResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryEncryptedSeedResponse(
-      encryptedSeed: json.valueAsBytes<List<int>?>(
-        'encrypted_seed',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      encryptedSeed: config.decodeBinary<List<int>?>(
+        json.valueAs(
+          'encrypted_seed',
+          normalizeKeyLookup: config.normalizeKeys,
+        ),
       ),
     );
   }

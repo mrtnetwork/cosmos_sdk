@@ -30,22 +30,27 @@ class Params extends CosmosProtoMessage {
   List<Object?> get protoValues => [enableErc20, permissionlessRegistration];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'enable_erc20': enableErc20,
       'permissionless_registration': permissionlessRegistration,
     };
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
       enableErc20: json.valueAsBool<bool?>(
         'enable_erc20',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       permissionlessRegistration: json.valueAsBool<bool?>(
         'permissionless_registration',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }

@@ -26,14 +26,25 @@ class Upgrade extends CosmosProtoMessage {
   List<Object?> get protoValues => [height, info];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'height': height?.toString(), 'info': info};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'height': config.encodeBigint(height), 'info': info};
   }
 
-  factory Upgrade.fromJson(Map<String, dynamic> json) {
+  factory Upgrade.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Upgrade(
-      height: json.valueAsBigInt<BigInt?>('height', acceptCamelCase: true),
-      info: json.valueAsString<String?>('info', acceptCamelCase: true),
+      height: json.valueAsBigInt<BigInt?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      info: json.valueAsString<String?>(
+        'info',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -58,9 +69,10 @@ class MsgProposeUpgrade extends CosmosProtoMessage
 
   final Upgrade? upgrade;
 
-  final List<int>? signer;
+  final BuBytes? signer;
 
-  const MsgProposeUpgrade({this.name, this.upgrade, this.signer});
+  MsgProposeUpgrade({this.name, this.upgrade, List<int>? signer})
+    : signer = signer?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -89,32 +101,32 @@ class MsgProposeUpgrade extends CosmosProtoMessage
   List<Object?> get protoValues => [name, upgrade, signer];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'name': name,
-      'upgrade': upgrade?.toJson(),
-      'signer': switch (signer) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'upgrade': config.encodeMessage(upgrade),
+      'signer': config.encodeBinary(signer),
     };
   }
 
-  factory MsgProposeUpgrade.fromJson(Map<String, dynamic> json) {
+  factory MsgProposeUpgrade.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgProposeUpgrade(
-      name: json.valueAsString<String?>('name', acceptCamelCase: true),
-      upgrade: json.valueTo<Upgrade?, Map<String, dynamic>>(
-        key: 'upgrade',
-        parse: (v) => Upgrade.fromJson(v),
-        acceptCamelCase: true,
+      name: json.valueAsString<String?>(
+        'name',
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      signer: json.valueAsBytes<List<int>?>(
-        'signer',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      upgrade: json.valueTo<Upgrade?, Object>(
+        key: 'upgrade',
+        parse: (v) => Upgrade.fromJson(JsonParser.valueAs(v), config: config),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      signer: config.decodeBinary<List<int>?>(
+        json.valueAs('signer', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }
@@ -148,9 +160,10 @@ class MsgApproveUpgrade extends CosmosProtoMessage
         ICosmosProtoAminoMessage {
   final String? name;
 
-  final List<int>? signer;
+  final BuBytes? signer;
 
-  const MsgApproveUpgrade({this.name, this.signer});
+  MsgApproveUpgrade({this.name, List<int>? signer})
+    : signer = signer?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -178,26 +191,23 @@ class MsgApproveUpgrade extends CosmosProtoMessage
   List<Object?> get protoValues => [name, signer];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {
-      'name': name,
-      'signer': switch (signer) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-    };
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'name': name, 'signer': config.encodeBinary(signer)};
   }
 
-  factory MsgApproveUpgrade.fromJson(Map<String, dynamic> json) {
+  factory MsgApproveUpgrade.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgApproveUpgrade(
-      name: json.valueAsString<String?>('name', acceptCamelCase: true),
-      signer: json.valueAsBytes<List<int>?>(
-        'signer',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      name: json.valueAsString<String?>(
+        'name',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      signer: config.decodeBinary<List<int>?>(
+        json.valueAs('signer', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }
@@ -230,9 +240,10 @@ class MsgRejectUpgrade extends CosmosProtoMessage
         ICosmosProtoAminoMessage {
   final String? name;
 
-  final List<int>? signer;
+  final BuBytes? signer;
 
-  const MsgRejectUpgrade({this.name, this.signer});
+  MsgRejectUpgrade({this.name, List<int>? signer})
+    : signer = signer?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -260,26 +271,23 @@ class MsgRejectUpgrade extends CosmosProtoMessage
   List<Object?> get protoValues => [name, signer];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {
-      'name': name,
-      'signer': switch (signer) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-    };
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'name': name, 'signer': config.encodeBinary(signer)};
   }
 
-  factory MsgRejectUpgrade.fromJson(Map<String, dynamic> json) {
+  factory MsgRejectUpgrade.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgRejectUpgrade(
-      name: json.valueAsString<String?>('name', acceptCamelCase: true),
-      signer: json.valueAsBytes<List<int>?>(
-        'signer',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      name: json.valueAsString<String?>(
+        'name',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      signer: config.decodeBinary<List<int>?>(
+        json.valueAs('signer', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }

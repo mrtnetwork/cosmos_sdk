@@ -34,23 +34,29 @@ class Params extends CosmosProtoMessage {
   List<Object?> get protoValues => [hostEnabled, allowMessages];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'host_enabled': hostEnabled,
       'allow_messages': allowMessages.map((e) => e).toList(),
     };
   }
 
-  factory Params.fromJson(Map<String, dynamic> json) {
+  factory Params.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Params(
       hostEnabled: json.valueAsBool<bool?>(
         'host_enabled',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       allowMessages:
           (json.valueEnsureAsList<dynamic>(
             'allow_messages',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
     );
   }
@@ -77,9 +83,9 @@ class QueryRequest extends CosmosProtoMessage {
 
   /// data defines the payload of the query request as defined by ADR-021.
   /// https://github.com/cosmos/cosmos-sdk/blob/main/docs/architecture/adr-021-protobuf-query-encoding.md#custom-query-registration-and-routing
-  final List<int>? data;
+  final BuBytes? data;
 
-  const QueryRequest({this.path, this.data});
+  QueryRequest({this.path, List<int>? data}) : data = data?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -96,26 +102,23 @@ class QueryRequest extends CosmosProtoMessage {
   List<Object?> get protoValues => [path, data];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {
-      'path': path,
-      'data': switch (data) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-    };
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'path': path, 'data': config.encodeBinary(data)};
   }
 
-  factory QueryRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryRequest(
-      path: json.valueAsString<String?>('path', acceptCamelCase: true),
-      data: json.valueAsBytes<List<int>?>(
-        'data',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      path: json.valueAsString<String?>(
+        'path',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      data: config.decodeBinary<List<int>?>(
+        json.valueAs('data', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }

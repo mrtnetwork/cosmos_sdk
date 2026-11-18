@@ -16,7 +16,7 @@ class Log extends CosmosProtoMessage {
   final List<String> topics;
 
   /// data which is supplied by the contract, usually ABI-encoded
-  final List<int>? data;
+  final BuBytes? data;
 
   /// block_number of the block in which the transaction was included
   final BigInt? blockNumber;
@@ -38,17 +38,17 @@ class Log extends CosmosProtoMessage {
   /// through a filter query.
   final bool? removed;
 
-  const Log({
+  Log({
     this.address,
     this.topics = const [],
-    this.data,
+    List<int>? data,
     this.blockNumber,
     this.txHash,
     this.txIndex,
     this.blockHash,
     this.index,
     this.removed,
-  });
+  }) : data = data?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -88,51 +88,64 @@ class Log extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'address': address,
       'topics': topics.map((e) => e).toList(),
-      'data': switch (data) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
-      'block_number': blockNumber?.toString(),
+      'data': config.encodeBinary(data),
+      'block_number': config.encodeBigint(blockNumber),
       'tx_hash': txHash,
-      'tx_index': txIndex?.toString(),
+      'tx_index': config.encodeBigint(txIndex),
       'block_hash': blockHash,
-      'index': index?.toString(),
+      'index': config.encodeBigint(index),
       'removed': removed,
     };
   }
 
-  factory Log.fromJson(Map<String, dynamic> json) {
+  factory Log.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return Log(
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       topics:
           (json.valueEnsureAsList<dynamic>(
             'topics',
-            acceptCamelCase: true,
+            normalizeKeyLookup: config.normalizeKeys,
+            onMissing: () => [],
           )).map((e) => JsonParser.valueAsString<String>(e)).toList(),
-      data: json.valueAsBytes<List<int>?>(
-        'data',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      data: config.decodeBinary<List<int>?>(
+        json.valueAs('data', normalizeKeyLookup: config.normalizeKeys),
       ),
       blockNumber: json.valueAsBigInt<BigInt?>(
         'block_number',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      txHash: json.valueAsString<String?>('tx_hash', acceptCamelCase: true),
-      txIndex: json.valueAsBigInt<BigInt?>('tx_index', acceptCamelCase: true),
+      txHash: json.valueAsString<String?>(
+        'tx_hash',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      txIndex: json.valueAsBigInt<BigInt?>(
+        'tx_index',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       blockHash: json.valueAsString<String?>(
         'block_hash',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      index: json.valueAsBigInt<BigInt?>('index', acceptCamelCase: true),
-      removed: json.valueAsBool<bool?>('removed', acceptCamelCase: true),
+      index: json.valueAsBigInt<BigInt?>(
+        'index',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      removed: json.valueAsBool<bool?>(
+        'removed',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

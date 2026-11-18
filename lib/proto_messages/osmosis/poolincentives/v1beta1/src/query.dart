@@ -35,13 +35,21 @@ class QueryGaugeIdsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [poolId];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'pool_id': poolId?.toString()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'pool_id': config.encodeBigint(poolId)};
   }
 
-  factory QueryGaugeIdsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryGaugeIdsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryGaugeIdsRequest(
-      poolId: json.valueAsBigInt<BigInt?>('pool_id', acceptCamelCase: true),
+      poolId: json.valueAsBigInt<BigInt?>(
+        'pool_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -91,29 +99,37 @@ class QueryGaugeIdsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [gaugeIdsWithDuration];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'gauge_ids_with_duration':
-          gaugeIdsWithDuration.map((e) => e.toJson()).toList(),
+          gaugeIdsWithDuration.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory QueryGaugeIdsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryGaugeIdsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryGaugeIdsResponse(
       gaugeIdsWithDuration:
           (json.valueEnsureAsList<dynamic>(
                 'gauge_ids_with_duration',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   QueryGaugeIdsResponseGaugeIdWithDuration,
-                  Map<String, dynamic>
+                  Object
                 >(
                   value: e,
                   parse:
-                      (v) =>
-                          QueryGaugeIdsResponseGaugeIdWithDuration.fromJson(v),
+                      (v) => QueryGaugeIdsResponseGaugeIdWithDuration.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -175,27 +191,37 @@ class QueryGaugeIdsResponseGaugeIdWithDuration extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'gauge_id': gaugeId?.toString(),
+      'gauge_id': config.encodeBigint(gaugeId),
       'duration': duration?.encodeString(asNanos: true),
       'gauge_incentive_percentage': gaugeIncentivePercentage,
     };
   }
 
   factory QueryGaugeIdsResponseGaugeIdWithDuration.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryGaugeIdsResponseGaugeIdWithDuration(
-      gaugeId: json.valueAsBigInt<BigInt?>('gauge_id', acceptCamelCase: true),
-      duration: json.valueTo<google_protobuf_duration.Duration?, String>(
+      gaugeId: json.valueAsBigInt<BigInt?>(
+        'gauge_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      duration: json.valueTo<google_protobuf_duration.Duration?, Object>(
         key: 'duration',
-        parse: (v) => google_protobuf_duration.Duration.fromString(v),
-        acceptCamelCase: true,
+        parse:
+            (v) => google_protobuf_duration.Duration.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       gaugeIncentivePercentage: json.valueAsString<String?>(
         'gauge_incentive_percentage',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -245,11 +271,16 @@ class QueryDistrInfoRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryDistrInfoRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryDistrInfoRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryDistrInfoRequest();
   }
 
@@ -292,21 +323,28 @@ class QueryDistrInfoResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [distrInfo];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'distr_info': distrInfo?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'distr_info': config.encodeMessage(distrInfo)};
   }
 
-  factory QueryDistrInfoResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryDistrInfoResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryDistrInfoResponse(
       distrInfo: json.valueTo<
         osmosis_poolincentives_v1beta1_incentives.DistrInfo?,
-        Map<String, dynamic>
+        Object
       >(
         key: 'distr_info',
         parse:
-            (v) =>
-                osmosis_poolincentives_v1beta1_incentives.DistrInfo.fromJson(v),
-        acceptCamelCase: true,
+            (v) => osmosis_poolincentives_v1beta1_incentives.DistrInfo.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -354,11 +392,16 @@ class QueryParamsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryParamsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsRequest();
   }
 
@@ -400,21 +443,25 @@ class QueryParamsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [params];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'params': params?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'params': config.encodeMessage(params)};
   }
 
-  factory QueryParamsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryParamsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryParamsResponse(
-      params: json.valueTo<
-        osmosis_poolincentives_v1beta1_incentives.Params?,
-        Map<String, dynamic>
-      >(
-        key: 'params',
-        parse:
-            (v) => osmosis_poolincentives_v1beta1_incentives.Params.fromJson(v),
-        acceptCamelCase: true,
-      ),
+      params: json
+          .valueTo<osmosis_poolincentives_v1beta1_incentives.Params?, Object>(
+            key: 'params',
+            parse:
+                (v) => osmosis_poolincentives_v1beta1_incentives
+                    .Params.fromJson(JsonParser.valueAs(v), config: config),
+            normalizeKeyLookup: config.normalizeKeys,
+          ),
     );
   }
 
@@ -460,11 +507,16 @@ class QueryLockableDurationsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryLockableDurationsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryLockableDurationsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryLockableDurationsRequest();
   }
 
@@ -515,27 +567,37 @@ class QueryLockableDurationsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [lockableDurations];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'lockable_durations':
           lockableDurations.map((e) => e.encodeString(asNanos: true)).toList(),
     };
   }
 
-  factory QueryLockableDurationsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryLockableDurationsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryLockableDurationsResponse(
       lockableDurations:
           (json.valueEnsureAsList<dynamic>(
                 'lockable_durations',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
                 (e) => JsonParser.valueTo<
                   google_protobuf_duration.Duration,
-                  String
+                  Object
                 >(
                   value: e,
-                  parse: (v) => google_protobuf_duration.Duration.fromString(v),
+                  parse:
+                      (v) => google_protobuf_duration.Duration.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
                 ),
               )
               .toList(),
@@ -584,11 +646,16 @@ class QueryIncentivizedPoolsRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory QueryIncentivizedPoolsRequest.fromJson(Map<String, dynamic> json) {
+  factory QueryIncentivizedPoolsRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryIncentivizedPoolsRequest();
   }
 
@@ -641,24 +708,39 @@ class IncentivizedPool extends CosmosProtoMessage {
   List<Object?> get protoValues => [poolId, lockableDuration, gaugeId];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'pool_id': poolId?.toString(),
+      'pool_id': config.encodeBigint(poolId),
       'lockable_duration': lockableDuration?.encodeString(asNanos: true),
-      'gauge_id': gaugeId?.toString(),
+      'gauge_id': config.encodeBigint(gaugeId),
     };
   }
 
-  factory IncentivizedPool.fromJson(Map<String, dynamic> json) {
+  factory IncentivizedPool.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return IncentivizedPool(
-      poolId: json.valueAsBigInt<BigInt?>('pool_id', acceptCamelCase: true),
+      poolId: json.valueAsBigInt<BigInt?>(
+        'pool_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       lockableDuration: json
-          .valueTo<google_protobuf_duration.Duration?, String>(
+          .valueTo<google_protobuf_duration.Duration?, Object>(
             key: 'lockable_duration',
-            parse: (v) => google_protobuf_duration.Duration.fromString(v),
-            acceptCamelCase: true,
+            parse:
+                (v) => google_protobuf_duration.Duration.fromJson(
+                  JsonParser.valueAs(v),
+                  config: config,
+                ),
+            normalizeKeyLookup: config.normalizeKeys,
           ),
-      gaugeId: json.valueAsBigInt<BigInt?>('gauge_id', acceptCamelCase: true),
+      gaugeId: json.valueAsBigInt<BigInt?>(
+        'gauge_id',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -705,25 +787,35 @@ class QueryIncentivizedPoolsResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [incentivizedPools];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'incentivized_pools': incentivizedPools.map((e) => e.toJson()).toList(),
+      'incentivized_pools':
+          incentivizedPools.map((e) => config.encodeMessage(e)).toList(),
     };
   }
 
-  factory QueryIncentivizedPoolsResponse.fromJson(Map<String, dynamic> json) {
+  factory QueryIncentivizedPoolsResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryIncentivizedPoolsResponse(
       incentivizedPools:
           (json.valueEnsureAsList<dynamic>(
                 'incentivized_pools',
-                acceptCamelCase: true,
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
               ))
               .map(
-                (e) =>
-                    JsonParser.valueTo<IncentivizedPool, Map<String, dynamic>>(
-                      value: e,
-                      parse: (v) => IncentivizedPool.fromJson(v),
-                    ),
+                (e) => JsonParser.valueTo<IncentivizedPool, Object>(
+                  value: e,
+                  parse:
+                      (v) => IncentivizedPool.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );
@@ -771,13 +863,16 @@ class QueryExternalIncentiveGaugesRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
   factory QueryExternalIncentiveGaugesRequest.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryExternalIncentiveGaugesRequest();
   }
 
@@ -828,24 +923,33 @@ class QueryExternalIncentiveGaugesResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [data];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'data': data.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'data': data.map((e) => config.encodeMessage(e)).toList()};
   }
 
   factory QueryExternalIncentiveGaugesResponse.fromJson(
-    Map<String, dynamic> json,
-  ) {
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QueryExternalIncentiveGaugesResponse(
       data:
-          (json.valueEnsureAsList<dynamic>('data', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'data',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  osmosis_incentives_gauge.Gauge,
-                  Map<String, dynamic>
-                >(
-                  value: e,
-                  parse: (v) => osmosis_incentives_gauge.Gauge.fromJson(v),
-                ),
+                (e) =>
+                    JsonParser.valueTo<osmosis_incentives_gauge.Gauge, Object>(
+                      value: e,
+                      parse:
+                          (v) => osmosis_incentives_gauge.Gauge.fromJson(
+                            JsonParser.valueAs(v),
+                            config: config,
+                          ),
+                    ),
               )
               .toList(),
     );

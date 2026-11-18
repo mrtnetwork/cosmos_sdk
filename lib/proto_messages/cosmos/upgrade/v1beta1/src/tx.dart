@@ -44,22 +44,30 @@ class MsgSoftwareUpgrade extends CosmosProtoMessage
   List<Object?> get protoValues => [authority, plan];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'authority': authority, 'plan': plan?.toJson()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'authority': authority, 'plan': config.encodeMessage(plan)};
   }
 
-  factory MsgSoftwareUpgrade.fromJson(Map<String, dynamic> json) {
+  factory MsgSoftwareUpgrade.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSoftwareUpgrade(
       authority: json.valueAsString<String?>(
         'authority',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      plan: json
-          .valueTo<cosmos_upgrade_v1beta1_upgrade.Plan?, Map<String, dynamic>>(
-            key: 'plan',
-            parse: (v) => cosmos_upgrade_v1beta1_upgrade.Plan.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      plan: json.valueTo<cosmos_upgrade_v1beta1_upgrade.Plan?, Object>(
+        key: 'plan',
+        parse:
+            (v) => cosmos_upgrade_v1beta1_upgrade.Plan.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -107,11 +115,16 @@ class MsgSoftwareUpgradeResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgSoftwareUpgradeResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgSoftwareUpgradeResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSoftwareUpgradeResponse();
   }
 
@@ -155,15 +168,20 @@ class MsgCancelUpgrade extends CosmosProtoMessage
   List<Object?> get protoValues => [authority];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'authority': authority};
   }
 
-  factory MsgCancelUpgrade.fromJson(Map<String, dynamic> json) {
+  factory MsgCancelUpgrade.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgCancelUpgrade(
       authority: json.valueAsString<String?>(
         'authority',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -206,11 +224,16 @@ class MsgCancelUpgradeResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {};
   }
 
-  factory MsgCancelUpgradeResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgCancelUpgradeResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgCancelUpgradeResponse();
   }
 

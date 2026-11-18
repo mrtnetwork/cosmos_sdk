@@ -14,13 +14,13 @@ class MsgSetNodeKeys extends CosmosProtoMessage
 
   final String? validatorConsPubKey;
 
-  final List<int>? signer;
+  final BuBytes? signer;
 
-  const MsgSetNodeKeys({
+  MsgSetNodeKeys({
     this.pubKeySetSet,
     this.validatorConsPubKey,
-    this.signer,
-  });
+    List<int>? signer,
+  }) : signer = signer?.asImmutableBytes;
 
   @override
   ProtoMessageConfig protoConfig() => protoConfigStatic();
@@ -49,36 +49,36 @@ class MsgSetNodeKeys extends CosmosProtoMessage
   List<Object?> get protoValues => [pubKeySetSet, validatorConsPubKey, signer];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
-      'pub_key_set_set': pubKeySetSet?.toJson(),
+      'pub_key_set_set': config.encodeMessage(pubKeySetSet),
       'validator_cons_pub_key': validatorConsPubKey,
-      'signer': switch (signer) {
-        List<int> bytes => StringUtils.decode(
-          bytes,
-          encoding: StringEncoding.base64,
-        ),
-        _ => null,
-      },
+      'signer': config.encodeBinary(signer),
     };
   }
 
-  factory MsgSetNodeKeys.fromJson(Map<String, dynamic> json) {
+  factory MsgSetNodeKeys.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgSetNodeKeys(
-      pubKeySetSet: json
-          .valueTo<common_common.PubKeySet?, Map<String, dynamic>>(
-            key: 'pub_key_set_set',
-            parse: (v) => common_common.PubKeySet.fromJson(v),
-            acceptCamelCase: true,
-          ),
+      pubKeySetSet: json.valueTo<common_common.PubKeySet?, Object>(
+        key: 'pub_key_set_set',
+        parse:
+            (v) => common_common.PubKeySet.fromJson(
+              JsonParser.valueAs(v),
+              config: config,
+            ),
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       validatorConsPubKey: json.valueAsString<String?>(
         'validator_cons_pub_key',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      signer: json.valueAsBytes<List<int>?>(
-        'signer',
-        acceptCamelCase: true,
-        encoding: StringEncoding.base64,
+      signer: config.decodeBinary<List<int>?>(
+        json.valueAs('signer', normalizeKeyLookup: config.normalizeKeys),
       ),
     );
   }

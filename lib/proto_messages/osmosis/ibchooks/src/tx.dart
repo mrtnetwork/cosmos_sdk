@@ -36,22 +36,33 @@ class MsgEmitIBCAck extends CosmosProtoMessage
   List<Object?> get protoValues => [sender, packetSequence, channel];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'sender': sender,
-      'packet_sequence': packetSequence?.toString(),
+      'packet_sequence': config.encodeBigint(packetSequence),
       'channel': channel,
     };
   }
 
-  factory MsgEmitIBCAck.fromJson(Map<String, dynamic> json) {
+  factory MsgEmitIBCAck.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgEmitIBCAck(
-      sender: json.valueAsString<String?>('sender', acceptCamelCase: true),
+      sender: json.valueAsString<String?>(
+        'sender',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       packetSequence: json.valueAsBigInt<BigInt?>(
         'packet_sequence',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      channel: json.valueAsString<String?>('channel', acceptCamelCase: true),
+      channel: json.valueAsString<String?>(
+        'channel',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -103,17 +114,25 @@ class MsgEmitIBCAckResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [contractResult, ibcAck];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'contract_result': contractResult, 'ibc_ack': ibcAck};
   }
 
-  factory MsgEmitIBCAckResponse.fromJson(Map<String, dynamic> json) {
+  factory MsgEmitIBCAckResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return MsgEmitIBCAckResponse(
       contractResult: json.valueAsString<String?>(
         'contract_result',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      ibcAck: json.valueAsString<String?>('ibc_ack', acceptCamelCase: true),
+      ibcAck: json.valueAsString<String?>(
+        'ibc_ack',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 

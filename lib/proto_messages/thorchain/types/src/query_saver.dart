@@ -37,15 +37,29 @@ class QuerySaverRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [asset, address, height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'asset': asset, 'address': address, 'height': height};
   }
 
-  factory QuerySaverRequest.fromJson(Map<String, dynamic> json) {
+  factory QuerySaverRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QuerySaverRequest(
-      asset: json.valueAsString<String?>('asset', acceptCamelCase: true),
-      address: json.valueAsString<String?>('address', acceptCamelCase: true),
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      asset: json.valueAsString<String?>(
+        'asset',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      address: json.valueAsString<String?>(
+        'address',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -133,12 +147,14 @@ class QuerySaverResponse extends CosmosProtoMessage {
   ];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {
       'asset': asset,
       'asset_address': assetAddress,
-      'last_add_height': lastAddHeight?.toString(),
-      'last_withdraw_height': lastWithdrawHeight?.toString(),
+      'last_add_height': config.encodeBigint(lastAddHeight),
+      'last_withdraw_height': config.encodeBigint(lastWithdrawHeight),
       'units': units,
       'asset_deposit_value': assetDepositValue,
       'asset_redeem_value': assetRedeemValue,
@@ -146,33 +162,42 @@ class QuerySaverResponse extends CosmosProtoMessage {
     };
   }
 
-  factory QuerySaverResponse.fromJson(Map<String, dynamic> json) {
+  factory QuerySaverResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QuerySaverResponse(
-      asset: json.valueAsString<String?>('asset', acceptCamelCase: true),
+      asset: json.valueAsString<String?>(
+        'asset',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       assetAddress: json.valueAsString<String?>(
         'asset_address',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       lastAddHeight: json.valueAsBigInt<BigInt?>(
         'last_add_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       lastWithdrawHeight: json.valueAsBigInt<BigInt?>(
         'last_withdraw_height',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
-      units: json.valueAsString<String?>('units', acceptCamelCase: true),
+      units: json.valueAsString<String?>(
+        'units',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
       assetDepositValue: json.valueAsString<String?>(
         'asset_deposit_value',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       assetRedeemValue: json.valueAsString<String?>(
         'asset_redeem_value',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
       growthPct: json.valueAsString<String?>(
         'growth_pct',
-        acceptCamelCase: true,
+        normalizeKeyLookup: config.normalizeKeys,
       ),
     );
   }
@@ -225,14 +250,25 @@ class QuerySaversRequest extends CosmosProtoMessage
   List<Object?> get protoValues => [asset, height];
 
   @override
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return {'asset': asset, 'height': height};
   }
 
-  factory QuerySaversRequest.fromJson(Map<String, dynamic> json) {
+  factory QuerySaversRequest.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QuerySaversRequest(
-      asset: json.valueAsString<String?>('asset', acceptCamelCase: true),
-      height: json.valueAsString<String?>('height', acceptCamelCase: true),
+      asset: json.valueAsString<String?>(
+        'asset',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
+      height: json.valueAsString<String?>(
+        'height',
+        normalizeKeyLookup: config.normalizeKeys,
+      ),
     );
   }
 
@@ -283,19 +319,32 @@ class QuerySaversResponse extends CosmosProtoMessage {
   List<Object?> get protoValues => [savers];
 
   @override
-  Map<String, dynamic> toJson() {
-    return {'savers': savers.map((e) => e.toJson()).toList()};
+  Map<String, dynamic> toJson({
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
+    return {'savers': savers.map((e) => config.encodeMessage(e)).toList()};
   }
 
-  factory QuerySaversResponse.fromJson(Map<String, dynamic> json) {
+  factory QuerySaversResponse.fromJson(
+    Map<String, dynamic> json, {
+    CosmosProtoJsonConfing config = CosmosProtoJsonConfing.defaultConfig,
+  }) {
     return QuerySaversResponse(
       savers:
-          (json.valueEnsureAsList<dynamic>('savers', acceptCamelCase: true))
+          (json.valueEnsureAsList<dynamic>(
+                'savers',
+                normalizeKeyLookup: config.normalizeKeys,
+                onMissing: () => [],
+              ))
               .map(
-                (e) => JsonParser.valueTo<
-                  QuerySaverResponse,
-                  Map<String, dynamic>
-                >(value: e, parse: (v) => QuerySaverResponse.fromJson(v)),
+                (e) => JsonParser.valueTo<QuerySaverResponse, Object>(
+                  value: e,
+                  parse:
+                      (v) => QuerySaverResponse.fromJson(
+                        JsonParser.valueAs(v),
+                        config: config,
+                      ),
+                ),
               )
               .toList(),
     );
