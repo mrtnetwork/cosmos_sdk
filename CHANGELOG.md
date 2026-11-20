@@ -1,3 +1,6 @@
+## 5.0.1
+- Fix `CosmosETHSecp256K1PublicKey` protobuf encoding (`protoValues` now emits the key bytes instead of the key object). Previously any `toBuffer`/`toAny` on eth-family pubkeys (ethermint, injective, cosmos.evm, stratos, initia) threw "Invalid value provided for field number 1", breaking fee simulation, signing and broadcast on EVM Cosmos chains.
+
 ## 5.0.0
 - BREAKING: all legacy exception classes removed; every error is now `BuError` with a `CosmosErrorType` taxonomy value.
 - Cryptography now routes through the `blockchain_utils` dual backend (pure Dart default, optional Rust FFI/WASM) with backend-parity test suites.

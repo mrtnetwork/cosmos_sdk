@@ -134,7 +134,7 @@ class CosmosETHSecp256K1PublicKey extends CosmosPublicKey {
   }
 
   @override
-  List<Object?> get protoValues => [publicKey];
+  List<Object?> get protoValues => [toBytes()];
 
   @override
   List<dynamic> get variables => [publicKey];
